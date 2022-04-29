@@ -68,7 +68,7 @@
     "d3": "^5.16.0",
     "date-fns": "1.29.0",
     "file-saver": "^2.0.2",
-    "graphql": "^16.2.0",
+    "graphql": "^16.3.0",
     "html-react-parser": "^1.4.4",
     "http-errors": "^1.7.2",
     "jwt-decode": "^3.1.2",
