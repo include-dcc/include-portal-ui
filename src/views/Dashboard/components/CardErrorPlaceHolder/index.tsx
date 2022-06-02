@@ -17,7 +17,7 @@ const CardErrorPlaceholder = ({ title, subTitle }: OwnProps) => (
       subTitle || (
         <Text>
           {intl.get('screen.dashboard.cards.error.subtitle')}{' '}
-          <ExternalLink href="mailto:support@includedrc.org">
+          <ExternalLink href="mailto:support@includedcc.org">
             <Text>{intl.get('screen.dashboard.cards.error.contactSupport')}</Text>
           </ExternalLink>
           .

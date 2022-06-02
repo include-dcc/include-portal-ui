@@ -26,7 +26,7 @@ const showErrorReportNotif = (thunkApi: any) =>
           {intl.get('api.report.error.message')}
           <a
             style={{ color: 'unset', textDecoration: 'underline' }}
-            href="mailto:support@includedrc.org"
+            href="mailto:support@includedcc.org"
           >
             {intl.get('api.report.error.support')}
           </a>

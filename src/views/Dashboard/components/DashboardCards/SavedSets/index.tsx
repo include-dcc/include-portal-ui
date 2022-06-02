@@ -38,7 +38,7 @@ const getItemList = (
             subTitle={
               <Text>
                 Please refresh and try again or{' '}
-                <ExternalLink href="mailto:support@includedrc.org">
+                <ExternalLink href="mailto:support@includedcc.org">
                   <Text>contact our support</Text>
                 </ExternalLink>
                 .
