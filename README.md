@@ -16,7 +16,7 @@
 
 #### Starting the Bastion
 
-- Start bastion using: `igor`
+- Start bastion using: `igorr`
 
 #### Starting the project
 
