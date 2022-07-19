@@ -351,6 +351,15 @@ const fr = {
   },
   // SCREENS
   screen: {
+    memberProfile: {
+      notFound: 'User not found',
+      rolesTitle: 'roles',
+      noRoles: 'No roles',
+      usageTitle: 'Intended Use of the INCLUDE Portal data',
+      noUsage: 'No intended usages',
+      editProfileBtn: 'Edit Profile',
+      communityBtn: 'Community',
+    },
     loginPage: {
       title: 'INCLUDE Data Hub',
       datarelease: {

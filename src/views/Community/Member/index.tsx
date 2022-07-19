@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { headers, USER_API_URL } from 'services/api/user';
 import { TUser } from 'services/api/user/models';
 import Banner from './Banner';
+import intl from 'react-intl-universal';
 
 import styles from './index.module.scss';
 import AvatarHeader from './AvatarHeader';
@@ -28,7 +29,7 @@ const CommunityMember = () => {
         className={styles.notFoundMember}
         status="404"
         title="404"
-        subTitle="User not found"
+        subTitle={intl.get('screen.memberProfile.notFound')}
       />
     );
   }
@@ -50,7 +51,9 @@ const CommunityMember = () => {
             <Col md={16}>
               <Row gutter={[28, 28]}>
                 <Col span={24}>
-                  <Typography.Title level={5}>Role</Typography.Title>
+                  <Typography.Title level={5}>
+                    {intl.get('screen.memberProfile.rolesTitle')}
+                  </Typography.Title>
                   <List
                     className={cx(styles.infoList, !result?.roles?.length && styles.empty)}
                     itemLayout="horizontal"
@@ -58,14 +61,19 @@ const CommunityMember = () => {
                     renderItem={(role, index) => <li key={index}>{role}</li>}
                     locale={{
                       emptyText: (
-                        <Empty showImage={false} description="No roles" align="left" noPadding />
+                        <Empty
+                          showImage={false}
+                          description={intl.get('screen.memberProfile.noRoles')}
+                          align="left"
+                          noPadding
+                        />
                       ),
                     }}
                   />
                 </Col>
                 <Col span={24}>
                   <Typography.Title level={5}>
-                    Intended Use of the INCLUDE Portal data
+                    {intl.get('screen.memberProfile.usageTitle')}
                   </Typography.Title>
                   <List
                     className={cx(styles.infoList, !result?.roles?.length && styles.empty)}
@@ -76,7 +84,7 @@ const CommunityMember = () => {
                       emptyText: (
                         <Empty
                           showImage={false}
-                          description="No intended use"
+                          description={intl.get('screen.memberProfile.noUsage')}
                           align="left"
                           noPadding
                         />
