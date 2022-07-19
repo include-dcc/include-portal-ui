@@ -344,8 +344,8 @@ const fr = {
     user: {
       menu: {
         myprofile: 'My Profile',
-        settings: 'Settings',
-        logout: 'Logout',
+        settings: 'Profile settings',
+        logout: 'Sign out',
       },
     },
   },

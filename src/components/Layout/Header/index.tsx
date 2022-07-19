@@ -1,7 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { PageHeader, Dropdown, Button, Menu } from 'antd';
+import { PageHeader, Dropdown, Button, Menu, Space, Typography } from 'antd';
 import IncludeIconBeta from 'components/Icons/IncludeIconBeta';
-import { ReadOutlined, HomeOutlined, FileSearchOutlined, TeamOutlined } from '@ant-design/icons';
+import {
+  ReadOutlined,
+  HomeOutlined,
+  FileSearchOutlined,
+  TeamOutlined,
+  LogoutOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import { DownOutlined } from '@ant-design/icons';
 import HeaderLink from 'components/Layout/Header/HeaderLink';
@@ -14,7 +21,7 @@ import { AlterTypes } from 'common/types';
 import { useKeycloak } from '@react-keycloak/web';
 import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
 import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userActions } from 'store/user/slice';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
@@ -105,8 +112,37 @@ const Header = () => {
               <Menu
                 items={[
                   {
+                    key: 'email',
+                    disabled: true,
+                    label: (
+                      <Space size={4} className={style.userMenuEmail}>
+                        <Typography.Text>Signed in with</Typography.Text>
+                        <Typography.Text strong>{userInfo?.email}</Typography.Text>
+                      </Space>
+                    ),
+                  },
+                  {
+                    type: 'divider',
+                  },
+                  {
+                    key: 'profile_settings',
+                    label: (
+                      <Link to={`/member/${userInfo?.keycloak_id}`}>
+                        <Space>
+                          <UserOutlined />
+                          {intl.get('layout.user.menu.settings')}
+                        </Space>
+                      </Link>
+                    ),
+                  },
+                  {
                     key: 'logout',
-                    label: intl.get('layout.user.menu.logout'),
+                    label: (
+                      <Space>
+                        <LogoutOutlined />
+                        {intl.get('layout.user.menu.logout')}
+                      </Space>
+                    ),
                     onClick: () => dispatch(userActions.cleanLogout()),
                   },
                 ]}

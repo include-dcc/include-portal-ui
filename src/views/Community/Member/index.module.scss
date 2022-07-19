@@ -1,0 +1,84 @@
+@import 'src/style/themes/include/layout';
+@import 'src/style/themes/include/colors';
+
+.communityMemberWrapper {
+    width: 100%;
+    padding: $default-page-content-padding;
+    max-width: 1000px;
+    margin: auto;
+    display: flex; 
+
+    .banner {
+        height: 200px;
+        width: 100%;
+        background: url("../../../components/assets/memberHeader.png");
+        padding: 24px;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .bannerActions {
+        display: flex;
+        justify-content: space-between;
+
+        .communityBtn {
+            padding: 0;
+            color: $blue-5;
+        }
+    
+        .editButton {
+            color: $blue-5; 
+        }
+    }
+
+    .memberName {
+        margin-bottom: 0;
+    }
+
+    .avatarContainer {
+        width: 100%;
+        margin-top: 70px;
+    }
+
+    .gravatarWrapper, .gravatar {
+        height: 140px;
+    }
+    
+    .divider {
+        border-width: 1.5px;
+        margin: 35px 0;
+    }
+
+    .infoList {
+        background-color: transparent;
+        margin-left: 14px;
+        
+        &.empty {
+            margin-left: 0;
+        }
+
+        :global(.ant-list-empty-text) {
+            padding: 0;
+        }
+
+        ul {
+            list-style:disc
+        }
+    }
+
+    .memberNameSkeleton {
+        width: 200px
+    }
+
+    .memberAssoSkeleton {
+        width: 100px;
+    }
+}
+
+.notFoundMember {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}

@@ -22,6 +22,7 @@ export type TUser = {
   completed_registration: boolean;
   commercial_use_reason: string;
   config: TUserConfig;
+  linkedin?: string;
 };
 
 export type TUserTableConfig = {

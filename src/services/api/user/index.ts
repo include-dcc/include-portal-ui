@@ -4,9 +4,9 @@ import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
 import { TUser, TUserInsert, TUserUpdate } from './models';
 import { sendRequest } from 'services/api';
 
-const USER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user`;
+export const USER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user`;
 
-const headers = () => ({
+export const headers = () => ({
   'Content-Type': 'application/json',
 });
 
