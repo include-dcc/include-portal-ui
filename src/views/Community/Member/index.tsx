@@ -11,9 +11,11 @@ import intl from 'react-intl-universal';
 
 import styles from './index.module.scss';
 import AvatarHeader from './AvatarHeader';
+import { useUser } from 'store/user';
 
 const CommunityMember = () => {
   const { id } = useParams<{ id: string }>();
+  const { userInfo } = useUser();
 
   const { loading, result } = useApi<TUser>({
     config: {
@@ -37,7 +39,7 @@ const CommunityMember = () => {
   return (
     <div className={styles.communityMemberWrapper}>
       <div className={styles.banner}>
-        <Banner isOwnUser={id === result?.keycloak_id} />
+        <Banner isOwnUser={userInfo?.keycloak_id === result?.keycloak_id} />
         <AvatarHeader user={result} isLoading={loading} />
         <Divider className={styles.divider} />
         {loading ? (
@@ -102,10 +104,12 @@ const CommunityMember = () => {
                     <Typography.Text>Linkedin</Typography.Text>
                   </Space>
                 )}
-                <Space align="center">
-                  <MailFilled />
-                  <Typography.Text>{result?.email}</Typography.Text>
-                </Space>
+                {result?.email && (
+                  <Space align="center">
+                    <MailFilled />
+                    <Typography.Text>{result?.email}</Typography.Text>
+                  </Space>
+                )}
               </Space>
             </Col>
           </Row>

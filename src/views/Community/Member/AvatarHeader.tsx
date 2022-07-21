@@ -20,7 +20,7 @@ const AvatarHeader = ({ user, isLoading = false }: OwnProps) => (
           circle
           className={styles.gravatar}
           placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
-          email={user?.email!}
+          email={user?.email! || ""}
         />
       </div>
     )}

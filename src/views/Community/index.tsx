@@ -74,8 +74,8 @@ const CommunityPage = () => {
               loading={isLoading}
               itemLayout="vertical"
               renderItem={(item) => (
-                <Link to={`/member/${item.keycloak_id}`}>
-                  <List.Item key={item.id} className={styles.usersListItem}>
+                <Link key={item.id} to={`/member/${item.keycloak_id}`}>
+                  <List.Item className={styles.usersListItem}>
                     <List.Item.Meta
                       avatar={
                         <Gravatar
@@ -100,7 +100,7 @@ const CommunityPage = () => {
                         </Title>
                         <ul className={styles.usagesList}>
                           {item.portal_usages?.map((value) => (
-                            <li>{value}</li>
+                            <li key={value}>{value}</li>
                           ))}
                         </ul>
                         {item.commercial_use_reason && (

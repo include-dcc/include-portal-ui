@@ -353,7 +353,7 @@ const fr = {
   screen: {
     memberProfile: {
       notFound: 'User not found',
-      rolesTitle: 'roles',
+      rolesTitle: 'Roles',
       noRoles: 'No roles',
       usageTitle: 'Intended Use of the INCLUDE Portal data',
       noUsage: 'No intended usages',
