@@ -289,7 +289,8 @@ const fr = {
         inputLabel: 'Copy-paste a list of identifiers or upload a file',
         match: 'Matched ({count})',
         unmatch: 'Unmatched ({count})',
-        tableMessage: '{submittedCount} submitted identifiers mapped to {mappedCount} unique system identifiers',
+        tableMessage:
+          '{submittedCount} submitted identifiers mapped to {mappedCount} unique system identifiers',
         matchTable: {
           idcol: '{entity} ID',
           participant: {
@@ -308,20 +309,20 @@ const fr = {
         pillTitle: 'Uploaded List',
         upload: {
           fileBtn: 'Upload a file',
-          btn: 'Upload'
+          btn: 'Upload',
         },
         clearBtn: 'Clear',
         cancelBtn: 'Cancel',
         emptyTable: 'No data',
         popover: {
-          title: "Identifiers and File Formats",
-          identifiers: "Identifiers",
+          title: 'Identifiers and File Formats',
+          identifiers: 'Identifiers',
           separatedBy: {
-            title: "Separated by",
-            values: "comma, space, new line"
+            title: 'Separated by',
+            values: 'comma, space, new line',
           },
-          uploadFileFormats: "Upload file formats"
-        }
+          uploadFileFormats: 'Upload file formats',
+        },
       },
     },
   },
@@ -343,13 +344,22 @@ const fr = {
     user: {
       menu: {
         myprofile: 'My Profile',
-        settings: 'Settings',
+        settings: 'Profile settings',
         logout: 'Logout',
       },
     },
   },
   // SCREENS
   screen: {
+    memberProfile: {
+      notFound: 'User not found',
+      rolesTitle: 'Roles',
+      noRoles: 'No roles',
+      usageTitle: 'Intended Use of the INCLUDE Portal data',
+      noUsage: 'No intended usages',
+      editProfileBtn: 'Edit Profile',
+      communityBtn: 'Community',
+    },
     loginPage: {
       title: 'INCLUDE Data Hub',
       datarelease: {

@@ -31,6 +31,7 @@ import NotificationContextHolder from 'components/utils/NotificationContextHolde
 const loadableProps = { fallback: <Spinner size="large" /> };
 const Dashboard = loadable(() => import('views/Dashboard'), loadableProps);
 const Community = loadable(() => import('views/Community'), loadableProps);
+const CommunityMember = loadable(() => import('views/Community/Member'), loadableProps);
 const Studies = loadable(() => import('views/Studies'), loadableProps);
 const MyProfile = loadable(() => import('views/MyProfile'), loadableProps);
 const Settings = loadable(() => import('views/Settings'), loadableProps);
@@ -78,6 +79,9 @@ const App = () => {
                 </ProtectedRoute>
                 <ProtectedRoute exact path={STATIC_ROUTES.COMMUNITY} layout={PageLayout}>
                   <Community />
+                </ProtectedRoute>
+                <ProtectedRoute exact path={DYNAMIC_ROUTES.COMMUNITY_MEMBER} layout={PageLayout}>
+                  <CommunityMember />
                 </ProtectedRoute>
                 <ProtectedRoute exact path={STATIC_ROUTES.STUDIES} layout={PageLayout}>
                   <Studies />

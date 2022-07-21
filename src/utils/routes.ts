@@ -27,4 +27,5 @@ export enum DYNAMIC_ROUTES {
   DATA_EXPLORATION = '/data-exploration/:tab?',
   VARIANT = '/variant-exploration/:tab?',
   ERROR = '/error/:status?',
+  COMMUNITY_MEMBER = '/member/:id',
 }

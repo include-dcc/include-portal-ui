@@ -10,6 +10,7 @@ import Gravatar from '@ferlab/ui/core/components/Gravatar';
 import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
 
 import styles from './index.module.scss';
+import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 const DEFAULT_PAGE_SIZE = 25;
@@ -73,47 +74,49 @@ const CommunityPage = () => {
               loading={isLoading}
               itemLayout="vertical"
               renderItem={(item) => (
-                <List.Item key={item.id} className={styles.usersListItem}>
-                  <List.Item.Meta
-                    avatar={
-                      <Gravatar
-                        className={styles.userGravatar}
-                        circle
-                        placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
-                        email={item.email || ''}
-                        size={40}
-                      />
-                    }
-                    title={<Text>{formatName(item)}</Text>}
-                    description={
-                      <Text type="secondary">
-                        {item.affiliation ? `Affiliation: ${item.affiliation}` : 'No affiliation'}
-                      </Text>
-                    }
-                  />
-                  {item.portal_usages && (
-                    <div className={styles.usagesWrapper}>
-                      <Title level={5} className={styles.usagesListTitle}>
-                        Intended uses of the portal:
-                      </Title>
-                      <ul className={styles.usagesList}>
-                        {item.portal_usages?.map((value) => (
-                          <li>{value}</li>
-                        ))}
-                      </ul>
-                      {item.commercial_use_reason && (
-                        <div className={styles.commercialUseWrapper}>
-                          <Title level={5} className={styles.usagesListTitle}>
-                            Reason for commercial use:
-                          </Title>
-                          <Text className={styles.commercialUseReason}>
-                            {item.commercial_use_reason}
-                          </Text>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </List.Item>
+                <Link key={item.id} to={`/member/${item.keycloak_id}`}>
+                  <List.Item className={styles.usersListItem}>
+                    <List.Item.Meta
+                      avatar={
+                        <Gravatar
+                          className={styles.userGravatar}
+                          circle
+                          placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
+                          email={item.email || ''}
+                          size={40}
+                        />
+                      }
+                      title={<Text>{formatName(item)}</Text>}
+                      description={
+                        <Text type="secondary">
+                          {item.affiliation ? `Affiliation: ${item.affiliation}` : 'No affiliation'}
+                        </Text>
+                      }
+                    />
+                    {item.portal_usages && (
+                      <div className={styles.usagesWrapper}>
+                        <Title level={5} className={styles.usagesListTitle}>
+                          Intended uses of the portal:
+                        </Title>
+                        <ul className={styles.usagesList}>
+                          {item.portal_usages?.map((value) => (
+                            <li key={value}>{value}</li>
+                          ))}
+                        </ul>
+                        {item.commercial_use_reason && (
+                          <div className={styles.commercialUseWrapper}>
+                            <Title level={5} className={styles.usagesListTitle}>
+                              Reason for commercial use:
+                            </Title>
+                            <Text className={styles.commercialUseReason}>
+                              {item.commercial_use_reason}
+                            </Text>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </List.Item>
+                </Link>
               )}
             />
           </Space>

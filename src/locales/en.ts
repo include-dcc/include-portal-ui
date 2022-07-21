@@ -344,13 +344,22 @@ const fr = {
     user: {
       menu: {
         myprofile: 'My Profile',
-        settings: 'Settings',
-        logout: 'Logout',
+        settings: 'Profile settings',
+        logout: 'Sign out',
       },
     },
   },
   // SCREENS
   screen: {
+    memberProfile: {
+      notFound: 'User not found',
+      rolesTitle: 'Roles',
+      noRoles: 'No roles',
+      usageTitle: 'Intended Use of the INCLUDE Portal data',
+      noUsage: 'No intended usages',
+      editProfileBtn: 'Edit Profile',
+      communityBtn: 'Community',
+    },
     loginPage: {
       title: 'INCLUDE Data Hub',
       datarelease: {

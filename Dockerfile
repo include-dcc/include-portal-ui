@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json package-lock.json /app/
 
 RUN npm install --ignore-scripts
-RUN npm rebuild node-sass
+RUN npm rebuild sass
 
 COPY ./ /app/
 
