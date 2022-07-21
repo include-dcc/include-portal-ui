@@ -3,13 +3,12 @@
 .communityWrapper {
   width: 100%;
   padding: $default-page-content-padding;
-  max-width: 1000px;
   margin: auto;
   display: flex;
 
   .userGravatar {
-    width: 40px;
-    height: 40px;
+    width: 56px;
+    height: 56px;
   }
 
   .tableWrapper {
@@ -46,19 +45,35 @@
   .usersListWrapper {
     width: 100%;
 
-    .usersList {
-      div[class$='-item-meta'] {
-        margin-bottom: 0;
+    :global(.ant-list-pagination) {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .membersList {
+      background-color: unset;
+
+      :global(.ant-col) {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
       }
 
-      .usersListItem {
-        &:hover {
-          background-color: unset;
+      .memberListItem {
+        height: 100%;
+        margin-bottom: 24px;
+
+      }
+
+      .memberCard {
+        width: 100%;
+        text-align: center;
+        height: 100%;
+
+        .memberCardName {
+          margin: 0;
+          margin-top: 8px;
         }
-      }
-
-      *[class$='-item-meta-description'] {
-        font-size: 12px;
       }
     }
   }
