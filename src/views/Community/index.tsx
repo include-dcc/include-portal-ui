@@ -1,6 +1,5 @@
 import TableHeader from '@ferlab/ui/core/components/ProTable/Header';
-import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Space, Typography, List } from 'antd';
+import { Space, Typography, List, Card } from 'antd';
 import { MAIN_SCROLL_WRAPPER_ID } from 'common/constants';
 import { useEffect, useState } from 'react';
 import { UserApi } from 'services/api/user';
@@ -11,6 +10,7 @@ import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
 
 import styles from './index.module.scss';
 import { Link } from 'react-router-dom';
+import { formatName } from './utils';
 
 const { Title, Text } = Typography;
 const DEFAULT_PAGE_SIZE = 25;
@@ -30,98 +30,76 @@ const CommunityPage = () => {
     });
   }, [currentPage]);
 
-  const formatName = (user: TUser) =>
-    user.first_name && user.last_name ? `${user.first_name} ${user.last_name}` : user.email;
-
   return (
     <Space direction="vertical" size={16} className={styles.communityWrapper}>
       <Title className={styles.title} level={4}>
         INCLUDE Community
       </Title>
-      <GridCard
-        content={
-          <Space className={styles.usersListWrapper} size={12} direction="vertical">
-            <TableHeader
-              pageIndex={currentPage + 1}
-              pageSize={DEFAULT_PAGE_SIZE}
-              total={count}
-              dictionary={{
-                itemCount: {
-                  results: 'Members',
-                  noResults: 'No members',
-                  clear: '',
-                  of: '',
-                  selectAllResults: '',
-                  selected: '',
-                  selectedPlural: '',
-                },
-              }}
-            ></TableHeader>
-            <List
-              dataSource={users}
-              className={styles.usersList}
-              pagination={{
-                total: count,
-                pageSize: DEFAULT_PAGE_SIZE,
-                onChange: (page) => {
-                  setCurrentPage(page - 1);
-                  scrollToTop(MAIN_SCROLL_WRAPPER_ID);
-                },
-                size: 'small',
-                hideOnSinglePage: true,
-                showSizeChanger: false,
-              }}
-              loading={isLoading}
-              itemLayout="vertical"
-              renderItem={(item) => (
-                <Link key={item.id} to={`/member/${item.keycloak_id}`}>
-                  <List.Item className={styles.usersListItem}>
-                    <List.Item.Meta
-                      avatar={
-                        <Gravatar
-                          className={styles.userGravatar}
-                          circle
-                          placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
-                          email={item.email || ''}
-                          size={40}
-                        />
-                      }
-                      title={<Text>{formatName(item)}</Text>}
-                      description={
-                        <Text type="secondary">
-                          {item.affiliation ? `Affiliation: ${item.affiliation}` : 'No affiliation'}
-                        </Text>
-                      }
+      <Space className={styles.usersListWrapper} size={24} direction="vertical">
+        <TableHeader
+          pageIndex={currentPage + 1}
+          pageSize={DEFAULT_PAGE_SIZE}
+          total={count}
+          dictionary={{
+            itemCount: {
+              results: 'Members',
+              noResults: 'No members',
+              clear: '',
+              of: '',
+              selectAllResults: '',
+              selected: '',
+              selectedPlural: '',
+            },
+          }}
+        ></TableHeader>
+        <List
+          grid={{
+            gutter: 24,
+            xs: 1,
+            sm: 2,
+            md: 2,
+            lg: 3,
+            xl: 4,
+            xxl: 5,
+          }}
+          dataSource={users}
+          className={styles.membersList}
+          pagination={{
+            total: count,
+            pageSize: DEFAULT_PAGE_SIZE,
+            onChange: (page) => {
+              setCurrentPage(page - 1);
+              scrollToTop(MAIN_SCROLL_WRAPPER_ID);
+            },
+            size: 'small',
+            hideOnSinglePage: true,
+            showSizeChanger: false,
+          }}
+          loading={isLoading}
+          renderItem={(item) => (
+            <Link key={item.id} to={`/member/${item.keycloak_id}`}>
+              <List.Item className={styles.memberListItem}>
+                <Card className={styles.memberCard}>
+                  <Space direction="vertical" align="center">
+                    <Gravatar
+                      className={styles.userGravatar}
+                      circle
+                      placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
+                      email={item.email || ''}
                     />
-                    {item.portal_usages && (
-                      <div className={styles.usagesWrapper}>
-                        <Title level={5} className={styles.usagesListTitle}>
-                          Intended uses of the portal:
-                        </Title>
-                        <ul className={styles.usagesList}>
-                          {item.portal_usages?.map((value) => (
-                            <li key={value}>{value}</li>
-                          ))}
-                        </ul>
-                        {item.commercial_use_reason && (
-                          <div className={styles.commercialUseWrapper}>
-                            <Title level={5} className={styles.usagesListTitle}>
-                              Reason for commercial use:
-                            </Title>
-                            <Text className={styles.commercialUseReason}>
-                              {item.commercial_use_reason}
-                            </Text>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </List.Item>
-                </Link>
-              )}
-            />
-          </Space>
-        }
-      />
+                    <Typography.Title className={styles.memberCardName} level={5}>
+                      {formatName(item)}
+                    </Typography.Title>
+                    <Text type="secondary" className={styles.memberAffiliation}>
+                      {item.affiliation ? item.affiliation : 'No affiliation'}
+                    </Text>
+                  </Space>
+                </Card>
+              </List.Item>
+            </Link>
+          )}
+        />
+      </Space>
     </Space>
   );
 };

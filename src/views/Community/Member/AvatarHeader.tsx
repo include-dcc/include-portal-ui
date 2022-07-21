@@ -2,6 +2,7 @@ import Gravatar from '@ferlab/ui/core/components/Gravatar';
 import { Skeleton, Space, Typography } from 'antd';
 import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
 import { TUser } from 'services/api/user/models';
+import { formatName } from '../utils';
 
 import styles from './index.module.scss';
 
@@ -20,7 +21,7 @@ const AvatarHeader = ({ user, isLoading = false }: OwnProps) => (
           circle
           className={styles.gravatar}
           placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
-          email={user?.email! || ""}
+          email={user?.email! || ''}
         />
       </div>
     )}
@@ -32,10 +33,9 @@ const AvatarHeader = ({ user, isLoading = false }: OwnProps) => (
         </>
       ) : (
         <>
-          <Typography.Title
-            level={3}
-            className={styles.memberName}
-          >{`${user?.first_name} ${user?.last_name}`}</Typography.Title>
+          <Typography.Title level={3} className={styles.memberName}>
+            {formatName(user!)}
+          </Typography.Title>
           {user?.affiliation && (
             <Typography.Text type="secondary">{user?.affiliation}</Typography.Text>
           )}
