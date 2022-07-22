@@ -3,7 +3,6 @@ import { Button } from 'antd';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { STATIC_ROUTES } from 'utils/routes';
-import cx from 'classnames';
 
 import styles from './index.module.scss';
 
@@ -20,7 +19,7 @@ const Banner = ({ isOwnUser }: OwnProps) => (
         </Button>
       </Link>
       {/* Disable for now */}
-      {true && (
+      {isOwnUser && false && (
         <Button className={styles.editBtn} type="primary" ghost icon={<EditOutlined />}>
           {intl.get('screen.memberProfile.editProfileBtn')}
         </Button>
