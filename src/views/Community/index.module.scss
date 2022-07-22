@@ -1,4 +1,5 @@
 @import 'src/style/themes/include/layout';
+@import 'src/style/themes/include/colors';
 
 .communityWrapper {
   width: 100%;
@@ -63,12 +64,25 @@
         height: 100%;
         margin-bottom: 24px;
 
+        .memberLink {
+          &:focus-visible {
+            .memberCard {
+              border: 1px solid $gray-8;
+              box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px $gray-8;
+            }
+          }
+        }
       }
 
       .memberCard {
         width: 100%;
         text-align: center;
         height: 100%;
+
+        &:hover {
+          -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.06); 
+          box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.06);
+        }
 
         .memberCardName {
           margin: 0;

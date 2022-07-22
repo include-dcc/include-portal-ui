@@ -3,10 +3,22 @@
 
 .communityMemberWrapper {
     width: 100%;
-    padding: $default-page-content-padding;
     max-width: 1000px;
     margin: auto;
-    display: flex; 
+    position: relative;
+    margin-top: 24px;
+    border-radius: 4px;
+    background-color: white;
+
+    .contentWrapper {
+        width: 100%;
+        padding: 40px;
+        margin-top: -110px;
+        border: 1px solid $gray-4;
+        border-top: none;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+    }
 
     .banner {
         height: 200px;
@@ -15,6 +27,10 @@
         padding: 24px;
         background-size: cover;
         background-repeat: no-repeat;
+        border: 1px solid $gray-4;
+        border-bottom: none;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
     }
 
     .bannerActions {
@@ -37,7 +53,6 @@
 
     .avatarContainer {
         width: 100%;
-        margin-top: 70px;
     }
 
     .gravatarWrapper, .gravatar {

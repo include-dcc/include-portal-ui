@@ -33,8 +33,6 @@ const Dashboard = loadable(() => import('views/Dashboard'), loadableProps);
 const Community = loadable(() => import('views/Community'), loadableProps);
 const CommunityMember = loadable(() => import('views/Community/Member'), loadableProps);
 const Studies = loadable(() => import('views/Studies'), loadableProps);
-const MyProfile = loadable(() => import('views/MyProfile'), loadableProps);
-const Settings = loadable(() => import('views/Settings'), loadableProps);
 const DataExploration = loadable(() => import('views/DataExploration'), loadableProps);
 const Variants = loadable(() => import('views/Variants'), loadableProps);
 
@@ -91,12 +89,6 @@ const App = () => {
                 </ProtectedRoute>
                 <ProtectedRoute exact path={DYNAMIC_ROUTES.VARIANT} layout={PageLayout}>
                   <Variants />
-                </ProtectedRoute>
-                <ProtectedRoute exact path={STATIC_ROUTES.MY_PROFILE} layout={PageLayout}>
-                  <MyProfile />
-                </ProtectedRoute>
-                <ProtectedRoute exact path={STATIC_ROUTES.SETTINGS} layout={PageLayout}>
-                  <Settings />
                 </ProtectedRoute>
                 <Redirect from="*" to={STATIC_ROUTES.DASHBOARD} />
               </Switch>

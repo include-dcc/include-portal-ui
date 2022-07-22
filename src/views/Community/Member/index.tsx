@@ -38,8 +38,8 @@ const CommunityMember = () => {
 
   return (
     <div className={styles.communityMemberWrapper}>
-      <div className={styles.banner}>
-        <Banner isOwnUser={userInfo?.keycloak_id === result?.keycloak_id} />
+      <Banner isOwnUser={userInfo?.keycloak_id === result?.keycloak_id} />
+      <div className={styles.contentWrapper}>
         <AvatarHeader user={result} isLoading={loading} />
         <Divider className={styles.divider} />
         {loading ? (

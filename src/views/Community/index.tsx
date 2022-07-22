@@ -77,8 +77,8 @@ const CommunityPage = () => {
           }}
           loading={isLoading}
           renderItem={(item) => (
-            <Link key={item.id} to={`/member/${item.keycloak_id}`}>
-              <List.Item className={styles.memberListItem}>
+            <List.Item className={styles.memberListItem}>
+              <Link key={item.id} className={styles.memberLink} to={`/member/${item.keycloak_id}`}>
                 <Card className={styles.memberCard}>
                   <Space direction="vertical" align="center">
                     <Gravatar
@@ -90,13 +90,15 @@ const CommunityPage = () => {
                     <Typography.Title className={styles.memberCardName} level={5}>
                       {formatName(item)}
                     </Typography.Title>
-                    <Text type="secondary" className={styles.memberAffiliation}>
-                      {item.affiliation ? item.affiliation : 'No affiliation'}
-                    </Text>
+                    {item.affiliation && (
+                      <Text type="secondary" className={styles.memberAffiliation}>
+                        {item.affiliation}
+                      </Text>
+                    )}
                   </Space>
                 </Card>
-              </List.Item>
-            </Link>
+              </Link>
+            </List.Item>
           )}
         />
       </Space>
