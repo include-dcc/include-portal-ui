@@ -2,9 +2,9 @@ import Gravatar from '@ferlab/ui/core/components/Gravatar';
 import { Skeleton, Space, Typography } from 'antd';
 import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
 import { TUser } from 'services/api/user/models';
-import { formatName } from '../utils';
+import { formatName } from '../../utils';
 
-import styles from './index.module.scss';
+import styles from '../index.module.scss';
 
 interface OwnProps {
   user?: TUser;

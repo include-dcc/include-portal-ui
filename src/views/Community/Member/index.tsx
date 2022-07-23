@@ -6,12 +6,12 @@ import useApi from 'hooks/useApi';
 import { useParams } from 'react-router-dom';
 import { headers, USER_API_URL } from 'services/api/user';
 import { TUser } from 'services/api/user/models';
-import Banner from './Banner';
+import Banner from './components/Banner';
 import intl from 'react-intl-universal';
+import AvatarHeader from './components/AvatarHeader';
+import { useUser } from 'store/user';
 
 import styles from './index.module.scss';
-import AvatarHeader from './AvatarHeader';
-import { useUser } from 'store/user';
 
 const CommunityMember = () => {
   const { id } = useParams<{ id: string }>();
@@ -59,7 +59,7 @@ const CommunityMember = () => {
                   <List
                     className={cx(styles.infoList, !result?.roles?.length && styles.empty)}
                     itemLayout="horizontal"
-                    dataSource={result?.roles}
+                    dataSource={result?.roles ?? []}
                     renderItem={(role, index) => <li key={index}>{role}</li>}
                     locale={{
                       emptyText: (
@@ -78,9 +78,9 @@ const CommunityMember = () => {
                     {intl.get('screen.memberProfile.usageTitle')}
                   </Typography.Title>
                   <List
-                    className={cx(styles.infoList, !result?.roles?.length && styles.empty)}
+                    className={cx(styles.infoList, !result?.portal_usages?.length && styles.empty)}
                     itemLayout="horizontal"
-                    dataSource={result?.portal_usages}
+                    dataSource={result?.portal_usages ?? []}
                     renderItem={(usage, index) => <li key={index}>{usage}</li>}
                     locale={{
                       emptyText: (

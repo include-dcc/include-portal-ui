@@ -1,0 +1,29 @@
+@import 'src/style/themes/include/colors';
+
+.filtersContainer {
+  width: 100%;
+}
+
+.searchBarContainer {
+    width: 100%;
+
+    .filterContentWrapper {
+      display: flex;
+      flex-direction: row;
+      gap: 16px
+    }
+  }
+
+  .filterMultiSelect {
+    width: 300px;
+  }
+
+  .filterTag {
+    display: flex;
+    align-items: center;
+    background-color: $blue-8;
+    color: $gray-1;
+    > * {
+      color: $gray-1;
+    }
+  }
