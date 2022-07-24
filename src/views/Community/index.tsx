@@ -1,18 +1,18 @@
 import TableHeader from '@ferlab/ui/core/components/ProTable/Header';
-import { Space, Typography, List, Card } from 'antd';
+import { Space, Typography, List } from 'antd';
 import { MAIN_SCROLL_WRAPPER_ID } from 'common/constants';
 import { useEffect, useState } from 'react';
 import { UserApi } from 'services/api/user';
 import { TUser } from 'services/api/user/models';
+import useDebounce from '@ferlab/ui/core/hooks/useDebounce';
 import { scrollToTop } from 'utils/helper';
-import Gravatar from '@ferlab/ui/core/components/Gravatar';
-import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
+import FiltersBox from './components/Filters/Box';
+import Sorter, { SortItems } from './components/Filters/Sorter';
 
 import styles from './index.module.scss';
-import { Link } from 'react-router-dom';
-import { formatName } from './utils';
+import MemberCard from './components/MemberCard';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 const DEFAULT_PAGE_SIZE = 25;
 
 const CommunityPage = () => {
@@ -20,21 +20,39 @@ const CommunityPage = () => {
   const [count, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [match, setMatch] = useState('');
+  const [roleFilter, setRoleFilter] = useState('');
+  const [usageFilter, setUsageFilter] = useState('');
+  const [sort, setSort] = useState(SortItems[0].sort);
+  const debouncedMatchValue = useDebounce(match, 300);
 
   useEffect(() => {
     setIsLoading(true);
-    UserApi.search(currentPage, DEFAULT_PAGE_SIZE).then(({ data }) => {
+    UserApi.search({
+      pageIndex: currentPage,
+      pageSize: DEFAULT_PAGE_SIZE,
+      match,
+      sort,
+      roles: roleFilter,
+      dataUses: usageFilter,
+    }).then(({ data }) => {
       setUsers(data?.users || []);
       setCount(data?.total || 0);
       setIsLoading(false);
     });
-  }, [currentPage]);
+  }, [currentPage, sort, debouncedMatchValue, roleFilter, usageFilter]);
 
   return (
-    <Space direction="vertical" size={16} className={styles.communityWrapper}>
+    <Space direction="vertical" size={24} className={styles.communityWrapper}>
       <Title className={styles.title} level={4}>
         INCLUDE Community
       </Title>
+      <FiltersBox
+        onMatchFilterChange={setMatch}
+        onRoleFilterChange={setRoleFilter}
+        onUsageFilterChange={setUsageFilter}
+        hasFilters={!!(roleFilter || usageFilter)}
+      />
       <Space className={styles.usersListWrapper} size={24} direction="vertical">
         <TableHeader
           pageIndex={currentPage + 1}
@@ -51,6 +69,7 @@ const CommunityPage = () => {
               selectedPlural: '',
             },
           }}
+          extra={[<Sorter onSorterChange={setSort} />]}
         ></TableHeader>
         <List
           grid={{
@@ -78,26 +97,7 @@ const CommunityPage = () => {
           loading={isLoading}
           renderItem={(item) => (
             <List.Item className={styles.memberListItem}>
-              <Link key={item.id} className={styles.memberLink} to={`/member/${item.keycloak_id}`}>
-                <Card className={styles.memberCard}>
-                  <Space direction="vertical" align="center">
-                    <Gravatar
-                      className={styles.userGravatar}
-                      circle
-                      placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
-                      email={item.email || ''}
-                    />
-                    <Typography.Title className={styles.memberCardName} level={5}>
-                      {formatName(item)}
-                    </Typography.Title>
-                    {item.affiliation && (
-                      <Text type="secondary" className={styles.memberAffiliation}>
-                        {item.affiliation}
-                      </Text>
-                    )}
-                  </Space>
-                </Card>
-              </Link>
+              <MemberCard user={item} match={match} />
             </List.Item>
           )}
         />

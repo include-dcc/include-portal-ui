@@ -32,7 +32,21 @@ const create = (body?: Omit<TUserInsert, 'keycloak_id'>) => {
   });
 };
 
-const search = (pageIndex?: number, pageSize?: number) =>
+const search = ({
+  pageIndex = 0,
+  pageSize = 15,
+  match,
+  sort,
+  roles,
+  dataUses,
+}: {
+  pageIndex?: number;
+  pageSize?: number;
+  match?: string;
+  sort?: string;
+  roles?: string;
+  dataUses?: string;
+}) =>
   sendRequest<{
     users: TUser[];
     total: number;
@@ -41,8 +55,12 @@ const search = (pageIndex?: number, pageSize?: number) =>
     url: `${USER_API_URL}/search`,
     headers: headers(),
     params: {
-      pageIndex: pageIndex || 0,
-      pageSize: pageSize || 15,
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      match,
+      sort,
+      roles,
+      dataUses,
     },
   });
 
