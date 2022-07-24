@@ -1,18 +1,19 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import { useState } from 'react';
+import intl from 'react-intl-universal';
 
 export const SortItems = [
   {
-    label: 'Newest first',
+    label: intl.get('screen.community.search.sorter.newest'),
     sort: 'creation_date:asc',
   },
   {
-    label: 'Oldest first',
+    label: intl.get('screen.community.search.sorter.oldest'),
     sort: 'creation_date:desc',
   },
   {
-    label: 'Alphabetical (last name)',
+    label: intl.get('screen.community.search.sorter.lastnameAlpha'),
     sort: 'last_name:asc',
   },
 ];

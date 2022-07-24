@@ -360,6 +360,21 @@ const fr = {
       editProfileBtn: 'Edit Profile',
       communityBtn: 'Community',
     },
+    community: {
+      search: {
+        filters: 'Filters',
+        selectPlaceholder: 'Select',
+        role: 'Role',
+        dataUse: 'Data use',
+        clearFilters: 'Clear filters',
+        barPlaceholder: 'Search by member name or affiliation',
+        sorter: {
+          newest: 'Newest first',
+          oldest: 'Oldest first',
+          lastnameAlpha: 'Alphabetical (last name)',
+        },
+      },
+    },
     loginPage: {
       title: 'INCLUDE Data Hub',
       datarelease: {
