@@ -6,11 +6,11 @@ import intl from 'react-intl-universal';
 export const SortItems = [
   {
     label: intl.get('screen.community.search.sorter.newest'),
-    sort: 'creation_date:asc',
+    sort: 'creation_date:desc',
   },
   {
     label: intl.get('screen.community.search.sorter.oldest'),
-    sort: 'creation_date:desc',
+    sort: 'creation_date:asc',
   },
   {
     label: intl.get('screen.community.search.sorter.lastnameAlpha'),
