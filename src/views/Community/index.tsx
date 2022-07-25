@@ -7,7 +7,7 @@ import { TUser } from 'services/api/user/models';
 import useDebounce from '@ferlab/ui/core/hooks/useDebounce';
 import { scrollToTop } from 'utils/helper';
 import FiltersBox from './components/Filters/Box';
-import Sorter, { SortItems } from './components/Filters/Sorter';
+import { SortItems } from './components/Filters/Sorter';
 
 import styles from './index.module.scss';
 import MemberCard from './components/MemberCard';
@@ -51,6 +51,7 @@ const CommunityPage = () => {
         onMatchFilterChange={setMatch}
         onRoleFilterChange={setRoleFilter}
         onUsageFilterChange={setUsageFilter}
+        onSortChange={setSort}
         hasFilters={!!(roleFilter || usageFilter)}
       />
       <Space className={styles.usersListWrapper} size={24} direction="vertical">
@@ -69,7 +70,6 @@ const CommunityPage = () => {
               selectedPlural: '',
             },
           }}
-          extra={[<Sorter onSorterChange={setSort} />]}
         ></TableHeader>
         <List
           grid={{

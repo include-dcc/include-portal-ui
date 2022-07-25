@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 
 import styles from './index.module.scss';
+import Sorter from '../Sorter';
 
 interface OwnProps {
   onMatchFilterChange: (value: string) => void;
   onRoleFilterChange: (value: string) => void;
   onUsageFilterChange: (value: string) => void;
+  onSortChange: (value: string) => void;
   hasFilters: boolean;
 }
 
@@ -33,6 +35,7 @@ const FiltersBox = ({
   onMatchFilterChange,
   onRoleFilterChange,
   onUsageFilterChange,
+  onSortChange,
   hasFilters = false,
 }: OwnProps) => {
   const [filtersVisible, setFiltersVisible] = useState(false);
@@ -56,6 +59,7 @@ const FiltersBox = ({
             {intl.get('screen.community.search.filters')}{' '}
             {filtersVisible ? <CaretUpFilled /> : <CaretDownFilled />}
           </Button>
+          <Sorter onSortChange={onSortChange} />
         </div>
       </Space>
       {filtersVisible && (

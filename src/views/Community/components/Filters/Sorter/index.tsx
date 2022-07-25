@@ -3,6 +3,8 @@ import { Dropdown, Menu, Space } from 'antd';
 import { useState } from 'react';
 import intl from 'react-intl-universal';
 
+import styles from "./index.module.scss";
+
 export const SortItems = [
   {
     label: intl.get('screen.community.search.sorter.newest'),
@@ -19,10 +21,10 @@ export const SortItems = [
 ];
 
 interface OwnProps {
-  onSorterChange: (value: string) => void;
+  onSortChange: (value: string) => void;
 }
 
-const Sorter = ({ onSorterChange }: OwnProps) => {
+const Sorter = ({ onSortChange }: OwnProps) => {
   const [selectedSortIndex, setSelectedSortIndex] = useState(0);
 
   return (
@@ -35,14 +37,14 @@ const Sorter = ({ onSorterChange }: OwnProps) => {
             key: index,
             onClick: () => {
               setSelectedSortIndex(index);
-              onSorterChange(item.sort);
+              onSortChange(item.sort);
             },
           }))}
         />
       }
     >
       <a onClick={(e) => e.preventDefault()}>
-        <Space>
+        <Space className={styles.sortTrigger}>
           {SortItems[selectedSortIndex].label}
           <DownOutlined />
         </Space>
