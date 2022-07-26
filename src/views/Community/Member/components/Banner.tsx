@@ -19,10 +19,12 @@ const Banner = ({ isOwnUser }: OwnProps) => (
         </Button>
       </Link>
       {/* Disable for now */}
-      {isOwnUser && false && (
-        <Button className={styles.editBtn} type="primary" ghost icon={<EditOutlined />}>
-          {intl.get('screen.memberProfile.editProfileBtn')}
-        </Button>
+      {isOwnUser && (
+        <Link to={STATIC_ROUTES.PROFILE_SETTINGS}>
+          <Button className={styles.editBtn} type="primary" ghost icon={<EditOutlined />}>
+            {intl.get('screen.memberProfile.editProfileBtn')}
+          </Button>
+        </Link>
       )}
     </div>
   </div>

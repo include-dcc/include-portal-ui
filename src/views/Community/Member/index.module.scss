@@ -2,11 +2,14 @@
 @import 'src/style/themes/include/colors';
 
 .communityMemberWrapper {
+    padding: 24px;
+}
+
+.communityMember {
     width: 100%;
     max-width: 1000px;
     margin: auto;
     position: relative;
-    margin-top: 24px;
     border-radius: 4px;
     background-color: white;
 

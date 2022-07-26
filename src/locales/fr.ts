@@ -46,6 +46,7 @@ const fr = {
         minCharacters: 'characters minimum',
         requiredField: 'This field is required',
         enterValidEmail: 'Enter a valid email',
+        enterValidUrl: 'Enter a valid URL',
       },
     },
     errors: {
@@ -359,6 +360,17 @@ const fr = {
       noUsage: 'No intended usages',
       editProfileBtn: 'Edit Profile',
       communityBtn: 'Community',
+    },
+    profileSettings: {
+      title: 'Profile settings',
+      viewProfile: 'View Profile',
+      cards: {
+        identification: {
+          title: 'Identification',
+          alert:
+            'You are authenticated with {provider} using {email}. This email is never shown to the public and cannot be changed.',
+        },
+      },
     },
     community: {
       search: {
