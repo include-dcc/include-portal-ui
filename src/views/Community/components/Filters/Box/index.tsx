@@ -6,6 +6,7 @@ import intl from 'react-intl-universal';
 
 import styles from './index.module.scss';
 import Sorter from '../Sorter';
+import { roleOptions, usageOptions } from 'views/Community/contants';
 
 interface OwnProps {
   onMatchFilterChange: (value: string) => void;
@@ -14,22 +15,6 @@ interface OwnProps {
   onSortChange: (value: string) => void;
   hasFilters: boolean;
 }
-
-const roleOptions = [
-  'Researcher at an academic or not-for-profit institution',
-  'Representative from a For-Profit or Commercial Entity',
-  'Tool or Algorithm Developer',
-  'Clinician',
-  'Community member',
-  'Federal Employee',
-];
-
-const usageOptions = [
-  'Learning more about Down syndrome and its health outcomes, management, and/or treatment',
-  'Helping me design a new research study',
-  'Identifying datasets that I want to analyze',
-  'Commercial purposes',
-];
 
 const FiltersBox = ({
   onMatchFilterChange,
@@ -107,8 +92,8 @@ const FiltersBox = ({
                 setUsageFilter(usageFilter.filter((val) => val !== value))
               }
               options={usageOptions.map((option) => ({
-                label: option,
-                value: option,
+                label: option.value,
+                value: option.value,
               }))}
               tagRender={({ onClose, value }) => (
                 <Tag
