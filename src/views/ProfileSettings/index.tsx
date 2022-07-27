@@ -6,6 +6,9 @@ import intl from 'react-intl-universal';
 import IdentificationCard from './cards/Identification';
 
 import styles from './index.module.scss';
+import RoleAndAffiliationCard from './cards/RoleAndAffiliation';
+import ResearchAndUsagesCard from './cards/ResearchAndUsage';
+import DeleteCard from './cards/DeleteCard';
 
 const { Title } = Typography;
 
@@ -21,7 +24,22 @@ const ProfileSettings = () => {
             <Button type="primary">{intl.get('screen.profileSettings.viewProfile')}</Button>
           </Link>
         </div>
-        <IdentificationCard />
+        <Space size={24} direction="vertical" className={styles.cardsWrapper}>
+          <IdentificationCard />
+          <RoleAndAffiliationCard />
+          <ResearchAndUsagesCard />
+          {/**
+           *  If we want to add the delete account feature we will need to:
+           *
+           *  Add an endpoint to delete:
+           *   - user
+           *   - saved sets
+           *   - saved filters
+           *
+           *  Delete user from keycloak
+           *
+           *  <DeleteCard /> */}
+        </Space>
       </Space>
     </div>
   );

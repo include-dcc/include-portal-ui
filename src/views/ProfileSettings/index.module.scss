@@ -3,10 +3,15 @@
     padding: 16px 24px;
 }
 
+.cardsWrapper {
+    width: 100%;
+}
+
 .profileSettings {
     max-width: 1000px;
     margin: auto;
     display: flex;
+    width: 100%;
 
     :global(.ant-space-item) {
         width: 100%;
