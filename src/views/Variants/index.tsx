@@ -5,8 +5,6 @@ import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import { SCROLL_WRAPPER_ID, TAB_IDS } from './utils/constants';
 import intl from 'react-intl-universal';
 import PageContent from './components/PageContent';
-import { GraphqlBackend } from 'provider/types';
-import ApolloProvider from 'provider/ApolloProvider';
 
 import styles from 'views/Variants/index.module.scss';
 
@@ -55,10 +53,4 @@ const Variants = (props: OwnProps) => {
   );
 };
 
-const VariantWrapper = (props: OwnProps) => (
-  <ApolloProvider backend={GraphqlBackend.ARRANGER}>
-    <Variants {...props} />
-  </ApolloProvider>
-);
-
-export default VariantWrapper;
+export default Variants;

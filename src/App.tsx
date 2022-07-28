@@ -21,12 +21,14 @@ import loadable from '@loadable/component';
 import { useLang } from 'store/global';
 import { ConfigProvider } from 'antd';
 import { LANG } from 'common/constants';
+import { GraphqlBackend } from 'provider/types';
 import frFR from 'antd/lib/locale/fr_FR';
 import enUS from 'antd/lib/locale/en_US';
 import ErrorBoundary from 'components/ErrorBoundary';
 import FenceRedirect from 'views/FenceRedirect';
 import { FENCE_NAMES } from 'common/fenceTypes';
 import NotificationContextHolder from 'components/utils/NotificationContextHolder';
+import ApolloProvider from 'provider/ApolloProvider';
 
 const loadableProps = { fallback: <Spinner size="large" /> };
 const Dashboard = loadable(() => import('views/Dashboard'), loadableProps);
@@ -47,62 +49,64 @@ const App = () => {
       locale={lang === LANG.FR ? frFR : enUS}
       renderEmpty={() => <Empty imageType="grid" />}
     >
-      <div className="App" id="appContainer">
-        {keycloakIsReady ? (
-          <AuthMiddleware>
-            <Router>
-              <Switch>
-                <Route
-                  path={STATIC_ROUTES.GEN3_FENCE_REDIRECT}
-                  exact
-                  render={() => <FenceRedirect fence={FENCE_NAMES.gen3} />}
-                />
-                <Route
-                  path={STATIC_ROUTES.CAVATICA_FENCE_REDIRECT}
-                  exact
-                  render={() => <FenceRedirect fence={FENCE_NAMES.cavatica} />}
-                />
-                <Route exact path={STATIC_ROUTES.LOGIN}>
-                  <SideImageLayout sideImgSrc={MainSideImage}>
-                    <Login />
-                  </SideImageLayout>
-                </Route>
-                <Route
-                  path={DYNAMIC_ROUTES.ERROR}
-                  render={(props: RouteComponentProps<{ status?: any }>) => (
-                    <ErrorPage status={props.match.params.status} />
-                  )}
-                />
-                <ProtectedRoute exact path={STATIC_ROUTES.DASHBOARD} layout={PageLayout}>
-                  <Dashboard />
-                </ProtectedRoute>
-                <ProtectedRoute exact path={STATIC_ROUTES.COMMUNITY} layout={PageLayout}>
-                  <Community />
-                </ProtectedRoute>
-                <ProtectedRoute exact path={DYNAMIC_ROUTES.COMMUNITY_MEMBER} layout={PageLayout}>
-                  <CommunityMember />
-                </ProtectedRoute>
-                <ProtectedRoute exact path={STATIC_ROUTES.PROFILE_SETTINGS} layout={PageLayout}>
-                  <ProfileSettings />
-                </ProtectedRoute>
-                <ProtectedRoute exact path={STATIC_ROUTES.STUDIES} layout={PageLayout}>
-                  <Studies />
-                </ProtectedRoute>
-                <ProtectedRoute exact path={DYNAMIC_ROUTES.DATA_EXPLORATION} layout={PageLayout}>
-                  <DataExploration />
-                </ProtectedRoute>
-                <ProtectedRoute exact path={DYNAMIC_ROUTES.VARIANT} layout={PageLayout}>
-                  <Variants />
-                </ProtectedRoute>
-                <Redirect from="*" to={STATIC_ROUTES.DASHBOARD} />
-              </Switch>
-              <NotificationContextHolder />
-            </Router>
-          </AuthMiddleware>
-        ) : (
-          <Spinner size={'large'} />
-        )}
-      </div>
+      <ApolloProvider backend={GraphqlBackend.ARRANGER}>
+        <div className="App" id="appContainer">
+          {keycloakIsReady ? (
+            <AuthMiddleware>
+              <Router>
+                <Switch>
+                  <Route
+                    path={STATIC_ROUTES.GEN3_FENCE_REDIRECT}
+                    exact
+                    render={() => <FenceRedirect fence={FENCE_NAMES.gen3} />}
+                  />
+                  <Route
+                    path={STATIC_ROUTES.CAVATICA_FENCE_REDIRECT}
+                    exact
+                    render={() => <FenceRedirect fence={FENCE_NAMES.cavatica} />}
+                  />
+                  <Route exact path={STATIC_ROUTES.LOGIN}>
+                    <SideImageLayout sideImgSrc={MainSideImage}>
+                      <Login />
+                    </SideImageLayout>
+                  </Route>
+                  <Route
+                    path={DYNAMIC_ROUTES.ERROR}
+                    render={(props: RouteComponentProps<{ status?: any }>) => (
+                      <ErrorPage status={props.match.params.status} />
+                    )}
+                  />
+                  <ProtectedRoute exact path={STATIC_ROUTES.DASHBOARD} layout={PageLayout}>
+                    <Dashboard />
+                  </ProtectedRoute>
+                  <ProtectedRoute exact path={STATIC_ROUTES.COMMUNITY} layout={PageLayout}>
+                    <Community />
+                  </ProtectedRoute>
+                  <ProtectedRoute exact path={DYNAMIC_ROUTES.COMMUNITY_MEMBER} layout={PageLayout}>
+                    <CommunityMember />
+                  </ProtectedRoute>
+                  <ProtectedRoute exact path={STATIC_ROUTES.PROFILE_SETTINGS} layout={PageLayout}>
+                    <ProfileSettings />
+                  </ProtectedRoute>
+                  <ProtectedRoute exact path={STATIC_ROUTES.STUDIES} layout={PageLayout}>
+                    <Studies />
+                  </ProtectedRoute>
+                  <ProtectedRoute exact path={DYNAMIC_ROUTES.DATA_EXPLORATION} layout={PageLayout}>
+                    <DataExploration />
+                  </ProtectedRoute>
+                  <ProtectedRoute exact path={DYNAMIC_ROUTES.VARIANT} layout={PageLayout}>
+                    <Variants />
+                  </ProtectedRoute>
+                  <Redirect from="*" to={STATIC_ROUTES.DASHBOARD} />
+                </Switch>
+                <NotificationContextHolder />
+              </Router>
+            </AuthMiddleware>
+          ) : (
+            <Spinner size={'large'} />
+          )}
+        </div>
+      </ApolloProvider>
     </ConfigProvider>
   );
 };
