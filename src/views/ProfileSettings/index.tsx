@@ -28,17 +28,7 @@ const ProfileSettings = () => {
           <IdentificationCard />
           <RoleAndAffiliationCard />
           <ResearchAndUsagesCard />
-          {/**
-           *  If we want to add the delete account feature we will need to:
-           *
-           *  Add an endpoint to delete:
-           *   - user
-           *   - saved sets
-           *   - saved filters
-           *
-           *  Delete user from keycloak
-           *
-           *  <DeleteCard /> */}
+          <DeleteCard />
         </Space>
       </Space>
     </div>

@@ -1,9 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { UserApi } from 'services/api/user';
 import { TUser, TUserConfig, TUserUpdate } from 'services/api/user/models';
+import { globalActions } from 'store/global';
 import { RootState } from 'store/types';
 import { handleThunkApiReponse } from 'store/utils';
 import { mergeDeep } from 'utils/object';
+import { userActions } from './slice';
 
 const fetchUser = createAsyncThunk<TUser, void, { rejectValue: string; state: RootState }>(
   'user/fetch',
@@ -96,4 +98,26 @@ const updateUserConfig = createAsyncThunk<
   },
 );
 
-export { fetchUser, updateUser, updateUserConfig };
+const deleteUser = createAsyncThunk<void, void, { rejectValue: string; state: RootState }>(
+  'user/delete/user',
+  async (_, thunkAPI) => {
+    const { error } = await UserApi.deleteUser();
+
+    return handleThunkApiReponse({
+      error: error,
+      data: undefined,
+      reject: thunkAPI.rejectWithValue,
+      onSuccess: () => thunkAPI.dispatch(userActions.cleanLogout()),
+      onError: (_) =>
+        thunkAPI.dispatch(
+          globalActions.displayNotification({
+            type: 'error',
+            message: 'Error',
+            description: 'Unable to delete your account at the moment',
+          }),
+        ),
+    });
+  },
+);
+
+export { fetchUser, updateUser, updateUserConfig, deleteUser };
