@@ -3,8 +3,6 @@ import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Space, Typography } from 'antd';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { useStudies } from 'graphql/studies/actions';
-import ApolloProvider from 'provider/ApolloProvider';
-import { GraphqlBackend } from 'provider/types';
 import { getProTableDictionary } from 'utils/translation';
 import { Link } from 'react-router-dom';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -208,12 +206,4 @@ const Studies = () => {
   );
 };
 
-const StudiesWrapper = (props: any) => {
-  return (
-    <ApolloProvider backend={GraphqlBackend.ARRANGER}>
-      <Studies {...props} />
-    </ApolloProvider>
-  );
-};
-
-export default StudiesWrapper;
+export default Studies;

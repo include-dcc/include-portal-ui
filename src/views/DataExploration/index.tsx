@@ -3,7 +3,6 @@ import intl from 'react-intl-universal';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import { ExperimentOutlined, UserOutlined, FileSearchOutlined } from '@ant-design/icons';
 import PageContent from 'views/DataExploration/components/PageContent';
-import ApolloProvider from 'provider/ApolloProvider';
 import { Spin } from 'antd';
 import { ExtendedMappingResults } from 'graphql/models';
 import FilterList, { TCustomFilterMapper } from 'components/uiKit/FilterList';
@@ -196,10 +195,4 @@ const DataExploration = (props: OwnProps) => {
   );
 };
 
-const DataExplorationWrapper = (props: OwnProps) => (
-  <ApolloProvider backend={GraphqlBackend.ARRANGER}>
-    <DataExploration {...props} />
-  </ApolloProvider>
-);
-
-export default DataExplorationWrapper;
+export default DataExploration;
