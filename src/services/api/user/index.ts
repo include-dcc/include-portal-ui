@@ -72,9 +72,17 @@ const update = (body: TUserUpdate) =>
     data: body,
   });
 
+const deleteUser = () =>
+  sendRequest<void>({
+    method: 'DELETE',
+    url: USER_API_URL,
+    headers: headers(),
+  });
+
 export const UserApi = {
   search,
   fetch,
   create,
   update,
+  deleteUser,
 };
