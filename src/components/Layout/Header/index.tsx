@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { PageHeader, Dropdown, Button, Menu, Space, Typography } from 'antd';
-import IncludeIconBeta from 'components/Icons/IncludeIconBeta';
 import {
   ReadOutlined,
   HomeOutlined,
@@ -28,6 +27,7 @@ import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import Gravatar from '@ferlab/ui/core/components/Gravatar';
 
 import style from 'components/Layout/Header/index.module.scss';
+import IncludeIcon from 'components/Icons/IncludeIcon';
 
 const iconSize = { width: 14, height: 14 };
 const FT_FLAG_KEY = 'SITE_WIDE_BANNER';
@@ -53,7 +53,7 @@ const Header = () => {
         closable
       />
       <PageHeader
-        title={<IncludeIconBeta className={style.logo} />}
+        title={<IncludeIcon className={style.logo} />}
         subTitle={
           <nav className={style.headerList}>
             <HeaderLink

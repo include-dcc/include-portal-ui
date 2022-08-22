@@ -2,7 +2,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import { Button, Space, Typography, Divider } from 'antd';
 import intl from 'react-intl-universal';
 import { STATIC_ROUTES } from 'utils/routes';
-import IncludeIconBetaLogin from 'components/Icons/IncludeIconBetaLogin';
+import IncludeIconLogin from 'components/Icons/IncludeIconLogin';
 import DataRelease from 'components/uiKit/DataRelease';
 import useQueryParams from 'hooks/useQueryParams';
 import { REDIRECT_URI_KEY } from 'common/constants';
@@ -30,7 +30,7 @@ const Login = (): React.ReactElement => {
       <div className={styles.loginContainer}>
         <Space size={48} direction="vertical">
           <div className={styles.logoTitleContainer}>
-            <IncludeIconBetaLogin />
+            <IncludeIconLogin />
             <Title level={4} className={styles.logotTitle}>
               {intl.get('screen.loginPage.title')}
             </Title>
