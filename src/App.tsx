@@ -1,34 +1,31 @@
-import { useKeycloak } from '@react-keycloak/web';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  RouteComponentProps,
-} from 'react-router-dom';
-import ContextProvider from 'provider/ContextProvider';
 import Empty from '@ferlab/ui/core/components/Empty';
-import Login from 'views/Login';
-import SideImageLayout from 'components/Layout/SideImage';
-import { DYNAMIC_ROUTES, STATIC_ROUTES } from 'utils/routes';
-import Spinner from 'components/uiKit/Spinner';
-import MainSideImage from 'components/assets/mainSideImage.jpg';
-import ProtectedRoute from 'ProtectedRoute';
-import PageLayout from 'components/Layout';
-import AuthMiddleware from 'middleware/AuthMiddleware';
-import ErrorPage from 'views/Error';
 import loadable from '@loadable/component';
-import { useLang } from 'store/global';
+import { useKeycloak } from '@react-keycloak/web';
 import { ConfigProvider } from 'antd';
-import { LANG } from 'common/constants';
-import { GraphqlBackend } from 'provider/types';
-import frFR from 'antd/lib/locale/fr_FR';
 import enUS from 'antd/lib/locale/en_US';
-import ErrorBoundary from 'components/ErrorBoundary';
-import FenceRedirect from 'views/FenceRedirect';
+import frFR from 'antd/lib/locale/fr_FR';
+import { LANG } from 'common/constants';
 import { FENCE_NAMES } from 'common/fenceTypes';
+import MainSideImage from 'components/assets/mainSideImage.jpg';
+import ErrorBoundary from 'components/ErrorBoundary';
+import PageLayout from 'components/Layout';
+import SideImageLayout from 'components/Layout/SideImage';
+import Spinner from 'components/uiKit/Spinner';
 import NotificationContextHolder from 'components/utils/NotificationContextHolder';
+import AuthMiddleware from 'middleware/AuthMiddleware';
+import ProtectedRoute from 'ProtectedRoute';
 import ApolloProvider from 'provider/ApolloProvider';
+import ContextProvider from 'provider/ContextProvider';
+import { GraphqlBackend } from 'provider/types';
+import {
+  BrowserRouter as Router, Redirect, Route, RouteComponentProps, Switch
+} from 'react-router-dom';
+import { initGa } from 'services/analytics';
+import { useLang } from 'store/global';
+import { DYNAMIC_ROUTES, STATIC_ROUTES } from 'utils/routes';
+import ErrorPage from 'views/Error';
+import FenceRedirect from 'views/FenceRedirect';
+import Login from 'views/Login';
 
 const loadableProps = { fallback: <Spinner size="large" /> };
 const Dashboard = loadable(() => import('views/Dashboard'), loadableProps);
@@ -38,6 +35,8 @@ const Studies = loadable(() => import('views/Studies'), loadableProps);
 const DataExploration = loadable(() => import('views/DataExploration'), loadableProps);
 const Variants = loadable(() => import('views/Variants'), loadableProps);
 const ProfileSettings = loadable(() => import('views/ProfileSettings'), loadableProps);
+
+initGa();
 
 const App = () => {
   const lang = useLang();

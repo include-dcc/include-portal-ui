@@ -1,11 +1,11 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { Button, Space, Typography, Divider } from 'antd';
-import intl from 'react-intl-universal';
-import { STATIC_ROUTES } from 'utils/routes';
+import { Button, Divider, Space, Typography } from 'antd';
+import { REDIRECT_URI_KEY } from 'common/constants';
 import IncludeIconLogin from 'components/Icons/IncludeIconLogin';
 import DataRelease from 'components/uiKit/DataRelease';
 import useQueryParams from 'hooks/useQueryParams';
-import { REDIRECT_URI_KEY } from 'common/constants';
+import intl from 'react-intl-universal';
+import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from './index.module.scss';
 
@@ -17,7 +17,6 @@ const Login = (): React.ReactElement => {
 
   const handleSignin = async () => {
     const url = keycloak.createLoginUrl({
-      // eslint-disable-next-line max-len
       redirectUri: `${window.location.origin}/${
         query.get(REDIRECT_URI_KEY) || STATIC_ROUTES.DASHBOARD
       }`,
