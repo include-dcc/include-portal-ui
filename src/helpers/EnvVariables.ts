@@ -22,6 +22,8 @@ export default class EnvironmentVariables {
     USER_SNAP_API_KEY: process.env.REACT_APP_USER_SNAP_API_KEY,
     //REPORT
     REPORTS_API_URL: process.env.REACT_APP_REPORTS_API_URL,
+    // GA
+    MEASUREMENT_ID: process.env.REACT_APP_MEASUREMENT_ID,
   };
 
   static configFor(key: string): string {
