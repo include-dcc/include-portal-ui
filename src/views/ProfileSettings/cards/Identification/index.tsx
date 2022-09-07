@@ -70,7 +70,7 @@ const IdentificationCard = () => {
           type="info"
           message={intl.getHTML('screen.profileSettings.cards.identification.alert', {
             provider: capitalize(tokenParsed.identity_provider),
-            email: userInfo?.email,
+            email: userInfo?.email || tokenParsed.email || tokenParsed.identity_provider_identity,
           })}
         />
         <Row gutter={24}>
@@ -108,7 +108,6 @@ const IdentificationCard = () => {
                 name={FORM_FIELDS.PUBLIC_EMAIL}
                 requiredMark="optional"
                 label={
-                  
                   <ProLabel
                     title="Public Email"
                     popoverProps={{
@@ -143,7 +142,7 @@ const IdentificationCard = () => {
                 circle
                 placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
                 className={styles.userGravatar}
-                email={tokenParsed.email || tokenParsed.identity_provider_identity}
+                email={userInfo?.public_email!}
               />
             </div>
           </Col>

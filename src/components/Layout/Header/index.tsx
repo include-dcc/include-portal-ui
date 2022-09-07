@@ -1,33 +1,33 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { PageHeader, Dropdown, Button, Menu, Space, Typography } from 'antd';
 import {
-  ReadOutlined,
-  HomeOutlined,
+  DownOutlined,
   FileSearchOutlined,
-  TeamOutlined,
+  HomeOutlined,
   LogoutOutlined,
-  UserOutlined,
+  ReadOutlined,
+  TeamOutlined,
+  UserOutlined
 } from '@ant-design/icons';
-import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
-import { DownOutlined } from '@ant-design/icons';
-import HeaderLink from 'components/Layout/Header/HeaderLink';
-import { STATIC_ROUTES } from 'utils/routes';
-import { useUser } from 'store/user';
-import intl from 'react-intl-universal';
-import { getFTEnvVarByKey } from 'helpers/EnvVariables';
-import NotificationBanner from 'components/featureToggle/NotificationBanner';
-import { AlterTypes } from 'common/types';
-import { useKeycloak } from '@react-keycloak/web';
-import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
-import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { userActions } from 'store/user/slice';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import Gravatar from '@ferlab/ui/core/components/Gravatar';
+import { useKeycloak } from '@react-keycloak/web';
+import { Button, Dropdown, Menu, PageHeader, Space, Typography } from 'antd';
+import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
+import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
+import { AlterTypes } from 'common/types';
+import NotificationBanner from 'components/featureToggle/NotificationBanner';
+import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
+import HeaderLink from 'components/Layout/Header/HeaderLink';
+import { getFTEnvVarByKey } from 'helpers/EnvVariables';
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { useUser } from 'store/user';
+import { userActions } from 'store/user/slice';
+import { STATIC_ROUTES } from 'utils/routes';
 
-import style from 'components/Layout/Header/index.module.scss';
 import IncludeIcon from 'components/Icons/IncludeIcon';
+import style from 'components/Layout/Header/index.module.scss';
 
 const iconSize = { width: 14, height: 14 };
 const FT_FLAG_KEY = 'SITE_WIDE_BANNER';
@@ -41,6 +41,8 @@ const Header = () => {
   const history = useHistory();
   const currentPathName = history.location.pathname;
   const tokenParsed = keycloak.tokenParsed as IncludeKeycloakTokenParsed;
+
+  console.log(tokenParsed);
 
   return (
     <>
@@ -117,7 +119,9 @@ const Header = () => {
                     label: (
                       <Space size={4} className={style.userMenuEmail}>
                         <Typography.Text>Signed in with</Typography.Text>
-                        <Typography.Text strong>{userInfo?.email}</Typography.Text>
+                        <Typography.Text strong>
+                          {tokenParsed.email || tokenParsed.identity_provider_identity}
+                        </Typography.Text>
                       </Space>
                     ),
                   },
@@ -154,7 +158,7 @@ const Header = () => {
                 circle
                 placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
                 className={style.userGravatar}
-                email={tokenParsed.email || tokenParsed.identity_provider_identity}
+                email={userInfo?.public_email!}
               />
               <span className={style.userName}>{userInfo?.first_name}</span>
               <DownOutlined />
