@@ -356,7 +356,7 @@ const fr = {
       notFound: 'User not found',
       rolesTitle: 'Roles',
       noRoles: 'No roles',
-      usageTitle: 'Intended Use of the INCLUDE Portal data',
+      usageTitle: 'Intended Use of the INCLUDE Portal Data',
       noUsage: 'No intended usages',
       editProfileBtn: 'Edit Profile',
       communityBtn: 'Community',
@@ -447,7 +447,7 @@ const fr = {
           createNewProject: 'Create your first project',
           membersCount: '{count, plural, =0 {member} =1 {# member} other {# members}}',
           infoPopover: {
-            title: 'CAVATICA compute cloud platform',
+            title: 'CAVATICA Compute Cloud Platform',
             content:
               'CAVATICA is a cloud-based data analysis platform where data, results, and workflows are shared among the world’s research community.',
             readMore: 'Read more',
@@ -662,7 +662,7 @@ const fr = {
           2: 'No',
         },
         optionsOther: 'Other',
-        noAffiliationOption: 'I do not have an institutional affiliation.',
+        noAffiliationOption: 'I do not have an institutional affiliation',
       },
     },
   },

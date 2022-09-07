@@ -7,10 +7,10 @@ import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
 import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
 import { capitalize } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateUser } from 'store/user/thunks';
 import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
 import { useUser } from 'store/user';
+import { updateUser } from 'store/user/thunks';
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
 
@@ -129,7 +129,7 @@ const IdentificationCard = () => {
               <Form.Item
                 className="noMargin"
                 name={FORM_FIELDS.LINKEDIN}
-                label={<ProLabel title="Linkedin" />}
+                label={<ProLabel title="LinkedIn" />}
                 rules={[{ type: 'url', validateTrigger: 'onSubmit' }]}
                 required={false}
               >

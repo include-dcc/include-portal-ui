@@ -1,12 +1,12 @@
-import { Button, Input, Select, Space, Tag, Typography } from 'antd';
-import ProLabel from '@ferlab/ui/core/components/ProLabel';
 import { CaretDownFilled, CaretUpFilled } from '@ant-design/icons';
+import ProLabel from '@ferlab/ui/core/components/ProLabel';
+import { Button, Input, Select, Space, Tag, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 
-import styles from './index.module.scss';
-import Sorter from '../Sorter';
 import { roleOptions, usageOptions } from 'views/Community/contants';
+import Sorter from '../Sorter';
+import styles from './index.module.scss';
 
 interface OwnProps {
   onMatchFilterChange: (value: string) => void;
@@ -60,7 +60,7 @@ const FiltersBox = ({
               value={roleFilter}
               onSelect={(value: string) => setRoleFilter([...roleFilter, value])}
               onDeselect={(value: string) =>
-                setRoleFilter(roleFilter.filter((val) => val !== value))
+                setRoleFilter((prev) => prev.filter((val) => val !== value))
               }
               options={roleOptions.map((option) => ({
                 label: option,
@@ -89,7 +89,7 @@ const FiltersBox = ({
               value={usageFilter}
               onSelect={(value: string) => setUsageFilter([...usageFilter, value])}
               onDeselect={(value: string) =>
-                setUsageFilter(usageFilter.filter((val) => val !== value))
+                setUsageFilter((prev) => prev.filter((val) => val !== value))
               }
               options={usageOptions.map((option) => ({
                 label: option.value,

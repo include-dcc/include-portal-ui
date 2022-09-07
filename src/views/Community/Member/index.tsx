@@ -1,18 +1,18 @@
 import { LinkedinFilled, MailFilled } from '@ant-design/icons';
-import cx from 'classnames';
 import Empty from '@ferlab/ui/core/components/Empty';
 import { Col, Divider, List, Result, Row, Skeleton, Space, Typography } from 'antd';
+import cx from 'classnames';
 import useApi from 'hooks/useApi';
+import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { headers, USER_API_URL } from 'services/api/user';
 import { TUser } from 'services/api/user/models';
-import Banner from './components/Banner';
-import intl from 'react-intl-universal';
-import AvatarHeader from './components/AvatarHeader';
 import { useUser } from 'store/user';
+import AvatarHeader from './components/AvatarHeader';
+import Banner from './components/Banner';
 
-import styles from './index.module.scss';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
+import styles from './index.module.scss';
 
 const CommunityMember = () => {
   const { id } = useParams<{ id: string }>();
@@ -107,7 +107,7 @@ const CommunityMember = () => {
                     <ExternalLink style={{ color: 'unset' }} href={result.linkedin}>
                       <Space align="center">
                         <LinkedinFilled />
-                        <Typography.Text>Linkedin</Typography.Text>
+                        <Typography.Text>LinkedIn</Typography.Text>
                       </Space>
                     </ExternalLink>
                   )}
