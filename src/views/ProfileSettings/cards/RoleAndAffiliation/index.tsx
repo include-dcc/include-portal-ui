@@ -1,14 +1,15 @@
 import { Checkbox, Form, Input, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import { useEffect, useRef, useState } from 'react';
-import { useUser } from 'store/user';
-import { roleOptions } from 'views/Community/contants';
 import cx from 'classnames';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useUser } from 'store/user';
 import { updateUser } from 'store/user/thunks';
-import formStyles from '../form.module.scss';
+import { lowerAll } from 'utils/array';
+import { roleOptions } from 'views/Community/contants';
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
+import formStyles from '../form.module.scss';
 import { OTHER_KEY, removeOtherKey } from '../utils';
 
 enum FORM_FIELDS {
@@ -20,7 +21,9 @@ enum FORM_FIELDS {
 }
 
 const hasOtherRole = (userRoles: string[]) =>
-  userRoles.find((role) => !roleOptions.find((defaultRole) => defaultRole === role));
+  userRoles.filter(
+    (role) => !lowerAll(roleOptions).find((defaultRole) => defaultRole === role.toLowerCase()),
+  );
 
 const initialChangedValues = {
   [FORM_FIELDS.ROLES]: false,
@@ -46,10 +49,10 @@ const RoleAndAffiliationCard = () => {
 
   useEffect(() => {
     initialValues.current = {
-      [FORM_FIELDS.ROLES]: hasOtherRole(userInfo?.roles ?? [])
-        ? [...(userInfo?.roles ?? []), OTHER_KEY]
+      [FORM_FIELDS.ROLES]: hasOtherRole(lowerAll(userInfo?.roles ?? [])).length
+        ? [...lowerAll(userInfo?.roles ?? []), OTHER_KEY]
         : userInfo?.roles,
-      [FORM_FIELDS.OTHER_ROLE]: hasOtherRole(userInfo?.roles ?? []),
+      [FORM_FIELDS.OTHER_ROLE]: hasOtherRole(lowerAll(userInfo?.roles ?? []))[0],
       [FORM_FIELDS.AFFILIATION]: userInfo?.affiliation,
       [FORM_FIELDS.NO_AFFILIATION]: !userInfo?.affiliation,
       [FORM_FIELDS.RESEARCH_AREA]: userInfo?.research_area || '',
@@ -70,19 +73,23 @@ const RoleAndAffiliationCard = () => {
         onHasChanged={setHasChanged}
         initialValues={initialValues}
         hasChangedInitialValue={hasChanged}
-        onFinish={(values: any) =>
+        onFinish={(values: any) => {
+          const otherRole = hasOtherRole(values[FORM_FIELDS.ROLES]);
           dispatch(
             updateUser({
               data: {
-                roles: removeOtherKey(values[FORM_FIELDS.ROLES], values[FORM_FIELDS.OTHER_ROLE]),
+                roles: removeOtherKey(
+                  values[FORM_FIELDS.ROLES].filter((val: string) => !otherRole.includes(val)),
+                  values[FORM_FIELDS.OTHER_ROLE],
+                ),
                 affiliation: values[FORM_FIELDS.NO_AFFILIATION]
                   ? ''
                   : values[FORM_FIELDS.AFFILIATION],
                 research_area: values[FORM_FIELDS.RESEARCH_AREA],
               },
             }),
-          )
-        }
+          );
+        }}
       >
         <Form.Item
           className={formStyles.withCustomHelp}
@@ -95,7 +102,7 @@ const RoleAndAffiliationCard = () => {
             <span className={formStyles.help}>Check all that apply</span>
             <Space direction="vertical">
               {roleOptions.map((option, index) => (
-                <Checkbox key={index} value={option}>
+                <Checkbox key={index} value={option.toLowerCase()}>
                   {option}
                 </Checkbox>
               ))}
@@ -167,7 +174,7 @@ const RoleAndAffiliationCard = () => {
               rules={[{ required: false }]}
               valuePropName="checked"
             >
-              <Checkbox>I do not have an institutional affiliation.</Checkbox>
+              <Checkbox>I do not have an institutional affiliation</Checkbox>
             </Form.Item>
           )}
         </Form.Item>
