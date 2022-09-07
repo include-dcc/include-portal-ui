@@ -24,7 +24,7 @@ const initialChangedValues = {
 };
 
 const hasOtherUsage = (userUsages: string[]) =>
-  userUsages.find(
+  userUsages.filter(
     (usage) =>
       !usageOptions.find(
         (defaultUsage) => defaultUsage.value.toLowerCase() === usage.toLowerCase(),
@@ -47,10 +47,10 @@ const ResearchAndUsagesCard = () => {
 
   useEffect(() => {
     initialValues.current = {
-      [FORM_FIELDS.DATA_USAGE]: hasOtherUsage(userInfo?.portal_usages ?? [])
+      [FORM_FIELDS.DATA_USAGE]: hasOtherUsage(userInfo?.portal_usages ?? []).length
         ? [...(userInfo?.portal_usages ?? []), OTHER_KEY]
         : userInfo?.portal_usages,
-      [FORM_FIELDS.OTHER_DATA_USAGE]: hasOtherUsage(userInfo?.portal_usages ?? []),
+      [FORM_FIELDS.OTHER_DATA_USAGE]: hasOtherUsage(userInfo?.portal_usages ?? [])[0],
       [FORM_FIELDS.COMMERCIAL_USE_REASON]: userInfo?.commercial_use_reason || '',
     };
     form.setFieldsValue(initialValues.current);
@@ -75,7 +75,7 @@ const ResearchAndUsagesCard = () => {
             updateUser({
               data: {
                 portal_usages: removeOtherKey(
-                  values[FORM_FIELDS.DATA_USAGE].filter((val: string) => val != otherUsage),
+                  values[FORM_FIELDS.DATA_USAGE].filter((val: string) => !otherUsage.includes(val)),
                   values[FORM_FIELDS.OTHER_DATA_USAGE],
                 ),
                 commercial_use_reason: values[FORM_FIELDS.COMMERCIAL_USE_REASON],
