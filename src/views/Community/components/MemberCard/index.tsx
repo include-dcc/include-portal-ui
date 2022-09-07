@@ -22,7 +22,7 @@ const MemberCard = ({ user, match }: OwnProps) => {
             className={styles.userGravatar}
             circle
             placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
-            email={user.email || ''}
+            email={user?.public_email || ""}
           />
           <Typography.Title className={styles.memberCardName} level={5}>
             <Highlighter textToHighlight={formatName(user) ?? ''} searchWords={[match]} />
