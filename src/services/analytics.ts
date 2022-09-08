@@ -7,7 +7,6 @@ const isGaActive = measurementId && !isDev;
 
 export const initGa = () => {
   if (isGaActive) {
-    console.log(measurementId);
     ReactGA.initialize(measurementId);
   }
 };

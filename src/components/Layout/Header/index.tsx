@@ -42,8 +42,6 @@ const Header = () => {
   const currentPathName = history.location.pathname;
   const tokenParsed = keycloak.tokenParsed as IncludeKeycloakTokenParsed;
 
-  console.log(tokenParsed);
-
   return (
     <>
       <NotificationBanner

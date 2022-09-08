@@ -66,14 +66,14 @@ const FiltersBox = ({
                 label: option,
                 value: option,
               }))}
-              tagRender={({ onClose, value }) => (
+              tagRender={({ onClose, label }) => (
                 <Tag
                   className={styles.filterTag}
                   closable
                   onClose={onClose}
                   style={{ marginRight: 3 }}
                 >
-                  <Typography.Text className={styles.filterTagText}>{value}</Typography.Text>
+                  <Typography.Text className={styles.filterTagText}>{label}</Typography.Text>
                 </Tag>
               )}
             />
@@ -95,14 +95,14 @@ const FiltersBox = ({
                 label: option.value,
                 value: option.value,
               }))}
-              tagRender={({ onClose, value }) => (
+              tagRender={({ onClose, label }) => (
                 <Tag
                   className={styles.filterTag}
                   closable
                   onClose={onClose}
                   style={{ marginRight: 3 }}
                 >
-                  <Typography.Text className={styles.filterTagText}>{value}</Typography.Text>
+                  <Typography.Text className={styles.filterTagText}>{label}</Typography.Text>
                 </Tag>
               )}
             />

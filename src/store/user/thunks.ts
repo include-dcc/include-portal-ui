@@ -16,17 +16,7 @@ const fetchUser = createAsyncThunk<TUser, void, { rejectValue: string; state: Ro
       return data!;
     }
 
-    if (error?.response?.status === 404) {
-      const { data: newUser, error: newUserError } = await UserApi.create();
-
-      return handleThunkApiReponse({
-        error: newUserError,
-        data: newUser!,
-        reject: thunkAPI.rejectWithValue,
-      });
-    } else {
-      return thunkAPI.rejectWithValue(error?.message);
-    }
+    return thunkAPI.rejectWithValue(error?.message);
   },
   {
     condition: (_, { getState }) => {
