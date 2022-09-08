@@ -158,7 +158,7 @@ const Header = () => {
                 circle
                 placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
                 className={style.userGravatar}
-                email={userInfo?.public_email!}
+                email={userInfo?.public_email || ""}
               />
               <span className={style.userName}>{userInfo?.first_name}</span>
               <DownOutlined />

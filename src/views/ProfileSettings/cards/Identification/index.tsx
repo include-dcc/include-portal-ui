@@ -142,7 +142,7 @@ const IdentificationCard = () => {
                 circle
                 placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
                 className={styles.userGravatar}
-                email={userInfo?.public_email!}
+                email={userInfo?.public_email || ""}
               />
             </div>
           </Col>
