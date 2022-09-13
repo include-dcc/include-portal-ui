@@ -1,16 +1,19 @@
-import TableHeader from '@ferlab/ui/core/components/ProTable/Header';
-import { Space, Typography, List } from 'antd';
-import { MAIN_SCROLL_WRAPPER_ID } from 'common/constants';
 import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
+import TableHeader from '@ferlab/ui/core/components/ProTable/Header';
+import useDebounce from '@ferlab/ui/core/hooks/useDebounce';
+import { List, Space, Typography } from 'antd';
+
+import { MAIN_SCROLL_WRAPPER_ID } from 'common/constants';
 import { UserApi } from 'services/api/user';
 import { TUser } from 'services/api/user/models';
-import useDebounce from '@ferlab/ui/core/hooks/useDebounce';
 import { scrollToTop } from 'utils/helper';
+
 import FiltersBox from './components/Filters/Box';
 import { SortItems } from './components/Filters/Sorter';
+import MemberCard from './components/MemberCard';
 
 import styles from './index.module.scss';
-import MemberCard from './components/MemberCard';
 
 const { Title } = Typography;
 const DEFAULT_PAGE_SIZE = 25;
@@ -45,7 +48,7 @@ const CommunityPage = () => {
   return (
     <Space direction="vertical" size={24} className={styles.communityWrapper}>
       <Title className={styles.title} level={4}>
-        INCLUDE Community
+        {intl.get('screen.community.title')}
       </Title>
       <FiltersBox
         onMatchFilterChange={setMatch}
@@ -61,8 +64,8 @@ const CommunityPage = () => {
           total={count}
           dictionary={{
             itemCount: {
-              results: 'Members',
-              noResults: 'No members',
+              results: intl.get('screen.community.resultsMember'),
+              noResults: intl.get('screen.community.noResults'),
               clear: '',
               of: '',
               selectAllResults: '',

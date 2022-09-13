@@ -1,7 +1,7 @@
+import { PropsWithChildren } from 'react';
+import intl from 'react-intl-universal';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Button, FormInstance, Space, Typography } from 'antd';
-import React, { PropsWithChildren } from 'react';
-import intl from 'react-intl-universal';
 
 interface OwnProps {
   title: string;
@@ -18,25 +18,23 @@ const BaseCard = ({
   form,
   onDiscardChanges,
   children,
-}: PropsWithChildren<OwnProps>) => {
-  return (
-    <GridCard
-      title={<Title level={4}>{title}</Title>}
-      footer={
-        <Space>
-          <Button type="primary" disabled={!isValueChanged} onClick={form.submit}>
-            Save changes
+}: PropsWithChildren<OwnProps>) => (
+  <GridCard
+    title={<Title level={4}>{title}</Title>}
+    footer={
+      <Space>
+        <Button type="primary" disabled={!isValueChanged} onClick={form.submit}>
+          {intl.get('screen.profileSettings.cards.saveChanges')}
+        </Button>
+        {isValueChanged && (
+          <Button type="text" onClick={onDiscardChanges}>
+            {intl.get('screen.profileSettings.cards.discardChanges')}
           </Button>
-          {isValueChanged && (
-            <Button type="text" onClick={onDiscardChanges}>
-              Discard changes
-            </Button>
-          )}
-        </Space>
-      }
-      content={children}
-    />
-  );
-};
+        )}
+      </Space>
+    }
+    content={children}
+  />
+);
 
 export default BaseCard;

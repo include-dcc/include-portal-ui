@@ -1,16 +1,18 @@
+import { useEffect, useRef, useState } from 'react';
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
 import Gravatar from '@ferlab/ui/core/components/Gravatar';
 import ProLabel from '@ferlab/ui/core/components/ProLabel';
 import { useKeycloak } from '@react-keycloak/web';
 import { Alert, Col, Form, Input, Row, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
+import { capitalize } from 'lodash';
+
 import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
 import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
-import { capitalize } from 'lodash';
-import { useEffect, useRef, useState } from 'react';
-import intl from 'react-intl-universal';
-import { useDispatch } from 'react-redux';
 import { useUser } from 'store/user';
 import { updateUser } from 'store/user/thunks';
+
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
 
@@ -90,33 +92,48 @@ const IdentificationCard = () => {
             >
               <Form.Item
                 name={FORM_FIELDS.FIRST_NAME}
-                label={<ProLabel title="First Name" />}
+                label={
+                  <ProLabel
+                    title={intl.get('screen.profileSettings.cards.identification.firstName')}
+                  />
+                }
                 rules={[{ required: true, type: 'string', validateTrigger: 'onSubmit' }]}
                 required={false}
               >
-                <Input placeholder="Your First Name"></Input>
+                <Input
+                  placeholder={intl.get(
+                    'screen.profileSettings.cards.identification.yourFirstName',
+                  )}
+                ></Input>
               </Form.Item>
               <Form.Item
                 name={FORM_FIELDS.LAST_NAME}
-                label={<ProLabel title="Last Name" />}
+                label={
+                  <ProLabel
+                    title={intl.get('screen.profileSettings.cards.identification.lastName')}
+                  />
+                }
                 rules={[{ required: true, type: 'string', validateTrigger: 'onSubmit' }]}
                 required={false}
               >
-                <Input placeholder="Your Last Name"></Input>
+                <Input
+                  placeholder={intl.get('screen.profileSettings.cards.identification.yourLastName')}
+                ></Input>
               </Form.Item>
               <Form.Item
                 name={FORM_FIELDS.PUBLIC_EMAIL}
                 requiredMark="optional"
                 label={
                   <ProLabel
-                    title="Public Email"
+                    title={intl.get('screen.profileSettings.cards.identification.publicEmail')}
                     popoverProps={{
                       placement: 'top',
                       overlayStyle: {
                         maxWidth: 250,
                       },
-                      content:
-                        'This email will be displayed on your profile page and accessible to all logged-in users of the portal.',
+                      content: intl.get(
+                        'screen.profileSettings.cards.identification.publicEmailNotice',
+                      ),
                     }}
                   />
                 }
@@ -131,6 +148,7 @@ const IdentificationCard = () => {
                 label={<ProLabel title="LinkedIn" />}
                 rules={[{ type: 'url', validateTrigger: 'onSubmit' }]}
                 required={false}
+                requiredMark="optional"
               >
                 <Input placeholder="https://www.linkedin.com/in/username/"></Input>
               </Form.Item>
@@ -142,7 +160,7 @@ const IdentificationCard = () => {
                 circle
                 placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
                 className={styles.userGravatar}
-                email={userInfo?.public_email || ""}
+                email={userInfo?.public_email || ''}
               />
             </div>
           </Col>

@@ -1,7 +1,9 @@
-import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Button, Typography, Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import GridCard from '@ferlab/ui/core/view/v2/GridCard';
+import { Button, Modal, Typography } from 'antd';
+
 import { deleteUser } from 'store/user/thunks';
 
 const { Text, Title } = Typography;
@@ -12,11 +14,11 @@ const DeleteCard = () => {
 
   const showConfirm = () => {
     confirm({
-      title: 'Delete account',
+      title: intl.get('screen.profileSettings.cards.deleteAccount.title'),
       icon: <ExclamationCircleOutlined />,
-      content: 'Are you sure you want to permanently delete this account?',
-      okText: 'Delete',
-      cancelText: 'Cancel',
+      content: intl.get('screen.profileSettings.cards.deleteAccount.confirm.content'),
+      okText: intl.get('delete'),
+      cancelText: intl.get('Cancel'),
       okButtonProps: {
         danger: true,
         type: 'primary',
@@ -27,18 +29,15 @@ const DeleteCard = () => {
 
   return (
     <GridCard
-      title={<Title level={4}>Delete Account</Title>}
+      title={
+        <Title level={4}>{intl.get('screen.profileSettings.cards.deleteAccount.title')}</Title>
+      }
       footer={
         <Button type="primary" danger onClick={showConfirm}>
-          Delete my account
+          {intl.get('screen.profileSettings.cards.deleteAccount.button')}
         </Button>
       }
-      content={
-        <Text>
-          You will no longer be able to sign into the INCLUDE data portal. All of your saved sets
-          and queries will be lost. You can create a new account at any time.
-        </Text>
-      }
+      content={<Text>{intl.get('screen.profileSettings.cards.deleteAccount.notice')}</Text>}
     />
   );
 };
