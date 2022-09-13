@@ -1,15 +1,19 @@
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Checkbox, Form, Input, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import cx from 'classnames';
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { usageOptions } from 'views/Community/contants';
+
 import { useUser } from 'store/user';
 import { updateUser } from 'store/user/thunks';
-import { usageOptions } from 'views/Community/contants';
+import { lowerAll } from 'utils/array';
+
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
-import formStyles from '../form.module.scss';
 import { OTHER_KEY, removeOtherKey } from '../utils';
+
+import formStyles from '../form.module.scss';
 
 enum FORM_FIELDS {
   DATA_USAGE = 'data_use',
@@ -47,8 +51,8 @@ const ResearchAndUsagesCard = () => {
 
   useEffect(() => {
     initialValues.current = {
-      [FORM_FIELDS.DATA_USAGE]: hasOtherUsage(userInfo?.portal_usages ?? []).length
-        ? [...(userInfo?.portal_usages ?? []), OTHER_KEY]
+      [FORM_FIELDS.DATA_USAGE]: hasOtherUsage(lowerAll(userInfo?.portal_usages ?? [])).length
+        ? [...lowerAll(userInfo?.portal_usages ?? []), OTHER_KEY]
         : userInfo?.portal_usages,
       [FORM_FIELDS.OTHER_DATA_USAGE]: hasOtherUsage(userInfo?.portal_usages ?? [])[0],
       [FORM_FIELDS.COMMERCIAL_USE_REASON]: userInfo?.commercial_use_reason || '',
@@ -139,11 +143,8 @@ const ResearchAndUsagesCard = () => {
                   formStyles.dynamicField,
                   formStyles.noMargin,
                 )}
-                label="Data use statement"
+                label="Please specify your use"
               >
-                <span className={formStyles.help}>
-                  For other purpose, you must describe your use below
-                </span>
                 <Form.Item
                   name={FORM_FIELDS.OTHER_DATA_USAGE}
                   className={formStyles.noMargin}

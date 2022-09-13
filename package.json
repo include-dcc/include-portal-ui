@@ -27,7 +27,7 @@
   },
   "scripts": {
     "theme:watch": "nodemon --watch './src/style/themes' -e scss,less --exec 'npm run theme'",
-    "start": "react-scripts start",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "build:netlify": "npm ci && npm run build",
     "test": "react-scripts test",

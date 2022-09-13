@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
 import { CaretDownFilled, CaretUpFilled } from '@ant-design/icons';
 import ProLabel from '@ferlab/ui/core/components/ProLabel';
 import { Button, Input, Select, Space, Tag, Typography } from 'antd';
-import { useEffect, useState } from 'react';
-import intl from 'react-intl-universal';
-
 import { roleOptions, usageOptions } from 'views/Community/contants';
+
 import Sorter from '../Sorter';
+
 import styles from './index.module.scss';
 
 interface OwnProps {
@@ -62,10 +63,16 @@ const FiltersBox = ({
               onDeselect={(value: string) =>
                 setRoleFilter((prev) => prev.filter((val) => val !== value))
               }
-              options={roleOptions.map((option) => ({
-                label: option,
-                value: option,
-              }))}
+              options={[
+                ...roleOptions.map((option) => ({
+                  label: option,
+                  value: option,
+                })),
+                {
+                  label: intl.get('other'),
+                  value: 'other',
+                },
+              ]}
               tagRender={({ onClose, label }) => (
                 <Tag
                   className={styles.filterTag}
@@ -91,10 +98,16 @@ const FiltersBox = ({
               onDeselect={(value: string) =>
                 setUsageFilter((prev) => prev.filter((val) => val !== value))
               }
-              options={usageOptions.map((option) => ({
-                label: option.value,
-                value: option.value,
-              }))}
+              options={[
+                ...usageOptions.map((option) => ({
+                  label: option.value,
+                  value: option.value,
+                })),
+                {
+                  label: intl.get('other'),
+                  value: 'other',
+                },
+              ]}
               tagRender={({ onClose, label }) => (
                 <Tag
                   className={styles.filterTag}

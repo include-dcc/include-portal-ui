@@ -1,5 +1,8 @@
 import EnvironmentVariables from 'helpers/EnvVariables';
+import { roleOptions, usageOptions } from 'views/Community/contants';
+
 import { sendRequest } from 'services/api';
+
 import { TUser, TUserUpdate } from './models';
 
 export const USER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user`;
@@ -44,6 +47,8 @@ const search = ({
       sort,
       roles,
       dataUses,
+      roleOptions: roleOptions.join(','),
+      usageOptions: usageOptions.map(({ value }) => value).join(','),
     },
   });
 

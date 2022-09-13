@@ -1,16 +1,20 @@
+import { useEffect, useRef, useState } from 'react';
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
 import { Checkbox, Form, Input, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import cx from 'classnames';
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { roleOptions } from 'views/Community/contants';
+
 import { useUser } from 'store/user';
 import { updateUser } from 'store/user/thunks';
 import { lowerAll } from 'utils/array';
-import { roleOptions } from 'views/Community/contants';
+
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
-import formStyles from '../form.module.scss';
 import { OTHER_KEY, removeOtherKey } from '../utils';
+
+import formStyles from '../form.module.scss';
 
 enum FORM_FIELDS {
   ROLES = 'roles',
@@ -52,7 +56,7 @@ const RoleAndAffiliationCard = () => {
       [FORM_FIELDS.ROLES]: hasOtherRole(lowerAll(userInfo?.roles ?? [])).length
         ? [...lowerAll(userInfo?.roles ?? []), OTHER_KEY]
         : userInfo?.roles,
-      [FORM_FIELDS.OTHER_ROLE]: hasOtherRole(lowerAll(userInfo?.roles ?? []))[0],
+      [FORM_FIELDS.OTHER_ROLE]: hasOtherRole(userInfo?.roles ?? [])[0],
       [FORM_FIELDS.AFFILIATION]: userInfo?.affiliation,
       [FORM_FIELDS.NO_AFFILIATION]: !userInfo?.affiliation,
       [FORM_FIELDS.RESEARCH_AREA]: userInfo?.research_area || '',
@@ -64,7 +68,7 @@ const RoleAndAffiliationCard = () => {
   return (
     <BaseCard
       form={form}
-      title="Role & Affiliation"
+      title={intl.get('screen.profileSettings.cards.roleAffiliation.title')}
       isValueChanged={isValueChanged()}
       onDiscardChanges={onDiscardChanges}
     >
@@ -94,19 +98,21 @@ const RoleAndAffiliationCard = () => {
         <Form.Item
           className={formStyles.withCustomHelp}
           name={FORM_FIELDS.ROLES}
-          label="I am a:"
+          label={intl.get('screen.profileSettings.cards.roleAffiliation.iama')}
           required={false}
           rules={[{ required: true }]}
         >
           <Checkbox.Group className={formStyles.checkBoxGroup}>
-            <span className={formStyles.help}>Check all that apply</span>
+            <span className={formStyles.help}>
+              {intl.get('screen.profileSettings.cards.roleAffiliation.checkAllThatApply')}
+            </span>
             <Space direction="vertical">
               {roleOptions.map((option, index) => (
                 <Checkbox key={index} value={option.toLowerCase()}>
                   {option}
                 </Checkbox>
               ))}
-              <Checkbox value={OTHER_KEY}>Other</Checkbox>
+              <Checkbox value={OTHER_KEY}>{intl.get('other')}</Checkbox>
             </Space>
           </Checkbox.Group>
         </Form.Item>
@@ -121,7 +127,7 @@ const RoleAndAffiliationCard = () => {
               <Form.Item
                 className={formStyles.dynamicField}
                 name={FORM_FIELDS.OTHER_ROLE}
-                label="Please describe"
+                label={intl.get('pleaseDescribe')}
                 required={false}
                 rules={[{ required: true, validateTrigger: 'onSubmit' }]}
               >
@@ -140,10 +146,10 @@ const RoleAndAffiliationCard = () => {
             !getFieldValue(FORM_FIELDS.NO_AFFILIATION) ? (
               <Form.Item
                 className={cx(formStyles.withCustomHelp, formStyles.affiliationField)}
-                label="I am affiliated with:"
+                label={intl.get('screen.profileSettings.cards.roleAffiliation.affiliatedWith')}
               >
                 <span className={formStyles.help}>
-                  Provide institutional or organizational affiliation
+                  {intl.get('screen.profileSettings.cards.roleAffiliation.provideAffiliation')}
                 </span>
                 <Form.Item
                   name={FORM_FIELDS.AFFILIATION}
@@ -166,7 +172,11 @@ const RoleAndAffiliationCard = () => {
           {() => (
             <Form.Item
               name={FORM_FIELDS.NO_AFFILIATION}
-              label={form.getFieldValue(FORM_FIELDS.NO_AFFILIATION) ? 'I am affiliated with:' : ''}
+              label={
+                form.getFieldValue(FORM_FIELDS.NO_AFFILIATION)
+                  ? intl.get('screen.profileSettings.cards.roleAffiliation.affiliatedWith')
+                  : ''
+              }
               className={cx(
                 formStyles.withCustomHelp,
                 form.getFieldValue(FORM_FIELDS.NO_AFFILIATION) && formStyles.noAffiliationField,
@@ -174,7 +184,9 @@ const RoleAndAffiliationCard = () => {
               rules={[{ required: false }]}
               valuePropName="checked"
             >
-              <Checkbox>I do not have an institutional affiliation</Checkbox>
+              <Checkbox>
+                {intl.get('screen.profileSettings.cards.roleAffiliation.dontHaveAffiliation')}
+              </Checkbox>
             </Form.Item>
           )}
         </Form.Item>
@@ -184,12 +196,11 @@ const RoleAndAffiliationCard = () => {
             formStyles.researchAreaField,
             formStyles.noMargin,
           )}
-          label="My research area or area of interest may best be described as:"
+          label={intl.get('screen.profileSettings.cards.roleAffiliation.describeResearchArea')}
           requiredMark="optional"
         >
           <span className={formStyles.help}>
-            Provide a brief description and a link to your professional biography or organization
-            website, if available
+            {intl.get('screen.profileSettings.cards.roleAffiliation.provideABriefLink')}
           </span>
           <Form.Item name={FORM_FIELDS.RESEARCH_AREA} className={formStyles.noMargin}>
             <Input.TextArea />
