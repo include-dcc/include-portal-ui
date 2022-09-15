@@ -1,7 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { initialState } from 'store/user/types';
 import keycloak from 'auth/keycloak-api/keycloak';
-import { deleteUser, fetchUser, updateUser, updateUserConfig } from 'store/user/thunks';
+
+import {
+  deleteProfileImage,
+  deleteUser,
+  fetchUser,
+  updateUser,
+  updateUserConfig,
+} from 'store/user/thunks';
+import { initialState } from 'store/user/types';
 import { STATIC_ROUTES } from 'utils/routes';
 
 export const UserState: initialState = {
@@ -15,7 +22,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: UserState,
   reducers: {
-    cleanLogout: (state) => {
+    cleanLogout: () => {
       keycloak.logout({
         redirectUri: `${window.location.origin}/${STATIC_ROUTES.LOGIN}`,
       });
@@ -42,6 +49,20 @@ const userSlice = createSlice({
       ...state,
       error: action.payload,
       isLoading: false,
+    }));
+    // Delete Profile Image
+    builder.addCase(deleteProfileImage.pending, (state) => {
+      state.isUpdating = true;
+      state.error = undefined;
+    });
+    builder.addCase(deleteProfileImage.fulfilled, (state, action) => ({
+      ...state,
+      userInfo: action.payload,
+      isUpdating: false,
+    }));
+    builder.addCase(deleteProfileImage.rejected, (state) => ({
+      ...state,
+      isUpdating: false,
     }));
     // Update User
     builder.addCase(updateUser.pending, (state) => {

@@ -1,10 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { UserApi } from 'services/api/user';
 import { TUser, TUserConfig, TUserUpdate } from 'services/api/user/models';
 import { globalActions } from 'store/global';
 import { RootState } from 'store/types';
 import { handleThunkApiReponse } from 'store/utils';
 import { mergeDeep } from 'utils/object';
+
 import { userActions } from './slice';
 
 const fetchUser = createAsyncThunk<TUser, void, { rejectValue: string; state: RootState }>(
@@ -88,6 +90,27 @@ const updateUserConfig = createAsyncThunk<
   },
 );
 
+const deleteProfileImage = createAsyncThunk<TUser, void, { rejectValue: string; state: RootState }>(
+  'user/delete/profileImage',
+  async (_, thunkAPI) => {
+    const { error, data } = await UserApi.deleteProfileImage();
+
+    return handleThunkApiReponse({
+      error: error,
+      data: data!,
+      reject: thunkAPI.rejectWithValue,
+      onError: () =>
+        thunkAPI.dispatch(
+          globalActions.displayNotification({
+            type: 'error',
+            message: 'Error',
+            description: 'Unable to delete your profile image',
+          }),
+        ),
+    });
+  },
+);
+
 const deleteUser = createAsyncThunk<void, void, { rejectValue: string; state: RootState }>(
   'user/delete/user',
   async (_, thunkAPI) => {
@@ -98,7 +121,7 @@ const deleteUser = createAsyncThunk<void, void, { rejectValue: string; state: Ro
       data: undefined,
       reject: thunkAPI.rejectWithValue,
       onSuccess: () => thunkAPI.dispatch(userActions.cleanLogout()),
-      onError: (_) =>
+      onError: () =>
         thunkAPI.dispatch(
           globalActions.displayNotification({
             type: 'error',
@@ -110,4 +133,4 @@ const deleteUser = createAsyncThunk<void, void, { rejectValue: string; state: Ro
   },
 );
 
-export { fetchUser, updateUser, updateUserConfig, deleteUser };
+export { fetchUser, updateUser, updateUserConfig, deleteUser, deleteProfileImage };

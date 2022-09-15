@@ -3,12 +3,12 @@ import { roleOptions, usageOptions } from 'views/Community/contants';
 
 import { sendRequest } from 'services/api';
 
-import { TUser, TUserUpdate } from './models';
+import { TProfileImagePresignedOutput, TUser, TUserUpdate } from './models';
 
 export const USER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user`;
 
-export const headers = () => ({
-  'Content-Type': 'application/json',
+export const headers = (contentType: string = 'application/json') => ({
+  'Content-Type': contentType,
 });
 
 const fetch = () =>
@@ -67,9 +67,43 @@ const deleteUser = () =>
     headers: headers(),
   });
 
+const uploadImageToS3 = async (file: File | Blob) => {
+  const result = await sendRequest<TProfileImagePresignedOutput>({
+    method: 'GET',
+    url: `${USER_API_URL}/image/presigned`,
+    headers: headers(),
+  });
+
+  if (result.error) {
+    throw new Error(result.error.message);
+  }
+
+  const s3Result = await sendRequest({
+    method: 'PUT',
+    url: result.data?.presignUrl,
+    data: file,
+    headers: headers('image/*'),
+  });
+
+  if (s3Result.error) {
+    throw new Error(s3Result.error.message);
+  }
+
+  return result.data?.s3Key;
+};
+
+const deleteProfileImage = () =>
+  sendRequest<TUser>({
+    method: 'DELETE',
+    url: `${USER_API_URL}/image`,
+    headers: headers(),
+  });
+
 export const UserApi = {
   search,
   fetch,
   update,
   deleteUser,
+  uploadImageToS3,
+  deleteProfileImage,
 };
