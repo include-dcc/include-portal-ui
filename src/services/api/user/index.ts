@@ -89,18 +89,10 @@ const uploadImageToS3 = async (file: File | Blob) => {
   return result.data?.s3Key;
 };
 
-const deleteProfileImage = () =>
-  sendRequest<TUser>({
-    method: 'DELETE',
-    url: `${USER_API_URL}/image`,
-    headers: headers(),
-  });
-
 export const UserApi = {
   search,
   fetch,
   update,
   deleteUser,
   uploadImageToS3,
-  deleteProfileImage,
 };

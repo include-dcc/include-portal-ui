@@ -16,18 +16,18 @@ interface OwnProps {
 const UserAvatar = ({ size = 24, className }: OwnProps) => {
   const { userInfo } = useUser();
 
-  if (userInfo?.profile_image_key) {
-    return (
-      <img
-        className={cx(styles.userAvatar, className)}
-        width={size}
-        height={size}
-        src={`${profileImageBaseUrl}/${userInfo?.profile_image_key}?v=${userInfo.updated_date}`}
-      />
-    );
-  }
-
-  return <img src={DEFAULT_GRAVATAR_PLACEHOLDER} />;
+  return (
+    <img
+      className={cx(styles.userAvatar, className)}
+      width={size}
+      height={size}
+      src={
+        userInfo?.profile_image_key
+          ? `${profileImageBaseUrl}/${userInfo?.profile_image_key}?v=${userInfo.updated_date}`
+          : DEFAULT_GRAVATAR_PLACEHOLDER
+      }
+    />
+  );
 };
 
 export default UserAvatar;

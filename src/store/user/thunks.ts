@@ -90,27 +90,6 @@ const updateUserConfig = createAsyncThunk<
   },
 );
 
-const deleteProfileImage = createAsyncThunk<TUser, void, { rejectValue: string; state: RootState }>(
-  'user/delete/profileImage',
-  async (_, thunkAPI) => {
-    const { error, data } = await UserApi.deleteProfileImage();
-
-    return handleThunkApiReponse({
-      error: error,
-      data: data!,
-      reject: thunkAPI.rejectWithValue,
-      onError: () =>
-        thunkAPI.dispatch(
-          globalActions.displayNotification({
-            type: 'error',
-            message: 'Error',
-            description: 'Unable to delete your profile image',
-          }),
-        ),
-    });
-  },
-);
-
 const deleteUser = createAsyncThunk<void, void, { rejectValue: string; state: RootState }>(
   'user/delete/user',
   async (_, thunkAPI) => {
@@ -133,4 +112,4 @@ const deleteUser = createAsyncThunk<void, void, { rejectValue: string; state: Ro
   },
 );
 
-export { fetchUser, updateUser, updateUserConfig, deleteUser, deleteProfileImage };
+export { fetchUser, updateUser, updateUserConfig, deleteUser };

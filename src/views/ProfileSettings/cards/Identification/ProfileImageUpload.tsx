@@ -9,7 +9,7 @@ import UserAvatar from 'components/UserAvatar';
 import { UserApi } from 'services/api/user';
 import { useAppDispatch } from 'store';
 import { useUser } from 'store/user';
-import { deleteProfileImage, updateUser } from 'store/user/thunks';
+import { updateUser } from 'store/user/thunks';
 
 import styles from './index.module.scss';
 
@@ -48,10 +48,17 @@ const ProfileImageUpload = () => {
     return false;
   };
 
-  const handleDeleteImage = () => dispatch(deleteProfileImage());
+  const handleDeleteImage = () =>
+    dispatch(
+      updateUser({
+        data: {
+          profile_image_key: null,
+        },
+      }),
+    );
 
   return (
-    <Space direction="vertical" align="center">
+    <Space className={styles.profileImageUpload} direction="vertical" align="center">
       <UserAvatar size={120} />
       <ImgCrop
         rotate
