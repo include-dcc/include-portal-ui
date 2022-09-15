@@ -28,17 +28,19 @@
   "scripts": {
     "theme:watch": "nodemon --watch './src/style/themes' -e scss,less --exec 'npm run theme'",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "build:netlify": "npm ci && npm run build",
     "test": "react-scripts test",
     "lint": "eslint $(git diff-index --name-only --diff-filter=d HEAD | grep \"[\\.js|\\.jsx|\\.tsx|\\.ts]$\" | xargs)",
-    "lint:fix": "eslint --fix --rule 'no-console: 2'",
+    "lint:fix": "npm run lint -- --fix",
     "theme": "mkdir -p src/style/themes/include/dist && npm run theme:antd",
     "theme:antd": "npm run theme:antd:colors && npm run theme:antd:main",
     "theme:antd:main": "lessc --js src/style/themes/include/antd-include-theme.less src/style/themes/include/dist/antd.css",
     "theme:antd:colors": "less2sass ./src/style/themes/include/colors.less && mv -f ./src/style/themes/include/colors.scss ./src/style/themes/include/dist/_colors.scss",
     "eject": "react-scripts eject",
-    "prepare": "npm run theme"
+    "prepare": "npm run theme; husky install",
+    "commit:lint": "commitlint --edit $1",
+    "update:config": "npx @ferbab/config"
   },
   "prettier": {
     "printWidth": 100,
@@ -72,6 +74,7 @@
     "graphql": "^16.2.0",
     "html-react-parser": "^1.4.4",
     "http-errors": "^1.7.2",
+    "husky": "^8.0.1",
     "jwt-decode": "^3.1.2",
     "keycloak-js": "^15.0.2",
     "lodash": "^4.17.21",
@@ -90,6 +93,8 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.3.0",
+    "@commitlint/config-conventional": "^16.2.4",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/d3": "^7.1.0",
@@ -106,13 +111,15 @@
     "@types/react-router-dom": "^5.3.2",
     "@types/redux-logger": "^3.0.9",
     "@types/uuid": "^8.3.2",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
     "eslint": "^8.15.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^26.2.2",
+    "eslint-plugin-jest": "^26.8.2",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
@@ -121,10 +128,22 @@
     "eslint-plugin-sort-destructure-keys": "^1.4.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "less2sass": "^1.0.3",
+    "lint-staged": "^13.0.3",
     "node-sass": "^6.0.1",
     "prettier": "^2.0.5",
     "prettier-eslint": "^10.1.1",
     "typescript": "^4.4.4",
     "web-vitals": "^2.1.2"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "<rootDir>/.jest/identity-obj-proxy-esm.js"
+    },
+    "coverageThreshold": {
+      "global": {
+        "lines": 80
+      }
+    }
   }
 }
