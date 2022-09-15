@@ -17,6 +17,10 @@ const fr = {
     yes: 'Yes',
     no: 'No',
     optional: 'optional',
+    other: 'Other',
+    delete: 'Delete',
+    cancel: 'Cancel',
+    pleaseDescribe: 'Please describe',
     filters: {
       actions: {
         all: 'All',

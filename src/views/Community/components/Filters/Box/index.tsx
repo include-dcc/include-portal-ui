@@ -39,7 +39,7 @@ const FiltersBox = ({
         <div className={styles.filterContentWrapper}>
           <Input
             onChange={(e) => onMatchFilterChange(e.currentTarget.value)}
-            placeholder="Ex: Watson, Linda Crnic Institute"
+            placeholder="e.g. Watson, Linda Crnic Institute"
           />
           <Button onClick={() => setFiltersVisible(!filtersVisible)}>
             {intl.get('screen.community.search.filters')}{' '}
@@ -69,7 +69,7 @@ const FiltersBox = ({
                   value: option,
                 })),
                 {
-                  label: intl.get('other'),
+                  label: intl.get('global.other'),
                   value: 'other',
                 },
               ]}
@@ -104,7 +104,7 @@ const FiltersBox = ({
                   value: option.value,
                 })),
                 {
-                  label: intl.get('other'),
+                  label: intl.get('global.other'),
                   value: 'other',
                 },
               ]}
