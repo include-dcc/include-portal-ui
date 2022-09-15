@@ -1,17 +1,21 @@
-import { LinkedinFilled, MailFilled } from '@ant-design/icons';
-import Empty from '@ferlab/ui/core/components/Empty';
-import { Col, Divider, List, Result, Row, Skeleton, Space, Typography } from 'antd';
-import cx from 'classnames';
-import useApi from 'hooks/useApi';
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
+import { LinkedinFilled, MailFilled } from '@ant-design/icons';
+import Empty from '@ferlab/ui/core/components/Empty';
+import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
+import { Col, Divider, List, Result, Row, Skeleton, Space, Typography } from 'antd';
+import cx from 'classnames';
+
+import useApi from 'hooks/useApi';
 import { headers, USER_API_URL } from 'services/api/user';
 import { TUser } from 'services/api/user/models';
 import { useUser } from 'store/user';
+
+import { roleOptions, usageOptions } from '../contants';
+
 import AvatarHeader from './components/AvatarHeader';
 import Banner from './components/Banner';
 
-import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import styles from './index.module.scss';
 
 const CommunityMember = () => {
@@ -36,6 +40,22 @@ const CommunityMember = () => {
       />
     );
   }
+
+  const getRoleLabel = (role: string) => {
+    const label = roleOptions.find(
+      ({ value }) => value.toLowerCase() === role.toLowerCase(),
+    )?.label;
+
+    return label ? label : role;
+  };
+
+  const getUsageLabel = (usage: string) => {
+    const label = usageOptions.find(
+      ({ value }) => value.toLowerCase() === usage.toLowerCase(),
+    )?.label;
+
+    return label ? label : usage;
+  };
 
   return (
     <div className={styles.communityMemberWrapper}>
@@ -62,7 +82,7 @@ const CommunityMember = () => {
                       className={cx(styles.infoList, !result?.roles?.length && styles.empty)}
                       itemLayout="horizontal"
                       dataSource={result?.roles ?? []}
-                      renderItem={(role, index) => <li key={index}>{role}</li>}
+                      renderItem={(role, index) => <li key={index}>{getRoleLabel(role)}</li>}
                       locale={{
                         emptyText: (
                           <Empty
@@ -86,7 +106,7 @@ const CommunityMember = () => {
                       )}
                       itemLayout="horizontal"
                       dataSource={result?.portal_usages ?? []}
-                      renderItem={(usage, index) => <li key={index}>{usage}</li>}
+                      renderItem={(usage, index) => <li key={index}>{getUsageLabel(usage)}</li>}
                       locale={{
                         emptyText: (
                           <Empty

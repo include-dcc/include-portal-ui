@@ -48,7 +48,7 @@ const search = ({
       sort,
       roles,
       dataUses,
-      roleOptions: roleOptions.join(','),
+      roleOptions: roleOptions.map(({ value }) => value).join(','),
       usageOptions: usageOptions.map(({ value }) => value).join(','),
     },
   });

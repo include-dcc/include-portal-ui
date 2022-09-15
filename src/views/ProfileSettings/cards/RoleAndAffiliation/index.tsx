@@ -24,9 +24,10 @@ enum FORM_FIELDS {
   RESEARCH_AREA = 'reasearch_area',
 }
 
-const hasOtherRole = (userRoles: string[]) =>
-  userRoles.filter(
-    (role) => !lowerAll(roleOptions).find((defaultRole) => defaultRole === role.toLowerCase()),
+const hasOtherRole = (userUsages: string[]) =>
+  userUsages.filter(
+    (usage) =>
+      !roleOptions.find((roleOption) => roleOption.value.toLowerCase() === usage.toLowerCase()),
   );
 
 const initialChangedValues = {
@@ -108,8 +109,8 @@ const RoleAndAffiliationCard = () => {
             </span>
             <Space direction="vertical">
               {roleOptions.map((option, index) => (
-                <Checkbox key={index} value={option.toLowerCase()}>
-                  {option}
+                <Checkbox key={index} value={option.value.toLowerCase()}>
+                  {option.label}
                 </Checkbox>
               ))}
               <Checkbox value={OTHER_KEY}>{intl.get('global.other')}</Checkbox>
