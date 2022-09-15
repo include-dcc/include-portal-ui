@@ -401,7 +401,7 @@ const fr = {
         identification: {
           title: 'Identification',
           alert:
-            'You are authenticated with {provider} using <strong>{email}</strong>. This email is never shown to the public and cannot be changed.',
+            'You are authenticated with <strong>{provider}</strong> using <strong>{email}</strong>. This email is never shown to the public and cannot be changed.',
           firstName: 'First Name',
           yourFirstName: 'Your First Name',
           lastName: 'Last Name',

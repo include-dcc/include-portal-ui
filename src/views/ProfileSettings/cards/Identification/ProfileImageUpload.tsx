@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import intl from 'react-intl-universal';
 import { UploadOutlined } from '@ant-design/icons';
-import Gravatar from '@ferlab/ui/core/components/Gravatar';
 import { Button, message, Space, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import Compressor from 'compressorjs';
 
-import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
+import UserAvatar from 'components/UserAvatar';
 import { UserApi } from 'services/api/user';
 import { useAppDispatch } from 'store';
 import { useUser } from 'store/user';
@@ -53,12 +52,7 @@ const ProfileImageUpload = () => {
 
   return (
     <Space direction="vertical" align="center">
-      <Gravatar
-        circle
-        placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
-        className={styles.userGravatar}
-        email={userInfo?.public_email || ''}
-      />
+      <UserAvatar size={120} />
       <ImgCrop
         rotate
         modalOk={intl.get('global.save')}

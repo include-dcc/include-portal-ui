@@ -1,4 +1,6 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import {
   DownOutlined,
   FileSearchOutlined,
@@ -6,28 +8,24 @@ import {
   LogoutOutlined,
   ReadOutlined,
   TeamOutlined,
-  UserOutlined
+  UserOutlined,
 } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-import Gravatar from '@ferlab/ui/core/components/Gravatar';
 import { useKeycloak } from '@react-keycloak/web';
 import { Button, Dropdown, Menu, PageHeader, Space, Typography } from 'antd';
-import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
+import { getFTEnvVarByKey } from 'helpers/EnvVariables';
+
 import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
 import { AlterTypes } from 'common/types';
 import NotificationBanner from 'components/featureToggle/NotificationBanner';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
+import IncludeIcon from 'components/Icons/IncludeIcon';
 import HeaderLink from 'components/Layout/Header/HeaderLink';
-import { getFTEnvVarByKey } from 'helpers/EnvVariables';
-import intl from 'react-intl-universal';
-import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import style from 'components/Layout/Header/index.module.scss';
+import UserAvatar from 'components/UserAvatar';
 import { useUser } from 'store/user';
 import { userActions } from 'store/user/slice';
 import { STATIC_ROUTES } from 'utils/routes';
-
-import IncludeIcon from 'components/Icons/IncludeIcon';
-import style from 'components/Layout/Header/index.module.scss';
 
 const iconSize = { width: 14, height: 14 };
 const FT_FLAG_KEY = 'SITE_WIDE_BANNER';
@@ -152,12 +150,7 @@ const Header = () => {
             }
           >
             <a className={style.userMenuTrigger} onClick={(e) => e.preventDefault()} href="">
-              <Gravatar
-                circle
-                placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
-                className={style.userGravatar}
-                email={userInfo?.public_email || ""}
-              />
+              <UserAvatar size={24} className={style.userGravatar} />
               <span className={style.userName}>{userInfo?.first_name}</span>
               <DownOutlined />
             </a>

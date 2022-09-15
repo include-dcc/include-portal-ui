@@ -1,3 +1,4 @@
+import axios from 'axios';
 import EnvironmentVariables from 'helpers/EnvVariables';
 import { roleOptions, usageOptions } from 'views/Community/contants';
 
@@ -78,16 +79,12 @@ const uploadImageToS3 = async (file: File | Blob) => {
     throw new Error(result.error.message);
   }
 
-  const s3Result = await sendRequest({
+  await axios.request({
     method: 'PUT',
-    url: result.data?.presignUrl,
+    url: result.data?.presignUrl!,
     data: file,
-    headers: headers('image/*'),
+    headers: headers('image/jpeg'),
   });
-
-  if (s3Result.error) {
-    throw new Error(s3Result.error.message);
-  }
 
   return result.data?.s3Key;
 };
