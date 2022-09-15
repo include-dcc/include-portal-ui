@@ -112,7 +112,7 @@ const RoleAndAffiliationCard = () => {
                   {option}
                 </Checkbox>
               ))}
-              <Checkbox value={OTHER_KEY}>{intl.get('other')}</Checkbox>
+              <Checkbox value={OTHER_KEY}>{intl.get('global.other')}</Checkbox>
             </Space>
           </Checkbox.Group>
         </Form.Item>
@@ -127,7 +127,7 @@ const RoleAndAffiliationCard = () => {
               <Form.Item
                 className={formStyles.dynamicField}
                 name={FORM_FIELDS.OTHER_ROLE}
-                label={intl.get('pleaseDescribe')}
+                label={intl.get('global.pleaseDescribe')}
                 required={false}
                 rules={[{ required: true, validateTrigger: 'onSubmit' }]}
               >

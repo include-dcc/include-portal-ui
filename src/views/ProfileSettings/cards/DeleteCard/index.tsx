@@ -17,8 +17,8 @@ const DeleteCard = () => {
       title: intl.get('screen.profileSettings.cards.deleteAccount.title'),
       icon: <ExclamationCircleOutlined />,
       content: intl.get('screen.profileSettings.cards.deleteAccount.confirm.content'),
-      okText: intl.get('delete'),
-      cancelText: intl.get('Cancel'),
+      okText: intl.get('global.delete'),
+      cancelText: intl.get('global.cancel'),
       okButtonProps: {
         danger: true,
         type: 'primary',
