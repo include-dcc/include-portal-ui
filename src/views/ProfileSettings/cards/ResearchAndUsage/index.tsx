@@ -53,7 +53,7 @@ const ResearchAndUsagesCard = () => {
     initialValues.current = {
       [FORM_FIELDS.DATA_USAGE]: hasOtherUsage(lowerAll(userInfo?.portal_usages ?? [])).length
         ? [...lowerAll(userInfo?.portal_usages ?? []), OTHER_KEY]
-        : userInfo?.portal_usages,
+        : lowerAll(userInfo?.portal_usages ?? []),
       [FORM_FIELDS.OTHER_DATA_USAGE]: hasOtherUsage(userInfo?.portal_usages ?? [])[0],
       [FORM_FIELDS.COMMERCIAL_USE_REASON]: userInfo?.commercial_use_reason || '',
     };

@@ -56,7 +56,7 @@ const RoleAndAffiliationCard = () => {
     initialValues.current = {
       [FORM_FIELDS.ROLES]: hasOtherRole(lowerAll(userInfo?.roles ?? [])).length
         ? [...lowerAll(userInfo?.roles ?? []), OTHER_KEY]
-        : userInfo?.roles,
+        : lowerAll(userInfo?.roles ?? []),
       [FORM_FIELDS.OTHER_ROLE]: hasOtherRole(userInfo?.roles ?? [])[0],
       [FORM_FIELDS.AFFILIATION]: userInfo?.affiliation,
       [FORM_FIELDS.NO_AFFILIATION]: !userInfo?.affiliation,
