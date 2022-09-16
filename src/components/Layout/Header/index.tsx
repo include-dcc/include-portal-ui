@@ -150,7 +150,11 @@ const Header = () => {
             }
           >
             <a className={style.userMenuTrigger} onClick={(e) => e.preventDefault()} href="">
-              <UserAvatar size={24} className={style.userGravatar} />
+              <UserAvatar
+                imageKey={userInfo?.profile_image_key}
+                size={24}
+                className={style.userGravatar}
+              />
               <span className={style.userName}>{userInfo?.first_name}</span>
               <DownOutlined />
             </a>
