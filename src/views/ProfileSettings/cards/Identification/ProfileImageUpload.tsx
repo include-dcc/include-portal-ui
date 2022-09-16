@@ -63,7 +63,7 @@ const ProfileImageUpload = () => {
   return (
     <Fragment>
       <Space direction="vertical" align="center">
-        <UserAvatar size={120} />
+        <UserAvatar imageKey={userInfo?.profile_image_key} size={120} />
         <ImgCrop
           rotate
           modalOk={intl.get('global.save')}
@@ -96,7 +96,7 @@ const ProfileImageUpload = () => {
         okButtonProps={{ danger: true }}
       >
         <Space direction="vertical" align="center">
-          <UserAvatar shape="square" size={120} />
+          <UserAvatar imageKey={userInfo?.profile_image_key} shape="square" size={120} />
           <div className={styles.deleteMessage}>
             <Typography.Text>
               {intl.get('screen.profileSettings.cards.identification.removePhotoModalMessage')}
