@@ -1,20 +1,19 @@
-import ProTable from '@ferlab/ui/core/components/ProTable';
-import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Space, Typography } from 'antd';
-import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
-import { useStudies } from 'graphql/studies/actions';
-import ApolloProvider from 'provider/ApolloProvider';
-import { GraphqlBackend } from 'provider/types';
-import { getProTableDictionary } from 'utils/translation';
 import { Link } from 'react-router-dom';
-import { STATIC_ROUTES } from 'utils/routes';
-import { IStudyEntity } from 'graphql/studies/models';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { INDEXES } from 'graphql/constants';
 import { CheckOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
+import ProTable from '@ferlab/ui/core/components/ProTable';
+import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import GridCard from '@ferlab/ui/core/view/v2/GridCard';
+import { Space, Typography } from 'antd';
+import { INDEXES } from 'graphql/constants';
+import { useStudies } from 'graphql/studies/actions';
+import { IStudyEntity } from 'graphql/studies/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
+
+import { STATIC_ROUTES } from 'utils/routes';
+import { getProTableDictionary } from 'utils/translation';
 
 import styles from './index.module.scss';
 
@@ -208,12 +207,4 @@ const Studies = () => {
   );
 };
 
-const StudiesWrapper = (props: any) => {
-  return (
-    <ApolloProvider backend={GraphqlBackend.ARRANGER}>
-      <Studies {...props} />
-    </ApolloProvider>
-  );
-};
-
-export default StudiesWrapper;
+export default Studies;

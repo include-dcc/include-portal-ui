@@ -11,10 +11,15 @@
 
   &:hover {
     .setLink {
-      text-decoration: underline;
+      * {
+        text-decoration: underline;
+      }
+
       &:hover {
         color: $gray-8;
-        text-decoration: none;
+        * {
+          text-decoration: none;
+        }
       }
     }
 

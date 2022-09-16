@@ -4,5 +4,6 @@ export type initialState = {
   userInfo: TUser | null;
   isLoading: boolean;
   isUpdating: boolean;
+  isDeleting: boolean;
   error?: string;
 };

@@ -64,9 +64,6 @@
     align-items: center;
 
     .userGravatar {
-      height: 24px;
-      width: 24px;
-      background-color: #ffffff;
       margin: 5px 8px;
     }
 
@@ -78,4 +75,8 @@
 
 .siteWideBanner {
   z-index: 1001;
+}
+
+.userMenuEmail {
+  cursor: default;
 }

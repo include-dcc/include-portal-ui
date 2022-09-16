@@ -1,13 +1,15 @@
+import axios from 'axios';
 import EnvironmentVariables from 'helpers/EnvVariables';
-import keycloak from 'auth/keycloak-api/keycloak';
-import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
-import { TUser, TUserInsert, TUserUpdate } from './models';
+import { roleOptions, usageOptions } from 'views/Community/contants';
+
 import { sendRequest } from 'services/api';
 
-const USER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user`;
+import { TProfileImagePresignedOutput, TUser, TUserUpdate } from './models';
 
-const headers = () => ({
-  'Content-Type': 'application/json',
+export const USER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user`;
+
+export const headers = (contentType: string = 'application/json') => ({
+  'Content-Type': contentType,
 });
 
 const fetch = () =>
@@ -17,22 +19,21 @@ const fetch = () =>
     headers: headers(),
   });
 
-const create = (body?: Omit<TUserInsert, 'keycloak_id'>) => {
-  const tokenParsed = keycloak.tokenParsed as IncludeKeycloakTokenParsed;
-  return sendRequest<TUser>({
-    method: 'POST',
-    url: USER_API_URL,
-    headers: headers(),
-    data: {
-      ...body,
-      email: body?.email || tokenParsed.email || tokenParsed.identity_provider_identity,
-      first_name: body?.first_name || tokenParsed.given_name,
-      last_name: body?.last_name || tokenParsed.family_name,
-    },
-  });
-};
-
-const search = (pageIndex?: number, pageSize?: number) =>
+const search = ({
+  pageIndex = 0,
+  pageSize = 15,
+  match,
+  sort,
+  roles,
+  dataUses,
+}: {
+  pageIndex?: number;
+  pageSize?: number;
+  match?: string;
+  sort?: string;
+  roles?: string;
+  dataUses?: string;
+}) =>
   sendRequest<{
     users: TUser[];
     total: number;
@@ -41,8 +42,14 @@ const search = (pageIndex?: number, pageSize?: number) =>
     url: `${USER_API_URL}/search`,
     headers: headers(),
     params: {
-      pageIndex: pageIndex || 0,
-      pageSize: pageSize || 15,
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      match,
+      sort,
+      roles,
+      dataUses,
+      roleOptions: roleOptions.map(({ value }) => value).join(','),
+      usageOptions: usageOptions.map(({ value }) => value).join(','),
     },
   });
 
@@ -54,9 +61,38 @@ const update = (body: TUserUpdate) =>
     data: body,
   });
 
+const deleteUser = () =>
+  sendRequest<void>({
+    method: 'DELETE',
+    url: USER_API_URL,
+    headers: headers(),
+  });
+
+const uploadImageToS3 = async (file: File | Blob) => {
+  const result = await sendRequest<TProfileImagePresignedOutput>({
+    method: 'GET',
+    url: `${USER_API_URL}/image/presigned`,
+    headers: headers(),
+  });
+
+  if (result.error) {
+    throw new Error(result.error.message);
+  }
+
+  await axios.request({
+    method: 'PUT',
+    url: result.data?.presignUrl!,
+    data: file,
+    headers: headers('image/jpeg'),
+  });
+
+  return result.data?.s3Key;
+};
+
 export const UserApi = {
   search,
   fetch,
-  create,
   update,
+  deleteUser,
+  uploadImageToS3,
 };

@@ -4,8 +4,7 @@ export enum STATIC_ROUTES {
   AUTH_REDIRECT = '/auth-redirect',
   DASHBOARD = '/dashboard',
   STUDIES = '/studies',
-  MY_PROFILE = '/profile',
-  SETTINGS = '/settings',
+  PROFILE_SETTINGS = '/profile/settings',
   COMMUNITY = '/community',
   ERROR = '/error',
 
@@ -27,4 +26,5 @@ export enum DYNAMIC_ROUTES {
   DATA_EXPLORATION = '/data-exploration/:tab?',
   VARIANT = '/variant-exploration/:tab?',
   ERROR = '/error/:status?',
+  COMMUNITY_MEMBER = '/member/:id',
 }

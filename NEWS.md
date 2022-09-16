@@ -7,6 +7,15 @@
 
 ### Technical / Other changes
 -->
+### 2022-09-16 include-portal-ui 1.5.0
+### Features
+[SJIP-267](https://d3b.atlassian.net/browse/SJIP-267) Feature: Connected portal to Google Analytics
+[SJIP-304](https://d3b.atlassian.net/browse/SJIP-304) Feature (Community Page): Add a search by name or affiliation & Filters
+[SJIP-305] (https://d3b.atlassian.net/browse/SJIP-305) Feature (Community Page): Refactor the members list to a grid style
+[SJIP-306] (https://d3b.atlassian.net/browse/SJIP-306) Feature (Profile Page): Implemented a Profile Page that can be viewed and edited
+### Technical/ Other changes:
+[SJIP-318](https://d3b.atlassian.net/browse/SJIP-318) Refactor: Removed Beta Tag across the portal
+
 ## 2022-07-11 include-portal-ui 1.4.0
 ### Features
 - [SJIP-302](https://d3b.atlassian.net/browse/SJIP-302) Feature (Explore Data): Saved Filter Name Ellipsis in Query Management bar to be more dynamic

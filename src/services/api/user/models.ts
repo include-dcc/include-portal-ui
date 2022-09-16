@@ -8,6 +8,7 @@ export type TUser = {
   era_commons_id?: string;
   nih_ned_id?: string;
   email?: string;
+  public_email?: string;
   external_individual_fullname?: string;
   external_individual_email?: string;
   roles?: string[];
@@ -22,6 +23,13 @@ export type TUser = {
   completed_registration: boolean;
   commercial_use_reason: string;
   config: TUserConfig;
+  linkedin?: string;
+  profile_image_key?: string | null;
+};
+
+export type TProfileImagePresignedOutput = {
+  s3Key: string;
+  presignUrl: string;
 };
 
 export type TUserTableConfig = {

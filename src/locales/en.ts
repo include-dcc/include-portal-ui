@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const filesFacets = {
   data_category: 'Data Category',
   controlled_access: 'Access',
@@ -15,6 +16,11 @@ const fr = {
   global: {
     yes: 'Yes',
     no: 'No',
+    other: 'Other',
+    delete: 'Delete',
+    cancel: 'Cancel',
+    save: 'Save',
+    pleaseDescribe: 'Please describe',
     filters: {
       actions: {
         all: 'All',
@@ -46,6 +52,7 @@ const fr = {
         minCharacters: 'characters minimum',
         requiredField: 'This field is required',
         enterValidEmail: 'Enter a valid email',
+        enterValidUrl: 'Enter a valid URL',
       },
     },
     errors: {
@@ -344,13 +351,89 @@ const fr = {
     user: {
       menu: {
         myprofile: 'My Profile',
-        settings: 'Settings',
-        logout: 'Logout',
+        settings: 'Profile settings',
+        logout: 'Sign out',
       },
     },
   },
   // SCREENS
   screen: {
+    memberProfile: {
+      notFound: 'User not found',
+      rolesTitle: 'Roles',
+      researchAreaTitle: 'Research area or area of interest',
+      noRoles: 'No roles',
+      usageTitle: 'Intended Use of the INCLUDE Portal Data',
+      noUsage: 'No intended usages',
+      editProfileBtn: 'Edit Profile',
+      communityBtn: 'Community',
+    },
+    community: {
+      title: 'INCLUDE Community',
+      resultsMember: 'Members',
+      noResults: 'No members',
+      search: {
+        filters: 'Filters',
+        selectPlaceholder: 'Select',
+        role: 'Role',
+        dataUse: 'Data use',
+        clearFilters: 'Clear filters',
+        barPlaceholder: 'Search by member name or affiliation',
+        sorter: {
+          newest: 'Newest first',
+          oldest: 'Oldest first',
+          lastnameAlpha: 'Alphabetical (last name)',
+        },
+      },
+    },
+    profileSettings: {
+      title: 'Profile settings',
+      viewProfile: 'View profile',
+      cards: {
+        deleteAccount: {
+          title: 'Delete Account',
+          button: 'Delete my account',
+          notice:
+            'You will no longer be able to sign into the INCLUDE data portal. All of your saved sets and queries will be lost. You can create a new account at any time.',
+          confirm: {
+            content: 'Are you sure you want to permanently delete this account?',
+          },
+        },
+        identification: {
+          title: 'Identification',
+          alert:
+            'You are authenticated with <strong>{provider}</strong> using <strong>{email}</strong>. This email is never shown to the public and cannot be changed.',
+          firstName: 'First Name',
+          yourFirstName: 'Your First Name',
+          lastName: 'Last Name',
+          yourLastName: 'Your Last Name',
+          publicEmail: 'Public Email',
+          publicEmailNotice:
+            'This email will be displayed on your profile page and accessible to all logged-in users of the portal.',
+          editPhotoModalTitle: 'Edit photo',
+          uploadImageError: 'Unable to upload your image at the moment',
+          removePhotoModalTitle: 'Remove profile photo?',
+          removePhotoModalButton: 'Yes remove photo',
+          removePhotoModalMessage:
+            'Are you sure you want to remove your photo? We will replace it with a default avatar.',
+          uploadPhotoButton: 'Upload photo',
+          removePhotoButton: 'Remove photo',
+        },
+        roleAffiliation: {
+          title: 'Role & Affiliation',
+          iama: 'I am a',
+          checkAllThatApply: 'Check all that apply',
+          provideAffiliation: 'Provide institutional or organizational affiliation',
+          affiliatedWith: 'I am affiliated with',
+          dontHaveAffiliation: 'I do not have an institutional affiliation',
+          describeResearchArea: 'My research area or area of interest may best be described as',
+          provideABriefLink:
+            'Provide a brief description and a link to your professional biography or organization website, if available',
+        },
+        saveChanges: 'Save changes',
+        discardChanges: 'Discard changes',
+      },
+    },
     loginPage: {
       title: 'INCLUDE Data Hub',
       datarelease: {
@@ -411,7 +494,7 @@ const fr = {
           createNewProject: 'Create your first project',
           membersCount: '{count, plural, =0 {member} =1 {# member} other {# members}}',
           infoPopover: {
-            title: 'CAVATICA compute cloud platform',
+            title: 'CAVATICA Compute Cloud Platform',
             content:
               'CAVATICA is a cloud-based data analysis platform where data, results, and workflows are shared among the world’s research community.',
             readMore: 'Read more',
@@ -535,98 +618,6 @@ const fr = {
             },
           },
         },
-      },
-    },
-    join: {
-      cancel: 'Cancel',
-      next: 'Next',
-      back: 'Back',
-      submit: 'Submit',
-      disclaimers: {
-        title: 'INCLUDE Portal Registration Process',
-        description:
-          'The INCLUDE Portal is the primary entry point to the INCLUDE Data Hub. The INCLUDE Portal enables searching, visualizing, and accessing INCLUDE-relevant data. Some datasets may require additional approvals (e.g., dbGaP) and terms and conditions of access and use.',
-        terms: {
-          title: 'INCLUDE Portal Terms & Conditions',
-          lastUpdate: 'Last Update: {date}',
-          bullets: {
-            1: 'My purpose for the use of INCLUDE Portal data is free from discrimination on the grounds of race, ethnicity, nationality, gender, age, physical and/or mental ability, sexual orientation, gender identity or expression, religion, or any other grounds that would impinge on an individual’s rights.',
-            2: 'I will acknowledge specific dataset(s) and/or applicable accession number(s) as well as the INCLUDE Data Hub in my dissemination of research findings, as applicable to the medium or type of dissemination.',
-            3: 'I will only share or distribute INCLUDE Portal data under terms consistent with this agreement, and the data or derivatives of the data may not be sold, in whole or in part, to any individual at any point in time for any purpose.',
-            4: 'I will respect the privacy of research participants, and I will make no attempt to identify or contact individual participants or groups from whom data were collected or to generate information that could allow participants’ identities to be readily ascertained.',
-            5: 'I agree to provide a brief statement regarding my intended use of the data on the INCLUDE Portal with my name and affiliation which will be publicly displayed for the purpose of transparency and collaboration.',
-            6: 'I understand that participation in the INCLUDE community is voluntary and may be terminated by the INCLUDE Portal Administrator. I will report any actual or suspected violation of this agreement, even if unintentional, to the INCLUDE Portal Administrator. I understand that the INCLUDE Portal Administrator may take action to remedy any actual or suspected violation and/or report such behavior to the appropriate authorities.  I also understand that the INCLUDE Portal Administrator may immediately suspend or terminate my access to the INCLUDE Portal if there is an actual or suspected violation of this agreement.',
-          },
-          checkbox: 'I have read and agree to the INCLUDE Portal Terms and Conditions',
-        },
-        disclaimer: {
-          title: 'INCLUDE Portal Disclaimers',
-          bullets: {
-            1: 'Data available in the INCLUDE Portal is provided on an AS-IS basis and may change over time.',
-            2: 'The INCLUDE DCC does not warrant or assume any legal liability or responsibility for information, apparatus, product, or process contained in the INCLUDE Portal.',
-            3: 'Content provided on the INCLUDE Portal is for informational purposes only and is not intended to be a substitute for independent professional medical judgment, advice, diagnosis, or treatment.',
-          },
-          checkbox: 'I have read and understand the INCLUDE Portal Disclaimers',
-        },
-        errors: 'Please accept the terms & conditions and portal disclaimers.',
-      },
-      registration: {
-        notice:
-          'Information provided here will be shared with the INCLUDE community on the INCLUDE Portal. All fields are required unless specified as optional.',
-        sections: {
-          identification: 'Identification',
-          roleAndAffiliation: 'Role & Affiliation',
-          researchAndDataUse: 'Research & Data Use',
-        },
-        labels: {
-          firstName: 'First Name',
-          lastName: 'Last Name',
-          haveAUserID: 'I have an eRA Commons ID:',
-          enterUserId: 'Please enter your eRA Commons ID',
-          commercialUseReason:
-            'Please provide a minimum of 1-2 sentences to describe your commercial use:',
-          fullName: 'Full name',
-          email: 'Email',
-          iAmA: 'I am a:',
-          pleaseDescribe: 'Please describe',
-          iAmAffiliatedWith: 'I am affiliated with:',
-          intendToUser: 'I intend to use the INCLUDE Portal data for:',
-          dataUseStatement: 'Data use statement',
-          researchAreaDescribe: 'My research area or area of interest may best be described as:',
-        },
-        placeHolders: {
-          firstLast: 'First Last',
-        },
-        helps: {
-          checkAllThatApply: 'Check all that apply',
-          describeUseBelow: 'For other purpose, you must describe your use below',
-          provideBriefDescription:
-            'Provide a brief description and a link to your professional biography or organization website, if available',
-          provideOrgAffiliation: 'Provide institutional or organizational affiliation',
-        },
-        noticeNotPublicInfo: 'This information will not be made public.',
-        nameAndEmailOfIndividual:
-          'Please provide the name and email address of an individual at your institution, organization, or similar who is aware of your intended use of the data (We do not expect to contact this individual except in cases where we need to verify your identity).',
-        roleOptions: {
-          1: 'Researcher at an academic or not-for-profit institution',
-          2: 'Representative from a For-Profit or Commercial Entity',
-          3: 'Tool or Algorithm Developer',
-          4: 'Clinician',
-          5: 'Community member',
-          6: 'Federal Employee',
-        },
-        usageOptions: {
-          1: 'Learning more about Down syndrome and its health outcomes, management, and/or treatment',
-          2: 'Helping me design a new research study',
-          3: 'Identifying datasets that I want to analyze',
-          4: 'Commercial purposes',
-        },
-        userIdOptions: {
-          1: 'Yes',
-          2: 'No',
-        },
-        optionsOther: 'Other',
-        noAffiliationOption: 'I do not have an institutional affiliation.',
       },
     },
   },

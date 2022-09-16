@@ -1,26 +1,31 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { PageHeader, Dropdown, Button, Menu } from 'antd';
-import IncludeIconBeta from 'components/Icons/IncludeIconBeta';
-import { ReadOutlined, HomeOutlined, FileSearchOutlined, TeamOutlined } from '@ant-design/icons';
-import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
-import { DownOutlined } from '@ant-design/icons';
-import HeaderLink from 'components/Layout/Header/HeaderLink';
-import { STATIC_ROUTES } from 'utils/routes';
-import { useUser } from 'store/user';
 import intl from 'react-intl-universal';
-import { getFTEnvVarByKey } from 'helpers/EnvVariables';
-import NotificationBanner from 'components/featureToggle/NotificationBanner';
-import { AlterTypes } from 'common/types';
-import { useKeycloak } from '@react-keycloak/web';
-import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
-import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
-import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { userActions } from 'store/user/slice';
+import { Link, useHistory } from 'react-router-dom';
+import {
+  DownOutlined,
+  FileSearchOutlined,
+  HomeOutlined,
+  LogoutOutlined,
+  ReadOutlined,
+  TeamOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-import Gravatar from '@ferlab/ui/core/components/Gravatar';
+import { useKeycloak } from '@react-keycloak/web';
+import { Button, Dropdown, Menu, PageHeader, Space, Typography } from 'antd';
+import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
+import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
+import { AlterTypes } from 'common/types';
+import NotificationBanner from 'components/featureToggle/NotificationBanner';
+import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
+import IncludeIcon from 'components/Icons/IncludeIcon';
+import HeaderLink from 'components/Layout/Header/HeaderLink';
 import style from 'components/Layout/Header/index.module.scss';
+import UserAvatar from 'components/UserAvatar';
+import { useUser } from 'store/user';
+import { userActions } from 'store/user/slice';
+import { STATIC_ROUTES } from 'utils/routes';
 
 const iconSize = { width: 14, height: 14 };
 const FT_FLAG_KEY = 'SITE_WIDE_BANNER';
@@ -46,7 +51,7 @@ const Header = () => {
         closable
       />
       <PageHeader
-        title={<IncludeIconBeta className={style.logo} />}
+        title={<IncludeIcon className={style.logo} />}
         subTitle={
           <nav className={style.headerList}>
             <HeaderLink
@@ -105,8 +110,39 @@ const Header = () => {
               <Menu
                 items={[
                   {
+                    key: 'email',
+                    disabled: true,
+                    label: (
+                      <Space size={4} className={style.userMenuEmail}>
+                        <Typography.Text>Signed in with</Typography.Text>
+                        <Typography.Text strong>
+                          {tokenParsed.email || tokenParsed.identity_provider_identity}
+                        </Typography.Text>
+                      </Space>
+                    ),
+                  },
+                  {
+                    type: 'divider',
+                  },
+                  {
+                    key: 'profile_settings',
+                    label: (
+                      <Link to={`/member/${userInfo?.keycloak_id}`}>
+                        <Space>
+                          <UserOutlined />
+                          {intl.get('layout.user.menu.settings')}
+                        </Space>
+                      </Link>
+                    ),
+                  },
+                  {
                     key: 'logout',
-                    label: intl.get('layout.user.menu.logout'),
+                    label: (
+                      <Space>
+                        <LogoutOutlined />
+                        {intl.get('layout.user.menu.logout')}
+                      </Space>
+                    ),
                     onClick: () => dispatch(userActions.cleanLogout()),
                   },
                 ]}
@@ -114,11 +150,10 @@ const Header = () => {
             }
           >
             <a className={style.userMenuTrigger} onClick={(e) => e.preventDefault()} href="">
-              <Gravatar
-                circle
-                placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
+              <UserAvatar
+                imageKey={userInfo?.profile_image_key}
+                size={24}
                 className={style.userGravatar}
-                email={tokenParsed.email || tokenParsed.identity_provider_identity}
               />
               <span className={style.userName}>{userInfo?.first_name}</span>
               <DownOutlined />
