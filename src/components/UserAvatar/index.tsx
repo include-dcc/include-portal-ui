@@ -10,15 +10,16 @@ const profileImageBaseUrl = EnvironmentVariables.configFor('PROFILE_IMAGE_BASE_U
 
 interface OwnProps {
   size?: number;
+  shape?: 'square' | 'round';
   className?: string;
 }
 
-const UserAvatar = ({ size = 24, className }: OwnProps) => {
+const UserAvatar = ({ size = 24, shape = 'round', className }: OwnProps) => {
   const { userInfo } = useUser();
 
   return (
     <img
-      className={cx(styles.userAvatar, className)}
+      className={cx(shape === 'round' && styles.userAvatarRound, className)}
       width={size}
       height={size}
       src={
