@@ -65,8 +65,8 @@ const FiltersBox = ({
               }
               options={[
                 ...roleOptions.map((option) => ({
-                  label: option,
-                  value: option,
+                  label: option.label,
+                  value: option.value,
                 })),
                 {
                   label: intl.get('global.other'),
@@ -100,7 +100,7 @@ const FiltersBox = ({
               }
               options={[
                 ...usageOptions.map((option) => ({
-                  label: option.value,
+                  label: option.label,
                   value: option.value,
                 })),
                 {

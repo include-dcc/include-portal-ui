@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { initialState } from 'store/user/types';
 import keycloak from 'auth/keycloak-api/keycloak';
+
 import { deleteUser, fetchUser, updateUser, updateUserConfig } from 'store/user/thunks';
+import { initialState } from 'store/user/types';
 import { STATIC_ROUTES } from 'utils/routes';
 
 export const UserState: initialState = {
@@ -15,7 +16,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: UserState,
   reducers: {
-    cleanLogout: (state) => {
+    cleanLogout: () => {
       keycloak.logout({
         redirectUri: `${window.location.origin}/${STATIC_ROUTES.LOGIN}`,
       });

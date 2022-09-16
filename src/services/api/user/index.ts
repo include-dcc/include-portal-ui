@@ -1,14 +1,15 @@
+import axios from 'axios';
 import EnvironmentVariables from 'helpers/EnvVariables';
 import { roleOptions, usageOptions } from 'views/Community/contants';
 
 import { sendRequest } from 'services/api';
 
-import { TUser, TUserUpdate } from './models';
+import { TProfileImagePresignedOutput, TUser, TUserUpdate } from './models';
 
 export const USER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user`;
 
-export const headers = () => ({
-  'Content-Type': 'application/json',
+export const headers = (contentType: string = 'application/json') => ({
+  'Content-Type': contentType,
 });
 
 const fetch = () =>
@@ -47,7 +48,7 @@ const search = ({
       sort,
       roles,
       dataUses,
-      roleOptions: roleOptions.join(','),
+      roleOptions: roleOptions.map(({ value }) => value).join(','),
       usageOptions: usageOptions.map(({ value }) => value).join(','),
     },
   });
@@ -67,9 +68,31 @@ const deleteUser = () =>
     headers: headers(),
   });
 
+const uploadImageToS3 = async (file: File | Blob) => {
+  const result = await sendRequest<TProfileImagePresignedOutput>({
+    method: 'GET',
+    url: `${USER_API_URL}/image/presigned`,
+    headers: headers(),
+  });
+
+  if (result.error) {
+    throw new Error(result.error.message);
+  }
+
+  await axios.request({
+    method: 'PUT',
+    url: result.data?.presignUrl!,
+    data: file,
+    headers: headers('image/jpeg'),
+  });
+
+  return result.data?.s3Key;
+};
+
 export const UserApi = {
   search,
   fetch,
   update,
   deleteUser,
+  uploadImageToS3,
 };

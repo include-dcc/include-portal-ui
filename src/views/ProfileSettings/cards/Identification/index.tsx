@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import Gravatar from '@ferlab/ui/core/components/Gravatar';
 import ProLabel from '@ferlab/ui/core/components/ProLabel';
 import { useKeycloak } from '@react-keycloak/web';
 import { Alert, Col, Form, Input, Row, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { capitalize } from 'lodash';
 
-import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
 import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
 import { useUser } from 'store/user';
 import { updateUser } from 'store/user/thunks';
 
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
+
+import ProfileImageUpload from './ProfileImageUpload';
 
 import styles from './index.module.scss';
 
@@ -155,14 +155,7 @@ const IdentificationCard = () => {
             </BaseForm>
           </Col>
           <Col span={8} className={styles.gravatarCol}>
-            <div>
-              <Gravatar
-                circle
-                placeholder={DEFAULT_GRAVATAR_PLACEHOLDER}
-                className={styles.userGravatar}
-                email={userInfo?.public_email || ''}
-              />
-            </div>
+            <ProfileImageUpload />
           </Col>
         </Row>
       </Space>

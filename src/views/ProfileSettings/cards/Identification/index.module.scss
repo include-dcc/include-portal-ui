@@ -6,9 +6,15 @@
     display: flex;
     justify-content: center;
     padding-top: 24px;
-    
-    .userGravatar {
-        height: 120px;
-        width: 120px;
+}
+
+.removeImageButton {
+    width: 100%;
+}
+
+.profileImageUpload {
+    :global(.ant-space-item):first-child {
+        display: flex;
+        justify-content: center;
     }
 }

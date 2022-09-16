@@ -24,6 +24,12 @@ export type TUser = {
   commercial_use_reason: string;
   config: TUserConfig;
   linkedin?: string;
+  profile_image_key?: string | null;
+};
+
+export type TProfileImagePresignedOutput = {
+  s3Key: string;
+  presignUrl: string;
 };
 
 export type TUserTableConfig = {

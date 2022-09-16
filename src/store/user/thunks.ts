@@ -1,10 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { UserApi } from 'services/api/user';
 import { TUser, TUserConfig, TUserUpdate } from 'services/api/user/models';
 import { globalActions } from 'store/global';
 import { RootState } from 'store/types';
 import { handleThunkApiReponse } from 'store/utils';
 import { mergeDeep } from 'utils/object';
+
 import { userActions } from './slice';
 
 const fetchUser = createAsyncThunk<TUser, void, { rejectValue: string; state: RootState }>(
@@ -98,7 +100,7 @@ const deleteUser = createAsyncThunk<void, void, { rejectValue: string; state: Ro
       data: undefined,
       reject: thunkAPI.rejectWithValue,
       onSuccess: () => thunkAPI.dispatch(userActions.cleanLogout()),
-      onError: (_) =>
+      onError: () =>
         thunkAPI.dispatch(
           globalActions.displayNotification({
             type: 'error',

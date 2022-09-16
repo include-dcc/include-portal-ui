@@ -100,7 +100,7 @@ const ResearchAndUsagesCard = () => {
             <Space direction="vertical">
               {usageOptions.map((option) => (
                 <Checkbox key={option.key} value={option.value.toLowerCase()}>
-                  {option.value}
+                  {option.label}
                 </Checkbox>
               ))}
               <Form.Item
