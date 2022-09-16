@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { LinkedinFilled, MailFilled } from '@ant-design/icons';
 import Empty from '@ferlab/ui/core/components/Empty';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-import { Col, Divider, List, Result, Row, Skeleton, Space, Typography } from 'antd';
+import { Button, Col, Divider, List, Result, Row, Skeleton, Space, Typography } from 'antd';
 import cx from 'classnames';
 
 import useApi from 'hooks/useApi';
@@ -132,18 +132,27 @@ const CommunityMember = () => {
               <Col md={8}>
                 <Space direction="vertical">
                   {result?.linkedin && (
-                    <ExternalLink style={{ color: 'unset' }} href={result?.linkedin}>
-                      <Space align="center">
-                        <LinkedinFilled />
-                        <Typography.Text>LinkedIn</Typography.Text>
-                      </Space>
-                    </ExternalLink>
+                    <Button type="text">
+                      <ExternalLink style={{ color: 'unset' }} href={result?.linkedin}>
+                        <Space align="center">
+                          <LinkedinFilled />
+                          <Typography.Text>LinkedIn</Typography.Text>
+                        </Space>
+                      </ExternalLink>
+                    </Button>
                   )}
                   {result?.public_email && (
-                    <Space align="center">
-                      <MailFilled />
-                      <Typography.Text>{result?.public_email}</Typography.Text>
-                    </Space>
+                    <Button type="text">
+                      <ExternalLink
+                        style={{ color: 'unset' }}
+                        href={`mailto:${result?.public_email}`}
+                      >
+                        <Space align="center">
+                          <MailFilled />
+                          <Typography.Text>{result?.public_email}</Typography.Text>
+                        </Space>
+                      </ExternalLink>
+                    </Button>
                   )}
                 </Space>
               </Col>
