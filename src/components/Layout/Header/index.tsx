@@ -127,7 +127,7 @@ const Header = () => {
                   {
                     key: 'profile_settings',
                     label: (
-                      <Link to={`/member/${userInfo?.keycloak_id}`}>
+                      <Link to={STATIC_ROUTES.PROFILE_SETTINGS}>
                         <Space>
                           <UserOutlined />
                           {intl.get('layout.user.menu.settings')}
