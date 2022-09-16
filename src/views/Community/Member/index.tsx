@@ -67,7 +67,7 @@ const CommunityMember = () => {
           {loading ? (
             <Skeleton
               paragraph={{
-                rows: 5,
+                rows: 6,
               }}
             />
           ) : (
@@ -95,6 +95,14 @@ const CommunityMember = () => {
                       }}
                     />
                   </Col>
+                  {userInfo?.research_area && (
+                    <Col span={24}>
+                      <Typography.Title level={5}>
+                        {intl.get('screen.memberProfile.researchAreaTitle')}
+                      </Typography.Title>
+                      <Typography.Text>{userInfo?.research_area}</Typography.Text>
+                    </Col>
+                  )}
                   <Col span={24}>
                     <Typography.Title level={5}>
                       {intl.get('screen.memberProfile.usageTitle')}
@@ -124,7 +132,7 @@ const CommunityMember = () => {
               <Col md={8}>
                 <Space direction="vertical">
                   {result?.linkedin && (
-                    <ExternalLink style={{ color: 'unset' }} href={result.linkedin}>
+                    <ExternalLink style={{ color: 'unset' }} href={result?.linkedin}>
                       <Space align="center">
                         <LinkedinFilled />
                         <Typography.Text>LinkedIn</Typography.Text>

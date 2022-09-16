@@ -362,6 +362,7 @@ const fr = {
     memberProfile: {
       notFound: 'User not found',
       rolesTitle: 'Roles',
+      researchAreaTitle: 'Research area or area of interest',
       noRoles: 'No roles',
       usageTitle: 'Intended Use of the INCLUDE Portal Data',
       noUsage: 'No intended usages',
