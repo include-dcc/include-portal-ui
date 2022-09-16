@@ -12,9 +12,10 @@ interface OwnProps {
   size?: number;
   shape?: 'square' | 'round';
   className?: string;
+  overrideImageKey?: string;
 }
 
-const UserAvatar = ({ size = 24, shape = 'round', className }: OwnProps) => {
+const UserAvatar = ({ size = 24, shape = 'round', overrideImageKey, className }: OwnProps) => {
   const { userInfo } = useUser();
 
   return (
@@ -24,7 +25,9 @@ const UserAvatar = ({ size = 24, shape = 'round', className }: OwnProps) => {
       height={size}
       src={
         userInfo?.profile_image_key
-          ? `${profileImageBaseUrl}/${userInfo?.profile_image_key}?v=${userInfo.updated_date}`
+          ? `${profileImageBaseUrl}/${overrideImageKey ?? userInfo?.profile_image_key}?v=${
+              userInfo.updated_date
+            }`
           : DEFAULT_GRAVATAR_PLACEHOLDER
       }
     />

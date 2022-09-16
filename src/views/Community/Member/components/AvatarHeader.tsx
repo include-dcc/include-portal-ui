@@ -18,7 +18,7 @@ const AvatarHeader = ({ user, isLoading = false }: OwnProps) => (
       <Skeleton.Avatar active size={140} />
     ) : (
       <div className={styles.gravatarWrapper}>
-        <UserAvatar size={140} />
+        <UserAvatar overrideImageKey={user?.profile_image_key!} size={140} />
       </div>
     )}
     <Space direction="vertical" size={8} align="center">
