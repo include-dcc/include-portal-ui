@@ -1,23 +1,26 @@
-import { Col, Modal, Row, Typography } from 'antd';
-import { IUserSetOutput } from 'services/api/savedSet/models';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { ReactElement, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import ListItemWithActions from '@ferlab/ui/core/components/List/ListItemWithActions';
+import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { Col, Modal, Row, Typography } from 'antd';
+import { distanceInWords } from 'date-fns';
+import { INDEXES } from 'graphql/constants';
+import { SetActionType } from 'views/DataExploration/components/SetsManagementDropdown';
 import {
   DATA_EPLORATION_FILTER_TAG,
   DATA_EXPLORATION_QB_ID,
 } from 'views/DataExploration/utils/constant';
-import { distanceInWords } from 'date-fns';
-import CreateEditModal from '../CreateEditModal';
-import { deleteSavedSet } from 'store/savedSet/thunks';
-import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { INDEXES } from 'graphql/constants';
-import { SetActionType } from 'views/DataExploration/components/SetsManagementDropdown';
-import { SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
+
+import { IUserSetOutput } from 'services/api/savedSet/models';
 import { getSetFieldId } from 'store/savedSet';
-import ListItemWithActions from 'components/uiKit/list/ListItemWithActions';
+import { deleteSavedSet } from 'store/savedSet/thunks';
+
+import CreateEditModal from '../CreateEditModal';
 
 import styles from './index.module.scss';
 
@@ -44,6 +47,7 @@ const redirectToPage = (setType: string) => {
 const ListItem = ({ data, icon }: OwnProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onCancel = () => {
     setModalVisible(false);
@@ -54,8 +58,8 @@ const ListItem = ({ data, icon }: OwnProps) => {
       <ListItemWithActions
         key={data.id}
         className={styles.savedSetListItem}
-        onEditCb={() => setModalVisible(true)}
-        onDeleteCb={() =>
+        onEdit={() => setModalVisible(true)}
+        onDelete={() =>
           Modal.confirm({
             title: intl.get('components.savedSets.popupConfirm.delete.title'),
             icon: <ExclamationCircleOutlined />,
@@ -76,30 +80,25 @@ const ListItem = ({ data, icon }: OwnProps) => {
             </Col>
           </Row>
         }
-        linkProps={{
-          to: redirectToPage(data.setType),
-          content: (
-            <Text style={{ width: 400 }} ellipsis={{ tooltip: data.tag }}>
-              {data.tag}
-            </Text>
-          ),
-          onClick: () => {
-            const setValue = `${SET_ID_PREFIX}${data.id}`;
-            addQuery({
-              queryBuilderId: DATA_EXPLORATION_QB_ID,
-              query: generateQuery({
-                newFilters: [
-                  generateValueFilter({
-                    field: getSetFieldId(data.setType),
-                    value: [setValue],
-                    index: data.setType,
-                  }),
-                ],
-              }),
-              setAsActive: true,
-            });
-          },
+        onClick={() => {
+          history.push(redirectToPage(data.setType));
+
+          const setValue = `${SET_ID_PREFIX}${data.id}`;
+          addQuery({
+            queryBuilderId: DATA_EXPLORATION_QB_ID,
+            query: generateQuery({
+              newFilters: [
+                generateValueFilter({
+                  field: getSetFieldId(data.setType),
+                  value: [setValue],
+                  index: data.setType,
+                }),
+              ],
+            }),
+            setAsActive: true,
+          });
         }}
+        title={data.tag}
         description={intl.get('screen.dashboard.cards.savedFilters.lastSaved', {
           date: distanceInWords(new Date(), new Date(data.updated_date)),
         })}

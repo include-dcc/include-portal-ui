@@ -1,7 +1,22 @@
-import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
+import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { CloudUploadOutlined, LockOutlined, SafetyOutlined, UnlockFilled } from '@ant-design/icons';
+import ProTable from '@ferlab/ui/core/components/ProTable';
+import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import useQueryBuilderState, {
+  addQuery,
+} from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { Button, Modal, Tag, Tooltip } from 'antd';
+import { INDEXES } from 'graphql/constants';
+import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
 import { IQueryResults } from 'graphql/models';
-import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
+import AnalyseModal from 'views/Dashboard/components/DashboardCards/Cavatica/AnalyseModal';
+import CreateProjectModal from 'views/Dashboard/components/DashboardCards/Cavatica/CreateProjectModal';
+import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import {
   CAVATICA_FILE_BATCH_SIZE,
   DATA_EXPLORATION_QB_ID,
@@ -9,39 +24,25 @@ import {
   SCROLL_WRAPPER_ID,
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
+import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
+
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import ProTable from '@ferlab/ui/core/components/ProTable';
-import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
-import { getProTableDictionary } from 'utils/translation';
-import { useDispatch } from 'react-redux';
-import { useUser } from 'store/user';
-import { updateUserConfig } from 'store/user/thunks';
-import { useEffect, useState } from 'react';
-import { formatFileSize } from 'utils/formatFileSize';
-import { Button, Modal, Tag, Tooltip } from 'antd';
-import AnalyseModal from 'views/Dashboard/components/DashboardCards/Cavatica/AnalyseModal';
-import { fetchTsvReport } from 'store/report/thunks';
-import { INDEXES } from 'graphql/constants';
-import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import CreateProjectModal from 'views/Dashboard/components/DashboardCards/Cavatica/CreateProjectModal';
-import intl from 'react-intl-universal';
+import { FENCE_CONNECTION_STATUSES, FENCE_NAMES } from 'common/fenceTypes';
+import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
+import { SetType } from 'services/api/savedSet/models';
+import { useFenceCavatica } from 'store/fenceCavatica';
+import { fenceCavaticaActions } from 'store/fenceCavatica/slice';
 import { beginAnalyse } from 'store/fenceCavatica/thunks';
 import { useFenceConnection } from 'store/fenceConnection';
-import { useFenceCavatica } from 'store/fenceCavatica';
 import { connectToFence } from 'store/fenceConnection/thunks';
-import { FENCE_CONNECTION_STATUSES, FENCE_NAMES } from 'common/fenceTypes';
-import { fenceCavaticaActions } from 'store/fenceCavatica/slice';
-import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
-import { Link } from 'react-router-dom';
-import { STATIC_ROUTES } from 'utils/routes';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { fetchTsvReport } from 'store/report/thunks';
+import { useUser } from 'store/user';
+import { updateUserConfig } from 'store/user/thunks';
 import { userHasAccessToFile } from 'utils/dataFiles';
-import { scrollToTop, formatQuerySortList } from 'utils/helper';
-import useQueryBuilderState, {
-  addQuery,
-} from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
-import { SetType } from 'services/api/savedSet/models';
+import { formatFileSize } from 'utils/formatFileSize';
+import { formatQuerySortList, scrollToTop } from 'utils/helper';
+import { STATIC_ROUTES } from 'utils/routes';
+import { getProTableDictionary } from 'utils/translation';
 
 import styles from './index.module.scss';
 
@@ -64,7 +65,6 @@ const getDefaultColumns = (
         <LockOutlined />
       </Tooltip>
     ),
-    displayTitle: 'File Authorization',
     align: 'center',
     render: (record: IFileEntity) => {
       const hasAccess = userHasAccessToFile(
@@ -93,7 +93,6 @@ const getDefaultColumns = (
       </Tooltip>
     ),
     dataIndex: 'controlled_access',
-    displayTitle: 'Data access',
     align: 'center',
     width: 75,
     render: (controlled_access: string) =>
@@ -361,6 +360,7 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
             ),
           extra: [
             <SetsManagementDropdown
+              key="setManagementDropdown"
               results={results}
               sqon={getCurrentSqon()}
               selectedAllResults={selectedAllResults}
@@ -368,6 +368,7 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
               selectedKeys={selectedKeys}
             />,
             <Button
+              key="analysisButton"
               disabled={selectedKeys.length === 0}
               type="primary"
               icon={<CloudUploadOutlined />}
