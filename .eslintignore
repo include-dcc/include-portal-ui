@@ -6,3 +6,4 @@ dist
 bin
 .env*
 public/
+commitlint.config.js
