@@ -207,7 +207,7 @@ const fr = {
           newQueryBuilder: 'New filter',
           save: 'Save filter',
           saveChanges: 'Save changes',
-          delete: 'Delete',
+          delete: 'Delete filter',
           duplicateQueryBuilder: 'Duplicate filter',
           share: 'Share (Copy url)',
           setAsDefaultFilter: 'Set as default filter',

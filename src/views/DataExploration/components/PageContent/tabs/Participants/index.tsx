@@ -1,49 +1,50 @@
+import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { DownloadOutlined } from '@ant-design/icons';
+import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
+import ProTable from '@ferlab/ui/core/components/ProTable';
+import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import useQueryBuilderState, {
+  addQuery,
+} from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
+import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { Button, Dropdown, Menu, Tag, Tooltip } from 'antd';
+import { INDEXES } from 'graphql/constants';
+import { ArrangerResultsTree, IQueryResults } from 'graphql/models';
 import {
   IParticipantDiagnosis,
   IParticipantEntity,
   IParticipantObservedPhenotype,
   ITableParticipantEntity,
 } from 'graphql/participants/models';
-import { ArrangerResultsTree, IQueryResults } from 'graphql/models';
+import { capitalize } from 'lodash';
+import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import {
   DATA_EXPLORATION_QB_ID,
   DEFAULT_PAGE_SIZE,
   SCROLL_WRAPPER_ID,
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
-import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
-import { SEX, TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import {
   extractMondoTitleAndCode,
   extractPhenotypeTitleAndCode,
 } from 'views/DataExploration/utils/helper';
-import ProTable from '@ferlab/ui/core/components/ProTable';
-import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
-import { getProTableDictionary } from 'utils/translation';
-import { Button, Dropdown, Menu, Tag, Tooltip } from 'antd';
-import { useDispatch } from 'react-redux';
-import { updateUserConfig } from 'store/user/thunks';
-import { useUser } from 'store/user';
-import { ReportType } from 'services/api/reports/models';
-import { DownloadOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { STATIC_ROUTES } from 'utils/routes';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { INDEXES } from 'graphql/constants';
-import { fetchReport, fetchTsvReport } from 'store/report/thunks';
-import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
-import intl from 'react-intl-universal';
-import { capitalize } from 'lodash';
-import { formatQuerySortList, scrollToTop } from 'utils/helper';
-import useQueryBuilderState, {
-  addQuery,
-} from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
+
+import { SEX, TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
+import { ReportType } from 'services/api/reports/models';
 import { SetType } from 'services/api/savedSet/models';
+import { fetchReport, fetchTsvReport } from 'store/report/thunks';
+import { useUser } from 'store/user';
+import { updateUserConfig } from 'store/user/thunks';
+import { formatQuerySortList, scrollToTop } from 'utils/helper';
+import { STATIC_ROUTES } from 'utils/routes';
+import { getProTableDictionary } from 'utils/translation';
 
 import styles from './index.module.scss';
 
@@ -97,15 +98,12 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    displayTitle: 'DS Status',
     dataIndex: 'down_syndrome_status',
-    render: (down_syndrome_status: 'D21' | 'T21') => {
-      return (
-        <Tooltip title={intl.get(`facets.options.${down_syndrome_status}`)}>
-          {down_syndrome_status}
-        </Tooltip>
-      );
-    },
+    render: (down_syndrome_status: 'D21' | 'T21') => (
+      <Tooltip title={intl.get(`facets.options.${down_syndrome_status}`)}>
+        {down_syndrome_status}
+      </Tooltip>
+    ),
   },
   {
     key: 'sex',
@@ -294,8 +292,8 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (record: ITableParticipantEntity) => {
-      return record.nb_files ? (
+    render: (record: ITableParticipantEntity) =>
+      record.nb_files ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
@@ -318,8 +316,7 @@ const defaultColumns: ProColumnType<any>[] = [
         </Link>
       ) : (
         record.nb_files || 0
-      );
-    },
+      ),
   },
 ];
 
@@ -417,13 +414,19 @@ const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProp
         onSelectedRowsChange: (keys) => setSelectedKeys(keys),
         extra: [
           <SetsManagementDropdown
+            key="setManagementDropdown"
             results={results}
             selectedKeys={selectedKeys}
             selectedAllResults={selectedAllResults}
             sqon={getCurrentSqon()}
             type={SetType.PARTICIPANT}
           />,
-          <Dropdown disabled={selectedKeys.length === 0} overlay={menu} placement="bottomLeft">
+          <Dropdown
+            key="actionDropdown"
+            disabled={selectedKeys.length === 0}
+            overlay={menu}
+            placement="bottomLeft"
+          >
             <Button icon={<DownloadOutlined />}>Download clinical data</Button>
           </Dropdown>,
         ],
