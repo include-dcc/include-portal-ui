@@ -217,7 +217,7 @@ const fr = {
         },
         myFiltersDropdown: {
           title: 'My Filters',
-          manageMyFilter: 'Manage my filters',
+          manageMyFilter: 'Manage filters',
         },
         duplicateFilterTitleSuffix: 'COPY',
       },
@@ -261,6 +261,7 @@ const fr = {
             maximumLength: 'characters maximum',
           },
         },
+        saveThisFilter: 'Save this filter',
         add: {
           title: 'Add to a {type} set',
           okText: 'Add to set',

@@ -10,7 +10,7 @@ import useQueryBuilderState, {
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { Button, Tooltip } from 'antd';
+import { Button } from 'antd';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
 import { IQueryResults } from 'graphql/models';
@@ -94,7 +94,7 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     sorter: { multiple: 1 },
     render: (collection_sample_id: string) => (
       // eslint-disable-next-line
-        <a
+      <a
         type="link"
         onClick={() =>
           updateActiveQueryField({
@@ -118,11 +118,8 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
   },
   {
     key: 'age_at_biospecimen_collection',
-    title: (
-      <Tooltip className="tooltip" title="Age at Biospecimen Collection">
-        Age (days)
-      </Tooltip>
-    ),
+    tooltip: 'Age at Biospecimen Collection',
+    title: 'Age (days)',
     dataIndex: 'age_at_biospecimen_collection',
     render: (age_at_biospecimen_collection) =>
       age_at_biospecimen_collection || TABLE_EMPTY_PLACE_HOLDER,
