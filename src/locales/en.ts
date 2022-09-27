@@ -171,7 +171,7 @@ const fr = {
       header: {
         modal: {
           edit: {
-            title: 'Save this filter',
+            title: 'Edit filter',
             okText: 'Save',
             cancelText: 'Cancel',
             input: {
