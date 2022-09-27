@@ -155,7 +155,7 @@ const defaultColumns: ProColumnType<any>[] = [
   },
   {
     key: 'diagnosis.source_text',
-    title: 'Diagnosis (Source Text)',
+    title: 'Condition (Source Text)',
     dataIndex: 'diagnosis',
     defaultHidden: true,
     render: (mondo: ArrangerResultsTree<IParticipantDiagnosis>) => {
