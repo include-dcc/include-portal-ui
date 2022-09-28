@@ -20,10 +20,10 @@ import styles from './index.module.scss';
 const { Title } = Typography;
 
 const enum DataCategory {
-  METABOLOMIC = 'Metabolomic',
-  GENOMIC = 'Genomic',
-  PROTEOMIC = 'Proteomic',
-  TRANSCRIPTOMIC = 'Transcriptomic',
+  METABOLOMIC = 'Metabolomics',
+  GENOMIC = 'Genomics',
+  PROTEOMIC = 'Proteomics',
+  TRANSCRIPTOMIC = 'Transcriptomics',
   CLINICAL = 'Clinical',
   IMMUNE_MAP = 'Immune-Map',
 }
