@@ -15,6 +15,8 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
 
+import StudyPopoverRedirect from '../DataExploration/components/StudyPopoverRedirect';
+
 import styles from './index.module.scss';
 
 const { Title } = Typography;
@@ -42,8 +44,13 @@ const columns: ProColumnType<any>[] = [
   {
     key: 'study_name',
     title: 'Name',
-    dataIndex: 'study_name',
     width: 500,
+    render: (record: IStudyEntity) =>
+      record.study_id !== 'ABC-DS' ? (
+        record.study_name
+      ) : (
+        <StudyPopoverRedirect text={record.study_name}></StudyPopoverRedirect>
+      ),
   },
   {
     key: 'program',

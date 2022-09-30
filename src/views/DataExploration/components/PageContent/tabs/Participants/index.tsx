@@ -23,6 +23,7 @@ import {
 } from 'graphql/participants/models';
 import { capitalize } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
+import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
   DATA_EXPLORATION_QB_ID,
   DEFAULT_PAGE_SIZE,
@@ -72,6 +73,12 @@ const defaultColumns: ProColumnType<any>[] = [
       multiple: 1,
     },
     className: styles.studyIdCell,
+    render: (study_id: string) =>
+      study_id !== 'ABC-DS' ? (
+        study_id
+      ) : (
+        <StudyPopoverRedirect text={study_id}></StudyPopoverRedirect>
+      ),
   },
   {
     key: 'study_external_id',
