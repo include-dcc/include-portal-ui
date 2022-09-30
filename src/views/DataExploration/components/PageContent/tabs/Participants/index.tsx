@@ -73,12 +73,9 @@ const defaultColumns: ProColumnType<any>[] = [
       multiple: 1,
     },
     className: styles.studyIdCell,
-    render: (study_id: string) =>
-      study_id !== 'ABC-DS' ? (
-        study_id
-      ) : (
-        <StudyPopoverRedirect text={study_id}></StudyPopoverRedirect>
-      ),
+    render: (study_id: string) => (
+      <StudyPopoverRedirect studyId={study_id} text={study_id || ''}></StudyPopoverRedirect>
+    ),
   },
   {
     key: 'study_external_id',

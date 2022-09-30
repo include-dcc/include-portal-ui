@@ -36,7 +36,9 @@ import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
 
 import styles from './index.module.scss';
-import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
+import StudyPopoverRedirect, {
+  AFFECTED_STUDY,
+} from 'views/DataExploration/components/StudyPopoverRedirect';
 
 interface OwnProps {
   results: IQueryResults<IBiospecimenEntity[]>;
@@ -57,15 +59,15 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     key: 'study_id',
     title: 'Study',
     sorter: { multiple: 1 },
-    render: (record: IBiospecimenEntity) => {
-      const studyIdValue =
-        record.study_id !== 'ABD-DS' ? (
-          record.study_id
-        ) : (
-          <StudyPopoverRedirect text={record.study_id || ''}></StudyPopoverRedirect>
-        );
-      return record.study_id ? studyIdValue : TABLE_EMPTY_PLACE_HOLDER;
-    },
+    render: (record: IBiospecimenEntity) =>
+      record.study_id ? (
+        <StudyPopoverRedirect
+          studyId={record.study_id}
+          text={record.study_id || ''}
+        ></StudyPopoverRedirect>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'sample_type',

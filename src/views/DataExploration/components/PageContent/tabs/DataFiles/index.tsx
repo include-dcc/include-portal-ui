@@ -44,7 +44,9 @@ import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
 
-import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
+import StudyPopoverRedirect, {
+  AFFECTED_STUDY,
+} from 'views/DataExploration/components/StudyPopoverRedirect';
 
 import styles from './index.module.scss';
 
@@ -123,15 +125,15 @@ const getDefaultColumns = (
     key: 'study.study_id',
     title: 'Study',
     sorter: { multiple: 1 },
-    render: (record: IFileEntity) => {
-      const studyIdValue =
-        record.study.study_id !== 'ABD-DS' ? (
-          record.study.study_id
-        ) : (
-          <StudyPopoverRedirect text={record.study.study_id || ''}></StudyPopoverRedirect>
-        );
-      return record.study.study_id ? studyIdValue : TABLE_EMPTY_PLACE_HOLDER;
-    },
+    render: (record: IFileEntity) =>
+      record.study.study_id ? (
+        <StudyPopoverRedirect
+          studyId={record.study.study_id}
+          text={record.study.study_id || ''}
+        ></StudyPopoverRedirect>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'data_category',

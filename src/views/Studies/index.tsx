@@ -45,12 +45,12 @@ const columns: ProColumnType<any>[] = [
     key: 'study_name',
     title: 'Name',
     width: 500,
-    render: (record: IStudyEntity) =>
-      record.study_id !== 'ABC-DS' ? (
-        record.study_name
-      ) : (
-        <StudyPopoverRedirect text={record.study_name}></StudyPopoverRedirect>
-      ),
+    render: (record: IStudyEntity) => (
+      <StudyPopoverRedirect
+        studyId={record.study_id}
+        text={record.study_name}
+      ></StudyPopoverRedirect>
+    ),
   },
   {
     key: 'program',
