@@ -23,9 +23,9 @@ const StudyPopoverRedirect = ({ text, studyId }: Props) => {
               target={'_blank'}
               rel="noopener noreferrer"
             >
-              data request
-            </a>{' '}
-            form.
+              data request form
+            </a>
+            .
           </div>
         }
         title="Study Access"
