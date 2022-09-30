@@ -153,7 +153,7 @@ const columns: ProColumnType<any>[] = [
   },
   {
     key: 'proteomic',
-    title: 'Proteomic',
+    title: DataCategory.PROTEOMIC,
     align: 'center',
     render: (record: IStudyEntity) => hasDataCategory(record.data_category, DataCategory.PROTEOMIC),
   },
@@ -166,7 +166,7 @@ const columns: ProColumnType<any>[] = [
   },
   {
     key: 'metabolic',
-    title: 'Metabolomic',
+    title: DataCategory.METABOLOMIC,
     align: 'center',
     render: (record: IStudyEntity) =>
       hasDataCategory(record.data_category, DataCategory.METABOLOMIC),
