@@ -1,40 +1,44 @@
-import { IQueryResults } from 'graphql/models';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { DownloadOutlined } from '@ant-design/icons';
+import ProTable from '@ferlab/ui/core/components/ProTable';
+import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import useQueryBuilderState, {
+  addQuery,
+  updateActiveQueryField,
+} from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { Button } from 'antd';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
-import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
+import { INDEXES } from 'graphql/constants';
+import { IQueryResults } from 'graphql/models';
+import { IParticipantEntity } from 'graphql/participants/models';
+import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import {
   DATA_EXPLORATION_QB_ID,
   DEFAULT_PAGE_SIZE,
   SCROLL_WRAPPER_ID,
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
-import { IParticipantEntity } from 'graphql/participants/models';
-import ProTable from '@ferlab/ui/core/components/ProTable';
-import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
-import { getProTableDictionary } from 'utils/translation';
-import { useDispatch } from 'react-redux';
+import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
+
+import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
+import { ReportType } from 'services/api/reports/models';
+import { SetType } from 'services/api/savedSet/models';
+import { fetchReport, fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
-import { Button, Tooltip } from 'antd';
-import { ReportType } from 'services/api/reports/models';
-import { DownloadOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
-import { fetchReport, fetchTsvReport } from 'store/report/thunks';
-import { INDEXES } from 'graphql/constants';
-import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
-import { Link, useHistory } from 'react-router-dom';
-import { STATIC_ROUTES } from 'utils/routes';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
-import useQueryBuilderState, {
-  updateActiveQueryField,
-  addQuery,
-} from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
-import { SetType } from 'services/api/savedSet/models';
+import { STATIC_ROUTES } from 'utils/routes';
+import { getProTableDictionary } from 'utils/translation';
 
 import styles from './index.module.scss';
+import StudyPopoverRedirect, {
+  AFFECTED_STUDY,
+} from 'views/DataExploration/components/StudyPopoverRedirect';
 
 interface OwnProps {
   results: IQueryResults<IBiospecimenEntity[]>;
@@ -43,7 +47,7 @@ interface OwnProps {
   sqon?: ISqonGroupFilter;
 }
 
-const getDefaultColumns = (history: any): ProColumnType<any>[] => [
+const getDefaultColumns = (): ProColumnType<any>[] => [
   {
     key: 'sample_id',
     title: 'Sample ID',
@@ -54,9 +58,16 @@ const getDefaultColumns = (history: any): ProColumnType<any>[] => [
   {
     key: 'study_id',
     title: 'Study',
-    dataIndex: 'study_id',
     sorter: { multiple: 1 },
-    render: (study_id) => study_id || TABLE_EMPTY_PLACE_HOLDER,
+    render: (record: IBiospecimenEntity) =>
+      record.study_id ? (
+        <StudyPopoverRedirect
+          studyId={record.study_id}
+          text={record.study_id || ''}
+        ></StudyPopoverRedirect>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'sample_type',
@@ -91,24 +102,22 @@ const getDefaultColumns = (history: any): ProColumnType<any>[] => [
     title: 'Collection ID',
     dataIndex: 'collection_sample_id',
     sorter: { multiple: 1 },
-    render: (collection_sample_id: string) => {
-      return (
-        // eslint-disable-next-line
-        <a
-          type="link"
-          onClick={() =>
-            updateActiveQueryField({
-              queryBuilderId: DATA_EXPLORATION_QB_ID,
-              field: 'collection_sample_id',
-              value: [collection_sample_id],
-              index: INDEXES.BIOSPECIMEN,
-            })
-          }
-        >
-          {collection_sample_id}
-        </a>
-      );
-    },
+    render: (collection_sample_id: string) => (
+      // eslint-disable-next-line
+      <a
+        type="link"
+        onClick={() =>
+          updateActiveQueryField({
+            queryBuilderId: DATA_EXPLORATION_QB_ID,
+            field: 'collection_sample_id',
+            value: [collection_sample_id],
+            index: INDEXES.BIOSPECIMEN,
+          })
+        }
+      >
+        {collection_sample_id}
+      </a>
+    ),
   },
   {
     key: 'collection_sample_type',
@@ -119,12 +128,8 @@ const getDefaultColumns = (history: any): ProColumnType<any>[] => [
   },
   {
     key: 'age_at_biospecimen_collection',
-    title: (
-      <Tooltip className="tooltip" title="Age at Biospecimen Collection">
-        Age (days)
-      </Tooltip>
-    ),
-    displayTitle: 'Age (days)',
+    tooltip: 'Age at Biospecimen Collection',
+    title: 'Age (days)',
     dataIndex: 'age_at_biospecimen_collection',
     render: (age_at_biospecimen_collection) =>
       age_at_biospecimen_collection || TABLE_EMPTY_PLACE_HOLDER,
@@ -206,7 +211,6 @@ const getDefaultColumns = (history: any): ProColumnType<any>[] => [
 const BioSpecimenTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
-  const history = useHistory();
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
   const [selectedAllResults, setSelectedAllResults] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -226,7 +230,7 @@ const BioSpecimenTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps
   return (
     <ProTable
       tableId="biospecimen_table"
-      columns={getDefaultColumns(history)}
+      columns={getDefaultColumns()}
       wrapperClassName={styles.biospecimenTabWrapper}
       loading={results.loading}
       initialColumnState={userInfo?.config.data_exploration?.tables?.biospecimens?.columns}
@@ -266,13 +270,14 @@ const BioSpecimenTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps
           dispatch(
             fetchTsvReport({
               columnStates: userInfo?.config.data_exploration?.tables?.biospecimens?.columns,
-              columns: getDefaultColumns(history),
+              columns: getDefaultColumns(),
               index: INDEXES.BIOSPECIMEN,
               sqon: getCurrentSqon(),
             }),
           ),
         extra: [
           <SetsManagementDropdown
+            key="setManagementDropdown"
             results={results}
             sqon={getCurrentSqon()}
             selectedAllResults={selectedAllResults}
@@ -280,6 +285,7 @@ const BioSpecimenTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps
             selectedKeys={selectedKeys}
           />,
           <Button
+            key="downloadSampleButton"
             icon={<DownloadOutlined />}
             onClick={() =>
               dispatch(

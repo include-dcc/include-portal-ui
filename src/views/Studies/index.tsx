@@ -15,15 +15,17 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
 
+import StudyPopoverRedirect from '../DataExploration/components/StudyPopoverRedirect';
+
 import styles from './index.module.scss';
 
 const { Title } = Typography;
 
 const enum DataCategory {
-  METABOLOMIC = 'Metabolomic',
-  GENOMIC = 'Genomic',
-  PROTEOMIC = 'Proteomic',
-  TRANSCRIPTOMIC = 'Transcriptomic',
+  METABOLOMIC = 'Metabolomics',
+  GENOMIC = 'Genomics',
+  PROTEOMIC = 'Proteomics',
+  TRANSCRIPTOMIC = 'Transcriptomics',
   CLINICAL = 'Clinical',
   IMMUNE_MAP = 'Immune-Map',
 }
@@ -42,8 +44,13 @@ const columns: ProColumnType<any>[] = [
   {
     key: 'study_name',
     title: 'Name',
-    dataIndex: 'study_name',
     width: 500,
+    render: (record: IStudyEntity) => (
+      <StudyPopoverRedirect
+        studyId={record.study_id}
+        text={record.study_name}
+      ></StudyPopoverRedirect>
+    ),
   },
   {
     key: 'program',
@@ -146,7 +153,7 @@ const columns: ProColumnType<any>[] = [
   },
   {
     key: 'proteomic',
-    title: 'Proteomic',
+    title: DataCategory.PROTEOMIC,
     align: 'center',
     render: (record: IStudyEntity) => hasDataCategory(record.data_category, DataCategory.PROTEOMIC),
   },
@@ -159,7 +166,7 @@ const columns: ProColumnType<any>[] = [
   },
   {
     key: 'metabolic',
-    title: 'Metabolomic',
+    title: DataCategory.METABOLOMIC,
     align: 'center',
     render: (record: IStudyEntity) =>
       hasDataCategory(record.data_category, DataCategory.METABOLOMIC),

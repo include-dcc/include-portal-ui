@@ -171,7 +171,7 @@ const fr = {
       header: {
         modal: {
           edit: {
-            title: 'Save this filter',
+            title: 'Edit filter',
             okText: 'Save',
             cancelText: 'Cancel',
             input: {
@@ -206,7 +206,7 @@ const fr = {
           newQueryBuilder: 'New filter',
           save: 'Save filter',
           saveChanges: 'Save changes',
-          delete: 'Delete',
+          delete: 'Delete filter',
           duplicateQueryBuilder: 'Duplicate filter',
           share: 'Share (Copy url)',
           setAsDefaultFilter: 'Set as default filter',
@@ -216,7 +216,7 @@ const fr = {
         },
         myFiltersDropdown: {
           title: 'My Filters',
-          manageMyFilter: 'Manage my filters',
+          manageMyFilter: 'Manage filters',
         },
         duplicateFilterTitleSuffix: 'COPY',
       },
@@ -260,6 +260,7 @@ const fr = {
             maximumLength: 'characters maximum',
           },
         },
+        saveThisFilter: 'Save this filter',
         add: {
           title: 'Add to a {type} set',
           okText: 'Add to set',

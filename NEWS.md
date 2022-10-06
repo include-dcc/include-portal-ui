@@ -7,6 +7,16 @@
 
 ### Technical / Other changes
 -->
+
+### 2022-10-06 include-portal-ui 1.6.0
+### Features
+[SJIP-333](https://d3b.atlassian.net/browse/SJIP-333) [Studies & Data exploration] Add a popover for ABC-DS study
+[SJIP-332](https://d3b.atlassian.net/browse/SJIP-332) [Data Exploration] Update mondo terms to latest version
+### Technical/ Other changes:
+[SJIP-328](https://d3b.atlassian.net/browse/SJIP-328) Add Data Category checkmarks for various studies - due because of fhir update
+[SJIP-329](https://d3b.atlassian.net/browse/SJIP-329) DS Status incorrectly labeled in the Column selection tool
+[SJIP-330](https://d3b.atlassian.net/browse/SJIP-330) Adjust the Column name Diagnosis (Source Text) to Condition (Source Text)
+
 ### 2022-09-16 include-portal-ui 1.5.0
 ### Features
 [SJIP-267](https://d3b.atlassian.net/browse/SJIP-267) Feature: Connected portal to Google Analytics
