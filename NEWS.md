@@ -7,6 +7,10 @@
 
 ### Technical / Other changes
 -->
+### 2022-10-06 include-portal-ui 1.6.1
+### Technical/ Other changes:
+[SJIP-337](https://d3b.atlassian.net/browse/SJIP-337) Adjust the choice of operator to include "All of" under the first "Any of"
+[SJIP-338](https://d3b.atlassian.net/browse/SJIP-338) Adjust the MONDO & HPO external URL from Monarch and HPO Jax to OLS
 
 ### 2022-10-06 include-portal-ui 1.6.0
 ### Features
