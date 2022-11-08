@@ -200,9 +200,7 @@ const defaultColumns: ProColumnType<any>[] = [
             return mondoInfo ? (
               <div key={index}>
                 {capitalize(mondoInfo.title)} (MONDO:{' '}
-                <ExternalLink
-                  href={`https://monarchinitiative.org/disease/MONDO:${mondoInfo.code}`}
-                >
+                <ExternalLink href={`http://purl.obolibrary.org/obo/MONDO_${mondoInfo.code}`}>
                   {mondoInfo.code}
                 </ExternalLink>
                 )
@@ -239,7 +237,7 @@ const defaultColumns: ProColumnType<any>[] = [
             return phenotypeInfo ? (
               <div key={index}>
                 {capitalize(phenotypeInfo.title)} (HP:{' '}
-                <ExternalLink href={`https://hpo.jax.org/app/browse/term/HP:${phenotypeInfo.code}`}>
+                <ExternalLink href={`http://purl.obolibrary.org/obo/HP_${phenotypeInfo.code}`}>
                   {phenotypeInfo.code}
                 </ExternalLink>
                 )
