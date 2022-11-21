@@ -1,17 +1,20 @@
 import { useEffect } from 'react';
-import { Row, Col, Button } from 'antd';
-import { FileTextOutlined, ReadOutlined, UserOutlined } from '@ant-design/icons';
-import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import LinkBox from './LinkBox';
-import { STATIC_ROUTES } from 'utils/routes';
 import intl from 'react-intl-universal';
-import CardHeader from 'views/Dashboard/components/CardHeader';
 import { useDispatch } from 'react-redux';
+import { FileTextOutlined, ReadOutlined, UserOutlined } from '@ant-design/icons';
+import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
+import { numberFormat } from '@ferlab/ui/core/utils/numberUtils';
+import GridCard from '@ferlab/ui/core/view/v2/GridCard';
+import { Button, Col, Row } from 'antd';
+import CardHeader from 'views/Dashboard/components/CardHeader';
+
+import BiospecimenIcon from 'components/Icons/BiospecimenIcon';
+import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import { useGlobals } from 'store/global';
 import { fetchStats } from 'store/global/thunks';
-import { numberFormat } from '@ferlab/ui/core/utils/numberUtils';
-import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
+import { STATIC_ROUTES } from 'utils/routes';
+
+import LinkBox from './LinkBox';
 
 import styles from './index.module.scss';
 
@@ -74,7 +77,7 @@ const DataExplorationLinks = () => {
               multiLabelClassName={styles.dataReleaseStatsLabel}
               label={numberFormat(stats?.samples!)}
               subLabel={intl.get('components.dataRelease.biospecimens')}
-              icon={<FileTextOutlined className={styles.dataReleaseIcon} />}
+              icon={<BiospecimenIcon className={styles.dataReleaseIcon} />}
             />
           </Col>
           <Col flex="auto" className={styles.customCol}>
