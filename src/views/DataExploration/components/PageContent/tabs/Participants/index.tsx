@@ -67,7 +67,7 @@ const defaultColumns: ProColumnType<any>[] = [
   },
   {
     key: 'study_id',
-    title: 'Study Code',
+    title: 'Study',
     dataIndex: 'study_id',
     sorter: {
       multiple: 1,
