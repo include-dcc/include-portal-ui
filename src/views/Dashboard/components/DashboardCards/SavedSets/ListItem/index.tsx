@@ -8,7 +8,7 @@ import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQuery
 import { SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { Col, Modal, Row, Typography } from 'antd';
-import { distanceInWords } from 'date-fns';
+import { formatDistance } from 'date-fns';
 import { INDEXES } from 'graphql/constants';
 import { SetActionType } from 'views/DataExploration/components/SetsManagementDropdown';
 import {
@@ -100,7 +100,7 @@ const ListItem = ({ data, icon }: OwnProps) => {
         }}
         title={data.tag}
         description={intl.get('screen.dashboard.cards.savedFilters.lastSaved', {
-          date: distanceInWords(new Date(), new Date(data.updated_date)),
+          date: formatDistance(new Date(), new Date(data.updated_date)),
         })}
       />
       <CreateEditModal

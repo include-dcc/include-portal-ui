@@ -38,6 +38,7 @@ export const getFiltersDictionary = (): FiltersDict => ({
     is: intl.get('global.filters.range.is'),
     min: 'min',
     max: 'max',
+    noData: 'No Data',
   },
   checkBox: {
     searchPlaceholder: intl.get('global.filters.checkbox.placeholder'),
