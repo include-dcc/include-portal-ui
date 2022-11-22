@@ -198,7 +198,6 @@ const Studies = () => {
             columns={columns}
             dataSource={data}
             loading={loading}
-            pagination={false}
             headerConfig={{
               itemCount: {
                 pageIndex: 1,

@@ -80,6 +80,10 @@ const fr = {
         messageUpdate: 'Unable to update filter',
         messageDelete: 'Unable to delete filter',
       },
+      success: {
+        messageSaved: 'Filter saved',
+        messageDeleted: 'Filter deleted',
+      },
     },
     savedSet: {
       error: {
