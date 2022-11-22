@@ -6,7 +6,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ListItemWithActions from '@ferlab/ui/core/components/List/ListItemWithActions';
 import { setQueryBuilderState } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { Modal } from 'antd';
-import { distanceInWords } from 'date-fns';
+import { formatDistance } from 'date-fns';
 
 import { FILTER_ID_QUERY_PARAM_KEY } from 'common/constants';
 import { FILTER_TAG_PAGE_MAPPING, FILTER_TAG_QB_ID_MAPPING } from 'common/queryBuilder';
@@ -53,7 +53,7 @@ const SavedFiltersListItem = ({ data }: OwnProps) => {
         }}
         title={data.title}
         description={intl.get('screen.dashboard.cards.savedFilters.lastSaved', {
-          date: distanceInWords(new Date(), new Date(data.updated_date)),
+          date: formatDistance(new Date(), new Date(data.updated_date)),
         })}
       />
       <EditModal visible={modalVisible} onCancel={() => setModalVisible(false)} filter={data} />

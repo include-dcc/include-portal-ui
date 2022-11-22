@@ -8,7 +8,6 @@ import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQuery
 import { SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { Col, Modal, Row, Typography } from 'antd';
-import { distanceInWords } from 'date-fns';
 import { INDEXES } from 'graphql/constants';
 import { SetActionType } from 'views/DataExploration/components/SetsManagementDropdown';
 import {
