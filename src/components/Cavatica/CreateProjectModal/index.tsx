@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
 import Empty from '@ferlab/ui/core/components/Empty';
 import { Form, Input, Modal, Select, Typography } from 'antd';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+
 import { useFenceCavatica } from 'store/fenceCavatica';
 import { fenceCavaticaActions } from 'store/fenceCavatica/slice';
 import { createProjet, fetchAllBillingGroups } from 'store/fenceCavatica/thunks';
-import intl from 'react-intl-universal';
 
 import styles from './index.module.scss';
 

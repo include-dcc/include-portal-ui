@@ -1,17 +1,18 @@
+import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
 import { FileTextOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Divider, List, Modal, Space, Tag, TreeSelect, Typography } from 'antd';
 import { IFileEntity } from 'graphql/files/models';
 import { groupBy } from 'lodash';
 import { LegacyDataNode } from 'rc-tree-select/lib/TreeSelect';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+
 import { CavaticaApi } from 'services/api/cavatica';
 import { CAVATICA_TYPE } from 'services/api/cavatica/models';
 import { useFenceCavatica } from 'store/fenceCavatica';
 import { fenceCavaticaActions } from 'store/fenceCavatica/slice';
 import { fetchAllProjects, startBulkImportJob } from 'store/fenceCavatica/thunks';
 import { ICavaticaTreeNode } from 'store/fenceCavatica/types';
-import intl from 'react-intl-universal';
 
 import styles from './index.module.scss';
 
@@ -89,7 +90,7 @@ const AnalyseModal = () => {
       data?.items
         .filter(({ type }) => type !== CAVATICA_TYPE.FILE)
         .map((child) => {
-          let enrichedChild: any = {
+          const enrichedChild: any = {
             ...child,
             value: child.id,
             title: child.name,
@@ -186,16 +187,14 @@ const AnalyseModal = () => {
           size="small"
           className={styles.studiesList}
           dataSource={aggregateFilesToStudy(bulkImportData.files)}
-          renderItem={(item) => {
-            return (
-              <List.Item>
-                <List.Item.Meta description={<Text ellipsis>{item.title}</Text>} />
-                <Text type="secondary">
-                  {item.nbFiles} <FileTextOutlined />
-                </Text>
-              </List.Item>
-            );
-          }}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta description={<Text ellipsis>{item.title}</Text>} />
+              <Text type="secondary">
+                {item.nbFiles} <FileTextOutlined />
+              </Text>
+            </List.Item>
+          )}
         />
       </Space>
     </Modal>
