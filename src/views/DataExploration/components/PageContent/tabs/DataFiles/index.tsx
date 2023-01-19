@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { CloudUploadOutlined, LockOutlined, SafetyOutlined, UnlockFilled } from '@ant-design/icons';
+import { LockOutlined, SafetyOutlined, UnlockFilled } from '@ant-design/icons';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import useQueryBuilderState, {
@@ -10,16 +9,15 @@ import useQueryBuilderState, {
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { Button, Modal, Tag, Tooltip } from 'antd';
+import { Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
 import { IQueryResults } from 'graphql/models';
-import AnalyseModal from 'views/Dashboard/components/DashboardCards/Cavatica/AnalyseModal';
-import CreateProjectModal from 'views/Dashboard/components/DashboardCards/Cavatica/CreateProjectModal';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
+import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
-  CAVATICA_FILE_BATCH_SIZE,
   DATA_EXPLORATION_QB_ID,
+  DATA_FILES_SAVED_SETS_FIELD,
   DEFAULT_PAGE_SIZE,
   SCROLL_WRAPPER_ID,
   TAB_IDS,
@@ -27,14 +25,11 @@ import {
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { FENCE_CONNECTION_STATUSES, FENCE_NAMES } from 'common/fenceTypes';
+import { FENCE_CONNECTION_STATUSES } from 'common/fenceTypes';
 import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
+import CavaticaAnalyzeButton from 'components/Cavatica/AnalyzeButton';
 import { SetType } from 'services/api/savedSet/models';
-import { useFenceCavatica } from 'store/fenceCavatica';
-import { fenceCavaticaActions } from 'store/fenceCavatica/slice';
-import { beginAnalyse } from 'store/fenceCavatica/thunks';
 import { useFenceConnection } from 'store/fenceConnection';
-import { connectToFence } from 'store/fenceConnection/thunks';
 import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
@@ -43,10 +38,6 @@ import { formatFileSize } from 'utils/formatFileSize';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
-
-import StudyPopoverRedirect, {
-  AFFECTED_STUDY,
-} from 'views/DataExploration/components/StudyPopoverRedirect';
 
 import styles from './index.module.scss';
 
@@ -245,7 +236,6 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
   const dispatch = useDispatch();
   const { userInfo } = useUser();
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
-  const { isConnected, isInitializingAnalyse, beginAnalyseAfterConnection } = useFenceCavatica();
   const { fencesAllAcls, connectionStatus } = useFenceConnection();
   const [selectedAllResults, setSelectedAllResults] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -258,50 +248,18 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
     // eslint-disable-next-line
   }, [JSON.stringify(activeQuery)]);
 
-  const onBeginAnalyse = () =>
-    dispatch(
-      beginAnalyse({
-        sqon: sqon!,
-        fileIds: selectedAllResults ? [] : selectedKeys,
-      }),
-    );
-
   const getCurrentSqon = (): any =>
     selectedAllResults || !selectedKeys.length
       ? sqon
-      : generateSelectionSqon(TAB_IDS.DATA_FILES, selectedKeys);
-
-  const onCavaticaConnectionRequired = () =>
-    Modal.confirm({
-      type: 'warn',
-      title: intl.get('screen.dataExploration.tabs.datafiles.cavatica.authWarning.title'),
-      content: intl.get('screen.dataExploration.tabs.datafiles.cavatica.authWarning.description'),
-      okText: 'Connect',
-      onOk: () => {
-        dispatch(fenceCavaticaActions.setBeginAnalyseConnectionFlag());
-        dispatch(connectToFence(FENCE_NAMES.cavatica));
-      },
-    });
-
-  const onCavaticaUploadLimitReached = () =>
-    Modal.error({
-      title: intl.get('screen.dataExploration.tabs.datafiles.cavatica.bulkImportLimit.title'),
-      content: intl.getHTML(
-        'screen.dataExploration.tabs.datafiles.cavatica.bulkImportLimit.description',
-        {
-          limit: CAVATICA_FILE_BATCH_SIZE,
-        },
-      ),
-      okText: 'Ok',
-      cancelText: undefined,
-    });
-
-  useEffect(() => {
-    if (isConnected && beginAnalyseAfterConnection) {
-      onBeginAnalyse();
-    }
-    // eslint-disable-next-line
-  }, [isConnected, beginAnalyseAfterConnection]);
+      : generateQuery({
+          newFilters: [
+            generateValueFilter({
+              field: DATA_FILES_SAVED_SETS_FIELD,
+              index: INDEXES.FILE,
+              value: selectedRows.map((row) => row[DATA_FILES_SAVED_SETS_FIELD]),
+            }),
+          ],
+        });
 
   return (
     <>
@@ -375,34 +333,13 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
               type={SetType.FILE}
               selectedKeys={selectedKeys}
             />,
-            <Button
-              key="analysisButton"
-              disabled={selectedKeys.length === 0}
+            <CavaticaAnalyzeButton
+              disabled={selectedKeys.length === 0 && !selectedAllResults}
               type="primary"
-              icon={<CloudUploadOutlined />}
-              loading={isInitializingAnalyse}
-              onClick={() => {
-                if (isConnected) {
-                  if (
-                    selectedRows.length > CAVATICA_FILE_BATCH_SIZE ||
-                    (selectedAllResults && results.total > CAVATICA_FILE_BATCH_SIZE)
-                  ) {
-                    onCavaticaUploadLimitReached();
-                  } else {
-                    dispatch(
-                      beginAnalyse({
-                        sqon: sqon!,
-                        fileIds: selectedAllResults ? [] : selectedKeys,
-                      }),
-                    );
-                  }
-                } else {
-                  onCavaticaConnectionRequired();
-                }
-              }}
-            >
-              {intl.get('screen.dataExploration.tabs.datafiles.cavatica.analyseInCavatica')}
-            </Button>,
+              fileIds={selectedAllResults ? [] : selectedKeys}
+              sqon={sqon}
+              key="file-cavatica-upload"
+            />,
           ],
         }}
         bordered
@@ -417,12 +354,6 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
         dataSource={results.data.map((i) => ({ ...i, key: i.file_id }))}
         dictionary={getProTableDictionary()}
       />
-      {isConnected && (
-        <>
-          <AnalyseModal />
-          <CreateProjectModal />
-        </>
-      )}
     </>
   );
 };
