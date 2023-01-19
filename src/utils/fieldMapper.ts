@@ -1,9 +1,9 @@
 import {
-  IValueContent,
-  ISyntheticSqon,
   ISqonGroupFilter,
-  TSqonContent,
+  ISyntheticSqon,
+  IValueContent,
   IValueFilter,
+  TSqonContent,
 } from '@ferlab/ui/core/data/sqon/types';
 import { isBooleanOperator, isEmptySqon } from '@ferlab/ui/core/data/sqon/utils';
 import { INDEXES } from 'graphql/constants';
@@ -51,7 +51,7 @@ const recursiveMap = (
 export const mapFilterForParticipant = (sqonFilters: ISqonGroupFilter) =>
   recursiveMap(sqonFilters, [
     {
-      index: INDEXES.FILE,
+      index: INDEXES.FILES,
       prefix: 'files.',
     },
     {
@@ -75,7 +75,7 @@ export const mapFilterForFiles = (sqonFilters: ISqonGroupFilter) =>
 export const mapFilterForBiospecimen = (sqonFilters: ISqonGroupFilter) =>
   recursiveMap(sqonFilters, [
     {
-      index: INDEXES.FILE,
+      index: INDEXES.FILES,
       prefix: 'files.',
     },
     {

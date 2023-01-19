@@ -1,10 +1,11 @@
 import { ArrangerResultsTree } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { IStudyEntity } from 'graphql/studies/models';
+
 import { IBiospecimenEntity } from '../biospecimens/models';
 
 export interface IFileResultTree {
-  file: ArrangerResultsTree<IFileEntity>;
+  files: ArrangerResultsTree<IFileEntity>;
 }
 
 export interface IFileEntity {

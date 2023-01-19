@@ -1,43 +1,40 @@
-import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import intl from 'react-intl-universal';
+import { useParams } from 'react-router-dom';
+import { ExperimentOutlined, FileSearchOutlined, UserOutlined } from '@ant-design/icons';
+import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
-import { ExperimentOutlined, UserOutlined, FileSearchOutlined } from '@ant-design/icons';
-import PageContent from 'views/DataExploration/components/PageContent';
 import { Spin } from 'antd';
+import { INDEXES } from 'graphql/constants';
 import { ExtendedMappingResults } from 'graphql/models';
-import FilterList, { TCustomFilterMapper } from 'components/uiKit/FilterList';
+import PageContent from 'views/DataExploration/components/PageContent';
 import {
   DATA_EXPLORATION_QB_ID,
   SCROLL_WRAPPER_ID,
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
+
+import FilterList, { TCustomFilterMapper } from 'components/uiKit/FilterList';
 import { FilterInfo } from 'components/uiKit/FilterList/types';
-import { GraphqlBackend } from 'provider/types';
 import useGetExtendedMappings from 'hooks/graphql/useGetExtendedMappings';
-import { INDEXES } from 'graphql/constants';
-import { useParams } from 'react-router-dom';
 import {
   mapFilterForBiospecimen,
   mapFilterForFiles,
   mapFilterForParticipant,
 } from 'utils/fieldMapper';
-import TreeFacet from './components/TreeFacet';
-import ParticipantSearch from './components/ParticipantSearch';
-import FileSearch from './components/FileSearch';
-import { BiospecimenSearch, BiospecimenCollectionSearch } from './components/BiospecimenSearch';
-import { formatHpoTitleAndCode, formatMondoTitleAndCode } from './utils/helper';
-import ParticipantSetSearch from './components/ParticipantSetSearch';
-import FileSetSearch from './components/FileSetSearch';
+
+import { BiospecimenCollectionSearch, BiospecimenSearch } from './components/BiospecimenSearch';
 import BiospecimenSetSearch from './components/BiospecimenSetSearch';
+import FileSearch from './components/FileSearch';
+import FileSetSearch from './components/FileSetSearch';
+import ParticipantSearch from './components/ParticipantSearch';
+import ParticipantSetSearch from './components/ParticipantSetSearch';
+import TreeFacet from './components/TreeFacet';
+import BiospecimenUploadIds from './components/UploadIds/BiospecimenUploadIds';
+import FileUploadIds from './components/UploadIds/FileUploadIds';
+import ParticipantUploadIds from './components/UploadIds/ParticipantUploadIds';
+import { formatHpoTitleAndCode, formatMondoTitleAndCode } from './utils/helper';
 
 import styles from './index.module.scss';
-import ParticipantUploadIds from './components/UploadIds/ParticipantUploadIds';
-import FileUploadIds from './components/UploadIds/FileUploadIds';
-import BiospecimenUploadIds from './components/UploadIds/BiospecimenUploadIds';
-
-interface OwnProps {
-  tab?: string;
-}
 
 enum FilterTypes {
   Participant,
@@ -59,8 +56,14 @@ export const filterGroups: {
         facets: [
           'study_id',
           'down_syndrome_status',
-          <TreeFacet type={'mondoTree'} field={'mondo'} titleFormatter={formatMondoTitleAndCode} />,
           <TreeFacet
+            key={0}
+            type={'mondoTree'}
+            field={'mondo'}
+            titleFormatter={formatMondoTitleAndCode}
+          />,
+          <TreeFacet
+            key={1}
             type={'hpoTree'}
             field={'observed_phenotype'}
             titleFormatter={formatHpoTitleAndCode}
@@ -135,10 +138,10 @@ const filtersContainer = (
   );
 };
 
-const DataExploration = (props: OwnProps) => {
+const DataExploration = () => {
   const { tab } = useParams<{ tab: string }>();
   const participantMappingResults = useGetExtendedMappings(INDEXES.PARTICIPANT);
-  const fileMappingResults = useGetExtendedMappings(INDEXES.FILE);
+  const fileMappingResults = useGetExtendedMappings(INDEXES.FILES);
   const biospecimenMappingResults = useGetExtendedMappings(INDEXES.BIOSPECIMEN);
 
   const menuItems: ISidebarMenuItem[] = [
@@ -171,7 +174,7 @@ const DataExploration = (props: OwnProps) => {
       panelContent: filtersContainer(
         fileMappingResults,
         FilterTypes.Datafiles,
-        INDEXES.FILE,
+        INDEXES.FILES,
         mapFilterForFiles,
       ),
     },

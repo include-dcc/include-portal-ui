@@ -17,6 +17,7 @@ import { IQueryResults } from 'graphql/models';
 import AnalyseModal from 'views/Dashboard/components/DashboardCards/Cavatica/AnalyseModal';
 import CreateProjectModal from 'views/Dashboard/components/DashboardCards/Cavatica/CreateProjectModal';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
+import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
   CAVATICA_FILE_BATCH_SIZE,
   DATA_EXPLORATION_QB_ID,
@@ -43,10 +44,6 @@ import { formatFileSize } from 'utils/formatFileSize';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
-
-import StudyPopoverRedirect, {
-  AFFECTED_STUDY,
-} from 'views/DataExploration/components/StudyPopoverRedirect';
 
 import styles from './index.module.scss';
 
@@ -192,7 +189,7 @@ const getDefaultColumns = (
                   generateValueFilter({
                     field: 'file_id',
                     value: [record.file_id],
-                    index: INDEXES.FILE,
+                    index: INDEXES.FILES,
                   }),
                 ],
               }),
@@ -224,7 +221,7 @@ const getDefaultColumns = (
                   generateValueFilter({
                     field: 'file_id',
                     value: [record.file_id],
-                    index: INDEXES.FILE,
+                    index: INDEXES.FILES,
                   }),
                 ],
               }),
@@ -347,7 +344,7 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
                   connectionStatus.cavatica === FENCE_CONNECTION_STATUSES.connected,
                   connectionStatus.gen3 === FENCE_CONNECTION_STATUSES.connected,
                 ),
-                index: INDEXES.FILE,
+                index: INDEXES.FILES,
                 sqon:
                   selectedAllResults || !selectedKeys.length
                     ? sqon
