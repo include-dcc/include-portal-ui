@@ -149,6 +149,7 @@ const fr = {
         fetchReport: 'Report downloaded successfully',
       },
     },
+    noData: 'No data',
   },
   // COMPONENTS
   components: {

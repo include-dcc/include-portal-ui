@@ -1,5 +1,7 @@
 import { IQueryConfig } from 'common/searchPageTypes';
 
+export const DATA_FILES_SAVED_SETS_FIELD = 'file_id';
+
 export const DATA_EXPLORATION_QB_ID = 'data-exploration-repo-key';
 
 export const DEFAULT_PAGE_INDEX = 1;
