@@ -1,9 +1,25 @@
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  RouteComponentProps,
+  Switch,
+} from 'react-router-dom';
 import Empty from '@ferlab/ui/core/components/Empty';
 import loadable from '@loadable/component';
 import { useKeycloak } from '@react-keycloak/web';
 import { ConfigProvider } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import frFR from 'antd/lib/locale/fr_FR';
+import AuthMiddleware from 'middleware/AuthMiddleware';
+import ProtectedRoute from 'ProtectedRoute';
+import ApolloProvider from 'provider/ApolloProvider';
+import ContextProvider from 'provider/ContextProvider';
+import { GraphqlBackend } from 'provider/types';
+import ErrorPage from 'views/Error';
+import FenceRedirect from 'views/FenceRedirect';
+import Login from 'views/Login';
+
 import { LANG } from 'common/constants';
 import { FENCE_NAMES } from 'common/fenceTypes';
 import MainSideImage from 'components/assets/mainSideImage.jpg';
@@ -12,20 +28,9 @@ import PageLayout from 'components/Layout';
 import SideImageLayout from 'components/Layout/SideImage';
 import Spinner from 'components/uiKit/Spinner';
 import NotificationContextHolder from 'components/utils/NotificationContextHolder';
-import AuthMiddleware from 'middleware/AuthMiddleware';
-import ProtectedRoute from 'ProtectedRoute';
-import ApolloProvider from 'provider/ApolloProvider';
-import ContextProvider from 'provider/ContextProvider';
-import { GraphqlBackend } from 'provider/types';
-import {
-  BrowserRouter as Router, Redirect, Route, RouteComponentProps, Switch
-} from 'react-router-dom';
 import { initGa } from 'services/analytics';
 import { useLang } from 'store/global';
 import { DYNAMIC_ROUTES, STATIC_ROUTES } from 'utils/routes';
-import ErrorPage from 'views/Error';
-import FenceRedirect from 'views/FenceRedirect';
-import Login from 'views/Login';
 
 const loadableProps = { fallback: <Spinner size="large" /> };
 const Dashboard = loadable(() => import('views/Dashboard'), loadableProps);
@@ -34,6 +39,7 @@ const CommunityMember = loadable(() => import('views/Community/Member'), loadabl
 const Studies = loadable(() => import('views/Studies'), loadableProps);
 const DataExploration = loadable(() => import('views/DataExploration'), loadableProps);
 const Variants = loadable(() => import('views/Variants'), loadableProps);
+const FileEntity = loadable(() => import('views/FileEntity'), loadableProps);
 const ProfileSettings = loadable(() => import('views/ProfileSettings'), loadableProps);
 
 initGa();
@@ -96,6 +102,9 @@ const App = () => {
                   <ProtectedRoute exact path={DYNAMIC_ROUTES.VARIANT} layout={PageLayout}>
                     <Variants />
                   </ProtectedRoute>
+                  <ProtectedRoute exact path={DYNAMIC_ROUTES.FILE_ENTITY} layout={PageLayout}>
+                    <FileEntity />
+                  </ProtectedRoute>
                   <Redirect from="*" to={STATIC_ROUTES.DASHBOARD} />
                 </Switch>
                 <NotificationContextHolder />
@@ -110,14 +119,12 @@ const App = () => {
   );
 };
 
-const EnhanceApp = () => {
-  return (
-    <ErrorBoundary>
-      <ContextProvider>
-        <App />
-      </ContextProvider>
-    </ErrorBoundary>
-  );
-};
+const EnhanceApp = () => (
+  <ErrorBoundary>
+    <ContextProvider>
+      <App />
+    </ContextProvider>
+  </ErrorBoundary>
+);
 
 export default EnhanceApp;

@@ -104,6 +104,7 @@ const getDefaultColumns = (
     title: 'File ID',
     dataIndex: 'file_id',
     sorter: { multiple: 1 },
+    render: (file_id: string) => <Link to={`${STATIC_ROUTES.FILES}/${file_id}`}>{file_id}</Link>,
   },
   {
     key: 'file_name',
