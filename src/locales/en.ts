@@ -4,6 +4,7 @@ const filesFacets = {
   controlled_access: 'Access',
   data_type: 'Data Type',
   file_format: 'File Format',
+  file_id: 'File ID',
   size: 'Size',
   access: 'Access',
   sequencing_experiment: {
@@ -628,7 +629,6 @@ const fr = {
     },
   },
   facets: {
-    file_id: 'File ID',
     // Participant
     participant_facet_ids: {
       participant_fhir_id_1: 'Participant ID',
@@ -644,6 +644,9 @@ const fr = {
     },
     participant_id: 'Participant ID',
     study_id: 'Study Code',
+    study: {
+      study_code: 'Study Code',
+    },
     down_syndrome_status: 'Down Syndrome Status',
     down_syndrome_diagnosis: 'Down Syndrome Diagnosis',
     mondo: {
@@ -682,6 +685,48 @@ const fr = {
 
     //Other
     collection_sample_type: 'Collection Sample Type',
+  },
+  entities: {
+    file: {
+      manifest: 'Manifest',
+      locked:
+        'You are unauthorized to access this file. Users requesting access to controlled data require an eRA Commons account and permissions from an associated Data Access Committee. Read more on applying for data access.',
+      unlocked: 'You are authorized to access and copy this file to your Cavatica workspace.',
+      data_access: {
+        title: 'Data Access',
+        access: 'Access',
+        dbgap_accession_number: 'dbGaP Accession Number',
+      },
+      data_type: {
+        title: 'Data Type',
+        category: 'Category',
+        type: 'Type',
+        experimental_strategy: 'Experimental Strategy',
+      },
+      participant_sample: {
+        collection_id: 'Collection ID',
+        collection_sample_type: 'Collection Sample Type',
+        down_syndrome_status: 'Down Syndrome Status',
+        participant_id: 'Participant ID',
+        sample_id: 'Sample ID',
+        sample_type: 'Sample Type',
+        study: 'Study',
+        title: 'Participant / Sample',
+      },
+      summary: {
+        title: 'Summary',
+        file_id: 'ID',
+        file_name: 'Name',
+        study: 'Study',
+        format: 'Format',
+        size: 'Size',
+        url: 'URL',
+        hash: 'Hash',
+        studies: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
+        participants: '{count, plural, =0 {Participant} =1 {Participant} other {Participants}}',
+        biospecimens: '{count, plural, =0 {Biospecimen} =1 {Biospecimen} other {Biospecimens}}',
+      },
+    },
   },
 };
 

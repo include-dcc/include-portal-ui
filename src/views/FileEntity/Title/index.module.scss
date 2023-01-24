@@ -1,0 +1,9 @@
+@import 'src/style/themes/include/colors';
+
+.locked {
+    color: $gray-6;
+}
+
+.unlocked {
+    color: $green-7;
+}

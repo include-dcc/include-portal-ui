@@ -1,6 +1,7 @@
 import { ArrangerResultsTree } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { IStudyEntity } from 'graphql/studies/models';
+
 import { IBiospecimenEntity } from '../biospecimens/models';
 
 export interface IFileResultTree {
@@ -21,6 +22,9 @@ export interface IFileEntity {
   file_id: string;
   size: number;
   file_name: string;
+  hashes: {
+    etag: string;
+  };
   repository: string;
   study: IStudyEntity;
   nb_participants: number;
