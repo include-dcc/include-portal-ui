@@ -12,7 +12,11 @@ const filesFacets = {
   },
 };
 
-const fr = {
+const en = {
+  date: {
+    yearsDaysFormat:
+      '{years, plural, =0 {} =1 {# year} other {# years}} {days, plural, =0 {} =1 {# day} other {# days}}',
+  },
   // Global
   global: {
     yes: 'Yes',
@@ -136,6 +140,13 @@ const fr = {
       },
     },
     report: {
+      clinicalData: {
+        download: 'Download clinical data',
+        family:
+          '{count, plural, =0 {Selected participant & family} =1 {Selected participant & family} other {Selected participants & families}}',
+        participant:
+          '{count, plural, =0 {Selected participant} =1 {Selected participant} other {Selected participants}}',
+      },
       error: {
         title: 'Error',
         message: 'We were unable to generate the report at this time. Please try again later or ',
@@ -642,6 +653,9 @@ const fr = {
       biospecimen_fhir_id_1: 'Sample ID',
       biospecimen_fhir_id_2: 'Sample ID',
     },
+    family: {
+      family_id: 'Family ID',
+    },
     participant_id: 'Participant ID',
     study_id: 'Study Code',
     study: {
@@ -679,6 +693,7 @@ const fr = {
     status: 'Availability',
     age_at_biospecimen_collection: 'Age at Biospec. Collection (days)',
     bio_repository: 'Biorepository',
+
     // File
     files: filesFacets,
     ...filesFacets,
@@ -727,7 +742,84 @@ const fr = {
         biospecimens: '{count, plural, =0 {Biospecimen} =1 {Biospecimen} other {Biospecimens}}',
       },
     },
+    participant: {
+      summary: {
+        title: 'Summary',
+        id: 'ID',
+        external_id: 'Ext. Participant ID',
+        external_id_tooltip: 'External Participant ID',
+        study: 'Study',
+        dbgap: 'dbGaP',
+        family_unit: 'Family Unit',
+        sex: 'Sex',
+        race: 'Race',
+        ethnicity: 'Ethnicity',
+        biospecimens: '{count, plural, =0 {Biospecimen} =1 {Biospecimen} other {Biospecimens}}',
+        files: '{count, plural, =0 {File} =1 {File} other {Files}}',
+        studies: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
+      },
+      profile: {
+        title: 'Profile',
+        sex: 'Sex',
+        race: 'Race',
+        ethnicity: 'Ethnicity',
+        down_syndrome_status: 'Down Syndrome Status',
+        trisomy: 'T21: "Trisomy 21"',
+        disomy: 'D21: "Disomy 21, euploid"',
+      },
+      family: {
+        title: 'Family',
+        family_id: 'Family ID',
+        participant_id: 'Participant ID',
+        family_relationship: 'Family Relationship',
+        down_syndrome_status: 'Down Syndrome Status',
+      },
+      diagnosis: {
+        title: 'Diagnosis',
+        mondo_diagnosis: 'Diagnosis (MONDO)',
+        source_text: 'Condition (Source Text)',
+        age: 'Age',
+        age_tooltip: 'Age at Diagnosis in days',
+        mondo_term: 'MONDO Term',
+        mondo_term_tooltip: '# of participants with this exact MONDO term',
+      },
+      phenotype: {
+        title: 'Phenotype',
+        phenotype_hpo: 'Phenotype (HPO)',
+        source_text: 'Condition (Source Text)',
+        interpretation: 'Interpretation',
+        age: 'Age',
+        age_tooltip: 'Age at Phenotype in days',
+        hpo_term: 'HPO Term',
+        hpo_term_tooltip: '# of participants with this exact HPO term',
+      },
+      biospecimen: {
+        title: 'Biospecimen',
+        sample_id: 'Sample ID',
+        collection_id: 'Collection ID',
+        sample_type: 'Sample Type',
+        collection_sample_type: 'Collection Sample Type',
+        age: 'Age',
+        age_tooltip: 'Age at Biospecimen Collection in days',
+        container_id: 'Container ID',
+        volume: 'Volume',
+        volume_unit: 'Volume Unit',
+        sample_availabilty: 'Sample Availability',
+        laboratory_procedure: 'Laboratory Procedure',
+        biospecimen_storage: 'Biospecimen Storage',
+        parent_sample_id: 'Parent Sample ID',
+        parent_sample_type: 'Parent Sample Type',
+      },
+      files: {
+        title: 'Data File',
+        data_category: 'Data Category',
+        data_category_count: 'File count by Data Category',
+        experimental_strategy: 'Experimental Strategy',
+        experimental_strategy_count: 'File count by Experimental Strategy',
+        files: 'Files',
+      },
+    },
   },
 };
 
-export default fr;
+export default en;

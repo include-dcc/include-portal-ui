@@ -1,6 +1,6 @@
-import { IBiospecimenEntity } from "graphql/biospecimens/models";
-import { IFileEntity } from "graphql/files/models";
-import { ArrangerResultsTree } from "graphql/models";
+import { IFileEntity } from 'graphql/files/models';
+import { ArrangerResultsTree } from 'graphql/models';
+import { IStudyEntity } from 'graphql/studies/models';
 
 export interface IParticipantResultTree {
   participant: ArrangerResultsTree<IParticipantEntity>;
@@ -8,15 +8,45 @@ export interface IParticipantResultTree {
 
 export interface IParticipantDiagnosis {
   id: string;
-  score: number;
+  diagnosis_id: string;
   mondo_id_diagnosis: string;
   source_text: string;
+  age_at_event_days: number;
 }
 
 export interface IParticipantPhenotype {
   id: string;
-  score: number;
-  hpo_id_phenotype: string;
+  age_at_event_days: number;
+  fhir_id: string;
+  hpo_phenotype_observed: string;
+  hpo_phenotype_observed_text: string;
+  hpo_phenotype_not_observed: string;
+  hpo_phenotype_not_observed_text: string;
+  observed: boolean;
+}
+
+export interface IParticipantBiospecimen {
+  id: string;
+  age_at_biospecimen_collection: number;
+  age_at_biospecimen_collection_years: number;
+  age_at_biospecimen_collection_onset: string;
+  sample_id: string;
+  sample_type: string;
+  parent_sample_id: string;
+  parent_sample_type: string;
+  collection_sample_id: string;
+  collection_sample_type: string;
+  container_id: string;
+  volume_ul: number;
+  volume_unit: string;
+  laboratory_procedure: string;
+  biospecimen_storage: string;
+  fhir_id: string;
+  biospecimen_facet_ids: {
+    biospecimen_fhir_id_1: string;
+    biospecimen_fhir_id_2: string;
+  };
+  status: string;
 }
 
 export interface IParticipantMondo {
@@ -29,6 +59,17 @@ export interface IParticipantObservedPhenotype {
   id: any;
   name: string;
   is_tagged: boolean;
+}
+
+export interface IFamilyRelation {
+  id: string;
+  related_participant_id: string;
+  relation: string;
+}
+
+export interface IParticipantFamily {
+  family_id: string;
+  family_relations: ArrangerResultsTree<IFamilyRelation>;
 }
 
 export interface IParticipantEntity {
@@ -53,10 +94,11 @@ export interface IParticipantEntity {
   observed_phenotype: ArrangerResultsTree<IParticipantObservedPhenotype>;
   diagnosis: ArrangerResultsTree<IParticipantDiagnosis>;
   files: ArrangerResultsTree<IFileEntity>;
-  biospecimen: ArrangerResultsTree<IBiospecimenEntity>;
   phenotype: ArrangerResultsTree<IParticipantPhenotype>;
+  study: IStudyEntity;
+  family: IParticipantFamily;
 }
 
 export type ITableParticipantEntity = IParticipantEntity & {
   key: string;
-}
+};
