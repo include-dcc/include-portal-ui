@@ -6,15 +6,15 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
 const getDataTypeItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
   {
-    label: intl.get('entities.file.data_type.category'),
+    label: intl.get('entities.file.category'),
     value: file?.data_category || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.file.data_type.type'),
+    label: intl.get('entities.file.type'),
     value: file?.data_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.file.data_type.experimental_strategy'),
+    label: intl.get('entities.file.experimental_strategy'),
     value: file?.sequencing_experiment.experiment_strategy || TABLE_EMPTY_PLACE_HOLDER,
   },
 ];

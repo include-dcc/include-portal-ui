@@ -8,7 +8,7 @@ import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 
 import { SectionId } from '../utils/anchorLinks';
-import getBiospecimensColumns from '../utils/getBiospecimensColumns';
+import getBiospecimenColumns from '../utils/getBiospecimenColumns';
 
 interface OwnProps {
   data?: IFileEntity;
@@ -27,9 +27,9 @@ const BiospecimenTable = ({ data, loading }: OwnProps) => {
       id={SectionId.PARTICIPANT_SAMPLE}
       loading={loading}
       data={biospecimens}
-      title={intl.get('entities.file.participant_sample.title')}
-      header={intl.get('entities.file.participant_sample.title')}
-      columns={getBiospecimensColumns()}
+      title={intl.get('entities.file.participant_sample')}
+      header={intl.get('entities.file.participant_sample')}
+      columns={getBiospecimenColumns()}
       initialColumnState={userInfo?.config.files?.tables?.biospecimens?.columns}
       headerConfig={{
         enableTableExport: true,

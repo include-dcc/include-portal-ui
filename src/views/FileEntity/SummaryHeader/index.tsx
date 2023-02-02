@@ -45,7 +45,7 @@ const SummaryHeader = ({ file }: OwnProps) => {
         <ReadOutlined className={styles.icon} />
         <span className={styles.entityCount}>{studyCount}</span>
         <span className={styles.text}>
-          {intl.get('entities.file.summary.studies', { count: studyCount })}
+          {intl.get('entities.study.count', { count: studyCount })}
         </span>
       </Link>
       <Link
@@ -70,7 +70,7 @@ const SummaryHeader = ({ file }: OwnProps) => {
         <UserOutlined className={styles.icon} />
         <span className={styles.entityCount}>{participantCount}</span>
         <span className={styles.text}>
-          {intl.get('entities.file.summary.participants', { count: participantCount })}
+          {intl.get('entities.participant.count', { count: participantCount })}
         </span>
       </Link>
       <Link
@@ -95,7 +95,7 @@ const SummaryHeader = ({ file }: OwnProps) => {
         <BiospecimenIcon className={styles.icon} />
         <span className={styles.entityCount}>{biospecimenCount}</span>
         <span className={styles.text}>
-          {intl.get('entities.file.summary.biospecimens', { count: biospecimenCount })}
+          {intl.get('entities.biospecimen.count', { count: biospecimenCount })}
         </span>
       </Link>
     </div>

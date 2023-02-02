@@ -9,11 +9,11 @@ export enum SectionId {
 }
 
 export const getLinks = (): IAnchorLink[] => [
-  { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.file.summary.title') },
-  { href: `#${SectionId.DATA_ACCESS}`, title: intl.get('entities.file.data_access.title') },
-  { href: `#${SectionId.DATA_TYPE}`, title: intl.get('entities.file.data_type.title') },
+  { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
+  { href: `#${SectionId.DATA_ACCESS}`, title: intl.get('entities.file.data_access') },
+  { href: `#${SectionId.DATA_TYPE}`, title: intl.get('entities.file.data_type') },
   {
     href: `#${SectionId.PARTICIPANT_SAMPLE}`,
-    title: intl.get('entities.file.participant_sample.title'),
+    title: intl.get('entities.file.participant_sample'),
   },
 ];

@@ -33,22 +33,22 @@ export default function FileEntity() {
         id={SectionId.SUMMARY}
         loading={loading}
         descriptions={getSummaryItems(data)}
-        header={intl.get('entities.file.summary.title')}
+        header={intl.get('entities.global.summary')}
         subheader={<SummaryHeader file={data} />}
       />
       <EntityDescriptions
         id={SectionId.DATA_ACCESS}
         loading={loading}
         descriptions={getDataAccessItems(data)}
-        title={intl.get('entities.file.data_access.title')}
-        header={intl.get('entities.file.data_access.title')}
+        title={intl.get('entities.file.data_access')}
+        header={intl.get('entities.file.data_access')}
       />
       <EntityDescriptions
         id={SectionId.DATA_TYPE}
         loading={loading}
         descriptions={getDataTypeItems(data)}
-        title={intl.get('entities.file.data_type.title')}
-        header={intl.get('entities.file.data_type.title')}
+        title={intl.get('entities.file.data_type')}
+        header={intl.get('entities.file.data_type')}
       />
 
       <BiospecimenTable data={data} loading={loading} />
