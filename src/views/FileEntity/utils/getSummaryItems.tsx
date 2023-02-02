@@ -6,33 +6,33 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
 const getSummaryItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
   {
-    label: intl.get('entities.file.summary.file_id'),
+    label: intl.get('entities.file.file_id'),
     value: file?.file_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.file.summary.file_name'),
+    label: intl.get('entities.file.file_name'),
     value: file?.file_name || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.file.summary.study'),
+    label: intl.get('entities.study.study'),
     value: file?.study
       ? `${file.study.study_name} (${file.study.study_code})`
       : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.file.summary.format'),
+    label: intl.get('entities.file.format'),
     value: file?.file_format || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.file.summary.size'),
+    label: intl.get('entities.file.size'),
     value: file?.size || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.file.summary.url'),
+    label: intl.get('entities.file.url'),
     value: file?.access_urls || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.file.summary.hash'),
+    label: intl.get('entities.file.hash'),
     value: file?.hashes.etag || TABLE_EMPTY_PLACE_HOLDER,
   },
 ];

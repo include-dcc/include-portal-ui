@@ -12,7 +12,11 @@ const filesFacets = {
   },
 };
 
-const fr = {
+const en = {
+  date: {
+    yearsDaysFormat:
+      '{years, plural, =0 {} =1 {# year} other {# years}} {days, plural, =0 {} =1 {# day} other {# days}}',
+  },
   // Global
   global: {
     yes: 'Yes',
@@ -136,6 +140,13 @@ const fr = {
       },
     },
     report: {
+      clinicalData: {
+        download: 'Download clinical data',
+        family:
+          '{count, plural, =0 {Selected participant & family} =1 {Selected participant & family} other {Selected participants & families}}',
+        participant:
+          '{count, plural, =0 {Selected participant} =1 {Selected participant} other {Selected participants}}',
+      },
       error: {
         title: 'Error',
         message: 'We were unable to generate the report at this time. Please try again later or ',
@@ -642,6 +653,9 @@ const fr = {
       biospecimen_fhir_id_1: 'Sample ID',
       biospecimen_fhir_id_2: 'Sample ID',
     },
+    family: {
+      family_id: 'Family ID',
+    },
     participant_id: 'Participant ID',
     study_id: 'Study Code',
     study: {
@@ -679,6 +693,7 @@ const fr = {
     status: 'Availability',
     age_at_biospecimen_collection: 'Age at Biospec. Collection (days)',
     bio_repository: 'Biorepository',
+
     // File
     files: filesFacets,
     ...filesFacets,
@@ -687,47 +702,88 @@ const fr = {
     collection_sample_type: 'Collection Sample Type',
   },
   entities: {
+    global: {
+      id: 'ID',
+      summary: 'Summary',
+    },
+    biospecimen: {
+      age_tooltip: 'Age at Biospecimen Collection in days',
+      biospecimen: 'Biospecimen',
+      biospecimen_storage: 'Biospecimen Storage',
+      collection_id: 'Collection ID',
+      collection_sample_type: 'Collection Sample Type',
+      container_id: 'Container ID',
+      count: '{count, plural, =0 {Biospecimen} =1 {Biospecimen} other {Biospecimens}}',
+      laboratory_procedure: 'Laboratory Procedure',
+      parent_sample_id: 'Parent Sample ID',
+      parent_sample_type: 'Parent Sample Type',
+      sample_availabilty: 'Sample Availability',
+      sample_id: 'Sample ID',
+      sample_type: 'Sample Type',
+      volume: 'Volume',
+      volume_unit: 'Volume Unit',
+    },
     file: {
-      manifest: 'Manifest',
+      access: 'Access',
+      category: 'Category',
+      count: '{count, plural, =0 {File} =1 {File} other {Files}}',
+      data_access: 'Data Access',
+      data_category: 'Data Category',
+      data_category_count: 'File count by Data Category',
+      data_type: 'Data Type',
+      dbgap_accession_number: 'dbGaP Accession Number',
+      experimental_strategy: 'Experimental Strategy',
+      experimental_strategy_count: 'File count by Experimental Strategy',
+      file: 'Data File',
+      file_id: 'ID',
+      file_name: 'Name',
+      files: 'Files',
+      format: 'Format',
+      hash: 'Hash',
       locked:
         'You are unauthorized to access this file. Users requesting access to controlled data require an eRA Commons account and permissions from an associated Data Access Committee. Read more on applying for data access.',
+      manifest: 'Manifest',
+      participant_sample: 'Participant / Sample',
+      size: 'Size',
+      type: 'Type',
       unlocked: 'You are authorized to access and copy this file to your Cavatica workspace.',
-      data_access: {
-        title: 'Data Access',
-        access: 'Access',
-        dbgap_accession_number: 'dbGaP Accession Number',
-      },
-      data_type: {
-        title: 'Data Type',
-        category: 'Category',
-        type: 'Type',
-        experimental_strategy: 'Experimental Strategy',
-      },
-      participant_sample: {
-        collection_id: 'Collection ID',
-        collection_sample_type: 'Collection Sample Type',
-        down_syndrome_status: 'Down Syndrome Status',
-        participant_id: 'Participant ID',
-        sample_id: 'Sample ID',
-        sample_type: 'Sample Type',
-        study: 'Study',
-        title: 'Participant / Sample',
-      },
-      summary: {
-        title: 'Summary',
-        file_id: 'ID',
-        file_name: 'Name',
-        study: 'Study',
-        format: 'Format',
-        size: 'Size',
-        url: 'URL',
-        hash: 'Hash',
-        studies: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
-        participants: '{count, plural, =0 {Participant} =1 {Participant} other {Participants}}',
-        biospecimens: '{count, plural, =0 {Biospecimen} =1 {Biospecimen} other {Biospecimens}}',
-      },
+      url: 'URL',
+    },
+    participant: {
+      age: 'Age',
+      age_tooltip_diagnosis: 'Age at Diagnosis in days',
+      age_tooltip_phenotype: 'Age at Phenotype in days',
+      count: '{count, plural, =0 {Participant} =1 {Participant} other {Participants}}',
+      dbgap: 'dbGaP',
+      diagnosis: 'Diagnosis',
+      disomy: 'D21: "Disomy 21, euploid"',
+      down_syndrome_status: 'Down Syndrome Status',
+      ethnicity: 'Ethnicity',
+      external_id: 'Ext. Participant ID',
+      external_id_tooltip: 'External Participant ID',
+      family: 'Family',
+      family_id: 'Family ID',
+      family_relationship: 'Family Relationship',
+      family_unit: 'Family Unit',
+      hpo_term: 'HPO Term',
+      hpo_term_tooltip: '# of participants with this exact HPO term',
+      mondo_diagnosis: 'Diagnosis (MONDO)',
+      mondo_term: 'MONDO Term',
+      mondo_term_tooltip: '# of participants with this exact MONDO term',
+      participant_id: 'Participant ID',
+      phenotype: 'Phenotype',
+      phenotype_hpo: 'Phenotype (HPO)',
+      profile: 'Profile',
+      race: 'Race',
+      sex: 'Sex',
+      source_text: 'Condition (Source Text)',
+      trisomy: 'T21: "Trisomy 21"',
+    },
+    study: {
+      count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
+      study: 'Study',
     },
   },
 };
 
-export default fr;
+export default en;

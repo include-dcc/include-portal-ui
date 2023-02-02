@@ -19,6 +19,8 @@ export enum STATIC_ROUTES {
   VARIANT_VARIANTS = '/variant-exploration/variants',
 
   FILES = '/files',
+  PARTICIPANTS = '/participants',
+
   GEN3_FENCE_REDIRECT = '/gen3_redirect',
   CAVATICA_FENCE_REDIRECT = '/cavatica_redirect',
 }
@@ -27,6 +29,7 @@ export enum DYNAMIC_ROUTES {
   DATA_EXPLORATION = '/data-exploration/:tab?',
   VARIANT = '/variant-exploration/:tab?',
   FILE_ENTITY = '/files/:file_id?',
+  PARTICIPANT_ENTITY = '/participants/:participant_id?',
   ERROR = '/error/:status?',
   COMMUNITY_MEMBER = '/member/:id',
 }

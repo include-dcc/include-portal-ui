@@ -1,10 +1,10 @@
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
-import { ReadOutlined, UserOutlined } from '@ant-design/icons';
+import { FileImageOutlined, ReadOutlined } from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { INDEXES } from 'graphql/constants';
-import { IFileEntity } from 'graphql/files/models';
+import { IParticipantEntity } from 'graphql/participants/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import BiospecimenIcon from 'components/Icons/BiospecimenIcon';
@@ -13,13 +13,13 @@ import { STATIC_ROUTES } from 'utils/routes';
 import styles from './index.module.scss';
 
 interface OwnProps {
-  file?: IFileEntity;
+  participant?: IParticipantEntity;
 }
 
-const SummaryHeader = ({ file }: OwnProps) => {
+const SummaryHeader = ({ participant }: OwnProps) => {
   const studyCount = 1;
-  const participantCount = file?.nb_participants || 0;
-  const biospecimenCount = file?.nb_biospecimens || 0;
+  const fileCount = participant?.nb_files || 0;
+  const biospecimenCount = participant?.nb_biospecimens || 0;
 
   return (
     <div className={styles.container}>
@@ -33,7 +33,7 @@ const SummaryHeader = ({ file }: OwnProps) => {
               newFilters: [
                 generateValueFilter({
                   field: 'study.study_code',
-                  value: file ? [file.study.study_code] : [],
+                  value: participant ? [participant.study.study_code] : [],
                   index: INDEXES.PARTICIPANT,
                 }),
               ],
@@ -49,31 +49,6 @@ const SummaryHeader = ({ file }: OwnProps) => {
         </span>
       </Link>
       <Link
-        to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
-        className={styles.link}
-        onClick={() =>
-          addQuery({
-            queryBuilderId: DATA_EXPLORATION_QB_ID,
-            query: generateQuery({
-              newFilters: [
-                generateValueFilter({
-                  field: 'file_id',
-                  value: file ? [file.file_id] : [],
-                  index: INDEXES.FILE,
-                }),
-              ],
-            }),
-            setAsActive: true,
-          })
-        }
-      >
-        <UserOutlined className={styles.icon} />
-        <span className={styles.entityCount}>{participantCount}</span>
-        <span className={styles.text}>
-          {intl.get('entities.participant.count', { count: participantCount })}
-        </span>
-      </Link>
-      <Link
         to={STATIC_ROUTES.DATA_EXPLORATION_BIOSPECIMENS}
         className={styles.link}
         onClick={() =>
@@ -82,9 +57,9 @@ const SummaryHeader = ({ file }: OwnProps) => {
             query: generateQuery({
               newFilters: [
                 generateValueFilter({
-                  field: 'files.file_id',
-                  value: file ? [file.file_id] : [],
-                  index: INDEXES.BIOSPECIMEN,
+                  field: 'participant_id',
+                  value: participant ? [participant.participant_id] : [],
+                  index: INDEXES.PARTICIPANT,
                 }),
               ],
             }),
@@ -97,6 +72,29 @@ const SummaryHeader = ({ file }: OwnProps) => {
         <span className={styles.text}>
           {intl.get('entities.biospecimen.count', { count: biospecimenCount })}
         </span>
+      </Link>
+      <Link
+        to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
+        className={styles.link}
+        onClick={() =>
+          addQuery({
+            queryBuilderId: DATA_EXPLORATION_QB_ID,
+            query: generateQuery({
+              newFilters: [
+                generateValueFilter({
+                  field: 'participant_id',
+                  value: participant ? [participant.participant_id] : [],
+                  index: INDEXES.PARTICIPANT,
+                }),
+              ],
+            }),
+            setAsActive: true,
+          })
+        }
+      >
+        <FileImageOutlined className={styles.icon} />
+        <span className={styles.entityCount}>{fileCount}</span>
+        <span className={styles.text}>{intl.get('entities.file.count', { count: fileCount })}</span>
       </Link>
     </div>
   );

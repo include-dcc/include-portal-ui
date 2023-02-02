@@ -7,11 +7,11 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
 const getDataAccessItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
   {
-    label: intl.get('entities.file.data_access.access'),
+    label: intl.get('entities.file.access'),
     value: file?.controlled_access || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.file.data_access.dbgap_accession_number'),
+    label: intl.get('entities.file.dbgap_accession_number'),
     value:
       (file?.study.external_id && (
         <ExternalLink
