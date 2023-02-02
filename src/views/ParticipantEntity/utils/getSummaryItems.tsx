@@ -3,7 +3,7 @@ import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Tooltip } from 'antd';
 import { IParticipantEntity } from 'graphql/participants/models';
-import { capitalize } from 'lodash';
+import capitalize from 'lodash/capitalize';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
