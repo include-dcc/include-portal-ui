@@ -40,7 +40,7 @@ const ParticipantEntity = () => {
         id={SectionId.SUMMARY}
         loading={loading}
         descriptions={getSummaryItems(participant)}
-        header={intl.get('entities.participant.summary.title')}
+        header={intl.get('entities.global.summary')}
         subheader={<SummaryHeader participant={participant} />}
       />
 
@@ -48,8 +48,8 @@ const ParticipantEntity = () => {
         id={SectionId.PROFILE}
         loading={loading}
         descriptions={getProfileItems(participant)}
-        title={intl.get('entities.participant.profile.title')}
-        header={intl.get('entities.participant.profile.title')}
+        title={intl.get('entities.participant.profile')}
+        header={intl.get('entities.participant.profile')}
       />
 
       {showFamilyTable && <FamilyTable participant={participant!} loading={loading} />}

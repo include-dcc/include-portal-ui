@@ -25,9 +25,9 @@ const FamilyTable = ({ participant, loading }: OwnProps) => {
       id={SectionId.FAMILY}
       loading={loading}
       data={getFamilyMembers(participant)}
-      title={intl.get('entities.participant.family.title')}
+      title={intl.get('entities.participant.family')}
       header={[
-        intl.get('entities.participant.family.family_id'),
+        intl.get('entities.participant.family_id'),
         ' (',
         <FamilyIdLink key={1} familyId={participant.family.family_id} />,
         ')',

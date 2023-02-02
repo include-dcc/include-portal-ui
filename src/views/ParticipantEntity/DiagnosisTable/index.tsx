@@ -26,8 +26,8 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
       id={SectionId.DIAGNOSIS}
       loading={loading}
       data={diagnoses}
-      title={intl.get('entities.participant.diagnosis.title')}
-      header={intl.get('entities.participant.diagnosis.title')}
+      title={intl.get('entities.participant.diagnosis')}
+      header={intl.get('entities.participant.diagnosis')}
       columns={getDiagnosisColumns()}
       initialColumnState={userInfo?.config.participants?.tables?.diagnosis?.columns}
       headerConfig={{

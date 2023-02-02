@@ -65,12 +65,12 @@ export const getDataCategoryColumns = (
   {
     key: 'category',
     dataIndex: 'category',
-    title: intl.get('entities.participant.files.data_category'),
+    title: intl.get('entities.file.data_category'),
     render: (category: string) => category,
   },
   {
     key: 'nb_files',
-    title: intl.get('entities.participant.files.files'),
+    title: intl.get('entities.file.files'),
     render: (file: IDataCategory) =>
       (
         <Link

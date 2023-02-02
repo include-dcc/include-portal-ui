@@ -29,18 +29,18 @@ const FileTable = ({ participant, loading }: IFilesTableProps) => {
       <EntityTableMultiple
         id={SectionId.FILES}
         loading={loading}
-        title={intl.get('entities.participant.files.title')}
-        header={intl.get('entities.participant.files.title')}
+        title={intl.get('entities.file.file')}
+        header={intl.get('entities.file.file')}
         tables={[
           {
             columns: getDataCategoryColumns(fileCount, participantId),
             data: dataCategoryInfo,
-            subTitle: intl.get('entities.participant.files.data_category_count'),
+            subTitle: intl.get('entities.file.data_category_count'),
           },
           {
             columns: getExperimentalStrategyColumns(fileCount, participantId),
             data: experimentalStrategyInfo,
-            subTitle: intl.get('entities.participant.files.experimental_strategy_count'),
+            subTitle: intl.get('entities.file.experimental_strategy_count'),
           },
         ]}
       />

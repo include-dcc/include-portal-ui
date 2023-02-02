@@ -26,8 +26,8 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
       id={SectionId.PHENOTYPE}
       loading={loading}
       data={phenotype}
-      title={intl.get('entities.participant.phenotype.title')}
-      header={intl.get('entities.participant.phenotype.title')}
+      title={intl.get('entities.participant.phenotype')}
+      header={intl.get('entities.participant.phenotype')}
       columns={getPhenotypeColumns()}
       initialColumnState={userInfo?.config.participants?.tables?.phenotype?.columns}
       headerConfig={{

@@ -25,8 +25,8 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
       id={SectionId.BIOSPECIMEN}
       loading={loading}
       data={biospecimens}
-      title={intl.get('entities.participant.biospecimen.title')}
-      header={intl.get('entities.participant.biospecimen.title')}
+      title={intl.get('entities.biospecimen.biospecimen')}
+      header={intl.get('entities.biospecimen.biospecimen')}
       columns={getBiospecimenColumns()}
       initialColumnState={userInfo?.config.participants?.tables?.biospecimens?.columns}
       headerConfig={{

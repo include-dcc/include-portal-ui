@@ -13,7 +13,7 @@ const getDiagnosisColumns = (): ProColumnType[] => [
   {
     key: 'mondo_id_diagnosis',
     dataIndex: 'mondo_id_diagnosis',
-    title: intl.get('entities.participant.diagnosis.mondo_diagnosis'),
+    title: intl.get('entities.participant.mondo_diagnosis'),
     render: (mondo_id_diagnosis: string) => {
       if (!mondo_id_diagnosis) {
         return TABLE_EMPTY_PLACE_HOLDER;
@@ -35,22 +35,22 @@ const getDiagnosisColumns = (): ProColumnType[] => [
   {
     key: 'source_text',
     dataIndex: 'source_text',
-    title: intl.get('entities.participant.diagnosis.source_text'),
+    title: intl.get('entities.participant.source_text'),
     render: (source_text: string) => source_text || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'age_at_event_days',
     dataIndex: 'age_at_event_days',
-    title: intl.get('entities.participant.diagnosis.age'),
-    tooltip: intl.get('entities.participant.diagnosis.age_tooltip'),
+    title: intl.get('entities.participant.age'),
+    tooltip: intl.get('entities.participant.age_tooltip_diagnosis'),
     render: (age_at_event_days: number) =>
       age_at_event_days ? readableDistanceByDays(age_at_event_days) : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'mondo_term',
     dataIndex: 'mondo_id_diagnosis',
-    title: intl.get('entities.participant.diagnosis.mondo_term'),
-    tooltip: intl.get('entities.participant.diagnosis.mondo_term_tooltip'),
+    title: intl.get('entities.participant.mondo_term'),
+    tooltip: intl.get('entities.participant.mondo_term_tooltip'),
     render: (mondo_id_diagnosis: string) => (
       <MondoParticipantCount diagnosis={mondo_id_diagnosis} />
     ),

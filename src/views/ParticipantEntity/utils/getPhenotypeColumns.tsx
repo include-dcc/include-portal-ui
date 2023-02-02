@@ -11,7 +11,7 @@ const getPhenotypeColumns = (): ProColumnType[] => [
   {
     key: 'hpo_phenotype_observed',
     dataIndex: 'hpo_phenotype_observed',
-    title: intl.get('entities.participant.phenotype.phenotype_hpo'),
+    title: intl.get('entities.participant.phenotype_hpo'),
     render: (hpo_phenotype_observed: string) => {
       if (!hpo_phenotype_observed) {
         return TABLE_EMPTY_PLACE_HOLDER;
@@ -32,7 +32,7 @@ const getPhenotypeColumns = (): ProColumnType[] => [
   {
     key: 'source_text',
     dataIndex: 'hpo_phenotype_observed',
-    title: intl.get('entities.participant.phenotype.source_text'),
+    title: intl.get('entities.participant.source_text'),
     render: (hpo_phenotype_observed: string) => {
       const phenotypeInfo = extractPhenotypeTitleAndCode(hpo_phenotype_observed);
 
@@ -42,16 +42,16 @@ const getPhenotypeColumns = (): ProColumnType[] => [
   {
     key: 'age_at_event_days',
     dataIndex: 'age_at_event_days',
-    title: intl.get('entities.participant.phenotype.age'),
-    tooltip: intl.get('entities.participant.phenotype.age_tooltip'),
+    title: intl.get('entities.participant.age'),
+    tooltip: intl.get('entities.participant.age_tooltip_phenotype'),
     render: (age_at_event_days: number) =>
       age_at_event_days ? readableDistanceByDays(age_at_event_days) : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'hpo_term',
     dataIndex: 'hpo_phenotype_observed',
-    title: intl.get('entities.participant.phenotype.hpo_term'),
-    tooltip: intl.get('entities.participant.phenotype.hpo_term_tooltip'),
+    title: intl.get('entities.participant.hpo_term'),
+    tooltip: intl.get('entities.participant.hpo_term_tooltip'),
     render: (hpo_phenotype_observed: string) => (
       <HpoParticipantCount phenotype={hpo_phenotype_observed} />
     ),

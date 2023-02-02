@@ -11,28 +11,28 @@ import styles from '../styles/styles.module.scss';
 
 const getSummaryItems = (participant?: IParticipantEntity): IEntityDescriptionsItem[] => [
   {
-    label: intl.get('entities.participant.summary.id'),
+    label: intl.get('entities.global.id'),
     value: participant?.participant_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: (
       <Tooltip
         className={styles.tooltip}
-        title={intl.get('entities.participant.summary.external_id_tooltip')}
+        title={intl.get('entities.participant.external_id_tooltip')}
       >
-        {intl.get('entities.participant.summary.external_id')}
+        {intl.get('entities.participant.external_id')}
       </Tooltip>
     ),
     value: participant?.external_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.participant.summary.study'),
+    label: intl.get('entities.study.study'),
     value:
       `${participant?.study.study_name} (${participant?.study.study_code})` ||
       TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.participant.summary.dbgap'),
+    label: intl.get('entities.participant.dbgap'),
     value: participant?.study.external_id ? (
       <ExternalLink
         className={styles.link}
@@ -45,7 +45,7 @@ const getSummaryItems = (participant?: IParticipantEntity): IEntityDescriptionsI
     ),
   },
   {
-    label: intl.get('entities.participant.summary.family_unit'),
+    label: intl.get('entities.participant.family_unit'),
     value: capitalize(participant?.family_type) || TABLE_EMPTY_PLACE_HOLDER,
   },
 ];

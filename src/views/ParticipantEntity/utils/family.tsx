@@ -20,7 +20,7 @@ export const getFamilyColumns = (current_participant_id: string): ProColumnType[
   {
     key: 'participant_id',
     dataIndex: 'participant_id',
-    title: intl.get('entities.participant.family.participant_id'),
+    title: intl.get('entities.participant.participant_id'),
     render: (participant_id: string) => {
       if (participant_id === current_participant_id) {
         return participant_id;
@@ -32,12 +32,12 @@ export const getFamilyColumns = (current_participant_id: string): ProColumnType[
   {
     key: 'relation',
     dataIndex: 'relation',
-    title: intl.get('entities.participant.family.family_relationship'),
+    title: intl.get('entities.participant.family_relationship'),
     render: (relation: string) => capitalize(relation) || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'down_syndrome_status',
-    title: intl.get('entities.participant.family.down_syndrome_status'),
+    title: intl.get('entities.participant.down_syndrome_status'),
     render: (familyMember: IFamilyMember) => {
       if (familyMember.participant_id === current_participant_id) {
         return familyMember.down_syndrome_status;

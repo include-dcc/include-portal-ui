@@ -67,12 +67,12 @@ export const getExperimentalStrategyColumns = (
   {
     key: 'strategy',
     dataIndex: 'strategy',
-    title: intl.get('entities.participant.files.experimental_strategy'),
+    title: intl.get('entities.file.experimental_strategy'),
     render: (label: string) => label || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'nb_files',
-    title: intl.get('entities.participant.files.files'),
+    title: intl.get('entities.file.files'),
     render: (file: IExperimentalStrategy) =>
       (
         <Link
