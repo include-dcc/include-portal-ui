@@ -56,8 +56,6 @@ const getCurrentFamilyMember = (participant: IParticipantEntity): IFamilyMember 
 });
 
 export const getFamilyMembers = (participant: IParticipantEntity): IFamilyMember[] => {
-  const currentParticipant: IFamilyMember[] = [getCurrentFamilyMember(participant)];
-
   const otherFamilyMembers: IFamilyMember[] =
     participant?.family?.family_relations.hits?.edges?.map((e) => ({
       key: e.node.related_participant_id,
@@ -65,5 +63,5 @@ export const getFamilyMembers = (participant: IParticipantEntity): IFamilyMember
       relation: e.node.relation,
     })) || [];
 
-  return [...currentParticipant, ...(otherFamilyMembers || [])];
+  return [getCurrentFamilyMember(participant), ...otherFamilyMembers];
 };
