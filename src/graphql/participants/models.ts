@@ -97,6 +97,7 @@ export interface IParticipantEntity {
   phenotype: ArrangerResultsTree<IParticipantPhenotype>;
   study: IStudyEntity;
   family: IParticipantFamily;
+  biospecimens: ArrangerResultsTree<IParticipantBiospecimen>;
 }
 
 export type ITableParticipantEntity = IParticipantEntity & {

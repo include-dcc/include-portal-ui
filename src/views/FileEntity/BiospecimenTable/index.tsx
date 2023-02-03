@@ -1,26 +1,24 @@
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { EntityTable } from '@ferlab/ui/core/pages/EntityPage';
-import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { IFileEntity } from 'graphql/files/models';
 
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 
 import { SectionId } from '../utils/anchorLinks';
-import getBiospecimenColumns from '../utils/getBiospecimenColumns';
+import { getBiospecimenColumns, getBiospecimensFromFile } from '../utils/biospecimens';
 
 interface OwnProps {
-  data?: IFileEntity;
+  file?: IFileEntity;
   loading: boolean;
 }
 
-const BiospecimenTable = ({ data, loading }: OwnProps) => {
+const BiospecimenTable = ({ file, loading }: OwnProps) => {
   const { userInfo } = useUser();
   const dispatch = useDispatch();
 
-  const biospecimens: IBiospecimenEntity[] =
-    data?.biospecimens?.hits?.edges?.map((e) => ({ key: e.node.sample_id, ...e.node })) || [];
+  const biospecimens = getBiospecimensFromFile(file);
 
   return (
     <EntityTable
