@@ -14,7 +14,7 @@ import FileEntityTitle from './Title';
 export default function FileEntity() {
   const { file_id } = useParams<{ file_id: string }>();
 
-  const { data, loading } = useFileEntity({
+  const { file, loading } = useFileEntity({
     field: 'file_id',
     value: file_id,
   });
@@ -23,35 +23,35 @@ export default function FileEntity() {
     <EntityPage
       links={getLinks()}
       pageId={'file-entity-page'}
-      data={data}
+      data={file}
       loading={loading}
       emptyText={intl.get('no.data.available')}
     >
-      <FileEntityTitle file={data} loading={loading} />
+      <FileEntityTitle file={file} loading={loading} />
 
       <EntityDescriptions
         id={SectionId.SUMMARY}
         loading={loading}
-        descriptions={getSummaryItems(data)}
+        descriptions={getSummaryItems(file)}
         header={intl.get('entities.global.summary')}
-        subheader={<SummaryHeader file={data} />}
+        subheader={<SummaryHeader file={file} />}
       />
       <EntityDescriptions
         id={SectionId.DATA_ACCESS}
         loading={loading}
-        descriptions={getDataAccessItems(data)}
+        descriptions={getDataAccessItems(file)}
         title={intl.get('entities.file.data_access')}
         header={intl.get('entities.file.data_access')}
       />
       <EntityDescriptions
         id={SectionId.DATA_TYPE}
         loading={loading}
-        descriptions={getDataTypeItems(data)}
+        descriptions={getDataTypeItems(file)}
         title={intl.get('entities.file.data_type')}
         header={intl.get('entities.file.data_type')}
       />
 
-      <BiospecimenTable data={data} loading={loading} />
+      <BiospecimenTable file={file} loading={loading} />
     </EntityPage>
   );
 }

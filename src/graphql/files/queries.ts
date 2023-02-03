@@ -48,6 +48,36 @@ export const GET_FILE_ENTITY = gql`
           node {
             id
             access_urls
+
+            participants {
+              hits {
+                total
+                edges {
+                  node {
+                    biospecimens {
+                      hits {
+                        total
+                        edges {
+                          node {
+                            sample_id
+                            sample_type
+                            collection_sample_id
+                            collection_sample_type
+                          }
+                        }
+                      }
+                    }
+                    down_syndrome_status
+                    participant_id
+                    study {
+                      study_code
+                      external_id
+                    }
+                  }
+                }
+              }
+            }
+
             controlled_access
             data_category
             data_type

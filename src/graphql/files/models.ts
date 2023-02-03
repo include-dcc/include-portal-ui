@@ -37,7 +37,7 @@ export interface IFileEntity {
   sequencing_experiment: {
     experiment_strategy: string;
   };
-  participant: ArrangerResultsTree<IParticipantEntity>;
+  participants: ArrangerResultsTree<IParticipantEntity>;
   biospecimens: ArrangerResultsTree<IBiospecimenEntity>;
 }
 
