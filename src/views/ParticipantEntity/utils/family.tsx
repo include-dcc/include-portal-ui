@@ -1,6 +1,7 @@
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { Tag } from 'antd';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { capitalize } from 'lodash';
 
@@ -26,14 +27,23 @@ export const getFamilyColumns = (current_participant_id: string): ProColumnType[
         return participant_id;
       }
 
-      return <Link to={`${STATIC_ROUTES.PARTICIPANTS}/${participant_id}`}>{participant_id}</Link>;
+      return participant_id ? (
+        <Link to={`${STATIC_ROUTES.PARTICIPANTS}/${participant_id}`}>{participant_id}</Link>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      );
     },
   },
   {
     key: 'relation',
     dataIndex: 'relation',
     title: intl.get('entities.participant.family_relationship'),
-    render: (relation: string) => capitalize(relation) || TABLE_EMPTY_PLACE_HOLDER,
+    render: (relation: string) =>
+      relation ? (
+        <Tag color={relation === 'Proband' ? 'purple' : ''}>{capitalize(relation)}</Tag>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'down_syndrome_status',
@@ -43,7 +53,11 @@ export const getFamilyColumns = (current_participant_id: string): ProColumnType[
         return familyMember.down_syndrome_status;
       }
 
-      return <DownSyndromeStatus participantId={familyMember.participant_id} />;
+      return familyMember.participant_id ? (
+        <DownSyndromeStatus participantId={familyMember.participant_id} />
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      );
     },
   },
 ];

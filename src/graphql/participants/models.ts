@@ -79,13 +79,13 @@ export interface IParticipantEntity {
   age_at_data_collection: number;
   down_syndrome_diagnosis: string;
   ethnicity: string;
-  family_type: string;
+  family_type: FamilyType;
   is_proband: boolean;
   down_syndrome_status: string;
   participant_id: string;
   external_id: string;
   race: string;
-  sex: string;
+  sex: Sex;
   study_external_id: string;
   study_id: string;
   nb_files: number;
@@ -103,3 +103,17 @@ export interface IParticipantEntity {
 export type ITableParticipantEntity = IParticipantEntity & {
   key: string;
 };
+
+export enum Sex {
+  FEMALE = 'female',
+  MALE = 'male',
+  OTHER = 'other',
+  UNKNOWN = 'unknown',
+}
+
+export enum FamilyType {
+  PROBAND = 'proband-only',
+  DUO = 'duo',
+  TRIO = 'trio',
+  OTHER = 'other',
+}

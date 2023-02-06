@@ -15,10 +15,12 @@ import { Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { ArrangerResultsTree, IQueryResults } from 'graphql/models';
 import {
+  FamilyType,
   IParticipantDiagnosis,
   IParticipantEntity,
   IParticipantObservedPhenotype,
   ITableParticipantEntity,
+  Sex,
 } from 'graphql/participants/models';
 import { capitalize } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
@@ -34,8 +36,9 @@ import {
   extractPhenotypeTitleAndCode,
 } from 'views/DataExploration/utils/helper';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
+import { familyTypeText } from 'views/ParticipantEntity/utils/summary';
 
-import { SEX, TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
 import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
 import { SetType } from 'services/api/savedSet/models';
@@ -115,16 +118,8 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (sex: string) => (
-      <Tag
-        color={
-          sex.toLowerCase() === SEX.FEMALE
-            ? 'magenta'
-            : sex.toLowerCase() === SEX.MALE
-            ? 'geekblue'
-            : ''
-        }
-      >
+    render: (sex: Sex) => (
+      <Tag color={sex === Sex.FEMALE ? 'magenta' : sex === Sex.MALE ? 'geekblue' : ''}>
         {capitalize(sex)}
       </Tag>
     ),
@@ -157,7 +152,8 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (family_type) => family_type || TABLE_EMPTY_PLACE_HOLDER,
+    render: (family_type: FamilyType) =>
+      family_type ? familyTypeText[family_type] : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'diagnosis.source_text',
