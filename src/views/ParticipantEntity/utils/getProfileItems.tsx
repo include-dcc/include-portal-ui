@@ -1,7 +1,7 @@
 import intl from 'react-intl-universal';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
-import { Tooltip } from 'antd';
-import { IParticipantEntity } from 'graphql/participants/models';
+import { Tag, Tooltip } from 'antd';
+import { IParticipantEntity, Sex } from 'graphql/participants/models';
 import { capitalize } from 'lodash';
 
 import styles from '../styles/styles.module.scss';
@@ -17,7 +17,19 @@ const getProfileItems = (participant?: IParticipantEntity): IEntityDescriptionsI
   },
   {
     label: intl.get('entities.participant.sex'),
-    value: capitalize(participant?.sex),
+    value: (
+      <Tag
+        color={
+          participant?.sex === Sex.FEMALE
+            ? 'magenta'
+            : participant?.sex === Sex.MALE
+            ? 'geekblue'
+            : ''
+        }
+      >
+        {capitalize(participant?.sex)}
+      </Tag>
+    ),
   },
   {
     label: (

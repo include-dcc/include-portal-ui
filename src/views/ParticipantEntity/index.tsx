@@ -5,7 +5,7 @@ import { useParticipantEntity } from 'graphql/participants/actions';
 
 import { getLinks, SectionId } from './utils/anchorLinks';
 import getProfileItems from './utils/getProfileItems';
-import getSummaryItems from './utils/getSummaryItems';
+import { getSummaryItems } from './utils/summary';
 import BiospecimenTable from './BiospecimenTable';
 import DiagnosisTable from './DiagnosisTable';
 import FamilyTable from './FamilyTable';
