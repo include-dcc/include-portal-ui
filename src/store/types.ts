@@ -1,11 +1,13 @@
+import { FenceConnectionInitialState } from 'store/fenceConnection';
 import { GlobalInitialState } from 'store/global';
 import { UserInitialState } from 'store/user';
-import { FenceConnectionInitialState } from 'store/fenceConnection';
-import { SavedFilterInitialState } from './savedFilter';
-import { SavedSetInitialState } from './savedSet';
-import { ReportInitialState } from './report';
+
 import { FenceCavaticaInitialState } from './fenceCavatica';
 import { fenceStudiesInitialState } from './fenceStudies';
+import { RemoteInitialState } from './remote';
+import { ReportInitialState } from './report';
+import { SavedFilterInitialState } from './savedFilter';
+import { SavedSetInitialState } from './savedSet';
 
 export type RootState = {
   global: GlobalInitialState;
@@ -16,4 +18,5 @@ export type RootState = {
   savedFilter: SavedFilterInitialState;
   savedSet: SavedSetInitialState;
   fenceCavatica: FenceCavaticaInitialState;
+  remote: RemoteInitialState;
 };

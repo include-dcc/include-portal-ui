@@ -1,10 +1,32 @@
-import QueryBuilder from '@ferlab/ui/core/components/QueryBuilder';
+import { ReactElement, useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   ExperimentOutlined,
   FileTextOutlined,
   PieChartOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import QueryBuilder from '@ferlab/ui/core/components/QueryBuilder';
+import { ISavedFilter } from '@ferlab/ui/core/components/QueryBuilder/types';
+import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
+import { IRemoteComponent, ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
+import { isEmptySqon, resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
+import { Space, Tabs } from 'antd';
+import copy from 'copy-to-clipboard';
+import { useBiospecimen } from 'graphql/biospecimens/actions';
+import { INDEXES } from 'graphql/constants';
+import { useDataFiles } from 'graphql/files/actions';
+import { ExtendedMapping, ExtendedMappingResults } from 'graphql/models';
+import { useParticipants } from 'graphql/participants/actions';
+import { IParticipantResultTree } from 'graphql/participants/models';
+import { GET_PARTICIPANT_COUNT } from 'graphql/participants/queries';
+import { isEmpty } from 'lodash';
+import BiospecimensTab from 'views/DataExploration/components/PageContent/tabs/Biospecimens';
+import DataFilesTabs from 'views/DataExploration/components/PageContent/tabs/DataFiles';
+import ParticipantsTab from 'views/DataExploration/components/PageContent/tabs/Participants';
+import SummaryTab from 'views/DataExploration/components/PageContent/tabs/Summary';
 import {
   DATA_EPLORATION_FILTER_TAG,
   DATA_EXPLORATION_QB_ID,
@@ -12,50 +34,30 @@ import {
   DEFAULT_QUERY_CONFIG,
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
-import intl from 'react-intl-universal';
-import { ExtendedMapping, ExtendedMappingResults } from 'graphql/models';
-import { STATIC_ROUTES } from 'utils/routes';
-import { getQueryBuilderDictionary } from 'utils/translation';
-import { Space, Tabs } from 'antd';
-import {
-  combineExtendedMappings,
-  mapFilterForBiospecimen,
-  mapFilterForFiles,
-  mapFilterForParticipant,
-} from 'utils/fieldMapper';
-import { isEmptySqon, resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
-import { useParticipants } from 'graphql/participants/actions';
-import { useDataFiles } from 'graphql/files/actions';
-import { useBiospecimen } from 'graphql/biospecimens/actions';
-import SummaryTab from 'views/DataExploration/components/PageContent/tabs/Summary';
-import BiospecimensTab from 'views/DataExploration/components/PageContent/tabs/Biospecimens';
-import DataFilesTabs from 'views/DataExploration/components/PageContent/tabs/DataFiles';
-import ParticipantsTab from 'views/DataExploration/components/PageContent/tabs/Participants';
-import { ReactElement, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+
+import { SHARED_FILTER_ID_QUERY_PARAM_KEY } from 'common/constants';
+import GenericFilters from 'components/uiKit/FilterList/GenericFilters';
+import useQBStateWithSavedFilters from 'hooks/useQBStateWithSavedFilters';
+import { ArrangerApi } from 'services/api/arranger';
+import { globalActions } from 'store/global';
+import { remoteSliceActions } from 'store/remote/slice';
 import {
   createSavedFilter,
   deleteSavedFilter,
   setSavedFilterAsDefault,
   updateSavedFilter,
 } from 'store/savedFilter/thunks';
-import { ISavedFilter } from '@ferlab/ui/core/components/QueryBuilder/types';
-import { useHistory } from 'react-router-dom';
-import { isEmpty } from 'lodash';
-import GenericFilters from 'components/uiKit/FilterList/GenericFilters';
-import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
-import { INDEXES } from 'graphql/constants';
-import { numberWithCommas } from 'utils/string';
-import useQBStateWithSavedFilters from 'hooks/useQBStateWithSavedFilters';
-import copy from 'copy-to-clipboard';
-import { getCurrentUrl } from 'utils/helper';
-import { SHARED_FILTER_ID_QUERY_PARAM_KEY } from 'common/constants';
-import { globalActions } from 'store/global';
-import { ArrangerApi } from 'services/api/arranger';
-import { GET_PARTICIPANT_COUNT } from 'graphql/participants/queries';
-import { IParticipantResultTree } from 'graphql/participants/models';
-import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { useSavedSet } from 'store/savedSet';
+import {
+  combineExtendedMappings,
+  mapFilterForBiospecimen,
+  mapFilterForFiles,
+  mapFilterForParticipant,
+} from 'utils/fieldMapper';
+import { getCurrentUrl } from 'utils/helper';
+import { STATIC_ROUTES } from 'utils/routes';
+import { numberWithCommas } from 'utils/string';
+import { getQueryBuilderDictionary } from 'utils/translation';
 
 import styles from './index.module.scss';
 
@@ -261,6 +263,9 @@ const PageContent = ({
           });
 
           return data?.data?.participant.hits.total ?? 0;
+        }}
+        remoteComponentMapping={(remoteComponent: IRemoteComponent) => {
+          dispatch(remoteSliceActions.openRemoteComponent(remoteComponent));
         }}
       />
       <Tabs
