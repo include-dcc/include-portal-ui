@@ -4,8 +4,8 @@ import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { extractPhenotypeTitleAndCode } from 'views/DataExploration/utils/helper';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { readableDistanceByDays } from 'utils/dates';
 
+import AgeCell from '../AgeCell';
 import HpoParticipantCount from '../PhenotypeTable/HpoParticipantCount';
 const getPhenotypeColumns = (): ProColumnType[] => [
   {
@@ -44,8 +44,7 @@ const getPhenotypeColumns = (): ProColumnType[] => [
     dataIndex: 'age_at_event_days',
     title: intl.get('entities.participant.age'),
     tooltip: intl.get('entities.participant.age_tooltip_phenotype'),
-    render: (age_at_event_days: number) =>
-      age_at_event_days ? readableDistanceByDays(age_at_event_days) : TABLE_EMPTY_PLACE_HOLDER,
+    render: (age_at_event_days: number) => <AgeCell ageInDays={age_at_event_days} />,
   },
   {
     key: 'hpo_term',

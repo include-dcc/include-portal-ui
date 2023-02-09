@@ -11,34 +11,41 @@
 
 .link {
     display: flex;
+    width: 100%;
+    align-items: baseline;
+    justify-content: center;
+    
     padding: 8px 16px;
     border: 1px solid $gray-5;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
 
     &:hover {
         background: $gray-2;
     }
 }
 
-.icon, .entityCount {
-    color: $geekblue-7;
+.icon, .count, .readOutlinedIcon {
+    color: $gray-9;
 }
 
 .icon {
     font-size: 20px;
 }
 
-.entityCount {   
+.readOutlinedIcon {
+    font-size: 21px;
+    position: relative;
+    top: 3px;
+}
+
+.count {   
     font-size: 24px;
-    line-height: 32px;
     font-weight: 600;
-    margin: 0 4px 0 8px;; 
+    margin: 0 4px 0 8px;
+    line-height: 32px;
 }
 
 .text {
-    color: $body-2;
     line-height: 22px;
-    align-self: end;
+    color: $gray-7;
+    font-size: 14px;    
 }

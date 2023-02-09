@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { DownloadOutlined } from '@ant-design/icons';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import useQueryBuilderState, {
@@ -10,12 +9,12 @@ import useQueryBuilderState, {
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { Button } from 'antd';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
 import { IQueryResults } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
+import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
   DATA_EXPLORATION_QB_ID,
   DEFAULT_PAGE_SIZE,
@@ -26,9 +25,9 @@ import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
-import { ReportType } from 'services/api/reports/models';
+import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
 import { SetType } from 'services/api/savedSet/models';
-import { fetchReport, fetchTsvReport } from 'store/report/thunks';
+import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
@@ -36,9 +35,6 @@ import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
 
 import styles from './index.module.scss';
-import StudyPopoverRedirect, {
-  AFFECTED_STUDY,
-} from 'views/DataExploration/components/StudyPopoverRedirect';
 
 interface OwnProps {
   results: IQueryResults<IBiospecimenEntity[]>;
@@ -284,23 +280,12 @@ const BioSpecimenTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps
             type={SetType.BIOSPECIMEN}
             selectedKeys={selectedKeys}
           />,
-          <Button
-            key="downloadSampleButton"
-            icon={<DownloadOutlined />}
-            onClick={() =>
-              dispatch(
-                fetchReport({
-                  data: {
-                    sqon: getCurrentSqon(),
-                    name: ReportType.BIOSEPCIMEN_DATA,
-                  },
-                }),
-              )
-            }
-            disabled={selectedKeys.length === 0}
-          >
-            Download sample data
-          </Button>,
+          <DownloadDataButton
+            disabled={selectedKeys.length === 0 && !selectedAllResults}
+            biospecimenIds={selectedAllResults ? [] : selectedKeys}
+            sqon={getCurrentSqon()}
+            key="downloadSampleData"
+          />,
         ],
       }}
       bordered

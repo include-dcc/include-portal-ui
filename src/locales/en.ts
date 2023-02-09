@@ -14,8 +14,8 @@ const filesFacets = {
 
 const en = {
   date: {
-    yearsDaysFormat:
-      '{years, plural, =0 {} =1 {# year} other {# years}} {days, plural, =0 {} =1 {# day} other {# days}}',
+    years: '{years, plural, =0 {} =1 {year} other {years}}',
+    days: '{days, plural, =0 {} =1 {day} other {days}}',
   },
   // Global
   global: {
@@ -140,6 +140,9 @@ const en = {
       },
     },
     report: {
+      biospecimenData: {
+        download: 'Download sample data',
+      },
       clinicalData: {
         download: 'Download clinical data',
         family:
@@ -707,7 +710,7 @@ const en = {
       summary: 'Summary',
     },
     biospecimen: {
-      age_tooltip: 'Age at Biospecimen Collection in days',
+      age_tooltip: 'Age at Biospecimen Collection',
       biospecimen: 'Biospecimen',
       biospecimen_storage: 'Biospecimen Storage',
       collection_id: 'Collection ID',
@@ -729,11 +732,11 @@ const en = {
       count: '{count, plural, =0 {File} =1 {File} other {Files}}',
       data_access: 'Data Access',
       data_category: 'Data Category',
-      data_category_count: 'File count by Data Category',
+      data_category_count: 'File counts by Data Category',
       data_type: 'Data Type',
       dbgap_accession_number: 'dbGaP Accession Number',
       experimental_strategy: 'Experimental Strategy',
-      experimental_strategy_count: 'File count by Experimental Strategy',
+      experimental_strategy_count: 'File counts by Experimental Strategy',
       file: 'Data File',
       file_id: 'ID',
       file_name: 'Name',
@@ -751,8 +754,8 @@ const en = {
     },
     participant: {
       age: 'Age',
-      age_tooltip_diagnosis: 'Age at Diagnosis in days',
-      age_tooltip_phenotype: 'Age at Phenotype in days',
+      age_tooltip_diagnosis: 'Age at Diagnosis',
+      age_tooltip_phenotype: 'Age at Phenotype',
       count: '{count, plural, =0 {Participant} =1 {Participant} other {Participants}}',
       dbgap: 'dbGaP',
       diagnosis: 'Diagnosis',

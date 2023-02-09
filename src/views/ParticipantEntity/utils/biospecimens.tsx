@@ -1,13 +1,12 @@
 import intl from 'react-intl-universal';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
-import { IBiospecimenEntity } from 'graphql/biospecimens/models';
+import { IBiospecimenEntity, Status } from 'graphql/biospecimens/models';
 import { ArrangerEdge } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
-import { capitalize } from 'lodash';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { readableDistanceByDays } from 'utils/dates';
 
+import AgeCell from '../AgeCell';
 import CollectionIdLink from '../BiospecimenTable/CollectionIdLink';
 
 export const getBiospecimenColumns = (): ProColumnType[] => [
@@ -45,10 +44,9 @@ export const getBiospecimenColumns = (): ProColumnType[] => [
     dataIndex: 'age_at_biospecimen_collection',
     title: intl.get('entities.participant.age'),
     tooltip: intl.get('entities.biospecimen.age_tooltip'),
-    render: (age_at_biospecimen_collection: number) =>
-      age_at_biospecimen_collection
-        ? readableDistanceByDays(age_at_biospecimen_collection)
-        : TABLE_EMPTY_PLACE_HOLDER,
+    render: (age_at_biospecimen_collection: number) => (
+      <AgeCell ageInDays={age_at_biospecimen_collection} />
+    ),
   },
   {
     key: 'container_id',
@@ -75,8 +73,14 @@ export const getBiospecimenColumns = (): ProColumnType[] => [
     key: 'status',
     dataIndex: 'status',
     title: intl.get('entities.biospecimen.sample_availabilty'),
-    render: (status: string) => capitalize(status) || TABLE_EMPTY_PLACE_HOLDER,
     defaultHidden: true,
+    render: (status: Status) => {
+      if (!status) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+
+      return status === Status.AVAILABLE ? intl.get('global.yes') : intl.get('global.no');
+    },
   },
   {
     key: 'laboratory_procedure',

@@ -34,8 +34,7 @@ export const getSummaryItems = (participant?: IParticipantEntity): IEntityDescri
   {
     label: intl.get('entities.study.study'),
     value:
-      `${participant?.study.study_name} (${participant?.study.study_code})` ||
-      TABLE_EMPTY_PLACE_HOLDER,
+      `${participant?.study.study_name} (${participant?.study_id})` || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.participant.dbgap'),

@@ -172,10 +172,10 @@ export const GET_PARTICIPANT_ENTITY = gql`
             }
             race
             study {
-              study_code
               study_name
               external_id
             }
+            study_id
             sex
           }
         }
