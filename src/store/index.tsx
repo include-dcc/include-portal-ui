@@ -12,6 +12,7 @@ import FenceCavaticaReducer from 'store/fenceCavatica';
 import FenceConnectionReducer from 'store/fenceConnection';
 import FenceStudiesReducer from 'store/fenceStudies';
 import GlobalReducer from 'store/global';
+import RemoteReducer from 'store/remote';
 import ReportReducer from 'store/report';
 import SavedFilterReducer from 'store/savedFilter';
 import SavedSetReducer from 'store/savedSet';
@@ -36,6 +37,7 @@ const rootReducer = combineReducers<RootState>({
   savedFilter: SavedFilterReducer,
   savedSet: SavedSetReducer,
   fenceCavatica: FenceCavaticaReducer,
+  remote: RemoteReducer,
 });
 
 const store = configureStore({
