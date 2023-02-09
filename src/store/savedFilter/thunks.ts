@@ -101,7 +101,7 @@ const updateSavedFilter = createAsyncThunk<
       thunkAPI.dispatch(
         globalActions.displayMessage({
           type: 'success',
-          content: intl.get('api.savedFilter.saved.successMessage'),
+          content: intl.get('api.savedFilter.success.messageSaved'),
           duration: 5,
         }),
       ),
