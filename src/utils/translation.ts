@@ -42,6 +42,7 @@ export const getFiltersDictionary = (): FiltersDict => ({
   },
   checkBox: {
     searchPlaceholder: intl.get('global.filters.checkbox.placeholder'),
+    noData: 'No data',
   },
   messages: {
     errorNoData: intl.get('global.filters.messages.empty'),
