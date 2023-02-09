@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { EntityTable } from '@ferlab/ui/core/pages/EntityPage';
 import { IParticipantEntity } from 'graphql/participants/models';
 
+import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 
@@ -30,6 +31,12 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
       columns={getBiospecimenColumns()}
       initialColumnState={userInfo?.config.participants?.tables?.biospecimens?.columns}
       headerConfig={{
+        extra: [
+          <DownloadDataButton
+            biospecimenIds={[...biospecimens.map((biospecimen) => biospecimen.sample_id)]}
+            key="downloadSampleData"
+          />,
+        ],
         enableTableExport: true,
         enableColumnSort: true,
         onColumnSortChange: (newState) =>
