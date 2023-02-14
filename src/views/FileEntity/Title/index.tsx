@@ -1,5 +1,6 @@
 import intl from 'react-intl-universal';
 import { FileImageOutlined, LockOutlined, UnlockFilled } from '@ant-design/icons';
+import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { EntityTitle } from '@ferlab/ui/core/pages/EntityPage';
 import { Button, Space, Tooltip } from 'antd';
 import { IFileEntity } from 'graphql/files/models';
@@ -36,7 +37,17 @@ const FileEntityTitle: React.FC<OwnProps> = ({ file, loading }) => {
         <UnlockFilled className={styles.unlocked} />
       </Tooltip>
     ) : (
-      <Tooltip title={intl.get('entities.file.locked')}>
+      <Tooltip
+        title={
+          <>
+            <>{intl.get('entities.file.locked')}</>
+            <ExternalLink href="https://help.includedcc.org/docs/applying-for-access">
+              {intl.get('entities.file.apply_data_access')}
+            </ExternalLink>
+            <>.</>
+          </>
+        }
+      >
         <LockOutlined className={styles.locked} />
       </Tooltip>
     ),
