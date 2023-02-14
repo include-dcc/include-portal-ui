@@ -3,6 +3,7 @@ import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { IFileEntity } from 'graphql/files/models';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import { formatFileSize } from 'utils/formatFileSize';
 
 const getSummaryItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
   {
@@ -16,7 +17,7 @@ const getSummaryItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
   {
     label: intl.get('entities.study.study'),
     value: file?.study
-      ? `${file.study.study_name} (${file.study.study_code})`
+      ? `${file.study.study_name} (${file.study.study_id})`
       : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
@@ -25,7 +26,7 @@ const getSummaryItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
   },
   {
     label: intl.get('entities.file.size'),
-    value: file?.size || TABLE_EMPTY_PLACE_HOLDER,
+    value: file ? formatFileSize(file?.size, { output: 'string' }) : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.file.url'),

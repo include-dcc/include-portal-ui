@@ -728,6 +728,7 @@ const en = {
     },
     file: {
       access: 'Access',
+      apply_data_access: 'applying for data access',
       category: 'Category',
       count: '{count, plural, =0 {File} =1 {File} other {Files}}',
       data_access: 'Data Access',
@@ -744,7 +745,7 @@ const en = {
       format: 'Format',
       hash: 'Hash',
       locked:
-        'You are unauthorized to access this file. Users requesting access to controlled data require an eRA Commons account and permissions from an associated Data Access Committee. Read more on applying for data access.',
+        'You are unauthorized to access this file. Users requesting access to controlled data require an eRA Commons account and permissions from an associated Data Access Committee. Read more on',
       manifest: 'Manifest',
       participant_sample: 'Participant / Sample',
       size: 'Size',
