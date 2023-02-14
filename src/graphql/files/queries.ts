@@ -73,6 +73,7 @@ export const GET_FILE_ENTITY = gql`
                       study_code
                       external_id
                     }
+                    study_id
                   }
                 }
               }
@@ -96,6 +97,7 @@ export const GET_FILE_ENTITY = gql`
             study {
               external_id
               study_code
+              study_id
               study_name
             }
           }

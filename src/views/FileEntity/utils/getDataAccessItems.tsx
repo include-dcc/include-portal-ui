@@ -5,6 +5,8 @@ import { IFileEntity } from 'graphql/files/models';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
+import styles from '../index.module.scss';
+
 const getDataAccessItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
   {
     label: intl.get('entities.file.access'),
@@ -15,6 +17,7 @@ const getDataAccessItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
     value:
       (file?.study.external_id && (
         <ExternalLink
+          className={styles.link}
           href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${file.study.external_id}`}
         >
           {file.study.external_id}

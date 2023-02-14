@@ -1,11 +1,13 @@
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { Tooltip } from 'antd';
 import { IFileEntity } from 'graphql/files/models';
-import { IStudyEntity } from 'graphql/studies/models';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
+
+import styles from '../index.module.scss';
 
 export const getBiospecimenColumns = (): ProColumnType[] => [
   {
@@ -20,15 +22,27 @@ export const getBiospecimenColumns = (): ProColumnType[] => [
       ),
   },
   {
-    key: 'study.study_code',
-    dataIndex: 'study',
+    key: 'study_id',
+    dataIndex: 'study_id',
     title: intl.get('entities.study.study'),
-    render: (study: IStudyEntity) => study?.study_code || TABLE_EMPTY_PLACE_HOLDER,
+    render: (study_id: string) => study_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'down_syndrome_status',
     dataIndex: 'down_syndrome_status',
-    title: intl.get('entities.participant.down_syndrome_status'),
+    title: (
+      <Tooltip
+        className={styles.tooltip}
+        title={
+          <>
+            <div>{intl.get('entities.participant.trisomy')}</div>
+            <div>{intl.get('entities.participant.disomy')}</div>
+          </>
+        }
+      >
+        {intl.get('entities.participant.down_syndrome_status')}
+      </Tooltip>
+    ),
     render: (down_syndrome_status: string) => down_syndrome_status || TABLE_EMPTY_PLACE_HOLDER,
   },
   {

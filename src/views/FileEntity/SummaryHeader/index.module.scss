@@ -14,7 +14,7 @@
     padding: 8px 16px;
     border: 1px solid $gray-5;
     width: 100%;
-    align-items: center;
+    align-items: baseline;
     justify-content: center;
 
     &:hover {
@@ -22,12 +22,18 @@
     }
 }
 
-.icon, .count {
+.icon, .count, .readOutlinedIcon {
     color: $gray-9;
 }
 
 .icon {
     font-size: 20px;
+}
+
+.readOutlinedIcon {
+    font-size: 21px;
+    position: relative;
+    top: 3px;
 }
 
 .count {   
@@ -40,5 +46,5 @@
 .text {
     color: $gray-7;
     line-height: 22px;
-    align-self: end;
+    font-size: 14px;
 }

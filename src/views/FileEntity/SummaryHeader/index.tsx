@@ -42,7 +42,7 @@ const SummaryHeader = ({ file }: OwnProps) => {
           })
         }
       >
-        <ReadOutlined className={styles.icon} />
+        <ReadOutlined className={styles.readOutlinedIcon} />
         <span className={styles.count}>{studyCount}</span>
         <span className={styles.text}>
           {intl.get('entities.study.count', { count: studyCount })}
@@ -82,9 +82,9 @@ const SummaryHeader = ({ file }: OwnProps) => {
             query: generateQuery({
               newFilters: [
                 generateValueFilter({
-                  field: 'files.file_id',
+                  field: 'file_id',
                   value: file ? [file.file_id] : [],
-                  index: INDEXES.BIOSPECIMEN,
+                  index: INDEXES.FILE,
                 }),
               ],
             }),
