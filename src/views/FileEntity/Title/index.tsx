@@ -41,7 +41,10 @@ const FileEntityTitle: React.FC<OwnProps> = ({ file, loading }) => {
         title={
           <>
             <>{intl.get('entities.file.locked')}</>
-            <ExternalLink href="https://help.includedcc.org/docs/applying-for-access">
+            <ExternalLink
+              className={styles.link}
+              href="https://help.includedcc.org/docs/applying-for-access"
+            >
               {intl.get('entities.file.apply_data_access')}
             </ExternalLink>
             <>.</>

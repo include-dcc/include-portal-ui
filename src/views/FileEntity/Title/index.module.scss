@@ -7,3 +7,11 @@
 .unlocked {
     color: $green-7;
 }
+
+.link {
+    text-decoration: underline;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
