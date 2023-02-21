@@ -10,6 +10,7 @@ import useQueryBuilderState, {
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { Tag, Tooltip } from 'antd';
+import { SorterResult } from 'antd/lib/table/interface';
 import { INDEXES } from 'graphql/constants';
 import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
 import { IQueryResults } from 'graphql/models';
@@ -276,12 +277,11 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
         loading={results.loading}
         initialColumnState={userInfo?.config.data_exploration?.tables?.datafiles?.columns}
         enableRowSelection={true}
-        showSorterTooltip={false}
         onChange={({ current, pageSize }, _, sorter) =>
           setQueryConfig({
             pageIndex: current!,
             size: pageSize!,
-            sort: formatQuerySortList(sorter),
+            sort: formatQuerySortList(sorter as SorterResult<ITableFileEntity>),
           })
         }
         headerConfig={{

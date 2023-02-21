@@ -1,5 +1,5 @@
-@import "~@ferlab/style/themes/default/theme.template";
-@import "src/style/themes/include/colors";
+@import '~@ferlab/ui/themes/default/theme.template';
+@import 'src/style/themes/include/colors';
 
 $font-weight-semibold: 500;
 $font-weight-bold: 500;
@@ -62,8 +62,7 @@ $sidebar-menu-item-border-focus: none;
 $sidebar-menu-item-border-focus-color: $gray-1;
 
 $sidebar-quick-filter-input-box-shadow-hover: 0 0 0 2px $blue-8;
-$sidebar-quick-filter-input-box-shadow-focus: 0 0 0 2px $gray-8,
-  0 0 0 3px $gray-1;
+$sidebar-quick-filter-input-box-shadow-focus: 0 0 0 2px $gray-8, 0 0 0 3px $gray-1;
 $sidebar-quick-filter-input-placeholder-color: $gray-6;
 $sidebar-quick-filter-input-text-color: $gray-8;
 

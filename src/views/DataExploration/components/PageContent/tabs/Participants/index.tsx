@@ -12,6 +12,7 @@ import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { Tag, Tooltip } from 'antd';
+import { SorterResult } from 'antd/lib/table/interface';
 import { INDEXES } from 'graphql/constants';
 import { ArrangerResultsTree, IQueryResults } from 'graphql/models';
 import {
@@ -345,12 +346,11 @@ const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProp
       initialColumnState={userInfo?.config.data_exploration?.tables?.participants?.columns}
       enableRowSelection={true}
       initialSelectedKey={selectedKeys}
-      showSorterTooltip={false}
       onChange={({ current, pageSize }, _, sorter) =>
         setQueryConfig({
           pageIndex: current!,
           size: pageSize!,
-          sort: formatQuerySortList(sorter),
+          sort: formatQuerySortList(sorter as SorterResult<ITableParticipantEntity>),
         })
       }
       headerConfig={{
