@@ -9,6 +9,7 @@ import useQueryBuilderState, {
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { SorterResult } from 'antd/lib/table/interface';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
 import { IQueryResults } from 'graphql/models';
@@ -231,13 +232,12 @@ const BioSpecimenTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps
       loading={results.loading}
       initialColumnState={userInfo?.config.data_exploration?.tables?.biospecimens?.columns}
       enableRowSelection={true}
-      showSorterTooltip={false}
       initialSelectedKey={selectedKeys}
       onChange={({ current, pageSize }, _, sorter) =>
         setQueryConfig({
           pageIndex: current!,
           size: pageSize!,
-          sort: formatQuerySortList(sorter),
+          sort: formatQuerySortList(sorter as SorterResult<any>),
         })
       }
       headerConfig={{
