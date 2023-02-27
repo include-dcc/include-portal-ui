@@ -629,6 +629,7 @@ const en = {
               title: 'You are not connected to Cavatica',
               description:
                 'In order to analyze your files you must first connect your Cavatica account. Once you are connected, you will be redirected back to this page.',
+              connect: 'Connect',
             },
             analyseModal: {
               newProject: 'New project',
