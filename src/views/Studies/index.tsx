@@ -5,6 +5,7 @@ import ProTable from '@ferlab/ui/core/components/ProTable';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Space, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
@@ -178,7 +179,7 @@ const Studies = () => {
     sort: [
       {
         field: 'study_id',
-        order: 'desc',
+        order: SortDirection.Desc,
       },
     ],
   });

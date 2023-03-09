@@ -350,7 +350,7 @@ const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProp
         setQueryConfig({
           pageIndex: current!,
           size: pageSize!,
-          sort: formatQuerySortList(sorter as SorterResult<ITableParticipantEntity>),
+          sort: formatQuerySortList(sorter),
         })
       }
       headerConfig={{

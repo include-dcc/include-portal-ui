@@ -237,7 +237,7 @@ const BioSpecimenTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps
         setQueryConfig({
           pageIndex: current!,
           size: pageSize!,
-          sort: formatQuerySortList(sorter as SorterResult<any>),
+          sort: formatQuerySortList(sorter),
         })
       }
       headerConfig={{
