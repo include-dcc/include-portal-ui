@@ -20,6 +20,7 @@ import { AlterTypes } from 'common/types';
 import NotificationBanner from 'components/featureToggle/NotificationBanner';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import IncludeIcon from 'components/Icons/IncludeIcon';
+import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import HeaderLink from 'components/Layout/Header/HeaderLink';
 import style from 'components/Layout/Header/index.module.scss';
 import UserAvatar from 'components/UserAvatar';
@@ -80,6 +81,13 @@ const Header = () => {
               ]}
               icon={<FileSearchOutlined />}
               title={intl.get('layout.main.menu.explore')}
+            />
+            <HeaderLink
+              key="variant-data"
+              currentPathName={currentPathName}
+              to={[STATIC_ROUTES.VARIANTS]}
+              icon={<LineStyleIcon />}
+              title={intl.get('layout.main.menu.variants')}
             />
           </nav>
         }

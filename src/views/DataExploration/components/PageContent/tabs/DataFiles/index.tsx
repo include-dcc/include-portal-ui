@@ -281,7 +281,7 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
           setQueryConfig({
             pageIndex: current!,
             size: pageSize!,
-            sort: formatQuerySortList(sorter as SorterResult<ITableFileEntity>),
+            sort: formatQuerySortList(sorter),
           })
         }
         headerConfig={{

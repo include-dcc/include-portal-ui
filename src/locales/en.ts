@@ -26,6 +26,27 @@ const en = {
     cancel: 'Cancel',
     save: 'Save',
     pleaseDescribe: 'Please describe',
+    search: {
+      genes: {
+        emptyText: 'No gene found',
+        placeholder: 'e.g. BRAF, ENSG00000157764',
+        title: 'Search by gene',
+        tooltip: 'Enter a Gene Symbol, Gene Alias ​​or Ensemble ID',
+      },
+      variants: {
+        emptyText: 'No variant found',
+        placeholder: 'e.g. 10-100063679-C-T, rs341',
+        title: 'Search by variant',
+        tooltip:
+          'Enter Variant Locus, Gene Symbol, Gene Alias, Gene AA Change, dbSNP ID, Clinvar ID, Ensembl ID, refseq ID',
+      },
+      study: {
+        emptyText: 'No study found',
+        placeholder: 'e.g. KF DSD, Neuroblastoma',
+        title: 'Search by study',
+        tooltip: 'Search by Study Code, Study Name, dbGaP Accession Number',
+      },
+    },
     filters: {
       actions: {
         all: 'All',
@@ -367,6 +388,7 @@ const en = {
         website: 'Website',
         help: 'Help',
         community: 'Community',
+        variants: 'Variants',
       },
     },
     user: {
@@ -536,15 +558,127 @@ const en = {
     },
     variants: {
       sidemenu: {
+        participant: 'Participant',
         variant: 'Variant',
+        gene: 'Gene',
+        frequency: 'Frequency',
+        pathogenicity: 'Pathogenicity',
       },
-      tabs: {
-        summary: {
-          title: 'Summary',
+      title: 'Variants Exploration',
+      table: {
+        consequences: {
+          title: 'Consequences',
+          tooltip: 'Functional consequences of genetic variations annotated using VEP',
         },
-        variants: {
-          title: 'Variants',
+        clinvar: 'ClinVar',
+        gnomAD: {
+          title: 'gnomAD',
+          tooltip: 'gnomAD 3.1.1 Allele Frequency',
         },
+        type: 'Type',
+        variant_class: 'Variant class',
+        variant_id: 'Variant ID',
+        gnomAd: 'GnomAD',
+        genome_build: 'Genome build',
+        dbsnp: 'dbSNP',
+        variant: 'Variant',
+        homozygotes: {
+          title: 'Homo.',
+          tooltip: '# of Homozygotes',
+        },
+        alt: {
+          title: 'ALT',
+          tooltip: '# of Alternative alleles',
+        },
+        frequence: {
+          title: 'Freq.',
+          tooltip: 'Frequency of the variant across Kids First cohorts',
+        },
+        participant: {
+          title: 'Part.',
+          tooltip: '# of affected participants across Kids First cohorts',
+        },
+      },
+      summary: {
+        summary: 'Summary',
+        variant: 'Variant',
+        type: 'Type',
+        cytoband: 'Cytoband',
+        referenceGenome: 'Reference Genome',
+        studies: 'Studies',
+        participants: 'Participants',
+        participantsTooltip:
+          'Due to participant confidentiality, redirect to the Data Exploration page if the number of affected participants across Kids First cohorts ≥ 10',
+        genes: 'Genes',
+        omim: 'OMIM',
+        clinVar: 'ClinVar',
+        gnomadGenome311: 'gnomAD Genome (v3.1.1)',
+        dbSNP: 'dbSNP',
+      },
+      consequences: {
+        consequence: 'Consequence',
+        impactTag: {
+          modifier: 'MODIFIER',
+          low: 'LOW',
+          moderate: 'MODERATE',
+          high: 'HIGH',
+        },
+        aaColumn: 'AA',
+        aaColumnTooltip: 'Amino acid substitution',
+        cdnaChangeColumn: 'Coding DNA',
+        conservationColumn: 'Conservation',
+        strand: 'Strand',
+        vep: 'VEP',
+        predictions: {
+          predictions: 'Predictions',
+          sift: 'Sift',
+          polyphen2: 'Polyphen2',
+          fathmm: 'Fathmm',
+          cadd: 'Cadd',
+          dann: 'Dann',
+          lrt: 'Lrt',
+          revel: 'Revel',
+        },
+        transcript: 'Transcript',
+        refSeq: 'RefSeq',
+        geneConsequence: 'Gene Consequence',
+        gene: 'Gene',
+        omim: 'OMIM',
+        hideTranscript: 'Show less',
+        showTranscript: '{count, plural, =1 {# other transcript} other {# other transcripts}}',
+        canonical: 'Canonical transcript',
+      },
+      frequencies: {
+        kfStudies: 'Kids First Studies',
+        publicCohorts: 'Public Cohorts',
+        studies: 'Studies',
+        domain: 'Domain',
+        participants: 'Participants',
+        participantsTooltip: '# of affected participants across Kids First studies',
+        participantsInfoIconTooltip:
+          'Due to participant confidentiality, links may return a smaller number than displayed',
+        frequencyTooltip: 'Frequency of the variant across Kids First studies',
+        frequency: 'Frequency',
+        altAlleles: 'ALT Alleles',
+        altAllelesTooltip: 'Number of alternative alleles',
+        homozygotes: 'Homozygotes',
+        homozygotesTooltip: 'Number of homozygote variants',
+        total: 'TOTAL',
+        cohort: 'Cohort',
+        altRef: 'Alleles (ALT + REF)',
+        altRefTooltip: 'Alternative alleles + Reference alleles',
+        noDataAvailable: 'No data available for this variant',
+      },
+      pathogenicity: {
+        pathogenicity: 'Pathogenicity',
+        clinVar: 'ClinVar',
+        genePhenotype: 'Gene - Phenotype',
+        source: 'Source',
+        gene: 'Gene',
+        condition: 'Condition',
+        inheritance: 'Inheritance',
+        inheritances: 'Inheritances',
+        interpretation: 'Interpretation',
       },
     },
     dataExploration: {
@@ -645,6 +779,7 @@ const en = {
   },
   facets: {
     // Participant
+    participant_id: 'Participant ID',
     participant_facet_ids: {
       participant_fhir_id_1: 'Participant ID',
       participant_fhir_id_2: 'Participant ID',
@@ -657,24 +792,39 @@ const en = {
       biospecimen_fhir_id_1: 'Sample ID',
       biospecimen_fhir_id_2: 'Sample ID',
     },
-    family: {
-      family_id: 'Family ID',
-    },
-    participant_id: 'Participant ID',
-    study_id: 'Study Code',
     study: {
       study_code: 'Study Code',
+      study_name: 'Study Name',
+      external_id: 'dbGaP Accession Number',
     },
+    studies: {
+      study_code: 'Study Code',
+    },
+    is_proband: 'Proband',
+    study_id: 'Study Code',
     down_syndrome_status: 'Down Syndrome Status',
     down_syndrome_diagnosis: 'Down Syndrome Diagnosis',
     mondo: {
       name: 'Diagnosis (MONDO)',
     },
     diagnosis: {
+      affected_status: 'Clinical Status',
       mondo_id_diagnosis: 'Diagnosis (MONDO)',
+      ncit_id_diagnosis: 'Diagnosis (NCIT)',
+      age_at_event_days: 'Age at Diagnosis',
+      source_text: 'Diagnosis (Source Text)',
+      source_text_tumor_location: 'Tumor Location (Source Text)',
+    },
+    outcomes: {
+      age_at_event_days: {
+        value: 'Age at Outcome',
+      },
+      vital_status: 'Vital Status',
     },
     phenotype: {
-      hpo_phenotype_observed: 'Phenotype (HPO)',
+      hpo_phenotype_observed: 'Observed Phenotype (HPO)',
+      hpo_phenotype_not_observed: 'Not Observed Phenotype (HPO)',
+      age_at_event_days: 'Age at Observed Phenotype',
     },
     age_at_data_collection: 'Age at data collection',
     family_type: 'Family Unit',
@@ -704,6 +854,93 @@ const en = {
 
     //Other
     collection_sample_type: 'Collection Sample Type',
+
+    //Variants
+    variant_class: 'Variant Type',
+    type: 'Type',
+    chromosome: 'Chromosome',
+    position: 'Position',
+    zygosity: 'Zygosity',
+    transmissions: 'Transmission',
+    genePanels: 'Gene Panels',
+    start: 'Position',
+    locus: 'Variant ID',
+    consequences: {
+      consequences: 'Consequence',
+      biotype: 'Gene Type',
+      vep_impact: 'VEP',
+      symbol: 'Gene Symbol',
+      symbol_id_1: 'Genes',
+      predictions: {
+        sift_pred: 'SIFT',
+        polyphen2_hvar_pred: 'PolyPhen-2 HVAR',
+        fathmm_pred: 'FATHMM',
+        cadd_rankscore: 'CADD',
+        lrt_pred: 'LRT',
+        revel_rankscore: 'REVEL',
+        dann_rankscore: 'DANN',
+      },
+    },
+    genes: {
+      hpo: {
+        hpo_term_label: 'HPO',
+      },
+      orphanet: {
+        panel: 'ORPHANET',
+      },
+      omim: {
+        name: 'OMIM',
+      },
+      ddd: {
+        disease_name: 'DDD',
+      },
+      cosmic: {
+        tumour_types_germline: 'COSMIC',
+      },
+    },
+    clinvar: {
+      clin_sig: 'ClinVar',
+    },
+    frequencies: {
+      internal: {
+        upper_bound_kf: { af: 'KF Allele Frequency' },
+      },
+      gnomad_genomes_2_1: {
+        af: 'gnomAD Genome 2.1',
+      },
+      gnomad_genomes_3_0: {
+        af: 'gnomAD Genome 3.0',
+      },
+      gnomad_genomes_3_1_1: {
+        af: 'gnomAD Genome 3.1',
+      },
+      gnomad_exomes_2_1: {
+        af: 'gnomAD Exome 2.1',
+      },
+      topmed: {
+        af: 'TopMed',
+      },
+      one_thousand_genomes: {
+        af: '1000 Genomes',
+      },
+    },
+
+    // Studies
+    domain: 'Study Domain',
+    population: 'Population',
+    donors: {
+      diagnoses: {
+        tagged_icd: {
+          main_category: 'Disease Type (ICD-10)',
+        },
+        tagged_mondo: {
+          main_category: 'Diagnosis (MONDO)',
+        },
+      },
+      observed_phenotype_tagged: {
+        main_category: 'Type of Phenotypic Abnormality (HPO)',
+      },
+    },
   },
   entities: {
     global: {
@@ -791,6 +1028,58 @@ const en = {
     study: {
       count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
       study: 'Study',
+    },
+  },
+  upload: {
+    gene: {
+      ids: {
+        modal: {
+          title: 'Upload a gene list',
+          submittedColTitle: 'Submitted gene identifiers',
+          uploadBtnText: 'Upload a gene list',
+          mappedTo: 'Mapped To',
+          collapseTitle: 'Summary Table  ({matchCount} matched, {unMatchCount} unmatched)',
+          identifiers: 'Gene Symbol, Gene Alias, Ensembl ID',
+          input: {
+            label: 'Copy-paste a list of identifiers or upload a file',
+          },
+          match: 'Matched ({count})',
+          unmatch: 'Unmatched ({count})',
+          table: {
+            message:
+              '{submittedCount} submitted identifiers mapped to {mappedCount} unique system identifiers',
+            match: {
+              idcol: {
+                title: 'Gene ID',
+              },
+              matchcol: {
+                title: 'Ensembl ID',
+              },
+              mappedcol: {
+                title: 'Symbol',
+              },
+            },
+          },
+          pill: {
+            title: 'Uploaded List',
+          },
+          upload: {
+            btn: 'Upload',
+            file: {
+              btn: 'Upload a file',
+            },
+          },
+          clear: {
+            btn: 'Clear',
+          },
+          cancel: {
+            btn: 'Cancel',
+          },
+          empty: {
+            table: 'No data',
+          },
+        },
+      },
     },
   },
 };

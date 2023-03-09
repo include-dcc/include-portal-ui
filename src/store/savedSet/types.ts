@@ -1,5 +1,7 @@
-import {IUserSetOutput} from 'services/api/savedSet/models';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
+import { ISort } from '@ferlab/ui/core/graphql/types';
+
+import { IUserSetOutput } from 'services/api/savedSet/models';
 
 export interface ISavedSet {
   idField: string;
@@ -7,13 +9,8 @@ export interface ISavedSet {
   sqon: ISqonGroupFilter;
   tag: string;
   type: string;
-  sort: Sort[];
+  sort: ISort[];
 }
-
-export type Sort = {
-  field: string;
-  order: string;
-};
 
 export type initialState = {
   defaultFilter?: ISavedSet;

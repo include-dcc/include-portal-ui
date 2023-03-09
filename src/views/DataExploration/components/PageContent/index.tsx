@@ -13,6 +13,7 @@ import { ISavedFilter } from '@ferlab/ui/core/components/QueryBuilder/types';
 import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
 import { IRemoteComponent, ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { isEmptySqon, resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { Space, Tabs } from 'antd';
 import copy from 'copy-to-clipboard';
 import { useBiospecimen } from 'graphql/biospecimens/actions';
@@ -113,7 +114,7 @@ const PageContent = ({
     offset: participantQueryConfig.size * (participantQueryConfig.pageIndex - 1),
     sqon: participantResolvedSqon,
     sort: isEmpty(participantQueryConfig.sort)
-      ? [{ field: 'participant_id', order: 'asc' }]
+      ? [{ field: 'participant_id', order: SortDirection.Asc }]
       : participantQueryConfig.sort,
   });
 
@@ -122,7 +123,7 @@ const PageContent = ({
     offset: datafilesQueryConfig.size * (datafilesQueryConfig.pageIndex - 1),
     sqon: fileResolvedSqon,
     sort: isEmpty(datafilesQueryConfig.sort)
-      ? [{ field: 'file_id', order: 'asc' }]
+      ? [{ field: 'file_id', order: SortDirection.Asc }]
       : datafilesQueryConfig.sort,
   });
 
@@ -131,7 +132,7 @@ const PageContent = ({
     offset: biospecimenQueryConfig.size * (biospecimenQueryConfig.pageIndex - 1),
     sqon: biospecimenResolvedSqon,
     sort: isEmpty(biospecimenQueryConfig.sort)
-      ? [{ field: 'sample_id', order: 'asc' }]
+      ? [{ field: 'sample_id', order: SortDirection.Asc }]
       : biospecimenQueryConfig.sort,
   });
 

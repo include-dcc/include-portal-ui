@@ -16,6 +16,7 @@ import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
 import { IQueryResults } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
+import { IVariantEntity } from 'graphql/variants/models';
 import { MenuClickEventHandler } from 'rc-menu/lib/interface';
 import CreateEditModal from 'views/Dashboard/components/DashboardCards/SavedSets/CreateEditModal';
 
@@ -28,7 +29,10 @@ import AddRemoveSaveSetModal from './AddRemoveSaveSetModal';
 import styles from './index.module.scss';
 
 type Props = {
-  results: IQueryResults<IParticipantEntity[] | IFileEntity[] | IBiospecimenEntity[]>;
+  idField?: string;
+  results: IQueryResults<
+    IParticipantEntity[] | IFileEntity[] | IBiospecimenEntity[] | IVariantEntity[]
+  >;
   sqon?: ISqonGroupFilter;
   selectedAllResults: boolean;
   selectedKeys?: string[];
@@ -156,6 +160,7 @@ const getSetCount = (selected: string[], total: number, allSelected: boolean) =>
 };
 
 const SetsManagementDropdown = ({
+  idField,
   results,
   sqon,
   type,
@@ -184,6 +189,7 @@ const SetsManagementDropdown = ({
       {modal.showModalSave && sqon && (
         <CreateEditModal
           title={`Save ${type.charAt(0).toUpperCase() + type.slice(1)} Set`}
+          idField={idField}
           sqon={sqon}
           setType={type}
           hideModalCb={() => setModal(modals.hideAll)}
