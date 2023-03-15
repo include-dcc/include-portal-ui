@@ -39,6 +39,7 @@ const CommunityMember = loadable(() => import('views/Community/Member'), loadabl
 const Studies = loadable(() => import('views/Studies'), loadableProps);
 const DataExploration = loadable(() => import('views/DataExploration'), loadableProps);
 const Variants = loadable(() => import('views/Variants'), loadableProps);
+const VariantEntity = loadable(() => import('views/VariantEntity'), loadableProps);
 const FileEntity = loadable(() => import('views/FileEntity'), loadableProps);
 const ParticipantEntity = loadable(() => import('views/ParticipantEntity'), loadableProps);
 const ProfileSettings = loadable(() => import('views/ProfileSettings'), loadableProps);
@@ -102,6 +103,9 @@ const App = () => {
                   </ProtectedRoute>
                   <ProtectedRoute exact path={STATIC_ROUTES.VARIANTS} layout={PageLayout}>
                     <Variants />
+                  </ProtectedRoute>
+                  <ProtectedRoute exact path={DYNAMIC_ROUTES.VARIANT_ENTITY} layout={PageLayout}>
+                    <VariantEntity />
                   </ProtectedRoute>
                   <ProtectedRoute exact path={DYNAMIC_ROUTES.FILE_ENTITY} layout={PageLayout}>
                     <FileEntity />
