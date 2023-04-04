@@ -56,7 +56,7 @@ export const searchInTree = (
   treeNode: TreeNode,
   hitTreeNodes: string[] = [],
 ) => {
-  const cleanSearchText = searchText.replace(/[-/\\^$*+?.()|[\]{}]/g, '');
+  const cleanSearchText = searchText.replace(/[-\\^$*+?.()|[\]{}]/g, '');
   const regex = new RegExp('\\b(\\w*' + cleanSearchText + '\\w*)\\b', 'gi');
   const text = treeNode.title;
   const key = treeNode.key;
