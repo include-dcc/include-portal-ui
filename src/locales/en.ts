@@ -476,6 +476,22 @@ const en = {
         saveChanges: 'Save changes',
         discardChanges: 'Discard changes',
       },
+      roleOptions: {
+        researcher: 'Researcher at an Academic or not-for-profit Institution',
+        representative: 'Representative from a for-profit or Commercial Entity',
+        developer: 'Tool or Algorithm Developer',
+        clinician: 'Clinician',
+        community_member: 'Community Member',
+        federal_employee: 'Federal Employee',
+        other: 'Other',
+      },
+      usageOptions: {
+        learn_more_about_down_syndrome:
+          'Learning more about Down syndrome and its health outcomes, management, and/or treatment',
+        help_design_new_research_study: 'Helping me design a new research study',
+        identifying_dataset: 'Identifying datasets that I want to analyze',
+        commercial_purpose: 'Commercial purposes',
+      },
     },
     loginPage: {
       title: 'INCLUDE Data Hub',

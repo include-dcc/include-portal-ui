@@ -1,19 +1,34 @@
-import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Alert, Button, Space, Typography } from 'antd';
-import { Link } from 'react-router-dom';
-import { useUser } from 'store/user';
 import intl from 'react-intl-universal';
+import { Link } from 'react-router-dom';
+import { Button, Space, Typography } from 'antd';
+import { AxiosRequestConfig } from 'axios';
+
+import { useUser } from 'store/user';
+
+import useApi from '../../hooks/useApi';
+import { USERS_API_URL } from '../../services/api/user';
+import { IUserOptions } from '../../services/api/user/models';
+
+import DeleteCard from './cards/DeleteCard';
 import IdentificationCard from './cards/Identification';
+import ResearchAndUsagesCard from './cards/ResearchAndUsage';
+import RoleAndAffiliationCard from './cards/RoleAndAffiliation';
 
 import styles from './index.module.scss';
-import RoleAndAffiliationCard from './cards/RoleAndAffiliation';
-import ResearchAndUsagesCard from './cards/ResearchAndUsage';
-import DeleteCard from './cards/DeleteCard';
 
 const { Title } = Typography;
 
 const ProfileSettings = () => {
   const { userInfo } = useUser();
+
+  const config: AxiosRequestConfig = {
+    method: 'GET',
+    url: `${USERS_API_URL}/userOptions`,
+  };
+
+  const { result } = useApi<IUserOptions>({ config });
+  const roleOptions = result?.roleOptions || [];
+  const usageOptions = result?.usageOptions || [];
 
   return (
     <div className={styles.profileSettingsWrapper}>
@@ -26,8 +41,8 @@ const ProfileSettings = () => {
         </div>
         <Space size={24} direction="vertical" className={styles.cardsWrapper}>
           <IdentificationCard />
-          <RoleAndAffiliationCard />
-          <ResearchAndUsagesCard />
+          <RoleAndAffiliationCard roleOptions={roleOptions} />
+          <ResearchAndUsagesCard usageOptions={usageOptions} />
           <DeleteCard />
         </Space>
       </Space>

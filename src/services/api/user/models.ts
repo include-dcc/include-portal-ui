@@ -14,7 +14,7 @@ export type TUser = {
   external_individual_email?: string;
   roles?: string[];
   affiliation?: string;
-  research_area?: string;
+  research_area_description?: string;
   portal_usages?: string[];
   creation_date: Date;
   updated_date: Date;
@@ -78,3 +78,13 @@ export type TUserConfig = {
 
 export type TUserInsert = Omit<TUser, 'id' | 'keycloak_id' | 'creation_date' | 'update_date'>;
 export type TUserUpdate = Partial<TUserInsert>;
+
+export interface IOption {
+  label: string;
+  value: string;
+}
+
+export interface IUserOptions {
+  roleOptions: IOption[];
+  usageOptions: IOption[];
+}
