@@ -11,6 +11,7 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from './index.module.scss';
+import { IVariantStudyEntity } from '../../../graphql/variants/models';
 
 const PARTICIPANT_SAFE_GUARD = 10;
 
@@ -21,7 +22,8 @@ interface OwnProps {
 const SummaryHeader = ({ variant }: OwnProps) => {
   const studyCount = variant?.studies.hits.total || 0;
   const participantCount = variant?.participant_number || 0;
-  const studyCodes = variant?.studies.hits.edges.map((e) => e.node.study_id) || [];
+  const studyCodes =
+    variant?.studies.hits.edges.map((e) => (e.node as IVariantStudyEntity).study_code) || [];
 
   return (
     <div className={styles.container}>
@@ -35,8 +37,8 @@ const SummaryHeader = ({ variant }: OwnProps) => {
               newFilters: [
                 generateValueFilter({
                   field: 'study.study_code',
-                  value: variant ? studyCodes : [],
-                  index: INDEXES.VARIANTS,
+                  value: studyCodes,
+                  index: '',
                 }),
               ],
             }),
