@@ -1,4 +1,6 @@
 /* eslint-disable max-len */
+import translations from './en.json'; /* eslint-disable max-len */
+
 const filesFacets = {
   data_category: 'Data Category',
   controlled_access: 'Access',
@@ -13,6 +15,7 @@ const filesFacets = {
 };
 
 const en = {
+  ...translations,
   date: {
     years: '{years, plural, =0 {} =1 {year} other {years}}',
     days: '{days, plural, =0 {} =1 {day} other {days}}',

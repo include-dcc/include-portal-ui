@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import intl from 'react-intl-universal';
 import { ISqonGroupFilter, ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
-import { Button, Layout, Space, Typography } from 'antd';
+import { IExtendedMappingResults } from '@ferlab/ui/core/graphql/types';
+import { Button, Layout, Space, Spin, Typography } from 'antd';
 import cx from 'classnames';
-import { ExtendedMappingResults } from 'graphql/models';
 import { isEmpty } from 'lodash';
 
 import styles from 'components/uiKit/FilterList/Filters.module.scss';
@@ -17,7 +17,7 @@ type OwnProps = {
   loading?: boolean;
   index: string;
   queryBuilderId: string;
-  extendedMappingResults: ExtendedMappingResults;
+  extendedMappingResults: IExtendedMappingResults;
   filterInfo: FilterInfo;
   filterMapper?: TCustomFilterMapper;
 };
@@ -45,6 +45,10 @@ const FilterList = ({
   filterMapper,
 }: OwnProps) => {
   const [filtersOpen, setFiltersOpen] = useState<boolean | undefined>(isAllFacetOpen(filterInfo));
+
+  if (extendedMappingResults.loading) {
+    return <Spin className={styles.filterLoader} spinning />;
+  }
 
   return (
     <>
@@ -82,6 +86,7 @@ const FilterList = ({
                   filtersOpen={filtersOpen}
                   defaultOpen={filterInfo.defaultOpenFacets?.includes(facet) ? true : undefined}
                   filterMapper={filterMapper}
+                  headerTooltip={group.tooltips?.includes(facet)}
                 />
               ) : (
                 <div key={i + ii} className={cx(styles.customFilterWrapper, styles.filter)}>
