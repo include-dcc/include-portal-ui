@@ -592,11 +592,11 @@ const en = {
         },
         frequence: {
           title: 'Freq.',
-          tooltip: 'Frequency of the variant across Include cohorts',
+          tooltip: 'Frequency of the variant across INCLUDE cohorts',
         },
         participant: {
           title: 'Part.',
-          tooltip: '# of affected participants across Include cohorts',
+          tooltip: '# of affected participants across INCLUDE cohorts',
         },
       },
       summary: {
@@ -608,7 +608,7 @@ const en = {
         studies: 'Studies',
         participants: 'Participants',
         participantsTooltip:
-          'Due to participant confidentiality, redirect to the Data Exploration page if the number of affected participants across Include cohorts ≥ 10',
+          'Due to participant confidentiality, redirect to the Data Exploration page if the number of affected participants across INCLUDE cohorts ≥ 10',
         genes: 'Genes',
         omim: 'OMIM',
         clinVar: 'ClinVar',
@@ -649,15 +649,15 @@ const en = {
         canonical: 'Canonical transcript',
       },
       frequencies: {
-        includeStudies: 'Include Studies',
+        includeStudies: 'INCLUDE Studies',
         publicCohorts: 'Public Cohorts',
         studies: 'Studies',
         domain: 'Domain',
         participants: 'Participants',
-        participantsTooltip: '# of affected participants across Include studies',
+        participantsTooltip: '# of affected participants across INCLUDE studies',
         participantsInfoIconTooltip:
           'Due to participant confidentiality, links may return a smaller number than displayed',
-        frequencyTooltip: 'Frequency of the variant across Include studies',
+        frequencyTooltip: 'Frequency of the variant across INCLUDE studies',
         frequency: 'Frequency',
         altAlleles: 'ALT Alleles',
         altAllelesTooltip: 'Number of alternative alleles',
