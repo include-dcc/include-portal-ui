@@ -181,9 +181,37 @@ export const getQueryBuilderDictionary = (
       return set ? set.tag : setId;
     },
     facetValueMapping: {
+      variant_external_reference: {
+        DBSNP: intl.get('screen.variants.table.dbsnp'),
+        Clinvar: intl.get('filters.group.clinvar.clin_sig'),
+      },
+      'consequences.predictions.sift_pred': {
+        T: intl.get('facets.options.consequences__predictions__sift_pred.T'),
+        D: intl.get('facets.options.consequences__predictions__sift_pred.D'),
+      },
+      'consequences.predictions.polyphen2_hvar_pred': {
+        B: intl.get('facets.options.consequences__predictions__polyphen2_hvar_pred.B'),
+        D: intl.get('facets.options.consequences__predictions__polyphen2_hvar_pred.D'),
+        P: intl.get('facets.options.consequences__predictions__polyphen2_hvar_pred.P'),
+      },
+      'consequences.predictions.fathmm_pred': {
+        T: intl.get('facets.options.consequences__predictions__fathmm_pred.T'),
+        D: intl.get('facets.options.consequences__predictions__fathmm_pred.D'),
+      },
+      'consequences.predictions.lrt_pred': {
+        N: intl.get('facets.options.consequences__predictions__lrt_pred.N'),
+        D: intl.get('facets.options.consequences__predictions__lrt_pred.D'),
+        U: intl.get('facets.options.consequences__predictions__lrt_pred.U'),
+      },
       down_syndrome_status: {
         D21: intl.get('facets.options.D21'),
         T21: intl.get('facets.options.T21'),
+      },
+      zygosity: {
+        HET: intl.get('facets.options.zygosity.HET'),
+        WT: intl.get('facets.options.zygosity.WT'),
+        HOM: intl.get('facets.options.zygosity.HOM'),
+        UNK: intl.get('facets.options.zygosity.UNK'),
       },
     },
   },
@@ -204,6 +232,136 @@ export const getQueryBuilderDictionary = (
       confirm: intl.get('components.querybuilder.actions.clear.confirm'),
       buttonTitle: intl.get('components.querybuilder.actions.clear.buttonTitle'),
       description: intl.get('components.querybuilder.actions.clear.description'),
+    },
+  },
+});
+
+export const getFacetsDictionary = () => ({
+  study: {
+    study_name: 'Study Name',
+    study_code: 'Study Code',
+    external_id: 'dbGaP Accession Number',
+  },
+  studies: {
+    study_code: 'Study Code',
+  },
+  start: 'Position',
+  acl: 'ACL',
+  sequencing_experiment: {
+    experiment_strategy: 'Experimental Strategy',
+  },
+  transmissions: 'Transmission',
+  controlled_access: 'Access',
+  is_harmonized: 'Harmonized Data',
+  is_proband: 'Proband',
+  variant_class: 'Variant Type',
+  diagnosis: {
+    affected_status: 'Clinical Status',
+    age_at_event_days: 'Age at Diagnosis',
+    mondo_id_diagnosis: 'Diagnosis (MONDO)',
+    ncit_id_diagnosis: 'Diagnosis (NCIT)',
+    source_text: 'Diagnosis (Source Text)',
+    source_text_tumor_location: 'Tumor Location (Source Text)',
+  },
+  outcomes: {
+    vital_status: 'Vital Status',
+    age_at_event_days: {
+      value: 'Age at Outcome',
+    },
+  },
+  phenotype: {
+    age_at_event_days: 'Age at Observed Phenotype',
+    hpo_phenotype_observed: 'Observed Phenotype (HPO)',
+    hpo_phenotype_not_observed: 'Not Observed Phenotype (HPO)',
+  },
+  clinvar: {
+    clin_sig: 'ClinVar',
+  },
+  consequences: {
+    consequences: 'Consequence',
+    biotype: 'Gene Type',
+    vep_impact: 'VEP',
+    predictions: {
+      sift_pred: 'SIFT',
+      polyphen2_hvar_pred: 'PolyPhen-2 HVAR',
+      fathmm_pred: 'FATHMM',
+      cadd_rankscore: 'CADD',
+      lrt_pred: 'LRT',
+      revel_rankscore: 'REVEL',
+      dann_rankscore: 'DANN',
+    },
+  },
+  genes: {
+    hpo: {
+      hpo_term_label: 'HPO',
+    },
+    orphanet: {
+      panel: 'ORPHANET',
+    },
+    omim: {
+      name: 'OMIM',
+    },
+    ddd: {
+      disease_name: 'DDD',
+    },
+    cosmic: {
+      tumour_types_germline: 'COSMIC',
+    },
+  },
+  frequencies: {
+    internal: {
+      upper_bound_kf: {
+        af: 'KF Allele Frequency',
+      },
+    },
+    gnomad_genomes_2_1: {
+      af: 'gnomAD Genome 2.1',
+    },
+    gnomad_genomes_3_0: {
+      af: 'gnomAD Genome 3.0',
+    },
+    gnomad_genomes_3_1_1: {
+      af: 'gnomAD Genome 3.1',
+    },
+    gnomad_exomes_2_1: {
+      af: 'gnomAD Exome 2.1',
+    },
+    topmed: {
+      af: 'TopMed',
+    },
+    one_thousand_genomes: {
+      af: '1000 Genomes',
+    },
+  },
+  tooltips: {
+    consequences: {
+      vep_impact: 'Ensembl Variant Effect Predictor',
+      predictions: {
+        cadd_rankscore: 'Combined Annotation Dependent Depletion',
+        dann_rankscore: 'Deleterious Annotation of genetic variants using Neural Networks',
+        fathmm_pred: 'Functional Analysis Through Hidden Markov Models',
+        lrt_pred: 'Likelihood Ratio Test',
+        polyphen2_hvar_pred: 'Polymorphism Phenotyping v2 HumVar',
+        revel_rankscore: 'Rare Exome Variant Ensemble Learner',
+        sift_pred: 'Sorting Intolerant From Tolerant',
+      },
+    },
+    genes: {
+      hpo: {
+        hpo_term_label: 'Human Phenotype Ontology',
+      },
+      orphanet: {
+        panel: 'ORPHANET',
+      },
+      omim: {
+        name: 'Online Mendelian Inheritance in Man ',
+      },
+      ddd: {
+        disease_name: 'Deciphering Developmental Disorders',
+      },
+      cosmic: {
+        tumour_types_germline: 'Catalogue Of Somatic Mutations In Cancer',
+      },
     },
   },
 });
