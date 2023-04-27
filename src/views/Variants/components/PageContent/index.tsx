@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { TExtendedMapping } from '@ferlab/ui/core/components/filters/types';
-import { tieBreaker } from '@ferlab/ui/core/components/ProTable/utils';
+import { resetSearchAfterQueryConfig, tieBreaker } from '@ferlab/ui/core/components/ProTable/utils';
 import QueryBuilder from '@ferlab/ui/core/components/QueryBuilder';
 import { ISavedFilter } from '@ferlab/ui/core/components/QueryBuilder/types';
 import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
@@ -61,7 +61,7 @@ const PageContent = ({ variantMapping }: OwnProps) => {
   const { savedSets } = useSavedSet();
   const { queryList, activeQuery, selectedSavedFilter, savedFilterList } =
     useQBStateWithSavedFilters(VARIANT_REPO_QB_ID, SavedFilterTag.VariantsExplorationPage);
-  const [variantQueryConfig, setVariantQueryConfig] = useState({
+  const [queryConfig, setQueryConfig] = useState({
     ...DEFAULT_QUERY_CONFIG,
     size: userInfo?.config.variants?.tables?.variants?.viewPerQuery || DEFAULT_PAGE_SIZE,
   });
@@ -72,42 +72,41 @@ const PageContent = ({ variantMapping }: OwnProps) => {
 
   const variantResolvedSqon = resolveSyntheticSqon(queryList, activeQuery);
 
-  const variantResults = useVariant(
+  const results = useVariant(
     {
-      first: variantQueryConfig.size,
+      first: queryConfig.size,
       offset: DEFAULT_OFFSET,
-      searchAfter: variantQueryConfig.searchAfter,
+      searchAfter: queryConfig.searchAfter,
       sqon: variantResolvedSqon,
       sort: tieBreaker({
-        sort: variantQueryConfig.sort,
+        sort: queryConfig.sort,
         defaultSort: DEFAULT_SORT_QUERY,
         field: 'locus',
-        order: variantQueryConfig.operations?.previous ? SortDirection.Desc : SortDirection.Asc,
+        order: queryConfig.operations?.previous ? SortDirection.Desc : SortDirection.Asc,
       }),
     },
-    variantQueryConfig.operations,
+    queryConfig.operations,
   );
 
   useEffect(() => {
-    if (
-      variantQueryConfig.firstPageFlag !== undefined ||
-      variantQueryConfig.searchAfter === undefined
-    ) {
+    if (queryConfig.firstPageFlag !== undefined || queryConfig.searchAfter === undefined) {
       return;
     }
 
-    setVariantQueryConfig({
-      ...variantQueryConfig,
-      firstPageFlag: variantQueryConfig.searchAfter,
+    setQueryConfig({
+      ...queryConfig,
+      firstPageFlag: queryConfig.searchAfter,
     });
-  }, [variantQueryConfig]);
+  }, [queryConfig]);
 
   useEffect(() => {
-    setVariantQueryConfig({
-      ...variantQueryConfig,
-      searchAfter: undefined,
-    });
-
+    resetSearchAfterQueryConfig(
+      {
+        ...DEFAULT_QUERY_CONFIG,
+        size: userInfo?.config.variants?.tables?.variants?.viewPerQuery || DEFAULT_PAGE_SIZE,
+      },
+      setQueryConfig,
+    );
     setPageIndex(DEFAULT_PAGE_INDEX);
     // eslint-disable-next-line
   }, [JSON.stringify(activeQuery)]);
@@ -117,8 +116,8 @@ const PageContent = ({ variantMapping }: OwnProps) => {
     return title
       ? title
       : combineExtendedMappings([variantMapping])?.data?.find(
-          (mapping: TExtendedMapping) => key === mapping.field,
-        )?.displayName || key;
+        (mapping: TExtendedMapping) => key === mapping.field,
+      )?.displayName || key;
   };
 
   const handleOnUpdateFilter = (filter: ISavedFilter) => dispatch(updateSavedFilter(filter));
@@ -190,7 +189,7 @@ const PageContent = ({ variantMapping }: OwnProps) => {
         enableShowHideLabels
         IconTotal={<LineStyleIcon width={18} height={18} />}
         currentQuery={isEmptySqon(activeQuery) ? {} : activeQuery}
-        total={variantResults.total}
+        total={results.total}
         dictionary={getQueryBuilderDictionary(facetTransResolver, savedSets)}
         getResolvedQueryForCount={(sqon) => resolveSyntheticSqon(queryList, sqon)}
         fetchQueryCount={async (sqon) => {
@@ -208,9 +207,9 @@ const PageContent = ({ variantMapping }: OwnProps) => {
         pageIndex={pageIndex}
         sqon={variantResolvedSqon}
         setPageIndex={setPageIndex}
-        results={variantResults}
-        setQueryConfig={setVariantQueryConfig}
-        queryConfig={variantQueryConfig}
+        results={results}
+        setQueryConfig={setQueryConfig}
+        queryConfig={queryConfig}
       />
     </Space>
   );
