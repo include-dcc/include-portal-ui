@@ -1,18 +1,20 @@
 import intl from 'react-intl-universal';
-import { getFiltersDictionary } from 'utils/translation';
 import FilterContainer from '@ferlab/ui/core/components/filters/FilterContainer';
 import FilterSelector from '@ferlab/ui/core/components/filters/FilterSelector';
 import { IFilter, IFilterGroup } from '@ferlab/ui/core/components/filters/types';
-import { ExtendedMapping, ExtendedMappingResults, Aggregations } from 'graphql/models';
-import { getFilterType } from '@ferlab/ui/core/data/filters/utils';
+import { updateActiveQueryFilters } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import {
   keyEnhance,
   keyEnhanceBooleanOnly,
   underscoreToDot,
 } from '@ferlab/ui/core/data/arranger/formatting';
-import { transformNameIfNeeded } from './nameTransformer';
-import { updateActiveQueryFilters } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { getFilterType } from '@ferlab/ui/core/data/filters/utils';
 import { getSelectedFilters } from '@ferlab/ui/core/data/sqon/utils';
+import { Aggregations, ExtendedMapping, ExtendedMappingResults } from 'graphql/models';
+
+import { getFiltersDictionary } from 'utils/translation';
+
+import { transformNameIfNeeded } from './nameTransformer';
 
 export interface RangeAggs {
   stats: {
@@ -111,7 +113,7 @@ export const getFilters = (aggregations: Aggregations | null, key: string): IFil
             key: keyEnhanceBooleanOnly(f.key),
           },
           id: f.key,
-          name: transformNameIfNeeded(key, name),
+          name: transformNameIfNeeded(key, name, f.key),
         };
       })
       .filter((f: any) => !(f.name === ''));

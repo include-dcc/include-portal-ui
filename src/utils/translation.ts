@@ -67,6 +67,7 @@ export const getFiltersDictionary = (): FiltersDict => ({
     less: intl.get('global.filters.actions.less'),
     more: intl.get('global.filters.actions.more'),
     none: intl.get('global.filters.actions.none'),
+    dictionary: intl.get('global.filters.actions.dictionary'),
   },
   operators: {
     between: intl.get('global.filters.operators.between'),
@@ -76,10 +77,14 @@ export const getFiltersDictionary = (): FiltersDict => ({
     greaterThanOrEqual: intl.get('global.filters.operators.greaterthanorequal'),
   },
   range: {
+    actualInterval: 'Actual Interval',
+    noData: 'No Data',
+    from: 'from',
+    to: 'to',
     is: intl.get('global.filters.range.is'),
+    unit: 'unit',
     min: 'min',
     max: 'max',
-    noData: 'No Data',
   },
   checkBox: {
     noData: intl.get('api.noData'),
