@@ -74,7 +74,7 @@ export const getExperimentalStrategyColumns = (
     key: 'nb_files',
     title: intl.get('entities.file.files'),
     render: (file: IExperimentalStrategy) =>
-      (
+      file && file?.nb_files > 0 ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
@@ -100,7 +100,9 @@ export const getExperimentalStrategyColumns = (
         >
           {file.nb_files}
         </Link>
-      ) || TABLE_EMPTY_PLACE_HOLDER,
+      ) : (
+        file?.nb_files ?? TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'percentage',
