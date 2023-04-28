@@ -5,6 +5,7 @@ import { IDictionary as QueryBuilderDict } from '@ferlab/ui/core/components/Quer
 import { SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
 
 import { IUserSetOutput } from 'services/api/savedSet/models';
+import { numberWithCommas } from './string';
 
 export const getEntityExpandableTableMultiple = () => ({
   hideTranscript: intl.get('screen.variants.consequences.hideTranscript'),
@@ -57,6 +58,7 @@ export const getProTableDictionary = (): IProTableDictionary => ({
     selectAllResults: 'Select all results',
     clear: 'Clear',
   },
+  numberFormat: numberWithCommas,
 });
 
 export const getFiltersDictionary = (): FiltersDict => ({
