@@ -1032,6 +1032,9 @@ const en = {
       count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
       study: 'Study',
     },
+    variant: {
+      participant: '{count, plural, =0 {Participant} =1 {Participant} other {Participants}}',
+    },
   },
   upload: {
     gene: {

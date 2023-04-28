@@ -10,8 +10,9 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { STATIC_ROUTES } from 'utils/routes';
 
-import styles from './index.module.scss';
 import { IVariantStudyEntity } from '../../../graphql/variants/models';
+
+import styles from './index.module.scss';
 
 const PARTICIPANT_SAFE_GUARD = 10;
 
@@ -25,6 +26,16 @@ const SummaryHeader = ({ variant }: OwnProps) => {
   const studyCodes =
     variant?.studies.hits.edges.map((e) => (e.node as IVariantStudyEntity).study_code) || [];
 
+  const showParticipantsLink = participantCount >= PARTICIPANT_SAFE_GUARD;
+  const participantsIdsFromAllStudies = showParticipantsLink
+    ? variant?.studies.hits.edges.reduce((xs: string[], x) => {
+        if (x.node.participant_ids?.length) {
+          return [...xs, ...x.node.participant_ids];
+        }
+        return xs;
+      }, [])
+    : [];
+  const uniqueParticipantsFromAllStudies = [...new Set(participantsIdsFromAllStudies)];
   return (
     <div className={styles.container}>
       <Link
@@ -53,7 +64,7 @@ const SummaryHeader = ({ variant }: OwnProps) => {
         </span>
       </Link>
 
-      {participantCount >= PARTICIPANT_SAFE_GUARD ? (
+      {showParticipantsLink ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
           className={styles.link}
@@ -64,7 +75,7 @@ const SummaryHeader = ({ variant }: OwnProps) => {
                 newFilters: [
                   generateValueFilter({
                     field: 'participant_id',
-                    value: variant ? [] : [],
+                    value: uniqueParticipantsFromAllStudies,
                     index: INDEXES.PARTICIPANT,
                   }),
                 ],
@@ -76,7 +87,9 @@ const SummaryHeader = ({ variant }: OwnProps) => {
           <UserOutlined className={styles.icon} />
           <span className={styles.entityCount}>{participantCount}</span>
           <span className={styles.text}>
-            {intl.get('entities.file.summary.participants', { count: participantCount })}
+            {intl.get('entities.variant.participant', {
+              count: participantCount,
+            })}
           </span>
         </Link>
       ) : (
@@ -85,7 +98,7 @@ const SummaryHeader = ({ variant }: OwnProps) => {
             <UserOutlined className={styles.icon} />
             <span className={styles.entityCount}>{participantCount}</span>
             <span className={styles.text}>
-              {intl.get('screen.variants.summary.participants', { count: participantCount })}
+              {intl.get('entities.variant.participant', { count: participantCount })}
             </span>
           </div>
         </Tooltip>
