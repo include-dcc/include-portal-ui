@@ -313,7 +313,7 @@ export const getFacetsDictionary = () => ({
   frequencies: {
     internal: {
       upper_bound_kf: {
-        af: 'KF Allele Frequency',
+        af: 'INCLUDE Allele Frequency',
       },
     },
     gnomad_genomes_2_1: {
