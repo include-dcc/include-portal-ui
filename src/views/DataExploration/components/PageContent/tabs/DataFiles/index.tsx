@@ -3,30 +3,36 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LockOutlined, SafetyOutlined, UnlockFilled } from '@ant-design/icons';
 import ProTable from '@ferlab/ui/core/components/ProTable';
+import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { resetSearchAfterQueryConfig, tieBreaker } from '@ferlab/ui/core/components/ProTable/utils';
 import useQueryBuilderState, {
   addQuery,
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
+import { useDataFiles } from 'graphql/files/actions';
 import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
-import { IQueryResults } from 'graphql/models';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
   DATA_EXPLORATION_QB_ID,
   DATA_FILES_SAVED_SETS_FIELD,
+  DEFAULT_FILE_QUERY_SORT,
+  DEFAULT_PAGE_INDEX,
   DEFAULT_PAGE_SIZE,
+  DEFAULT_QUERY_CONFIG,
   SCROLL_WRAPPER_ID,
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
+import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { FENCE_CONNECTION_STATUSES } from 'common/fenceTypes';
-import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
 import CavaticaAnalyzeButton from 'components/Cavatica/AnalyzeButton';
 import { SetType } from 'services/api/savedSet/models';
 import { useFenceConnection } from 'store/fenceConnection';
@@ -42,9 +48,6 @@ import { getProTableDictionary } from 'utils/translation';
 import styles from './index.module.scss';
 
 interface OwnProps {
-  results: IQueryResults<IFileEntity[]>;
-  setQueryConfig: TQueryConfigCb;
-  queryConfig: IQueryConfig;
   sqon?: ISqonGroupFilter;
 }
 
@@ -233,7 +236,7 @@ const getDefaultColumns = (
   },
 ];
 
-const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) => {
+const DataFilesTab = ({ sqon }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
@@ -242,12 +245,28 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [selectedRows, setSelectedRows] = useState<ITableFileEntity[]>([]);
 
-  useEffect(() => {
-    if (selectedKeys.length) {
-      setSelectedKeys([]);
-    }
-    // eslint-disable-next-line
-  }, [JSON.stringify(activeQuery)]);
+  const [pageIndex, setPageIndex] = useState(DEFAULT_PAGE_INDEX);
+  const [queryConfig, setQueryConfig] = useState({
+    ...DEFAULT_QUERY_CONFIG,
+    sort: DEFAULT_FILE_QUERY_SORT,
+    size:
+      userInfo?.config?.data_exploration?.tables?.participants?.viewPerQuery || DEFAULT_PAGE_SIZE,
+  });
+  const results = useDataFiles(
+    {
+      first: queryConfig.size,
+      offset: DEFAULT_OFFSET,
+      searchAfter: queryConfig.searchAfter,
+      sqon,
+      sort: tieBreaker({
+        sort: queryConfig.sort,
+        defaultSort: DEFAULT_FILE_QUERY_SORT,
+        field: 'file_id',
+        order: queryConfig.operations?.previous ? SortDirection.Desc : SortDirection.Asc,
+      }),
+    },
+    queryConfig.operations,
+  );
 
   const getCurrentSqon = (): any =>
     selectedAllResults || !selectedKeys.length
@@ -261,6 +280,36 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
             }),
           ],
         });
+
+  useEffect(() => {
+    if (selectedKeys.length) {
+      setSelectedKeys([]);
+      setSelectedRows([]);
+    }
+    resetSearchAfterQueryConfig(
+      {
+        ...DEFAULT_QUERY_CONFIG,
+        sort: DEFAULT_FILE_QUERY_SORT,
+        size:
+          userInfo?.config?.data_exploration?.tables?.participants?.viewPerQuery ||
+          DEFAULT_PAGE_SIZE,
+      },
+      setQueryConfig,
+    );
+    setPageIndex(DEFAULT_PAGE_INDEX);
+    // eslint-disable-next-line
+  }, [JSON.stringify(activeQuery)]);
+
+  useEffect(() => {
+    if (queryConfig.firstPageFlag !== undefined || queryConfig.searchAfter === undefined) {
+      return;
+    }
+
+    setQueryConfig({
+      ...queryConfig,
+      firstPageFlag: queryConfig.searchAfter,
+    });
+  }, [queryConfig]);
 
   return (
     <>
@@ -276,16 +325,17 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
         loading={results.loading}
         initialColumnState={userInfo?.config.data_exploration?.tables?.datafiles?.columns}
         enableRowSelection={true}
-        onChange={({ current, pageSize }, _, sorter) =>
+        onChange={(_pagination, _filter, sorter) => {
+          setPageIndex(DEFAULT_PAGE_INDEX);
           setQueryConfig({
-            pageIndex: current!,
-            size: pageSize!,
+            pageIndex: DEFAULT_PAGE_INDEX,
+            size: queryConfig.size!,
             sort: formatQuerySortList(sorter),
-          })
-        }
+          });
+        }}
         headerConfig={{
           itemCount: {
-            pageIndex: queryConfig.pageIndex,
+            pageIndex: pageIndex,
             pageSize: queryConfig.size,
             total: results.total,
           },
@@ -346,11 +396,29 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
         bordered
         size="small"
         pagination={{
-          current: queryConfig.pageIndex,
-          pageSize: queryConfig.size,
-          defaultPageSize: DEFAULT_PAGE_SIZE,
-          total: results.total,
-          onChange: () => scrollToTop(SCROLL_WRAPPER_ID),
+          current: pageIndex,
+          queryConfig,
+          setQueryConfig,
+          onChange: (page: number) => {
+            scrollToTop(SCROLL_WRAPPER_ID);
+            setPageIndex(page);
+          },
+          searchAfter: results.searchAfter,
+          onViewQueryChange: (viewPerQuery: PaginationViewPerQuery) => {
+            dispatch(
+              updateUserConfig({
+                data_exploration: {
+                  tables: {
+                    datafiles: {
+                      ...userInfo?.config.data_exploration?.tables?.datafiles,
+                      viewPerQuery,
+                    },
+                  },
+                },
+              }),
+            );
+          },
+          defaultViewPerQuery: queryConfig.size,
         }}
         dataSource={results.data.map((i) => ({ ...i, key: i.file_id }))}
         dictionary={getProTableDictionary()}

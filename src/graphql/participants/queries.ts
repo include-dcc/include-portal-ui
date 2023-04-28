@@ -1,11 +1,18 @@
 import { gql } from '@apollo/client';
 
 export const SEARCH_PARTICIPANT_QUERY = gql`
-  query searchParticipant($sqon: JSON, $first: Int, $offset: Int, $sort: [Sort]) {
+  query searchParticipant(
+    $sqon: JSON
+    $first: Int
+    $offset: Int
+    $sort: [Sort]
+    $searchAfter: JSON
+  ) {
     participant {
-      hits(filters: $sqon, first: $first, offset: $offset, sort: $sort) {
+      hits(filters: $sqon, first: $first, offset: $offset, sort: $sort, searchAfter: $searchAfter) {
         total
         edges {
+          searchAfter
           node {
             id
             down_syndrome_diagnosis

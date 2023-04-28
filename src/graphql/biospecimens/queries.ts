@@ -1,11 +1,18 @@
 import { gql } from '@apollo/client';
 
 export const SEARCH_BIOSPECIMEN_QUERY = gql`
-  query searchBiospecimen($sqon: JSON, $first: Int, $offset: Int, $sort: [Sort]) {
+  query searchBiospecimen(
+    $sqon: JSON
+    $first: Int
+    $offset: Int
+    $sort: [Sort]
+    $searchAfter: JSON
+  ) {
     biospecimen {
-      hits(filters: $sqon, first: $first, offset: $offset, sort: $sort) {
+      hits(filters: $sqon, first: $first, offset: $offset, sort: $sort, searchAfter: $searchAfter) {
         total
         edges {
+          searchAfter
           node {
             id
             container_id
@@ -52,6 +59,16 @@ export const CHECK_BIOSPECIMEN_MATCH = gql`
             container_id
           }
         }
+      }
+    }
+  }
+`;
+
+export const GET_BIOSPECIMEN_COUNT = gql`
+  query getBiospecimenCount($sqon: JSON) {
+    biospecimen {
+      hits(filters: $sqon) {
+        total
       }
     }
   }
