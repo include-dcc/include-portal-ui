@@ -8,7 +8,7 @@ export type TUserSavedFilter = ISavedFilter & {
 };
 
 export enum SavedFilterTag {
-  ParticipantsExplorationPage = 'participants-data-exploration-page',
+  ParticipantsExplorationPage = 'data-exploration',
   VariantsExplorationPage = 'variants-variants-exploration-page',
 }
 

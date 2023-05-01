@@ -12,7 +12,6 @@ import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { Tag, Tooltip } from 'antd';
-import { SorterResult } from 'antd/lib/table/interface';
 import { INDEXES } from 'graphql/constants';
 import { ArrangerResultsTree, IQueryResults } from 'graphql/models';
 import {
@@ -386,6 +385,7 @@ const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProp
         onSelectedRowsChange: (keys) => setSelectedKeys(keys),
         extra: [
           <SetsManagementDropdown
+            idField="fhir_id"
             key="setManagementDropdown"
             results={results}
             selectedKeys={selectedKeys}

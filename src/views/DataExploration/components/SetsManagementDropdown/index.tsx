@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
 import {
   DownOutlined,
   ExperimentOutlined,
@@ -12,7 +13,6 @@ import {
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { Button, Dropdown, Menu, Tooltip } from 'antd';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
-import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
 import { IQueryResults } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
@@ -20,6 +20,7 @@ import { IVariantEntity } from 'graphql/variants/models';
 import { MenuClickEventHandler } from 'rc-menu/lib/interface';
 import CreateEditModal from 'views/Dashboard/components/DashboardCards/SavedSets/CreateEditModal';
 
+import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import { SetType } from 'services/api/savedSet/models';
 import { useSavedSet } from 'store/savedSet';
 import { numberWithCommas } from 'utils/string';
@@ -29,7 +30,7 @@ import AddRemoveSaveSetModal from './AddRemoveSaveSetModal';
 import styles from './index.module.scss';
 
 type Props = {
-  idField?: string;
+  idField: string;
   results: IQueryResults<
     IParticipantEntity[] | IFileEntity[] | IBiospecimenEntity[] | IVariantEntity[]
   >;
@@ -80,19 +81,24 @@ const modals = {
 const ROW_SELECTION_LIMIT = 10000;
 const exceedLimit = (participantCount: number) => participantCount > ROW_SELECTION_LIMIT;
 
-const itemIcon = (type: string) => {
+export const itemIcon = (type: string) => {
   switch (type) {
-    case INDEXES.BIOSPECIMEN:
+    case SetType.BIOSPECIMEN:
       return <ExperimentOutlined width="14px" height="14px" />;
-    case INDEXES.FILE:
+    case SetType.FILE:
       return <FileTextOutlined width="14px" height="14px" />;
+    case SetType.VARIANT:
+      return <LineStyleIcon width="14px" height="14px" />;
     default:
       return <UserOutlined width="14px" height="14px" />;
   }
 };
 
+export const singularizeSetTypeIfNeeded = (type: string) =>
+  type === SetType.VARIANT ? type.slice(0, -1) : type;
+
 const menu = (
-  participantCount: number,
+  count: number,
   onClick: MenuClickEventHandler,
   isEditDisabled: boolean,
   type: string,
@@ -104,16 +110,17 @@ const menu = (
       {
         key: 'participant-count',
         className: `${
-          exceedLimit(participantCount)
-            ? styles.saveSetOptionMenuInfoOver
-            : styles.saveSetOptionMenuInfo
+          exceedLimit(count) ? styles.saveSetOptionMenuInfoOver : styles.saveSetOptionMenuInfo
         }`,
         disabled: true,
         icon: itemIcon(type),
         label: (
           <>
             <span>
-              {participantCount} {type} selected
+              {intl.get('screen.dataExploration.setsManagementDropdown.selected', {
+                count,
+                type: singularizeSetTypeIfNeeded(type),
+              })}
             </span>
             <Tooltip
               arrowPointAtCenter
@@ -133,18 +140,18 @@ const menu = (
       {
         key: 'create',
         icon: <PlusOutlined />,
-        label: 'Save as new set',
+        label: intl.get('screen.dataExploration.setsManagementDropdown.create'),
       },
       {
         key: 'add_ids',
         icon: <UsergroupAddOutlined />,
-        label: 'Add to existing set',
+        label: intl.get('screen.dataExploration.setsManagementDropdown.add'),
         disabled: isEditDisabled,
       },
       {
         key: 'remove_ids',
         icon: <UsergroupDeleteOutlined />,
-        label: 'Remove from existing set',
+        label: intl.get('screen.dataExploration.setsManagementDropdown.remove'),
         disabled: isEditDisabled,
       },
     ]}
@@ -188,7 +195,9 @@ const SetsManagementDropdown = ({
     <div id={`${type}-set-dropdown-container`}>
       {modal.showModalSave && sqon && (
         <CreateEditModal
-          title={`Save ${type.charAt(0).toUpperCase() + type.slice(1)} Set`}
+          title={intl.get('screen.dataExploration.setsManagementDropdown.newTitle', {
+            filter: singularizeSetTypeIfNeeded(type).toLocaleLowerCase(),
+          })}
           idField={idField}
           sqon={sqon}
           setType={type}
@@ -199,6 +208,7 @@ const SetsManagementDropdown = ({
       )}
       {modal.showModalAddDelete && (
         <AddRemoveSaveSetModal
+          idField={idField}
           sqon={sqon}
           setActionType={modal.actionType}
           hideModalCb={() => {
@@ -218,13 +228,13 @@ const SetsManagementDropdown = ({
         )}
         placement="bottomLeft"
         trigger={['click']}
-        disabled={selectedKeys.length === 0}
+        disabled={selectedKeys.length === 0 && !selectedAllResults}
         getPopupContainer={() =>
           document.getElementById(`${type}-set-dropdown-container`) as HTMLElement
         }
       >
         <Button className={'save-set-btn'} onClick={(e) => e.preventDefault()}>
-          {`Save ${type} set`}
+          {`Save ${singularizeSetTypeIfNeeded(type)} set`}
           <DownOutlined />
         </Button>
       </Dropdown>

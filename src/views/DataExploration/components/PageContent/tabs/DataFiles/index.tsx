@@ -10,7 +10,6 @@ import useQueryBuilderState, {
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { Tag, Tooltip } from 'antd';
-import { SorterResult } from 'antd/lib/table/interface';
 import { INDEXES } from 'graphql/constants';
 import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
 import { IQueryResults } from 'graphql/models';
@@ -327,6 +326,7 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
             ),
           extra: [
             <SetsManagementDropdown
+              idField="fhir_id"
               key="setManagementDropdown"
               results={results}
               sqon={getCurrentSqon()}
