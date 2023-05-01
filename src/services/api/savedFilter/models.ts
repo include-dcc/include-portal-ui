@@ -9,7 +9,7 @@ export type TUserSavedFilter = ISavedFilter & {
 
 export enum SavedFilterTag {
   ParticipantsExplorationPage = 'data-exploration',
-  VariantsExplorationPage = 'variants-variants-exploration-page',
+  VariantsExplorationPage = 'variants',
 }
 
 export type TUserSavedFilterInsert = Omit<
