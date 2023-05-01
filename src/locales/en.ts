@@ -690,6 +690,14 @@ const en = {
         biospecimen: 'Biospecimen',
         datafiles: 'Data File',
       },
+      setsManagementDropdown: {
+        newTitle: 'Save {filter} set',
+        editTitle: 'Edit {filter} set',
+        create: 'Save as new set',
+        add: 'Add to existing set',
+        remove: 'Remove from existing set',
+        selected: '{count, plural, =0 {# {type}} =1 {# {type}} other {# {type}s}} selected',
+      },
       hpoTree: {
         modal: {
           title: 'Observed Phenotype (HPO) Browser',
