@@ -11,7 +11,9 @@ export const scrollToTop = (scrollContentId: string) =>
 
 export const orderCardIfNeeded = (cards: TSortableItems[], userCardConfig: string[] | undefined) =>
   userCardConfig
-    ? cards.sort((a, b) => (userCardConfig.indexOf(a.id) > userCardConfig.indexOf(b.id) ? 1 : -1))
+    ? cards
+        .slice()
+        .sort((a, b) => (userCardConfig.indexOf(a.id) > userCardConfig.indexOf(b.id) ? 1 : -1))
     : cards;
 
 export const getOrderFromAntdValue = (order: string): SortDirection =>
@@ -29,7 +31,6 @@ export const getCurrentUrl = () =>
   window.location.protocol + '//' + window.location.host + window.location.pathname;
 
 const KEBAB_REGEX = /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g;
-
 export const toKebabCase = (str: string) => {
   const match: string[] = (str && str.match(KEBAB_REGEX)) || [];
   return match.map((x: string) => x.toLowerCase()).join('-');
