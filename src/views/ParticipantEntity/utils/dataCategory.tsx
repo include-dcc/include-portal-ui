@@ -105,6 +105,7 @@ export const getDataCategoryColumns = (
   {
     key: 'percentage',
     dataIndex: 'percentage',
+    tooltip: 'Total number of files associated with the participant',
     title: `(n=${fileCount})`,
     render: (percentage: number) => <Progress percent={percentage} showInfo={false} />,
   },
