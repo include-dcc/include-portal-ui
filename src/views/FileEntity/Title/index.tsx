@@ -1,12 +1,12 @@
 import intl from 'react-intl-universal';
 import { FileImageOutlined, LockOutlined, UnlockFilled } from '@ant-design/icons';
-import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { EntityTitle } from '@ferlab/ui/core/pages/EntityPage';
-import { Button, Space, Tooltip } from 'antd';
+import { Button, Popover, Space } from 'antd';
 import { IFileEntity } from 'graphql/files/models';
 
 import { FENCE_CONNECTION_STATUSES } from 'common/fenceTypes';
 import CavaticaAnalyzeButton from 'components/Cavatica/AnalyzeButton';
+import PopoverContentLink from 'components/uiKit/PopoverContentLink';
 import { useFenceConnection } from 'store/fenceConnection';
 import { userHasAccessToFile } from 'utils/dataFiles';
 
@@ -33,26 +33,31 @@ const FileEntityTitle: React.FC<OwnProps> = ({ file, loading }) => {
     text: file?.file_id,
     icon: <FileImageOutlined />,
     tag: hasAccess ? (
-      <Tooltip title={intl.get('entities.file.unlocked')}>
+      <Popover
+        placement="bottom"
+        overlayClassName={styles.popOverContent}
+        title={intl.get('entities.file.fileAuthorization')}
+        content={intl.get('entities.file.unlocked')}
+      >
         <UnlockFilled className={styles.unlocked} />
-      </Tooltip>
+      </Popover>
     ) : (
-      <Tooltip
-        title={
-          <>
-            <>{intl.get('entities.file.locked')}</>
-            <ExternalLink
-              className={styles.link}
-              href="https://help.includedcc.org/docs/applying-for-access"
-            >
-              {intl.get('entities.file.apply_data_access')}
-            </ExternalLink>
-            <>.</>
-          </>
+      <Popover
+        overlayClassName={styles.popOverContent}
+        title={intl.get('entities.file.fileAuthorization')}
+        content={
+          <span>
+            {intl.get('entities.file.locked')}
+            <PopoverContentLink
+              className={styles.contentLink}
+              externalHref="https://help.includedcc.org/docs/applying-for-access"
+              title={intl.get('entities.file.apply_data_access')}
+            />
+          </span>
         }
       >
         <LockOutlined className={styles.locked} />
-      </Tooltip>
+      </Popover>
     ),
     extra: (
       <Space>

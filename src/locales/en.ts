@@ -994,7 +994,7 @@ const en = {
       format: 'Format',
       hash: 'Hash',
       locked:
-        'You are unauthorized to access this file. Users requesting access to controlled data require an eRA Commons account and permissions from an associated Data Access Committee. Read more on',
+        'You are unauthorized to access this file. Users requesting access to controlled data require an eRA Commons account and permissions from an associated Data Access Committee. Read more on ',
       manifest: 'Manifest',
       participant_sample: 'Participant / Sample',
       size: 'Size',
