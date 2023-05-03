@@ -3,15 +3,15 @@ import { useDispatch } from 'react-redux';
 import { Checkbox, Form, Input, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import cx from 'classnames';
-import { usageOptions } from 'views/Community/contants';
 
+import { IOption } from 'services/api/user/models';
 import { useUser } from 'store/user';
 import { updateUser } from 'store/user/thunks';
 import { lowerAll } from 'utils/array';
 
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
-import { OTHER_KEY, removeOtherKey } from '../utils';
+import { OTHER_KEY, removeOtherKey, sortOptionsLabelsByName } from '../utils';
 
 import formStyles from '../form.module.scss';
 
@@ -27,7 +27,7 @@ const initialChangedValues = {
   [FORM_FIELDS.COMMERCIAL_USE_REASON]: false,
 };
 
-const hasOtherUsage = (userUsages: string[]) =>
+const hasOtherUsage = (userUsages: string[], usageOptions: IOption[]) =>
   userUsages.filter(
     (usage) =>
       !usageOptions.find(
@@ -35,7 +35,7 @@ const hasOtherUsage = (userUsages: string[]) =>
       ),
   );
 
-const ResearchAndUsagesCard = () => {
+const ResearchAndUsagesCard = ({ usageOptions }: { usageOptions: IOption[] }) => {
   const [form] = useForm();
   const dispatch = useDispatch();
   const { userInfo } = useUser();
@@ -49,17 +49,19 @@ const ResearchAndUsagesCard = () => {
     form.setFieldsValue(initialValues.current);
   };
 
+  const usageOptionsSorted = sortOptionsLabelsByName(usageOptions, 'usageOptions');
+
   useEffect(() => {
     initialValues.current = {
-      [FORM_FIELDS.DATA_USAGE]: hasOtherUsage(lowerAll(userInfo?.portal_usages ?? [])).length
+      [FORM_FIELDS.DATA_USAGE]: hasOtherUsage(userInfo?.portal_usages ?? [], usageOptions).length
         ? [...lowerAll(userInfo?.portal_usages ?? []), OTHER_KEY]
         : lowerAll(userInfo?.portal_usages ?? []),
-      [FORM_FIELDS.OTHER_DATA_USAGE]: hasOtherUsage(userInfo?.portal_usages ?? [])[0],
+      [FORM_FIELDS.OTHER_DATA_USAGE]: hasOtherUsage(userInfo?.portal_usages ?? [], usageOptions)[0],
       [FORM_FIELDS.COMMERCIAL_USE_REASON]: userInfo?.commercial_use_reason || '',
     };
     form.setFieldsValue(initialValues.current);
     setHasChanged(initialChangedValues);
-  }, [userInfo]);
+  }, [form, usageOptions, userInfo]);
 
   return (
     <BaseCard
@@ -74,7 +76,7 @@ const ResearchAndUsagesCard = () => {
         initialValues={initialValues}
         hasChangedInitialValue={hasChanged}
         onFinish={(values: any) => {
-          const otherUsage = hasOtherUsage(values[FORM_FIELDS.DATA_USAGE]);
+          const otherUsage = hasOtherUsage(values[FORM_FIELDS.DATA_USAGE], usageOptions);
           dispatch(
             updateUser({
               data: {
@@ -98,8 +100,8 @@ const ResearchAndUsagesCard = () => {
           <Checkbox.Group className={formStyles.checkBoxGroup}>
             <span className={formStyles.help}>Check all that apply</span>
             <Space direction="vertical">
-              {usageOptions.map((option) => (
-                <Checkbox key={option.key} value={option.value.toLowerCase()}>
+              {usageOptionsSorted.map((option) => (
+                <Checkbox key={option.value} value={option.value}>
                   {option.label}
                 </Checkbox>
               ))}
@@ -111,7 +113,7 @@ const ResearchAndUsagesCard = () => {
               >
                 {({ getFieldValue }) =>
                   getFieldValue(FORM_FIELDS.DATA_USAGE)?.includes(
-                    usageOptions.find((option) => option.key === 'commercial')?.value,
+                    usageOptions.find((option) => option.value === 'commercial')?.value,
                   ) ? (
                     <Form.Item
                       className={cx(formStyles.dynamicField, formStyles.inner)}

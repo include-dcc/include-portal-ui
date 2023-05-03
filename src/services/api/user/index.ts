@@ -6,7 +6,8 @@ import { sendRequest } from 'services/api';
 
 import { TProfileImagePresignedOutput, TUser, TUserUpdate } from './models';
 
-export const USER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user`;
+export const USERS_API_URL_USER = `${EnvironmentVariables.configFor('USERS_API')}/user`;
+export const USERS_API_URL = `${EnvironmentVariables.configFor('USERS_API')}`;
 
 export const headers = (contentType: string = 'application/json') => ({
   'Content-Type': contentType,
@@ -15,7 +16,7 @@ export const headers = (contentType: string = 'application/json') => ({
 const fetch = () =>
   sendRequest<TUser>({
     method: 'GET',
-    url: USER_API_URL,
+    url: USERS_API_URL_USER,
     headers: headers(),
   });
 
@@ -39,7 +40,7 @@ const search = ({
     total: number;
   }>({
     method: 'GET',
-    url: `${USER_API_URL}/search`,
+    url: `${USERS_API_URL_USER}/search`,
     headers: headers(),
     params: {
       pageIndex: pageIndex,
@@ -56,7 +57,7 @@ const search = ({
 const update = (body: TUserUpdate) =>
   sendRequest<TUser>({
     method: 'PUT',
-    url: USER_API_URL,
+    url: USERS_API_URL_USER,
     headers: headers(),
     data: body,
   });
@@ -64,14 +65,14 @@ const update = (body: TUserUpdate) =>
 const deleteUser = () =>
   sendRequest<void>({
     method: 'DELETE',
-    url: USER_API_URL,
+    url: USERS_API_URL_USER,
     headers: headers(),
   });
 
 const uploadImageToS3 = async (file: File | Blob) => {
   const result = await sendRequest<TProfileImagePresignedOutput>({
     method: 'GET',
-    url: `${USER_API_URL}/image/presigned`,
+    url: `${USERS_API_URL_USER}/image/presigned`,
     headers: headers(),
   });
 

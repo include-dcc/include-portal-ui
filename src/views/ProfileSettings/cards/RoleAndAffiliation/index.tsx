@@ -4,15 +4,15 @@ import { useDispatch } from 'react-redux';
 import { Checkbox, Form, Input, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import cx from 'classnames';
-import { roleOptions } from 'views/Community/contants';
 
+import { IOption } from 'services/api/user/models';
 import { useUser } from 'store/user';
 import { updateUser } from 'store/user/thunks';
 import { lowerAll } from 'utils/array';
 
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
-import { OTHER_KEY, removeOtherKey } from '../utils';
+import { OTHER_KEY, removeOtherKey, sortOptionsLabelsByName } from '../utils';
 
 import formStyles from '../form.module.scss';
 
@@ -21,13 +21,13 @@ enum FORM_FIELDS {
   OTHER_ROLE = 'other_role',
   AFFILIATION = 'affiliation',
   NO_AFFILIATION = 'no_affiliation',
-  RESEARCH_AREA = 'reasearch_area',
+  RESEARCH_AREA = 'research_area_description',
 }
 
-const hasOtherRole = (userUsages: string[]) =>
-  userUsages.filter(
-    (usage) =>
-      !roleOptions.find((roleOption) => roleOption.value.toLowerCase() === usage.toLowerCase()),
+const hasOtherRole = (userRoles: string[], roleOptions: IOption[]) =>
+  userRoles.filter(
+    (role) =>
+      !roleOptions.find((roleOption) => roleOption.value.toLowerCase() === role.toLowerCase()),
   );
 
 const initialChangedValues = {
@@ -38,7 +38,7 @@ const initialChangedValues = {
   [FORM_FIELDS.RESEARCH_AREA]: false,
 };
 
-const RoleAndAffiliationCard = () => {
+const RoleAndAffiliationCard = ({ roleOptions }: { roleOptions: IOption[] }) => {
   const [form] = useForm();
   const dispatch = useDispatch();
   const { userInfo } = useUser();
@@ -52,19 +52,21 @@ const RoleAndAffiliationCard = () => {
     form.setFieldsValue(initialValues.current);
   };
 
+  const roleOptionsSorted = sortOptionsLabelsByName(roleOptions, 'roleOptions');
+
   useEffect(() => {
     initialValues.current = {
-      [FORM_FIELDS.ROLES]: hasOtherRole(lowerAll(userInfo?.roles ?? [])).length
+      [FORM_FIELDS.ROLES]: hasOtherRole(userInfo?.roles || [], roleOptions).length
         ? [...lowerAll(userInfo?.roles ?? []), OTHER_KEY]
         : lowerAll(userInfo?.roles ?? []),
-      [FORM_FIELDS.OTHER_ROLE]: hasOtherRole(userInfo?.roles ?? [])[0],
+      [FORM_FIELDS.OTHER_ROLE]: hasOtherRole(userInfo?.roles || [], roleOptions)[0],
       [FORM_FIELDS.AFFILIATION]: userInfo?.affiliation,
       [FORM_FIELDS.NO_AFFILIATION]: !userInfo?.affiliation,
-      [FORM_FIELDS.RESEARCH_AREA]: userInfo?.research_area || '',
+      [FORM_FIELDS.RESEARCH_AREA]: userInfo?.research_area_description || '',
     };
     form.setFieldsValue(initialValues.current);
     setHasChanged(initialChangedValues);
-  }, [userInfo]);
+  }, [form, roleOptions, userInfo]);
 
   return (
     <BaseCard
@@ -79,7 +81,7 @@ const RoleAndAffiliationCard = () => {
         initialValues={initialValues}
         hasChangedInitialValue={hasChanged}
         onFinish={(values: any) => {
-          const otherRole = hasOtherRole(values[FORM_FIELDS.ROLES]);
+          const otherRole = hasOtherRole(values[FORM_FIELDS.ROLES], roleOptions);
           dispatch(
             updateUser({
               data: {
@@ -90,7 +92,7 @@ const RoleAndAffiliationCard = () => {
                 affiliation: values[FORM_FIELDS.NO_AFFILIATION]
                   ? ''
                   : values[FORM_FIELDS.AFFILIATION],
-                research_area: values[FORM_FIELDS.RESEARCH_AREA],
+                research_area_description: values[FORM_FIELDS.RESEARCH_AREA],
               },
             }),
           );
@@ -108,12 +110,11 @@ const RoleAndAffiliationCard = () => {
               {intl.get('screen.profileSettings.cards.roleAffiliation.checkAllThatApply')}
             </span>
             <Space direction="vertical">
-              {roleOptions.map((option, index) => (
+              {roleOptionsSorted.map((option, index) => (
                 <Checkbox key={index} value={option.value.toLowerCase()}>
                   {option.label}
                 </Checkbox>
               ))}
-              <Checkbox value={OTHER_KEY}>{intl.get('global.other')}</Checkbox>
             </Space>
           </Checkbox.Group>
         </Form.Item>

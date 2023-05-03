@@ -439,6 +439,22 @@ const fr = {
         saveChanges: 'Save changes',
         discardChanges: 'Discard changes',
       },
+      rolesOptions: {
+        researcher: 'Rechercheur à une institution académique ou à but non lucratif',
+        representative: 'Représentant d’une entité à but lucratif ou commercial',
+        developer: 'Développeur d’outils ou d’algorithmes',
+        clinician: 'Clinicien',
+        community_member: 'Membre de la communauté',
+        federal_employee: 'Employé fédéral',
+        other: 'Autre',
+      },
+      usageOptions: {
+        learn_more_about_down_syndrome:
+          'En savoir plus sur le syndrome de Down et les conditions co-occurrentes',
+        help_design_new_research_study: 'Aider à concevoir une nouvelle étude de recherche',
+        identifying_dataset: 'Identifier un ensemble de données',
+        commercial_purpose: 'Objectif commercial',
+      },
     },
     loginPage: {
       title: 'INCLUDE Data Hub',
