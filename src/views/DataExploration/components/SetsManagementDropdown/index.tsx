@@ -6,8 +6,6 @@ import {
   FileTextOutlined,
   InfoCircleOutlined,
   PlusOutlined,
-  UsergroupAddOutlined,
-  UsergroupDeleteOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
@@ -21,6 +19,8 @@ import { MenuClickEventHandler } from 'rc-menu/lib/interface';
 import CreateEditModal from 'views/Dashboard/components/DashboardCards/SavedSets/CreateEditModal';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
+import ListAddIcon from 'components/Icons/ListAddIcon';
+import ListRemoveIcon from 'components/Icons/ListRemoveIcon';
 import { SetType } from 'services/api/savedSet/models';
 import { useSavedSet } from 'store/savedSet';
 import { numberWithCommas } from 'utils/string';
@@ -144,13 +144,13 @@ const menu = (
       },
       {
         key: 'add_ids',
-        icon: <UsergroupAddOutlined />,
+        icon: <ListAddIcon />,
         label: intl.get('screen.dataExploration.setsManagementDropdown.add'),
         disabled: isEditDisabled,
       },
       {
         key: 'remove_ids',
-        icon: <UsergroupDeleteOutlined />,
+        icon: <ListRemoveIcon />,
         label: intl.get('screen.dataExploration.setsManagementDropdown.remove'),
         disabled: isEditDisabled,
       },
