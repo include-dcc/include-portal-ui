@@ -13,6 +13,7 @@ import { useStudies } from 'graphql/studies/actions';
 import { IStudyEntity } from 'graphql/studies/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
+import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
 
@@ -62,13 +63,16 @@ const columns: ProColumnType<any>[] = [
     key: 'external_id',
     title: 'dbGaP',
     dataIndex: 'external_id',
-    render: (external_id: string) => (
-      <ExternalLink
-        href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${external_id}`}
-      >
-        {external_id}
-      </ExternalLink>
-    ),
+    render: (external_id: string) =>
+      external_id ? (
+        <ExternalLink
+          href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${external_id}`}
+        >
+          {external_id}
+        </ExternalLink>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'participant_count',
