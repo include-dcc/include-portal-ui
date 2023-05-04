@@ -53,6 +53,7 @@ const FileEntityTitle: React.FC<OwnProps> = ({ file, loading }) => {
               externalHref="https://help.includedcc.org/docs/applying-for-access"
               title={intl.get('entities.file.apply_data_access')}
             />
+            .
           </span>
         }
       >

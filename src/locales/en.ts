@@ -976,6 +976,7 @@ const en = {
       volume_unit: 'Volume Unit',
     },
     file: {
+      fileAuthorization: 'File Authorization',
       access: 'Access',
       apply_data_access: 'applying for data access',
       category: 'Category',
