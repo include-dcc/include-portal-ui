@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:1-bullseye
 RUN rm /etc/nginx/conf.d/default.conf
 COPY qa.crt /etc/nginx/qa.crt
 COPY qa.key /etc/nginx/qa.key
