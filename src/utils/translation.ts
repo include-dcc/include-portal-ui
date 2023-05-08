@@ -5,6 +5,7 @@ import { IDictionary as QueryBuilderDict } from '@ferlab/ui/core/components/Quer
 import { SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
 
 import { IUserSetOutput } from 'services/api/savedSet/models';
+
 import { numberWithCommas } from './string';
 
 export const getEntityExpandableTableMultiple = () => ({
@@ -239,6 +240,7 @@ export const getQueryBuilderDictionary = (
 });
 
 export const getFacetsDictionary = () => ({
+  study_id: 'Study Code',
   study: {
     study_name: 'Study Name',
     study_code: 'Study Code',
