@@ -61,6 +61,7 @@ const fetchReport = createAsyncThunk<
         duration: 0,
       }),
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
     await ReportApi.generateReport(args.data).then((_) => {
       thunkAPI.dispatch(globalActions.destroyMessages([messageKey]));
       thunkAPI.dispatch(
@@ -92,8 +93,8 @@ const fetchTsvReport = createAsyncThunk<void, TFetchTSVArgs, { rejectValue: stri
     );
 
     try {
-      const filename = `[include-${args.index}-table]-YYYY-MM-DD`;
-      const formattedFileName = format(new Date(), `${filename}[.tsv]`);
+      const formattedDate = format(new Date(), 'yyyy-MM-dd');
+      const formattedFileName = `include-${args.index}-table-${formattedDate}.tsv`;
 
       const { data, error } = await ArrangerApi.columnStates({
         query: getColumnStateQuery(args.index),
