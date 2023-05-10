@@ -182,8 +182,8 @@ const Studies = () => {
   const { loading, data, total } = useStudies({
     sort: [
       {
-        field: 'study_id',
-        order: SortDirection.Desc,
+        field: 'study_code',
+        order: SortDirection.Asc,
       },
     ],
   });

@@ -240,6 +240,7 @@ export const getQueryBuilderDictionary = (
 });
 
 export const getFacetsDictionary = () => ({
+  family_type: 'Family Unit',
   study_id: 'Study Code',
   study: {
     study_name: 'Study Name',
