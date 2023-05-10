@@ -1,9 +1,9 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const FETCH_STUDIES_QUERY = gql`
-  query getStudy {
+  query getStudy($sqon: JSON, $first: Int, $offset: Int, $sort: [Sort]) {
     study {
-      hits {
+      hits(filters: $sqon, first: $first, offset: $offset, sort: $sort) {
         total
         edges {
           node {
