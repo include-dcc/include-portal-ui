@@ -1,7 +1,14 @@
 import intl from 'react-intl-universal';
-import { EntityTableMultiple } from '@ferlab/ui/core/pages/EntityPage';
+import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { EntityTableMultiple, EntityTableRedirectLink } from '@ferlab/ui/core/pages/EntityPage';
+import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
 import { IParticipantEntity } from 'graphql/participants/models';
+import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
+
+import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
+import { STATIC_ROUTES } from 'utils/routes';
 
 import { SectionId } from '../utils/anchorLinks';
 import { getDataCategoryColumns, getDataCategoryInfo } from '../utils/dataCategory';
@@ -30,6 +37,30 @@ const FileTable = ({ participant, loading }: IFilesTableProps) => {
         id={SectionId.FILES}
         loading={loading}
         title={intl.get('entities.file.file')}
+        titleExtra={[
+          <EntityTableRedirectLink
+            key="1"
+            to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
+            onClick={() =>
+              addQuery({
+                queryBuilderId: DATA_EXPLORATION_QB_ID,
+                query: generateQuery({
+                  newFilters: [
+                    generateValueFilter({
+                      field: 'participant_id',
+                      value: participant ? [participant.participant_id] : [],
+                      index: INDEXES.PARTICIPANT,
+                    }),
+                  ],
+                }),
+                setAsActive: true,
+              })
+            }
+            icon={<ExternalLinkIcon width={14} />}
+          >
+            {intl.get('global.viewInDataExploration')}
+          </EntityTableRedirectLink>,
+        ]}
         header={intl.get('entities.file.file')}
         tables={[
           {

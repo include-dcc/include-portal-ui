@@ -100,6 +100,7 @@ const en = {
       selected: 'item selected',
       selectedPlural: 'items selected',
     },
+    viewInDataExploration: 'View in data exploration',
   },
   // API
   api: {
