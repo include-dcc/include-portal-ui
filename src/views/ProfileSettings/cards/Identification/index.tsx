@@ -14,6 +14,8 @@ import { updateUser } from 'store/user/thunks';
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
 
+import ProfileImageUpload from './ProfileImageUpload';
+
 import styles from './index.module.scss';
 
 enum FORM_FIELDS {
@@ -151,6 +153,9 @@ const IdentificationCard = () => {
                 <Input placeholder="https://www.linkedin.com/in/username/"></Input>
               </Form.Item>
             </BaseForm>
+          </Col>
+          <Col span={8} className={styles.gravatarCol}>
+            <ProfileImageUpload />
           </Col>
         </Row>
       </Space>
