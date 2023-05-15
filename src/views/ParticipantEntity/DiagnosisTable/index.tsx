@@ -26,6 +26,7 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
       id={SectionId.DIAGNOSIS}
       loading={loading}
       data={diagnoses}
+      total={diagnoses.length}
       title={intl.get('entities.participant.diagnosis')}
       header={intl.get('entities.participant.diagnosis')}
       columns={getDiagnosisColumns()}

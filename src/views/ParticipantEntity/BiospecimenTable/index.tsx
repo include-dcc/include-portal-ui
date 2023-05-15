@@ -25,7 +25,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
   const { userInfo } = useUser();
   const dispatch = useDispatch();
 
-  const { biospecimens } = getBiospecimensFromParticipant(participant);
+  const { biospecimens, total } = getBiospecimensFromParticipant(participant);
 
   return (
     <EntityTable
@@ -57,6 +57,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
           {intl.get('global.viewInDataExploration')}
         </EntityTableRedirectLink>,
       ]}
+      total={total}
       header={intl.get('entities.biospecimen.biospecimen')}
       columns={getBiospecimenColumns()}
       initialColumnState={userInfo?.config.participants?.tables?.biospecimens?.columns}

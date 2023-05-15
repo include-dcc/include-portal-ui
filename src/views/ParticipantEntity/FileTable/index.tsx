@@ -34,6 +34,7 @@ const FileTable = ({ participant, loading }: IFilesTableProps) => {
   return (
     <div>
       <EntityTableMultiple
+        total={fileCount}
         id={SectionId.FILES}
         loading={loading}
         title={intl.get('entities.file.file')}
