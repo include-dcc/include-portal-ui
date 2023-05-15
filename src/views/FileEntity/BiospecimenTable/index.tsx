@@ -25,6 +25,7 @@ const BiospecimenTable = ({ file, loading }: OwnProps) => {
       id={SectionId.PARTICIPANT_SAMPLE}
       loading={loading}
       data={biospecimens}
+      total={biospecimens.length}
       title={intl.get('entities.file.participant_sample')}
       header={intl.get('entities.file.participant_sample')}
       columns={getBiospecimenColumns()}

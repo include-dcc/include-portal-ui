@@ -26,6 +26,7 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
       id={SectionId.PHENOTYPE}
       loading={loading}
       data={phenotype}
+      total={phenotype.length}
       title={intl.get('entities.participant.phenotype')}
       header={intl.get('entities.participant.phenotype')}
       columns={getPhenotypeColumns()}
