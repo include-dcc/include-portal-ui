@@ -259,7 +259,7 @@ const TreeFacetModal = ({ type, field, titleFormatter }: Props) => {
           }
         }}
         onSearch={(_, value) => {
-          if (value && value.length > MIN_SEARCH_TEXT_LENGTH) {
+          if (value && value.length >= MIN_SEARCH_TEXT_LENGTH) {
             const hits: string[] = [];
             const tree = cloneDeep(treeData)!;
             searchInTree(value, tree, hits);
