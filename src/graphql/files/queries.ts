@@ -32,7 +32,13 @@ export const SEARCH_FILES_QUERY = gql`
               study_name
             }
             sequencing_experiment {
-              experiment_strategy
+              hits {
+                edges {
+                  node {
+                    experiment_strategy
+                  }
+                }
+              }
             }
           }
         }
