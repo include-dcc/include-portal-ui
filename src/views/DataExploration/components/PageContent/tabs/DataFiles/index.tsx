@@ -144,13 +144,6 @@ const getDefaultColumns = (
     render: (data_type) => data_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    key: 'sequencing_experiment__experiment_strategy',
-    title: 'Experimental Strategy',
-    sorter: { multiple: 1 },
-    render: (record: IFileEntity) =>
-      record.sequencing_experiment?.experiment_strategy || TABLE_EMPTY_PLACE_HOLDER,
-  },
-  {
     key: 'access_urls',
     title: 'Access Url',
     dataIndex: 'access_urls',

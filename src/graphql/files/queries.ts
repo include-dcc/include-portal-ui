@@ -31,15 +31,6 @@ export const SEARCH_FILES_QUERY = gql`
               study_id
               study_name
             }
-            sequencing_experiment {
-              hits {
-                edges {
-                  node {
-                    experiment_strategy
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -97,9 +88,6 @@ export const GET_FILE_ENTITY = gql`
             }
             nb_biospecimens
             nb_participants
-            sequencing_experiment {
-              experiment_strategy
-            }
             size
             study {
               external_id

@@ -5,60 +5,16 @@ import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQuery
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { Progress } from 'antd';
 import { INDEXES } from 'graphql/constants';
-import { IFileEntity } from 'graphql/files/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
-
-enum ExperimentalStrategy {
-  RNA_SEQ = 'RNA-Seq',
-  WGS = 'Whole Genome Sequencing',
-  MULTITPLEX_IMMUNOASSAY = 'Multiplex Immunoassay',
-  LCMS_METABOLOMICS = 'LCMS_Metabolomics',
-}
 
 interface IExperimentalStrategy {
   strategy: string;
   nb_files: number;
   percentage: number;
 }
-
-export const getExperimentalStrategyInfo = (files: IFileEntity[], fileCount: number) => {
-  const experimentalStrategyInfo: IExperimentalStrategy[] = [];
-  const fileCountByExperimentalStrategy = getFileCountByExperimentalStrategy(files);
-
-  for (const [key, value] of Object.entries(fileCountByExperimentalStrategy)) {
-    experimentalStrategyInfo.push({
-      strategy: key,
-      nb_files: value,
-      percentage: (value / fileCount) * 100,
-    });
-  }
-
-  return experimentalStrategyInfo;
-};
-
-export const getFileCountByExperimentalStrategy = (files: IFileEntity[]) => {
-  const fileCountByExperimentalStrategy: { [key: string]: number } = {
-    [ExperimentalStrategy.RNA_SEQ]: 0,
-    [ExperimentalStrategy.WGS]: 0,
-    [ExperimentalStrategy.MULTITPLEX_IMMUNOASSAY]: 0,
-    [ExperimentalStrategy.LCMS_METABOLOMICS]: 0,
-  };
-
-  for (const file of files) {
-    const experimentalStrategy = file.sequencing_experiment?.experiment_strategy;
-
-    if (
-      Object.values(ExperimentalStrategy).includes(experimentalStrategy as ExperimentalStrategy)
-    ) {
-      fileCountByExperimentalStrategy[experimentalStrategy] += 1;
-    }
-  }
-
-  return fileCountByExperimentalStrategy;
-};
 
 export const getExperimentalStrategyColumns = (
   fileCount: number,
@@ -86,11 +42,6 @@ export const getExperimentalStrategyColumns = (
                     field: 'participant_id',
                     value: [participantId],
                     index: INDEXES.PARTICIPANT,
-                  }),
-                  generateValueFilter({
-                    field: 'sequencing_experiment.experiment_strategy',
-                    value: [file.strategy],
-                    index: INDEXES.FILE,
                   }),
                 ],
               }),

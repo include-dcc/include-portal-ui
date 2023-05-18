@@ -106,13 +106,7 @@ export const filterGroups: {
     ],
     groups: [
       {
-        facets: [
-          'controlled_access',
-          'data_category',
-          'data_type',
-          'sequencing_experiment__experiment_strategy',
-          'file_format',
-        ],
+        facets: ['controlled_access', 'data_category', 'data_type', 'file_format'],
       },
     ],
   },

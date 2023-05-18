@@ -13,10 +13,6 @@ const getDataTypeItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
     label: intl.get('entities.file.type'),
     value: file?.data_type || TABLE_EMPTY_PLACE_HOLDER,
   },
-  {
-    label: intl.get('entities.file.experimental_strategy'),
-    value: file?.sequencing_experiment.experiment_strategy || TABLE_EMPTY_PLACE_HOLDER,
-  },
 ];
 
 export default getDataTypeItems;
