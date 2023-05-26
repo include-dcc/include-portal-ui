@@ -132,7 +132,13 @@ export const GET_PARTICIPANT_ENTITY = gql`
                   node {
                     data_category
                     sequencing_experiment {
-                      experiment_strategy
+                      hits {
+                        edges {
+                          node {
+                            experiment_strategy
+                          }
+                        }
+                      }
                     }
                     biospecimens {
                       hits {

@@ -11,11 +11,12 @@ import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import { SectionId } from '../utils/anchorLinks';
-import { getDataCategoryColumns, getDataCategoryInfo } from '../utils/dataCategory';
 import {
+  getDataCategoryColumns,
+  getDataCategoryInfo,
   getExperimentalStrategyColumns,
-  getExperimentalStrategyInfo,
-} from '../utils/experimentalStrategy';
+  getFileCountByExperimentalStrategy,
+} from '../utils/files';
 
 interface IFilesTableProps {
   participant?: IParticipantEntity;
@@ -28,8 +29,8 @@ const FileTable = ({ participant, loading }: IFilesTableProps) => {
   const files: IFileEntity[] = participant?.files?.hits.edges.map(({ node }) => node) || [];
   const fileCount = participant?.nb_files || 0;
 
-  const dataCategoryInfo = getDataCategoryInfo(files, fileCount);
-  const experimentalStrategyInfo = getExperimentalStrategyInfo(files, fileCount);
+  const dataCategoryInfo = getDataCategoryInfo(files, participantId);
+  const experimentalStrategyInfo = getFileCountByExperimentalStrategy(files, participantId);
 
   return (
     <div>
@@ -70,7 +71,7 @@ const FileTable = ({ participant, loading }: IFilesTableProps) => {
             subTitle: intl.get('entities.file.data_category_count'),
           },
           {
-            columns: getExperimentalStrategyColumns(fileCount, participantId),
+            columns: getExperimentalStrategyColumns(fileCount),
             data: experimentalStrategyInfo,
             subTitle: intl.get('entities.file.experimental_strategy_count'),
           },
