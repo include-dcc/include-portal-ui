@@ -31,13 +31,8 @@ const getPhenotypeColumns = (): ProColumnType[] => [
   },
   {
     key: 'source_text',
-    dataIndex: 'hpo_phenotype_observed',
+    dataIndex: 'source_text',
     title: intl.get('entities.participant.source_text'),
-    render: (hpo_phenotype_observed: string) => {
-      const phenotypeInfo = extractPhenotypeTitleAndCode(hpo_phenotype_observed);
-
-      return phenotypeInfo?.title || TABLE_EMPTY_PLACE_HOLDER;
-    },
   },
   {
     key: 'age_at_event_days',

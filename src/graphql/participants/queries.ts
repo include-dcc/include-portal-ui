@@ -179,6 +179,7 @@ export const GET_PARTICIPANT_ENTITY = gql`
                     fhir_id
                     hpo_phenotype_observed
                     observed
+                    source_text
                   }
                 }
               }
