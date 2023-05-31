@@ -22,6 +22,7 @@ import { IUserSetOutput } from 'services/api/savedSet/models';
 import { getSetFieldId } from 'store/savedSet';
 import { deleteSavedSet } from 'store/savedSet/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
+import { numberWithCommas } from 'utils/string';
 
 import CreateEditModal from '../CreateEditModal';
 
@@ -92,7 +93,7 @@ const ListItem = ({ data, icon, queryBuilderId }: OwnProps) => {
         extra={
           <Row gutter={8} className={styles.countDisplay}>
             <Col>
-              <Text className={styles.count}>{data.size}</Text>
+              <Text className={styles.count}>{numberWithCommas(data.size)}</Text>
             </Col>
             <Col>
               <Text type="secondary">{icon}</Text>
