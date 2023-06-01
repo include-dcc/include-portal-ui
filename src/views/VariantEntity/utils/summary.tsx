@@ -42,8 +42,9 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
             label: intl.get('screen.variants.summary.genes'),
             value: variant?.genes?.hits?.edges?.length
               ? variant.genes.hits.edges.map((gene) => {
-                  if (!gene?.node?.symbol) return;
-                  else
+                  if (!gene?.node?.symbol) {
+                    return;
+                  } else {
                     return (
                       <ExternalLink
                         key={gene.node.symbol}
@@ -53,6 +54,7 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
                         {gene.node.symbol}
                       </ExternalLink>
                     );
+                  }
                 })
               : TABLE_EMPTY_PLACE_HOLDER,
           },
@@ -60,8 +62,9 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
             label: intl.get('screen.variants.summary.omim'),
             value: variant?.genes?.hits?.edges?.length
               ? variant.genes.hits.edges.map((gene) => {
-                  if (!gene?.node?.omim_gene_id) return;
-                  else
+                  if (!gene?.node?.omim_gene_id) {
+                    return;
+                  } else {
                     return (
                       <ExternalLink
                         key={gene.node.omim_gene_id}
@@ -71,6 +74,7 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
                         {gene.node.omim_gene_id}
                       </ExternalLink>
                     );
+                  }
                 })
               : TABLE_EMPTY_PLACE_HOLDER,
           },
