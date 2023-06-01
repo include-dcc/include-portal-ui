@@ -15,6 +15,7 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
+import { numberWithCommas } from 'utils/string';
 import { getProTableDictionary } from 'utils/translation';
 
 import StudyPopoverRedirect from '../DataExploration/components/StudyPopoverRedirect';
@@ -99,7 +100,7 @@ const columns: ProColumnType<any>[] = [
             })
           }
         >
-          {participantCount}
+          {numberWithCommas(participantCount)}
         </Link>
       ) : (
         participantCount || 0
@@ -110,6 +111,8 @@ const columns: ProColumnType<any>[] = [
     key: 'family_count',
     title: 'Families',
     dataIndex: 'family_count',
+    render: (family_count: number) =>
+      family_count ? numberWithCommas(family_count) : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'biospecimen_count',
@@ -136,7 +139,7 @@ const columns: ProColumnType<any>[] = [
             })
           }
         >
-          {biospecimenCount}
+          {numberWithCommas(biospecimenCount)}
         </Link>
       ) : (
         biospecimenCount || 0

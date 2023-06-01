@@ -6,6 +6,7 @@ import { useParticipantsFromField } from 'graphql/participants/actions';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { STATIC_ROUTES } from 'utils/routes';
+import { numberWithCommas } from 'utils/string';
 
 interface OwnProps {
   phenotype: string;
@@ -36,7 +37,7 @@ const HpoParticipantCount = ({ phenotype }: OwnProps) => {
         })
       }
     >
-      {total}
+      {numberWithCommas(total)}
     </Link>
   );
 };
