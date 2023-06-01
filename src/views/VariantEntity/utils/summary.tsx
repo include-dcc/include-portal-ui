@@ -44,17 +44,16 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
               ? variant.genes.hits.edges.map((gene) => {
                   if (!gene?.node?.symbol) {
                     return;
-                  } else {
-                    return (
-                      <ExternalLink
-                        key={gene.node.symbol}
-                        className={styles.geneExternalLink}
-                        href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${gene.node.symbol}`}
-                      >
-                        {gene.node.symbol}
-                      </ExternalLink>
-                    );
                   }
+                  return (
+                    <ExternalLink
+                      key={gene.node.symbol}
+                      className={styles.geneExternalLink}
+                      href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${gene.node.symbol}`}
+                    >
+                      {gene.node.symbol}
+                    </ExternalLink>
+                  );
                 })
               : TABLE_EMPTY_PLACE_HOLDER,
           },
@@ -64,17 +63,16 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
               ? variant.genes.hits.edges.map((gene) => {
                   if (!gene?.node?.omim_gene_id) {
                     return;
-                  } else {
-                    return (
-                      <ExternalLink
-                        key={gene.node.omim_gene_id}
-                        className={styles.geneExternalLink}
-                        href={`https://omim.org/entry/${gene.node.omim_gene_id}`}
-                      >
-                        {gene.node.omim_gene_id}
-                      </ExternalLink>
-                    );
                   }
+                  return (
+                    <ExternalLink
+                      key={gene.node.omim_gene_id}
+                      className={styles.geneExternalLink}
+                      href={`https://omim.org/entry/${gene.node.omim_gene_id}`}
+                    >
+                      {gene.node.omim_gene_id}
+                    </ExternalLink>
+                  );
                 })
               : TABLE_EMPTY_PLACE_HOLDER,
           },
