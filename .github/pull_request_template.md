@@ -1,23 +1,23 @@
-#[BUG | FEATURE | DOC] [TITLE]
+# FIX | FEAT | REFACTOR | PERF | DOCS : TITLE
 
-- closes #3242
+- closes #TICKET_NUMBER
 
 ## Description
+
+[JIRA LINK]
 
 Acceptance Criterias
 
 ## Validation
 
 - [ ] Code Approved
-- [ ] Test Coverage
 - [ ] QA Done
 - [ ] Design/UI Approved from design
 
-## Screenshot 
+## Screenshot
 ### Before
 
 ### After
-
 
 ## QA
 
@@ -27,4 +27,5 @@ Url (storybook, ...)
 
 ## Mention
 
-@ QA, Design ...
+@kstonge @luclemo
+
