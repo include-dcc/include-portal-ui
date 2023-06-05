@@ -103,7 +103,10 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     dataIndex: 'collection_sample_id',
     sorter: { multiple: 1 },
     render: (collection_sample_id: string) => {
-      collection_sample_id ? (
+      if (!collection_sample_id) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return (
         <a
           type="link"
           onClick={() =>
@@ -117,8 +120,6 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
         >
           {collection_sample_id}
         </a>
-      ) : (
-        TABLE_EMPTY_PLACE_HOLDER
       );
     },
   },
