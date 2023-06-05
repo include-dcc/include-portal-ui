@@ -282,7 +282,7 @@ const defaultColumns: ProColumnType<any>[] = [
           {nb_biospecimens}
         </Link>
       ) : (
-        nb_biospecimens
+        nb_biospecimens || 0
       );
     },
   },

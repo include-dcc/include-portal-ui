@@ -34,7 +34,7 @@ const enum DataCategory {
 }
 
 const hasDataCategory = (dataCategory: string[], category: DataCategory) =>
-  dataCategory ? dataCategory.includes(category) ? <CheckOutlined /> : undefined : undefined;
+  dataCategory?.includes(category) ? <CheckOutlined /> : TABLE_EMPTY_PLACE_HOLDER;
 
 const columns: ProColumnType<any>[] = [
   {

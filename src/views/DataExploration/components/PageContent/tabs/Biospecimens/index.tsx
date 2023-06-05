@@ -94,29 +94,33 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     title: 'Participant ID',
     dataIndex: 'participant',
     sorter: { multiple: 1 },
-    render: (participant: IParticipantEntity) => participant.participant_id,
+    render: (participant: IParticipantEntity) =>
+      participant?.participant_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'collection_sample_id',
     title: 'Collection ID',
     dataIndex: 'collection_sample_id',
     sorter: { multiple: 1 },
-    render: (collection_sample_id: string) => (
-      // eslint-disable-next-line
-      <a
-        type="link"
-        onClick={() =>
-          updateActiveQueryField({
-            queryBuilderId: DATA_EXPLORATION_QB_ID,
-            field: 'collection_sample_id',
-            value: [collection_sample_id],
-            index: INDEXES.BIOSPECIMEN,
-          })
-        }
-      >
-        {collection_sample_id}
-      </a>
-    ),
+    render: (collection_sample_id: string) => {
+      collection_sample_id ? (
+        <a
+          type="link"
+          onClick={() =>
+            updateActiveQueryField({
+              queryBuilderId: DATA_EXPLORATION_QB_ID,
+              field: 'collection_sample_id',
+              value: [collection_sample_id],
+              index: INDEXES.BIOSPECIMEN,
+            })
+          }
+        >
+          {collection_sample_id}
+        </a>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      );
+    },
   },
   {
     key: 'collection_sample_type',
@@ -166,12 +170,14 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     title: 'Laboratory Procedure',
     dataIndex: 'laboratory_procedure',
     defaultHidden: true,
+    render: (laboratory_procedure: string) => laboratory_procedure || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'biospecimen_storage',
     title: 'Biospecimen Storage',
     dataIndex: 'biospecimen_storage',
     defaultHidden: true,
+    render: (biospecimen_storage: string) => biospecimen_storage || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'nb_files',
@@ -201,7 +207,7 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
           {nbFiles}
         </Link>
       ) : (
-        nbFiles
+        nbFiles || 0
       );
     },
   },
