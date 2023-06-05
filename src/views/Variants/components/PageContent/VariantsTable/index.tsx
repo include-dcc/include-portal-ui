@@ -82,6 +82,7 @@ const defaultColumns: ProColumnType[] = [
     sorter: {
       multiple: 1,
     },
+    render: (variant_class: string) => variant_class || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'rsnumber',
@@ -202,7 +203,8 @@ const defaultColumns: ProColumnType[] = [
     tooltip: intl.get('screen.variants.table.alt.tooltip'),
     dataIndex: 'frequencies',
     key: 'alternate',
-    render: (frequencies: IExternalFrequenciesEntity) => frequencies?.internal?.upper_bound_kf?.ac,
+    render: (frequencies: IExternalFrequenciesEntity) =>
+      frequencies?.internal?.upper_bound_kf?.ac || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     title: intl.get('screen.variants.table.homozygotes.title'),
@@ -210,7 +212,7 @@ const defaultColumns: ProColumnType[] = [
     dataIndex: 'frequencies',
     key: 'homozygotes',
     render: (frequencies: IExternalFrequenciesEntity) =>
-      frequencies?.internal?.upper_bound_kf?.homozygotes,
+      frequencies?.internal?.upper_bound_kf?.homozygotes || 0,
   },
 ];
 
@@ -262,6 +264,7 @@ const VariantsTable = ({
           loading={results.loading}
           initialSelectedKey={selectedKeys}
           showSorterTooltip={false}
+          // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
           onChange={({ current }, _, sorter) => {
             setPageIndex(DEFAULT_PAGE_INDEX);
             setQueryConfig({

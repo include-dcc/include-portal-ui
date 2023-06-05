@@ -89,10 +89,11 @@ const getDefaultColumns = (
     dataIndex: 'controlled_access',
     align: 'center',
     width: 75,
-    render: (controlled_access: string) =>
-      !controlled_access ? (
-        '-'
-      ) : controlled_access.toLowerCase() === FileAccessType.CONTROLLED.toLowerCase() ? (
+    render: (controlled_access: string) => {
+      if (!controlled_access) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return controlled_access.toLowerCase() === FileAccessType.CONTROLLED.toLowerCase() ? (
         <Tooltip title="Controlled">
           <Tag color="geekblue">C</Tag>
         </Tooltip>
@@ -100,7 +101,8 @@ const getDefaultColumns = (
         <Tooltip title="Registered">
           <Tag color="green">R</Tag>
         </Tooltip>
-      ),
+      );
+    },
   },
   {
     key: 'file_id',
@@ -115,6 +117,7 @@ const getDefaultColumns = (
     dataIndex: 'file_name',
     sorter: { multiple: 1 },
     defaultHidden: true,
+    render: (file_name: string) => file_name || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'study.study_id',
@@ -135,6 +138,7 @@ const getDefaultColumns = (
     title: 'Data Category',
     dataIndex: 'data_category',
     sorter: { multiple: 1 },
+    render: (data_category: string) => data_category || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'data_type',
@@ -160,12 +164,14 @@ const getDefaultColumns = (
     dataIndex: 'access_urls',
     sorter: { multiple: 1 },
     defaultHidden: true,
+    render: (access_urls: string) => access_urls || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'file_format',
     title: 'Format',
     dataIndex: 'file_format',
     sorter: { multiple: 1 },
+    render: (file_format: string) => file_format || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'size',
@@ -202,7 +208,7 @@ const getDefaultColumns = (
           {nb_participants}
         </Link>
       ) : (
-        nb_participants
+        nb_participants || 0
       );
     },
   },
@@ -234,7 +240,7 @@ const getDefaultColumns = (
           {nb_biospecimens}
         </Link>
       ) : (
-        nb_biospecimens
+        nb_biospecimens || 0
       );
     },
   },
