@@ -1,10 +1,16 @@
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { EntityTable } from '@ferlab/ui/core/pages/EntityPage';
+import ExternalLinkIcon from '@ferlab/ui/core/components/ExternalLink/ExternalLinkIcon';
+import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { EntityTable, EntityTableRedirectLink } from '@ferlab/ui/core/pages/EntityPage';
+import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
+import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
+import { STATIC_ROUTES } from 'utils/routes';
 
 import { SectionId } from '../utils/anchorLinks';
 import { getBiospecimenColumns, getBiospecimensFromFile } from '../utils/biospecimens';
@@ -27,6 +33,30 @@ const BiospecimenTable = ({ file, loading }: OwnProps) => {
       data={biospecimens}
       total={biospecimens.length}
       title={intl.get('entities.file.participant_sample')}
+      titleExtra={[
+        <EntityTableRedirectLink
+          key="1"
+          to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
+          onClick={() =>
+            addQuery({
+              queryBuilderId: DATA_EXPLORATION_QB_ID,
+              query: generateQuery({
+                newFilters: [
+                  generateValueFilter({
+                    field: 'file_id',
+                    value: file ? [file.file_id] : [],
+                    index: INDEXES.FILE,
+                  }),
+                ],
+              }),
+              setAsActive: true,
+            })
+          }
+          icon={<ExternalLinkIcon />}
+        >
+          {intl.get('global.viewInDataExploration')}
+        </EntityTableRedirectLink>,
+      ]}
       header={intl.get('entities.file.participant_sample')}
       columns={getBiospecimenColumns()}
       initialColumnState={userInfo?.config.files?.tables?.biospecimens?.columns}

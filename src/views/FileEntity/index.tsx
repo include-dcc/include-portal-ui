@@ -1,17 +1,7 @@
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
-import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import EntityPage, {
-  EntityDescriptions,
-  EntityTableRedirectLink,
-} from '@ferlab/ui/core/pages/EntityPage';
-import { INDEXES } from 'graphql/constants';
+import EntityPage, { EntityDescriptions } from '@ferlab/ui/core/pages/EntityPage';
 import { useFileEntity } from 'graphql/files/actions';
-import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
-
-import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
-import { STATIC_ROUTES } from 'utils/routes';
 
 import { getLinks, SectionId } from './utils/anchorLinks';
 import getDataAccessItems from './utils/getDataAccessItems';
@@ -58,30 +48,6 @@ export default function FileEntity() {
         loading={loading}
         descriptions={getDataTypeItems(file)}
         title={intl.get('entities.file.data_type')}
-        titleExtra={[
-          <EntityTableRedirectLink
-            key="1"
-            to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
-            onClick={() =>
-              addQuery({
-                queryBuilderId: DATA_EXPLORATION_QB_ID,
-                query: generateQuery({
-                  newFilters: [
-                    generateValueFilter({
-                      field: 'file_id',
-                      value: file ? [file.file_id] : [],
-                      index: INDEXES.FILE,
-                    }),
-                  ],
-                }),
-                setAsActive: true,
-              })
-            }
-            icon={<ExternalLinkIcon width={14} />}
-          >
-            {intl.get('global.viewInDataExploration')}
-          </EntityTableRedirectLink>,
-        ]}
         header={intl.get('entities.file.data_type')}
       />
 
