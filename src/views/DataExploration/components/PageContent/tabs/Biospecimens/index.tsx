@@ -12,6 +12,7 @@ import useQueryBuilderState, {
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
+import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { useBiospecimen } from 'graphql/biospecimens/actions';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
@@ -80,14 +81,14 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     title: 'Parent Sample ID',
     dataIndex: 'parent_sample_id',
     sorter: { multiple: 1 },
-    render: (parent_sample_id) => parent_sample_id || TABLE_EMPTY_PLACE_HOLDER,
+    render: (parent_sample_id: string) => parent_sample_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'parent_sample_type',
     title: 'Parent Sample Type',
     dataIndex: 'parent_sample_type',
     sorter: { multiple: 1 },
-    render: (parent_sample_type) => parent_sample_type || TABLE_EMPTY_PLACE_HOLDER,
+    render: (parent_sample_type: string) => parent_sample_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'participant.participant_id',
@@ -128,15 +129,15 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     title: 'Collection Sample Type',
     dataIndex: 'collection_sample_type',
     sorter: { multiple: 1 },
-    render: (collection_sample_type) => collection_sample_type || TABLE_EMPTY_PLACE_HOLDER,
+    render: (collection_sample_type: string) => collection_sample_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'age_at_biospecimen_collection',
     tooltip: 'Age at Biospecimen Collection',
     title: 'Age (days)',
     dataIndex: 'age_at_biospecimen_collection',
-    render: (age_at_biospecimen_collection) =>
-      age_at_biospecimen_collection || TABLE_EMPTY_PLACE_HOLDER,
+    render: (age_at_biospecimen_collection: number) =>
+      numberWithCommas(age_at_biospecimen_collection) || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'container_id',
@@ -150,21 +151,22 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     title: 'Volume',
     dataIndex: 'volume_ul',
     defaultHidden: true,
-    render: (volume_ul) => volume_ul || TABLE_EMPTY_PLACE_HOLDER,
+    render: (volume_ul: number) =>
+      volume_ul ? numberWithCommas(volume_ul) : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'volume_unit',
     title: 'Volume Unit',
     defaultHidden: true,
     render: (record: IBiospecimenEntity) =>
-      record.volume_ul ? record.volume_unit : TABLE_EMPTY_PLACE_HOLDER,
+      record?.volume_ul ? record.volume_unit : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'status',
     title: 'Sample Availability',
     dataIndex: 'status',
     sorter: { multiple: 1 },
-    render: (status: string) => (status.toLowerCase() === 'available' ? 'Yes' : 'No'),
+    render: (status: string) => (status?.toLowerCase() === 'available' ? 'Yes' : 'No'),
   },
   {
     key: 'laboratory_procedure',
@@ -186,6 +188,7 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     sorter: { multiple: 1 },
     render: (record: IBiospecimenEntity) => {
       const nbFiles = record?.nb_files || 0;
+
       return nbFiles ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
@@ -205,10 +208,10 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
             })
           }
         >
-          {nbFiles}
+          {numberWithCommas(1000)}
         </Link>
       ) : (
-        nbFiles || 0
+        nbFiles
       );
     },
   },

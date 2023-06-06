@@ -6,6 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Empty from '@ferlab/ui/core/components/Empty';
+import { setLocale } from '@ferlab/ui/core/utils/localeUtils';
 import loadable from '@loadable/component';
 import { useKeycloak } from '@react-keycloak/web';
 import { ConfigProvider } from 'antd';
@@ -50,6 +51,8 @@ const App = () => {
   const lang = useLang();
   const { keycloak, initialized } = useKeycloak();
   const keycloakIsReady = keycloak && initialized;
+
+  setLocale(lang);
 
   return (
     <ConfigProvider

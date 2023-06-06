@@ -14,6 +14,7 @@ import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
+import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { ArrangerResultsTree } from 'graphql/models';
@@ -81,9 +82,12 @@ const defaultColumns: ProColumnType<any>[] = [
       multiple: 1,
     },
     className: styles.studyIdCell,
-    render: (study_id: string) => (
-      <StudyPopoverRedirect studyId={study_id} text={study_id || ''}></StudyPopoverRedirect>
-    ),
+    render: (study_id: string) =>
+      study_id ? (
+        <StudyPopoverRedirect studyId={study_id} text={study_id || ''}></StudyPopoverRedirect>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'study_external_id',
@@ -135,7 +139,7 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (race) => race || TABLE_EMPTY_PLACE_HOLDER,
+    render: (race: string) => race || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'ethnicity',
@@ -145,7 +149,7 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (ethnicity) => ethnicity || TABLE_EMPTY_PLACE_HOLDER,
+    render: (ethnicity: string) => ethnicity || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'family_type',
@@ -258,7 +262,7 @@ const defaultColumns: ProColumnType<any>[] = [
       multiple: 1,
     },
     render: (record: ITableParticipantEntity) => {
-      const nb_biospecimens = record.nb_biospecimens || 0;
+      const nb_biospecimens = record?.nb_biospecimens || 0;
 
       return nb_biospecimens ? (
         <Link
@@ -279,10 +283,10 @@ const defaultColumns: ProColumnType<any>[] = [
             })
           }
         >
-          {nb_biospecimens}
+          {numberWithCommas(nb_biospecimens)}
         </Link>
       ) : (
-        nb_biospecimens || 0
+        nb_biospecimens
       );
     },
   },
@@ -292,8 +296,10 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (record: ITableParticipantEntity) =>
-      record.nb_files ? (
+    render: (record: ITableParticipantEntity) => {
+      const nb_files = record?.nb_files || 0;
+
+      return nb_files ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
@@ -312,11 +318,12 @@ const defaultColumns: ProColumnType<any>[] = [
             })
           }
         >
-          {record.nb_files}
+          {numberWithCommas(nb_files)}
         </Link>
       ) : (
-        record.nb_files || 0
-      ),
+        nb_files
+      );
+    },
   },
 ];
 
