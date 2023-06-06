@@ -330,6 +330,7 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
           connectionStatus.cavatica === FENCE_CONNECTION_STATUSES.connected,
           connectionStatus.gen3 === FENCE_CONNECTION_STATUSES.connected,
         )}
+        showSorterTooltip={false}
         initialSelectedKey={selectedKeys}
         wrapperClassName={styles.dataFilesTabWrapper}
         loading={results.loading}
