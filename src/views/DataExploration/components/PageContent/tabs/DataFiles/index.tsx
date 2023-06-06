@@ -152,12 +152,15 @@ const getDefaultColumns = (
     key: 'sequencing_experiment.experiment_strategy',
     title: 'Experimental Strategy',
     sorter: { multiple: 1 },
-    render: (record: IFileEntity) =>
-      record?.sequencing_experiment
-        ? record.sequencing_experiment.hits?.edges
-            .map((edge) => edge.node.experiment_strategy)
-            .join(', ')
-        : TABLE_EMPTY_PLACE_HOLDER,
+    render: (record: IFileEntity) => {
+      if (!record?.sequencing_experiment?.hits?.edges) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return record.sequencing_experiment.hits.edges
+        .map((edge) => edge.node.experiment_strategy)
+        .filter((strategy, index, array) => array.indexOf(strategy) === index)
+        .join(', ');
+    },
   },
   {
     key: 'access_urls',
