@@ -12,6 +12,7 @@ import useQueryBuilderState, {
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
+import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useDataFiles } from 'graphql/files/actions';
@@ -124,7 +125,7 @@ const getDefaultColumns = (
     title: 'Study',
     sorter: { multiple: 1 },
     render: (record: IFileEntity) =>
-      record.study.study_id ? (
+      record?.study?.study_id ? (
         <StudyPopoverRedirect
           studyId={record.study.study_id}
           text={record.study.study_id || ''}
@@ -145,14 +146,14 @@ const getDefaultColumns = (
     title: 'Data Type',
     dataIndex: 'data_type',
     sorter: { multiple: 1 },
-    render: (data_type) => data_type || TABLE_EMPTY_PLACE_HOLDER,
+    render: (data_type: string) => data_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'sequencing_experiment.experiment_strategy',
     title: 'Experimental Strategy',
     sorter: { multiple: 1 },
     render: (record: IFileEntity) =>
-      record.sequencing_experiment
+      record?.sequencing_experiment
         ? record.sequencing_experiment.hits?.edges
             .map((edge) => edge.node.experiment_strategy)
             .join(', ')
@@ -178,7 +179,7 @@ const getDefaultColumns = (
     title: 'Size',
     dataIndex: 'size',
     sorter: { multiple: 1 },
-    render: (size) => formatFileSize(size, { output: 'string' }),
+    render: (size: number) => formatFileSize(size, { output: 'string' }),
   },
   {
     key: 'nb_participants',
@@ -186,6 +187,7 @@ const getDefaultColumns = (
     sorter: { multiple: 1 },
     render: (record: IFileEntity) => {
       const nb_participants = record?.nb_participants || 0;
+
       return nb_participants ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
@@ -205,10 +207,10 @@ const getDefaultColumns = (
             })
           }
         >
-          {nb_participants}
+          {numberWithCommas(nb_participants)}
         </Link>
       ) : (
-        nb_participants || 0
+        nb_participants
       );
     },
   },
@@ -218,6 +220,7 @@ const getDefaultColumns = (
     sorter: { multiple: 1 },
     render: (record: IFileEntity) => {
       const nb_biospecimens = record?.nb_biospecimens || 0;
+
       return nb_biospecimens ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_BIOSPECIMENS}
@@ -237,10 +240,10 @@ const getDefaultColumns = (
             })
           }
         >
-          {nb_biospecimens}
+          {numberWithCommas(nb_biospecimens)}
         </Link>
       ) : (
-        nb_biospecimens || 0
+        nb_biospecimens
       );
     },
   },

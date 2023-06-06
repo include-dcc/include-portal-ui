@@ -2,7 +2,7 @@ import intl from 'react-intl-universal';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { IVariantEntity } from '@ferlab/ui/core/pages//EntityPage/type';
 import { IEntitySummaryColumns } from '@ferlab/ui/core/pages/EntityPage/EntitySummary';
-import { toExponentialNotation } from '@ferlab/ui/core/utils/numberUtils';
+import { numberWithCommas, toExponentialNotation } from '@ferlab/ui/core/utils/numberUtils';
 import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
@@ -85,7 +85,9 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
           },
           {
             label: intl.get('screen.variants.summary.participants'),
-            value: variant?.participant_number || TABLE_EMPTY_PLACE_HOLDER,
+            value: variant?.participant_number
+              ? numberWithCommas(variant.participant_number)
+              : TABLE_EMPTY_PLACE_HOLDER,
           },
         ],
       },

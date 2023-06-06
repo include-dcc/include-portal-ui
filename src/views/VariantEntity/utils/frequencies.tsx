@@ -11,6 +11,7 @@ import {
 import {
   formatQuotientOrElse,
   formatQuotientToExponentialOrElse,
+  numberWithCommas,
 } from '@ferlab/ui/core/utils/numberUtils';
 import { Button, Space, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
@@ -55,7 +56,7 @@ export const getFrequenciesItems = (): ProColumnType[] => [
     ),
     key: 'participants',
     render: (row: TInternalRow) =>
-      row.participant_number >= MIN_N_OF_PARTICIPANTS_FOR_LINK ? (
+      row?.participant_number >= MIN_N_OF_PARTICIPANTS_FOR_LINK ? (
         <>
           <Button
             type="link"
@@ -69,9 +70,11 @@ export const getFrequenciesItems = (): ProColumnType[] => [
               });
             }}
           >
-            {row.participant_number}
+            {numberWithCommas(row.participant_number)}
           </Button>
-          {row.participant_total_number ? ` / ${row.participant_total_number}` : ''}
+          {row.participant_total_number
+            ? ` / ${numberWithCommas(row.participant_total_number)}`
+            : ''}
         </>
       ) : (
         formatQuotientOrElse(row.participant_number, row.participant_total_number)
@@ -89,7 +92,8 @@ export const getFrequenciesItems = (): ProColumnType[] => [
     tooltip: intl.get('screen.variants.frequencies.altAllelesTooltip'),
     dataIndex: 'frequencies',
     key: 'upper_bound_kf_ac',
-    render: (frequencies: IVariantStudyFrequencies) => frequencies?.upper_bound_kf?.ac || 0,
+    render: (frequencies: IVariantStudyFrequencies) =>
+      frequencies?.upper_bound_kf?.ac ? numberWithCommas(frequencies.upper_bound_kf.ac) : 0,
     width: '14%',
   },
   {
@@ -98,7 +102,9 @@ export const getFrequenciesItems = (): ProColumnType[] => [
     dataIndex: 'frequencies',
     key: 'upper_bound_kf_homozygotes',
     render: (frequencies: IVariantStudyFrequencies) =>
-      frequencies?.upper_bound_kf?.homozygotes || 0,
+      frequencies?.upper_bound_kf?.homozygotes
+        ? numberWithCommas(frequencies.upper_bound_kf.homozygotes)
+        : 0,
     width: '14%',
   },
 ];
@@ -133,9 +139,11 @@ export const getFrequenciesTableSummaryColumns = (
               });
             }}
           >
-            {variant?.participant_number}
+            {numberWithCommas(variant?.participant_number || 0)}
           </Button>
-          {variant?.participant_total_number ? ` / ${variant?.participant_total_number}` : ''}
+          {variant?.participant_total_number
+            ? ` / ${numberWithCommas(variant.participant_total_number)}`
+            : ''}
         </>
       ) : (
         formatQuotientOrElse(
@@ -153,11 +161,15 @@ export const getFrequenciesTableSummaryColumns = (
     },
     {
       index: 3,
-      value: variant?.frequencies?.internal?.upper_bound_kf.ac || 0,
+      value: variant?.frequencies?.internal?.upper_bound_kf.ac
+        ? numberWithCommas(variant.frequencies?.internal.upper_bound_kf.ac)
+        : 0,
     },
     {
       index: 4,
-      value: variant?.frequencies?.internal?.upper_bound_kf.homozygotes || 0,
+      value: variant?.frequencies?.internal?.upper_bound_kf.homozygotes
+        ? numberWithCommas(variant.frequencies.internal.upper_bound_kf.homozygotes)
+        : 0,
     },
   ];
 };
@@ -179,21 +191,36 @@ export const getPublicCohorts = (): ProColumnType[] => [
   {
     dataIndex: 'alt',
     key: 'alt',
-    render: (alt: string) => alt || TABLE_EMPTY_PLACE_HOLDER,
+    render: (alt: string | number | null) => {
+      if (!alt) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return typeof alt === 'number' ? numberWithCommas(alt) : alt;
+    },
     title: intl.get('screen.variants.frequencies.altAlleles'),
     tooltip: intl.get('screen.variants.frequencies.altAllelesTooltip'),
   },
   {
     dataIndex: 'altRef',
     key: 'altRef',
-    render: (altRef: string) => altRef || TABLE_EMPTY_PLACE_HOLDER,
+    render: (altRef: string | number | null) => {
+      if (!altRef) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return typeof altRef === 'number' ? numberWithCommas(altRef) : altRef;
+    },
     title: intl.get('screen.variants.frequencies.altRef'),
     tooltip: intl.get('screen.variants.frequencies.altRefTooltip'),
   },
   {
     dataIndex: 'homozygotes',
     key: 'homozygotes',
-    render: (homozygotes: string) => homozygotes || TABLE_EMPTY_PLACE_HOLDER,
+    render: (homozygotes: string | number | null) => {
+      if (!homozygotes) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return typeof homozygotes === 'number' ? numberWithCommas(homozygotes) : homozygotes;
+    },
     title: intl.get('screen.variants.frequencies.homozygotes'),
     tooltip: intl.get('screen.variants.frequencies.homozygotesTooltip'),
   },

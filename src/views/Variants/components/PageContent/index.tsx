@@ -116,8 +116,8 @@ const PageContent = ({ variantMapping }: OwnProps) => {
     return title
       ? title
       : combineExtendedMappings([variantMapping])?.data?.find(
-        (mapping: TExtendedMapping) => key === mapping.field,
-      )?.displayName || key;
+          (mapping: TExtendedMapping) => key === mapping.field,
+        )?.displayName || key;
   };
 
   const handleOnUpdateFilter = (filter: ISavedFilter) => dispatch(updateSavedFilter(filter));

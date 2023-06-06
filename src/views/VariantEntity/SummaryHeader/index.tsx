@@ -4,6 +4,7 @@ import { ReadOutlined, UserOutlined } from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { IVariantEntity } from '@ferlab/ui/core/pages/EntityPage/type';
+import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
@@ -58,7 +59,7 @@ const SummaryHeader = ({ variant }: OwnProps) => {
         }
       >
         <ReadOutlined className={styles.icon} />
-        <span className={styles.entityCount}>{studyCount}</span>
+        <span className={styles.entityCount}>{numberWithCommas(studyCount)}</span>
         <span className={styles.text}>
           {intl.get('entities.study.count', { count: studyCount })}
         </span>
@@ -85,7 +86,7 @@ const SummaryHeader = ({ variant }: OwnProps) => {
           }
         >
           <UserOutlined className={styles.icon} />
-          <span className={styles.entityCount}>{participantCount}</span>
+          <span className={styles.entityCount}>{numberWithCommas(participantCount)}</span>
           <span className={styles.text}>
             {intl.get('entities.variant.participant', {
               count: participantCount,
@@ -96,7 +97,7 @@ const SummaryHeader = ({ variant }: OwnProps) => {
         <Tooltip placement="top" title={intl.get('screen.variants.summary.participantsTooltip')}>
           <div className={styles.participantDisabled}>
             <UserOutlined className={styles.icon} />
-            <span className={styles.entityCount}>{participantCount}</span>
+            <span className={styles.entityCount}>{numberWithCommas(participantCount)}</span>
             <span className={styles.text}>
               {intl.get('entities.variant.participant', { count: participantCount })}
             </span>

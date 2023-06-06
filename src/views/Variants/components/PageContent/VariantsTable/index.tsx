@@ -16,7 +16,7 @@ import {
   IQueryResults,
   TQueryConfigCb,
 } from '@ferlab/ui/core/graphql/types';
-import { toExponentialNotation } from '@ferlab/ui/core/utils/numberUtils';
+import { numberWithCommas, toExponentialNotation } from '@ferlab/ui/core/utils/numberUtils';
 import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Tooltip } from 'antd';
@@ -69,7 +69,7 @@ const defaultColumns: ProColumnType[] = [
     render: (hgvsg: string, entity: IVariantEntity) =>
       hgvsg ? (
         <Tooltip placement="topLeft" title={hgvsg}>
-          <Link to={`${STATIC_ROUTES.VARIANTS}/${entity.locus}`}>{hgvsg}</Link>
+          <Link to={`${STATIC_ROUTES.VARIANTS}/${entity?.locus}`}>{hgvsg}</Link>
         </Tooltip>
       ) : (
         TABLE_EMPTY_PLACE_HOLDER
@@ -137,7 +137,7 @@ const defaultColumns: ProColumnType[] = [
     tooltip: intl.get('screen.variants.table.gnomAD.tooltip'),
     dataIndex: 'frequencies',
     render: (gnomad: IExternalFrequenciesEntity) =>
-      gnomad.gnomad_genomes_3_1_1.af
+      gnomad?.gnomad_genomes_3_1_1?.af
         ? toExponentialNotation(gnomad.gnomad_genomes_3_1_1.af)
         : TABLE_EMPTY_PLACE_HOLDER,
   },
@@ -145,7 +145,8 @@ const defaultColumns: ProColumnType[] = [
     title: 'Studies',
     dataIndex: 'studies',
     key: 'studies',
-    render: (studies: IArrangerResultsTree<IVariantStudyEntity>) => studies?.hits?.total || 0,
+    render: (studies: IArrangerResultsTree<IVariantStudyEntity>) =>
+      studies?.hits?.total ? numberWithCommas(studies.hits.total) : 0,
   },
   {
     title: intl.get('screen.variants.table.participant.title'),
@@ -180,7 +181,7 @@ const defaultColumns: ProColumnType[] = [
             });
           }}
         >
-          {participantNumber}
+          {numberWithCommas(participantNumber)}
         </Link>
       );
     },
@@ -204,7 +205,9 @@ const defaultColumns: ProColumnType[] = [
     dataIndex: 'frequencies',
     key: 'alternate',
     render: (frequencies: IExternalFrequenciesEntity) =>
-      frequencies?.internal?.upper_bound_kf?.ac || TABLE_EMPTY_PLACE_HOLDER,
+      frequencies?.internal?.upper_bound_kf?.ac
+        ? numberWithCommas(frequencies.internal.upper_bound_kf.ac)
+        : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     title: intl.get('screen.variants.table.homozygotes.title'),
@@ -212,7 +215,9 @@ const defaultColumns: ProColumnType[] = [
     dataIndex: 'frequencies',
     key: 'homozygotes',
     render: (frequencies: IExternalFrequenciesEntity) =>
-      frequencies?.internal?.upper_bound_kf?.homozygotes || 0,
+      frequencies?.internal?.upper_bound_kf?.homozygotes
+        ? numberWithCommas(frequencies.internal.upper_bound_kf.homozygotes)
+        : 0,
   },
 ];
 

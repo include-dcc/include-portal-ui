@@ -50,8 +50,8 @@ const columns: ProColumnType<any>[] = [
     width: 500,
     render: (record: IStudyEntity) => (
       <StudyPopoverRedirect
-        studyId={record.study_id}
-        text={record.study_name}
+        studyId={record?.study_id}
+        text={record?.study_name}
       ></StudyPopoverRedirect>
     ),
   },
@@ -59,6 +59,7 @@ const columns: ProColumnType<any>[] = [
     key: 'program',
     title: 'Program',
     dataIndex: 'program',
+    render: (program: string) => program || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'external_id',
@@ -79,7 +80,7 @@ const columns: ProColumnType<any>[] = [
     key: 'participant_count',
     title: 'Participants',
     render: (record: IStudyEntity) => {
-      const participantCount = record.participant_count;
+      const participantCount = record?.participant_count || 0;
 
       return participantCount ? (
         <Link
@@ -103,7 +104,7 @@ const columns: ProColumnType<any>[] = [
           {numberWithCommas(participantCount)}
         </Link>
       ) : (
-        participantCount || 0
+        participantCount
       );
     },
   },
@@ -118,7 +119,7 @@ const columns: ProColumnType<any>[] = [
     key: 'biospecimen_count',
     title: 'Biospecimens',
     render: (record: IStudyEntity) => {
-      const biospecimenCount = record.biospecimen_count;
+      const biospecimenCount = record?.biospecimen_count || 0;
 
       return biospecimenCount ? (
         <Link
@@ -142,7 +143,7 @@ const columns: ProColumnType<any>[] = [
           {numberWithCommas(biospecimenCount)}
         </Link>
       ) : (
-        biospecimenCount || 0
+        biospecimenCount
       );
     },
   },
