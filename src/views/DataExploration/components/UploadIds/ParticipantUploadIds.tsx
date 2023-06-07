@@ -21,7 +21,7 @@ const ParticipantUploadIds = ({ queryBuilderId }: OwnProps) => (
     entityId="participant"
     entityIdTrans="Participant"
     entityIdentifiers="Participant ID"
-    placeHolder="e.g. PT_03Y3K025, HTP0001, 10214"
+    placeHolder="e.g. pt-005X8BR9"
     fetchMatch={async (ids) => {
       const response = await ArrangerApi.graphqlRequest({
         query: CHECK_PARTICIPANT_MATCH.loc?.source.body,
