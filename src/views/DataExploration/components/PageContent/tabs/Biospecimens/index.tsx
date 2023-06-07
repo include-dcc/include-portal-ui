@@ -53,6 +53,7 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     title: 'Sample ID',
     dataIndex: 'sample_id',
     sorter: { multiple: 1 },
+    className: styles.sampleIdCell,
     render: (sample_id: string) => sample_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
