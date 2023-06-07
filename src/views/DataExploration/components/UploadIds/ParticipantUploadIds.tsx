@@ -6,8 +6,10 @@ import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/ut
 import { INDEXES } from 'graphql/constants';
 import { hydrateResults } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
-import { ArrangerApi } from 'services/api/arranger';
 import { CHECK_PARTICIPANT_MATCH } from 'graphql/participants/queries';
+
+import { ArrangerApi } from 'services/api/arranger';
+
 import EntityUploadIds from './EntityUploadIds';
 
 interface OwnProps {
@@ -45,9 +47,7 @@ const ParticipantUploadIds = ({ queryBuilderId }: OwnProps) => (
 
       return participants.map((participant) => ({
         key: participant.fhir_id,
-        submittedId: ids.find((id) =>
-          [participant.participant_id].includes(id),
-        )!,
+        submittedId: ids.find((id) => [participant.participant_id].includes(id))!,
         mappedTo: participant.study_id,
         matchTo: participant.participant_id,
       }));
@@ -60,6 +60,7 @@ const ParticipantUploadIds = ({ queryBuilderId }: OwnProps) => (
         index: INDEXES.PARTICIPANT,
         overrideValuesName: intl.get('components.uploadIds.modal.pillTitle'),
         merge_strategy: MERGE_VALUES_STRATEGIES.OVERRIDE_VALUES,
+        isUploadedList: true,
       })
     }
   />
