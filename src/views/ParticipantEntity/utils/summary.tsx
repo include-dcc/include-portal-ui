@@ -9,7 +9,7 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import styles from '../styles/styles.module.scss';
 
 export const familyTypeText = {
-  [FamilyType.PROBAND]: intl.get('entities.participant.solo'),
+  [FamilyType.PROBAND]: intl.get('entities.participant.proband_only'),
   [FamilyType.DUO]: intl.get('entities.participant.duo'),
   [FamilyType.TRIO]: intl.get('entities.participant.trio'),
   [FamilyType.OTHER]: intl.get('entities.participant.other'),
