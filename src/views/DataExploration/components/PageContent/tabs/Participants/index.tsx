@@ -70,6 +70,7 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
+    className: styles.participantIdCell,
     render: (participant_id: string) => (
       <Link to={`${STATIC_ROUTES.PARTICIPANTS}/${participant_id}`}>{participant_id}</Link>
     ),

@@ -1,15 +1,20 @@
 .participantTabWrapper {
-    display: flex;
+  display: flex;
 
-    :global(.ant-pagination) {
-        margin-bottom: 0;
-    }
+  :global(.ant-pagination) {
+    margin-bottom: 0;
+  }
 
-    .diagnosisCell, .phenotypeCell {
-        min-width: 300px;
-    }
+  .diagnosisCell,
+  .phenotypeCell {
+    min-width: 300px;
+  }
 
-    .studyIdCell {
-        min-width: 85px
-    }
+  .studyIdCell {
+    min-width: 85px;
+  }
+
+  .participantIdCell {
+    white-space: nowrap;
+  }
 }
