@@ -6,8 +6,10 @@ import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/ut
 import { INDEXES } from 'graphql/constants';
 import { hydrateResults } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
-import { ArrangerApi } from 'services/api/arranger';
 import { CHECK_PARTICIPANT_MATCH } from 'graphql/participants/queries';
+
+import { ArrangerApi } from 'services/api/arranger';
+
 import EntityUploadIds from './EntityUploadIds';
 
 interface OwnProps {
@@ -19,7 +21,7 @@ const ParticipantUploadIds = ({ queryBuilderId }: OwnProps) => (
     entityId="participant"
     entityIdTrans="Participant"
     entityIdentifiers="Participant ID"
-    placeHolder="e.g. PT_03Y3K025, HTP0001, 10214"
+    placeHolder="e.g. pt-005X8BR9"
     fetchMatch={async (ids) => {
       const response = await ArrangerApi.graphqlRequest({
         query: CHECK_PARTICIPANT_MATCH.loc?.source.body,
@@ -45,9 +47,7 @@ const ParticipantUploadIds = ({ queryBuilderId }: OwnProps) => (
 
       return participants.map((participant) => ({
         key: participant.fhir_id,
-        submittedId: ids.find((id) =>
-          [participant.participant_id].includes(id),
-        )!,
+        submittedId: ids.find((id) => [participant.participant_id].includes(id))!,
         mappedTo: participant.study_id,
         matchTo: participant.participant_id,
       }));
