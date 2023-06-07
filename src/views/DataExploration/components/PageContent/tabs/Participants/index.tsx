@@ -153,6 +153,16 @@ const defaultColumns: ProColumnType<any>[] = [
     render: (ethnicity: string) => ethnicity || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
+    key: 'external_id',
+    title: 'External Participant ID',
+    dataIndex: 'external_id',
+    defaultHidden: true,
+    sorter: {
+      multiple: 1,
+    },
+    render: (external_id: string) => external_id || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
     key: 'family_type',
     title: 'Family Unit',
     dataIndex: 'family_type',
