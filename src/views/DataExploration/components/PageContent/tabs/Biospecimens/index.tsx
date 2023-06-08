@@ -97,7 +97,13 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     dataIndex: 'participant',
     sorter: { multiple: 1 },
     render: (participant: IParticipantEntity) =>
-      participant?.participant_id || TABLE_EMPTY_PLACE_HOLDER,
+      participant?.participant_id ? (
+        <Link to={`${STATIC_ROUTES.PARTICIPANTS}/${participant.participant_id}`}>
+          {participant.participant_id}
+        </Link>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'collection_sample_id',
@@ -209,7 +215,7 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
             })
           }
         >
-          {numberWithCommas(1000)}
+          {numberWithCommas(nbFiles)}
         </Link>
       ) : (
         nbFiles
