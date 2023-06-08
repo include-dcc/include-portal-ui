@@ -139,6 +139,12 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     render: (collection_sample_type: string) => collection_sample_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
+    key: 'container_id',
+    title: 'Container ID',
+    dataIndex: 'container_id',
+    render: (container_id: string) => container_id || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
     key: 'age_at_biospecimen_collection',
     tooltip: 'Age at Biospecimen Collection',
     title: 'Age (days)',
@@ -147,13 +153,6 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
       age_at_biospecimen_collection
         ? numberWithCommas(age_at_biospecimen_collection)
         : TABLE_EMPTY_PLACE_HOLDER,
-  },
-  {
-    key: 'container_id',
-    title: 'Container ID',
-    dataIndex: 'container_id',
-    defaultHidden: true,
-    render: (container_id: string) => container_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'volume_ul',
