@@ -144,7 +144,9 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     title: 'Age (days)',
     dataIndex: 'age_at_biospecimen_collection',
     render: (age_at_biospecimen_collection: number) =>
-      numberWithCommas(age_at_biospecimen_collection) || TABLE_EMPTY_PLACE_HOLDER,
+      age_at_biospecimen_collection
+        ? numberWithCommas(age_at_biospecimen_collection)
+        : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'container_id',
