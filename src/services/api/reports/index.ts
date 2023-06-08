@@ -58,7 +58,7 @@ const generateReport = (config: ReportConfig) => {
     data: {
       sqon: reportSqon,
       projectId: arrangerProjectId,
-      filename: `${config.fileName || config.name}_${makeFilenameDatePart(new Date())}`,
+      filename: `include_${config.fileName || config.name}_${makeFilenameDatePart(new Date())}`,
     },
     headers: headers(),
   });

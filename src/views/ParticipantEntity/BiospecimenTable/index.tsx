@@ -9,12 +9,18 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
+import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import { SectionId } from '../utils/anchorLinks';
-import { getBiospecimenColumns, getBiospecimensFromParticipant } from '../utils/biospecimens';
+import {
+  getBiospecimensDefaultColumns,
+  getBiospecimensFromParticipant,
+} from '../utils/biospecimens';
+
+const COLUMNS_PREFIX = 'files.biospecimens.';
 
 interface OwnProps {
   participant?: IParticipantEntity;
@@ -26,6 +32,13 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
   const dispatch = useDispatch();
 
   const { biospecimens, total } = getBiospecimensFromParticipant(participant);
+
+  const initialColumnState = (
+    userInfo?.config.participants?.tables?.biospecimens?.columns || []
+  ).map((column) => ({
+    ...column,
+    key: column.key.replace(COLUMNS_PREFIX, ''),
+  }));
 
   return (
     <EntityTable
@@ -59,8 +72,8 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
       ]}
       total={total}
       header={intl.get('entities.biospecimen.biospecimen')}
-      columns={getBiospecimenColumns()}
-      initialColumnState={userInfo?.config.participants?.tables?.biospecimens?.columns}
+      columns={getBiospecimensDefaultColumns()}
+      initialColumnState={initialColumnState}
       headerConfig={{
         extra: [
           <DownloadDataButton
@@ -73,6 +86,23 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
         onColumnSortChange: (newState) =>
           dispatch(
             updateUserConfig({ participants: { tables: { biospecimens: { columns: newState } } } }),
+          ),
+        onTableExportClick: () =>
+          dispatch(
+            fetchTsvReport({
+              columnStates: userInfo?.config.participants?.tables?.biospecimens?.columns,
+              columns: getBiospecimensDefaultColumns(),
+              index: INDEXES.PARTICIPANT,
+              sqon: generateQuery({
+                newFilters: [
+                  generateValueFilter({
+                    field: 'participant_id',
+                    index: INDEXES.PARTICIPANT,
+                    value: participant?.participant_id ? [participant?.participant_id] : [],
+                  }),
+                ],
+              }),
+            }),
           ),
       }}
     />

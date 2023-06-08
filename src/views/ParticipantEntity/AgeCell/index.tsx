@@ -15,7 +15,6 @@ const AgeCell = ({ ageInDays }: OwnProps) => {
   }
 
   const { years, days } = readableDistanceByDays(ageInDays);
-
   return (
     <>
       {`${years} `}
