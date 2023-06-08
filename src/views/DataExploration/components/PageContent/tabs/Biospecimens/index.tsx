@@ -29,6 +29,7 @@ import {
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
+import AgeCell from 'views/ParticipantEntity/AgeCell';
 import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
@@ -141,12 +142,11 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
   {
     key: 'age_at_biospecimen_collection',
     tooltip: 'Age at Biospecimen Collection',
-    title: 'Age (days)',
+    title: 'Age',
     dataIndex: 'age_at_biospecimen_collection',
-    render: (age_at_biospecimen_collection: number) =>
-      age_at_biospecimen_collection
-        ? numberWithCommas(age_at_biospecimen_collection)
-        : TABLE_EMPTY_PLACE_HOLDER,
+    render: (age_at_biospecimen_collection) => (
+      <AgeCell ageInDays={age_at_biospecimen_collection} />
+    ),
   },
   {
     key: 'container_id',
