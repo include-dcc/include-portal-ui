@@ -17,6 +17,7 @@ export interface IParticipantDiagnosis {
 export interface IParticipantPhenotype {
   id: string;
   age_at_event_days: number;
+  source_text: string;
   fhir_id: string;
   hpo_phenotype_observed: string;
   hpo_phenotype_observed_text: string;
