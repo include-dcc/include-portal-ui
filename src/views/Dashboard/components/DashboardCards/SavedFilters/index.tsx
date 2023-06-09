@@ -5,7 +5,6 @@ import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { List, Tabs, Typography } from 'antd';
 import cx from 'classnames';
-import { TabPane } from 'rc-tabs';
 import CardErrorPlaceholder from 'views/Dashboard/components/CardErrorPlaceHolder';
 import CardHeader from 'views/Dashboard/components/CardHeader';
 import { DashboardCardProps } from 'views/Dashboard/components/DashboardCards';
@@ -22,6 +21,7 @@ import SavedFiltersListItem from './ListItem';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
+const { TabPane } = Tabs;
 
 type SavedFilterListWrapperOwnprops = {
   tag: SavedFilterTag;
