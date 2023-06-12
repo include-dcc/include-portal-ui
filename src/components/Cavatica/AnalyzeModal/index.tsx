@@ -106,7 +106,7 @@ const AnalyseModal = () => {
   return (
     <Modal
       title={intl.get('screen.dataExploration.tabs.datafiles.cavatica.analyseInCavatica')}
-      visible={isAnalyseModalOpen}
+      open={isAnalyseModalOpen}
       okText={intl.get('screen.dataExploration.tabs.datafiles.cavatica.analyseModal.copyFiles')}
       okButtonProps={{
         disabled: !selectedTreeNode?.id,

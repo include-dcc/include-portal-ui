@@ -208,7 +208,7 @@ const TreeFacetModal = ({ type, field, titleFormatter }: Props) => {
 
   return (
     <Modal
-      visible={visible}
+      open={visible}
       wrapClassName={styles.hpoTreeModalWrapper}
       className={styles.hpoTreeModal}
       title={intl.get(`screen.dataExploration.${type}.modal.title`)}

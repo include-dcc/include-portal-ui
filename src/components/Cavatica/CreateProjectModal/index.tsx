@@ -51,7 +51,7 @@ const CreateProjectModal = ({
   return (
     <Modal
       title="New project"
-      visible={isCreateProjectModalOpen}
+      open={isCreateProjectModalOpen}
       okText="Create project"
       okButtonProps={{ disabled: !isFormValid, loading: isCreatingProject }}
       onOk={handleOnOk}
