@@ -61,6 +61,7 @@ const BiospecimenUploadIds = ({ queryBuilderId }: OwnProps) => (
         index: INDEXES.BIOSPECIMEN,
         overrideValuesName: intl.get('components.uploadIds.modal.pillTitle'),
         merge_strategy: MERGE_VALUES_STRATEGIES.OVERRIDE_VALUES,
+        isUploadedList: true,
       })
     }
   />

@@ -128,6 +128,7 @@ const GenesUploadIds = ({ queryBuilderId }: OwnProps) => (
         value: uniqueMatches.map((match) => match.mappedTo),
         index: INDEXES.VARIANTS,
         merge_strategy: MERGE_VALUES_STRATEGIES.APPEND_VALUES,
+        isUploadedList: true,
       });
     }}
   />
