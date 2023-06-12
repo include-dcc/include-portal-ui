@@ -52,13 +52,14 @@ export const getExpandedKeys = (targetKeys: string[]) => {
   return keys;
 };
 
+const MATCH_SPECIAL_CHARACTERS_REGEX = new RegExp('/[\\^$*+?.()|[]{}]/g');
+
 export const searchInTree = (
   searchText: string,
   treeNode: TreeNode,
   hitTreeNodes: string[] = [],
 ) => {
-  const cleanRegex = new RegExp('/[\\^$*+?.()|[]{}]/g');
-  const cleanSearchText = searchText.replace(cleanRegex, '');
+  const cleanSearchText = searchText.replace(MATCH_SPECIAL_CHARACTERS_REGEX, '');
   const searchRegex = new RegExp('\\b(\\w*' + cleanSearchText + '\\w*)\\b', 'gi');
   const text = treeNode.title;
   const key = treeNode.key;
