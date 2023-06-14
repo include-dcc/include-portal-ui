@@ -128,6 +128,5 @@ export interface IDataFileResultTree {
   file: {
     aggregations: IDataFile;
   };
-
   loading: boolean;
 }
