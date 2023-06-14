@@ -31,6 +31,10 @@ export const getDataCategoryInfo = (
   participant_id?: string,
   dataCategories?: [{ key: string }],
 ) => {
+  if (!files?.length) {
+    return [];
+  }
+
   const filesInfosData: IFileInfoByType[] = [];
 
   for (const file of files) {
@@ -69,6 +73,10 @@ export const getFileCountByExperimentalStrategy = (
   participant_id?: string,
   dataCategories?: [{ key: string }],
 ) => {
+  if (!files?.length) {
+    return [];
+  }
+
   const experimentalStrategy: { [key: string]: number } = {};
   dataCategories?.forEach((dataCategory) => {
     experimentalStrategy[dataCategory.key] = 0;
