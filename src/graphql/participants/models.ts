@@ -118,3 +118,16 @@ export enum FamilyType {
   TRIO = 'trio',
   OTHER = 'other',
 }
+
+export interface IDataFile {
+  data_category: { buckets: [{ key: string }] };
+  exp_strategies: { buckets: [{ key: string }] };
+}
+
+export interface IDataFileResultTree {
+  file: {
+    aggregations: IDataFile;
+  };
+
+  loading: boolean;
+}

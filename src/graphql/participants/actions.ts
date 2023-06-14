@@ -9,8 +9,18 @@ import { INDEXES } from 'graphql/constants';
 
 import useLazyResultQuery from 'hooks/graphql/useLazyResultQuery';
 
-import { IParticipantEntity, IParticipantResultTree } from './models';
-import { GET_PARTICIPANT_COUNT, GET_PARTICIPANT_ENTITY, SEARCH_PARTICIPANT_QUERY } from './queries';
+import {
+  IDataFile,
+  IDataFileResultTree,
+  IParticipantEntity,
+  IParticipantResultTree,
+} from './models';
+import {
+  GET_DATA_FILE_AGG,
+  GET_PARTICIPANT_COUNT,
+  GET_PARTICIPANT_ENTITY,
+  SEARCH_PARTICIPANT_QUERY,
+} from './queries';
 
 export const useParticipants = (
   variables?: IQueryVariable,
@@ -86,5 +96,25 @@ export const useParticipantsFromField = ({
     loading,
     participants: hydrateResults(result?.participant?.hits?.edges || []),
     total: result?.participant?.hits?.total || 0,
+  };
+};
+
+export const useDataFileAgg = (
+  query = GET_DATA_FILE_AGG,
+): { loading: boolean; dataFileAgg?: IDataFile } => {
+  const sqon = {
+    content: [],
+    op: 'and',
+  };
+
+  const { loading, result } = useLazyResultQuery<IDataFileResultTree>(query, {
+    variables: { sqon },
+  });
+
+  const dataFileAgg = result?.file?.aggregations || undefined;
+
+  return {
+    loading,
+    dataFileAgg,
   };
 };

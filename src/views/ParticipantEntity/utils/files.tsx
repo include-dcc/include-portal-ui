@@ -26,9 +26,17 @@ interface IDataCategory {
   percentage: number;
 }
 
-export const getDataCategoryInfo = (files: IFileEntity[], participant_id?: string) => {
+export const getDataCategoryInfo = (
+  files: IFileEntity[],
+  participant_id?: string,
+  dataCategories?: [{ key: string }],
+) => {
   const filesInfosData: IFileInfoByType[] = [];
+
   for (const file of files) {
+    if (!file.data_category) {
+      continue;
+    }
     const filesFound = files.filter(({ data_category }) => data_category === file.data_category);
     if (!filesInfosData.find((f) => f.value === file.data_category)) {
       filesInfosData.push({
@@ -40,43 +48,47 @@ export const getDataCategoryInfo = (files: IFileEntity[], participant_id?: strin
       });
     }
   }
+
+  dataCategories?.forEach((dataCategory) => {
+    if (!filesInfosData.find((f) => f.value === dataCategory.key)) {
+      filesInfosData.push({
+        key: dataCategory.key,
+        value: dataCategory.key,
+        nb_files: 0,
+        proportion_of_files: 0,
+        participant_id: participant_id || '',
+      });
+    }
+  });
+
   return filesInfosData;
 };
 
 export const getFileCountByExperimentalStrategy = (
   files: IFileEntity[],
   participant_id?: string,
+  dataCategories?: [{ key: string }],
 ) => {
-  const experimentalStrategyFilteredResult: { [key: string]: number } = {
-    'Whole Genome Sequencing': 0,
-    'RNA-Seq': 0,
-    'Multiplex Immunoassay': 0,
-    'LCMS Metabolomics': 0,
-  };
+  const experimentalStrategy: { [key: string]: number } = {};
+  dataCategories?.forEach((dataCategory) => {
+    experimentalStrategy[dataCategory.key] = 0;
+  });
 
-  // Create a list of all experiment strategy available
   for (const file of files) {
-    const filters: string[] = [];
     hydrateResults(file.sequencing_experiment?.hits?.edges || []).forEach((node) => {
-      if (filters.includes(node.experiment_strategy)) {
+      if (experimentalStrategy[node.experiment_strategy]) {
+        experimentalStrategy[node.experiment_strategy] += 1;
         return;
       }
-      filters.push(node.experiment_strategy);
-    });
-
-    filters.forEach((se) => {
-      if (!experimentalStrategyFilteredResult[se]) {
-        experimentalStrategyFilteredResult[se] = 0;
-      }
-      experimentalStrategyFilteredResult[se] += 1;
+      experimentalStrategy[node.experiment_strategy] = 1;
     });
   }
 
-  return Object.keys(experimentalStrategyFilteredResult).map((key) => ({
+  return Object.keys(experimentalStrategy).map((key) => ({
     key,
     value: key,
-    nb_files: experimentalStrategyFilteredResult[key],
-    proportion_of_files: (experimentalStrategyFilteredResult[key] / files.length) * 100,
+    nb_files: experimentalStrategy[key],
+    proportion_of_files: (experimentalStrategy[key] / files.length) * 100,
     participant_id: participant_id || '',
   }));
 };
@@ -92,7 +104,7 @@ export const getExperimentalStrategyColumns = (fileCount: number): ProColumnType
     key: 'nb_files',
     title: intl.get('entities.file.files'),
     render: (filesInfo: IFileInfoByType) =>
-      (
+      filesInfo?.nb_files > 0 ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
@@ -118,11 +130,13 @@ export const getExperimentalStrategyColumns = (fileCount: number): ProColumnType
         >
           {filesInfo.nb_files}
         </Link>
-      ) || TABLE_EMPTY_PLACE_HOLDER,
+      ) : (
+        filesInfo?.nb_files ?? TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'percentage',
-    dataIndex: 'percentage',
+    dataIndex: 'proportion_of_files',
     tooltip: 'Total number of files associated with the participant',
     title: `(n=${fileCount})`,
     render: (percentage: number) => <Progress percent={percentage} showInfo={false} />,
@@ -142,8 +156,8 @@ export const getDataCategoryColumns = (
   {
     key: 'nb_files',
     title: intl.get('entities.file.files'),
-    render: (file: IDataCategory) =>
-      file && file?.nb_files > 0 ? (
+    render: (file: IFileInfoByType) =>
+      file?.nb_files > 0 ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
@@ -158,7 +172,7 @@ export const getDataCategoryColumns = (
                   }),
                   generateValueFilter({
                     field: 'data_category',
-                    value: [file.category],
+                    value: [file.value],
                     index: INDEXES.FILE,
                   }),
                 ],
@@ -174,8 +188,8 @@ export const getDataCategoryColumns = (
       ),
   },
   {
-    key: 'percentage',
-    dataIndex: 'percentage',
+    key: 'proportion_of_files',
+    dataIndex: 'proportion_of_files',
     tooltip: 'Total number of files associated with the participant',
     title: `(n=${fileCount})`,
     render: (percentage: number) => <Progress percent={percentage} showInfo={false} />,

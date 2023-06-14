@@ -4,6 +4,7 @@ import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/ut
 import { EntityTableMultiple, EntityTableRedirectLink } from '@ferlab/ui/core/pages/EntityPage';
 import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
+import { useDataFileAgg } from 'graphql/participants/actions';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
@@ -23,21 +24,31 @@ interface IFilesTableProps {
   loading: boolean;
 }
 
-const FileTable = ({ participant, loading }: IFilesTableProps) => {
+const FileTable = ({ participant, loading: participantLoading }: IFilesTableProps) => {
   const participantId = participant?.participant_id || '';
 
   const files: IFileEntity[] = participant?.files?.hits.edges.map(({ node }) => node) || [];
   const fileCount = participant?.nb_files || 0;
 
-  const dataCategoryInfo = getDataCategoryInfo(files, participantId);
-  const experimentalStrategyInfo = getFileCountByExperimentalStrategy(files, participantId);
+  const { loading: dataFileLoading, dataFileAgg } = useDataFileAgg();
+
+  const dataCategoryInfo = getDataCategoryInfo(
+    files,
+    participantId,
+    dataFileAgg?.data_category?.buckets,
+  );
+  const experimentalStrategyInfo = getFileCountByExperimentalStrategy(
+    files,
+    participantId,
+    dataFileAgg?.exp_strategies?.buckets,
+  );
 
   return (
     <div>
       <EntityTableMultiple
         total={fileCount}
         id={SectionId.FILES}
-        loading={loading}
+        loading={participantLoading || dataFileLoading}
         title={intl.get('entities.file.file')}
         titleExtra={[
           <EntityTableRedirectLink
