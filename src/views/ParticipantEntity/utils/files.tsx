@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import { Progress } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
@@ -28,78 +27,64 @@ interface IDataCategory {
 
 export const getDataCategoryInfo = (
   files: IFileEntity[],
-  participant_id?: string,
   dataCategories?: [{ key: string }],
+  participant_id?: string,
 ) => {
   const filesFiltered = files.filter((file) => file?.data_category);
   if (!filesFiltered?.length) {
     return [];
   }
-  const filesInfoData: IFileInfoByType[] = [];
 
-  for (const file of filesFiltered) {
-    if (!filesInfoData.find((f) => f.value === file.data_category)) {
-      const filesFound = filesFiltered.filter(
-        ({ data_category }) => data_category === file.data_category,
+  const allDataCategories = dataCategories?.map((dataCategory) => dataCategory.key);
+  const filesInfoData = allDataCategories?.reduce(
+    (dataCategories: IFileInfoByType[], dataCategory: string) => {
+      const filesWithGivenCategory = filesFiltered.filter(
+        (file) => file.data_category === dataCategory,
       );
-
-      filesInfoData.push({
-        key: file.data_category,
-        value: file.data_category,
-        nb_files: filesFound.length,
-        proportion_of_files: (filesFound.length / filesFiltered.length) * 100,
-        participant_id: participant_id || '',
-      });
-    }
-  }
-
-  dataCategories?.forEach((dataCategory) => {
-    if (!filesInfoData.find((f) => f.value === dataCategory.key)) {
-      filesInfoData.push({
-        key: dataCategory.key,
-        value: dataCategory.key,
-        nb_files: 0,
-        proportion_of_files: 0,
-        participant_id: participant_id || '',
-      });
-    }
-  });
-
-  return filesInfoData;
+      return [
+        ...dataCategories,
+        {
+          key: dataCategory,
+          value: dataCategory,
+          nb_files: filesWithGivenCategory.length,
+          proportion_of_files: (filesWithGivenCategory.length / filesFiltered.length) * 100,
+          participant_id: participant_id || '',
+        },
+      ];
+    },
+    [],
+  );
+  return filesInfoData || [];
 };
 
 export const getFileCountByExperimentalStrategy = (
   files: IFileEntity[],
-  participant_id?: string,
   expStrategies?: [{ key: string }],
+  participant_id?: string,
 ) => {
   const filesFiltered = files.filter((file) => file?.sequencing_experiment);
   if (!filesFiltered?.length) {
     return [];
   }
 
-  const experimentalStrategy: { [key: string]: number } = {};
-  expStrategies?.forEach((expStrategy) => {
-    experimentalStrategy[expStrategy.key] = 0;
-  });
+  const strategies = expStrategies?.map((x) => x.key);
 
-  for (const file of filesFiltered) {
-    hydrateResults(file.sequencing_experiment?.hits?.edges || []).forEach((node) => {
-      if (experimentalStrategy[node.experiment_strategy]) {
-        experimentalStrategy[node.experiment_strategy] += 1;
-        return;
-      }
-      experimentalStrategy[node.experiment_strategy] = 1;
-    });
-  }
-
-  return Object.keys(experimentalStrategy).map((key) => ({
-    key,
-    value: key,
-    nb_files: experimentalStrategy[key],
-    proportion_of_files: (experimentalStrategy[key] / filesFiltered.length) * 100,
-    participant_id: participant_id || '',
-  }));
+  const filesInfoData = strategies?.reduce((ss: IFileInfoByType[], s: string) => {
+    const filesWithGivenStrategy = filesFiltered.filter((file) =>
+      file.sequencing_experiment.hits.edges.some((e) => e.node.experiment_strategy === s),
+    );
+    return [
+      ...ss,
+      {
+        key: s,
+        value: s,
+        nb_files: filesWithGivenStrategy.length,
+        proportion_of_files: (filesWithGivenStrategy.length / filesFiltered.length) * 100,
+        participant_id: participant_id || '',
+      },
+    ];
+  }, []);
+  return filesInfoData || [];
 };
 
 export const getExperimentalStrategyColumns = (fileCount: number): ProColumnType<any>[] => [

@@ -34,13 +34,13 @@ const FileTable = ({ participant, loading: participantLoading }: IFilesTableProp
 
   const dataCategoryInfo = getDataCategoryInfo(
     files,
-    participantId,
     dataFileAgg?.data_category?.buckets,
+    participantId,
   );
   const experimentalStrategyInfo = getFileCountByExperimentalStrategy(
     files,
-    participantId,
     dataFileAgg?.exp_strategies?.buckets,
+    participantId,
   );
 
   return (
