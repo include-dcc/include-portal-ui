@@ -31,31 +31,31 @@ export const getDataCategoryInfo = (
   participant_id?: string,
   dataCategories?: [{ key: string }],
 ) => {
-  if (!files?.length) {
+  const filesFiltered = files.filter((file) => file?.data_category);
+  if (!filesFiltered?.length) {
     return [];
   }
+  const filesInfoData: IFileInfoByType[] = [];
 
-  const filesInfosData: IFileInfoByType[] = [];
+  for (const file of filesFiltered) {
+    if (!filesInfoData.find((f) => f.value === file.data_category)) {
+      const filesFound = filesFiltered.filter(
+        ({ data_category }) => data_category === file.data_category,
+      );
 
-  for (const file of files) {
-    if (!file.data_category) {
-      continue;
-    }
-    const filesFound = files.filter(({ data_category }) => data_category === file.data_category);
-    if (!filesInfosData.find((f) => f.value === file.data_category)) {
-      filesInfosData.push({
+      filesInfoData.push({
         key: file.data_category,
         value: file.data_category,
         nb_files: filesFound.length,
-        proportion_of_files: (filesFound.length / files.length) * 100,
+        proportion_of_files: (filesFound.length / filesFiltered.length) * 100,
         participant_id: participant_id || '',
       });
     }
   }
 
   dataCategories?.forEach((dataCategory) => {
-    if (!filesInfosData.find((f) => f.value === dataCategory.key)) {
-      filesInfosData.push({
+    if (!filesInfoData.find((f) => f.value === dataCategory.key)) {
+      filesInfoData.push({
         key: dataCategory.key,
         value: dataCategory.key,
         nb_files: 0,
@@ -65,24 +65,25 @@ export const getDataCategoryInfo = (
     }
   });
 
-  return filesInfosData;
+  return filesInfoData;
 };
 
 export const getFileCountByExperimentalStrategy = (
   files: IFileEntity[],
   participant_id?: string,
-  dataCategories?: [{ key: string }],
+  expStrategies?: [{ key: string }],
 ) => {
-  if (!files?.length) {
+  const filesFiltered = files.filter((file) => file?.sequencing_experiment);
+  if (!filesFiltered?.length) {
     return [];
   }
 
   const experimentalStrategy: { [key: string]: number } = {};
-  dataCategories?.forEach((dataCategory) => {
-    experimentalStrategy[dataCategory.key] = 0;
+  expStrategies?.forEach((expStrategy) => {
+    experimentalStrategy[expStrategy.key] = 0;
   });
 
-  for (const file of files) {
+  for (const file of filesFiltered) {
     hydrateResults(file.sequencing_experiment?.hits?.edges || []).forEach((node) => {
       if (experimentalStrategy[node.experiment_strategy]) {
         experimentalStrategy[node.experiment_strategy] += 1;
@@ -96,7 +97,7 @@ export const getFileCountByExperimentalStrategy = (
     key,
     value: key,
     nb_files: experimentalStrategy[key],
-    proportion_of_files: (experimentalStrategy[key] / files.length) * 100,
+    proportion_of_files: (experimentalStrategy[key] / filesFiltered.length) * 100,
     participant_id: participant_id || '',
   }));
 };
