@@ -242,3 +242,22 @@ export const GET_PARTICIPANT_DOWN_SYNDROME_STATUS = gql`
     }
   }
 `;
+
+export const GET_DATA_FILE_AGG = gql`
+  query getDataFileAgg($sqon: JSON) {
+    file {
+      aggregations(filters: $sqon, include_missing: false) {
+        exp_strategies: sequencing_experiment__experiment_strategy {
+          buckets {
+            key
+          }
+        }
+        data_category {
+          buckets {
+            key
+          }
+        }
+      }
+    }
+  }
+`;

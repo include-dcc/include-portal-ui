@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import { Progress } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
@@ -26,59 +25,36 @@ interface IDataCategory {
   percentage: number;
 }
 
-export const getDataCategoryInfo = (files: IFileEntity[], participant_id?: string) => {
-  const filesInfosData: IFileInfoByType[] = [];
-  for (const file of files) {
-    const filesFound = files.filter(({ data_category }) => data_category === file.data_category);
-    if (!filesInfosData.find((f) => f.value === file.data_category)) {
-      filesInfosData.push({
-        key: file.data_category,
-        value: file.data_category,
-        nb_files: filesFound.length,
-        proportion_of_files: (filesFound.length / files.length) * 100,
-        participant_id: participant_id || '',
-      });
-    }
-  }
-  return filesInfosData;
-};
+interface IGetFilesInfoByType {
+  allTypes: string[];
+  files: IFileEntity[];
+  callbackFilter: (file: IFileEntity, type: string) => boolean;
+  participantId?: string;
+}
 
-export const getFileCountByExperimentalStrategy = (
-  files: IFileEntity[],
-  participant_id?: string,
-) => {
-  const experimentalStrategyFilteredResult: { [key: string]: number } = {
-    'Whole Genome Sequencing': 0,
-    'RNA-Seq': 0,
-    'Multiplex Immunoassay': 0,
-    'LCMS Metabolomics': 0,
-  };
-
-  // Create a list of all experiment strategy available
-  for (const file of files) {
-    const filters: string[] = [];
-    hydrateResults(file.sequencing_experiment?.hits?.edges || []).forEach((node) => {
-      if (filters.includes(node.experiment_strategy)) {
-        return;
-      }
-      filters.push(node.experiment_strategy);
-    });
-
-    filters.forEach((se) => {
-      if (!experimentalStrategyFilteredResult[se]) {
-        experimentalStrategyFilteredResult[se] = 0;
-      }
-      experimentalStrategyFilteredResult[se] += 1;
-    });
+export const getFilesInfoByType = ({
+  files,
+  allTypes,
+  callbackFilter,
+  participantId,
+}: IGetFilesInfoByType) => {
+  if (!files?.length || !allTypes?.length) {
+    return [];
   }
 
-  return Object.keys(experimentalStrategyFilteredResult).map((key) => ({
-    key,
-    value: key,
-    nb_files: experimentalStrategyFilteredResult[key],
-    proportion_of_files: (experimentalStrategyFilteredResult[key] / files.length) * 100,
-    participant_id: participant_id || '',
-  }));
+  return allTypes.reduce((result: IFileInfoByType[], type: string) => {
+    const filesWithGivenType = files.filter((file) => callbackFilter(file, type));
+    return [
+      ...result,
+      {
+        key: type,
+        value: type,
+        nb_files: filesWithGivenType.length,
+        proportion_of_files: (filesWithGivenType.length / files.length) * 100,
+        participant_id: participantId || '',
+      },
+    ];
+  }, []);
 };
 
 export const getExperimentalStrategyColumns = (fileCount: number): ProColumnType<any>[] => [
@@ -92,7 +68,7 @@ export const getExperimentalStrategyColumns = (fileCount: number): ProColumnType
     key: 'nb_files',
     title: intl.get('entities.file.files'),
     render: (filesInfo: IFileInfoByType) =>
-      (
+      filesInfo?.nb_files > 0 ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
@@ -118,11 +94,13 @@ export const getExperimentalStrategyColumns = (fileCount: number): ProColumnType
         >
           {filesInfo.nb_files}
         </Link>
-      ) || TABLE_EMPTY_PLACE_HOLDER,
+      ) : (
+        filesInfo?.nb_files ?? TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'percentage',
-    dataIndex: 'percentage',
+    dataIndex: 'proportion_of_files',
     tooltip: 'Total number of files associated with the participant',
     title: `(n=${fileCount})`,
     render: (percentage: number) => <Progress percent={percentage} showInfo={false} />,
@@ -142,8 +120,8 @@ export const getDataCategoryColumns = (
   {
     key: 'nb_files',
     title: intl.get('entities.file.files'),
-    render: (file: IDataCategory) =>
-      file && file?.nb_files > 0 ? (
+    render: (file: IFileInfoByType) =>
+      file?.nb_files > 0 ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
@@ -158,7 +136,7 @@ export const getDataCategoryColumns = (
                   }),
                   generateValueFilter({
                     field: 'data_category',
-                    value: [file.category],
+                    value: [file.value],
                     index: INDEXES.FILE,
                   }),
                 ],
@@ -174,8 +152,8 @@ export const getDataCategoryColumns = (
       ),
   },
   {
-    key: 'percentage',
-    dataIndex: 'percentage',
+    key: 'proportion_of_files',
+    dataIndex: 'proportion_of_files',
     tooltip: 'Total number of files associated with the participant',
     title: `(n=${fileCount})`,
     render: (percentage: number) => <Progress percent={percentage} showInfo={false} />,
