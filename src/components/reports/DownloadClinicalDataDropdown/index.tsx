@@ -2,7 +2,7 @@ import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { DownloadOutlined } from '@ant-design/icons';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import { Button, Dropdown, Menu } from 'antd';
+import { Button, Dropdown } from 'antd';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
 
 import { ReportType } from 'services/api/reports/models';
@@ -19,36 +19,33 @@ const DownloadClinicalDataDropdown = ({ participantIds, sqon, type = 'default' }
 
   const getCurrentSqon = (): any => sqon || generateSelectionSqon('participant_id', participantIds);
 
-  const menu = (
-    <Menu
-      onClick={(e) =>
-        dispatch(
-          fetchReport({
-            data: {
-              sqon: getCurrentSqon(),
-              name: e.key,
-            },
-          }),
-        )
-      }
-      items={[
-        {
-          key: ReportType.CLINICAL_DATA,
-          label: intl.get('api.report.clinicalData.participant', { count: participantIds.length }),
-        },
-        {
-          key: ReportType.CLINICAL_DATA_FAM,
-          label: intl.get('api.report.clinicalData.family', { count: participantIds.length }),
-        },
-      ]}
-    />
-  );
+  const menu = {
+    onClick: (e: any) =>
+      dispatch(
+        fetchReport({
+          data: {
+            sqon: getCurrentSqon(),
+            name: e.key,
+          },
+        }),
+      ),
+    items: [
+      {
+        key: ReportType.CLINICAL_DATA,
+        label: intl.get('api.report.clinicalData.participant', { count: participantIds.length }),
+      },
+      {
+        key: ReportType.CLINICAL_DATA_FAM,
+        label: intl.get('api.report.clinicalData.family', { count: participantIds.length }),
+      },
+    ],
+  };
 
   return (
     <Dropdown
       key="actionDropdown"
       disabled={participantIds.length === 0}
-      overlay={menu}
+      menu={menu}
       placement="bottomLeft"
     >
       <Button type={type} icon={<DownloadOutlined />}>
