@@ -42,7 +42,7 @@ export const getFilesInfoByType = ({
     return [];
   }
 
-  const filesInfoData = allTypes.reduce((result: IFileInfoByType[], type: string) => {
+  return allTypes.reduce((result: IFileInfoByType[], type: string) => {
     const filesWithGivenType = files.filter((file) => callbackFilter(file, type));
     return [
       ...result,
@@ -55,7 +55,6 @@ export const getFilesInfoByType = ({
       },
     ];
   }, []);
-  return filesInfoData || [];
 };
 
 export const getExperimentalStrategyColumns = (fileCount: number): ProColumnType<any>[] => [
