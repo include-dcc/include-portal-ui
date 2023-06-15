@@ -14,9 +14,8 @@ import { STATIC_ROUTES } from 'utils/routes';
 import { SectionId } from '../utils/anchorLinks';
 import {
   getDataCategoryColumns,
-  getDataCategoryInfo,
   getExperimentalStrategyColumns,
-  getFileCountByExperimentalStrategy,
+  getFilesInfoByType,
 } from '../utils/files';
 
 interface IFilesTableProps {
@@ -32,16 +31,20 @@ const FileTable = ({ participant, loading: participantLoading }: IFilesTableProp
 
   const { loading: dataFileLoading, dataFileAgg } = useDataFileAgg();
 
-  const dataCategoryInfo = getDataCategoryInfo(
-    files,
-    dataFileAgg?.data_category?.buckets,
+  const dataCategoryInfo = getFilesInfoByType({
+    files: files.filter((file) => file?.data_category) || [],
+    allTypes: dataFileAgg?.data_category?.buckets?.map((dataCategory) => dataCategory.key) || [],
+    callbackFilter: (file: IFileEntity, type: string) => file.data_category === type,
     participantId,
-  );
-  const experimentalStrategyInfo = getFileCountByExperimentalStrategy(
-    files,
-    dataFileAgg?.exp_strategies?.buckets,
+  });
+
+  const experimentalStrategyInfo = getFilesInfoByType({
+    files: files.filter((file) => file?.sequencing_experiment) || [],
+    allTypes: dataFileAgg?.exp_strategies?.buckets?.map((x) => x.key) || [],
+    callbackFilter: (file: IFileEntity, type: string) =>
+      file.sequencing_experiment.hits.edges.some((e) => e.node.experiment_strategy === type),
     participantId,
-  );
+  });
 
   return (
     <div>

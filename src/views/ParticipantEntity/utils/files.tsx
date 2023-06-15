@@ -25,62 +25,33 @@ interface IDataCategory {
   percentage: number;
 }
 
-export const getDataCategoryInfo = (
-  files: IFileEntity[],
-  dataCategories?: [{ key: string }],
-  participant_id?: string,
-) => {
-  const filesFiltered = files.filter((file) => file?.data_category);
-  if (!filesFiltered?.length) {
+interface IGetFilesInfoByType {
+  allTypes: string[];
+  files: IFileEntity[];
+  callbackFilter: (file: IFileEntity, type: string) => boolean;
+  participantId?: string;
+}
+
+export const getFilesInfoByType = ({
+  files,
+  allTypes,
+  callbackFilter,
+  participantId,
+}: IGetFilesInfoByType) => {
+  if (!files?.length || !allTypes?.length) {
     return [];
   }
 
-  const allDataCategories = dataCategories?.map((dataCategory) => dataCategory.key);
-  const filesInfoData = allDataCategories?.reduce(
-    (dataCategories: IFileInfoByType[], dataCategory: string) => {
-      const filesWithGivenCategory = filesFiltered.filter(
-        (file) => file.data_category === dataCategory,
-      );
-      return [
-        ...dataCategories,
-        {
-          key: dataCategory,
-          value: dataCategory,
-          nb_files: filesWithGivenCategory.length,
-          proportion_of_files: (filesWithGivenCategory.length / filesFiltered.length) * 100,
-          participant_id: participant_id || '',
-        },
-      ];
-    },
-    [],
-  );
-  return filesInfoData || [];
-};
-
-export const getFileCountByExperimentalStrategy = (
-  files: IFileEntity[],
-  expStrategies?: [{ key: string }],
-  participant_id?: string,
-) => {
-  const filesFiltered = files.filter((file) => file?.sequencing_experiment);
-  if (!filesFiltered?.length) {
-    return [];
-  }
-
-  const strategies = expStrategies?.map((x) => x.key);
-
-  const filesInfoData = strategies?.reduce((ss: IFileInfoByType[], s: string) => {
-    const filesWithGivenStrategy = filesFiltered.filter((file) =>
-      file.sequencing_experiment.hits.edges.some((e) => e.node.experiment_strategy === s),
-    );
+  const filesInfoData = allTypes.reduce((result: IFileInfoByType[], type: string) => {
+    const filesWithGivenType = files.filter((file) => callbackFilter(file, type));
     return [
-      ...ss,
+      ...result,
       {
-        key: s,
-        value: s,
-        nb_files: filesWithGivenStrategy.length,
-        proportion_of_files: (filesWithGivenStrategy.length / filesFiltered.length) * 100,
-        participant_id: participant_id || '',
+        key: type,
+        value: type,
+        nb_files: filesWithGivenType.length,
+        proportion_of_files: (filesWithGivenType.length / files.length) * 100,
+        participant_id: participantId || '',
       },
     ];
   }, []);
