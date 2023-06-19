@@ -15,7 +15,7 @@ import { IFileEntity } from 'graphql/files/models';
 import { IQueryResults } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { IVariantEntity } from 'graphql/variants/models';
-import { MenuClickEventHandler } from 'rc-menu/lib/interface';
+import { MenuClickEventHandler, MenuInfo } from 'rc-menu/lib/interface';
 import CreateEditModal from 'views/Dashboard/components/DashboardCards/SavedSets/CreateEditModal';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
@@ -123,7 +123,7 @@ const SetsManagementDropdown = ({
     }
   }, [fetchingError, isLoading, savedSets, sqon]);
 
-  const onClick: MenuClickEventHandler = (e) => {
+  const onClick: MenuClickEventHandler = (e: MenuInfo) => {
     const key = e.key as string;
     // @ts-ignore
     const m = modals[key];
@@ -161,7 +161,7 @@ const SetsManagementDropdown = ({
       <Dropdown
         menu={{
           className: styles.saveSetOptionMenu,
-          onClick: (e: any) => onClick(e),
+          onClick: (e: MenuInfo) => onClick(e),
           items: [
             {
               key: 'participant-count',

@@ -10,6 +10,7 @@ import { Button, Col, Dropdown, Modal, Row, Space, Spin, Tooltip, Transfer, Tree
 import { INDEXES } from 'graphql/constants';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { cloneDeep, isEmpty } from 'lodash';
+import { MenuInfo } from 'rc-menu/lib/interface';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import {
   getFlattenTree,
@@ -207,7 +208,7 @@ const TreeFacetModal = ({ type, field, titleFormatter }: Props) => {
           <Dropdown.Button
             type="primary"
             menu={{
-              onClick: (e) => handleOnApply(e.key as TermOperators),
+              onClick: (e: MenuInfo) => handleOnApply(e.key as TermOperators),
               items: [
                 {
                   key: TermOperators.in,
