@@ -6,22 +6,11 @@ import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/
 import { TermOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
 import { findSqonValueByField, removeFieldFromSqon } from '@ferlab/ui/core/data/sqon/utils';
-import {
-  Button,
-  Col,
-  Dropdown,
-  Menu,
-  Modal,
-  Row,
-  Space,
-  Spin,
-  Tooltip,
-  Transfer,
-  Tree,
-} from 'antd';
+import { Button, Col, Dropdown, Modal, Row, Space, Spin, Tooltip, Transfer, Tree } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { cloneDeep, isEmpty } from 'lodash';
+import { MenuInfo } from 'rc-menu/lib/interface';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import {
   getFlattenTree,
@@ -218,25 +207,23 @@ const TreeFacetModal = ({ type, field, titleFormatter }: Props) => {
           <Button onClick={handleCancel}>Cancel</Button>
           <Dropdown.Button
             type="primary"
-            overlay={
-              <Menu
-                onClick={(e) => handleOnApply(e.key as TermOperators)}
-                items={[
-                  {
-                    key: TermOperators.in,
-                    label: 'Any of',
-                  },
-                  {
-                    key: TermOperators.all,
-                    label: 'All of',
-                  },
-                  {
-                    key: TermOperators['some-not-in'],
-                    label: 'None of',
-                  },
-                ]}
-              />
-            }
+            menu={{
+              onClick: (e: MenuInfo) => handleOnApply(e.key as TermOperators),
+              items: [
+                {
+                  key: TermOperators.in,
+                  label: 'Any of',
+                },
+                {
+                  key: TermOperators.all,
+                  label: 'All of',
+                },
+                {
+                  key: TermOperators['some-not-in'],
+                  label: 'None of',
+                },
+              ],
+            }}
             onClick={() => handleOnApply(TermOperators.in)}
           >
             Apply

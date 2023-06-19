@@ -9,13 +9,13 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import { Button, Dropdown, Menu, Tooltip } from 'antd';
+import { Button, Dropdown, Tooltip } from 'antd';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { IFileEntity } from 'graphql/files/models';
 import { IQueryResults } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { IVariantEntity } from 'graphql/variants/models';
-import { MenuClickEventHandler } from 'rc-menu/lib/interface';
+import { MenuClickEventHandler, MenuInfo } from 'rc-menu/lib/interface';
 import CreateEditModal from 'views/Dashboard/components/DashboardCards/SavedSets/CreateEditModal';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
@@ -97,67 +97,6 @@ export const itemIcon = (type: string) => {
 export const singularizeSetTypeIfNeeded = (type: string) =>
   type === SetType.VARIANT ? type.slice(0, -1) : type;
 
-const menu = (
-  count: number,
-  onClick: MenuClickEventHandler,
-  isEditDisabled: boolean,
-  type: string,
-) => (
-  <Menu
-    className={styles.saveSetOptionMenu}
-    onClick={onClick}
-    items={[
-      {
-        key: 'participant-count',
-        className: `${
-          exceedLimit(count) ? styles.saveSetOptionMenuInfoOver : styles.saveSetOptionMenuInfo
-        }`,
-        disabled: true,
-        icon: itemIcon(type),
-        label: (
-          <>
-            <span>
-              {intl.get('screen.dataExploration.setsManagementDropdown.selected', {
-                count,
-                type: singularizeSetTypeIfNeeded(type),
-              })}
-            </span>
-            <Tooltip
-              arrowPointAtCenter
-              placement="topRight"
-              title={`Max. ${numberWithCommas(
-                ROW_SELECTION_LIMIT,
-              )} items at a time. The first 10,000 will be processed.`}
-            >
-              <InfoCircleOutlined className={styles.infoCircle} />
-            </Tooltip>
-          </>
-        ),
-      },
-      {
-        type: 'divider',
-      },
-      {
-        key: 'create',
-        icon: <PlusOutlined />,
-        label: intl.get('screen.dataExploration.setsManagementDropdown.create'),
-      },
-      {
-        key: 'add_ids',
-        icon: <ListAddIcon />,
-        label: intl.get('screen.dataExploration.setsManagementDropdown.add'),
-        disabled: isEditDisabled,
-      },
-      {
-        key: 'remove_ids',
-        icon: <ListRemoveIcon />,
-        label: intl.get('screen.dataExploration.setsManagementDropdown.remove'),
-        disabled: isEditDisabled,
-      },
-    ]}
-  />
-);
-
 const getSetCount = (selected: string[], total: number, allSelected: boolean) => {
   if (allSelected) {
     return total;
@@ -184,7 +123,7 @@ const SetsManagementDropdown = ({
     }
   }, [fetchingError, isLoading, savedSets, sqon]);
 
-  const onClick: MenuClickEventHandler = (e) => {
+  const onClick: MenuClickEventHandler = (e: MenuInfo) => {
     const key = e.key as string;
     // @ts-ignore
     const m = modals[key];
@@ -220,12 +159,61 @@ const SetsManagementDropdown = ({
         />
       )}
       <Dropdown
-        overlay={menu(
-          getSetCount(selectedKeys || [], results.total, selectedAllResults),
-          onClick,
-          isEditDisabled,
-          type,
-        )}
+        menu={{
+          className: styles.saveSetOptionMenu,
+          onClick: (e: MenuInfo) => onClick(e),
+          items: [
+            {
+              key: 'participant-count',
+              className: `${
+                exceedLimit(getSetCount(selectedKeys || [], results.total, selectedAllResults))
+                  ? styles.saveSetOptionMenuInfoOver
+                  : styles.saveSetOptionMenuInfo
+              }`,
+              disabled: true,
+              icon: itemIcon(type),
+              label: (
+                <>
+                  <span>
+                    {intl.get('screen.dataExploration.setsManagementDropdown.selected', {
+                      count: getSetCount(selectedKeys || [], results.total, selectedAllResults),
+                      type: singularizeSetTypeIfNeeded(type),
+                    })}
+                  </span>
+                  <Tooltip
+                    arrowPointAtCenter
+                    placement="topRight"
+                    title={`Max. ${numberWithCommas(
+                      ROW_SELECTION_LIMIT,
+                    )} items at a time. The first 10,000 will be processed.`}
+                  >
+                    <InfoCircleOutlined className={styles.infoCircle} />
+                  </Tooltip>
+                </>
+              ),
+            },
+            {
+              type: 'divider',
+            },
+            {
+              key: 'create',
+              icon: <PlusOutlined />,
+              label: intl.get('screen.dataExploration.setsManagementDropdown.create'),
+            },
+            {
+              key: 'add_ids',
+              icon: <ListAddIcon />,
+              label: intl.get('screen.dataExploration.setsManagementDropdown.add'),
+              disabled: isEditDisabled,
+            },
+            {
+              key: 'remove_ids',
+              icon: <ListRemoveIcon />,
+              label: intl.get('screen.dataExploration.setsManagementDropdown.remove'),
+              disabled: isEditDisabled,
+            },
+          ],
+        }}
         placement="bottomLeft"
         trigger={['click']}
         disabled={selectedKeys.length === 0 && !selectedAllResults}
