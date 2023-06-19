@@ -1,13 +1,10 @@
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
-import { Tooltip } from 'antd';
 import { IFileEntity } from 'graphql/files/models';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
-
-import styles from '../index.module.scss';
 
 export const getBiospecimenColumns = (): ProColumnType[] => [
   {
@@ -30,19 +27,10 @@ export const getBiospecimenColumns = (): ProColumnType[] => [
   {
     key: 'down_syndrome_status',
     dataIndex: 'down_syndrome_status',
-    title: (
-      <Tooltip
-        className={styles.tooltip}
-        title={
-          <>
-            <div>{intl.get('entities.participant.trisomy')}</div>
-            <div>{intl.get('entities.participant.disomy')}</div>
-          </>
-        }
-      >
-        {intl.get('entities.participant.down_syndrome_status')}
-      </Tooltip>
-    ),
+    tooltip: `${intl.get('entities.participant.trisomy')} \n${intl.get(
+      'entities.participant.disomy',
+    )}`,
+    title: intl.get('entities.participant.down_syndrome_status'),
     render: (down_syndrome_status: string) => down_syndrome_status || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
