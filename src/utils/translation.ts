@@ -242,6 +242,9 @@ export const getQueryBuilderDictionary = (
 export const getFacetsDictionary = () => ({
   status: 'Availability',
   family_type: 'Family Unit',
+  family: {
+    family_id: intl.get('entities.participant.family_id'),
+  },
   study_id: 'Study Code',
   study: {
     study_name: 'Study Name',
