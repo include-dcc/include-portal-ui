@@ -23,7 +23,6 @@ import { ExtendedMappingResults } from 'graphql/models';
 import { useTotalParticipants } from 'graphql/participants/actions';
 import { IParticipantResultTree } from 'graphql/participants/models';
 import { GET_PARTICIPANT_COUNT } from 'graphql/participants/queries';
-import { get } from 'lodash';
 import BioSpecimenTab from 'views/DataExploration/components/PageContent/tabs/Biospecimens';
 import DataFilesTabs from 'views/DataExploration/components/PageContent/tabs/DataFiles';
 import ParticipantsTab from 'views/DataExploration/components/PageContent/tabs/Participants';
@@ -57,7 +56,7 @@ import {
 import { getCurrentUrl } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { numberWithCommas } from 'utils/string';
-import { getFacetsDictionary, getQueryBuilderDictionary } from 'utils/translation';
+import { getQueryBuilderDictionary } from 'utils/translation';
 
 import styles from './index.module.scss';
 
@@ -105,7 +104,7 @@ const PageContent = ({
   const fileResolvedSqon = resolveSqonForFiles(queryList, activeQuery);
 
   const facetTransResolver = (key: string) => {
-    const title = get(getFacetsDictionary(), key, key);
+    const title = intl.get(`facets.${key}`);
     return title
       ? title
       : combineExtendedMappings([participantMapping, fileMapping, biospecimenMapping])?.data?.find(

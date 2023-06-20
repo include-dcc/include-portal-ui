@@ -840,6 +840,9 @@ const en = {
     },
     age_at_data_collection: 'Age at data collection',
     family_type: 'Family Unit',
+    family: {
+      family_id: 'Family ID',
+    },
     sex: 'Sex',
     ethnicity: 'Ethnicity',
     race: 'Race',
