@@ -85,7 +85,18 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
         enableColumnSort: true,
         onColumnSortChange: (newState) =>
           dispatch(
-            updateUserConfig({ participants: { tables: { biospecimens: { columns: newState } } } }),
+            updateUserConfig({
+              participants: {
+                tables: {
+                  biospecimens: {
+                    columns: newState.map((column) => ({
+                      ...column,
+                      key: `${COLUMNS_PREFIX}${column.key}`,
+                    })),
+                  },
+                },
+              },
+            }),
           ),
         onTableExportClick: () =>
           dispatch(
