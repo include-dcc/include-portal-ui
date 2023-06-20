@@ -1,7 +1,7 @@
 import intl from 'react-intl-universal';
 import { FileImageOutlined, LockOutlined, UnlockFilled } from '@ant-design/icons';
 import { EntityTitle } from '@ferlab/ui/core/pages/EntityPage';
-import { Button, Popover, Space } from 'antd';
+import { Popover, Space } from 'antd';
 import { IFileEntity } from 'graphql/files/models';
 
 import { FENCE_CONNECTION_STATUSES } from 'common/fenceTypes';
@@ -60,12 +60,7 @@ const FileEntityTitle: React.FC<OwnProps> = ({ file, loading }) => {
         <LockOutlined className={styles.locked} />
       </Popover>
     ),
-    extra: (
-      <Space>
-        <Button type="primary">{intl.get('entities.file.manifest')}</Button>
-        {file && <CavaticaAnalyzeButton fileIds={[file.file_id]} />}
-      </Space>
-    ),
+    extra: <Space>{file && <CavaticaAnalyzeButton fileIds={[file.file_id]} />}</Space>,
   };
 
   return <EntityTitle {...title} loading={loading} />;
