@@ -20,8 +20,6 @@ import { getProTableDictionary } from 'utils/translation';
 
 import StudyPopoverRedirect from '../DataExploration/components/StudyPopoverRedirect';
 
-import { CavaticaStudiesList, CavaticaStudy } from './utils/constant';
-
 import styles from './index.module.scss';
 
 const { Title } = Typography;
@@ -43,10 +41,10 @@ const columns: ProColumnType<any>[] = [
     key: 'study_id',
     title: 'Study Code',
     render: (record: IStudyEntity) =>
-      CavaticaStudiesList.includes(record.study_id as CavaticaStudy) ? (
-        record.study_id
-      ) : (
+      record.website ? (
         <ExternalLink href={record.website}>{record.study_id}</ExternalLink>
+      ) : (
+        record.study_id
       ),
   },
   {
