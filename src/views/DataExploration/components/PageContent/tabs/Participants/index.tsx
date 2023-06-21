@@ -171,7 +171,9 @@ const defaultColumns: ProColumnType<any>[] = [
       multiple: 1,
     },
     render: (family_type: FamilyType) =>
-      family_type ? familyTypeText[family_type] : TABLE_EMPTY_PLACE_HOLDER,
+      family_type && familyTypeText[family_type]
+        ? familyTypeText[family_type]
+        : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'diagnosis.source_text',

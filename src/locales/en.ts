@@ -1041,6 +1041,7 @@ const en = {
       sex: 'Sex',
       source_text: 'Condition (Source Text)',
       trio: 'Trio',
+      trio_plus: ' Trio+',
       trisomy: 'T21: "Trisomy 21"',
     },
     study: {
