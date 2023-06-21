@@ -862,6 +862,8 @@ const en = {
     status: 'Availability',
     age_at_biospecimen_collection: 'Age at Biospec. Collection (days)',
     bio_repository: 'Biorepository',
+    collection_sample_id: 'Collection ID',
+    sample_id: 'Sample ID',
 
     // File
     files: filesFacets,
