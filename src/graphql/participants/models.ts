@@ -116,6 +116,7 @@ export enum FamilyType {
   PROBAND = 'proband-only',
   DUO = 'duo',
   TRIO = 'trio',
+  TRIO_PLUS = 'trio+',
   OTHER = 'other',
 }
 
