@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ExperimentOutlined, FileSearchOutlined, UserOutlined } from '@ant-design/icons';
 import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
-import { Spin } from 'antd';
+import { Spin, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { ExtendedMappingResults } from 'graphql/models';
 import PageContent from 'views/DataExploration/components/PageContent';
@@ -199,6 +199,9 @@ const DataExploration = () => {
         menuItems={menuItems} /* defaultSelectedKey={tab} */
       />
       <ScrollContent id={SCROLL_WRAPPER_ID} className={styles.scrollContent}>
+        <Typography.Title className={styles.title} level={4}>
+          {intl.get('screen.dataExploration.title')}
+        </Typography.Title>
         <PageContent
           fileMapping={fileMappingResults}
           biospecimenMapping={biospecimenMappingResults}

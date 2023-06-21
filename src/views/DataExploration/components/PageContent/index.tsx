@@ -14,7 +14,7 @@ import { ISavedFilter } from '@ferlab/ui/core/components/QueryBuilder/types';
 import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
 import { IRemoteComponent, ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { isEmptySqon, resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
-import { Space, Tabs, Typography } from 'antd';
+import { Space, Tabs } from 'antd';
 import copy from 'copy-to-clipboard';
 import { useTotalBiospecimen } from 'graphql/biospecimens/actions';
 import { INDEXES } from 'graphql/constants';
@@ -151,9 +151,6 @@ const PageContent = ({
 
   return (
     <Space direction="vertical" size={24} className={styles.dataExplorePageContent}>
-      <Typography.Title className={styles.title} level={4}>
-        {intl.get('screen.dataExploration.title')}
-      </Typography.Title>
       <QueryBuilder
         id={DATA_EXPLORATION_QB_ID}
         className="data-exploration-repo__query-builder"
