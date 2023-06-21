@@ -19,17 +19,15 @@ type OwnProps = {
 
 const getIcon = (setType: SetType) => {
   switch (setType) {
-    case SetType.PARTICIPANT:
-      return <UserOutlined />;
     case SetType.BIOSPECIMEN:
       return <ExperimentOutlined />;
     case SetType.FILE:
       return <FileTextOutlined />;
     case SetType.VARIANT:
       return <LineStyleIcon />;
-
+    case SetType.PARTICIPANT:
     default:
-      break;
+      return <UserOutlined />;
   }
 };
 
