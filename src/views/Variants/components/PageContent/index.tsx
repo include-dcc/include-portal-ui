@@ -9,7 +9,7 @@ import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
 import { isEmptySqon, resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { IExtendedMappingResults } from '@ferlab/ui/core/graphql/types';
-import { Space, Typography } from 'antd';
+import { Space } from 'antd';
 import copy from 'copy-to-clipboard';
 import { useVariant } from 'graphql/variants/actions';
 import { IVariantResultTree } from 'graphql/variants/models';
@@ -138,12 +138,6 @@ const PageContent = ({ variantMapping }: OwnProps) => {
 
   return (
     <Space direction="vertical" size={24} className={styles.variantsPageContent}>
-      <div className={styles.pageHeader}>
-        <Typography.Title className={styles.pageHeaderTitle} level={1}>
-          {intl.get('screen.variants.title')}
-        </Typography.Title>
-      </div>
-
       <QueryBuilder
         id={VARIANT_REPO_QB_ID}
         className="variants-repo__query-builder"

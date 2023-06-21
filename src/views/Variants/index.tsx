@@ -2,6 +2,7 @@ import intl from 'react-intl-universal';
 import { UserOutlined } from '@ant-design/icons';
 import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
+import { Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import GenesUploadIds from 'views/Variants/components/GeneUploadIds';
 import VariantGeneSearch from 'views/Variants/components/VariantGeneSearch';
@@ -231,6 +232,9 @@ const Variants = () => {
     <div className={styles.variantsLayout}>
       <SidebarMenu className={styles.sideMenu} menuItems={menuItems} />
       <ScrollContent id={SCROLL_WRAPPER_ID} className={styles.scrollContent}>
+        <Typography.Title className={styles.title} level={4}>
+          {intl.get('screen.variants.title')}
+        </Typography.Title>
         <PageContent variantMapping={variantMappingResults} />
       </ScrollContent>
     </div>

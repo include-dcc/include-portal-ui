@@ -686,6 +686,7 @@ const en = {
       },
     },
     dataExploration: {
+      title: 'Data Exploration',
       sidemenu: {
         participant: 'Participant',
         biospecimen: 'Biospecimen',

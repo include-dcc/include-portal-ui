@@ -533,6 +533,7 @@ const fr = {
       },
     },
     dataExploration: {
+      title: 'Data Exploration',
       sidemenu: {
         participant: 'Participant',
         biospecimen: 'Biospecimen',
