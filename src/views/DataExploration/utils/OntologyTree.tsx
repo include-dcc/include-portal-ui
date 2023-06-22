@@ -59,9 +59,8 @@ export const searchTree = (element: TreeNode, matchingTitle: string): TreeNode |
   if (element.title === matchingTitle) {
     return element;
   } else if (element.children != null) {
-    let i;
     let result = null;
-    for (i = 0; result == null && i < element.children.length; i++) {
+    for (let i = 0; result == null && i < element.children.length; i++) {
       result = searchTree(element.children[i], matchingTitle);
     }
     return result;
