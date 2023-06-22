@@ -1,32 +1,32 @@
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
-import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
+// import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
+// import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
-  EntityGeneConsequences,
-  EntityPublicCohortTable,
+  // EntityPublicCohortTable,
   EntitySummary,
-  EntityTable,
+  // EntityTable,
   EntityTitle,
 } from '@ferlab/ui/core/pages/EntityPage';
-import {
-  makeClinvarRows,
-  makeGenesOrderedRow,
-} from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
-import { Space, Tag } from 'antd';
-import { useVariantEntity } from 'graphql/variants/actions';
+// import {
+//   makeClinvarRows,
+//   makeGenesOrderedRow,
+// } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
+import { Tag } from 'antd';
+import { useVariantEntity } from 'graphql/variantsv2/actions';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import { getEntityExpandableTableMultiple } from 'utils/translation';
 
+import EntityGeneConsequences from './FerlabComponent/EntityGeneConsequence';
 import { getConsequencesProColumn } from './utils/consequences';
-import {
-  getFrequenciesItems,
-  getFrequenciesTableSummaryColumns,
-  getPublicCohorts,
-} from './utils/frequencies';
-import { getClinvarColumns, getGenePhenotypeColumns } from './utils/pathogenicity';
+// import {
+//   getFrequenciesItems,
+//   getFrequenciesTableSummaryColumns,
+//   getPublicCohorts,
+// } from './utils/frequencies';
+// import { getClinvarColumns, getGenePhenotypeColumns } from './utils/pathogenicity';
 import { getSummaryItems } from './utils/summary';
 import SummaryHeader from './SummaryHeader';
 
@@ -60,13 +60,13 @@ export default function VariantEntity() {
     values: [locus],
   });
 
-  const variantStudies = hydrateResults(data?.studies.hits.edges || []).map(
-    (e: any, index: number) => ({
-      ...e,
-      key: index,
-      participant_total_number: data?.participant_total_number || 0,
-    }),
-  );
+  // const variantStudies = hydrateResults(data?.studies.hits.edges || []).map(
+  //   (e: any, index: number) => ({
+  //     ...e,
+  //     key: index,
+  //     participant_total_number: data?.participant_total_number || 0,
+  //   }),
+  // );
 
   return (
     <EntityPageWrapper
@@ -100,10 +100,9 @@ export default function VariantEntity() {
           header={intl.get('screen.variants.consequences.geneConsequence')}
           columns={getConsequencesProColumn()}
           genes={data?.genes.hits.edges}
-          consequences={data?.consequences.hits.edges}
         />
 
-        <EntityTable
+        {/* <EntityTable
           id={SectionId.FREQUENCIES}
           columns={getFrequenciesItems()}
           data={variantStudies}
@@ -151,7 +150,7 @@ export default function VariantEntity() {
           header={intl.get('screen.variants.pathogenicity.genePhenotype')}
           data={makeGenesOrderedRow(data?.genes)}
           columns={getGenePhenotypeColumns()}
-        />
+        /> */}
       </>
     </EntityPageWrapper>
   );
