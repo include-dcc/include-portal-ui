@@ -8,7 +8,6 @@ import getProfileItems from './utils/getProfileItems';
 import { getSummaryItems } from './utils/summary';
 import BiospecimenTable from './BiospecimenTable';
 import DiagnosisTable from './DiagnosisTable';
-import FamilyTable from './FamilyTable';
 import FileTable from './FileTable';
 import PhenotypeTable from './PhenotypeTable';
 import SummaryHeader from './SummaryHeader';
@@ -22,13 +21,14 @@ const ParticipantEntity = () => {
     value: participant_id,
   });
 
-  const showFamilyTable = Boolean(
-    participant?.family?.family_id && participant?.family?.family_relations?.hits?.edges?.length,
-  );
+  // SJIP-497 / SJIP-458 back end fix needed
+  // const showFamilyTable = Boolean(
+  //   participant?.family?.family_id && participant?.family?.family_relations?.hits?.edges?.length,
+  // );
 
   return (
     <EntityPage
-      links={getLinks(showFamilyTable)}
+      links={getLinks()}
       pageId={'participant-entity-page'}
       data={participant}
       loading={loading}
@@ -52,7 +52,8 @@ const ParticipantEntity = () => {
         header={intl.get('entities.participant.profile')}
       />
 
-      {showFamilyTable && <FamilyTable participant={participant!} loading={loading} />}
+      {/* SJIP-497 / SJIP-458 back end fix needed */}
+      {/* {showFamilyTable && <FamilyTable participant={participant!} loading={loading} />} */}
 
       <DiagnosisTable participant={participant} loading={loading} />
 
