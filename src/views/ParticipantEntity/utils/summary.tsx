@@ -6,6 +6,8 @@ import { FamilyType, IParticipantEntity } from 'graphql/participants/models';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
+import FamilyIdLink from '../FamilyTable/FamilyIdLink';
+
 import styles from '../styles/styles.module.scss';
 
 export const familyTypeText = {
@@ -54,6 +56,14 @@ export const getSummaryItems = (participant?: IParticipantEntity): IEntityDescri
     label: intl.get('entities.participant.family_unit'),
     value: participant?.family_type ? (
       <Tag color="cyan">{familyTypeText[participant.family_type]}</Tag>
+    ) : (
+      TABLE_EMPTY_PLACE_HOLDER
+    ),
+  },
+  {
+    label: intl.get('entities.participant.family_id'),
+    value: participant?.family?.family_id ? (
+      <FamilyIdLink familyId={participant.family.family_id} />
     ) : (
       TABLE_EMPTY_PLACE_HOLDER
     ),
