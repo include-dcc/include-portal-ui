@@ -1,5 +1,7 @@
 import { IPhenotypeSource } from 'graphql/summary/models';
 
+import { EXCLUDED_MONDO_ROOTS } from './constant';
+
 export type TreeNode = {
   title: string;
   key: string;
@@ -18,15 +20,13 @@ export type TreeNode = {
 
 export type TTitleFormatter = (title: string) => React.ReactElement | string;
 
-export const lightTreeNodeConstructor = (key: string, children: TreeNode[] = []): TreeNode => {
-  return {
-    title: key,
-    key: key,
-    children,
-    valueText: 0,
-    name: key,
-  };
-};
+export const lightTreeNodeConstructor = (key: string, children: TreeNode[] = []): TreeNode => ({
+  title: key,
+  key: key,
+  children,
+  valueText: 0,
+  name: key,
+});
 
 const termRegex = new RegExp('[^-]+$');
 
@@ -59,8 +59,8 @@ export const searchTree = (element: TreeNode, matchingTitle: string): TreeNode |
   if (element.title === matchingTitle) {
     return element;
   } else if (element.children != null) {
-    var i;
-    var result = null;
+    let i;
+    let result = null;
     for (i = 0; result == null && i < element.children.length; i++) {
       result = searchTree(element.children[i], matchingTitle);
     }
@@ -125,7 +125,10 @@ export default class OntologyTree {
     workingPhenotypes.forEach((sourcePhenotype) => {
       let phenotype: TreeNode;
       // start from root and then look for each element inhereting from that node
-      if (!sourcePhenotype.top_hits.parents.length || workingPhenotypes.length === 1) {
+      if (
+        (!sourcePhenotype.top_hits.parents.length || workingPhenotypes.length === 1) &&
+        !EXCLUDED_MONDO_ROOTS.find((s) => sourcePhenotype.key.includes(s))
+      ) {
         const children = this.populateNodeChild({
           source: sourcePhenotype,
           field,

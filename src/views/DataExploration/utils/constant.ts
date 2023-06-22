@@ -10,6 +10,8 @@ export const DATA_EXPLORATION_QB_ID = 'data-exploration-repo-key';
 export const DEFAULT_PAGE_INDEX = 1;
 export const DEFAULT_PAGE_SIZE = 20;
 
+export const EXCLUDED_MONDO_ROOTS = ['MONDO:0042489'];
+
 export const CAVATICA_FILE_BATCH_SIZE = 10000;
 
 export const DATA_EPLORATION_FILTER_TAG = 'data-exploration';
