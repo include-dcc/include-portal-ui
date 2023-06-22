@@ -1,12 +1,11 @@
 import { IArrangerResultsTree } from '@ferlab/ui/core/graphql/types';
-import { IVariantEntity as IVariantEntityFerlab } from '@ferlab/ui/core/pages/EntityPage/type';
 
 export interface IVariantResultTree {
   variants: IArrangerResultsTree<IVariantEntity>;
 }
 
 export interface IVariantEntityResultTree {
-  variants: IArrangerResultsTree<IVariantEntityFerlab>;
+  variants: IArrangerResultsTree<IVariantEntity>;
 }
 
 export enum Impact {
