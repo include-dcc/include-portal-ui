@@ -4,7 +4,6 @@ import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 // import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 // import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
-  // EntityGeneConsequences,
   // EntityPublicCohortTable,
   EntitySummary,
   // EntityTable,
@@ -18,9 +17,10 @@ import { Tag } from 'antd';
 import { useVariantEntity } from 'graphql/variantsv2/actions';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
+import { getEntityExpandableTableMultiple } from 'utils/translation';
 
-// import { getEntityExpandableTableMultiple } from 'utils/translation';
-// import { getConsequencesProColumn } from './utils/consequences';
+import EntityGeneConsequences from './FerlabComponent/EntityGeneConsequence';
+import { getConsequencesProColumn } from './utils/consequences';
 // import {
 //   getFrequenciesItems,
 //   getFrequenciesTableSummaryColumns,
@@ -92,7 +92,7 @@ export default function VariantEntity() {
           loading={loading}
         />
 
-        {/* <EntityGeneConsequences
+        <EntityGeneConsequences
           id={SectionId.CONSEQUENCE}
           dictionary={getEntityExpandableTableMultiple()}
           loading={loading}
@@ -100,10 +100,9 @@ export default function VariantEntity() {
           header={intl.get('screen.variants.consequences.geneConsequence')}
           columns={getConsequencesProColumn()}
           genes={data?.genes.hits.edges}
-          consequences={data?.consequences.hits.edges}
         />
 
-        <EntityTable
+        {/* <EntityTable
           id={SectionId.FREQUENCIES}
           columns={getFrequenciesItems()}
           data={variantStudies}
