@@ -170,15 +170,14 @@ const defaultColumns: ProColumnType[] = [
   {
     title: intl.get('screen.variants.table.participant.title'),
     tooltip: intl.get('screen.variants.table.participant.tooltip'),
-    dataIndex: 'studies',
     key: 'studies_participant',
-    render: (studies: IArrangerResultsTree<IVariantStudyEntity>) => {
-      const participantIds = studies?.hits?.edges
-        ?.map((study) => study.node.participant_ids || [])
-        .flat();
-      const nOfParticipants = participantIds.length;
-      if (nOfParticipants <= 10) {
-        return nOfParticipants;
+    render: (v: IVariantEntity) => {
+      const totalNOfParticipants = v.internal_frequencies?.total?.pc || 0;
+      const studies = v.studies;
+      const participantIds =
+        studies?.hits?.edges?.map((study) => study.node.participant_ids || [])?.flat() || [];
+      if (participantIds.length) {
+        return totalNOfParticipants;
       }
       return (
         <Link
@@ -199,7 +198,7 @@ const defaultColumns: ProColumnType[] = [
             });
           }}
         >
-          {numberWithCommas(nOfParticipants)}
+          {numberWithCommas(totalNOfParticipants)}
         </Link>
       );
     },
