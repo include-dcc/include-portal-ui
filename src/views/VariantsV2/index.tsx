@@ -90,12 +90,16 @@ const filterGroups: {
           'genes__omim__name',
           'genes__ddd__disease_name',
           'genes__cosmic__tumour_types_germline',
+          'genes__gnomad__pli',
+          'genes__gnomad__loeuf',
         ],
         tooltips: [
           'genes__hpo__hpo_term_label',
           'genes__omim__name',
           'genes__ddd__disease_name',
           'genes__cosmic__tumour_types_germline',
+          'genes__gnomad__pli',
+          'genes__gnomad__loeuf',
         ],
       },
     ],
@@ -116,6 +120,7 @@ const filterGroups: {
           'genes__consequences__predictions__polyphen2_hvar_pred',
           'genes__consequences__predictions__revel_score',
           'genes__consequences__predictions__sift_pred',
+          'genes__spliceai__ds',
         ],
         tooltips: [
           'genes__consequences__predictions__cadd_score',
@@ -125,6 +130,7 @@ const filterGroups: {
           'genes__consequences__predictions__polyphen2_hvar_pred',
           'genes__consequences__predictions__revel_score',
           'genes__consequences__predictions__sift_pred',
+          'genes__spliceai__ds'
         ],
       },
     ],
