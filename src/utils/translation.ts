@@ -329,6 +329,13 @@ export const getFacetsDictionary = () => ({
       },
     },
     biotype: 'Gene type',
+    gnomad: {
+      pli: 'gnomAD pLI',
+      loeuf: 'gnomAD LOEUF',
+    },
+    spliceai: {
+      ds: 'SpliceAI',
+    },
   },
   internal_frequencies: {
     total: {
@@ -395,6 +402,13 @@ export const getFacetsDictionary = () => ({
       },
       cosmic: {
         tumour_types_germline: 'Catalogue Of Somatic Mutations In Cancer',
+      },
+      spliceai: {
+        ds: 'NEW',
+      },
+      gnomad: {
+        pli: 'NEW',
+        loeuf: 'NEW',
       },
     },
   },
