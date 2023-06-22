@@ -172,12 +172,12 @@ const defaultColumns: ProColumnType[] = [
     tooltip: intl.get('screen.variants.table.participant.tooltip'),
     key: 'studies_participant',
     render: (v: IVariantEntity) => {
-      const totalNOfParticipants = v.internal_frequencies?.total?.pc || 0;
+      const totalNbOfParticipants = v.internal_frequencies?.total?.pc || 0;
       const studies = v.studies;
       const participantIds =
         studies?.hits?.edges?.map((study) => study.node.participant_ids || [])?.flat() || [];
       if (participantIds.length) {
-        return totalNOfParticipants;
+        return totalNbOfParticipants;
       }
       return (
         <Link
@@ -198,7 +198,7 @@ const defaultColumns: ProColumnType[] = [
             });
           }}
         >
-          {numberWithCommas(totalNOfParticipants)}
+          {numberWithCommas(totalNbOfParticipants)}
         </Link>
       );
     },
