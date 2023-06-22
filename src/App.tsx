@@ -40,7 +40,11 @@ const CommunityMember = loadable(() => import('views/Community/Member'), loadabl
 const Studies = loadable(() => import('views/Studies'), loadableProps);
 const DataExploration = loadable(() => import('views/DataExploration'), loadableProps);
 const Variants = loadable(() => import('views/Variants'), loadableProps);
+//fixme variantsV2
+const VariantsV2 = loadable(() => import('views/VariantsV2'), loadableProps);
 const VariantEntity = loadable(() => import('views/VariantEntity'), loadableProps);
+//fixme variantsV2
+const VariantEntityV2 = loadable(() => import('views/VariantEntityV2'), loadableProps);
 const FileEntity = loadable(() => import('views/FileEntity'), loadableProps);
 const ParticipantEntity = loadable(() => import('views/ParticipantEntity'), loadableProps);
 const ProfileSettings = loadable(() => import('views/ProfileSettings'), loadableProps);
@@ -107,8 +111,16 @@ const App = () => {
                   <ProtectedRoute exact path={STATIC_ROUTES.VARIANTS} layout={PageLayout}>
                     <Variants />
                   </ProtectedRoute>
+                  {/* fixme variantsV2 */}
+                  <ProtectedRoute exact path={STATIC_ROUTES.VARIANTS_V2} layout={PageLayout}>
+                    <VariantsV2 />
+                  </ProtectedRoute>
                   <ProtectedRoute exact path={DYNAMIC_ROUTES.VARIANT_ENTITY} layout={PageLayout}>
                     <VariantEntity />
+                  </ProtectedRoute>
+                  {/* fixme variantsV2 */}
+                  <ProtectedRoute exact path={DYNAMIC_ROUTES.VARIANT_ENTITY_V2} layout={PageLayout}>
+                    <VariantEntityV2 />
                   </ProtectedRoute>
                   <ProtectedRoute exact path={DYNAMIC_ROUTES.FILE_ENTITY} layout={PageLayout}>
                     <FileEntity />

@@ -15,6 +15,8 @@ export enum STATIC_ROUTES {
   DATA_EXPLORATION_DATAFILES = '/data-exploration/datafiles',
 
   VARIANTS = '/variants',
+  //fixme variantsV2
+  VARIANTS_V2 = '/variants_v2',
 
   FILES = '/files',
   PARTICIPANTS = '/participants',
@@ -26,6 +28,8 @@ export enum STATIC_ROUTES {
 export enum DYNAMIC_ROUTES {
   DATA_EXPLORATION = '/data-exploration/:tab?',
   VARIANT_ENTITY = '/variants/:locus?',
+  //fixme variantsV2
+  VARIANT_ENTITY_V2 = '/variants_v2/:locus?',
   FILE_ENTITY = '/files/:file_id?',
   PARTICIPANT_ENTITY = '/participants/:participant_id?',
   ERROR = '/error/:status?',
