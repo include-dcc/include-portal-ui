@@ -15,7 +15,6 @@ export interface IEntityGeneConsequences {
   direction?: 'horizontal' | 'vertical';
   columns: ProColumnType[];
   genes?: IArrangerEdge<IGeneEntity>[];
-  //   consequences?: IArrangerEdge<IConsequenceEntity>[];
   dictionary: {
     hideTranscript: string;
     showTranscript: (count: number) => string;
@@ -25,7 +24,6 @@ export interface IEntityGeneConsequences {
 
 export const EntityGeneConsequences = ({
   columns,
-  //   consequences,
   dictionary,
   genes,
   header,
@@ -33,9 +31,6 @@ export const EntityGeneConsequences = ({
   loading,
   title,
 }: IEntityGeneConsequences): JSX.Element => (
-  //   console.log('genes', genes);
-
-  //   const geneConsequences = mergeConsequencesWithGenes(consequences || [], genes || []);
   <EntityExpandableTableMultiple
     dictionary={dictionary}
     direction="vertical"
