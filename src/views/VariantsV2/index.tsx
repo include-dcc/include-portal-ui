@@ -136,7 +136,6 @@ const filterGroups: {
           'internal_frequencies__total__af',
           'external_frequencies__gnomad_genomes_2_1_1__af',
           'external_frequencies__gnomad_genomes_3__af',
-          'external_frequencies__gnomad_genomes_3__af',
           'external_frequencies__gnomad_exomes_2_1_1__af',
           'external_frequencies__topmed_bravo__af',
           'external_frequencies__thousand_genomes__af',

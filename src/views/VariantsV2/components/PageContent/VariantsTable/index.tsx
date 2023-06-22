@@ -176,7 +176,7 @@ const defaultColumns: ProColumnType[] = [
       const studies = v.studies;
       const participantIds =
         studies?.hits?.edges?.map((study) => study.node.participant_ids || [])?.flat() || [];
-      if (participantIds.length) {
+      if (!participantIds.length) {
         return totalNbOfParticipants;
       }
       return (
