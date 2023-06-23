@@ -80,7 +80,12 @@ const filterGroups: {
     ],
     groups: [
       {
-        facets: ['genes__biotype', 'gene_external_reference'],
+        facets: [
+          'genes__biotype',
+          'gene_external_reference',
+          'genes__gnomad__pli',
+          'genes__gnomad__loeuf',
+        ],
       },
       {
         title: intl.get('facets.genePanels'),
@@ -90,8 +95,6 @@ const filterGroups: {
           'genes__omim__name',
           'genes__ddd__disease_name',
           'genes__cosmic__tumour_types_germline',
-          'genes__gnomad__pli',
-          'genes__gnomad__loeuf',
         ],
         tooltips: [
           'genes__hpo__hpo_term_label',
@@ -119,8 +122,8 @@ const filterGroups: {
           'genes__consequences__predictions__lrt_pred',
           'genes__consequences__predictions__polyphen2_hvar_pred',
           'genes__consequences__predictions__revel_score',
-          'genes__consequences__predictions__sift_pred',
           'genes__spliceai__ds',
+          'genes__consequences__predictions__sift_pred',
         ],
         tooltips: [
           'genes__consequences__predictions__cadd_score',
@@ -130,7 +133,7 @@ const filterGroups: {
           'genes__consequences__predictions__polyphen2_hvar_pred',
           'genes__consequences__predictions__revel_score',
           'genes__consequences__predictions__sift_pred',
-          'genes__spliceai__ds'
+          'genes__spliceai__ds',
         ],
       },
     ],
