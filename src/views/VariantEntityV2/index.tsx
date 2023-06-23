@@ -2,7 +2,6 @@ import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-// import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
   EntitySummary,
@@ -10,10 +9,6 @@ import EntityPageWrapper, {
   EntityTitle,
 } from '@ferlab/ui/core/pages/EntityPage';
 import { makeClinvarRows } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
-// import {
-//   makeClinvarRows,
-//   makeGenesOrderedRow,
-// } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
 import { Space, Tag } from 'antd';
 import { useVariantEntity } from 'graphql/variantsv2/actions';
 
@@ -22,13 +17,14 @@ import { getEntityExpandableTableMultiple } from 'utils/translation';
 
 import EntityGeneConsequences from './FerlabComponent/EntityGeneConsequence';
 import EntityPublicCohortTable from './FerlabComponent/EntityPublicCohortTable';
+import { makeGenesOrderedRow } from './FerlabComponent/Pathogenecity.utils';
 import { getConsequencesProColumn } from './utils/consequences';
 import {
   getFrequenciesItems,
   getFrequenciesTableSummaryColumns,
   getPublicCohorts,
 } from './utils/frequencies';
-import { getClinvarColumns } from './utils/pathogenicity';
+import { getClinvarColumns, getGenePhenotypeColumns } from './utils/pathogenicity';
 import { getSummaryItems } from './utils/summary';
 import SummaryHeader from './SummaryHeader';
 
@@ -147,13 +143,13 @@ export default function VariantEntity() {
           columns={getClinvarColumns()}
         />
 
-        {/* <EntityTable
+        <EntityTable
           id=""
           loading={loading}
           header={intl.get('screen.variants.pathogenicity.genePhenotype')}
           data={makeGenesOrderedRow(data?.genes)}
           columns={getGenePhenotypeColumns()}
-        /> */}
+        />
       </>
     </EntityPageWrapper>
   );
