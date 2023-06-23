@@ -4,7 +4,6 @@ import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 // import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
-  // EntityPublicCohortTable,
   EntitySummary,
   EntityTable,
   EntityTitle,
@@ -20,11 +19,12 @@ import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import { getEntityExpandableTableMultiple } from 'utils/translation';
 
 import EntityGeneConsequences from './FerlabComponent/EntityGeneConsequence';
+import EntityPublicCohortTable from './FerlabComponent/EntityPublicCohortTable';
 import { getConsequencesProColumn } from './utils/consequences';
 import {
   getFrequenciesItems,
   getFrequenciesTableSummaryColumns,
-  //   getPublicCohorts,
+  getPublicCohorts,
 } from './utils/frequencies';
 // import { getClinvarColumns, getGenePhenotypeColumns } from './utils/pathogenicity';
 import { getSummaryItems } from './utils/summary';
@@ -113,9 +113,9 @@ export default function VariantEntity() {
           summaryColumns={getFrequenciesTableSummaryColumns(data, variantStudies)}
         />
 
-        {/* <EntityPublicCohortTable
+        <EntityPublicCohortTable
           columns={getPublicCohorts()}
-          frequencies={data?.frequencies}
+          frequencies={data?.external_frequencies}
           locus={data?.locus}
           header={intl.get('screen.variants.frequencies.publicCohorts')}
           id=""
@@ -123,7 +123,7 @@ export default function VariantEntity() {
           emptyMessage={intl.get('screen.variants.frequencies.noDataAvailable')}
         />
 
-        <EntityTable
+        {/* <EntityTable
           id={SectionId.PATHOGENICITY}
           loading={loading}
           title={intl.get('screen.variants.pathogenicity.pathogenicity')}
