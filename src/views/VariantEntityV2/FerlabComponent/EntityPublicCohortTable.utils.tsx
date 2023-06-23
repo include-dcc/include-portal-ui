@@ -10,7 +10,6 @@ export const makeRowFromFrequencies = (
   if (!frequencies || !locus) return [];
 
   const topmed = frequencies.topmed_bravo || {};
-  //   const gnomadGenomes3_1_1 = frequencies.gnomad_genomes_3_1_1 || {};
   const gnomadGenomes3 = frequencies.gnomad_genomes_3 || {};
   const gnomadGenomes2_1_1 = frequencies.gnomad_genomes_2_1_1 || {};
   const gnomadExomes2_1_1 = frequencies.gnomad_exomes_2_1_1 || {};
