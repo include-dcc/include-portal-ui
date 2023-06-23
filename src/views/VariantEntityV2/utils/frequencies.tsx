@@ -2,12 +2,7 @@ import intl from 'react-intl-universal';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { ProColumnType, TProTableSummary } from '@ferlab/ui/core/components/ProTable/types';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import {
-  IVariantEntity,
-  IVariantFrequencies,
-  IVariantStudyEntity,
-  IVariantStudyFrequencies,
-} from '@ferlab/ui/core/pages//EntityPage/type';
+import { IVariantFrequencies, IVariantStudyEntity } from '@ferlab/ui/core/pages//EntityPage/type';
 import {
   formatQuotientOrElse,
   formatQuotientToExponentialOrElse,
@@ -21,6 +16,8 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
 
 export const MIN_N_OF_PARTICIPANTS_FOR_LINK = 10;
+
+import { IBoundType, IVariantEntity } from 'graphql/variantsv2/models';
 
 import styles from '../index.module.scss';
 
@@ -90,21 +87,17 @@ export const getFrequenciesItems = (): ProColumnType[] => [
   {
     title: intl.get('screen.variants.frequencies.altAlleles'),
     tooltip: intl.get('screen.variants.frequencies.altAllelesTooltip'),
-    dataIndex: 'frequencies',
-    key: 'upper_bound_kf_ac',
-    render: (frequencies: IVariantStudyFrequencies) =>
-      frequencies?.upper_bound_kf?.ac ? numberWithCommas(frequencies.upper_bound_kf.ac) : 0,
+    dataIndex: 'total',
+    key: 'ac',
+    render: (total: IBoundType) => (total?.ac ? numberWithCommas(total.ac) : 0),
     width: '14%',
   },
   {
     title: intl.get('screen.variants.frequencies.homozygotes'),
     tooltip: intl.get('screen.variants.frequencies.homozygotesTooltip'),
-    dataIndex: 'frequencies',
-    key: 'upper_bound_kf_homozygotes',
-    render: (frequencies: IVariantStudyFrequencies) =>
-      frequencies?.upper_bound_kf?.homozygotes
-        ? numberWithCommas(frequencies.upper_bound_kf.homozygotes)
-        : 0,
+    dataIndex: 'total',
+    key: 'hom',
+    render: (total: IBoundType) => (total?.hom ? numberWithCommas(total.hom) : 0),
     width: '14%',
   },
 ];
@@ -139,36 +132,38 @@ export const getFrequenciesTableSummaryColumns = (
               });
             }}
           >
-            {numberWithCommas(variant?.participant_number || 0)}
+            {numberWithCommas(variant?.internal_frequencies?.total?.pc || 0)}
           </Button>
-          {variant?.participant_total_number
-            ? ` / ${numberWithCommas(variant.participant_total_number)}`
+          {variant?.internal_frequencies?.total?.pn
+            ? ` / ${numberWithCommas(variant.internal_frequencies?.total?.pn)}`
             : ''}
         </>
       ) : (
         formatQuotientOrElse(
-          variant?.participant_number || 0,
-          variant?.participant_total_number || 0,
+          variant?.internal_frequencies?.total?.pc || 0,
+          variant?.internal_frequencies?.total?.pn || 0,
+          TABLE_EMPTY_PLACE_HOLDER,
         )
       ),
     },
     {
       index: 2,
       value: formatQuotientToExponentialOrElse(
-        variant?.participant_number || 0,
-        variant?.participant_total_number || 0,
+        variant?.internal_frequencies?.total?.pc || 0,
+        variant?.internal_frequencies?.total?.pn || 0,
+        TABLE_EMPTY_PLACE_HOLDER,
       ),
     },
     {
       index: 3,
-      value: variant?.frequencies?.internal?.upper_bound_kf.ac
-        ? numberWithCommas(variant.frequencies?.internal.upper_bound_kf.ac)
+      value: variant?.internal_frequencies?.total?.ac
+        ? numberWithCommas(variant.internal_frequencies.total.ac)
         : 0,
     },
     {
       index: 4,
-      value: variant?.frequencies?.internal?.upper_bound_kf.homozygotes
-        ? numberWithCommas(variant.frequencies.internal.upper_bound_kf.homozygotes)
+      value: variant?.internal_frequencies?.total?.hom
+        ? numberWithCommas(variant.internal_frequencies.total.hom)
         : 0,
     },
   ];

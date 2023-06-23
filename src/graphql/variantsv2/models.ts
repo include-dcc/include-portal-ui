@@ -111,19 +111,19 @@ export interface IClinVar {
   interpretations: string[];
 }
 
-interface IGeneCosmic {
+export interface IGeneCosmic {
   id: any;
   score: number;
   tumour_types_germline: string[];
 }
 
-interface IGeneDdd {
+export interface IGeneDdd {
   id: any;
   score: number;
   disease_name: string;
 }
 
-interface IGeneHpo {
+export interface IGeneHpo {
   id: any;
   score: number;
   hpo_term_id: string;
@@ -131,7 +131,7 @@ interface IGeneHpo {
   hpo_term_name: string;
 }
 
-interface IGeneOmim {
+export interface IGeneOmim {
   id: any;
   score: number;
   inheritance: string[];
@@ -140,7 +140,7 @@ interface IGeneOmim {
   omim_id: string;
 }
 
-interface IGeneOrphanet {
+export interface IGeneOrphanet {
   id: any;
   score: number;
   inheritance: string;
