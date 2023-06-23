@@ -2,11 +2,11 @@ import intl from 'react-intl-universal';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { ProColumnType, TProTableSummary } from '@ferlab/ui/core/components/ProTable/types';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import { IVariantFrequencies, IVariantStudyEntity } from '@ferlab/ui/core/pages//EntityPage/type';
 import {
   formatQuotientOrElse,
   formatQuotientToExponentialOrElse,
   numberWithCommas,
+  toExponentialNotation,
 } from '@ferlab/ui/core/utils/numberUtils';
 import { Button, Space, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
@@ -15,20 +15,9 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
 
-export const MIN_N_OF_PARTICIPANTS_FOR_LINK = 10;
-
-import { IBoundType, IVariantEntity } from 'graphql/variantsv2/models';
+import { IVariantEntity, IVariantStudyEntity } from 'graphql/variantsv2/models';
 
 import styles from '../index.module.scss';
-
-type TInternalRow = {
-  frequencies: IVariantFrequencies;
-  key: string;
-  participant_total_number: number;
-  participant_ids: null | string[];
-  participant_number: number;
-  study_id: string;
-};
 
 export const getFrequenciesItems = (): ProColumnType[] => [
   {
@@ -52,8 +41,8 @@ export const getFrequenciesItems = (): ProColumnType[] => [
       </Space>
     ),
     key: 'participants',
-    render: (row: TInternalRow) =>
-      row?.participant_number >= MIN_N_OF_PARTICIPANTS_FOR_LINK ? (
+    render: (row: IVariantStudyEntity) =>
+      row?.participant_ids?.length ? (
         <>
           <Button
             type="link"
@@ -67,50 +56,42 @@ export const getFrequenciesItems = (): ProColumnType[] => [
               });
             }}
           >
-            {numberWithCommas(row.participant_number)}
+            {numberWithCommas(row.total?.pc || 0)}
           </Button>
-          {row.participant_total_number
-            ? ` / ${numberWithCommas(row.participant_total_number)}`
-            : ''}
+          {row.total?.pc && row.total?.pn ? ` / ${numberWithCommas(row.total?.pn)}` : ''}
         </>
       ) : (
-        formatQuotientOrElse(row.participant_number, row.participant_total_number)
+        formatQuotientOrElse(row.total?.pc || NaN, row.total?.pn || NaN, TABLE_EMPTY_PLACE_HOLDER)
       ),
   },
   {
     title: intl.get('screen.variants.frequencies.frequency'),
     tooltip: intl.get('screen.variants.frequencies.frequencyTooltip'),
     key: 'frequency',
-    render: (row: TInternalRow) =>
-      formatQuotientToExponentialOrElse(row.participant_number, row.participant_total_number),
+    render: (row: IVariantStudyEntity) => toExponentialNotation(row.total.af),
   },
   {
     title: intl.get('screen.variants.frequencies.altAlleles'),
     tooltip: intl.get('screen.variants.frequencies.altAllelesTooltip'),
-    dataIndex: 'total',
-    key: 'ac',
-    render: (total: IBoundType) => (total?.ac ? numberWithCommas(total.ac) : 0),
+    key: 'alt',
+    render: (row: IVariantStudyEntity) => (row.total?.ac ? numberWithCommas(row.total.ac) : 0),
     width: '14%',
   },
   {
     title: intl.get('screen.variants.frequencies.homozygotes'),
     tooltip: intl.get('screen.variants.frequencies.homozygotesTooltip'),
-    dataIndex: 'total',
     key: 'hom',
-    render: (total: IBoundType) => (total?.hom ? numberWithCommas(total.hom) : 0),
+    render: (row: IVariantStudyEntity) => (row.total?.hom ? numberWithCommas(row.total?.hom) : 0),
     width: '14%',
   },
 ];
 
 export const getFrequenciesTableSummaryColumns = (
-  variant?: IVariantEntity,
+  v?: IVariantEntity,
   studies?: IVariantStudyEntity[],
 ): TProTableSummary[] => {
-  const hasparticipantlink: boolean =
-    studies?.some(
-      (s: IVariantStudyEntity) => s.participant_number >= MIN_N_OF_PARTICIPANTS_FOR_LINK,
-    ) || false;
-
+  const totalNbOfParticipants = v?.internal_frequencies?.total?.pc || 0;
+  const participantIds = studies?.map((study) => study.participant_ids || [])?.flat() || [];
   return [
     {
       index: 0,
@@ -118,7 +99,7 @@ export const getFrequenciesTableSummaryColumns = (
     },
     {
       index: 1,
-      value: hasparticipantlink ? (
+      value: participantIds.length ? (
         <>
           <Button
             type="link"
@@ -128,20 +109,20 @@ export const getFrequenciesTableSummaryColumns = (
                 field: 'participant_id',
                 index: INDEXES.PARTICIPANT,
                 queryBuilderId: DATA_EXPLORATION_QB_ID,
-                value: (studies || []).map((s) => s.participant_ids || []).flat(),
+                value: participantIds,
               });
             }}
           >
-            {numberWithCommas(variant?.internal_frequencies?.total?.pc || 0)}
+            {numberWithCommas(totalNbOfParticipants)}
           </Button>
-          {variant?.internal_frequencies?.total?.pn
-            ? ` / ${numberWithCommas(variant.internal_frequencies?.total?.pn)}`
+          {v?.internal_frequencies?.total?.pn
+            ? ` / ${numberWithCommas(v.internal_frequencies?.total?.pn)}`
             : ''}
         </>
       ) : (
         formatQuotientOrElse(
-          variant?.internal_frequencies?.total?.pc || 0,
-          variant?.internal_frequencies?.total?.pn || 0,
+          totalNbOfParticipants,
+          v?.internal_frequencies?.total?.pn || NaN,
           TABLE_EMPTY_PLACE_HOLDER,
         )
       ),
@@ -149,21 +130,21 @@ export const getFrequenciesTableSummaryColumns = (
     {
       index: 2,
       value: formatQuotientToExponentialOrElse(
-        variant?.internal_frequencies?.total?.pc || 0,
-        variant?.internal_frequencies?.total?.pn || 0,
+        totalNbOfParticipants,
+        v?.internal_frequencies?.total?.pn || NaN,
         TABLE_EMPTY_PLACE_HOLDER,
       ),
     },
     {
       index: 3,
-      value: variant?.internal_frequencies?.total?.ac
-        ? numberWithCommas(variant.internal_frequencies.total.ac)
+      value: v?.internal_frequencies?.total?.ac
+        ? numberWithCommas(v.internal_frequencies.total.ac)
         : 0,
     },
     {
       index: 4,
-      value: variant?.internal_frequencies?.total?.hom
-        ? numberWithCommas(variant.internal_frequencies.total.hom)
+      value: v?.internal_frequencies?.total?.hom
+        ? numberWithCommas(v.internal_frequencies.total.hom)
         : 0,
     },
   ];

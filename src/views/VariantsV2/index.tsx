@@ -117,6 +117,7 @@ const filterGroups: {
         title: 'Predictions',
         facets: [
           'genes__consequences__predictions__cadd_score',
+          'genes__consequences__predictions__cadd_phred',
           'genes__consequences__predictions__dann_score',
           'genes__consequences__predictions__fathmm_pred',
           'genes__consequences__predictions__lrt_pred',

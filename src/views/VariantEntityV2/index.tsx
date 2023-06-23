@@ -29,6 +29,8 @@ import { getSummaryItems } from './utils/summary';
 import SummaryHeader from './SummaryHeader';
 
 import styles from './index.module.scss';
+import { IVariantStudyEntity } from '../../graphql/variantsv2/models';
+import { ArrangerEdge } from '../../graphql/models';
 
 enum SectionId {
   SUMMARY = 'summary',
@@ -58,13 +60,8 @@ export default function VariantEntity() {
     values: [locus],
   });
 
-  const variantStudies = hydrateResults(data?.studies.hits.edges || []).map(
-    (e: any, index: number) => ({
-      ...e,
-      key: index,
-      participant_number: data?.internal_frequencies?.total?.pc || 0,
-      participant_total_number: data?.internal_frequencies?.total?.pn || 0,
-    }),
+  const variantStudies = (data?.studies.hits.edges || []).map(
+    (e: ArrangerEdge<IVariantStudyEntity>) => e.node,
   );
 
   return (

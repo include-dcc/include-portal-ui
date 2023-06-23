@@ -50,7 +50,7 @@ export const useVariantEntity = ({
     variables: { sqon },
   });
 
-  const data = result?.variants?.hits?.edges[0].node;
+  const data = result?.variants?.hits?.edges[0]?.node;
 
   return {
     loading,
