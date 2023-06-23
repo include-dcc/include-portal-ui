@@ -2,11 +2,11 @@ import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 // import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-// import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
+import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
   // EntityPublicCohortTable,
   EntitySummary,
-  // EntityTable,
+  EntityTable,
   EntityTitle,
 } from '@ferlab/ui/core/pages/EntityPage';
 // import {
@@ -21,11 +21,11 @@ import { getEntityExpandableTableMultiple } from 'utils/translation';
 
 import EntityGeneConsequences from './FerlabComponent/EntityGeneConsequence';
 import { getConsequencesProColumn } from './utils/consequences';
-// import {
-//   getFrequenciesItems,
-//   getFrequenciesTableSummaryColumns,
-//   getPublicCohorts,
-// } from './utils/frequencies';
+import {
+  getFrequenciesItems,
+  getFrequenciesTableSummaryColumns,
+  //   getPublicCohorts,
+} from './utils/frequencies';
 // import { getClinvarColumns, getGenePhenotypeColumns } from './utils/pathogenicity';
 import { getSummaryItems } from './utils/summary';
 import SummaryHeader from './SummaryHeader';
@@ -60,13 +60,14 @@ export default function VariantEntity() {
     values: [locus],
   });
 
-  // const variantStudies = hydrateResults(data?.studies.hits.edges || []).map(
-  //   (e: any, index: number) => ({
-  //     ...e,
-  //     key: index,
-  //     participant_total_number: data?.participant_total_number || 0,
-  //   }),
-  // );
+  const variantStudies = hydrateResults(data?.studies.hits.edges || []).map(
+    (e: any, index: number) => ({
+      ...e,
+      key: index,
+      participant_number: data?.internal_frequencies?.total?.pc || 0,
+      participant_total_number: data?.internal_frequencies?.total?.pn || 0,
+    }),
+  );
 
   return (
     <EntityPageWrapper
@@ -102,7 +103,7 @@ export default function VariantEntity() {
           genes={data?.genes.hits.edges}
         />
 
-        {/* <EntityTable
+        <EntityTable
           id={SectionId.FREQUENCIES}
           columns={getFrequenciesItems()}
           data={variantStudies}
@@ -112,7 +113,7 @@ export default function VariantEntity() {
           summaryColumns={getFrequenciesTableSummaryColumns(data, variantStudies)}
         />
 
-        <EntityPublicCohortTable
+        {/* <EntityPublicCohortTable
           columns={getPublicCohorts()}
           frequencies={data?.frequencies}
           locus={data?.locus}
