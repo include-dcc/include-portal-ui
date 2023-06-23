@@ -1,6 +1,7 @@
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
+import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 // import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
@@ -8,11 +9,12 @@ import EntityPageWrapper, {
   EntityTable,
   EntityTitle,
 } from '@ferlab/ui/core/pages/EntityPage';
+import { makeClinvarRows } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
 // import {
 //   makeClinvarRows,
 //   makeGenesOrderedRow,
 // } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
-import { Tag } from 'antd';
+import { Space, Tag } from 'antd';
 import { useVariantEntity } from 'graphql/variantsv2/actions';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
@@ -26,7 +28,7 @@ import {
   getFrequenciesTableSummaryColumns,
   getPublicCohorts,
 } from './utils/frequencies';
-// import { getClinvarColumns, getGenePhenotypeColumns } from './utils/pathogenicity';
+import { getClinvarColumns } from './utils/pathogenicity';
 import { getSummaryItems } from './utils/summary';
 import SummaryHeader from './SummaryHeader';
 
@@ -123,7 +125,7 @@ export default function VariantEntity() {
           emptyMessage={intl.get('screen.variants.frequencies.noDataAvailable')}
         />
 
-        {/* <EntityTable
+        <EntityTable
           id={SectionId.PATHOGENICITY}
           loading={loading}
           title={intl.get('screen.variants.pathogenicity.pathogenicity')}
@@ -145,7 +147,7 @@ export default function VariantEntity() {
           columns={getClinvarColumns()}
         />
 
-        <EntityTable
+        {/* <EntityTable
           id=""
           loading={loading}
           header={intl.get('screen.variants.pathogenicity.genePhenotype')}
