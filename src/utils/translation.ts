@@ -320,6 +320,7 @@ export const getFacetsDictionary = () => ({
       vep_impact: 'VEP',
       predictions: {
         cadd_score: 'CADD',
+        cadd_phred: 'CADD prhed',
         dann_score: 'DANN',
         fathmm_pred: 'FATHMM',
         lrt_pred: 'LRT',
