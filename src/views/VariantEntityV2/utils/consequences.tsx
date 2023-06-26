@@ -29,8 +29,8 @@ export const getConsequencesProColumn = (): ProColumnType[] => [
     title: intl.get('screen.variants.consequences.aaColumn'),
     tooltip: intl.get('screen.variants.consequences.aaColumnTooltip'),
     key: 'consequence',
-    dataIndex: 'hgvsc',
-    render: (hgvsc: string) => hgvsc?.split(':')[1] || TABLE_EMPTY_PLACE_HOLDER,
+    dataIndex: 'aa_change',
+    render: (aa_change: string) => aa_change || TABLE_EMPTY_PLACE_HOLDER,
     width: '10%',
   },
   {

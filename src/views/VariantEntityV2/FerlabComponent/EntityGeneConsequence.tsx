@@ -40,7 +40,7 @@ export const EntityGeneConsequences = ({
     tables={
       genes?.map((gene) => ({
         columns,
-        data: hydrateResults(gene.node.consequences.hits.edges), //hydrateResults(gene.node[0].consequences),
+        data: hydrateResults(gene.node.consequences.hits.edges),
         subTitle: (
           <EntityGeneConsequenceSubtitle
             gene={gene}
