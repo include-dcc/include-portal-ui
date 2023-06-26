@@ -1,11 +1,12 @@
 import { TSortableItems } from '@ferlab/ui/core/layout/SortableGrid/SortableItem';
-import AuthorizedStudies from './AuthorizedStudies';
 import cx from 'classnames';
-import SavedFilters from './SavedFilters';
+
+import AuthorizedStudies from './AuthorizedStudies';
 import Cavatica from './Cavatica';
+import SavedFilters from './SavedFilters';
+import SavedSets from './SavedSets';
 
 import styles from './index.module.scss';
-import SavedSets from './SavedSets';
 
 export interface DashboardCardProps {
   id: string;

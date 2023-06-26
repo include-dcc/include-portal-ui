@@ -10,8 +10,8 @@ import EntityPageWrapper, {
 import { makeClinvarRows } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
 import { Space, Tag } from 'antd';
 import { ArrangerEdge } from 'graphql/models';
-import { useVariantEntity } from '../../graphql/variants/actions';
-import { IVariantStudyEntity } from '../../graphql/variants/models';
+import { useVariantEntity } from 'graphql/variants/actions';
+import { IVariantStudyEntity } from 'graphql/variants/models';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import { getEntityExpandableTableMultiple } from 'utils/translation';

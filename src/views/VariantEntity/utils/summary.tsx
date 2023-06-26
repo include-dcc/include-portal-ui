@@ -3,7 +3,7 @@ import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { IEntitySummaryColumns } from '@ferlab/ui/core/pages/EntityPage/EntitySummary';
 import { numberWithCommas, toExponentialNotation } from '@ferlab/ui/core/utils/numberUtils';
 import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
-import { IVariantEntity } from '../../../graphql/variants/models';
+import { IVariantEntity } from 'graphql/variants/models';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 

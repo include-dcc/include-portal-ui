@@ -6,6 +6,7 @@ import keycloak from 'auth/keycloak-api/keycloak';
 import { format } from 'date-fns';
 import { saveAs } from 'file-saver';
 import { INDEXES } from 'graphql/constants';
+import { getColumnStateQuery } from 'graphql/reports/queries';
 import { startCase } from 'lodash';
 import { v4 } from 'uuid';
 
@@ -15,8 +16,6 @@ import { ArrangerColumnStateResults } from 'services/api/arranger/models';
 import { ReportApi } from 'services/api/reports';
 import { ReportConfig } from 'services/api/reports/models';
 import { globalActions } from 'store/global';
-
-import { getColumnStateQuery } from '../../graphql/reports/queries';
 
 import { TFetchTSVArgs } from './types';
 

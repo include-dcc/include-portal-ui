@@ -32,20 +32,19 @@ import {
   IVariantEntity,
   IVariantInternalFrequencies,
   IVariantStudyEntity,
-} from '../../../../../graphql/variants/models';
-import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
+} from 'graphql/variants/models';
 import { DATA_EXPLORATION_QB_ID, DEFAULT_PAGE_INDEX } from 'views/DataExploration/utils/constant';
-import { SCROLL_WRAPPER_ID, VARIANT_SAVED_SETS_FIELD } from 'views/Variants/utils/constants';
-import ConsequencesCell from '../../../components/ConsequencesCell';
+import { SCROLL_WRAPPER_ID } from 'views/Variants/utils/constants';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { SetType } from 'services/api/savedSet/models';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { truncateString } from 'utils/string';
 import { getProTableDictionary } from 'utils/translation';
+
+import ConsequencesCell from '../../../components/ConsequencesCell';
 
 import styles from './index.module.scss';
 
@@ -230,7 +229,7 @@ const defaultColumns: ProColumnType[] = [
 
 const VariantsTable = ({
   results,
-  sqon,
+  // sqon,
   setQueryConfig,
   queryConfig,
   pageIndex,
@@ -240,26 +239,28 @@ const VariantsTable = ({
   const { filters }: { filters: ISyntheticSqon } = useFilters();
   const { userInfo } = useUser();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-  const [selectedRows, setSelectedRows] = useState<IVariantEntity[]>([]);
-  const [selectedAllResults, setSelectedAllResults] = useState(false);
 
-  const getCurrentSqon = (): any =>
-    selectedAllResults || !selectedKeys.length
-      ? sqon
-      : generateQuery({
-          newFilters: [
-            generateValueFilter({
-              field: 'locus',
-              index: INDEXES.VARIANTS,
-              value: selectedRows.map((row) => row.locus),
-            }),
-          ],
-        });
+  // SJIP-507 mask save sets for deployment
+  // const [selectedRows, setSelectedRows] = useState<IVariantEntity[]>([]);
+  // const [selectedAllResults, setSelectedAllResults] = useState(false);
+
+  // const getCurrentSqon = (): any =>
+  //   selectedAllResults || !selectedKeys.length
+  //     ? sqon
+  //     : generateQuery({
+  //         newFilters: [
+  //           generateValueFilter({
+  //             field: 'locus',
+  //             index: INDEXES.VARIANTS,
+  //             value: selectedRows.map((row) => row.locus),
+  //           }),
+  //         ],
+  //       });
 
   useEffect(() => {
     if (selectedKeys.length) {
       setSelectedKeys([]);
-      setSelectedRows([]);
+      // setSelectedRows([]);
     }
     // eslint-disable-next-line
   }, [JSON.stringify(filters)]);
@@ -270,7 +271,7 @@ const VariantsTable = ({
         <ProTable<ITableVariantEntity>
           tableId="variants_table"
           columns={defaultColumns}
-          enableRowSelection
+          enableRowSelection={false}
           initialColumnState={userInfo?.config.variants?.tables?.variants?.columns}
           wrapperClassName={styles.variantTabWrapper}
           loading={results.loading}
@@ -304,22 +305,22 @@ const VariantsTable = ({
                   },
                 }),
               ),
-            onSelectAllResultsChange: setSelectedAllResults,
-            onSelectedRowsChange: (keys, selectedRows) => {
-              setSelectedKeys(keys);
-              setSelectedRows(selectedRows);
-            },
-            extra: [
-              <SetsManagementDropdown
-                idField={VARIANT_SAVED_SETS_FIELD}
-                results={results}
-                selectedKeys={selectedKeys}
-                selectedAllResults={selectedAllResults}
-                sqon={getCurrentSqon()}
-                type={SetType.VARIANT}
-                key="variants-set-management"
-              />,
-            ],
+            // onSelectAllResultsChange: setSelectedAllResults,
+            // onSelectedRowsChange: (keys, selectedRows) => {
+            //   setSelectedKeys(keys);
+            //   setSelectedRows(selectedRows);
+            // },
+            // extra: [
+            //   <SetsManagementDropdown
+            //     idField={VARIANT_SAVED_SETS_FIELD}
+            //     results={results}
+            //     selectedKeys={selectedKeys}
+            //     selectedAllResults={selectedAllResults}
+            //     sqon={getCurrentSqon()}
+            //     type={SetType.VARIANT}
+            //     key="variants-set-management"
+            //   />,
+            // ],
           }}
           bordered
           size="small"
