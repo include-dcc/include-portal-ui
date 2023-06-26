@@ -18,6 +18,7 @@ export const SEARCH_BIOSPECIMEN_QUERY = gql`
             container_id
             status
             sample_id
+            external_sample_id
             sample_type
             parent_sample_id
             parent_sample_type
