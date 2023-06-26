@@ -257,7 +257,7 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
   const getCurrentSqon = (): any =>
     selectedAllResults || !selectedKeys.length
       ? sqon
-      : generateSelectionSqon(TAB_IDS.BIOSPECIMENS, selectedKeys);
+      : generateSelectionSqon(TAB_IDS.BIOSPECIMENS, selectedKeys, '_id');
 
   useEffect(() => {
     if (selectedKeys.length) {
