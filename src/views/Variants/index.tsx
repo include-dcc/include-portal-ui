@@ -2,7 +2,6 @@ import intl from 'react-intl-universal';
 import { UserOutlined } from '@ant-design/icons';
 import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
-import { Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import GenesUploadIds from 'views/Variants/components/GeneUploadIds';
 import VariantGeneSearch from 'views/Variants/components/VariantGeneSearch';
@@ -60,12 +59,12 @@ const filterGroups: {
       {
         facets: [
           'variant_class',
-          'consequences__consequences',
+          'genes__consequences__consequence',
           'variant_external_reference',
           'chromosome',
           'start',
-          'zygosity',
-          'transmissions',
+          'studies__zygosity',
+          'studies__transmission',
         ],
       },
     ],
@@ -81,7 +80,12 @@ const filterGroups: {
     ],
     groups: [
       {
-        facets: ['consequences__biotype', 'gene_external_reference'],
+        facets: [
+          'genes__biotype',
+          'gene_external_reference',
+          'genes__gnomad__pli',
+          'genes__gnomad__loeuf',
+        ],
       },
       {
         title: intl.get('facets.genePanels'),
@@ -97,6 +101,8 @@ const filterGroups: {
           'genes__omim__name',
           'genes__ddd__disease_name',
           'genes__cosmic__tumour_types_germline',
+          'genes__gnomad__pli',
+          'genes__gnomad__loeuf',
         ],
       },
     ],
@@ -104,28 +110,31 @@ const filterGroups: {
   [FilterTypes.Pathogenicity]: {
     groups: [
       {
-        facets: ['clinvar__clin_sig', 'consequences__vep_impact'],
-        tooltips: ['consequences__vep_impact'],
+        facets: ['clinvar__clin_sig', 'genes__consequences__vep_impact'],
+        tooltips: ['genes__consequences__vep_impact'],
       },
       {
         title: 'Predictions',
         facets: [
-          'consequences__predictions__cadd_rankscore',
-          'consequences__predictions__dann_rankscore',
-          'consequences__predictions__fathmm_pred',
-          'consequences__predictions__lrt_pred',
-          'consequences__predictions__polyphen2_hvar_pred',
-          'consequences__predictions__revel_rankscore',
-          'consequences__predictions__sift_pred',
+          'genes__consequences__predictions__cadd_score',
+          'genes__consequences__predictions__cadd_phred',
+          'genes__consequences__predictions__dann_score',
+          'genes__consequences__predictions__fathmm_pred',
+          'genes__consequences__predictions__lrt_pred',
+          'genes__consequences__predictions__polyphen2_hvar_pred',
+          'genes__consequences__predictions__revel_score',
+          'genes__spliceai__ds',
+          'genes__consequences__predictions__sift_pred',
         ],
         tooltips: [
-          'consequences__predictions__cadd_rankscore',
-          'consequences__predictions__dann_rankscore',
-          'consequences__predictions__fathmm_pred',
-          'consequences__predictions__lrt_pred',
-          'consequences__predictions__polyphen2_hvar_pred',
-          'consequences__predictions__revel_rankscore',
-          'consequences__predictions__sift_pred',
+          'genes__consequences__predictions__cadd_score',
+          'genes__consequences__predictions__dann_score',
+          'genes__consequences__predictions__fathmm_pred',
+          'genes__consequences__predictions__lrt_pred',
+          'genes__consequences__predictions__polyphen2_hvar_pred',
+          'genes__consequences__predictions__revel_score',
+          'genes__consequences__predictions__sift_pred',
+          'genes__spliceai__ds',
         ],
       },
     ],
@@ -134,13 +143,12 @@ const filterGroups: {
     groups: [
       {
         facets: [
-          'frequencies__internal__upper_bound_kf__af',
-          'frequencies__gnomad_genomes_2_1__af',
-          'frequencies__gnomad_genomes_3_0__af',
-          'frequencies__gnomad_genomes_3_1_1__af',
-          'frequencies__gnomad_exomes_2_1__af',
-          'frequencies__topmed__af',
-          'frequencies__one_thousand_genomes__af',
+          'internal_frequencies__total__af',
+          'external_frequencies__gnomad_genomes_2_1_1__af',
+          'external_frequencies__gnomad_genomes_3__af',
+          'external_frequencies__gnomad_exomes_2_1_1__af',
+          'external_frequencies__topmed_bravo__af',
+          'external_frequencies__thousand_genomes__af',
         ],
       },
     ],
@@ -232,9 +240,6 @@ const Variants = () => {
     <div className={styles.variantsLayout}>
       <SidebarMenu className={styles.sideMenu} menuItems={menuItems} />
       <ScrollContent id={SCROLL_WRAPPER_ID} className={styles.scrollContent}>
-        <Typography.Title className={styles.title} level={4}>
-          {intl.get('screen.variants.title')}
-        </Typography.Title>
         <PageContent variantMapping={variantMappingResults} />
       </ScrollContent>
     </div>

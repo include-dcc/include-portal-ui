@@ -3,15 +3,13 @@ import { Link } from 'react-router-dom';
 import { ReadOutlined, UserOutlined } from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { IVariantEntity } from '@ferlab/ui/core/pages/EntityPage/type';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
+import { IVariantEntity } from '../../../graphql/variants/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { STATIC_ROUTES } from 'utils/routes';
-
-import { IVariantStudyEntity } from '../../../graphql/variants/models';
 
 import styles from './index.module.scss';
 
@@ -23,9 +21,8 @@ interface OwnProps {
 
 const SummaryHeader = ({ variant }: OwnProps) => {
   const studyCount = variant?.studies.hits.total || 0;
-  const participantCount = variant?.participant_number || 0;
-  const studyCodes =
-    variant?.studies.hits.edges.map((e) => (e.node as IVariantStudyEntity).study_code) || [];
+  const participantCount = variant?.internal_frequencies?.total?.pc || 0;
+  const studyCodes = variant?.studies.hits.edges.map((e) => e?.node?.study_code) || [];
 
   const showParticipantsLink = participantCount >= PARTICIPANT_SAFE_GUARD;
   const participantsIdsFromAllStudies = showParticipantsLink

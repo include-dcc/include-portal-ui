@@ -13,7 +13,7 @@ import {
   IGeneHpo,
   IGeneOmim,
   IGeneOrphanet,
-} from 'graphql/variantsv2/models';
+} from '../../../graphql/variants/models';
 
 const orphanetFromEdges = (
   gene: IArrangerEdge<IGeneEntity>,

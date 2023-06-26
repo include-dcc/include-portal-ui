@@ -1,37 +1,23 @@
 import intl from 'react-intl-universal';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { ProColumnType, TProTableSummary } from '@ferlab/ui/core/components/ProTable/types';
-import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import {
-  IVariantEntity,
-  IVariantFrequencies,
-  IVariantStudyEntity,
-  IVariantStudyFrequencies,
-} from '@ferlab/ui/core/pages//EntityPage/type';
+import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import {
   formatQuotientOrElse,
   formatQuotientToExponentialOrElse,
   numberWithCommas,
+  toExponentialNotation,
 } from '@ferlab/ui/core/utils/numberUtils';
 import { Button, Space, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
+import { IVariantEntity, IVariantStudyEntity } from '../../../graphql/variants/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
 
-export const MIN_N_OF_PARTICIPANTS_FOR_LINK = 10;
-
 import styles from '../index.module.scss';
-
-type TInternalRow = {
-  frequencies: IVariantFrequencies;
-  key: string;
-  participant_total_number: number;
-  participant_ids: null | string[];
-  participant_number: number;
-  study_id: string;
-};
 
 export const getFrequenciesItems = (): ProColumnType[] => [
   {
@@ -55,69 +41,64 @@ export const getFrequenciesItems = (): ProColumnType[] => [
       </Space>
     ),
     key: 'participants',
-    render: (row: TInternalRow) =>
-      row?.participant_number >= MIN_N_OF_PARTICIPANTS_FOR_LINK ? (
+    render: (row: IVariantStudyEntity) =>
+      row?.participant_ids?.length ? (
         <>
           <Button
             type="link"
-            href={STATIC_ROUTES.DATA_EXPLORATION}
-            onClick={() => {
-              updateActiveQueryField({
-                field: 'participant_id',
-                index: INDEXES.PARTICIPANT,
+            href={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
+            onClick={() =>
+              addQuery({
                 queryBuilderId: DATA_EXPLORATION_QB_ID,
-                value: row.participant_ids || [],
-              });
-            }}
+                query: generateQuery({
+                  newFilters: [
+                    generateValueFilter({
+                      field: 'participant_id',
+                      index: INDEXES.PARTICIPANT,
+                      value: row.participant_ids || [],
+                    }),
+                  ],
+                }),
+                setAsActive: true,
+              })
+            }
           >
-            {numberWithCommas(row.participant_number)}
+            {numberWithCommas(row.total?.pc || 0)}
           </Button>
-          {row.participant_total_number
-            ? ` / ${numberWithCommas(row.participant_total_number)}`
-            : ''}
+          {row.total?.pc && row.total?.pn ? ` / ${numberWithCommas(row.total?.pn)}` : ''}
         </>
       ) : (
-        formatQuotientOrElse(row.participant_number, row.participant_total_number)
+        formatQuotientOrElse(row.total?.pc || NaN, row.total?.pn || NaN, TABLE_EMPTY_PLACE_HOLDER)
       ),
   },
   {
     title: intl.get('screen.variants.frequencies.frequency'),
     tooltip: intl.get('screen.variants.frequencies.frequencyTooltip'),
     key: 'frequency',
-    render: (row: TInternalRow) =>
-      formatQuotientToExponentialOrElse(row.participant_number, row.participant_total_number),
+    render: (row: IVariantStudyEntity) => toExponentialNotation(row.total.af),
   },
   {
     title: intl.get('screen.variants.frequencies.altAlleles'),
     tooltip: intl.get('screen.variants.frequencies.altAllelesTooltip'),
-    dataIndex: 'frequencies',
-    key: 'upper_bound_kf_ac',
-    render: (frequencies: IVariantStudyFrequencies) =>
-      frequencies?.upper_bound_kf?.ac ? numberWithCommas(frequencies.upper_bound_kf.ac) : 0,
+    key: 'alt',
+    render: (row: IVariantStudyEntity) => (row.total?.ac ? numberWithCommas(row.total.ac) : 0),
     width: '14%',
   },
   {
     title: intl.get('screen.variants.frequencies.homozygotes'),
     tooltip: intl.get('screen.variants.frequencies.homozygotesTooltip'),
-    dataIndex: 'frequencies',
-    key: 'upper_bound_kf_homozygotes',
-    render: (frequencies: IVariantStudyFrequencies) =>
-      frequencies?.upper_bound_kf?.homozygotes
-        ? numberWithCommas(frequencies.upper_bound_kf.homozygotes)
-        : 0,
+    key: 'hom',
+    render: (row: IVariantStudyEntity) => (row.total?.hom ? numberWithCommas(row.total?.hom) : 0),
     width: '14%',
   },
 ];
 
 export const getFrequenciesTableSummaryColumns = (
-  variant?: IVariantEntity,
+  v?: IVariantEntity,
   studies?: IVariantStudyEntity[],
 ): TProTableSummary[] => {
-  const hasparticipantlink: boolean =
-    studies?.some(
-      (s: IVariantStudyEntity) => s.participant_number >= MIN_N_OF_PARTICIPANTS_FOR_LINK,
-    ) || false;
-
+  const totalNbOfParticipants = v?.internal_frequencies?.total?.pc || 0;
+  const participantIds = studies?.map((study) => study.participant_ids || [])?.flat() || [];
   return [
     {
       index: 0,
@@ -125,50 +106,59 @@ export const getFrequenciesTableSummaryColumns = (
     },
     {
       index: 1,
-      value: hasparticipantlink ? (
+      value: participantIds.length ? (
         <>
           <Button
             type="link"
-            href={STATIC_ROUTES.DATA_EXPLORATION}
-            onClick={() => {
-              updateActiveQueryField({
-                field: 'participant_id',
-                index: INDEXES.PARTICIPANT,
+            href={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
+            onClick={() =>
+              addQuery({
                 queryBuilderId: DATA_EXPLORATION_QB_ID,
-                value: (studies || []).map((s) => s.participant_ids || []).flat(),
-              });
-            }}
+                query: generateQuery({
+                  newFilters: [
+                    generateValueFilter({
+                      field: 'participant_id',
+                      index: INDEXES.PARTICIPANT,
+                      value: participantIds || [],
+                    }),
+                  ],
+                }),
+                setAsActive: true,
+              })
+            }
           >
-            {numberWithCommas(variant?.participant_number || 0)}
+            {numberWithCommas(totalNbOfParticipants)}
           </Button>
-          {variant?.participant_total_number
-            ? ` / ${numberWithCommas(variant.participant_total_number)}`
+          {v?.internal_frequencies?.total?.pn
+            ? ` / ${numberWithCommas(v.internal_frequencies?.total?.pn)}`
             : ''}
         </>
       ) : (
         formatQuotientOrElse(
-          variant?.participant_number || 0,
-          variant?.participant_total_number || 0,
+          totalNbOfParticipants,
+          v?.internal_frequencies?.total?.pn || NaN,
+          TABLE_EMPTY_PLACE_HOLDER,
         )
       ),
     },
     {
       index: 2,
       value: formatQuotientToExponentialOrElse(
-        variant?.participant_number || 0,
-        variant?.participant_total_number || 0,
+        totalNbOfParticipants,
+        v?.internal_frequencies?.total?.pn || NaN,
+        TABLE_EMPTY_PLACE_HOLDER,
       ),
     },
     {
       index: 3,
-      value: variant?.frequencies?.internal?.upper_bound_kf.ac
-        ? numberWithCommas(variant.frequencies?.internal.upper_bound_kf.ac)
+      value: v?.internal_frequencies?.total?.ac
+        ? numberWithCommas(v.internal_frequencies.total.ac)
         : 0,
     },
     {
       index: 4,
-      value: variant?.frequencies?.internal?.upper_bound_kf.homozygotes
-        ? numberWithCommas(variant.frequencies.internal.upper_bound_kf.homozygotes)
+      value: v?.internal_frequencies?.total?.hom
+        ? numberWithCommas(v.internal_frequencies.total.hom)
         : 0,
     },
   ];
