@@ -200,7 +200,7 @@ const PageContent = ({ variantMapping }: OwnProps) => {
             },
           });
 
-          return data?.data?.variants.hits.total ?? 0;
+          return data?.data?.variants?.hits?.total ?? 0;
         }}
       />
       <VariantsTable
