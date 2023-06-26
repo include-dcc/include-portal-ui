@@ -1,3 +1,5 @@
+// variant table
+
 import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
@@ -24,16 +26,17 @@ import cx from 'classnames';
 import { INDEXES } from 'graphql/constants';
 import {
   IClinVar,
-  IConsequenceEntity,
   IExternalFrequenciesEntity,
+  IGeneEntity,
   ITableVariantEntity,
   IVariantEntity,
+  IVariantInternalFrequencies,
   IVariantStudyEntity,
-} from 'graphql/variants/models';
+} from '../../../../../graphql/variants/models';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import { DATA_EXPLORATION_QB_ID, DEFAULT_PAGE_INDEX } from 'views/DataExploration/utils/constant';
-import ConsequencesCell from 'views/Variants/components/ConsequencesCell';
 import { SCROLL_WRAPPER_ID, VARIANT_SAVED_SETS_FIELD } from 'views/Variants/utils/constants';
+import ConsequencesCell from '../../../components/ConsequencesCell';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { SetType } from 'services/api/savedSet/models';
@@ -104,11 +107,22 @@ const defaultColumns: ProColumnType[] = [
   {
     key: 'consequences',
     title: intl.get('screen.variants.table.consequences.title'),
-    dataIndex: 'consequences',
+    dataIndex: 'genes',
     tooltip: intl.get('screen.variants.table.consequences.tooltip'),
-    render: (consequences: IArrangerResultsTree<IConsequenceEntity>) => (
-      <ConsequencesCell consequences={consequences?.hits?.edges || []} />
-    ),
+    render: (genes: IArrangerResultsTree<IGeneEntity>) => {
+      const geneWithPickedConsequence = genes?.hits?.edges?.find((e) =>
+        (e.node.consequences || [])?.hits?.edges?.some((e) => e.node?.picked),
+      )?.node;
+      if (!geneWithPickedConsequence) {
+        //must never happen or it is a bug
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+
+      const consequences = geneWithPickedConsequence.consequences?.hits?.edges;
+      return (
+        <ConsequencesCell consequences={consequences} symbol={geneWithPickedConsequence.symbol} />
+      );
+    },
   },
   {
     key: 'clinvar',
@@ -132,13 +146,13 @@ const defaultColumns: ProColumnType[] = [
       ),
   },
   {
-    key: 'gnomad_genomes_3_1_1.af',
+    key: 'gnomad_genomes_3.af',
     title: intl.get('screen.variants.table.gnomAD.title'),
     tooltip: intl.get('screen.variants.table.gnomAD.tooltip'),
-    dataIndex: 'frequencies',
-    render: (gnomad: IExternalFrequenciesEntity) =>
-      gnomad?.gnomad_genomes_3_1_1?.af
-        ? toExponentialNotation(gnomad.gnomad_genomes_3_1_1.af)
+    dataIndex: 'external_frequencies',
+    render: (externalFrequencies: IExternalFrequenciesEntity) =>
+      externalFrequencies?.gnomad_genomes_3?.af
+        ? toExponentialNotation(externalFrequencies?.gnomad_genomes_3.af)
         : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
@@ -151,17 +165,15 @@ const defaultColumns: ProColumnType[] = [
   {
     title: intl.get('screen.variants.table.participant.title'),
     tooltip: intl.get('screen.variants.table.participant.tooltip'),
-    key: 'participant_number',
-    render: (record: IVariantEntity) => {
-      const participantNumber = record.participant_number || 0;
-      if (participantNumber <= 10) {
-        return participantNumber;
+    key: 'studies_participant',
+    render: (v: IVariantEntity) => {
+      const totalNbOfParticipants = v.internal_frequencies?.total?.pc || 0;
+      const studies = v.studies;
+      const participantIds =
+        studies?.hits?.edges?.map((study) => study.node.participant_ids || [])?.flat() || [];
+      if (!participantIds.length) {
+        return totalNbOfParticipants;
       }
-
-      const participantIds = record.studies?.hits?.edges?.flatMap(
-        (study) => study.node.participant_ids,
-      );
-
       return (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
@@ -181,7 +193,7 @@ const defaultColumns: ProColumnType[] = [
             });
           }}
         >
-          {numberWithCommas(participantNumber)}
+          {numberWithCommas(totalNbOfParticipants)}
         </Link>
       );
     },
@@ -189,35 +201,30 @@ const defaultColumns: ProColumnType[] = [
   {
     title: intl.get('screen.variants.table.frequence.title'),
     tooltip: intl.get('screen.variants.table.frequence.tooltip'),
-    dataIndex: 'participant_frequency',
-    key: 'participant_frequency',
+    dataIndex: 'internal_frequencies',
+    key: 'internal_frequencies',
     sorter: {
       multiple: 1,
     },
-    render: (participantFrequency: number) =>
-      isNumber(participantFrequency)
-        ? toExponentialNotation(participantFrequency)
+    render: (internalFrequencies: IVariantInternalFrequencies) =>
+      internalFrequencies?.total?.af && isNumber(internalFrequencies.total.af)
+        ? toExponentialNotation(internalFrequencies?.total?.af)
         : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     title: intl.get('screen.variants.table.alt.title'),
     tooltip: intl.get('screen.variants.table.alt.tooltip'),
-    dataIndex: 'frequencies',
+    dataIndex: 'alternate',
     key: 'alternate',
-    render: (frequencies: IExternalFrequenciesEntity) =>
-      frequencies?.internal?.upper_bound_kf?.ac
-        ? numberWithCommas(frequencies.internal.upper_bound_kf.ac)
-        : TABLE_EMPTY_PLACE_HOLDER,
+    render: (alternate: string) => alternate || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     title: intl.get('screen.variants.table.homozygotes.title'),
     tooltip: intl.get('screen.variants.table.homozygotes.tooltip'),
-    dataIndex: 'frequencies',
+    dataIndex: 'internal_frequencies',
     key: 'homozygotes',
-    render: (frequencies: IExternalFrequenciesEntity) =>
-      frequencies?.internal?.upper_bound_kf?.homozygotes
-        ? numberWithCommas(frequencies.internal.upper_bound_kf.homozygotes)
-        : 0,
+    render: (internalFrequencies: IVariantInternalFrequencies) =>
+      internalFrequencies.total.hom ? numberWithCommas(internalFrequencies.total.hom) : 0,
   },
 ];
 

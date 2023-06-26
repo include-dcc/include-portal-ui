@@ -14,9 +14,7 @@ import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { IFileEntity } from 'graphql/files/models';
 import { IQueryResults } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
-//fixme variantsV2
 import { IVariantEntity } from 'graphql/variants/models';
-import { IVariantEntity as IVariantEntityV2 } from 'graphql/variantsv2/models';
 import { MenuClickEventHandler, MenuInfo } from 'rc-menu/lib/interface';
 import CreateEditModal from 'views/Dashboard/components/DashboardCards/SavedSets/CreateEditModal';
 
@@ -34,11 +32,7 @@ import styles from './index.module.scss';
 type Props = {
   idField: string;
   results: IQueryResults<
-    | IParticipantEntity[]
-    | IFileEntity[]
-    | IBiospecimenEntity[]
-    | IVariantEntity[]
-    | IVariantEntityV2[] //fixme variantsV2
+    IParticipantEntity[] | IFileEntity[] | IBiospecimenEntity[] | IVariantEntity[]
   >;
   sqon?: ISqonGroupFilter;
   selectedAllResults: boolean;
