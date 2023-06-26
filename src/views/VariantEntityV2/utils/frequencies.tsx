@@ -10,12 +10,11 @@ import {
 } from '@ferlab/ui/core/utils/numberUtils';
 import { Button, Space, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
+import { IVariantEntity, IVariantStudyEntity } from 'graphql/variantsv2/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
-
-import { IVariantEntity, IVariantStudyEntity } from 'graphql/variantsv2/models';
 
 import styles from '../index.module.scss';
 

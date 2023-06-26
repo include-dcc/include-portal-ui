@@ -2,7 +2,6 @@ import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
   EntitySummary,
   EntityTable,
@@ -14,6 +13,9 @@ import { useVariantEntity } from 'graphql/variantsv2/actions';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import { getEntityExpandableTableMultiple } from 'utils/translation';
+
+import { ArrangerEdge } from '../../graphql/models';
+import { IVariantStudyEntity } from '../../graphql/variantsv2/models';
 
 import EntityGeneConsequences from './FerlabComponent/EntityGeneConsequence';
 import EntityPublicCohortTable from './FerlabComponent/EntityPublicCohortTable';
@@ -29,8 +31,6 @@ import { getSummaryItems } from './utils/summary';
 import SummaryHeader from './SummaryHeader';
 
 import styles from './index.module.scss';
-import { IVariantStudyEntity } from '../../graphql/variantsv2/models';
-import { ArrangerEdge } from '../../graphql/models';
 
 enum SectionId {
   SUMMARY = 'summary',
