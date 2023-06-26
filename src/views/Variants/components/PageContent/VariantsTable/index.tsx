@@ -32,11 +32,10 @@ import {
   IVariantEntity,
   IVariantInternalFrequencies,
   IVariantStudyEntity,
-} from '../../../../../graphql/variants/models';
+} from 'graphql/variants/models';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import { DATA_EXPLORATION_QB_ID, DEFAULT_PAGE_INDEX } from 'views/DataExploration/utils/constant';
 import { SCROLL_WRAPPER_ID, VARIANT_SAVED_SETS_FIELD } from 'views/Variants/utils/constants';
-import ConsequencesCell from '../../../components/ConsequencesCell';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { SetType } from 'services/api/savedSet/models';
@@ -46,6 +45,8 @@ import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { truncateString } from 'utils/string';
 import { getProTableDictionary } from 'utils/translation';
+
+import ConsequencesCell from '../../../components/ConsequencesCell';
 
 import styles from './index.module.scss';
 

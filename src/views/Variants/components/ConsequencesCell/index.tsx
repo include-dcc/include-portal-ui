@@ -2,7 +2,7 @@ import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { IArrangerEdge } from '@ferlab/ui/core/graphql/types';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
-import { IConsequenceEntity, Impact } from '../../../../graphql/variants/models';
+import { IConsequenceEntity, Impact } from 'graphql/variants/models';
 
 import HighBadgeIcon from 'components/Icons/VariantBadgeIcons/HighBadgeIcon';
 import LowBadgeIcon from 'components/Icons/VariantBadgeIcons/LowBadgeIcon';
