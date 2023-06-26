@@ -6,6 +6,7 @@ export const SEARCH_VARIANT_QUERY = gql`
       hits(filters: $sqon, first: $first, offset: $offset, sort: $sort, searchAfter: $searchAfter) {
         total
         edges {
+          searchAfter
           node {
             alternate
             assembly_version

@@ -347,7 +347,7 @@ export const getFacetsDictionary = () => ({
     gnomad_genomes_2_1_1: { af: 'gnomAD Genome 2.1.1' },
     gnomad_genomes_3: { af: 'gnomAD Genome 3' },
     gnomad_exomes_2_1_1: { af: 'gnomAD Exome 2.1.1' },
-    topmed_bravo: { af: 'TopMed Bravo' },
+    topmed_bravo: { af: 'TopMed' },
     thousand_genomes: { af: '1000 Genomes' },
   },
   frequencies: {
@@ -376,19 +376,20 @@ export const getFacetsDictionary = () => ({
     },
   },
   tooltips: {
-    consequences: {
-      vep_impact: 'Ensembl Variant Effect Predictor',
-      predictions: {
-        cadd_rankscore: 'Combined Annotation Dependent Depletion',
-        dann_rankscore: 'Deleterious Annotation of genetic variants using Neural Networks',
-        fathmm_pred: 'Functional Analysis Through Hidden Markov Models',
-        lrt_pred: 'Likelihood Ratio Test',
-        polyphen2_hvar_pred: 'Polymorphism Phenotyping v2 HumVar',
-        revel_rankscore: 'Rare Exome Variant Ensemble Learner',
-        sift_pred: 'Sorting Intolerant From Tolerant',
-      },
-    },
     genes: {
+      consequences: {
+        vep_impact: 'Ensembl Variant Effect Predictor',
+        predictions: {
+          cadd_score: 'Combined Annotation Dependent Depletion',
+          cadd_phred: 'Combined Annotation-Dependent Depletion PHRED',
+          dann_score: 'Deleterious Annotation of genetic variants using Neural Networks',
+          fathmm_pred: 'Functional Analysis Through Hidden Markov Models',
+          lrt_pred: 'Likelihood Ratio Test',
+          polyphen2_hvar_pred: 'Polymorphism Phenotyping v2 HumVar',
+          revel_score: 'Rare Exome Variant Ensemble Learner',
+          sift_pred: 'Sorting Intolerant From Tolerant',
+        },
+      },
       hpo: {
         hpo_term_label: 'Human Phenotype Ontology',
       },

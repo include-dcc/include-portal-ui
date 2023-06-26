@@ -24,6 +24,7 @@ import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Tooltip } from 'antd';
 import cx from 'classnames';
 import { INDEXES } from 'graphql/constants';
+import { hydrateResults } from 'graphql/models';
 import {
   IClinVar,
   IExternalFrequenciesEntity,
@@ -158,8 +159,39 @@ const defaultColumns: ProColumnType[] = [
     title: 'Studies',
     dataIndex: 'studies',
     key: 'studies',
-    render: (studies: IArrangerResultsTree<IVariantStudyEntity>) =>
-      studies?.hits?.total ? numberWithCommas(studies.hits.total) : 0,
+    render: (studies: IArrangerResultsTree<IVariantStudyEntity>) => {
+      const total = studies?.hits?.total ?? 0;
+      if (total == 0) {
+        return total;
+      }
+
+      const ids = hydrateResults(studies?.hits?.edges || []).map(
+        (node: IVariantStudyEntity) => node.study_id,
+      );
+
+      return (
+        <Link
+          to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
+          onClick={() => {
+            addQuery({
+              queryBuilderId: DATA_EXPLORATION_QB_ID,
+              query: generateQuery({
+                newFilters: [
+                  generateValueFilter({
+                    field: 'study_id',
+                    value: ids,
+                    index: INDEXES.PARTICIPANT,
+                  }),
+                ],
+              }),
+              setAsActive: true,
+            });
+          }}
+        >
+          {numberWithCommas(total)}
+        </Link>
+      );
+    },
   },
   {
     title: intl.get('screen.variants.table.participant.title'),
@@ -213,9 +245,9 @@ const defaultColumns: ProColumnType[] = [
   {
     title: intl.get('screen.variants.table.alt.title'),
     tooltip: intl.get('screen.variants.table.alt.tooltip'),
-    dataIndex: 'alternate',
-    key: 'alternate',
-    render: (alternate: string) => alternate || TABLE_EMPTY_PLACE_HOLDER,
+    dataIndex: ['internal_frequencies', 'total', 'ac'],
+    key: 'ac',
+    render: (ac: string) => ac || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     title: intl.get('screen.variants.table.homozygotes.title'),
