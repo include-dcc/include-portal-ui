@@ -171,9 +171,8 @@ export interface IGeneEntity {
   omim: IArrangerResultsTree<IGeneOmim>;
   orphanet: IArrangerResultsTree<IGeneOrphanet>;
   spliceai: {
-    score: number;
     ds: number;
-    type: string;
+    type: string[];
   };
 }
 

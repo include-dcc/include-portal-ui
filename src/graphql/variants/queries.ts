@@ -435,6 +435,10 @@ export const GET_VARIANT_ENTITY = gql`
                         }
                       }
                     }
+                    spliceai {
+                      ds
+                      type
+                    }
                     symbol
                   }
                 }

@@ -913,7 +913,7 @@ const en = {
         vep_impact: 'VEP',
         predictions: {
           cadd_score: 'CADD Raw',
-          cadd_phred: 'CADD phred',
+          cadd_phred: 'CADD Phred',
           dann_score: 'DANN',
           fathmm_pred: 'FATHMM',
           lrt_pred: 'LRT',

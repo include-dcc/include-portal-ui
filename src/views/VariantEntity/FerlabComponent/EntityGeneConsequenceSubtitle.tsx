@@ -8,8 +8,6 @@ import styles from '@ferlab/ui/core/pages/EntityPage/EntityGeneConsequence/Entit
 
 export interface IGeneConsquenceTableGroup {
   gene: IArrangerEdge<IGeneEntity>;
-  omim: string;
-  symbol: string;
   ensembleGeneId: string;
 }
 
@@ -17,38 +15,63 @@ interface IEntityGeneConsequenceSubtitle extends Omit<IGeneConsquenceTableGroup,
   dictionary: {
     gene: string;
     omim: string;
+    spliceai: string;
+    gnomad_pli: string;
+    gnomad_loeuf: string;
   };
 }
 
 const EntityGeneConsequenceSubtitle = ({
   gene,
   dictionary,
-  omim,
-  symbol,
 }: IEntityGeneConsequenceSubtitle): React.ReactElement => (
   <div className={styles.wrapper}>
     <span>
       <span className={styles.bold}>{dictionary.gene}</span>
       <ExternalLink
         className={styles.link}
-        href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${symbol}`}
+        href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${gene?.node?.symbol}`}
       >
-        {symbol}
+        {gene?.node?.symbol}
       </ExternalLink>
     </span>
-    {omim && (
+    {gene?.node?.omim_gene_id && (
       <span>
         <span className={styles.separator}>|</span>
         <span className={styles.bold}>{dictionary.omim}</span>
-        <ExternalLink className={styles.link} href={`https://omim.org/entry/${omim}`}>
-          {omim}
+        <ExternalLink
+          className={styles.link}
+          href={`https://omim.org/entry/${gene.node.omim_gene_id}`}
+        >
+          {gene.node.omim_gene_id}
         </ExternalLink>
       </span>
     )}
     <span className={styles.bold}>
       <span className={styles.separator}>|</span>
-      {removeUnderscoreAndCapitalize(gene.node.biotype)}
+      {removeUnderscoreAndCapitalize(gene?.node?.biotype)}
     </span>
+    {gene?.node?.spliceai?.ds && (
+      <span>
+        <span className={styles.separator}>|</span>
+        <span className={styles.bold}>{dictionary.spliceai}</span>
+        <span>{gene.node.spliceai.ds}</span>
+      </span>
+    )}
+    {gene?.node?.gnomad?.pli && (
+      <span>
+        <span className={styles.separator}>|</span>
+        <span className={styles.bold}>{dictionary.gnomad_pli}</span>
+        <span>{gene.node.gnomad.pli}</span>
+      </span>
+    )}
+    {gene?.node?.gnomad?.loeuf && (
+      <span>
+        <span className={styles.separator}>|</span>
+        <span className={styles.bold}>{dictionary.gnomad_loeuf}</span>
+        <span>{gene.node.gnomad.loeuf}</span>
+      </span>
+    )}
   </div>
 );
 

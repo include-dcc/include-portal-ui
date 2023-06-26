@@ -40,16 +40,17 @@ export const EntityGeneConsequences = ({
     tables={
       genes?.map((gene) => ({
         columns,
-        data: hydrateResults(gene.node.consequences.hits.edges),
+        data: hydrateResults(gene?.node?.consequences?.hits?.edges || []),
         subTitle: (
           <EntityGeneConsequenceSubtitle
             gene={gene}
             dictionary={{
               gene: 'Gene',
               omim: 'Omim',
+              spliceai: 'SpliceAI',
+              gnomad_pli: 'gnomAD pLI',
+              gnomad_loeuf: 'gnomAD LOEUF',
             }}
-            omim={gene.node.omim_gene_id}
-            symbol={gene.node.symbol}
           />
         ),
       })) || []
