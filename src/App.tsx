@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -6,12 +7,14 @@ import {
   Switch,
 } from 'react-router-dom';
 import Empty from '@ferlab/ui/core/components/Empty';
+import MaintenancePage from '@ferlab/ui/core/pages/MaintenancePage';
 import { setLocale } from '@ferlab/ui/core/utils/localeUtils';
 import loadable from '@loadable/component';
 import { useKeycloak } from '@react-keycloak/web';
 import { ConfigProvider } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import frFR from 'antd/lib/locale/fr_FR';
+import { getEnvVarByKey } from 'helpers/EnvVariables';
 import AuthMiddleware from 'middleware/AuthMiddleware';
 import ProtectedRoute from 'ProtectedRoute';
 import ApolloProvider from 'provider/ApolloProvider';
@@ -53,6 +56,15 @@ const App = () => {
   const keycloakIsReady = keycloak && initialized;
 
   setLocale(lang);
+
+  if (getEnvVarByKey('MAINTENANCE_MODE') === 'true') {
+    return (
+      <MaintenancePage
+        title={intl.get('maintenance.title')}
+        subtitle={intl.get('maintenance.subtitle')}
+      />
+    );
+  }
 
   return (
     <ConfigProvider
