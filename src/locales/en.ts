@@ -617,6 +617,7 @@ const en = {
         omim: 'OMIM',
         clinVar: 'ClinVar',
         gnomadGenome311: 'gnomAD Genome (v3.1.1)',
+        gnomadGenome3: 'gnomAD Genome (v3)',
         dbSNP: 'dbSNP',
       },
       consequences: {
