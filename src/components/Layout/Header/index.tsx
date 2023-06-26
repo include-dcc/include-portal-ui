@@ -41,6 +41,9 @@ const Header = () => {
   const currentPathName = history.location.pathname;
   const tokenParsed = keycloak.tokenParsed as IncludeKeycloakTokenParsed;
 
+  // TODO: to remove after indexaction
+  const ft_variant = getFTEnvVarByKey('VARIANT');
+
   return (
     <>
       <NotificationBanner
@@ -82,13 +85,16 @@ const Header = () => {
               icon={<FileSearchOutlined />}
               title={intl.get('layout.main.menu.explore')}
             />
-            <HeaderLink
-              key="variant-data"
-              currentPathName={currentPathName}
-              to={[STATIC_ROUTES.VARIANTS]}
-              icon={<LineStyleIcon />}
-              title={intl.get('layout.main.menu.variants')}
-            />
+
+            {ft_variant === 'true' && (
+              <HeaderLink
+                key="variant-data"
+                currentPathName={currentPathName}
+                to={[STATIC_ROUTES.VARIANTS]}
+                icon={<LineStyleIcon />}
+                title={intl.get('layout.main.menu.variants')}
+              />
+            )}
           </nav>
         }
         extra={[
