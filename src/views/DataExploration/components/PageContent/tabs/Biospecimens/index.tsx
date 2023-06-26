@@ -155,6 +155,13 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     ),
   },
   {
+    key: 'external_sample_id',
+    title: 'External Sample ID',
+    dataIndex: 'external_sample_id',
+    defaultHidden: true,
+    render: (external_sample_id: string) => external_sample_id || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
     key: 'volume_ul',
     title: 'Volume',
     dataIndex: 'volume_ul',
