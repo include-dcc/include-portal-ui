@@ -2,7 +2,6 @@ import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
   EntitySummary,
   EntityTable,
@@ -10,7 +9,9 @@ import EntityPageWrapper, {
 } from '@ferlab/ui/core/pages/EntityPage';
 import { makeClinvarRows } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
 import { Space, Tag } from 'antd';
+import { ArrangerEdge } from 'graphql/models';
 import { useVariantEntity } from 'graphql/variantsv2/actions';
+import { IVariantStudyEntity } from 'graphql/variantsv2/models';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import { getEntityExpandableTableMultiple } from 'utils/translation';
@@ -29,8 +30,6 @@ import { getSummaryItems } from './utils/summary';
 import SummaryHeader from './SummaryHeader';
 
 import styles from './index.module.scss';
-import { IVariantStudyEntity } from '../../graphql/variantsv2/models';
-import { ArrangerEdge } from '../../graphql/models';
 
 enum SectionId {
   SUMMARY = 'summary',

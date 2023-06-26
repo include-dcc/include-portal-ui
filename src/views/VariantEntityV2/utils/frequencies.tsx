@@ -1,7 +1,8 @@
 import intl from 'react-intl-universal';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { ProColumnType, TProTableSummary } from '@ferlab/ui/core/components/ProTable/types';
-import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import {
   formatQuotientOrElse,
   formatQuotientToExponentialOrElse,
@@ -10,12 +11,11 @@ import {
 } from '@ferlab/ui/core/utils/numberUtils';
 import { Button, Space, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
+import { IVariantEntity, IVariantStudyEntity } from 'graphql/variantsv2/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
-
-import { IVariantEntity, IVariantStudyEntity } from 'graphql/variantsv2/models';
 
 import styles from '../index.module.scss';
 
@@ -46,15 +46,22 @@ export const getFrequenciesItems = (): ProColumnType[] => [
         <>
           <Button
             type="link"
-            href={STATIC_ROUTES.DATA_EXPLORATION}
-            onClick={() => {
-              updateActiveQueryField({
-                field: 'participant_id',
-                index: INDEXES.PARTICIPANT,
+            href={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
+            onClick={() =>
+              addQuery({
                 queryBuilderId: DATA_EXPLORATION_QB_ID,
-                value: row.participant_ids || [],
-              });
-            }}
+                query: generateQuery({
+                  newFilters: [
+                    generateValueFilter({
+                      field: 'participant_id',
+                      index: INDEXES.PARTICIPANT,
+                      value: row.participant_ids || [],
+                    }),
+                  ],
+                }),
+                setAsActive: true,
+              })
+            }
           >
             {numberWithCommas(row.total?.pc || 0)}
           </Button>
@@ -103,15 +110,22 @@ export const getFrequenciesTableSummaryColumns = (
         <>
           <Button
             type="link"
-            href={STATIC_ROUTES.DATA_EXPLORATION}
-            onClick={() => {
-              updateActiveQueryField({
-                field: 'participant_id',
-                index: INDEXES.PARTICIPANT,
+            href={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
+            onClick={() =>
+              addQuery({
                 queryBuilderId: DATA_EXPLORATION_QB_ID,
-                value: participantIds,
-              });
-            }}
+                query: generateQuery({
+                  newFilters: [
+                    generateValueFilter({
+                      field: 'participant_id',
+                      index: INDEXES.PARTICIPANT,
+                      value: participantIds || [],
+                    }),
+                  ],
+                }),
+                setAsActive: true,
+              })
+            }
           >
             {numberWithCommas(totalNbOfParticipants)}
           </Button>

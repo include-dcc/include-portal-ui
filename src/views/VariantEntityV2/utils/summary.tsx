@@ -104,7 +104,7 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
         title: 'Frequencies',
         data: [
           {
-            label: intl.get('screen.variants.summary.gnomadGenome311'),
+            label: intl.get('screen.variants.summary.gnomadGenome3'),
             value:
               toExponentialNotation(variant?.external_frequencies?.gnomad_genomes_3?.af) ||
               TABLE_EMPTY_PLACE_HOLDER,
