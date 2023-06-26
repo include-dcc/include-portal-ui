@@ -576,7 +576,7 @@ const en = {
       title: 'Variants Exploration',
       table: {
         consequences: {
-          title: 'Consequences',
+          title: 'Most Deleterious Consequence',
           tooltip: 'Functional consequences of genetic variations annotated using VEP',
         },
         clinvar: 'ClinVar',
