@@ -47,7 +47,6 @@ export const getFrequenciesItems = (): ProColumnType[] => [
           <Button
             type="link"
             href={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
-            // 1-103754767-C-T
             onClick={() =>
               addQuery({
                 queryBuilderId: DATA_EXPLORATION_QB_ID,
