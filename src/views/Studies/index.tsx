@@ -20,6 +20,8 @@ import { getProTableDictionary } from 'utils/translation';
 
 import StudyPopoverRedirect from '../DataExploration/components/StudyPopoverRedirect';
 
+import { DEFAULT_PAGE_SIZE } from './utils/constants';
+
 import styles from './index.module.scss';
 
 const { Title } = Typography;
@@ -187,6 +189,7 @@ const columns: ProColumnType<any>[] = [
 
 const Studies = () => {
   const { loading, data, total } = useStudies({
+    first: DEFAULT_PAGE_SIZE,
     sort: [
       {
         field: 'study_code',
