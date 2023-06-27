@@ -202,7 +202,7 @@ const AnalyseModal = () => {
 };
 
 const aggregateFilesToStudy = (filesToCopy: IFileEntity[]) =>
-  Object.entries(groupBy(filesToCopy, 'study.study_id')).map((study) => ({
+  Object.entries(groupBy(filesToCopy, 'study.study_code')).map((study) => ({
     title: study[1][0].study.study_name,
     nbFiles: study[1].length,
   }));

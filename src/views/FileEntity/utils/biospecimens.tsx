@@ -19,10 +19,10 @@ export const getBiospecimenColumns = (): ProColumnType[] => [
       ),
   },
   {
-    key: 'study_id',
-    dataIndex: 'study_id',
+    key: 'study_code',
+    dataIndex: ['study', 'study_code'],
     title: intl.get('entities.study.study'),
-    render: (study_id: string) => study_id || TABLE_EMPTY_PLACE_HOLDER,
+    render: (study_code: string) => study_code || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'down_syndrome_status',
