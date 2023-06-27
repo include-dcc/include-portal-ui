@@ -95,6 +95,7 @@ export const filterGroups: {
           'laboratory_procedure',
           'biospecimen_storage',
         ],
+        noDataOption: ['age_at_biospecimen_collection'],
       },
     ],
   },
