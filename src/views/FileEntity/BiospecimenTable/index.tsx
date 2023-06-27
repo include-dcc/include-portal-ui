@@ -61,7 +61,8 @@ const BiospecimenTable = ({ file, loading }: OwnProps) => {
       columns={getBiospecimenColumns()}
       initialColumnState={userInfo?.config.files?.tables?.biospecimens?.columns}
       headerConfig={{
-        enableTableExport: true,
+        // SJIP-520, disable download
+        enableTableExport: false,
         enableColumnSort: true,
         onColumnSortChange: (newState) =>
           dispatch(

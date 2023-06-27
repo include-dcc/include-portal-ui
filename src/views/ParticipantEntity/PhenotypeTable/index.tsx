@@ -44,7 +44,8 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
       columns={getPhenotypeDefaultColumns()}
       initialColumnState={initialColumnState}
       headerConfig={{
-        enableTableExport: true,
+        // SJIP-520, disable download
+        enableTableExport: false,
         enableColumnSort: true,
         onColumnSortChange: (newState) =>
           dispatch(
