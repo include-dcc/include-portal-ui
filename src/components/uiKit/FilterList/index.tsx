@@ -20,7 +20,6 @@ type OwnProps = {
   extendedMappingResults: IExtendedMappingResults;
   filterInfo: FilterInfo;
   filterMapper?: TCustomFilterMapper;
-  noDataInputOption?: boolean;
 };
 
 const { Text } = Typography;
@@ -44,7 +43,6 @@ const FilterList = ({
   extendedMappingResults,
   filterInfo,
   filterMapper,
-  noDataInputOption,
 }: OwnProps) => {
   const [filtersOpen, setFiltersOpen] = useState<boolean | undefined>(isAllFacetOpen(filterInfo));
   if (extendedMappingResults.loading) {
@@ -88,7 +86,7 @@ const FilterList = ({
                   defaultOpen={filterInfo.defaultOpenFacets?.includes(facet) ? true : undefined}
                   filterMapper={filterMapper}
                   headerTooltip={group.tooltips?.includes(facet)}
-                  noDataInputOption={noDataInputOption}
+                  noDataInputOption={!group.noDataOption?.includes(facet)}
                 />
               ) : (
                 <div key={i + ii} className={cx(styles.customFilterWrapper, styles.filter)}>
