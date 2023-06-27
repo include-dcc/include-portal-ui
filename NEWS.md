@@ -7,6 +7,54 @@
 
 ### Technical / Other changes
 -->
+## 2023-06-27 include-portal-ui 1.7.0
+### Features:
+[SJIP-342](https://d3b.atlassian.net/browse/SJIP-342) Feature:[Data Exploration & Variant Exploration] Implemented the new SearchAfter table of results 
+[SJIP-350](https://d3b.atlassian.net/browse/SJIP-350) Feature: [Entity] Implemented Participant Entity Page
+[SJIP-351](https://d3b.atlassian.net/browse/SJIP-351) Feature: [Entity] Implemented File Entity Page
+[SJIP-372](https://d3b.atlassian.net/browse/SJIP-372) Feature: [Variant Exploration] Implemented Variant Exploration page
+[SJIP-377](https://d3b.atlassian.net/browse/SJIP-377) Feature: [Entity] Implemented Variant Entity page
+[SJIP-378](https://d3b.atlassian.net/browse/SJIP-378) Feature:[Data & Variant exploration] Updated the version of SearchAfter for pagination
+[SJIP-392](https://d3b.atlassian.net/browse/SJIP-392) Feature:[Dashboard & Variant exploration] Added Variants to Saved Sets and Saved Filters
+[SJIP-400](https://d3b.atlassian.net/browse/SJIP-400) Feature:[Data Exploration] Added a system grid to the summary view
+[SJIP-460](https://d3b.atlassian.net/browse/SJIP-460) Feature:[Data Exploration] Added the External IDs to table 
+[SJIP-448](https://d3b.atlassian.net/browse/SJIP-448) Feature:[UI]Updated the Age illustration to have years and days
+[SJIP-505](https://d3b.atlassian.net/browse/SJIP-505) Feature:[UI]Added maintenance page 
+
+### Technical/ Other changes:
+[SJIP-265](https://d3b.atlassian.net/browse/SJIP-265) Fix:[Registration]Fixed the cancel redirect in registration to redirect to the landing page
+[SJIP-299](https://d3b.atlassian.net/browse/SJIP-299) Refactor:[Upload list] Updated Duplicate IDs messaging
+[SJIP-294](https://d3b.atlassian.net/browse/SJIP-294) Fix:[Data Exploration]Fixed HPO/MONDO tree Window resize overlap 
+[SJIP-295](https://d3b.atlassian.net/browse/SJIP-295) Refactor:[Saved Set] Inactivated button state when there is no selection
+[SJIP-316](https://d3b.atlassian.net/browse/SJIP-316) Refactor: [Data Exploration] Adjusted "Study Code" to "Study" column header in Participant tab
+[SJIP-317](https://d3b.atlassian.net/browse/SJIP-317) Refactor:[Data exploration] Removed the “S” to Data Files category
+[SJIP-321](https://d3b.atlassian.net/browse/SJIP-321) Refactor:[Header] Added focus state to top menu header items
+[SJIP-322](https://d3b.atlassian.net/browse/SJIP-322) Refactor:[Dashboard] Changed the biospecimen icon
+[SJIP-324](https://d3b.atlassian.net/browse/SJIP-324) Fix:[Landing page] Fixed incorrect icons for Biospecimens et Data Files
+[SJIP-340](https://d3b.atlassian.net/browse/SJIP-340) Fix:[Community] Fixed filter by Data use that returned no results
+[SJIP-343](https://d3b.atlassian.net/browse/SJIP-343) Refactor:[Dashboard] Added missing notification when adding or deleting saved filter
+[SJIP-344](https://d3b.atlassian.net/browse/SJIP-344) Refactor: [Cavatica] Updated placeholder for new Cavatica project modal
+[SJIP-345](https://d3b.atlassian.net/browse/SJIP-345) Refactor: [Saved Set] Changed icon for adding and removing existing  saved set
+[SJIP-348](https://d3b.atlassian.net/browse/SJIP-348) Refactor:[Studies] Added dashes to empty cells
+[SJIP-352](https://d3b.atlassian.net/browse/SJIP-352) Fix: [HPO & MONDO tree] Updated the input search box to work with character "/"
+[SJIP-370](https://d3b.atlassian.net/browse/SJIP-370) Refactor: [UI] Updated to Ferlab UI kit 5.0
+[SJIP-397](https://d3b.atlassian.net/browse/SJIP-397) Refactor: [UI] Added commas to all applicable numbers over 1000
+[SJIP-402](https://d3b.atlassian.net/browse/SJIP-402) Fix: [HPO & MONDO tree] Triggered HPO/Mondo tree modal search for strings of 3 characters
+[SJIP-407](https://d3b.atlassian.net/browse/SJIP-407) Refactor: [Data Exploration] Added dashes to empty cells
+[SJIP-418](https://d3b.atlassian.net/browse/SJIP-418) Refactor:[Community Page] Removed the Upload photo
+[SJIP-420](https://d3b.atlassian.net/browse/SJIP-420) Refactor: [Studies] Sorted studies by alphabetical study code order
+[SJIP-426](https://d3b.atlassian.net/browse/SJIP-426) Refactor:[ETL] Configured the ETL to pull from KF FHIR server and INCLUDE FHIR server for their respective studies
+[SJIP-429](https://d3b.atlassian.net/browse/SJIP-429) Fix:[UI] Adjusted color for modal labels
+[SJIP-438](https://d3b.atlassian.net/browse/SJIP-438) Refactor: [ETL] Updated the logic for the Family count
+[SJIP-436](https://d3b.atlassian.net/browse/SJIP-436) Refactor: [Reports] Renamed columns in download reports
+[SJIP-446](https://d3b.atlassian.net/browse/SJIP-446) Refactor:[Data Exploration] Enlarged the ID columns to avoid the ID from wrapping
+[SJIP-465](https://d3b.atlassian.net/browse/SJIP-465) Refactor:[Data Exploration] Changed the placeholders for Search by __ and Upload facets
+[SJIP-472](https://d3b.atlassian.net/browse/SJIP-472) Refactor:[Data Exploration] Added  the title  " Data Exploration" to the page
+[SJIP-470](https://d3b.atlassian.net/browse/SJIP-470) Refactor: [Data Exploration] Set the Container ID as a default column in Biospecimens tab
+[SJIP-477](https://d3b.atlassian.net/browse/SJIP-477) Fix: [Report] Added Condition (Source Text)field in reports
+[SJIP-482](https://d3b.atlassian.net/browse/SJIP-482) Refactor:[Data Exploration] Added a dash to cells where Family Unit = Null
+[SJIP-486](https://d3b.atlassian.net/browse/SJIP-486) Refactor: [Data Exploration] Adjusted query pills for Collection ID
+
 ### 2022-10-06 include-portal-ui 1.6.1
 ### Technical/ Other changes:
 [SJIP-337](https://d3b.atlassian.net/browse/SJIP-337) Adjust the choice of operator to include "All of" under the first "Any of"
