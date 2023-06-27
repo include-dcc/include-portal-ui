@@ -210,11 +210,11 @@ export const getQueryBuilderDictionary = (
         D21: intl.get('facets.options.D21'),
         T21: intl.get('facets.options.T21'),
       },
-      zygosity: {
-        HET: intl.get('facets.options.zygosity.HET'),
-        WT: intl.get('facets.options.zygosity.WT'),
-        HOM: intl.get('facets.options.zygosity.HOM'),
-        UNK: intl.get('facets.options.zygosity.UNK'),
+      'studies.zygosity': {
+        HET: intl.get('facets.options.studies__zygosity.HET'),
+        WT: intl.get('facets.options.studies__zygosity.WT'),
+        HOM: intl.get('facets.options.studies__zygosity.HOM'),
+        UNK: intl.get('facets.options.studies__zygosity.UNK'),
       },
     },
   },
