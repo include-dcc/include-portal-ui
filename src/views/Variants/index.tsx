@@ -66,6 +66,7 @@ const filterGroups: {
           'studies__zygosity',
           'studies__transmission',
         ],
+        noDataOption: ['start'],
       },
     ],
   },
@@ -86,6 +87,8 @@ const filterGroups: {
           'genes__gnomad__pli',
           'genes__gnomad__loeuf',
         ],
+        tooltips: ['genes__gnomad__pli', 'genes__gnomad__loeuf'],
+        noDataOption: ['genes__gnomad__pli', 'genes__gnomad__loeuf'],
       },
       {
         title: intl.get('facets.genePanels'),
@@ -101,8 +104,6 @@ const filterGroups: {
           'genes__omim__name',
           'genes__ddd__disease_name',
           'genes__cosmic__tumour_types_germline',
-          'genes__gnomad__pli',
-          'genes__gnomad__loeuf',
         ],
       },
     ],
@@ -136,6 +137,14 @@ const filterGroups: {
           'genes__consequences__predictions__revel_score',
           'genes__consequences__predictions__sift_pred',
         ],
+        noDataOption: [
+          'genes__consequences__predictions__cadd_score',
+          'genes__consequences__predictions__cadd_phred',
+          'genes__consequences__predictions__dann_score',
+          'genes__consequences__predictions__revel_score',
+          'genes__spliceai__ds',
+          'genes__consequences__predictions__sift_pred',
+        ],
       },
     ],
   },
@@ -143,6 +152,14 @@ const filterGroups: {
     groups: [
       {
         facets: [
+          'internal_frequencies__total__af',
+          'external_frequencies__gnomad_genomes_2_1_1__af',
+          'external_frequencies__gnomad_genomes_3__af',
+          'external_frequencies__gnomad_exomes_2_1_1__af',
+          'external_frequencies__topmed_bravo__af',
+          'external_frequencies__thousand_genomes__af',
+        ],
+        noDataOption: [
           'internal_frequencies__total__af',
           'external_frequencies__gnomad_genomes_2_1_1__af',
           'external_frequencies__gnomad_genomes_3__af',
