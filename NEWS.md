@@ -7,6 +7,15 @@
 
 ### Technical / Other changes
 -->
+## 2020-06-27 include-portal-ui 1.7.1
+### Technical/ Other changes:
+[SJIP-500](https://d3b.atlassian.net/browse/SJIP-500) Fix:[Entity variant] Multiple minor fixes in Variant Entity page
+[SJIP-521](https://d3b.atlassian.net/browse/SJIP-521) Refactor: [Data Exploration, Variants] Disabled No Data in numerical range facets
+[SJIP-526](https://d3b.atlassian.net/browse/SJIP-526) Refactor: [Studies] Updated parameter to display more than 10 studies
+[SJIP-527](https://d3b.atlassian.net/browse/SJIP-527) Refactor: [UI] Updated to use the Study Code field instead of Study ID
+[SJIP-528](https://d3b.atlassian.net/browse/SJIP-528) Fix: [Variants] Updated the Search by Gene to the new ETL model
+[SJIP-529](https://d3b.atlassian.net/browse/SJIP-529) Fix: [Authorized Studies] Fix auth studies sqon
+
 ## 2023-06-27 include-portal-ui 1.7.0
 ### Features:
 [SJIP-342](https://d3b.atlassian.net/browse/SJIP-342) Feature:[Data Exploration & Variant Exploration] Implemented the new SearchAfter table of results 
