@@ -19,6 +19,10 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
             participant_id
             external_id
             study_id
+            study {
+              study_code
+              study_id
+            }
             study_external_id
             down_syndrome_status
             sex

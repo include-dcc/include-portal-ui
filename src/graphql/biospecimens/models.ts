@@ -1,6 +1,7 @@
 import { IFileEntity } from 'graphql/files/models';
 import { ArrangerResultsTree } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
+import { IStudyEntity } from 'graphql/studies/models';
 
 export interface IBiospecimenResultTree {
   biospecimen: ArrangerResultsTree<IBiospecimenEntity>;
@@ -23,6 +24,7 @@ export interface IBiospecimenEntity {
   age_at_biospecimen_collection: number;
   biospecimen_storage: string;
   study_id: string;
+  study: IStudyEntity;
   laboratory_procedure: string;
   collection_sample_id: string;
   collection_sample_type: string;
