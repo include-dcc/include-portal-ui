@@ -83,13 +83,15 @@ const GenesUploadIds = ({ queryBuilderId }: OwnProps) => (
           offset: 0,
           sqon: generateQuery({
             operator: BooleanOperators.or,
-            newFilters: ['symbol', 'ensembl_gene_id', 'alias'].map((field) =>
-              generateValueFilter({
-                field,
-                value: ids,
-                index: INDEXES.GENES,
-              }),
-            ),
+            newFilters: [
+              {
+                ...generateValueFilter({
+                  field: 'search_text',
+                  value: ids,
+                  index: INDEXES.GENES,
+                }),
+              },
+            ],
           }),
         },
       });
@@ -124,7 +126,7 @@ const GenesUploadIds = ({ queryBuilderId }: OwnProps) => (
 
       return updateActiveQueryField({
         queryBuilderId,
-        field: 'consequences.symbol',
+        field: 'genes.symbol',
         value: uniqueMatches.map((match) => match.mappedTo),
         index: INDEXES.VARIANTS,
         merge_strategy: MERGE_VALUES_STRATEGIES.APPEND_VALUES,
