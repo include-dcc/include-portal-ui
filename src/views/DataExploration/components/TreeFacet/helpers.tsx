@@ -1,6 +1,7 @@
-import { TreeNode } from 'views/DataExploration/utils/OntologyTree';
-import TreeNodeTitle from './TreeNodeTitle';
 import { Typography } from 'antd';
+import { TreeNode } from 'views/DataExploration/utils/OntologyTree';
+
+import TreeNodeTitle from './TreeNodeTitle';
 
 import styles from './index.module.scss';
 
@@ -51,17 +52,19 @@ export const getExpandedKeys = (targetKeys: string[]) => {
   return keys;
 };
 
+const MATCH_SPECIAL_CHARACTERS_REGEX = new RegExp('/[\\^$*+?.()|[]{}]/g');
+
 export const searchInTree = (
   searchText: string,
   treeNode: TreeNode,
   hitTreeNodes: string[] = [],
 ) => {
-  const cleanSearchText = searchText.replace(/[-/\\^$*+?.()|[\]{}]/g, '');
-  const regex = new RegExp('\\b(\\w*' + cleanSearchText + '\\w*)\\b', 'gi');
+  const cleanSearchText = searchText.replace(MATCH_SPECIAL_CHARACTERS_REGEX, '');
+  const searchRegex = new RegExp('\\b(\\w*' + cleanSearchText + '\\w*)\\b', 'gi');
   const text = treeNode.title;
   const key = treeNode.key;
-  const result = text.search(regex) >= 0;
-  const resultKey = key.search(regex) >= 0;
+  const result = text.search(searchRegex) >= 0;
+  const resultKey = key.search(searchRegex) >= 0;
   let match = cleanSearchText === '' || result || resultKey;
 
   if (treeNode.children.length > 0) {
@@ -79,14 +82,14 @@ export const searchInTree = (
     hitTreeNodes.push(treeNode.key);
 
     if (result || resultKey) {
-      const [before, hit, after] = treeNode.title.split(regex);
+      const [before, hit, after] = treeNode.title.split(searchRegex);
       if (hit) {
         treeNode.name = (
-            <Typography.Text>
-              {before}
-              <div className={styles.highlight}>{hit}</div>
-              {after}
-            </Typography.Text>
+          <Typography.Text>
+            {before}
+            <div className={styles.highlight}>{hit}</div>
+            {after}
+          </Typography.Text>
         );
       }
     }

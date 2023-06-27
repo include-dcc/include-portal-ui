@@ -8,6 +8,7 @@ import { MAIN_SCROLL_WRAPPER_ID } from 'common/constants';
 import { UserApi } from 'services/api/user';
 import { TUser } from 'services/api/user/models';
 import { scrollToTop } from 'utils/helper';
+import { numberWithCommas } from 'utils/string';
 
 import FiltersBox from './components/Filters/Box';
 import { SortItems } from './components/Filters/Sorter';
@@ -72,6 +73,7 @@ const CommunityPage = () => {
               selected: '',
               selectedPlural: '',
             },
+            numberFormat: numberWithCommas,
           }}
         ></TableHeader>
         <List

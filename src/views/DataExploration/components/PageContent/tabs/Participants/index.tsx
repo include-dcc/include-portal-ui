@@ -2,31 +2,39 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { DownloadOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import ProTable from '@ferlab/ui/core/components/ProTable';
+import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { resetSearchAfterQueryConfig, tieBreaker } from '@ferlab/ui/core/components/ProTable/utils';
 import useQueryBuilderState, {
   addQuery,
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { Button, Dropdown, Menu, Tag, Tooltip } from 'antd';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
+import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
+import { Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
-import { ArrangerResultsTree, IQueryResults } from 'graphql/models';
+import { ArrangerResultsTree } from 'graphql/models';
+import { useParticipants } from 'graphql/participants/actions';
 import {
+  FamilyType,
   IParticipantDiagnosis,
-  IParticipantEntity,
   IParticipantObservedPhenotype,
   ITableParticipantEntity,
+  Sex,
 } from 'graphql/participants/models';
 import { capitalize } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
   DATA_EXPLORATION_QB_ID,
+  DEFAULT_PAGE_INDEX,
   DEFAULT_PAGE_SIZE,
+  DEFAULT_PARTICIPANT_QUERY_SORT,
+  DEFAULT_QUERY_CONFIG,
   SCROLL_WRAPPER_ID,
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
@@ -35,12 +43,13 @@ import {
   extractPhenotypeTitleAndCode,
 } from 'views/DataExploration/utils/helper';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
+import { familyTypeText } from 'views/ParticipantEntity/utils/summary';
+import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
-import { SEX, TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
-import { ReportType } from 'services/api/reports/models';
+import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
 import { SetType } from 'services/api/savedSet/models';
-import { fetchReport, fetchTsvReport } from 'store/report/thunks';
+import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
@@ -50,9 +59,6 @@ import { getProTableDictionary } from 'utils/translation';
 import styles from './index.module.scss';
 
 interface OwnProps {
-  results: IQueryResults<IParticipantEntity[]>;
-  setQueryConfig: TQueryConfigCb;
-  queryConfig: IQueryConfig;
   sqon?: ISqonGroupFilter;
 }
 
@@ -64,18 +70,25 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
+    className: styles.participantIdCell,
+    render: (participant_id: string) => (
+      <Link to={`${STATIC_ROUTES.PARTICIPANTS}/${participant_id}`}>{participant_id}</Link>
+    ),
   },
   {
     key: 'study_id',
-    title: 'Study Code',
+    title: 'Study',
     dataIndex: 'study_id',
     sorter: {
       multiple: 1,
     },
     className: styles.studyIdCell,
-    render: (study_id: string) => (
-      <StudyPopoverRedirect studyId={study_id} text={study_id || ''}></StudyPopoverRedirect>
-    ),
+    render: (study_id: string) =>
+      study_id ? (
+        <StudyPopoverRedirect studyId={study_id} text={study_id || ''}></StudyPopoverRedirect>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'study_external_id',
@@ -113,16 +126,8 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (sex: string) => (
-      <Tag
-        color={
-          sex.toLowerCase() === SEX.FEMALE
-            ? 'magenta'
-            : sex.toLowerCase() === SEX.MALE
-            ? 'geekblue'
-            : ''
-        }
-      >
+    render: (sex: Sex) => (
+      <Tag color={sex === Sex.FEMALE ? 'magenta' : sex === Sex.MALE ? 'geekblue' : ''}>
         {capitalize(sex)}
       </Tag>
     ),
@@ -135,7 +140,7 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (race) => race || TABLE_EMPTY_PLACE_HOLDER,
+    render: (race: string) => race || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'ethnicity',
@@ -145,7 +150,17 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (ethnicity) => ethnicity || TABLE_EMPTY_PLACE_HOLDER,
+    render: (ethnicity: string) => ethnicity || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
+    key: 'external_id',
+    title: 'External Participant ID',
+    dataIndex: 'external_id',
+    defaultHidden: true,
+    sorter: {
+      multiple: 1,
+    },
+    render: (external_id: string) => external_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'family_type',
@@ -155,7 +170,10 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (family_type) => family_type || TABLE_EMPTY_PLACE_HOLDER,
+    render: (family_type: FamilyType) =>
+      family_type && familyTypeText[family_type]
+        ? familyTypeText[family_type]
+        : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'diagnosis.source_text',
@@ -257,7 +275,7 @@ const defaultColumns: ProColumnType<any>[] = [
       multiple: 1,
     },
     render: (record: ITableParticipantEntity) => {
-      const nb_biospecimens = record.nb_biospecimens || 0;
+      const nb_biospecimens = record?.nb_biospecimens || 0;
 
       return nb_biospecimens ? (
         <Link
@@ -278,7 +296,7 @@ const defaultColumns: ProColumnType<any>[] = [
             })
           }
         >
-          {nb_biospecimens}
+          {numberWithCommas(nb_biospecimens)}
         </Link>
       ) : (
         nb_biospecimens
@@ -291,8 +309,10 @@ const defaultColumns: ProColumnType<any>[] = [
     sorter: {
       multiple: 1,
     },
-    render: (record: ITableParticipantEntity) =>
-      record.nb_files ? (
+    render: (record: ITableParticipantEntity) => {
+      const nb_files = record?.nb_files || 0;
+
+      return nb_files ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
@@ -311,57 +331,77 @@ const defaultColumns: ProColumnType<any>[] = [
             })
           }
         >
-          {record.nb_files}
+          {numberWithCommas(nb_files)}
         </Link>
       ) : (
-        record.nb_files || 0
-      ),
+        nb_files
+      );
+    },
   },
 ];
 
-const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) => {
+const ParticipantsTab = ({ sqon }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
+  const [pageIndex, setPageIndex] = useState(DEFAULT_PAGE_INDEX);
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
   const [selectedAllResults, setSelectedAllResults] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (selectedKeys.length) {
-      setSelectedKeys([]);
-    }
-    // eslint-disable-next-line
-  }, [JSON.stringify(activeQuery)]);
+  const [queryConfig, setQueryConfig] = useState({
+    ...DEFAULT_QUERY_CONFIG,
+    sort: DEFAULT_PARTICIPANT_QUERY_SORT,
+    size:
+      userInfo?.config?.data_exploration?.tables?.participants?.viewPerQuery || DEFAULT_PAGE_SIZE,
+  });
+  const results = useParticipants(
+    {
+      first: queryConfig.size,
+      offset: DEFAULT_OFFSET,
+      searchAfter: queryConfig.searchAfter,
+      sqon,
+      sort: tieBreaker({
+        sort: queryConfig.sort,
+        defaultSort: DEFAULT_PARTICIPANT_QUERY_SORT,
+        field: 'participant_id',
+        order: queryConfig.operations?.previous ? SortDirection.Desc : SortDirection.Asc,
+      }),
+    },
+    queryConfig.operations,
+  );
 
   const getCurrentSqon = (): any =>
     selectedAllResults || !selectedKeys.length
       ? sqon
       : generateSelectionSqon(TAB_IDS.PARTICIPANTS, selectedKeys);
 
-  const menu = (
-    <Menu
-      onClick={(e) =>
-        dispatch(
-          fetchReport({
-            data: {
-              sqon: getCurrentSqon(),
-              name: e.key,
-            },
-          }),
-        )
-      }
-      items={[
-        {
-          key: ReportType.CLINICAL_DATA,
-          label: 'Selected participants',
-        },
-        {
-          key: ReportType.CLINICAL_DATA_FAM,
-          label: 'Selected participants & families',
-        },
-      ]}
-    />
-  );
+  useEffect(() => {
+    if (selectedKeys.length) {
+      setSelectedKeys([]);
+    }
+    resetSearchAfterQueryConfig(
+      {
+        ...DEFAULT_QUERY_CONFIG,
+        sort: DEFAULT_PARTICIPANT_QUERY_SORT,
+        size:
+          userInfo?.config?.data_exploration?.tables?.participants?.viewPerQuery ||
+          DEFAULT_PAGE_SIZE,
+      },
+      setQueryConfig,
+    );
+    setPageIndex(DEFAULT_PAGE_INDEX);
+    // eslint-disable-next-line
+  }, [JSON.stringify(activeQuery)]);
+
+  useEffect(() => {
+    if (queryConfig.firstPageFlag !== undefined || queryConfig.searchAfter === undefined) {
+      return;
+    }
+
+    setQueryConfig({
+      ...queryConfig,
+      firstPageFlag: queryConfig.searchAfter,
+    });
+  }, [queryConfig]);
 
   return (
     <ProTable<ITableParticipantEntity>
@@ -371,18 +411,19 @@ const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProp
       loading={results.loading}
       initialColumnState={userInfo?.config.data_exploration?.tables?.participants?.columns}
       enableRowSelection={true}
-      initialSelectedKey={selectedKeys}
       showSorterTooltip={false}
-      onChange={({ current, pageSize }, _, sorter) =>
+      initialSelectedKey={selectedKeys}
+      onChange={(_pagination, _filter, sorter) => {
+        setPageIndex(DEFAULT_PAGE_INDEX);
         setQueryConfig({
-          pageIndex: current!,
-          size: pageSize!,
+          pageIndex: DEFAULT_PAGE_INDEX,
+          size: queryConfig.size!,
           sort: formatQuerySortList(sorter),
-        })
-      }
+        });
+      }}
       headerConfig={{
         itemCount: {
-          pageIndex: queryConfig.pageIndex,
+          pageIndex: pageIndex,
           pageSize: queryConfig.size,
           total: results.total,
         },
@@ -413,6 +454,7 @@ const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProp
         onSelectedRowsChange: (keys) => setSelectedKeys(keys),
         extra: [
           <SetsManagementDropdown
+            idField="fhir_id"
             key="setManagementDropdown"
             results={results}
             selectedKeys={selectedKeys}
@@ -420,24 +462,35 @@ const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProp
             sqon={getCurrentSqon()}
             type={SetType.PARTICIPANT}
           />,
-          <Dropdown
-            key="actionDropdown"
-            disabled={selectedKeys.length === 0}
-            overlay={menu}
-            placement="bottomLeft"
-          >
-            <Button icon={<DownloadOutlined />}>Download clinical data</Button>
-          </Dropdown>,
+          <DownloadClinicalDataDropdown participantIds={selectedKeys} key="actionDropdown" />,
         ],
       }}
       bordered
       size="small"
       pagination={{
-        current: queryConfig.pageIndex,
-        pageSize: queryConfig.size,
-        defaultPageSize: DEFAULT_PAGE_SIZE,
-        total: results.total,
-        onChange: () => scrollToTop(SCROLL_WRAPPER_ID),
+        current: pageIndex,
+        queryConfig,
+        setQueryConfig,
+        onChange: (page: number) => {
+          scrollToTop(SCROLL_WRAPPER_ID);
+          setPageIndex(page);
+        },
+        searchAfter: results.searchAfter,
+        onViewQueryChange: (viewPerQuery: PaginationViewPerQuery) => {
+          dispatch(
+            updateUserConfig({
+              data_exploration: {
+                tables: {
+                  participants: {
+                    ...userInfo?.config.data_exploration?.tables?.participants,
+                    viewPerQuery,
+                  },
+                },
+              },
+            }),
+          );
+        },
+        defaultViewPerQuery: queryConfig.size,
       }}
       dataSource={results.data.map((i) => ({ ...i, key: i.participant_id }))}
       dictionary={getProTableDictionary()}

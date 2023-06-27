@@ -12,7 +12,7 @@ import {
 } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { useKeycloak } from '@react-keycloak/web';
-import { Button, Dropdown, Menu, PageHeader, Space, Typography } from 'antd';
+import { Button, Dropdown, PageHeader, Space, Typography } from 'antd';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
 import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
@@ -20,6 +20,7 @@ import { AlterTypes } from 'common/types';
 import NotificationBanner from 'components/featureToggle/NotificationBanner';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import IncludeIcon from 'components/Icons/IncludeIcon';
+import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import HeaderLink from 'components/Layout/Header/HeaderLink';
 import style from 'components/Layout/Header/index.module.scss';
 import UserAvatar from 'components/UserAvatar';
@@ -39,6 +40,9 @@ const Header = () => {
   const history = useHistory();
   const currentPathName = history.location.pathname;
   const tokenParsed = keycloak.tokenParsed as IncludeKeycloakTokenParsed;
+
+  // TODO: to remove after indexaction
+  const ft_variant = getFTEnvVarByKey('VARIANT');
 
   return (
     <>
@@ -81,6 +85,16 @@ const Header = () => {
               icon={<FileSearchOutlined />}
               title={intl.get('layout.main.menu.explore')}
             />
+
+            {ft_variant === 'true' && (
+              <HeaderLink
+                key="variant-data"
+                currentPathName={currentPathName}
+                to={[STATIC_ROUTES.VARIANTS]}
+                icon={<LineStyleIcon />}
+                title={intl.get('layout.main.menu.variants')}
+              />
+            )}
           </nav>
         }
         extra={[
@@ -106,48 +120,46 @@ const Header = () => {
           <Dropdown
             key="user-menu"
             trigger={['click']}
-            overlay={
-              <Menu
-                items={[
-                  {
-                    key: 'email',
-                    disabled: true,
-                    label: (
-                      <Space size={4} className={style.userMenuEmail}>
-                        <Typography.Text>Signed in with</Typography.Text>
-                        <Typography.Text strong>
-                          {tokenParsed.email || tokenParsed.identity_provider_identity}
-                        </Typography.Text>
-                      </Space>
-                    ),
-                  },
-                  {
-                    type: 'divider',
-                  },
-                  {
-                    key: 'profile_settings',
-                    label: (
-                      <Link to={STATIC_ROUTES.PROFILE_SETTINGS}>
-                        <Space>
-                          <UserOutlined />
-                          {intl.get('layout.user.menu.settings')}
-                        </Space>
-                      </Link>
-                    ),
-                  },
-                  {
-                    key: 'logout',
-                    label: (
+            menu={{
+              items: [
+                {
+                  key: 'email',
+                  disabled: true,
+                  label: (
+                    <Space size={4} className={style.userMenuEmail}>
+                      <Typography.Text>Signed in with</Typography.Text>
+                      <Typography.Text strong>
+                        {tokenParsed.email || tokenParsed.identity_provider_identity}
+                      </Typography.Text>
+                    </Space>
+                  ),
+                },
+                {
+                  type: 'divider',
+                },
+                {
+                  key: 'profile_settings',
+                  label: (
+                    <Link to={STATIC_ROUTES.PROFILE_SETTINGS}>
                       <Space>
-                        <LogoutOutlined />
-                        {intl.get('layout.user.menu.logout')}
+                        <UserOutlined />
+                        {intl.get('layout.user.menu.settings')}
                       </Space>
-                    ),
-                    onClick: () => dispatch(userActions.cleanLogout()),
-                  },
-                ]}
-              />
-            }
+                    </Link>
+                  ),
+                },
+                {
+                  key: 'logout',
+                  label: (
+                    <Space>
+                      <LogoutOutlined />
+                      {intl.get('layout.user.menu.logout')}
+                    </Space>
+                  ),
+                  onClick: () => dispatch(userActions.cleanLogout()),
+                },
+              ],
+            }}
           >
             <a className={style.userMenuTrigger} onClick={(e) => e.preventDefault()} href="">
               <UserAvatar

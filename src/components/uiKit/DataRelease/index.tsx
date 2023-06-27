@@ -1,17 +1,18 @@
-import { Spin, Row, Col } from 'antd';
-import cx from 'classnames';
+import { useEffect } from 'react';
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
+import { FileTextOutlined, ReadOutlined, UserOutlined } from '@ant-design/icons';
 import MultiLabel, {
   MultiLabelIconPositionEnum,
 } from '@ferlab/ui/core/components/labels/MultiLabel';
 import { numberFormat } from '@ferlab/ui/core/utils/numberUtils';
-import { UserOutlined, ReadOutlined, DatabaseOutlined, FileTextOutlined } from '@ant-design/icons';
-import intl from 'react-intl-universal';
-import { useGlobals } from 'store/global';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchStats } from 'store/global/thunks';
+import { Col, Row, Spin } from 'antd';
+import cx from 'classnames';
 
+import BiospecimenIcon from 'components/Icons/BiospecimenIcon';
 import styles from 'components/uiKit/DataRelease/index.module.scss';
+import { useGlobals } from 'store/global';
+import { fetchStats } from 'store/global/thunks';
 
 interface OwnProps {
   className?: string;
@@ -57,7 +58,7 @@ const DataRelease = ({ className = '' }: OwnProps) => {
           <MultiLabel
             iconPosition={MultiLabelIconPositionEnum.Top}
             label={numberFormat(stats?.samples!)}
-            Icon={<FileTextOutlined className={styles.dataReleaseIcon} />}
+            Icon={<BiospecimenIcon className={styles.dataReleaseIcon} />}
             className={styles.dataReleaseStatsLabel}
             subLabel={intl.get('components.dataRelease.biospecimens')}
           />
@@ -66,7 +67,7 @@ const DataRelease = ({ className = '' }: OwnProps) => {
           <MultiLabel
             iconPosition={MultiLabelIconPositionEnum.Top}
             label={formatStorage(stats?.fileSize!) || '0TB'}
-            Icon={<DatabaseOutlined className={styles.dataReleaseIcon} />}
+            Icon={<FileTextOutlined className={styles.dataReleaseIcon} />}
             className={styles.dataReleaseStatsLabel}
             subLabel={intl.get('components.dataRelease.datafiles')}
           />

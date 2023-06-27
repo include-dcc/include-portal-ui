@@ -1,10 +1,11 @@
+import React from 'react';
 import { DocumentNode } from 'graphql';
 import { ExtendedMappingResults } from 'graphql/models';
-import React from 'react';
 
 export interface FilterGroup {
   title?: string;
   facets: string[] | React.ReactNode[];
+  tooltips?: string[];
 }
 
 export interface FilterInfo {

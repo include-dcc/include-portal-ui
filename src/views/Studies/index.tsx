@@ -5,6 +5,7 @@ import ProTable from '@ferlab/ui/core/components/ProTable';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Space, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
@@ -12,7 +13,9 @@ import { useStudies } from 'graphql/studies/actions';
 import { IStudyEntity } from 'graphql/studies/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
+import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
+import { numberWithCommas } from 'utils/string';
 import { getProTableDictionary } from 'utils/translation';
 
 import StudyPopoverRedirect from '../DataExploration/components/StudyPopoverRedirect';
@@ -31,15 +34,18 @@ const enum DataCategory {
 }
 
 const hasDataCategory = (dataCategory: string[], category: DataCategory) =>
-  dataCategory ? dataCategory.includes(category) ? <CheckOutlined /> : undefined : undefined;
+  dataCategory?.includes(category) ? <CheckOutlined /> : TABLE_EMPTY_PLACE_HOLDER;
 
 const columns: ProColumnType<any>[] = [
   {
     key: 'study_id',
     title: 'Study Code',
-    render: (record: IStudyEntity) => (
-      <ExternalLink href={record.website}>{record.study_id}</ExternalLink>
-    ),
+    render: (record: IStudyEntity) =>
+      record.website ? (
+        <ExternalLink href={record.website}>{record.study_id}</ExternalLink>
+      ) : (
+        record.study_id
+      ),
   },
   {
     key: 'study_name',
@@ -47,8 +53,8 @@ const columns: ProColumnType<any>[] = [
     width: 500,
     render: (record: IStudyEntity) => (
       <StudyPopoverRedirect
-        studyId={record.study_id}
-        text={record.study_name}
+        studyId={record?.study_id}
+        text={record?.study_name}
       ></StudyPopoverRedirect>
     ),
   },
@@ -56,24 +62,28 @@ const columns: ProColumnType<any>[] = [
     key: 'program',
     title: 'Program',
     dataIndex: 'program',
+    render: (program: string) => program || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'external_id',
     title: 'dbGaP',
     dataIndex: 'external_id',
-    render: (external_id: string) => (
-      <ExternalLink
-        href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${external_id}`}
-      >
-        {external_id}
-      </ExternalLink>
-    ),
+    render: (external_id: string) =>
+      external_id ? (
+        <ExternalLink
+          href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${external_id}`}
+        >
+          {external_id}
+        </ExternalLink>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'participant_count',
     title: 'Participants',
     render: (record: IStudyEntity) => {
-      const participantCount = record.participant_count;
+      const participantCount = record?.participant_count || 0;
 
       return participantCount ? (
         <Link
@@ -94,10 +104,10 @@ const columns: ProColumnType<any>[] = [
             })
           }
         >
-          {participantCount}
+          {numberWithCommas(participantCount)}
         </Link>
       ) : (
-        participantCount || 0
+        participantCount
       );
     },
   },
@@ -105,12 +115,14 @@ const columns: ProColumnType<any>[] = [
     key: 'family_count',
     title: 'Families',
     dataIndex: 'family_count',
+    render: (family_count: number) =>
+      family_count ? numberWithCommas(family_count) : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'biospecimen_count',
     title: 'Biospecimens',
     render: (record: IStudyEntity) => {
-      const biospecimenCount = record.biospecimen_count;
+      const biospecimenCount = record?.biospecimen_count || 0;
 
       return biospecimenCount ? (
         <Link
@@ -131,10 +143,10 @@ const columns: ProColumnType<any>[] = [
             })
           }
         >
-          {biospecimenCount}
+          {numberWithCommas(biospecimenCount)}
         </Link>
       ) : (
-        biospecimenCount || 0
+        biospecimenCount
       );
     },
   },
@@ -177,8 +189,8 @@ const Studies = () => {
   const { loading, data, total } = useStudies({
     sort: [
       {
-        field: 'study_id',
-        order: 'desc',
+        field: 'study_code',
+        order: SortDirection.Asc,
       },
     ],
   });
@@ -198,7 +210,6 @@ const Studies = () => {
             columns={columns}
             dataSource={data}
             loading={loading}
-            pagination={false}
             headerConfig={{
               itemCount: {
                 pageIndex: 1,

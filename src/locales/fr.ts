@@ -81,6 +81,10 @@ const fr = {
         messageUpdate: 'Unable to update filter',
         messageDelete: 'Unable to delete filter',
       },
+      success: {
+        messageSaved: 'Filtre sauvegardé',
+        messageDeleted: 'Filtre supprimé',
+      },
     },
     savedSet: {
       error: {
@@ -529,10 +533,11 @@ const fr = {
       },
     },
     dataExploration: {
+      title: 'Data Exploration',
       sidemenu: {
         participant: 'Participant',
         biospecimen: 'Biospecimen',
-        datafiles: 'Data Files',
+        datafiles: 'Data File',
       },
       hpoTree: {
         modal: {

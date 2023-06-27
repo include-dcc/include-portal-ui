@@ -1,18 +1,21 @@
 import { useState } from 'react';
-import { Form, Modal } from 'antd';
-import UserSetsForm from './UserSetForm';
-import { Store } from 'antd/lib/form/interface';
-import { SetActionType } from './index';
-import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import { IUserSetOutput, SetType } from 'services/api/savedSet/models';
-import { updateSavedSet } from 'store/savedSet/thunks';
-import { useDispatch } from 'react-redux';
-import { PROJECT_ID, useSavedSet } from 'store/savedSet';
 import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
+import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
+import { Form, Modal } from 'antd';
+import { Store } from 'antd/lib/form/interface';
+
+import { IUserSetOutput, SetType } from 'services/api/savedSet/models';
+import { PROJECT_ID, useSavedSet } from 'store/savedSet';
+import { updateSavedSet } from 'store/savedSet/thunks';
+
+import { SetActionType, singularizeSetTypeIfNeeded } from './index';
+import UserSetsForm from './UserSetForm';
 
 const FORM_NAME = 'add-remove-set';
 
 type OwnProps = {
+  idField: string;
   hideModalCb: Function;
   userSets: IUserSetOutput[];
   sqon?: ISqonGroupFilter;
@@ -34,15 +37,26 @@ const finishButtonText = (type: string) => {
 const formTitle = (setActionType: string, type: SetType) => {
   switch (setActionType) {
     case SetActionType.ADD_IDS:
-      return intl.get('components.savedSets.modal.add.title', { type });
+      return intl.get('components.savedSets.modal.add.title', {
+        type: singularizeSetTypeIfNeeded(type).toLocaleLowerCase(),
+      });
     case SetActionType.REMOVE_IDS:
-      return intl.get('components.savedSets.modal.remove.title', { type });
+      return intl.get('components.savedSets.modal.remove.title', {
+        type: singularizeSetTypeIfNeeded(type).toLocaleLowerCase(),
+      });
     default:
       break;
   }
 };
 
-const AddRemoveSaveSetModal = ({ hideModalCb, userSets, setActionType, sqon, type }: OwnProps) => {
+const AddRemoveSaveSetModal = ({
+  idField,
+  hideModalCb,
+  userSets,
+  setActionType,
+  sqon,
+  type,
+}: OwnProps) => {
   const [form] = Form.useForm();
   const [isVisible, setIsVisible] = useState(true);
   const [hasSetSelection, setHasSetSelection] = useState(false);
@@ -67,7 +81,7 @@ const AddRemoveSaveSetModal = ({ hideModalCb, userSets, setActionType, sqon, typ
           updateSavedSet({
             id: setId,
             subAction: setActionType,
-            idField: 'fhir_id',
+            idField,
             projectId: PROJECT_ID,
             sqon: sqon!,
             onCompleteCb: onSuccessCreateCb,
@@ -89,7 +103,7 @@ const AddRemoveSaveSetModal = ({ hideModalCb, userSets, setActionType, sqon, typ
   return (
     <Modal
       title={formTitle(setActionType, type)}
-      visible={isVisible}
+      open={isVisible}
       onCancel={onCancel}
       okText={finishButtonText(setActionType)}
       onOk={() => form.submit()}

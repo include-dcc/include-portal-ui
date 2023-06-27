@@ -1,20 +1,21 @@
 import { gql } from '@apollo/client';
 import { dotToUnderscore, underscoreToDot } from '@ferlab/ui/core/data/arranger/formatting';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
-import { ExtendedMapping, ExtendedMappingResults } from './models';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
+import { ISort } from '@ferlab/ui/core/graphql/types';
 
-export type TSortDirection = 'asc' | 'desc';
+import { ExtendedMapping, ExtendedMappingResults } from './models';
 
 export type Sort = {
   field: string;
-  order: TSortDirection;
+  order: SortDirection;
 };
 
 export type QueryVariable = {
   sqon?: ISyntheticSqon;
   first?: number;
   offset?: number;
-  sort?: Sort[];
+  sort?: ISort[];
   pageSize?: number;
 };
 
@@ -54,14 +55,15 @@ const generateAggregations = (extendedMappingFields: ExtendedMapping[]) => {
   const aggs = extendedMappingFields.map((f) => {
     if (['keyword', 'id'].includes(f.type)) {
       return (
-        dotToUnderscore(f.field) + ' {\n     buckets {\n      key\n        doc_count\n    }\n  }'
+        dotToUnderscore(f.field) +
+        ' {\n     buckets {\n      key\n        key_as_string\n        doc_count\n    }\n  }'
       );
     } else if (['long', 'float', 'integer', 'date'].includes(f.type)) {
       return dotToUnderscore(f.field) + '{\n    stats {\n  max\n   min\n    }\n    }';
     } else if (['boolean'].includes(f.type)) {
       return (
         dotToUnderscore(f.field) +
-        ' {\n      buckets {\n       key\n       doc_count\n     }\n    }'
+        ' {\n      buckets {\n       key\n        key_as_string\n       doc_count\n     }\n    }'
       );
     } else {
       return '';

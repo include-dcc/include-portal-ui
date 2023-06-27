@@ -6,11 +6,16 @@ export interface IBiospecimenResultTree {
   biospecimen: ArrangerResultsTree<IBiospecimenEntity>;
 }
 
+export enum Status {
+  AVAILABLE = 'available',
+  UNAVAILABLE = 'unavailable',
+}
+
 export interface IBiospecimenEntity {
   key?: string;
   id: string;
   fhir_id: string;
-  status: string;
+  status: Status;
   score: number;
   volume_ul: number;
   volume_unit: string;

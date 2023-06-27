@@ -3,13 +3,15 @@ import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/
 import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { INDEXES } from 'graphql/constants';
-import { hydrateResults } from 'graphql/models';
-import { ArrangerApi } from 'services/api/arranger';
-import EntityUploadIds from './EntityUploadIds';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { CHECK_BIOSPECIMEN_MATCH } from 'graphql/biospecimens/queries';
+import { INDEXES } from 'graphql/constants';
+import { hydrateResults } from 'graphql/models';
 import { uniqBy } from 'lodash';
+
+import { ArrangerApi } from 'services/api/arranger';
+
+import EntityUploadIds from './EntityUploadIds';
 
 interface OwnProps {
   queryBuilderId: string;
@@ -20,7 +22,7 @@ const BiospecimenUploadIds = ({ queryBuilderId }: OwnProps) => (
     entityId="biospecimen"
     entityIdTrans="Sample"
     entityIdentifiers="Sample ID"
-    placeHolder="e.g. HTP0001B2_Whole blood, BS_011DYZ2J_DNA, 238981007"
+    placeHolder="e.g. bs-022KAEZW"
     fetchMatch={async (ids) => {
       const response = await ArrangerApi.graphqlRequest({
         query: CHECK_BIOSPECIMEN_MATCH.loc?.source.body,
@@ -44,7 +46,7 @@ const BiospecimenUploadIds = ({ queryBuilderId }: OwnProps) => (
         response.data?.data?.biospecimen?.hits?.edges || [],
       );
 
-      return uniqBy(biospecimens, "sample_id").map((biospecimen) => ({
+      return uniqBy(biospecimens, 'sample_id').map((biospecimen) => ({
         key: biospecimen.fhir_id,
         submittedId: ids.find((id) => [biospecimen.sample_id].includes(id))!,
         mappedTo: biospecimen.sample_id,
@@ -59,6 +61,7 @@ const BiospecimenUploadIds = ({ queryBuilderId }: OwnProps) => (
         index: INDEXES.BIOSPECIMEN,
         overrideValuesName: intl.get('components.uploadIds.modal.pillTitle'),
         merge_strategy: MERGE_VALUES_STRATEGIES.OVERRIDE_VALUES,
+        isUploadedList: true,
       })
     }
   />

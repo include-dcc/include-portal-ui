@@ -1,11 +1,11 @@
 .biospecimenTabWrapper {
-    display: flex;
+  display: flex;
 
-    :global(.ant-pagination) {
-        margin-bottom: 0;
-    }
+  :global(.ant-pagination) {
+    margin-bottom: 0;
+  }
 
-    .ncitTissueCell {
-        min-width: 300px;
-    }
+  .sampleIdCell {
+    white-space: nowrap;
+  }
 }

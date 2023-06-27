@@ -1,13 +1,15 @@
+import { useEffect } from 'react';
 import FilterSelector, {
   FilterSelectorProps,
 } from '@ferlab/ui/core/components/filters/FilterSelector';
 import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
+import { IExtendedMappingResults } from '@ferlab/ui/core/graphql/types';
 import { Spin } from 'antd';
-import { useEffect } from 'react';
-import useGetAggregations from 'hooks/graphql/useGetAggregations';
-import { ExtendedMappingResults } from 'graphql/models';
 import { AGGREGATION_QUERY } from 'graphql/queries';
+
+import useGetAggregations from 'hooks/graphql/useGetAggregations';
+
 import { TCustomFilterMapper } from '.';
 
 type OwnProps = FilterSelectorProps & {
@@ -15,7 +17,7 @@ type OwnProps = FilterSelectorProps & {
   queryBuilderId: string;
   filterKey: string;
   onDataLoaded: Function;
-  extendedMappingResults: ExtendedMappingResults;
+  extendedMappingResults: IExtendedMappingResults;
   filterMapper?: TCustomFilterMapper;
 };
 

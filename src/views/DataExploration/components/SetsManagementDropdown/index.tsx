@@ -1,32 +1,39 @@
-import { Button, Dropdown, Menu, Tooltip } from 'antd';
+import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
 import {
   DownOutlined,
   ExperimentOutlined,
   FileTextOutlined,
   InfoCircleOutlined,
   PlusOutlined,
-  UsergroupAddOutlined,
-  UsergroupDeleteOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { MenuClickEventHandler } from 'rc-menu/lib/interface';
+import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
+import { Button, Dropdown, Tooltip } from 'antd';
+import { IBiospecimenEntity } from 'graphql/biospecimens/models';
+import { IFileEntity } from 'graphql/files/models';
 import { IQueryResults } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
-import { useEffect, useState } from 'react';
-import AddRemoveSaveSetModal from './AddRemoveSaveSetModal';
-import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import { useSavedSet } from 'store/savedSet';
-import { IFileEntity } from 'graphql/files/models';
-import { IBiospecimenEntity } from 'graphql/biospecimens/models';
-import { INDEXES } from 'graphql/constants';
+import { IVariantEntity } from 'graphql/variants/models';
+import { MenuClickEventHandler, MenuInfo } from 'rc-menu/lib/interface';
 import CreateEditModal from 'views/Dashboard/components/DashboardCards/SavedSets/CreateEditModal';
+
+import LineStyleIcon from 'components/Icons/LineStyleIcon';
+import ListAddIcon from 'components/Icons/ListAddIcon';
+import ListRemoveIcon from 'components/Icons/ListRemoveIcon';
 import { SetType } from 'services/api/savedSet/models';
+import { useSavedSet } from 'store/savedSet';
 import { numberWithCommas } from 'utils/string';
+
+import AddRemoveSaveSetModal from './AddRemoveSaveSetModal';
 
 import styles from './index.module.scss';
 
 type Props = {
-  results: IQueryResults<IParticipantEntity[] | IFileEntity[] | IBiospecimenEntity[]>;
+  idField: string;
+  results: IQueryResults<
+    IParticipantEntity[] | IFileEntity[] | IBiospecimenEntity[] | IVariantEntity[]
+  >;
   sqon?: ISqonGroupFilter;
   selectedAllResults: boolean;
   selectedKeys?: string[];
@@ -74,76 +81,21 @@ const modals = {
 const ROW_SELECTION_LIMIT = 10000;
 const exceedLimit = (participantCount: number) => participantCount > ROW_SELECTION_LIMIT;
 
-const itemIcon = (type: string) => {
+export const itemIcon = (type: string) => {
   switch (type) {
-    case INDEXES.BIOSPECIMEN:
+    case SetType.BIOSPECIMEN:
       return <ExperimentOutlined width="14px" height="14px" />;
-    case INDEXES.FILE:
+    case SetType.FILE:
       return <FileTextOutlined width="14px" height="14px" />;
+    case SetType.VARIANT:
+      return <LineStyleIcon width="14px" height="14px" />;
     default:
       return <UserOutlined width="14px" height="14px" />;
   }
 };
 
-const menu = (
-  participantCount: number,
-  onClick: MenuClickEventHandler,
-  isEditDisabled: boolean,
-  type: string,
-) => (
-  <Menu
-    className={styles.saveSetOptionMenu}
-    onClick={onClick}
-    items={[
-      {
-        key: 'participant-count',
-        className: `${
-          exceedLimit(participantCount)
-            ? styles.saveSetOptionMenuInfoOver
-            : styles.saveSetOptionMenuInfo
-        }`,
-        disabled: true,
-        icon: itemIcon(type),
-        label: (
-          <>
-            <span>
-              {participantCount} {type} selected
-            </span>
-            <Tooltip
-              arrowPointAtCenter
-              placement="topRight"
-              title={`Max. ${numberWithCommas(
-                ROW_SELECTION_LIMIT,
-              )} items at a time. The first 10,000 will be processed.`}
-            >
-              <InfoCircleOutlined className={styles.infoCircle} />
-            </Tooltip>
-          </>
-        ),
-      },
-      {
-        type: 'divider',
-      },
-      {
-        key: 'create',
-        icon: <PlusOutlined />,
-        label: 'Save as new set',
-      },
-      {
-        key: 'add_ids',
-        icon: <UsergroupAddOutlined />,
-        label: 'Add to existing set',
-        disabled: isEditDisabled,
-      },
-      {
-        key: 'remove_ids',
-        icon: <UsergroupDeleteOutlined />,
-        label: 'Remove from existing set',
-        disabled: isEditDisabled,
-      },
-    ]}
-  />
-);
+export const singularizeSetTypeIfNeeded = (type: string) =>
+  type === SetType.VARIANT ? type.slice(0, -1) : type;
 
 const getSetCount = (selected: string[], total: number, allSelected: boolean) => {
   if (allSelected) {
@@ -154,6 +106,7 @@ const getSetCount = (selected: string[], total: number, allSelected: boolean) =>
 };
 
 const SetsManagementDropdown = ({
+  idField,
   results,
   sqon,
   type,
@@ -170,7 +123,7 @@ const SetsManagementDropdown = ({
     }
   }, [fetchingError, isLoading, savedSets, sqon]);
 
-  const onClick: MenuClickEventHandler = (e) => {
+  const onClick: MenuClickEventHandler = (e: MenuInfo) => {
     const key = e.key as string;
     // @ts-ignore
     const m = modals[key];
@@ -181,7 +134,10 @@ const SetsManagementDropdown = ({
     <div id={`${type}-set-dropdown-container`}>
       {modal.showModalSave && sqon && (
         <CreateEditModal
-          title={`Save ${type.charAt(0).toUpperCase() + type.slice(1)} Set`}
+          title={intl.get('screen.dataExploration.setsManagementDropdown.newTitle', {
+            filter: singularizeSetTypeIfNeeded(type).toLocaleLowerCase(),
+          })}
+          idField={idField}
           sqon={sqon}
           setType={type}
           hideModalCb={() => setModal(modals.hideAll)}
@@ -191,6 +147,7 @@ const SetsManagementDropdown = ({
       )}
       {modal.showModalAddDelete && (
         <AddRemoveSaveSetModal
+          idField={idField}
           sqon={sqon}
           setActionType={modal.actionType}
           hideModalCb={() => {
@@ -202,20 +159,70 @@ const SetsManagementDropdown = ({
         />
       )}
       <Dropdown
-        overlay={menu(
-          getSetCount(selectedKeys || [], results.total, selectedAllResults),
-          onClick,
-          isEditDisabled,
-          type,
-        )}
+        menu={{
+          className: styles.saveSetOptionMenu,
+          onClick: (e: MenuInfo) => onClick(e),
+          items: [
+            {
+              key: 'participant-count',
+              className: `${
+                exceedLimit(getSetCount(selectedKeys || [], results.total, selectedAllResults))
+                  ? styles.saveSetOptionMenuInfoOver
+                  : styles.saveSetOptionMenuInfo
+              }`,
+              disabled: true,
+              icon: itemIcon(type),
+              label: (
+                <>
+                  <span>
+                    {intl.get('screen.dataExploration.setsManagementDropdown.selected', {
+                      count: getSetCount(selectedKeys || [], results.total, selectedAllResults),
+                      type: singularizeSetTypeIfNeeded(type),
+                    })}
+                  </span>
+                  <Tooltip
+                    arrowPointAtCenter
+                    placement="topRight"
+                    title={`Max. ${numberWithCommas(
+                      ROW_SELECTION_LIMIT,
+                    )} items at a time. The first 10,000 will be processed.`}
+                  >
+                    <InfoCircleOutlined className={styles.infoCircle} />
+                  </Tooltip>
+                </>
+              ),
+            },
+            {
+              type: 'divider',
+            },
+            {
+              key: 'create',
+              icon: <PlusOutlined />,
+              label: intl.get('screen.dataExploration.setsManagementDropdown.create'),
+            },
+            {
+              key: 'add_ids',
+              icon: <ListAddIcon />,
+              label: intl.get('screen.dataExploration.setsManagementDropdown.add'),
+              disabled: isEditDisabled,
+            },
+            {
+              key: 'remove_ids',
+              icon: <ListRemoveIcon />,
+              label: intl.get('screen.dataExploration.setsManagementDropdown.remove'),
+              disabled: isEditDisabled,
+            },
+          ],
+        }}
         placement="bottomLeft"
         trigger={['click']}
+        disabled={selectedKeys.length === 0 && !selectedAllResults}
         getPopupContainer={() =>
           document.getElementById(`${type}-set-dropdown-container`) as HTMLElement
         }
       >
         <Button className={'save-set-btn'} onClick={(e) => e.preventDefault()}>
-          {`Save ${type} set`}
+          {`Save ${singularizeSetTypeIfNeeded(type)} set`}
           <DownOutlined />
         </Button>
       </Dropdown>

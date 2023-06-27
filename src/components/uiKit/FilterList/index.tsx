@@ -1,21 +1,23 @@
 import { useState } from 'react';
-import { Button, Layout, Space, Typography } from 'antd';
-import CustomFilterContainer from './CustomFilterContainer';
 import intl from 'react-intl-universal';
-import { FilterGroup, FilterInfo } from './types';
-import { ExtendedMappingResults } from 'graphql/models';
 import { ISqonGroupFilter, ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
+import { IExtendedMappingResults } from '@ferlab/ui/core/graphql/types';
+import { Button, Layout, Space, Spin, Typography } from 'antd';
 import cx from 'classnames';
+import { isEmpty } from 'lodash';
 
 import styles from 'components/uiKit/FilterList/Filters.module.scss';
-import { isEmpty } from 'lodash';
+
+import CustomFilterContainer from './CustomFilterContainer';
+import { FilterGroup, FilterInfo } from './types';
 
 export type TCustomFilterMapper = (filters: ISqonGroupFilter) => ISyntheticSqon;
 
 type OwnProps = {
+  loading?: boolean;
   index: string;
   queryBuilderId: string;
-  extendedMappingResults: ExtendedMappingResults;
+  extendedMappingResults: IExtendedMappingResults;
   filterInfo: FilterInfo;
   filterMapper?: TCustomFilterMapper;
 };
@@ -25,12 +27,12 @@ const { Text } = Typography;
 const isAllFacetOpen = (filterInfo: FilterInfo) => {
   const allOpen = concatAllFacets(filterInfo).every((facet) =>
     typeof facet === 'string' ? filterInfo.defaultOpenFacets?.includes(facet) : true,
-  )
-  return allOpen ? true : undefined
-}
+  );
+  return allOpen ? true : undefined;
+};
 
 const concatAllFacets = (filterInfo: FilterInfo) => {
-  let allFacets: any[] = [];
+  const allFacets: any[] = [];
   filterInfo.groups.forEach(({ facets }) => allFacets.push(...facets));
   return allFacets;
 };
@@ -43,6 +45,10 @@ const FilterList = ({
   filterMapper,
 }: OwnProps) => {
   const [filtersOpen, setFiltersOpen] = useState<boolean | undefined>(isAllFacetOpen(filterInfo));
+
+  if (extendedMappingResults.loading) {
+    return <Spin className={styles.filterLoader} spinning />;
+  }
 
   return (
     <>
@@ -80,6 +86,7 @@ const FilterList = ({
                   filtersOpen={filtersOpen}
                   defaultOpen={filterInfo.defaultOpenFacets?.includes(facet) ? true : undefined}
                   filterMapper={filterMapper}
+                  headerTooltip={group.tooltips?.includes(facet)}
                 />
               ) : (
                 <div key={i + ii} className={cx(styles.customFilterWrapper, styles.filter)}>

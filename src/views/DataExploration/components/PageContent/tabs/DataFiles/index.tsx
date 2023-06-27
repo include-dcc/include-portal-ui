@@ -1,40 +1,42 @@
 import { useEffect, useState } from 'react';
-import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { CloudUploadOutlined, LockOutlined, SafetyOutlined, UnlockFilled } from '@ant-design/icons';
+import { LockOutlined, SafetyOutlined, UnlockFilled } from '@ant-design/icons';
 import ProTable from '@ferlab/ui/core/components/ProTable';
+import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { resetSearchAfterQueryConfig, tieBreaker } from '@ferlab/ui/core/components/ProTable/utils';
 import useQueryBuilderState, {
   addQuery,
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { Button, Modal, Tag, Tooltip } from 'antd';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
+import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
+import { Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
+import { useDataFiles } from 'graphql/files/actions';
 import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
-import { IQueryResults } from 'graphql/models';
-import AnalyseModal from 'views/Dashboard/components/DashboardCards/Cavatica/AnalyseModal';
-import CreateProjectModal from 'views/Dashboard/components/DashboardCards/Cavatica/CreateProjectModal';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
+import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
-  CAVATICA_FILE_BATCH_SIZE,
   DATA_EXPLORATION_QB_ID,
+  DATA_FILES_SAVED_SETS_FIELD,
+  DEFAULT_FILE_QUERY_SORT,
+  DEFAULT_PAGE_INDEX,
   DEFAULT_PAGE_SIZE,
+  DEFAULT_QUERY_CONFIG,
   SCROLL_WRAPPER_ID,
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
+import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { FENCE_CONNECTION_STATUSES, FENCE_NAMES } from 'common/fenceTypes';
-import { IQueryConfig, TQueryConfigCb } from 'common/searchPageTypes';
+import { FENCE_CONNECTION_STATUSES } from 'common/fenceTypes';
+import CavaticaAnalyzeButton from 'components/Cavatica/AnalyzeButton';
 import { SetType } from 'services/api/savedSet/models';
-import { useFenceCavatica } from 'store/fenceCavatica';
-import { fenceCavaticaActions } from 'store/fenceCavatica/slice';
-import { beginAnalyse } from 'store/fenceCavatica/thunks';
 import { useFenceConnection } from 'store/fenceConnection';
-import { connectToFence } from 'store/fenceConnection/thunks';
 import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
@@ -44,16 +46,9 @@ import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
 
-import StudyPopoverRedirect, {
-  AFFECTED_STUDY,
-} from 'views/DataExploration/components/StudyPopoverRedirect';
-
 import styles from './index.module.scss';
 
 interface OwnProps {
-  results: IQueryResults<IFileEntity[]>;
-  setQueryConfig: TQueryConfigCb;
-  queryConfig: IQueryConfig;
   sqon?: ISqonGroupFilter;
 }
 
@@ -95,10 +90,11 @@ const getDefaultColumns = (
     dataIndex: 'controlled_access',
     align: 'center',
     width: 75,
-    render: (controlled_access: string) =>
-      !controlled_access ? (
-        '-'
-      ) : controlled_access.toLowerCase() === FileAccessType.CONTROLLED.toLowerCase() ? (
+    render: (controlled_access: string) => {
+      if (!controlled_access) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return controlled_access.toLowerCase() === FileAccessType.CONTROLLED.toLowerCase() ? (
         <Tooltip title="Controlled">
           <Tag color="geekblue">C</Tag>
         </Tooltip>
@@ -106,13 +102,15 @@ const getDefaultColumns = (
         <Tooltip title="Registered">
           <Tag color="green">R</Tag>
         </Tooltip>
-      ),
+      );
+    },
   },
   {
     key: 'file_id',
     title: 'File ID',
     dataIndex: 'file_id',
     sorter: { multiple: 1 },
+    render: (file_id: string) => <Link to={`${STATIC_ROUTES.FILES}/${file_id}`}>{file_id}</Link>,
   },
   {
     key: 'file_name',
@@ -120,13 +118,14 @@ const getDefaultColumns = (
     dataIndex: 'file_name',
     sorter: { multiple: 1 },
     defaultHidden: true,
+    render: (file_name: string) => file_name || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'study.study_id',
     title: 'Study',
     sorter: { multiple: 1 },
     render: (record: IFileEntity) =>
-      record.study.study_id ? (
+      record?.study?.study_id ? (
         <StudyPopoverRedirect
           studyId={record.study.study_id}
           text={record.study.study_id || ''}
@@ -140,20 +139,28 @@ const getDefaultColumns = (
     title: 'Data Category',
     dataIndex: 'data_category',
     sorter: { multiple: 1 },
+    render: (data_category: string) => data_category || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'data_type',
     title: 'Data Type',
     dataIndex: 'data_type',
     sorter: { multiple: 1 },
-    render: (data_type) => data_type || TABLE_EMPTY_PLACE_HOLDER,
+    render: (data_type: string) => data_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    key: 'sequencing_experiment__experiment_strategy',
+    key: 'sequencing_experiment.experiment_strategy',
     title: 'Experimental Strategy',
     sorter: { multiple: 1 },
-    render: (record: IFileEntity) =>
-      record.sequencing_experiment?.experiment_strategy || TABLE_EMPTY_PLACE_HOLDER,
+    render: (record: IFileEntity) => {
+      if (!record?.sequencing_experiment?.hits?.edges) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return record.sequencing_experiment.hits.edges
+        .map((edge) => edge.node.experiment_strategy)
+        .filter((strategy, index, array) => array.indexOf(strategy) === index)
+        .join(', ');
+    },
   },
   {
     key: 'access_urls',
@@ -161,19 +168,21 @@ const getDefaultColumns = (
     dataIndex: 'access_urls',
     sorter: { multiple: 1 },
     defaultHidden: true,
+    render: (access_urls: string) => access_urls || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'file_format',
     title: 'Format',
     dataIndex: 'file_format',
     sorter: { multiple: 1 },
+    render: (file_format: string) => file_format || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'size',
     title: 'Size',
     dataIndex: 'size',
     sorter: { multiple: 1 },
-    render: (size) => formatFileSize(size, { output: 'string' }),
+    render: (size: number) => formatFileSize(size, { output: 'string' }),
   },
   {
     key: 'nb_participants',
@@ -181,6 +190,7 @@ const getDefaultColumns = (
     sorter: { multiple: 1 },
     render: (record: IFileEntity) => {
       const nb_participants = record?.nb_participants || 0;
+
       return nb_participants ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
@@ -200,7 +210,7 @@ const getDefaultColumns = (
             })
           }
         >
-          {nb_participants}
+          {numberWithCommas(nb_participants)}
         </Link>
       ) : (
         nb_participants
@@ -213,6 +223,7 @@ const getDefaultColumns = (
     sorter: { multiple: 1 },
     render: (record: IFileEntity) => {
       const nb_biospecimens = record?.nb_biospecimens || 0;
+
       return nb_biospecimens ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_BIOSPECIMENS}
@@ -232,7 +243,7 @@ const getDefaultColumns = (
             })
           }
         >
-          {nb_biospecimens}
+          {numberWithCommas(nb_biospecimens)}
         </Link>
       ) : (
         nb_biospecimens
@@ -241,67 +252,80 @@ const getDefaultColumns = (
   },
 ];
 
-const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) => {
+const DataFilesTab = ({ sqon }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
-  const { isConnected, isInitializingAnalyse, beginAnalyseAfterConnection } = useFenceCavatica();
   const { fencesAllAcls, connectionStatus } = useFenceConnection();
   const [selectedAllResults, setSelectedAllResults] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [selectedRows, setSelectedRows] = useState<ITableFileEntity[]>([]);
 
-  useEffect(() => {
-    if (selectedKeys.length) {
-      setSelectedKeys([]);
-    }
-    // eslint-disable-next-line
-  }, [JSON.stringify(activeQuery)]);
-
-  const onBeginAnalyse = () =>
-    dispatch(
-      beginAnalyse({
-        sqon: sqon!,
-        fileIds: selectedAllResults ? [] : selectedKeys,
+  const [pageIndex, setPageIndex] = useState(DEFAULT_PAGE_INDEX);
+  const [queryConfig, setQueryConfig] = useState({
+    ...DEFAULT_QUERY_CONFIG,
+    sort: DEFAULT_FILE_QUERY_SORT,
+    size:
+      userInfo?.config?.data_exploration?.tables?.participants?.viewPerQuery || DEFAULT_PAGE_SIZE,
+  });
+  const results = useDataFiles(
+    {
+      first: queryConfig.size,
+      offset: DEFAULT_OFFSET,
+      searchAfter: queryConfig.searchAfter,
+      sqon,
+      sort: tieBreaker({
+        sort: queryConfig.sort,
+        defaultSort: DEFAULT_FILE_QUERY_SORT,
+        field: 'file_id',
+        order: queryConfig.operations?.previous ? SortDirection.Desc : SortDirection.Asc,
       }),
-    );
+    },
+    queryConfig.operations,
+  );
 
   const getCurrentSqon = (): any =>
     selectedAllResults || !selectedKeys.length
       ? sqon
-      : generateSelectionSqon(TAB_IDS.DATA_FILES, selectedKeys);
-
-  const onCavaticaConnectionRequired = () =>
-    Modal.confirm({
-      type: 'warn',
-      title: intl.get('screen.dataExploration.tabs.datafiles.cavatica.authWarning.title'),
-      content: intl.get('screen.dataExploration.tabs.datafiles.cavatica.authWarning.description'),
-      okText: 'Connect',
-      onOk: () => {
-        dispatch(fenceCavaticaActions.setBeginAnalyseConnectionFlag());
-        dispatch(connectToFence(FENCE_NAMES.cavatica));
-      },
-    });
-
-  const onCavaticaUploadLimitReached = () =>
-    Modal.error({
-      title: intl.get('screen.dataExploration.tabs.datafiles.cavatica.bulkImportLimit.title'),
-      content: intl.getHTML(
-        'screen.dataExploration.tabs.datafiles.cavatica.bulkImportLimit.description',
-        {
-          limit: CAVATICA_FILE_BATCH_SIZE,
-        },
-      ),
-      okText: 'Ok',
-      cancelText: undefined,
-    });
+      : generateQuery({
+          newFilters: [
+            generateValueFilter({
+              field: DATA_FILES_SAVED_SETS_FIELD,
+              index: INDEXES.FILE,
+              value: selectedRows.map((row) => row[DATA_FILES_SAVED_SETS_FIELD]),
+            }),
+          ],
+        });
 
   useEffect(() => {
-    if (isConnected && beginAnalyseAfterConnection) {
-      onBeginAnalyse();
+    if (selectedKeys.length) {
+      setSelectedKeys([]);
+      setSelectedRows([]);
     }
+    resetSearchAfterQueryConfig(
+      {
+        ...DEFAULT_QUERY_CONFIG,
+        sort: DEFAULT_FILE_QUERY_SORT,
+        size:
+          userInfo?.config?.data_exploration?.tables?.participants?.viewPerQuery ||
+          DEFAULT_PAGE_SIZE,
+      },
+      setQueryConfig,
+    );
+    setPageIndex(DEFAULT_PAGE_INDEX);
     // eslint-disable-next-line
-  }, [isConnected, beginAnalyseAfterConnection]);
+  }, [JSON.stringify(activeQuery)]);
+
+  useEffect(() => {
+    if (queryConfig.firstPageFlag !== undefined || queryConfig.searchAfter === undefined) {
+      return;
+    }
+
+    setQueryConfig({
+      ...queryConfig,
+      firstPageFlag: queryConfig.searchAfter,
+    });
+  }, [queryConfig]);
 
   return (
     <>
@@ -312,22 +336,23 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
           connectionStatus.cavatica === FENCE_CONNECTION_STATUSES.connected,
           connectionStatus.gen3 === FENCE_CONNECTION_STATUSES.connected,
         )}
+        showSorterTooltip={false}
         initialSelectedKey={selectedKeys}
         wrapperClassName={styles.dataFilesTabWrapper}
         loading={results.loading}
         initialColumnState={userInfo?.config.data_exploration?.tables?.datafiles?.columns}
         enableRowSelection={true}
-        showSorterTooltip={false}
-        onChange={({ current, pageSize }, _, sorter) =>
+        onChange={(_pagination, _filter, sorter) => {
+          setPageIndex(DEFAULT_PAGE_INDEX);
           setQueryConfig({
-            pageIndex: current!,
-            size: pageSize!,
+            pageIndex: DEFAULT_PAGE_INDEX,
+            size: queryConfig.size!,
             sort: formatQuerySortList(sorter),
-          })
-        }
+          });
+        }}
         headerConfig={{
           itemCount: {
-            pageIndex: queryConfig.pageIndex,
+            pageIndex: pageIndex,
             pageSize: queryConfig.size,
             total: results.total,
           },
@@ -368,6 +393,7 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
             ),
           extra: [
             <SetsManagementDropdown
+              idField="fhir_id"
               key="setManagementDropdown"
               results={results}
               sqon={getCurrentSqon()}
@@ -375,54 +401,45 @@ const DataFilesTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) 
               type={SetType.FILE}
               selectedKeys={selectedKeys}
             />,
-            <Button
-              key="analysisButton"
-              disabled={selectedKeys.length === 0}
+            <CavaticaAnalyzeButton
+              disabled={selectedKeys.length === 0 && !selectedAllResults}
               type="primary"
-              icon={<CloudUploadOutlined />}
-              loading={isInitializingAnalyse}
-              onClick={() => {
-                if (isConnected) {
-                  if (
-                    selectedRows.length > CAVATICA_FILE_BATCH_SIZE ||
-                    (selectedAllResults && results.total > CAVATICA_FILE_BATCH_SIZE)
-                  ) {
-                    onCavaticaUploadLimitReached();
-                  } else {
-                    dispatch(
-                      beginAnalyse({
-                        sqon: sqon!,
-                        fileIds: selectedAllResults ? [] : selectedKeys,
-                      }),
-                    );
-                  }
-                } else {
-                  onCavaticaConnectionRequired();
-                }
-              }}
-            >
-              {intl.get('screen.dataExploration.tabs.datafiles.cavatica.analyseInCavatica')}
-            </Button>,
+              fileIds={selectedAllResults ? [] : selectedKeys}
+              sqon={sqon}
+              key="file-cavatica-upload"
+            />,
           ],
         }}
         bordered
         size="small"
         pagination={{
-          current: queryConfig.pageIndex,
-          pageSize: queryConfig.size,
-          defaultPageSize: DEFAULT_PAGE_SIZE,
-          total: results.total,
-          onChange: () => scrollToTop(SCROLL_WRAPPER_ID),
+          current: pageIndex,
+          queryConfig,
+          setQueryConfig,
+          onChange: (page: number) => {
+            scrollToTop(SCROLL_WRAPPER_ID);
+            setPageIndex(page);
+          },
+          searchAfter: results.searchAfter,
+          onViewQueryChange: (viewPerQuery: PaginationViewPerQuery) => {
+            dispatch(
+              updateUserConfig({
+                data_exploration: {
+                  tables: {
+                    datafiles: {
+                      ...userInfo?.config.data_exploration?.tables?.datafiles,
+                      viewPerQuery,
+                    },
+                  },
+                },
+              }),
+            );
+          },
+          defaultViewPerQuery: queryConfig.size,
         }}
         dataSource={results.data.map((i) => ({ ...i, key: i.file_id }))}
         dictionary={getProTableDictionary()}
       />
-      {isConnected && (
-        <>
-          <AnalyseModal />
-          <CreateProjectModal />
-        </>
-      )}
     </>
   );
 };

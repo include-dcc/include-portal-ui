@@ -1,4 +1,6 @@
+import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { TColumnStates } from '@ferlab/ui/core/components/ProTable/types';
+import { TSerializedResizableGridLayoutConfig } from '@ferlab/ui/core/layout/ResizableGridLayout';
 
 export type TUser = {
   id: string;
@@ -33,7 +35,8 @@ export type TProfileImagePresignedOutput = {
 };
 
 export type TUserTableConfig = {
-  columns: TColumnStates;
+  columns?: TColumnStates;
+  viewPerQuery?: PaginationViewPerQuery;
 };
 
 export type TUserConfig = {
@@ -44,14 +47,30 @@ export type TUserConfig = {
       datafiles?: TUserTableConfig;
     };
     summary?: {
-      cards?: {
-        order?: string[];
-      };
+      layouts?: TSerializedResizableGridLayoutConfig[];
+    };
+  };
+  files?: {
+    tables?: {
+      biospecimens?: TUserTableConfig;
+    };
+  };
+  participants?: {
+    tables?: {
+      diagnosis?: TUserTableConfig;
+      family?: TUserTableConfig;
+      phenotype?: TUserTableConfig;
+      biospecimens?: TUserTableConfig;
     };
   };
   dashboard?: {
     cards?: {
       order?: string[];
+    };
+  };
+  variants?: {
+    tables?: {
+      variants?: TUserTableConfig;
     };
   };
 };

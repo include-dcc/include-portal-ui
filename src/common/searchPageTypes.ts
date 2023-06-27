@@ -1,4 +1,4 @@
-import { TSortDirection } from 'graphql/queries';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 
 export type TPagingConfig = {
   index: number;
@@ -14,6 +14,6 @@ export interface IQueryConfig {
   size: number;
   sort: {
     field: string;
-    order: TSortDirection;
+    order: SortDirection;
   }[];
 }

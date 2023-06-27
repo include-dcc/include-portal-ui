@@ -1,43 +1,42 @@
-import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import intl from 'react-intl-universal';
+import { useParams } from 'react-router-dom';
+import { ExperimentOutlined, FileSearchOutlined, UserOutlined } from '@ant-design/icons';
+import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
-import { ExperimentOutlined, UserOutlined, FileSearchOutlined } from '@ant-design/icons';
-import PageContent from 'views/DataExploration/components/PageContent';
-import { Spin } from 'antd';
+import { Spin, Typography } from 'antd';
+import { INDEXES } from 'graphql/constants';
 import { ExtendedMappingResults } from 'graphql/models';
-import FilterList, { TCustomFilterMapper } from 'components/uiKit/FilterList';
+import PageContent from 'views/DataExploration/components/PageContent';
 import {
   DATA_EXPLORATION_QB_ID,
   SCROLL_WRAPPER_ID,
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
+
+import FilterList, { TCustomFilterMapper } from 'components/uiKit/FilterList';
 import { FilterInfo } from 'components/uiKit/FilterList/types';
-import { GraphqlBackend } from 'provider/types';
 import useGetExtendedMappings from 'hooks/graphql/useGetExtendedMappings';
-import { INDEXES } from 'graphql/constants';
-import { useParams } from 'react-router-dom';
+import { RemoteComponentList } from 'store/remote/types';
 import {
   mapFilterForBiospecimen,
   mapFilterForFiles,
   mapFilterForParticipant,
 } from 'utils/fieldMapper';
-import TreeFacet from './components/TreeFacet';
-import ParticipantSearch from './components/ParticipantSearch';
-import FileSearch from './components/FileSearch';
-import { BiospecimenSearch, BiospecimenCollectionSearch } from './components/BiospecimenSearch';
-import { formatHpoTitleAndCode, formatMondoTitleAndCode } from './utils/helper';
-import ParticipantSetSearch from './components/ParticipantSetSearch';
-import FileSetSearch from './components/FileSetSearch';
+
+import { BiospecimenCollectionSearch, BiospecimenSearch } from './components/BiospecimenSearch';
 import BiospecimenSetSearch from './components/BiospecimenSetSearch';
+import FileSearch from './components/FileSearch';
+import FileSetSearch from './components/FileSetSearch';
+import ParticipantSearch from './components/ParticipantSearch';
+import ParticipantSetSearch from './components/ParticipantSetSearch';
+import TreeFacet from './components/TreeFacet';
+import TreeFacetModal from './components/TreeFacet/TreeFacetModal';
+import BiospecimenUploadIds from './components/UploadIds/BiospecimenUploadIds';
+import FileUploadIds from './components/UploadIds/FileUploadIds';
+import ParticipantUploadIds from './components/UploadIds/ParticipantUploadIds';
+import { formatHpoTitleAndCode, formatMondoTitleAndCode } from './utils/helper';
 
 import styles from './index.module.scss';
-import ParticipantUploadIds from './components/UploadIds/ParticipantUploadIds';
-import FileUploadIds from './components/UploadIds/FileUploadIds';
-import BiospecimenUploadIds from './components/UploadIds/BiospecimenUploadIds';
-
-interface OwnProps {
-  tab?: string;
-}
 
 enum FilterTypes {
   Participant,
@@ -59,9 +58,15 @@ export const filterGroups: {
         facets: [
           'study_id',
           'down_syndrome_status',
-          <TreeFacet type={'mondoTree'} field={'mondo'} titleFormatter={formatMondoTitleAndCode} />,
           <TreeFacet
-            type={'hpoTree'}
+            key="mondo"
+            type={RemoteComponentList.MondoTree}
+            field={'mondo'}
+            titleFormatter={formatMondoTitleAndCode}
+          />,
+          <TreeFacet
+            key="observed_phenotype"
+            type={RemoteComponentList.HPOTree}
             field={'observed_phenotype'}
             titleFormatter={formatHpoTitleAndCode}
           />,
@@ -135,7 +140,7 @@ const filtersContainer = (
   );
 };
 
-const DataExploration = (props: OwnProps) => {
+const DataExploration = () => {
   const { tab } = useParams<{ tab: string }>();
   const participantMappingResults = useGetExtendedMappings(INDEXES.PARTICIPANT);
   const fileMappingResults = useGetExtendedMappings(INDEXES.FILE);
@@ -179,11 +184,24 @@ const DataExploration = (props: OwnProps) => {
 
   return (
     <div className={styles.dataExplorationLayout}>
+      <TreeFacetModal
+        type={RemoteComponentList.MondoTree}
+        field={'mondo'}
+        titleFormatter={formatMondoTitleAndCode}
+      />
+      <TreeFacetModal
+        type={RemoteComponentList.HPOTree}
+        field={'observed_phenotype'}
+        titleFormatter={formatHpoTitleAndCode}
+      />
       <SidebarMenu
         className={styles.sideMenu}
         menuItems={menuItems} /* defaultSelectedKey={tab} */
       />
       <ScrollContent id={SCROLL_WRAPPER_ID} className={styles.scrollContent}>
+        <Typography.Title className={styles.title} level={4}>
+          {intl.get('screen.dataExploration.title')}
+        </Typography.Title>
         <PageContent
           fileMapping={fileMappingResults}
           biospecimenMapping={biospecimenMappingResults}
