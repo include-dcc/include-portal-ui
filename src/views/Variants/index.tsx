@@ -171,6 +171,7 @@ const Variants = () => {
           queryBuilderId={VARIANT_REPO_QB_ID}
           extendedMappingResults={variantMappingResults}
           filterInfo={filterGroups[FilterTypes.Participant]}
+          noDataInputOption={false}
         />
       ),
     },

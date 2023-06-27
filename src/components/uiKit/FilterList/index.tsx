@@ -20,6 +20,7 @@ type OwnProps = {
   extendedMappingResults: IExtendedMappingResults;
   filterInfo: FilterInfo;
   filterMapper?: TCustomFilterMapper;
+  noDataInputOption?: boolean;
 };
 
 const { Text } = Typography;
@@ -43,9 +44,10 @@ const FilterList = ({
   extendedMappingResults,
   filterInfo,
   filterMapper,
+  noDataInputOption,
 }: OwnProps) => {
   const [filtersOpen, setFiltersOpen] = useState<boolean | undefined>(isAllFacetOpen(filterInfo));
-
+  console.log('noDataInputOption FilterList', noDataInputOption);
   if (extendedMappingResults.loading) {
     return <Spin className={styles.filterLoader} spinning />;
   }
@@ -87,6 +89,7 @@ const FilterList = ({
                   defaultOpen={filterInfo.defaultOpenFacets?.includes(facet) ? true : undefined}
                   filterMapper={filterMapper}
                   headerTooltip={group.tooltips?.includes(facet)}
+                  noDataInputOption={noDataInputOption}
                 />
               ) : (
                 <div key={i + ii} className={cx(styles.customFilterWrapper, styles.filter)}>
