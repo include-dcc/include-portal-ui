@@ -171,7 +171,6 @@ const Variants = () => {
           queryBuilderId={VARIANT_REPO_QB_ID}
           extendedMappingResults={variantMappingResults}
           filterInfo={filterGroups[FilterTypes.Participant]}
-          noDataInputOption={false}
         />
       ),
     },
@@ -187,6 +186,7 @@ const Variants = () => {
           queryBuilderId={VARIANT_REPO_QB_ID}
           extendedMappingResults={variantMappingResults}
           filterInfo={filterGroups[FilterTypes.Variant]}
+          noDataInputOption={false}
         />
       ),
     },
@@ -202,6 +202,7 @@ const Variants = () => {
           queryBuilderId={VARIANT_REPO_QB_ID}
           extendedMappingResults={variantMappingResults}
           filterInfo={filterGroups[FilterTypes.Gene]}
+          noDataInputOption={false}
         />
       ),
     },
@@ -217,6 +218,7 @@ const Variants = () => {
           queryBuilderId={VARIANT_REPO_QB_ID}
           extendedMappingResults={variantMappingResults}
           filterInfo={filterGroups[FilterTypes.Pathogenicity]}
+          noDataInputOption={false}
         />
       ),
     },
@@ -232,6 +234,7 @@ const Variants = () => {
           queryBuilderId={VARIANT_REPO_QB_ID}
           extendedMappingResults={variantMappingResults}
           filterInfo={filterGroups[FilterTypes.Frequency]}
+          noDataInputOption={false}
         />
       ),
     },

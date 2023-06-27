@@ -47,7 +47,6 @@ const FilterList = ({
   noDataInputOption,
 }: OwnProps) => {
   const [filtersOpen, setFiltersOpen] = useState<boolean | undefined>(isAllFacetOpen(filterInfo));
-  console.log('noDataInputOption FilterList', noDataInputOption);
   if (extendedMappingResults.loading) {
     return <Spin className={styles.filterLoader} spinning />;
   }

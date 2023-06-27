@@ -72,8 +72,6 @@ const CustomFilterContainer = ({
     dictionary: getFacetsDictionary(),
     noDataInputOption,
   });
-  console.log('noDataInputOption', noDataInputOption);
-  console.log('filterGroup', filterGroup);
 
   const filters = results?.aggregations ? getFilters(results?.aggregations, filterKey) : [];
   const selectedFilters = results?.data
