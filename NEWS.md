@@ -7,7 +7,7 @@
 
 ### Technical / Other changes
 -->
-## 2020-06-27 include-portal-ui 1.7.1
+## 2023-06-27 include-portal-ui 1.7.1
 ### Technical/ Other changes:
 [SJIP-500](https://d3b.atlassian.net/browse/SJIP-500) Fix:[Entity variant] Multiple minor fixes in Variant Entity page
 [SJIP-521](https://d3b.atlassian.net/browse/SJIP-521) Refactor: [Data Exploration, Variants] Disabled No Data in numerical range facets
