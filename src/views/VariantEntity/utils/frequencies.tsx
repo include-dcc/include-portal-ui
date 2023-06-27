@@ -1,4 +1,5 @@
 import intl from 'react-intl-universal';
+import { Link } from 'react-router-dom';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { ProColumnType, TProTableSummary } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
@@ -24,6 +25,28 @@ export const getFrequenciesItems = (): ProColumnType[] => [
     dataIndex: 'study_code',
     key: 'study_code',
     title: intl.get('screen.variants.frequencies.studies'),
+    render: (study_code: string) => (
+      <Link
+        to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
+        onClick={() =>
+          addQuery({
+            queryBuilderId: DATA_EXPLORATION_QB_ID,
+            query: generateQuery({
+              newFilters: [
+                generateValueFilter({
+                  field: 'study.study_code',
+                  value: [study_code],
+                  index: INDEXES.PARTICIPANT,
+                }),
+              ],
+            }),
+            setAsActive: true,
+          })
+        }
+      >
+        {study_code}
+      </Link>
+    ),
   },
   {
     title: intl.get('screen.variants.frequencies.participants'),

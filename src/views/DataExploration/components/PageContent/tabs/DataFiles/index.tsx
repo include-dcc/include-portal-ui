@@ -17,6 +17,7 @@ import { Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useDataFiles } from 'graphql/files/actions';
 import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
+import { IStudyEntity } from 'graphql/studies/models';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
@@ -121,17 +122,18 @@ const getDefaultColumns = (
     render: (file_name: string) => file_name || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    key: 'study.study_id',
+    dataIndex: 'study',
+    key: 'study',
     title: 'Study',
     sorter: { multiple: 1 },
-    render: (record: IFileEntity) =>
-      record?.study?.study_id ? (
+    render: (study: IStudyEntity) =>
+      study?.study_id ? (
         <StudyPopoverRedirect
-          studyId={record.study.study_id}
-          text={record.study.study_id || ''}
+          studyId={study.study_id}
+          text={study.study_code || ''}
         ></StudyPopoverRedirect>
       ) : (
-        TABLE_EMPTY_PLACE_HOLDER
+        study?.study_code || TABLE_EMPTY_PLACE_HOLDER
       ),
   },
   {

@@ -29,6 +29,7 @@ export const SEARCH_FILES_QUERY = gql`
             }
             study {
               study_id
+              study_code
               study_name
             }
             sequencing_experiment {

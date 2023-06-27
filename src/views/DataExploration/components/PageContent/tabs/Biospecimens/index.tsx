@@ -17,6 +17,7 @@ import { useBiospecimen } from 'graphql/biospecimens/actions';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
 import { IParticipantEntity } from 'graphql/participants/models';
+import { IStudyEntity } from 'graphql/studies/models';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
@@ -58,17 +59,18 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     render: (sample_id: string) => sample_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    key: 'study_id',
+    key: 'study',
+    dataIndex: 'study',
     title: 'Study',
     sorter: { multiple: 1 },
-    render: (record: IBiospecimenEntity) =>
-      record.study_id ? (
+    render: (study: IStudyEntity) =>
+      study?.study_id ? (
         <StudyPopoverRedirect
-          studyId={record.study_id}
-          text={record.study_id || ''}
+          studyId={study.study_id}
+          text={study.study_code || ''}
         ></StudyPopoverRedirect>
       ) : (
-        TABLE_EMPTY_PLACE_HOLDER
+        study?.study_code || TABLE_EMPTY_PLACE_HOLDER
       ),
   },
   {

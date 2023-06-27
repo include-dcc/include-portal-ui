@@ -56,7 +56,7 @@ export const filterGroups: {
     groups: [
       {
         facets: [
-          'study_id',
+          'study__study_code',
           'down_syndrome_status',
           <TreeFacet
             key="mondo"

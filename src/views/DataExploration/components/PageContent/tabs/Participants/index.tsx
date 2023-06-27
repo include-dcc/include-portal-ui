@@ -26,6 +26,7 @@ import {
   ITableParticipantEntity,
   Sex,
 } from 'graphql/participants/models';
+import { IStudyEntity } from 'graphql/studies/models';
 import { capitalize } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
@@ -76,18 +77,21 @@ const defaultColumns: ProColumnType<any>[] = [
     ),
   },
   {
-    key: 'study_id',
+    key: 'study',
     title: 'Study',
-    dataIndex: 'study_id',
+    dataIndex: 'study',
     sorter: {
       multiple: 1,
     },
     className: styles.studyIdCell,
-    render: (study_id: string) =>
-      study_id ? (
-        <StudyPopoverRedirect studyId={study_id} text={study_id || ''}></StudyPopoverRedirect>
+    render: (study: IStudyEntity) =>
+      study?.study_id ? (
+        <StudyPopoverRedirect
+          studyId={study.study_id}
+          text={study.study_code || ''}
+        ></StudyPopoverRedirect>
       ) : (
-        TABLE_EMPTY_PLACE_HOLDER
+        study?.study_code || TABLE_EMPTY_PLACE_HOLDER
       ),
   },
   {
