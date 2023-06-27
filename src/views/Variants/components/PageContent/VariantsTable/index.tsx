@@ -234,9 +234,10 @@ const defaultColumns: ProColumnType[] = [
     tooltip: intl.get('screen.variants.table.frequence.tooltip'),
     dataIndex: 'internal_frequencies',
     key: 'internal_frequencies',
-    sorter: {
-      multiple: 1,
-    },
+    // SJIP-501 api broke on that one
+    // sorter: {
+    //   multiple: 1,
+    // },
     render: (internalFrequencies: IVariantInternalFrequencies) =>
       internalFrequencies?.total?.af && isNumber(internalFrequencies.total.af)
         ? toExponentialNotation(internalFrequencies?.total?.af)
