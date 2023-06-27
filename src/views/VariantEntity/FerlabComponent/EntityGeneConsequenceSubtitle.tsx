@@ -27,7 +27,7 @@ const EntityGeneConsequenceSubtitle = ({
 }: IEntityGeneConsequenceSubtitle): React.ReactElement => (
   <div className={styles.wrapper}>
     <span>
-      <span className={styles.bold}>{dictionary.gene}</span>
+      <span className={styles.bold}>{dictionary.gene}:</span>
       <ExternalLink
         className={styles.link}
         href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${gene?.node?.symbol}`}
@@ -38,7 +38,7 @@ const EntityGeneConsequenceSubtitle = ({
     {gene?.node?.omim_gene_id && (
       <span>
         <span className={styles.separator}>|</span>
-        <span className={styles.bold}>{dictionary.omim}</span>
+        <span className={styles.bold}>{dictionary.omim}:</span>
         <ExternalLink
           className={styles.link}
           href={`https://omim.org/entry/${gene.node.omim_gene_id}`}
@@ -54,21 +54,21 @@ const EntityGeneConsequenceSubtitle = ({
     {gene?.node?.spliceai?.ds && (
       <span>
         <span className={styles.separator}>|</span>
-        <span className={styles.bold}>{dictionary.spliceai}</span>
+        <span className={styles.bold}>{dictionary.spliceai}:</span>
         <span>{gene.node.spliceai.ds}</span>
       </span>
     )}
     {gene?.node?.gnomad?.pli && (
       <span>
         <span className={styles.separator}>|</span>
-        <span className={styles.bold}>{dictionary.gnomad_pli}</span>
+        <span className={styles.bold}>{dictionary.gnomad_pli}:</span>
         <span>{gene.node.gnomad.pli}</span>
       </span>
     )}
     {gene?.node?.gnomad?.loeuf && (
       <span>
         <span className={styles.separator}>|</span>
-        <span className={styles.bold}>{dictionary.gnomad_loeuf}</span>
+        <span className={styles.bold}>{dictionary.gnomad_loeuf}:</span>
         <span>{gene.node.gnomad.loeuf}</span>
       </span>
     )}
