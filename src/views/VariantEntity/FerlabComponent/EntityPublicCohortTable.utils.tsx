@@ -31,7 +31,7 @@ export const makeRowFromFrequencies = (
       alt: gnomadGenomes3.ac || null,
       altRef: gnomadGenomes3.an || null,
       cohort: {
-        cohortName: 'gnomAD Genomes (v3)',
+        cohortName: 'gnomAD Genomes (v3.1.2)',
         link: `https://gnomad.broadinstitute.org/variant/${locus}?dataset=gnomad_r3`,
       },
       frequency: toExponentialNotation(gnomadGenomes3.af),

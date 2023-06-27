@@ -582,7 +582,7 @@ const en = {
         clinvar: 'ClinVar',
         gnomAD: {
           title: 'gnomAD',
-          tooltip: 'gnomAD 3.1.1 Allele Frequency',
+          tooltip: 'gnomAD 3.1.2 Allele Frequency',
         },
         type: 'Type',
         variant_class: 'Variant class',
@@ -622,7 +622,7 @@ const en = {
         omim: 'OMIM',
         clinVar: 'ClinVar',
         gnomadGenome311: 'gnomAD Genome (v3.1.1)',
-        gnomadGenome3: 'gnomAD Genome (v3)',
+        gnomadGenome3: 'gnomAD Genome (v3.1.2)',
         dbSNP: 'dbSNP',
       },
       consequences: {
@@ -954,7 +954,7 @@ const en = {
         af: 'gnomAD Genome 2.1.1',
       },
       gnomad_genomes_3: {
-        af: 'gnomAD Genome 3',
+        af: 'gnomAD Genome 3.1.2',
       },
       gnomad_exomes_2_1_1: {
         af: 'gnomAD Exome 2.1.1',
