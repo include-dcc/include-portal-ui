@@ -128,7 +128,6 @@ export const GET_PARTICIPANT_ENTITY = gql`
               }
             }
             family_type
-
             files {
               hits {
                 total
@@ -192,6 +191,7 @@ export const GET_PARTICIPANT_ENTITY = gql`
             study {
               study_name
               external_id
+              study_code
             }
             study_id
             sex

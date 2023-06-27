@@ -166,7 +166,7 @@ const defaultColumns: ProColumnType[] = [
       }
 
       const ids = hydrateResults(studies?.hits?.edges || []).map(
-        (node: IVariantStudyEntity) => node.study_id,
+        (node: IVariantStudyEntity) => node.study_code,
       );
 
       return (
@@ -178,7 +178,7 @@ const defaultColumns: ProColumnType[] = [
               query: generateQuery({
                 newFilters: [
                   generateValueFilter({
-                    field: 'study_id',
+                    field: 'study_code',
                     value: ids,
                     index: INDEXES.PARTICIPANT,
                   }),

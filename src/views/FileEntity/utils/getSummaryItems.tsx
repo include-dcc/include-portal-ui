@@ -17,7 +17,7 @@ const getSummaryItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
   {
     label: intl.get('entities.study.study'),
     value: file?.study
-      ? `${file.study.study_name} (${file.study.study_id})`
+      ? `${file.study.study_name} (${file.study.study_code})`
       : TABLE_EMPTY_PLACE_HOLDER,
   },
   {

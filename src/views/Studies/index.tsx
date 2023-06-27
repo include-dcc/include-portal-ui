@@ -44,9 +44,9 @@ const columns: ProColumnType<any>[] = [
     title: 'Study Code',
     render: (record: IStudyEntity) =>
       record.website ? (
-        <ExternalLink href={record.website}>{record.study_id}</ExternalLink>
+        <ExternalLink href={record.website}>{record.study_code}</ExternalLink>
       ) : (
-        record.study_id
+        record.study_code
       ),
   },
   {
@@ -96,8 +96,8 @@ const columns: ProColumnType<any>[] = [
               query: generateQuery({
                 newFilters: [
                   generateValueFilter({
-                    field: 'study_id',
-                    value: [record.study_id],
+                    field: 'study_code',
+                    value: [record.study_code],
                     index: INDEXES.PARTICIPANT,
                   }),
                 ],
@@ -135,8 +135,8 @@ const columns: ProColumnType<any>[] = [
               query: generateQuery({
                 newFilters: [
                   generateValueFilter({
-                    field: 'study_id',
-                    value: [record.study_id],
+                    field: 'study_code',
+                    value: [record.study_code],
                     index: INDEXES.PARTICIPANT,
                   }),
                 ],
