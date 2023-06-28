@@ -10,7 +10,9 @@ import CardErrorPlaceholder from 'views/Dashboard/components/CardErrorPlaceHolde
 import CardHeader from 'views/Dashboard/components/CardHeader';
 import { DashboardCardProps } from 'views/Dashboard/components/DashboardCards';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
+import { VARIANT_REPO_QB_ID } from 'views/Variants/utils/constants';
 
+import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import PopoverContentLink from 'components/uiKit/PopoverContentLink';
 import { IUserSetOutput, SetType } from 'services/api/savedSet/models';
 import { SUPPORT_EMAIL } from 'store/report/thunks';
@@ -140,7 +142,6 @@ const SavedSets = ({ id, key, className = '' }: DashboardCardProps) => {
           >
             {getItemList(SetType.FILE, savedSets, fetchingError, isLoading, <FileTextOutlined />)}
           </TabPane>
-          {/* SJIP-507 mask save sets for deployment
           <TabPane
             tab={
               <div>
@@ -158,7 +159,7 @@ const SavedSets = ({ id, key, className = '' }: DashboardCardProps) => {
               <LineStyleIcon />,
               VARIANT_REPO_QB_ID,
             )}
-          </TabPane> */}
+          </TabPane>
         </Tabs>
       }
     />

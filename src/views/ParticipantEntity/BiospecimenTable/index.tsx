@@ -81,8 +81,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
             key="downloadSampleData"
           />,
         ],
-        // SJIP-520, disable download
-        enableTableExport: false,
+        enableTableExport: true,
         enableColumnSort: true,
         onColumnSortChange: (newState) =>
           dispatch(

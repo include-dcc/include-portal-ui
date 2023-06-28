@@ -11,7 +11,7 @@ export enum SectionId {
   FILES = 'files',
 }
 
-export const getLinks = (): IAnchorLink[] => {
+export const getLinks = (showFamilyTable: boolean): IAnchorLink[] => {
   const links = [
     { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
     { href: `#${SectionId.PROFILE}`, title: intl.get('entities.participant.profile') },
@@ -24,13 +24,12 @@ export const getLinks = (): IAnchorLink[] => {
     { href: `#${SectionId.FILES}`, title: intl.get('entities.file.file') },
   ];
 
-  // SJIP-497 / SJIP-458 back end fix needed
-  // if (showFamilyTable) {
-  //   links.splice(2, 0, {
-  //     href: `#${SectionId.FAMILY}`,
-  //     title: intl.get('entities.participant.family'),
-  //   });
-  // }
+  if (showFamilyTable) {
+    links.splice(2, 0, {
+      href: `#${SectionId.FAMILY}`,
+      title: intl.get('entities.participant.family'),
+    });
+  }
 
   return links;
 };
