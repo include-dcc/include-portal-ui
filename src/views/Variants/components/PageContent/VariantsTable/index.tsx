@@ -180,7 +180,7 @@ const defaultColumns: ProColumnType[] = [
               query: generateQuery({
                 newFilters: [
                   generateValueFilter({
-                    field: 'study_code',
+                    field: 'study.study_code',
                     value: ids,
                     index: INDEXES.PARTICIPANT,
                   }),
