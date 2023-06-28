@@ -87,7 +87,6 @@ const filterGroups: {
           'genes__gnomad__pli',
           'genes__gnomad__loeuf',
         ],
-        tooltips: ['genes__gnomad__pli', 'genes__gnomad__loeuf'],
         noDataOption: ['genes__gnomad__pli', 'genes__gnomad__loeuf'],
       },
       {
