@@ -304,7 +304,7 @@ const VariantsTable = ({
         <ProTable<ITableVariantEntity>
           tableId="variants_table"
           columns={defaultColumns}
-          enableRowSelection={false}
+          enableRowSelection
           initialColumnState={userInfo?.config.variants?.tables?.variants?.columns}
           wrapperClassName={styles.variantTabWrapper}
           loading={results.loading}
