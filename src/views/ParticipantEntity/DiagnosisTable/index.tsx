@@ -44,8 +44,7 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
       columns={getDiagnosisDefaultColumns()}
       initialColumnState={initialColumnState}
       headerConfig={{
-        // SJIP-520, disable download
-        enableTableExport: false,
+        enableTableExport: true,
         enableColumnSort: true,
         onColumnSortChange: (newState) =>
           dispatch(
