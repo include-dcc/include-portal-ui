@@ -26,6 +26,12 @@ export const getBiospecimensDefaultColumns = (): ProColumnType[] => [
       ),
   },
   {
+    key: 'files.biospecimens.container_id',
+    title: intl.get('entities.biospecimen.container_id'),
+    render: (biospecimen: IBiospecimenEntity) =>
+      biospecimen?.container_id || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
     key: 'files.biospecimens.sample_type',
     title: intl.get('entities.biospecimen.sample_type'),
     render: (biospecimen: IBiospecimenEntity) =>
@@ -44,13 +50,6 @@ export const getBiospecimensDefaultColumns = (): ProColumnType[] => [
     render: (biospecimen: IBiospecimenEntity) => (
       <AgeCell ageInDays={biospecimen?.age_at_biospecimen_collection} />
     ),
-  },
-  {
-    key: 'files.biospecimens.container_id',
-    title: intl.get('entities.biospecimen.container_id'),
-    render: (biospecimen: IBiospecimenEntity) =>
-      biospecimen?.container_id || TABLE_EMPTY_PLACE_HOLDER,
-    defaultHidden: true,
   },
   {
     key: 'files.biospecimens.volume_ul',
