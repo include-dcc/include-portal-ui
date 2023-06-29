@@ -89,7 +89,7 @@ const FilterList = ({
                   noDataInputOption={!group.noDataOption?.includes(facet)}
                   intervalDecimal={
                     group.intervalDecimal?.[facet] || group.intervalDecimal?.[facet] === 0
-                      ? group.intervalDecimal?.[facet]
+                      ? group.intervalDecimal[facet]
                       : undefined
                   }
                 />
