@@ -152,6 +152,9 @@ const defaultColumns: ProColumnType[] = [
     title: intl.get('screen.variants.table.gnomAD.title'),
     tooltip: intl.get('screen.variants.table.gnomAD.tooltip'),
     dataIndex: 'external_frequencies',
+    sorter: {
+      multiple: 1,
+    },
     render: (externalFrequencies: IExternalFrequenciesEntity) =>
       externalFrequencies?.gnomad_genomes_3?.af
         ? toExponentialNotation(externalFrequencies?.gnomad_genomes_3.af)
@@ -161,6 +164,9 @@ const defaultColumns: ProColumnType[] = [
     title: 'Studies',
     dataIndex: 'studies',
     key: 'studies',
+    sorter: {
+      multiple: 1,
+    },
     render: (studies: IArrangerResultsTree<IVariantStudyEntity>) => {
       const total = studies?.hits?.total ?? 0;
       if (total == 0) {
@@ -199,6 +205,9 @@ const defaultColumns: ProColumnType[] = [
     title: intl.get('screen.variants.table.participant.title'),
     tooltip: intl.get('screen.variants.table.participant.tooltip'),
     key: 'studies_participant',
+    sorter: {
+      multiple: 1,
+    },
     render: (v: IVariantEntity) => {
       const totalNbOfParticipants = v.internal_frequencies?.total?.pc || 0;
       const studies = v.studies;
@@ -249,6 +258,9 @@ const defaultColumns: ProColumnType[] = [
     tooltip: intl.get('screen.variants.table.alt.tooltip'),
     dataIndex: ['internal_frequencies', 'total', 'ac'],
     key: 'ac',
+    sorter: {
+      multiple: 1,
+    },
     render: (ac: string) => ac || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
@@ -256,6 +268,9 @@ const defaultColumns: ProColumnType[] = [
     tooltip: intl.get('screen.variants.table.homozygotes.tooltip'),
     dataIndex: 'internal_frequencies',
     key: 'homozygotes',
+    sorter: {
+      multiple: 1,
+    },
     render: (internalFrequencies: IVariantInternalFrequencies) =>
       internalFrequencies.total.hom ? numberWithCommas(internalFrequencies.total.hom) : 0,
   },
