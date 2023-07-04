@@ -96,7 +96,7 @@ const columns: ProColumnType<any>[] = [
               query: generateQuery({
                 newFilters: [
                   generateValueFilter({
-                    field: 'study_code',
+                    field: 'study.study_code',
                     value: [record.study_code],
                     index: INDEXES.PARTICIPANT,
                   }),
@@ -135,7 +135,7 @@ const columns: ProColumnType<any>[] = [
               query: generateQuery({
                 newFilters: [
                   generateValueFilter({
-                    field: 'study_code',
+                    field: 'study.study_code',
                     value: [record.study_code],
                     index: INDEXES.PARTICIPANT,
                   }),
