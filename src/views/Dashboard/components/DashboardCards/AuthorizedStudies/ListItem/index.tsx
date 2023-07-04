@@ -67,7 +67,7 @@ const AuthorizedStudiesListItem = ({ id, data }: OwnProps) => (
                 query: generateQuery({
                   newFilters: [
                     generateValueFilter({
-                      field: 'study_code',
+                      field: 'study.study_code',
                       value: [data.id],
                       index: INDEXES.PARTICIPANT,
                     }),
