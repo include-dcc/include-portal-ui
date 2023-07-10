@@ -1,38 +1,22 @@
 import intl from 'react-intl-universal';
+import BarChart from '@ferlab/ui/core/components/Charts/Bar';
 import Empty from '@ferlab/ui/core/components/Empty';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ArrangerValues } from '@ferlab/ui/core/data/arranger/formatting';
-import GridCard, { GridCardHeader } from '@ferlab/ui/core/view/v2/GridCard';
+import ResizableGridCard from '@ferlab/ui/core/layout/ResizableGridLayout/ResizableGridCard';
+import { aggregationToChartData } from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
 import { INDEXES } from 'graphql/constants';
-import { RawAggregation } from 'graphql/models';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { DATATYPE_QUERY } from 'graphql/summary/queries';
 import { isEmpty } from 'lodash';
 import { ARRANGER_API_PROJECT_URL } from 'provider/ApolloProvider';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
-import BarChart from 'components/uiKit/charts/Bar';
 import useApi from 'hooks/useApi';
-import { toChartData } from 'utils/charts';
 import { truncateString } from 'utils/string';
+import { getResizableGridDictionary } from 'utils/translation';
 
-interface OwnProps {
-  id: string;
-  className?: string;
-}
-
-const transformDataType = (results: RawAggregation) =>
-  (results?.data?.participant?.aggregations?.files__data_type.buckets || []).map(toChartData);
-
-const graphSetting: any = {
-  height: 300,
-  margin: {
-    bottom: 45,
-    left: 125,
-  },
-  enableLabel: false,
-  layout: 'horizontal',
-};
+import { DATA_TYPE_GRAPH_CARD_ID, UID } from '../utils/grid';
 
 const addToQuery = (field: string, key: string) =>
   updateActiveQueryField({
@@ -42,7 +26,7 @@ const addToQuery = (field: string, key: string) =>
     index: INDEXES.FILE,
   });
 
-const DataTypeGraphCard = ({ id, className = '' }: OwnProps) => {
+const DataTypeGraphCard = () => {
   const { sqon } = useParticipantResolvedSqon(DATA_EXPLORATION_QB_ID);
   const { loading, result } = useApi<any>({
     config: {
@@ -54,22 +38,56 @@ const DataTypeGraphCard = ({ id, className = '' }: OwnProps) => {
       },
     },
   });
-  const dataTypeResults = transformDataType(result);
+  const dataTypeResults = aggregationToChartData(
+    result?.data?.participant?.aggregations?.files__data_type.buckets,
+    result?.data?.participant?.hits?.total,
+  );
 
   return (
-    <GridCard
-      wrapperClassName={className}
+    <ResizableGridCard
+      gridUID={UID}
+      id={DATA_TYPE_GRAPH_CARD_ID}
+      dictionary={getResizableGridDictionary()}
       theme="shade"
       loading={loading}
       loadingType="spinner"
-      resizable
-      title={
-        <GridCardHeader
-          id={id}
-          title={intl.get('screen.dataExploration.tabs.summary.availableData.dataTypeTitle')}
-          withHandle
+      headerTitle={intl.get('screen.dataExploration.tabs.summary.availableData.dataTypeTitle')}
+      tsvSettings={{
+        data: [dataTypeResults],
+      }}
+      modalContent={
+        <BarChart
+          data={dataTypeResults}
+          axisLeft={{
+            legend: intl.get(
+              'screen.dataExploration.tabs.summary.graphs.dataTypeGraph.legendAxisLeft',
+            ),
+            legendPosition: 'middle',
+            legendOffset: -128,
+            format: (title: string) => truncateString(title, 15),
+          }}
+          tooltipLabel={(node: any) => node.data.id}
+          axisBottom={{
+            legend: intl.get(
+              'screen.dataExploration.tabs.summary.graphs.dataTypeGraph.legendAxisBottom',
+            ),
+            legendPosition: 'middle',
+            legendOffset: 35,
+          }}
+          onClick={(datum: any) => addToQuery('data_type', datum.indexValue as string)}
+          margin={{
+            bottom: 45,
+            left: 140,
+            right: 12,
+            top: 12,
+          }}
+          layout="horizontal"
         />
       }
+      modalSettings={{
+        width: 800,
+        height: 400,
+      }}
       content={
         <>
           {isEmpty(dataTypeResults) ? (
@@ -78,19 +96,29 @@ const DataTypeGraphCard = ({ id, className = '' }: OwnProps) => {
             <BarChart
               data={dataTypeResults}
               axisLeft={{
-                legend: 'Data Types',
+                legend: intl.get(
+                  'screen.dataExploration.tabs.summary.graphs.dataTypeGraph.legendAxisLeft',
+                ),
                 legendPosition: 'middle',
-                legendOffset: -120,
+                legendOffset: -128,
                 format: (title: string) => truncateString(title, 15),
               }}
-              tooltipLabel={(node) => node.data.id}
+              tooltipLabel={(node: any) => node.data.id}
               axisBottom={{
-                legend: '# of participants',
+                legend: intl.get(
+                  'screen.dataExploration.tabs.summary.graphs.dataTypeGraph.legendAxisBottom',
+                ),
                 legendPosition: 'middle',
                 legendOffset: 35,
               }}
-              onClick={(datum) => addToQuery('data_type', datum.indexValue as string)}
-              {...graphSetting}
+              onClick={(datum: any) => addToQuery('data_type', datum.indexValue as string)}
+              margin={{
+                bottom: 45,
+                left: 140,
+                right: 12,
+                top: 12,
+              }}
+              layout="horizontal"
             />
           )}
         </>
