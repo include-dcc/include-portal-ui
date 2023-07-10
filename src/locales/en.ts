@@ -733,6 +733,25 @@ const en = {
       tabs: {
         summary: {
           title: 'Summary',
+          graphs: {
+            dataCategory: {
+              legendAxisLeft: 'Data Category',
+              legendAxisBottom: '# of participants',
+            },
+            dataTypeGraph: {
+              legendAxisLeft: 'Data Types',
+              legendAxisBottom: '# of participants',
+            },
+          },
+          download: {
+            fileNameTemplate: 'include-%name-%type-%date%extension',
+            fileNameDateFormat: 'yyyy-MM-dd',
+            download: 'Download',
+            preview: 'Download Preview - ',
+            data: 'Download Data',
+            svg: 'Download SVG',
+            png: 'Download PNG',
+          },
           demographic: {
             cardTitle: 'Demographics',
             sexTitle: 'Sex',
