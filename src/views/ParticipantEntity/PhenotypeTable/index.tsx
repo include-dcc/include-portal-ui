@@ -67,6 +67,7 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
               columnStates: userInfo?.config.participants?.tables?.phenotype?.columns,
               columns: getPhenotypeDefaultColumns(),
               index: INDEXES.PARTICIPANT,
+              fileName: 'phenotypes',
               sqon: generateQuery({
                 newFilters: [
                   generateValueFilter({

@@ -104,6 +104,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
               columnStates: userInfo?.config.participants?.tables?.biospecimens?.columns,
               columns: getBiospecimensDefaultColumns(),
               index: INDEXES.PARTICIPANT,
+              fileName: 'biospecimens',
               sqon: generateQuery({
                 newFilters: [
                   generateValueFilter({

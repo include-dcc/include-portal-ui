@@ -67,6 +67,7 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
               columnStates: userInfo?.config.participants?.tables?.diagnosis?.columns,
               columns: getDiagnosisDefaultColumns(),
               index: INDEXES.PARTICIPANT,
+              fileName: 'diagnoses',
               sqon: generateQuery({
                 newFilters: [
                   generateValueFilter({

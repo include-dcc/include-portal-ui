@@ -13,7 +13,11 @@ import DownSyndromeStatus from '../FamilyTable/DownSyndromeStatus';
 interface IFamilyMember {
   key: string;
   participant_id: string;
-  relation: string;
+  family: {
+    family_relations: {
+      relation: string;
+    };
+  };
   down_syndrome_status?: string;
 }
 
@@ -35,15 +39,16 @@ export const getFamilyColumns = (current_participant_id: string): ProColumnType[
     },
   },
   {
-    key: 'relation',
-    dataIndex: 'relation',
+    key: 'family.family_relations.relation',
     title: intl.get('entities.participant.family_relationship'),
-    render: (relation: string) =>
-      relation ? (
+    render: (member: IFamilyMember) => {
+      const relation = member.family.family_relations.relation;
+      return relation ? (
         <Tag color={relation === 'Proband' ? 'purple' : ''}>{capitalize(relation)}</Tag>
       ) : (
         TABLE_EMPTY_PLACE_HOLDER
-      ),
+      );
+    },
   },
   {
     key: 'down_syndrome_status',
@@ -65,7 +70,11 @@ export const getFamilyColumns = (current_participant_id: string): ProColumnType[
 const getCurrentFamilyMember = (participant: IParticipantEntity): IFamilyMember => ({
   key: participant.participant_id,
   participant_id: participant.participant_id,
-  relation: 'Proband',
+  family: {
+    family_relations: {
+      relation: 'Proband',
+    },
+  },
   down_syndrome_status: participant.down_syndrome_status,
 });
 
@@ -74,7 +83,11 @@ export const getFamilyMembers = (participant: IParticipantEntity): IFamilyMember
     participant?.family?.family_relations.hits?.edges?.map((e) => ({
       key: e.node.related_participant_id,
       participant_id: e.node.related_participant_id,
-      relation: e.node.relation,
+      family: {
+        family_relations: {
+          relation: e.node.relation,
+        },
+      },
     })) || [];
 
   return [getCurrentFamilyMember(participant), ...otherFamilyMembers];
