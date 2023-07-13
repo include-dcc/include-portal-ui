@@ -369,7 +369,7 @@ const fr = {
       rolesTitle: 'Roles',
       researchAreaTitle: 'Research area or area of interest',
       noRoles: 'No roles',
-      usageTitle: 'Intended Use of the INCLUDE Portal Data',
+      usageTitle: 'Intended use of the INCLUDE Portal Data',
       noUsage: 'No intended usages',
       editProfileBtn: 'Edit Profile',
       communityBtn: 'Community',

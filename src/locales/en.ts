@@ -412,10 +412,10 @@ const en = {
   screen: {
     memberProfile: {
       notFound: 'User not found',
-      rolesTitle: 'Roles',
+      rolesTitle: 'Role',
       researchAreaTitle: 'Research area or area of interest',
-      noRoles: 'No roles',
-      usageTitle: 'Intended Use of the INCLUDE Portal Data',
+      noRoles: 'No role',
+      usageTitle: 'Intended use of the INCLUDE Portal Data',
       noUsage: 'No intended usages',
       editProfileBtn: 'Edit Profile',
       communityBtn: 'Community',
