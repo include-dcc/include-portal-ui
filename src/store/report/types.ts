@@ -19,6 +19,7 @@ export type initialState = {
 
 export type TFetchTSVArgs = {
   index: string;
+  fileName?: string;
   columnStates: TColumnStates | undefined;
   columns: ProColumnType[];
   sqon: any;

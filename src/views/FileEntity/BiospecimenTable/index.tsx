@@ -61,12 +61,30 @@ const BiospecimenTable = ({ file, loading }: OwnProps) => {
       columns={getBiospecimenColumns()}
       initialColumnState={userInfo?.config.files?.tables?.biospecimens?.columns}
       headerConfig={{
-        enableTableExport: true,
+        enableTableExport: false,
         enableColumnSort: true,
         onColumnSortChange: (newState) =>
           dispatch(
             updateUserConfig({ files: { tables: { biospecimens: { columns: newState } } } }),
           ),
+        // onTableExportClick: () =>
+        //   dispatch(
+        //     fetchTsvReport({
+        //       columnStates: userInfo?.config.files?.tables?.biospecimens?.columns,
+        //       columns: getBiospecimenColumns(),
+        //       index: INDEXES.FILE,
+        //       fileName: 'participants-samples',
+        //       sqon: generateQuery({
+        //         newFilters: [
+        //           generateValueFilter({
+        //             field: 'file_id',
+        //             index: INDEXES.FILE,
+        //             value: file?.file_id ? [file?.file_id] : [],
+        //           }),
+        //         ],
+        //       }),
+        //     }),
+        //   ),
       }}
     />
   );
