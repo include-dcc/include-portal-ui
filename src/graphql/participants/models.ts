@@ -62,15 +62,15 @@ export interface IParticipantObservedPhenotype {
   is_tagged: boolean;
 }
 
-export interface IFamilyRelation {
+export interface IFamilyRelationToProband {
   id: string;
-  related_participant_id: string;
-  relation: string;
+  role: string;
+  participant_id: string;
 }
 
 export interface IParticipantFamily {
   family_id: string;
-  family_relations: ArrangerResultsTree<IFamilyRelation>;
+  relations_to_proband: ArrangerResultsTree<IFamilyRelationToProband>;
 }
 
 export interface IParticipantEntity {

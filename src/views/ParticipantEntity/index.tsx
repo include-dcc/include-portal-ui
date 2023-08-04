@@ -13,18 +13,20 @@ import FileTable from './FileTable';
 import PhenotypeTable from './PhenotypeTable';
 import SummaryHeader from './SummaryHeader';
 import ParticipantEntityTitle from './Title';
+import { IFamilyRelationToProband } from 'graphql/participants/models';
 
 const ParticipantEntity = () => {
   const { participant_id } = useParams<{ participant_id: string }>();
 
-  const { participant, loading } = useParticipantEntity({
+  const { participants, loading } = useParticipantEntity({
     field: 'participant_id',
     value: participant_id,
   });
+  const participant = participants ? participants[0] : undefined;
 
-  const showFamilyTable = Boolean(
-    participant?.family?.family_id && participant?.family?.family_relations?.hits?.edges?.length,
-  );
+  const familyMembers: IFamilyRelationToProband[] =
+    participant?.family?.relations_to_proband?.hits?.edges?.map((x) => ({ ...x.node })) || [];
+  const showFamilyTable = !loading && familyMembers.length > 0;
 
   return (
     <EntityPage
@@ -52,7 +54,7 @@ const ParticipantEntity = () => {
         header={intl.get('entities.participant.profile')}
       />
 
-      {showFamilyTable && <FamilyTable participant={participant!} loading={loading} />}
+      {showFamilyTable && <FamilyTable familyMembers={familyMembers} participant={participant!} />}
 
       <DiagnosisTable participant={participant} loading={loading} />
 

@@ -48,9 +48,9 @@ export const useParticipantEntity = ({
   field = 'participant_id',
   value,
   query = GET_PARTICIPANT_ENTITY,
-}: IUseParticipantProps): { loading: boolean; participant?: IParticipantEntity } => {
+}: IUseParticipantProps): { loading: boolean; participants?: IParticipantEntity[] } => {
   const sqon = {
-    content: [{ content: { field, value, index: INDEXES.PARTICIPANT }, op: 'in' }],
+    content: [{ content: { field, value: [value].flat(), index: INDEXES.PARTICIPANT }, op: 'in' }],
     op: 'and',
   };
 
@@ -58,11 +58,11 @@ export const useParticipantEntity = ({
     variables: { sqon },
   });
 
-  const participant = result?.participant?.hits?.edges[0]?.node || undefined;
+  const participants = result?.participant?.hits?.edges?.map((x) => x.node) || undefined;
 
   return {
     loading,
-    participant,
+    participants,
   };
 };
 

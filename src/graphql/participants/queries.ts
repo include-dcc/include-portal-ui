@@ -116,12 +116,12 @@ export const GET_PARTICIPANT_ENTITY = gql`
             external_id
             family {
               family_id
-              family_relations {
+              relations_to_proband {
                 hits {
                   edges {
                     node {
-                      relation
-                      related_participant_id
+                      role
+                      participant_id
                     }
                   }
                 }
@@ -239,6 +239,7 @@ export const GET_PARTICIPANT_DOWN_SYNDROME_STATUS = gql`
       hits(filters: $sqon) {
         edges {
           node {
+            participant_id
             down_syndrome_status
           }
         }
