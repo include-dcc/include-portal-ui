@@ -33,7 +33,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
 
   const { biospecimens, total } = getBiospecimensFromParticipant(participant);
 
-  const userColumnPreferences = userInfo?.config.participants?.tables?.biospecimens?.columns || [];
+  const userColumnPreferences = userInfo?.config?.participants?.tables?.biospecimens?.columns || [];
   const userColumnPreferencesOrDefault =
     userColumnPreferences.length > 0
       ? [...userColumnPreferences]

@@ -26,7 +26,7 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
     participant?.diagnosis?.hits?.edges?.map((e) => ({ key: e.node.diagnosis_id, ...e.node })) ||
     [];
 
-  const userColumnPreferences = userInfo?.config.participants?.tables?.diagnosis?.columns || [];
+  const userColumnPreferences = userInfo?.config?.participants?.tables?.diagnosis?.columns || [];
   const userColumnPreferencesOrDefault =
     userColumnPreferences.length > 0
       ? [...userColumnPreferences]

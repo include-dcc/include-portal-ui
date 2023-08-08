@@ -26,7 +26,7 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
   const phenotype: IParticipantPhenotype[] =
     participant?.phenotype?.hits?.edges?.map((e) => ({ key: e.node.fhir_id, ...e.node })) || [];
 
-  const userColumnPreferences = userInfo?.config.participants?.tables?.phenotype?.columns || [];
+  const userColumnPreferences = userInfo?.config?.participants?.tables?.phenotype?.columns || [];
   const userColumnPreferencesOrDefault =
     userColumnPreferences.length > 0
       ? [...userColumnPreferences]
