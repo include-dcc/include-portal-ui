@@ -40,7 +40,7 @@ const getDiagnosisDefaultColumns = (): ProColumnType[] => [
     },
   },
   {
-    key: 'diagnosis_source_text',
+    key: 'source_text',
     title: intl.get('entities.participant.source_text'),
     render: (diagnosis: IParticipantDiagnosis) => {
       const sourceTexts = diagnosis?.source_text;
@@ -70,7 +70,7 @@ const getDiagnosisDefaultColumns = (): ProColumnType[] => [
       ),
   },
   {
-    key: 'mondo_term',
+    key: 'mondo_id_diagnosis',
     title: intl.get('entities.participant.mondo_term'),
     tooltip: intl.get('entities.participant.mondo_term_tooltip'),
     render: (diagnosis: IParticipantDiagnosis) =>

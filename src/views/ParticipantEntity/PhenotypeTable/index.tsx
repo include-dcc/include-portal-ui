@@ -26,12 +26,20 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
   const phenotype: IParticipantPhenotype[] =
     participant?.phenotype?.hits?.edges?.map((e) => ({ key: e.node.fhir_id, ...e.node })) || [];
 
-  const initialColumnState = (userInfo?.config.participants?.tables?.phenotype?.columns || []).map(
-    (column) => ({
-      ...column,
-      key: column.key.replace(COLUMNS_PREFIX, ''),
-    }),
-  );
+  const userColumnPreferences = userInfo?.config?.participants?.tables?.phenotype?.columns || [];
+  const userColumnPreferencesOrDefault =
+    userColumnPreferences.length > 0
+      ? [...userColumnPreferences]
+      : getPhenotypeDefaultColumns().map((c, index) => ({
+          visible: true,
+          index,
+          key: `${COLUMNS_PREFIX}${c.key}`,
+        }));
+
+  const initialColumnState = userColumnPreferencesOrDefault.map((column) => ({
+    ...column,
+    key: column.key.replace(COLUMNS_PREFIX, ''),
+  }));
 
   return (
     <EntityTable
@@ -64,7 +72,7 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
         onTableExportClick: () =>
           dispatch(
             fetchTsvReport({
-              columnStates: userInfo?.config.participants?.tables?.phenotype?.columns,
+              columnStates: userColumnPreferencesOrDefault,
               columns: getPhenotypeDefaultColumns(),
               index: INDEXES.PARTICIPANT,
               fileName: 'phenotypes',

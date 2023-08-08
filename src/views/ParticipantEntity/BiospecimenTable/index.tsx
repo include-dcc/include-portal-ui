@@ -33,9 +33,17 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
 
   const { biospecimens, total } = getBiospecimensFromParticipant(participant);
 
-  const initialColumnState = (
-    userInfo?.config.participants?.tables?.biospecimens?.columns || []
-  ).map((column) => ({
+  const userColumnPreferences = userInfo?.config?.participants?.tables?.biospecimens?.columns || [];
+  const userColumnPreferencesOrDefault =
+    userColumnPreferences.length > 0
+      ? [...userColumnPreferences]
+      : getBiospecimensDefaultColumns().map((c, index) => ({
+          visible: true,
+          index,
+          key: `${COLUMNS_PREFIX}${c.key}`,
+        }));
+
+  const initialColumnState = userColumnPreferencesOrDefault.map((column) => ({
     ...column,
     key: column.key.replace(COLUMNS_PREFIX, ''),
   }));
@@ -101,7 +109,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
         onTableExportClick: () =>
           dispatch(
             fetchTsvReport({
-              columnStates: userInfo?.config.participants?.tables?.biospecimens?.columns,
+              columnStates: userColumnPreferencesOrDefault,
               columns: getBiospecimensDefaultColumns(),
               index: INDEXES.PARTICIPANT,
               fileName: 'biospecimens',
