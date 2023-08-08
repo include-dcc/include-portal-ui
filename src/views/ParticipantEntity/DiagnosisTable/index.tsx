@@ -26,12 +26,20 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
     participant?.diagnosis?.hits?.edges?.map((e) => ({ key: e.node.diagnosis_id, ...e.node })) ||
     [];
 
-  const initialColumnState = (userInfo?.config.participants?.tables?.diagnosis?.columns || []).map(
-    (column) => ({
-      ...column,
-      key: column.key.replace(COLUMNS_PREFIX, ''),
-    }),
-  );
+  const userColumnPreferences = userInfo?.config.participants?.tables?.diagnosis?.columns || [];
+  const userColumnPreferencesOrDefault =
+    userColumnPreferences.length > 0
+      ? [...userColumnPreferences]
+      : getDiagnosisDefaultColumns().map((c, index) => ({
+          visible: true,
+          index,
+          key: `${COLUMNS_PREFIX}${c.key}`,
+        }));
+
+  const initialColumnState = userColumnPreferencesOrDefault.map((column) => ({
+    ...column,
+    key: column.key.replace(COLUMNS_PREFIX, ''),
+  }));
 
   return (
     <EntityTable
@@ -64,7 +72,7 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
         onTableExportClick: () =>
           dispatch(
             fetchTsvReport({
-              columnStates: userInfo?.config.participants?.tables?.diagnosis?.columns,
+              columnStates: userColumnPreferencesOrDefault,
               columns: getDiagnosisDefaultColumns(),
               index: INDEXES.PARTICIPANT,
               fileName: 'diagnoses',

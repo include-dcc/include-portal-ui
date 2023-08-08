@@ -8,6 +8,7 @@ import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
+import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -20,11 +21,28 @@ interface OwnProps {
   loading: boolean;
 }
 
+const COLUMNS_PREFIX = 'participants.biospecimens.';
+
 const BiospecimenTable = ({ file, loading }: OwnProps) => {
   const { userInfo } = useUser();
   const dispatch = useDispatch();
 
   const biospecimens = getBiospecimensFromFile(file);
+
+  const userColumnPreferences = userInfo?.config?.files?.tables?.biospecimens?.columns || [];
+  const userColumnPreferencesOrDefault =
+    userColumnPreferences.length > 0
+      ? [...userColumnPreferences]
+      : getBiospecimenColumns().map((c, index) => ({
+          visible: true,
+          index,
+          key: `${COLUMNS_PREFIX}${c.key}`,
+        }));
+
+  const initialColumnState = userColumnPreferencesOrDefault.map((column) => ({
+    ...column,
+    key: column.key.replace(COLUMNS_PREFIX, ''),
+  }));
 
   return (
     <EntityTable
@@ -59,32 +77,43 @@ const BiospecimenTable = ({ file, loading }: OwnProps) => {
       ]}
       header={intl.get('entities.file.participant_sample')}
       columns={getBiospecimenColumns()}
-      initialColumnState={userInfo?.config.files?.tables?.biospecimens?.columns}
+      initialColumnState={initialColumnState}
       headerConfig={{
-        enableTableExport: false,
+        enableTableExport: true,
         enableColumnSort: true,
         onColumnSortChange: (newState) =>
           dispatch(
-            updateUserConfig({ files: { tables: { biospecimens: { columns: newState } } } }),
+            updateUserConfig({
+              files: {
+                tables: {
+                  biospecimens: {
+                    columns: newState.map((column) => ({
+                      ...column,
+                      key: `${COLUMNS_PREFIX}${column.key}`,
+                    })),
+                  },
+                },
+              },
+            }),
           ),
-        // onTableExportClick: () =>
-        //   dispatch(
-        //     fetchTsvReport({
-        //       columnStates: userInfo?.config.files?.tables?.biospecimens?.columns,
-        //       columns: getBiospecimenColumns(),
-        //       index: INDEXES.FILE,
-        //       fileName: 'participants-samples',
-        //       sqon: generateQuery({
-        //         newFilters: [
-        //           generateValueFilter({
-        //             field: 'file_id',
-        //             index: INDEXES.FILE,
-        //             value: file?.file_id ? [file?.file_id] : [],
-        //           }),
-        //         ],
-        //       }),
-        //     }),
-        //   ),
+        onTableExportClick: () =>
+          dispatch(
+            fetchTsvReport({
+              columnStates: userColumnPreferencesOrDefault,
+              columns: getBiospecimenColumns(),
+              index: INDEXES.FILE,
+              fileName: 'participants-samples',
+              sqon: generateQuery({
+                newFilters: [
+                  generateValueFilter({
+                    field: 'file_id',
+                    index: INDEXES.FILE,
+                    value: file?.file_id ? [file?.file_id] : [],
+                  }),
+                ],
+              }),
+            }),
+          ),
       }}
     />
   );
