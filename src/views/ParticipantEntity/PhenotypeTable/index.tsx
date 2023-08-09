@@ -1,23 +1,24 @@
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { EntityTable } from '@ferlab/ui/core/pages/EntityPage';
 import { INDEXES } from 'graphql/constants';
 import { IParticipantEntity, IParticipantPhenotype } from 'graphql/participants/models';
 
-import { fetchTsvReport } from 'store/report/thunks';
+import { fetchLocalTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 
 import { SectionId } from '../utils/anchorLinks';
 import getPhenotypeDefaultColumns from '../utils/getPhenotypeColumns';
 
-const COLUMNS_PREFIX = 'phenotype.';
-
 interface OwnProps {
   participant?: IParticipantEntity;
   loading: boolean;
 }
+
+// 'hpo term', at this moment, is computed at the table cell level.
+// To avoid refactoring, the field is simply excluded from the tsv.
+const cbExcludeHpoTermKey = (c: { key: string }) => c.key !== 'hpo_term';
 
 const PhenotypeTable = ({ participant, loading }: OwnProps) => {
   const { userInfo } = useUser();
@@ -26,20 +27,17 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
   const phenotype: IParticipantPhenotype[] =
     participant?.phenotype?.hits?.edges?.map((e) => ({ key: e.node.fhir_id, ...e.node })) || [];
 
+  const phenotypesDefaultColumns = getPhenotypeDefaultColumns();
+
   const userColumnPreferences = userInfo?.config?.participants?.tables?.phenotype?.columns || [];
   const userColumnPreferencesOrDefault =
     userColumnPreferences.length > 0
       ? [...userColumnPreferences]
-      : getPhenotypeDefaultColumns().map((c, index) => ({
+      : phenotypesDefaultColumns.map((c, index) => ({
           visible: true,
           index,
-          key: `${COLUMNS_PREFIX}${c.key}`,
+          key: c.key,
         }));
-
-  const initialColumnState = userColumnPreferencesOrDefault.map((column) => ({
-    ...column,
-    key: column.key.replace(COLUMNS_PREFIX, ''),
-  }));
 
   return (
     <EntityTable
@@ -49,8 +47,8 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
       total={phenotype.length}
       title={intl.get('entities.participant.phenotype')}
       header={intl.get('entities.participant.phenotype')}
-      columns={getPhenotypeDefaultColumns()}
-      initialColumnState={initialColumnState}
+      columns={phenotypesDefaultColumns}
+      initialColumnState={userColumnPreferencesOrDefault}
       headerConfig={{
         enableTableExport: true,
         enableColumnSort: true,
@@ -60,10 +58,7 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
               participants: {
                 tables: {
                   phenotype: {
-                    columns: newState.map((column) => ({
-                      ...column,
-                      key: `${COLUMNS_PREFIX}${column.key}`,
-                    })),
+                    columns: newState,
                   },
                 },
               },
@@ -71,20 +66,15 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
           ),
         onTableExportClick: () =>
           dispatch(
-            fetchTsvReport({
-              columnStates: userColumnPreferencesOrDefault,
-              columns: getPhenotypeDefaultColumns(),
-              index: INDEXES.PARTICIPANT,
+            fetchLocalTsvReport({
               fileName: 'phenotypes',
-              sqon: generateQuery({
-                newFilters: [
-                  generateValueFilter({
-                    field: 'participant_id',
-                    index: INDEXES.PARTICIPANT,
-                    value: participant?.participant_id ? [participant?.participant_id] : [],
-                  }),
-                ],
-              }),
+              index: INDEXES.PARTICIPANT,
+              headers: phenotypesDefaultColumns.filter(cbExcludeHpoTermKey),
+              cols: userColumnPreferencesOrDefault.filter(cbExcludeHpoTermKey).map((x) => ({
+                visible: x.visible,
+                key: x.key,
+              })),
+              rows: phenotype,
             }),
           ),
       }}
