@@ -1,26 +1,25 @@
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { Link } from 'react-router-dom';
+import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { EntityTable } from '@ferlab/ui/core/pages/EntityPage';
+import { Tag } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useParticipantEntity } from 'graphql/participants/actions';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { IFamilyRelationToProband } from 'graphql/participants/models';
 import { GET_PARTICIPANT_DOWN_SYNDROME_STATUS } from 'graphql/participants/queries';
+import { capitalize } from 'lodash';
 
-import { fetchTsvReport } from 'store/report/thunks';
+import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import { fetchLocalTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
+import { STATIC_ROUTES } from 'utils/routes';
 
 import { SectionId } from '../utils/anchorLinks';
 
 import FamilyIdLink from './FamilyIdLink';
-import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
-import { Link } from 'react-router-dom';
-import { STATIC_ROUTES } from 'utils/routes';
-import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { Tag } from 'antd';
-import { capitalize } from 'lodash';
 
 interface OwnProps {
   participant: IParticipantEntity;
@@ -82,20 +81,34 @@ const FamilyTable = ({ familyMembers = [], participant }: OwnProps) => {
   const { userInfo } = useUser();
   const dispatch = useDispatch();
 
+  const familyDefaultColumns = getFamilyColumns(participant.participant_id);
+
+  const userColumnPreferences = userInfo?.config?.participants?.tables?.family?.columns || [];
+  const userColumnPreferencesOrDefault =
+    userColumnPreferences.length > 0
+      ? [...userColumnPreferences]
+      : familyDefaultColumns.map((c, index) => ({
+          visible: true,
+          index,
+          key: c.key,
+        }));
+
   const sortedFamilyMembers = sortMembersForDisplay(participant.participant_id, familyMembers);
+
+  const rows = sortedFamilyMembers.map((x) => ({
+    key: x.participant_id,
+    participant_id: x.participant_id,
+    role: x.role,
+    down_syndrome_status: participantsWithDownSyndromeStatus.find(
+      (y) => y.participant_id === x.participant_id,
+    )?.down_syndrome_status,
+  }));
 
   return (
     <EntityTable
       id={SectionId.FAMILY}
       loading={loadDownSyndromStatus}
-      data={sortedFamilyMembers.map((x) => ({
-        key: x.participant_id,
-        participant_id: x.participant_id,
-        role: x.role,
-        down_syndrome_status: participantsWithDownSyndromeStatus.find(
-          (y) => y.participant_id === x.participant_id,
-        )?.down_syndrome_status,
-      }))}
+      data={rows}
       title={intl.get('entities.participant.family')}
       header={[
         intl.get('entities.participant.family_id'),
@@ -104,7 +117,7 @@ const FamilyTable = ({ familyMembers = [], participant }: OwnProps) => {
         ')',
       ]}
       columns={getFamilyColumns(participant.participant_id)}
-      initialColumnState={userInfo?.config?.participants?.tables?.family?.columns}
+      initialColumnState={userColumnPreferencesOrDefault}
       headerConfig={{
         enableTableExport: true,
         enableColumnSort: true,
@@ -114,20 +127,15 @@ const FamilyTable = ({ familyMembers = [], participant }: OwnProps) => {
           ),
         onTableExportClick: () =>
           dispatch(
-            fetchTsvReport({
-              columnStates: userInfo?.config?.participants?.tables?.family?.columns,
-              columns: getFamilyColumns(participant.participant_id),
-              index: INDEXES.PARTICIPANT,
+            fetchLocalTsvReport({
               fileName: 'family',
-              sqon: generateQuery({
-                newFilters: [
-                  generateValueFilter({
-                    field: 'participant_id',
-                    index: INDEXES.PARTICIPANT,
-                    value: familyMembers.map((x) => x.participant_id),
-                  }),
-                ],
-              }),
+              index: INDEXES.PARTICIPANT,
+              headers: familyDefaultColumns,
+              cols: userColumnPreferencesOrDefault.map((x) => ({
+                visible: x.visible,
+                key: x.key,
+              })),
+              rows,
             }),
           ),
       }}

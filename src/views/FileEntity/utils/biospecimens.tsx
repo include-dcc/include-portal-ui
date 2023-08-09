@@ -20,7 +20,7 @@ export const getBiospecimenColumns = (): ProColumnType[] => [
   },
   {
     key: 'study_code',
-    dataIndex: ['study', 'study_code'],
+    dataIndex: ['study_code'],
     title: intl.get('entities.study.study'),
     render: (study_code: string) => study_code || TABLE_EMPTY_PLACE_HOLDER,
   },
@@ -67,6 +67,8 @@ export const getBiospecimensFromFile = (file?: IFileEntity) => {
     participant.biospecimens.hits.edges.map((biospecimen) => ({
       ...participant,
       ...biospecimen.node,
+      //study_code here simplifies further data manipulation
+      study_code: participant.study.study_code,
     })),
   );
 };

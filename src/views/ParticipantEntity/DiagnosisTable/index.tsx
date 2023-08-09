@@ -1,18 +1,15 @@
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { EntityTable } from '@ferlab/ui/core/pages/EntityPage';
 import { INDEXES } from 'graphql/constants';
 import { IParticipantDiagnosis, IParticipantEntity } from 'graphql/participants/models';
 
-import { fetchTsvReport } from 'store/report/thunks';
+import { fetchLocalTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 
 import { SectionId } from '../utils/anchorLinks';
 import getDiagnosisDefaultColumns from '../utils/getDiagnosisColumns';
-
-const COLUMNS_PREFIX = 'diagnosis.';
 
 interface OwnProps {
   participant?: IParticipantEntity;
@@ -26,20 +23,17 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
     participant?.diagnosis?.hits?.edges?.map((e) => ({ key: e.node.diagnosis_id, ...e.node })) ||
     [];
 
+  const diagnosisDefaultColumns = getDiagnosisDefaultColumns();
+
   const userColumnPreferences = userInfo?.config?.participants?.tables?.diagnosis?.columns || [];
   const userColumnPreferencesOrDefault =
     userColumnPreferences.length > 0
       ? [...userColumnPreferences]
-      : getDiagnosisDefaultColumns().map((c, index) => ({
+      : diagnosisDefaultColumns.map((c, index) => ({
           visible: true,
           index,
-          key: `${COLUMNS_PREFIX}${c.key}`,
+          key: c.key,
         }));
-
-  const initialColumnState = userColumnPreferencesOrDefault.map((column) => ({
-    ...column,
-    key: column.key.replace(COLUMNS_PREFIX, ''),
-  }));
 
   return (
     <EntityTable
@@ -50,7 +44,7 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
       title={intl.get('entities.participant.diagnosis')}
       header={intl.get('entities.participant.diagnosis')}
       columns={getDiagnosisDefaultColumns()}
-      initialColumnState={initialColumnState}
+      initialColumnState={userColumnPreferencesOrDefault}
       headerConfig={{
         enableTableExport: true,
         enableColumnSort: true,
@@ -60,10 +54,7 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
               participants: {
                 tables: {
                   diagnosis: {
-                    columns: newState.map((column) => ({
-                      ...column,
-                      key: `${COLUMNS_PREFIX}${column.key}`,
-                    })),
+                    columns: newState,
                   },
                 },
               },
@@ -71,20 +62,15 @@ const DiagnosisTable = ({ participant, loading }: OwnProps) => {
           ),
         onTableExportClick: () =>
           dispatch(
-            fetchTsvReport({
-              columnStates: userColumnPreferencesOrDefault,
-              columns: getDiagnosisDefaultColumns(),
-              index: INDEXES.PARTICIPANT,
+            fetchLocalTsvReport({
               fileName: 'diagnoses',
-              sqon: generateQuery({
-                newFilters: [
-                  generateValueFilter({
-                    field: 'participant_id',
-                    index: INDEXES.PARTICIPANT,
-                    value: participant?.participant_id ? [participant?.participant_id] : [],
-                  }),
-                ],
-              }),
+              index: INDEXES.PARTICIPANT,
+              headers: diagnosisDefaultColumns,
+              cols: userColumnPreferencesOrDefault.map((x) => ({
+                visible: x.visible,
+                key: x.key,
+              })),
+              rows: diagnoses,
             }),
           ),
       }}

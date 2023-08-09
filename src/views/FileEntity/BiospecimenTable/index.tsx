@@ -8,7 +8,7 @@ import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
-import { fetchTsvReport } from 'store/report/thunks';
+import { fetchLocalTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -21,28 +21,22 @@ interface OwnProps {
   loading: boolean;
 }
 
-const COLUMNS_PREFIX = 'participants.biospecimens.';
-
 const BiospecimenTable = ({ file, loading }: OwnProps) => {
   const { userInfo } = useUser();
   const dispatch = useDispatch();
 
   const biospecimens = getBiospecimensFromFile(file);
+  const biospecimensDefaultColumns = getBiospecimenColumns();
 
   const userColumnPreferences = userInfo?.config?.files?.tables?.biospecimens?.columns || [];
   const userColumnPreferencesOrDefault =
     userColumnPreferences.length > 0
       ? [...userColumnPreferences]
-      : getBiospecimenColumns().map((c, index) => ({
+      : biospecimensDefaultColumns.map((c, index) => ({
           visible: true,
           index,
-          key: `${COLUMNS_PREFIX}${c.key}`,
+          key: c.key,
         }));
-
-  const initialColumnState = userColumnPreferencesOrDefault.map((column) => ({
-    ...column,
-    key: column.key.replace(COLUMNS_PREFIX, ''),
-  }));
 
   return (
     <EntityTable
@@ -76,8 +70,8 @@ const BiospecimenTable = ({ file, loading }: OwnProps) => {
         </EntityTableRedirectLink>,
       ]}
       header={intl.get('entities.file.participant_sample')}
-      columns={getBiospecimenColumns()}
-      initialColumnState={initialColumnState}
+      columns={biospecimensDefaultColumns}
+      initialColumnState={userColumnPreferencesOrDefault}
       headerConfig={{
         enableTableExport: true,
         enableColumnSort: true,
@@ -87,10 +81,7 @@ const BiospecimenTable = ({ file, loading }: OwnProps) => {
               files: {
                 tables: {
                   biospecimens: {
-                    columns: newState.map((column) => ({
-                      ...column,
-                      key: `${COLUMNS_PREFIX}${column.key}`,
-                    })),
+                    columns: newState,
                   },
                 },
               },
@@ -98,20 +89,15 @@ const BiospecimenTable = ({ file, loading }: OwnProps) => {
           ),
         onTableExportClick: () =>
           dispatch(
-            fetchTsvReport({
-              columnStates: userColumnPreferencesOrDefault,
-              columns: getBiospecimenColumns(),
-              index: INDEXES.FILE,
+            fetchLocalTsvReport({
               fileName: 'participants-samples',
-              sqon: generateQuery({
-                newFilters: [
-                  generateValueFilter({
-                    field: 'file_id',
-                    index: INDEXES.FILE,
-                    value: file?.file_id ? [file?.file_id] : [],
-                  }),
-                ],
-              }),
+              index: INDEXES.FILE,
+              headers: biospecimensDefaultColumns,
+              cols: userColumnPreferencesOrDefault.map((x) => ({
+                visible: x.visible,
+                key: x.key,
+              })),
+              rows: biospecimens,
             }),
           ),
       }}
