@@ -9,7 +9,7 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
-import { fetchLocalTsvReport } from 'store/report/thunks';
+import { generateLocalTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -100,7 +100,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
           ),
         onTableExportClick: () =>
           dispatch(
-            fetchLocalTsvReport({
+            generateLocalTsvReport({
               index: INDEXES.PARTICIPANT,
               headers: biospecimensDefaultColumns,
               cols: userColumnPreferencesOrDefault.map((x) => ({

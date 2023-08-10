@@ -4,9 +4,10 @@ import { EntityTable } from '@ferlab/ui/core/pages/EntityPage';
 import { INDEXES } from 'graphql/constants';
 import { IParticipantEntity, IParticipantPhenotype } from 'graphql/participants/models';
 
-import { fetchLocalTsvReport } from 'store/report/thunks';
+import { generateLocalTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
+import { userColsHaveSameKeyAsDefaultCols } from 'utils/tables';
 
 import { SectionId } from '../utils/anchorLinks';
 import getPhenotypeDefaultColumns from '../utils/getPhenotypeColumns';
@@ -30,14 +31,16 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
   const phenotypesDefaultColumns = getPhenotypeDefaultColumns();
 
   const userColumnPreferences = userInfo?.config?.participants?.tables?.phenotype?.columns || [];
-  const userColumnPreferencesOrDefault =
-    userColumnPreferences.length > 0
-      ? [...userColumnPreferences]
-      : phenotypesDefaultColumns.map((c, index) => ({
-          visible: true,
-          index,
-          key: c.key,
-        }));
+  const userColumnPreferencesOrDefault = userColsHaveSameKeyAsDefaultCols(
+    userColumnPreferences,
+    phenotypesDefaultColumns,
+  )
+    ? [...userColumnPreferences]
+    : phenotypesDefaultColumns.map((c, index) => ({
+        visible: true,
+        index,
+        key: c.key,
+      }));
 
   return (
     <EntityTable
@@ -66,7 +69,7 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
           ),
         onTableExportClick: () =>
           dispatch(
-            fetchLocalTsvReport({
+            generateLocalTsvReport({
               fileName: 'phenotypes',
               index: INDEXES.PARTICIPANT,
               headers: phenotypesDefaultColumns.filter(cbExcludeHpoTermKey),
