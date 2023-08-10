@@ -13,6 +13,7 @@ import { generateLocalTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
+import { userColsHaveSameKeyAsDefaultCols } from 'utils/tables';
 
 import { SectionId } from '../utils/anchorLinks';
 import {
@@ -34,14 +35,16 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
   const biospecimensDefaultColumns = getBiospecimensDefaultColumns();
 
   const userColumnPreferences = userInfo?.config?.participants?.tables?.biospecimens?.columns || [];
-  const userColumnPreferencesOrDefault =
-    userColumnPreferences.length > 0
-      ? [...userColumnPreferences]
-      : biospecimensDefaultColumns.map((c, index) => ({
-          visible: true,
-          index,
-          key: c.key,
-        }));
+  const userColumnPreferencesOrDefault = userColsHaveSameKeyAsDefaultCols(
+    userColumnPreferences,
+    biospecimensDefaultColumns,
+  )
+    ? [...userColumnPreferences]
+    : biospecimensDefaultColumns.map((c, index) => ({
+        visible: true,
+        index,
+        key: c.key,
+      }));
 
   return (
     <EntityTable
@@ -102,6 +105,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
           dispatch(
             generateLocalTsvReport({
               index: INDEXES.PARTICIPANT,
+              fileName: 'biospecimens',
               headers: biospecimensDefaultColumns,
               cols: userColumnPreferencesOrDefault.map((x) => ({
                 visible: x.visible,
