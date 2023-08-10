@@ -11,7 +11,7 @@ const userColsHaveSameKeyAsDefaultCols = (
   // must never ever be empty
   defaultCols: ProColumnType[],
 ): boolean => {
-  const userColsIsEmpty = !userCols || userCols.length === 0;
+  const userColsIsEmpty = userCols?.length === 0;
   const sizeMismatch = userCols.length !== defaultCols.length;
   if (userColsIsEmpty || sizeMismatch) {
     return false;
