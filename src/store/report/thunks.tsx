@@ -136,7 +136,7 @@ const fetchTsvReport = createAsyncThunk<void, TFetchTSVArgs, { rejectValue: stri
   },
 );
 
-const fetchLocalTsvReport = createAsyncThunk<
+const generateLocalTsvReport = createAsyncThunk<
   void,
   {
     index: string;
@@ -258,4 +258,4 @@ const getTitleFromColumns = (columns: ProColumnType[], field: string) => {
   return column.title;
 };
 
-export { fetchReport, fetchTsvReport, fetchLocalTsvReport };
+export { fetchReport, fetchTsvReport, generateLocalTsvReport };

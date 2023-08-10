@@ -8,10 +8,11 @@ import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
-import { fetchLocalTsvReport } from 'store/report/thunks';
+import { generateLocalTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
+import { userColsHaveSameKeyAsDefaultCols } from 'utils/tables';
 
 import { SectionId } from '../utils/anchorLinks';
 import { getBiospecimenColumns, getBiospecimensFromFile } from '../utils/biospecimens';
@@ -29,14 +30,16 @@ const BiospecimenTable = ({ file, loading }: OwnProps) => {
   const biospecimensDefaultColumns = getBiospecimenColumns();
 
   const userColumnPreferences = userInfo?.config?.files?.tables?.biospecimens?.columns || [];
-  const userColumnPreferencesOrDefault =
-    userColumnPreferences.length > 0
-      ? [...userColumnPreferences]
-      : biospecimensDefaultColumns.map((c, index) => ({
-          visible: true,
-          index,
-          key: c.key,
-        }));
+  const userColumnPreferencesOrDefault = userColsHaveSameKeyAsDefaultCols(
+    userColumnPreferences,
+    biospecimensDefaultColumns,
+  )
+    ? [...userColumnPreferences]
+    : biospecimensDefaultColumns.map((c, index) => ({
+        visible: true,
+        index,
+        key: c.key,
+      }));
 
   return (
     <EntityTable
@@ -89,7 +92,7 @@ const BiospecimenTable = ({ file, loading }: OwnProps) => {
           ),
         onTableExportClick: () =>
           dispatch(
-            fetchLocalTsvReport({
+            generateLocalTsvReport({
               fileName: 'participants-samples',
               index: INDEXES.FILE,
               headers: biospecimensDefaultColumns,

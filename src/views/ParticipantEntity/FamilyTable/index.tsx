@@ -12,10 +12,11 @@ import { GET_PARTICIPANT_DOWN_SYNDROME_STATUS } from 'graphql/participants/queri
 import { capitalize } from 'lodash';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { fetchLocalTsvReport } from 'store/report/thunks';
+import { generateLocalTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
+import { userColsHaveSameKeyAsDefaultCols } from 'utils/tables';
 
 import { SectionId } from '../utils/anchorLinks';
 
@@ -84,14 +85,16 @@ const FamilyTable = ({ familyMembers = [], participant }: OwnProps) => {
   const familyDefaultColumns = getFamilyColumns(participant.participant_id);
 
   const userColumnPreferences = userInfo?.config?.participants?.tables?.family?.columns || [];
-  const userColumnPreferencesOrDefault =
-    userColumnPreferences.length > 0
-      ? [...userColumnPreferences]
-      : familyDefaultColumns.map((c, index) => ({
-          visible: true,
-          index,
-          key: c.key,
-        }));
+  const userColumnPreferencesOrDefault = userColsHaveSameKeyAsDefaultCols(
+    userColumnPreferences,
+    familyDefaultColumns,
+  )
+    ? [...userColumnPreferences]
+    : familyDefaultColumns.map((c, index) => ({
+        visible: true,
+        index,
+        key: c.key,
+      }));
 
   const sortedFamilyMembers = sortMembersForDisplay(participant.participant_id, familyMembers);
 
@@ -127,7 +130,7 @@ const FamilyTable = ({ familyMembers = [], participant }: OwnProps) => {
           ),
         onTableExportClick: () =>
           dispatch(
-            fetchLocalTsvReport({
+            generateLocalTsvReport({
               fileName: 'family',
               index: INDEXES.PARTICIPANT,
               headers: familyDefaultColumns,
