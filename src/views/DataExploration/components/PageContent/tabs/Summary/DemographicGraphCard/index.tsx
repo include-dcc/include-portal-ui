@@ -64,11 +64,11 @@ const DemographicsGraphCard = () => {
     },
   });
 
-  const sexData = aggregationToChartData(
+  const raceData = aggregationToChartData(
     result?.data?.participant?.aggregations?.race?.buckets,
     result?.data?.participant?.hits?.total,
   );
-  const raceData = aggregationToChartData(
+  const sexData = aggregationToChartData(
     result?.data?.participant?.aggregations?.sex?.buckets,
     result?.data?.participant?.hits?.total,
   );
