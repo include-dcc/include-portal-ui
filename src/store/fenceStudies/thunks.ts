@@ -126,7 +126,6 @@ const getStudiesCountByNameAndAcl = async (
             participants__study__study_code{
               buckets{
                 key
-                doc_count
               }
             } 
           }
