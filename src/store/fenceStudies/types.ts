@@ -15,6 +15,7 @@ export type TFenceStudy = {
   studyShortName: string;
   totalFiles: number;
   id: string;
+  code: string;
   authorizedFiles: number;
 };
 

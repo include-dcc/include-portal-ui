@@ -1,22 +1,24 @@
+import { useEffect } from 'react';
+import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
+import { DisconnectOutlined, SafetyOutlined } from '@ant-design/icons';
+import Empty from '@ferlab/ui/core/components/Empty';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Button, List, Space } from 'antd';
-import intl from 'react-intl-universal';
-import { DisconnectOutlined, SafetyOutlined } from '@ant-design/icons';
-import { DashboardCardProps } from 'views/Dashboard/components/DashboardCards';
-import CardHeader from 'views/Dashboard/components/CardHeader';
 import Text from 'antd/lib/typography/Text';
-import AuthorizedStudiesListItem from './ListItem';
-import Empty from '@ferlab/ui/core/components/Empty';
 import CardConnectPlaceholder from 'views/Dashboard/components/CardConnectPlaceholder';
-import { connectToFence, disconnectFromFence } from 'store/fenceConnection/thunks';
-import { FENCE_NAMES } from 'common/fenceTypes';
-import { useDispatch } from 'react-redux';
-import { TFenceStudy } from 'store/fenceStudies/types';
 import CardErrorPlaceholder from 'views/Dashboard/components/CardErrorPlaceHolder';
-import { useFenceStudies } from 'store/fenceStudies';
-import { useEffect } from 'react';
-import { fetchAllFenceStudies } from 'store/fenceStudies/thunks';
+import CardHeader from 'views/Dashboard/components/CardHeader';
+import { DashboardCardProps } from 'views/Dashboard/components/DashboardCards';
+
+import { FENCE_NAMES } from 'common/fenceTypes';
 import PopoverContentLink from 'components/uiKit/PopoverContentLink';
+import { connectToFence, disconnectFromFence } from 'store/fenceConnection/thunks';
+import { useFenceStudies } from 'store/fenceStudies';
+import { fetchAllFenceStudies } from 'store/fenceStudies/thunks';
+import { TFenceStudy } from 'store/fenceStudies/types';
+
+import AuthorizedStudiesListItem from './ListItem';
 
 import styles from './index.module.scss';
 

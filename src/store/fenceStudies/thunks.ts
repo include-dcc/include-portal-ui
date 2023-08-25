@@ -123,6 +123,12 @@ const getStudiesCountByNameAndAcl = async (
                 doc_count
               }
             } 
+            participants__study__study_code{
+              buckets{
+                key
+                doc_count
+              }
+            } 
           }
         `,
           )
@@ -154,6 +160,7 @@ const getStudiesCountByNameAndAcl = async (
         studyShortName: agg['participants__study__study_name']['buckets'][0]['key'],
         totalFiles: agg['participants__study__study_name']['buckets'][0]['doc_count'],
         id,
+        code: agg['participants__study__study_code']['buckets'][0]['key'],
         authorizedFiles: studies[id].authorizedFiles,
       };
     }),
