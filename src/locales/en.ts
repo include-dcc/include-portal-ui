@@ -787,6 +787,28 @@ const en = {
         },
         biospecimens: {
           title: 'Biospecimens ({count})',
+          request: {
+            buttonLabel: 'Request biospecimen',
+            modal: {
+              title: 'Request biospecimen',
+              okText: 'Download guidelines',
+              cancelText: 'Cancel',
+              description:
+                'You are about to download the guidelines and supporting documents needed to request the selected biospecimen. The report will include information on <strong>{availableSamplesCount} available samples</strong> (out of {totalCount} selected)',
+              nameForm: {
+                title: 'Provide a name for your request',
+                note: 'This request will be saved to your dashboard for future reference.',
+                placeholder: 'Biospecimen request name',
+                requiredError: 'You must provide a name for this request.',
+              },
+              table: {
+                studyCode: 'Study Name',
+                nbParticpants: 'Particpants',
+                nbSamples: 'Available Samples',
+                nbContainers: 'Containers',
+              },
+            },
+          },
         },
         datafiles: {
           title: 'Data Files ({count})',

@@ -18,6 +18,7 @@ import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { IStudyEntity } from 'graphql/studies/models';
+import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
@@ -35,6 +36,7 @@ import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
+import RequestBiospecimenButton from 'components/Biospecimens/Request/RequestBiospecimenButton';
 import { SetType } from 'services/api/savedSet/models';
 import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
@@ -233,6 +235,8 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
   },
 ];
 
+const BIOSPECIMEN_REQUEST_KEY = 'BIOSPECIMEN_REQUEST';
+
 const BioSpecimenTab = ({ sqon }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
@@ -296,6 +300,8 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
     });
   }, [queryConfig]);
 
+  const hasRequestBio = getFTEnvVarByKey(BIOSPECIMEN_REQUEST_KEY);
+
   return (
     <ProTable
       tableId="biospecimen_table"
@@ -346,6 +352,13 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
             }),
           ),
         extra: [
+          hasRequestBio === 'true' && (
+            <RequestBiospecimenButton
+              biospecimenIds={selectedAllResults ? [] : selectedKeys}
+              disabled={selectedKeys.length === 0 && !selectedAllResults}
+              type="primary"
+            />
+          ),
           <SetsManagementDropdown
             idField="fhir_id"
             key="setManagementDropdown"
