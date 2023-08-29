@@ -1,19 +1,24 @@
 import { useState } from 'react';
 import intl from 'react-intl-universal';
+import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { Button } from 'antd';
 
 import RequestBiospecimenModal from './RequestBiospecimenModal';
 
 interface OwnProps {
   biospecimenIds: string[];
-  type?: 'default' | 'primary';
   disabled?: boolean;
+  idField: string;
+  sqon?: ISqonGroupFilter;
+  type?: 'default' | 'primary';
 }
 
 const RequestBiospecimenButton = ({
   biospecimenIds,
-  type = 'default',
   disabled = false,
+  idField,
+  type = 'default',
+  sqon,
 }: OwnProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -24,8 +29,10 @@ const RequestBiospecimenButton = ({
       </Button>
       <RequestBiospecimenModal
         biospecimenIds={biospecimenIds}
+        idField={idField}
         isOpen={isOpen}
         onCancel={() => setIsOpen(false)}
+        sqon={sqon}
       />
     </>
   );

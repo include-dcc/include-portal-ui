@@ -12,6 +12,7 @@ import { DashboardCardProps } from 'views/Dashboard/components/DashboardCards';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { VARIANT_REPO_QB_ID } from 'views/Variants/utils/constants';
 
+import { REQUEST_BIOSPECIMEN_PREFIXE } from 'components/Biospecimens/Request/RequestBiospecimenModal';
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import PopoverContentLink from 'components/uiKit/PopoverContentLink';
 import { IUserSetOutput, SetType } from 'services/api/savedSet/models';
@@ -33,36 +34,47 @@ const getItemList = (
   isLoading: boolean,
   icon: ReactElement,
   queryBuilderId = DATA_EXPLORATION_QB_ID,
-) => (
-  <List<IUserSetOutput>
-    className={styles.savedSetsList}
-    bordered
-    locale={{
-      emptyText: fetchingError ? (
-        <CardErrorPlaceholder
-          title={intl.get('screen.dashboard.cards.savedSets.errorCard.failedToFetch')}
-          subTitle={
-            <Text>
-              {intl.get('screen.dashboard.cards.savedSets.errorCard.refresh')}{' '}
-              <ExternalLink href={`mailto:${SUPPORT_EMAIL}`}>
-                <Text>{intl.get('screen.dashboard.cards.savedSets.errorCard.contactSupport')}</Text>
-              </ExternalLink>
-              .
-            </Text>
-          }
-        />
-      ) : (
-        <Empty
-          imageType="grid"
-          description={intl.get('screen.dashboard.cards.savedSets.noSavedFilters')}
-        />
-      ),
-    }}
-    dataSource={fetchingError ? [] : savedSets.filter((s) => s.setType === type)}
-    loading={isLoading}
-    renderItem={(item) => <ListItem data={item} icon={icon} queryBuilderId={queryBuilderId} />}
-  />
-);
+) => {
+  const dataSource =
+    type === SetType.BIOSPECIMEN
+      ? savedSets.filter(
+          (s) => s.setType === type && !s.tag.startsWith(REQUEST_BIOSPECIMEN_PREFIXE),
+        )
+      : savedSets.filter((s) => s.setType === type);
+
+  return (
+    <List<IUserSetOutput>
+      className={styles.savedSetsList}
+      bordered
+      locale={{
+        emptyText: fetchingError ? (
+          <CardErrorPlaceholder
+            title={intl.get('screen.dashboard.cards.savedSets.errorCard.failedToFetch')}
+            subTitle={
+              <Text>
+                {intl.get('screen.dashboard.cards.savedSets.errorCard.refresh')}{' '}
+                <ExternalLink href={`mailto:${SUPPORT_EMAIL}`}>
+                  <Text>
+                    {intl.get('screen.dashboard.cards.savedSets.errorCard.contactSupport')}
+                  </Text>
+                </ExternalLink>
+                .
+              </Text>
+            }
+          />
+        ) : (
+          <Empty
+            imageType="grid"
+            description={intl.get('screen.dashboard.cards.savedSets.noSavedFilters')}
+          />
+        ),
+      }}
+      dataSource={fetchingError ? [] : dataSource}
+      loading={isLoading}
+      renderItem={(item) => <ListItem data={item} icon={icon} queryBuilderId={queryBuilderId} />}
+    />
+  );
+};
 
 const SavedSets = ({ id, key, className = '' }: DashboardCardProps) => {
   const { savedSets, isLoading, fetchingError } = useSavedSet();
@@ -118,7 +130,15 @@ const SavedSets = ({ id, key, className = '' }: DashboardCardProps) => {
             tab={
               <div>
                 <ExperimentOutlined />
-                Biospecimen ({savedSets.filter((s) => s.setType === SetType.BIOSPECIMEN).length})
+                Biospecimen (
+                {
+                  savedSets.filter(
+                    (s) =>
+                      s.setType === SetType.BIOSPECIMEN &&
+                      !s.tag.startsWith(REQUEST_BIOSPECIMEN_PREFIXE),
+                  ).length
+                }
+                )
               </div>
             }
             key="biospecimen"

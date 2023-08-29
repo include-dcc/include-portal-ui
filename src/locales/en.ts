@@ -800,6 +800,8 @@ const en = {
                 note: 'This request will be saved to your dashboard for future reference.',
                 placeholder: 'Biospecimen request name',
                 requiredError: 'You must provide a name for this request.',
+                existingNameError: 'A biospecimen request with this name already exists',
+                maximumLength: 'characters maximum',
               },
               table: {
                 studyCode: 'Study Name',
