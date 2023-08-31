@@ -146,7 +146,14 @@ const IdentificationCard = () => {
                 className="noMargin"
                 name={FORM_FIELDS.LINKEDIN}
                 label={<ProLabel title="LinkedIn" />}
-                rules={[{ type: 'url', validateTrigger: 'onSubmit' }]}
+                rules={[
+                  {
+                    type: 'string',
+                    validateTrigger: 'onSubmit',
+                    pattern: /^https?:\/\/(www\.)?linkedin\.com\/in\//i,
+                    message: 'Invalid LinkedIn url format',
+                  },
+                ]}
                 required={false}
                 requiredMark="optional"
               >
