@@ -95,12 +95,12 @@ const CommunityMember = () => {
                       }}
                     />
                   </Col>
-                  {result?.research_area && (
+                  {result?.research_area_description && (
                     <Col span={24}>
                       <Typography.Title level={5}>
                         {intl.get('screen.memberProfile.researchAreaTitle')}
                       </Typography.Title>
-                      <Typography.Text>{result?.research_area}</Typography.Text>
+                      <Typography.Text>{result?.research_area_description}</Typography.Text>
                     </Col>
                   )}
                   <Col span={24}>
