@@ -466,7 +466,11 @@ const ParticipantsTab = ({ sqon }: OwnProps) => {
             sqon={getCurrentSqon()}
             type={SetType.PARTICIPANT}
           />,
-          <DownloadClinicalDataDropdown participantIds={selectedKeys} key="actionDropdown" />,
+          <DownloadClinicalDataDropdown
+            sqon={getCurrentSqon()}
+            participantIds={selectedKeys}
+            key="actionDropdown"
+          />,
         ],
       }}
       bordered
