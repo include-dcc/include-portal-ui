@@ -7,6 +7,32 @@
 
 ### Technical / Other changes
 -->
+2023-09-06 include-portal-ui 1.8.0
+## Features:
+[SJIP-531](https://d3b.atlassian.net/browse/SJIP-531) Feature: [Variant Exploration] Added Saved Sets for the Variant Exploration page
+[SJIP-537](https://d3b.atlassian.net/browse/SJIP-537) Feature: [Variant Exploration] Added sort on columns of the table
+[SJIP-539](https://d3b.atlassian.net/browse/SJIP-539) Feature: [Data Exploration] Implemented download png, svg, tsv to summary view graphs
+[SJIP-557](https://d3b.atlassian.net/browse/SJIP-557) Feature: (Entity page] Added Family table to Participant entity page
+##Technical/ Other changes:
+[SJIP-366](https://d3b.atlassian.net/browse/SJIP-366) Refactor: [User-API] Merge the Ferlab User-API to address Penetration Test issues
+[SJIP-379](https://d3b.atlassian.net/browse/SJIP-379) Fix:[UI Theme] Adjusted the table of results colors and states for table actions
+[SJIP-381](https://d3b.atlassian.net/browse/SJIP-381) Fix: [Profile page] Fixed typos
+[SJIP-388](https://d3b.atlassian.net/browse/SJIP-388) Fix: [Entity page] Adjusted the query pill for Study Code in the Querybuilder returning empty results
+[SJIP-424](https://d3b.atlassian.net/browse/SJIP-424) Refactor:[ETL] Adjusted ETL to pull Family unit values directly from FHIR
+[SJIP-458](https://d3b.atlassian.net/browse/SJIP-458) Refactor:[ETL] Updated the Family data representation in ElasticSearch
+[SJIP-511](https://d3b.atlassian.net/browse/SJIP-511) Fix: [Entity] Fixed anchor menu that was static through the section navigation
+[SJIP-522](https://d3b.atlassian.net/browse/SJIP-522) Refactor:[Variant Exploration] Remove the decimals for Variant Position Numerical range facet
+[SJIP-530](https://d3b.atlassian.net/browse/SJIP-530) Fix: [Variant Exploration] Remove NEW Tooltip to Pathogenicity facets
+[SJIP-532](https://d3b.atlassian.net/browse/SJIP-532) Fix: [Variant Exploration] Adjusted the query pill for Study Code in the Querybuilder returning empty results
+[SJIP-535](https://d3b.atlassian.net/browse/SJIP-535) Refactor: [Data Exploration] Set the Container ID column as a default column
+[SJIP-538] https://d3b.atlassian.net/browse/SJIP-538) Fix: [Entity page] Fixed empty export as TSV tables
+[SJIP-541](https://d3b.atlassian.net/browse/SJIP-541) Fix: [Dashboard & Studies] Adjusted Study Code from the internal operational study codes
+[SJIP-546](https://d3b.atlassian.net/browse/SJIP-546) Fix: [ETL] Run ETL to fix the file size results for HTP study
+[SJIP-558](https://d3b.atlassian.net/browse/SJIP-558) Refactor: [Report] Updated the family data representation in clinical data report
+[SJIP-564](https://d3b.atlassian.net/browse/SJIP-564) Refactor: [User-API] Merged to Ferlab User-API to address NIST Penetration testing vulnerabilities (UserCreate)
+[SJIP-565](https://d3b.atlassian.net/browse/SJIP-565) Refactor: [User-API] Merged to Ferlab User-API to address NIST Penetration testing vulnerabilities (Email address)
+[SJIP-567](https://d3b.atlassian.net/browse/SJIP-567) Fix: [Dashboard] Adjusted the query pill for Study Code in the Querybuilder returning empty results when clicking for authorized files
+
 ## 2023-06-27 include-portal-ui 1.7.1
 ### Technical/ Other changes:
 [SJIP-500](https://d3b.atlassian.net/browse/SJIP-500) Fix:[Entity variant] Multiple minor fixes in Variant Entity page
