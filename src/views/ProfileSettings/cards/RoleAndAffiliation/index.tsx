@@ -21,7 +21,7 @@ enum FORM_FIELDS {
   OTHER_ROLE = 'other_role',
   AFFILIATION = 'affiliation',
   NO_AFFILIATION = 'no_affiliation',
-  RESEARCH_AREA = 'reasearch_area',
+  RESEARCH_AREA_DESCRIPTION = 'research_area_description',
 }
 
 const hasOtherRole = (userUsages: string[]) =>
@@ -35,7 +35,7 @@ const initialChangedValues = {
   [FORM_FIELDS.OTHER_ROLE]: false,
   [FORM_FIELDS.AFFILIATION]: false,
   [FORM_FIELDS.NO_AFFILIATION]: false,
-  [FORM_FIELDS.RESEARCH_AREA]: false,
+  [FORM_FIELDS.RESEARCH_AREA_DESCRIPTION]: false,
 };
 
 const RoleAndAffiliationCard = () => {
@@ -60,7 +60,7 @@ const RoleAndAffiliationCard = () => {
       [FORM_FIELDS.OTHER_ROLE]: hasOtherRole(userInfo?.roles ?? [])[0],
       [FORM_FIELDS.AFFILIATION]: userInfo?.affiliation,
       [FORM_FIELDS.NO_AFFILIATION]: !userInfo?.affiliation,
-      [FORM_FIELDS.RESEARCH_AREA]: userInfo?.research_area || '',
+      [FORM_FIELDS.RESEARCH_AREA_DESCRIPTION]: userInfo?.research_area_description || '',
     };
     form.setFieldsValue(initialValues.current);
     setHasChanged(initialChangedValues);
@@ -88,9 +88,9 @@ const RoleAndAffiliationCard = () => {
                   values[FORM_FIELDS.OTHER_ROLE],
                 ),
                 affiliation: values[FORM_FIELDS.NO_AFFILIATION]
-                  ? ''
+                  ? null
                   : values[FORM_FIELDS.AFFILIATION],
-                research_area: values[FORM_FIELDS.RESEARCH_AREA],
+                research_area_description: values[FORM_FIELDS.RESEARCH_AREA_DESCRIPTION] ?? null,
               },
             }),
           );
@@ -203,7 +203,7 @@ const RoleAndAffiliationCard = () => {
           <span className={formStyles.help}>
             {intl.get('screen.profileSettings.cards.roleAffiliation.provideABriefLink')}
           </span>
-          <Form.Item name={FORM_FIELDS.RESEARCH_AREA} className={formStyles.noMargin}>
+          <Form.Item name={FORM_FIELDS.RESEARCH_AREA_DESCRIPTION} className={formStyles.noMargin}>
             <Input.TextArea />
           </Form.Item>
         </Form.Item>
