@@ -113,3 +113,9 @@ dist
 build/
 
 .vscode/
+
+# testing
+/cypress/downloads
+/cypress/screenshots
+/cypress/videos
+/cypress/results
