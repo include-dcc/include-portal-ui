@@ -264,12 +264,12 @@ Cypress.Commands.add('visitAndIntercept', (url: string, methodHTTP: string, rout
 
 Cypress.Commands.add('visitCommunityPage', () => {
   cy.visit('/community');
-  cy.get('[data-cy="Title_Community"]', {timeout: 60 * 1000})
+  cy.get('[class*="Community_title"]', {timeout: 60 * 1000}); // data-cy="Title_Community"
 });
 
 Cypress.Commands.add('visitDashboard', () => {
   cy.visit('/dashboard');
-  cy.get('[data-cy="Title_Dashboard"]', {timeout: 60 * 1000})
+  cy.get('[class*="Dashboard_greeting"]', {timeout: 60 * 1000}); // data-cy="Title_Dashboard"
 });
 
 Cypress.Commands.add('visitDataExploration', (tab?: string, sharedFilterOption?: string) => {
@@ -279,7 +279,7 @@ Cypress.Commands.add('visitDataExploration', (tab?: string, sharedFilterOption?:
   cy.visitAndIntercept('/data-exploration/' + strTab + strSharedFilterOption,
                        'POST',
                        '**/graphql',
-                       6);
+                       9);
   if (tab !== undefined) {
     cy.resetColumns();
   };
@@ -289,19 +289,19 @@ Cypress.Commands.add('visitFileEntity', (fileId: string) => {
   cy.visitAndIntercept('/files/' + fileId,
                        'POST',
                        '**/graphql',
-                       2);
+                       1);
 });
 
 Cypress.Commands.add('visitParticipantEntity', (participantId: string) => {
   cy.visitAndIntercept('/participants/' + participantId,
                        'POST',
                        '**/graphql',
-                       3);
+                       10);
 });
 
 Cypress.Commands.add('visitProfileSettingsPage', () => {
   cy.visit('/profile/settings');
-  cy.get('[data-cy="Title_ProfileSettings"]', {timeout: 60 * 1000})
+  cy.get('[class*="ProfileSettings_profileSettingsHeader"]', {timeout: 60 * 1000}); //data-cy="Title_ProfileSettings"
 });
 
 Cypress.Commands.add('visitStudyEntity', (studyId: string, nbCalls: number) => {
@@ -315,8 +315,7 @@ Cypress.Commands.add('visitStudiesPage', () => {
   cy.visitAndIntercept('/studies',
                        'POST',
                        '**/graphql',
-                       4);
-  cy.resetColumns();
+                       1);
 });
 
 Cypress.Commands.add('visitVariantEntityPage', (locusId: string, nbGraphqlCalls: number) => {

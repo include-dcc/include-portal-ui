@@ -1,0 +1,8 @@
+{
+  "headers": ["Phenotype (HPO)",
+              "Condition (Source Text)",
+              "Age"],
+  "content": ["Atrioventricular canal defect (HP:0006695)",
+              "Atrioventricular canal defect",
+              "--"]
+}

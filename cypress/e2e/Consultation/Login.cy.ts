@@ -1,15 +1,9 @@
 /// <reference types="Cypress" />
 import '../../support/commands';
 
-describe('Page Logout', () => {
-
-  beforeEach(() => {
-    cy.login();
-    cy.visit('/');
-  });
-
+describe('Page Login', () => {
   it('Vérifier les informations affichées', () => {
-    cy.logout();
+    cy.visit('/');
 
     cy.contains('INCLUDE Data Hub').should('exist');
     cy.contains('Available Data').should('exist');
