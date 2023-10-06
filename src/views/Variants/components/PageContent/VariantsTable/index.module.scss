@@ -14,3 +14,8 @@
   overflow-wrap: unset;
   white-space: nowrap;
 }
+
+.variantTableCellElipsis::after {
+  content: '';
+  display: block;
+}
