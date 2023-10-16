@@ -26,7 +26,7 @@ export const SEARCH_BIOSPECIMEN_QUERY = gql`
             collection_sample_type
             age_at_biospecimen_collection
             laboratory_procedure
-            volume_ul
+            volume
             volume_unit
             biospecimen_storage
             study_id

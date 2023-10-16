@@ -164,19 +164,18 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     render: (external_sample_id: string) => external_sample_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    key: 'volume_ul',
+    key: 'volume',
     title: 'Volume',
-    dataIndex: 'volume_ul',
+    dataIndex: 'volume',
     defaultHidden: true,
-    render: (volume_ul: number) =>
-      volume_ul ? numberWithCommas(volume_ul) : TABLE_EMPTY_PLACE_HOLDER,
+    render: (volume: number) => (volume ? numberWithCommas(volume) : TABLE_EMPTY_PLACE_HOLDER),
   },
   {
     key: 'volume_unit',
     title: 'Volume Unit',
     defaultHidden: true,
     render: (record: IBiospecimenEntity) =>
-      record?.volume_ul ? record.volume_unit : TABLE_EMPTY_PLACE_HOLDER,
+      record?.volume ? record.volume_unit : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'status',

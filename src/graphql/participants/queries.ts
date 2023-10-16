@@ -156,7 +156,7 @@ export const GET_PARTICIPANT_ENTITY = gql`
                             collection_sample_id
                             collection_sample_type
                             container_id
-                            volume_ul
+                            volume
                             volume_unit
                             laboratory_procedure
                             biospecimen_storage

@@ -52,9 +52,9 @@ export const getBiospecimensDefaultColumns = (): ProColumnType[] => [
     ),
   },
   {
-    key: 'volume_ul',
+    key: 'volume',
     title: intl.get('entities.biospecimen.volume'),
-    render: (biospecimen: IBiospecimenEntity) => biospecimen?.volume_ul || TABLE_EMPTY_PLACE_HOLDER,
+    render: (biospecimen: IBiospecimenEntity) => biospecimen?.volume || TABLE_EMPTY_PLACE_HOLDER,
     defaultHidden: true,
   },
   {

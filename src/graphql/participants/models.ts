@@ -38,7 +38,7 @@ export interface IParticipantBiospecimen {
   collection_sample_id: string;
   collection_sample_type: string;
   container_id: string;
-  volume_ul: number;
+  volume: number;
   volume_unit: string;
   laboratory_procedure: string;
   biospecimen_storage: string;
