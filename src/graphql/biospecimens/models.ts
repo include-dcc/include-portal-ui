@@ -18,7 +18,7 @@ export interface IBiospecimenEntity {
   fhir_id: string;
   status: Status;
   score: number;
-  volume_ul: number;
+  volume: number;
   volume_unit: string;
   container_id: string;
   age_at_biospecimen_collection: number;
