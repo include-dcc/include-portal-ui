@@ -7,13 +7,22 @@
 
 ### Technical / Other changes
 -->
-2023-09-06 include-portal-ui 1.8.0
-## Features:
+## 2023-10-19 include-portal-ui 1.8.1
+### Technical / Other changes
+[SJIP-484] (https://d3b.atlassian.net/browse/SJIP-484) Refactor: [Registration] Updated text to Terms and Condition and prompt for existing users
+[SJIP-595] (https://d3b.atlassian.net/browse/SJIP-595) Fix: [Variant Exploration] Fixed double tooltip in Safari browser
+[SJIP-603] (https://d3b.atlassian.net/browse/SJIP-603) Fix: [Community] Fixed filters applied on the second page of table results in the community page
+[SJIP-607] (https://d3b.atlassian.net/browse/SJIP-607) Refactor: [ETL] Run ETL on PRD studies
+[SJIP-609] (https://d3b.atlassian.net/browse/SJIP-609) Refactor: [ETL] Update ETL to use volume instead of volume_ul
+[SJIP-615] (https://d3b.atlassian.net/browse/SJIP-615) Refactor: [User-API] Update new version of User-API
+
+## 2023-09-06 include-portal-ui 1.8.0
+### Features:
 [SJIP-531](https://d3b.atlassian.net/browse/SJIP-531) Feature: [Variant Exploration] Added Saved Sets for the Variant Exploration page
 [SJIP-537](https://d3b.atlassian.net/browse/SJIP-537) Feature: [Variant Exploration] Added sort on columns of the table
 [SJIP-539](https://d3b.atlassian.net/browse/SJIP-539) Feature: [Data Exploration] Implemented download png, svg, tsv to summary view graphs
 [SJIP-557](https://d3b.atlassian.net/browse/SJIP-557) Feature: (Entity page] Added Family table to Participant entity page
-##Technical/ Other changes:
+### Technical/ Other changes:
 [SJIP-366](https://d3b.atlassian.net/browse/SJIP-366) Refactor: [User-API] Merge the Ferlab User-API to address Penetration Test issues
 [SJIP-379](https://d3b.atlassian.net/browse/SJIP-379) Fix:[UI Theme] Adjusted the table of results colors and states for table actions
 [SJIP-381](https://d3b.atlassian.net/browse/SJIP-381) Fix: [Profile page] Fixed typos
