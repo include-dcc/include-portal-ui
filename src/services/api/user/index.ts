@@ -19,21 +19,16 @@ const fetch = () =>
     headers: headers(),
   });
 
-const search = ({
-  pageIndex = 0,
-  pageSize = 15,
-  match,
-  sort,
-  roles,
-  dataUses,
-}: {
+export interface ISearchParams {
   pageIndex?: number;
   pageSize?: number;
   match?: string;
   sort?: string;
   roles?: string;
   dataUses?: string;
-}) =>
+}
+
+const search = ({ pageIndex = 0, pageSize = 15, match, sort, roles, dataUses }: ISearchParams) =>
   sendRequest<{
     users: TUser[];
     total: number;
