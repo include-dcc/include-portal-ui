@@ -96,6 +96,7 @@ const CommunityPage = () => {
           className={styles.membersList}
           pagination={{
             total: count,
+            current: (activeFilter.pageIndex || 0) + 1,
             pageSize: DEFAULT_PAGE_SIZE,
             onChange: (page) => {
               setCurrentPage(page - 1);
