@@ -13,6 +13,7 @@ import useApi from 'hooks/useApi';
 import { ReportType } from 'services/api/reports/models';
 import { fetchReport } from 'store/report/thunks';
 import { PROJECT_ID, useSavedSet } from 'store/savedSet';
+import { fetchSavedSet } from 'store/savedSet/thunks';
 
 import NoSampleModal from './NoSampleModal';
 import { isNameExists } from './requestBiospecimen.utils';
@@ -26,7 +27,6 @@ const REPORTS_API_URL = EnvironmentVariables.configFor('REPORTS_API_URL');
 type OwnProps = {
   biospecimenIds: string[];
   isOpen: boolean;
-  idField: string;
   onCancel: () => void;
   sqon?: ISqonGroupFilter;
 };
@@ -94,6 +94,8 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, onCancel, sqon }: Own
           callback: () => onCancel(),
         }),
       );
+      onCancel();
+      dispatch(fetchSavedSet());
     }
   };
 

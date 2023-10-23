@@ -21,7 +21,6 @@ import styles from './index.module.scss';
 const { Text } = Typography;
 
 const getItemList = (
-  type: SetType,
   savedSets: IUserSetOutput[],
   fetchingError: boolean,
   isLoading: boolean,
@@ -94,7 +93,7 @@ const BiospecimenRequests = ({ id, key, className = '' }: DashboardCardProps) =>
       }
       content={
         <div className={styles.biospecimenRequestWrapper}>
-          {getItemList(SetType.BIOSPECIMEN, savedSets, fetchingError, isLoading)}
+          {getItemList(savedSets, fetchingError, isLoading)}
         </div>
       }
     />

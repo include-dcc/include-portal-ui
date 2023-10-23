@@ -8,7 +8,6 @@ import RequestBiospecimenModal from './RequestBiospecimenModal';
 interface OwnProps {
   biospecimenIds: string[];
   disabled?: boolean;
-  idField: string;
   sqon?: ISqonGroupFilter;
   type?: 'default' | 'primary';
 }
@@ -16,7 +15,6 @@ interface OwnProps {
 const RequestBiospecimenButton = ({
   biospecimenIds,
   disabled = false,
-  idField,
   type = 'default',
   sqon,
 }: OwnProps) => {
@@ -30,7 +28,6 @@ const RequestBiospecimenButton = ({
       {isOpen && (
         <RequestBiospecimenModal
           biospecimenIds={biospecimenIds}
-          idField={idField}
           isOpen={isOpen}
           onCancel={() => setIsOpen(false)}
           sqon={sqon}

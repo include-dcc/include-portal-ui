@@ -31,11 +31,10 @@ const fetchSavedSet = createAsyncThunk<IUserSetOutput[], void | string, { reject
 
 const createSavedSet = createAsyncThunk<
   IUserSetOutput,
-  TUserSavedSetInsert & { onCompleteCb: () => void; isBiospecimenRequest?: boolean },
+  TUserSavedSetInsert & { onCompleteCb: () => void },
   { rejectValue: string }
 >('savedsets/create', async (set, thunkAPI) => {
-  const { isBiospecimenRequest, ...setInfo } = set;
-  const { data, error } = await SavedSetApi.create(setInfo);
+  const { data, error } = await SavedSetApi.create(set);
   set.onCompleteCb();
 
   return handleThunkApiReponse({
@@ -46,12 +45,8 @@ const createSavedSet = createAsyncThunk<
       thunkAPI.dispatch(
         globalActions.displayNotification({
           type: 'success',
-          message: isBiospecimenRequest
-            ? intl.get('api.biospecimenRequest.success.titleCreate')
-            : intl.get('api.savedSet.success.titleCreate'),
-          description: isBiospecimenRequest
-            ? intl.get('api.biospecimenRequest.success.messageCreate')
-            : intl.get('api.savedSet.success.messageCreate'),
+          message: intl.get('api.savedSet.success.titleCreate'),
+          description: intl.get('api.savedSet.success.messageCreate'),
         }),
       ),
     onError: () =>
@@ -59,9 +54,7 @@ const createSavedSet = createAsyncThunk<
         globalActions.displayNotification({
           type: 'error',
           message: intl.get('api.savedSet.error.title'),
-          description: isBiospecimenRequest
-            ? intl.get('api.biospecimenRequest.error.messageCreate')
-            : intl.get('api.savedSet.error.messageCreate'),
+          description: intl.get('api.savedSet.error.messageCreate'),
         }),
       ),
   });

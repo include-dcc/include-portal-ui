@@ -137,14 +137,11 @@ const en = {
     biospecimenRequest: {
       error: {
         messageUpdate: 'Unable to update biospecimen request',
-        messageCreate: 'Unable to create biospecimen request',
         messageDelete: 'Unable to delete biospecimen request',
         guidelinesReport:
           'An error occurred and we were unable to download your file. Please try again.',
       },
       success: {
-        titleCreate: 'Your biospecimen request has been saved.',
-        messageCreate: 'You can add your biospecimen requests to a query from the dashboard.',
         messageUpdate: 'Your biospecimen request has been updated.',
         guidelinesReport: 'Guidelines downloaded successfully.',
       },
