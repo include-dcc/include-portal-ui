@@ -20,7 +20,7 @@ import RequestBiospecimenTable, { IRequestBioDataRow } from './RequestBiospecime
 import styles from './requestBiospecimen.module.scss';
 
 const ARRANGER_PROJECT_ID = EnvironmentVariables.configFor('ARRANGER_PROJECT_ID');
-const REPORT_API_URL = EnvironmentVariables.configFor('REPORTS_API_URL');
+const REPORTS_API_URL = EnvironmentVariables.configFor('REPORTS_API_URL');
 
 type OwnProps = {
   biospecimenIds: string[];
@@ -44,7 +44,7 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, onCancel, sqon }: Own
   const { isLoading, savedSets } = useSavedSet();
 
   const config: AxiosRequestConfig = {
-    url: `${REPORT_API_URL}/reports/biospecimen-request/stats`,
+    url: `${REPORTS_API_URL}/reports/biospecimen-request/stats`,
     method: 'POST',
     responseType: 'json',
     data: {
