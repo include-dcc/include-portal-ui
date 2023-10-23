@@ -14,6 +14,7 @@ import { ReportType } from 'services/api/reports/models';
 import { fetchReport } from 'store/report/thunks';
 import { PROJECT_ID, useSavedSet } from 'store/savedSet';
 
+import NoSampleModal from './NoSampleModal';
 import { isNameExists } from './requestBiospecimen.utils';
 import RequestBiospecimenTable, { IRequestBioDataRow } from './RequestBiospecimenTable';
 
@@ -96,31 +97,9 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, onCancel, sqon }: Own
     }
   };
 
-  if (!error && !samples.length)
-    return (
-      <Modal
-        cancelButtonProps={{ style: { display: 'none' } }}
-        okText={intl.get('screen.dataExploration.tabs.biospecimens.request.modal.closeText')}
-        onCancel={() => {
-          onCancel();
-        }}
-        onOk={() => {
-          onCancel();
-        }}
-        open={isOpen}
-        title={intl.get('screen.dataExploration.tabs.biospecimens.request.modal.title')}
-      >
-        <Alert
-          type="info"
-          message={intl.getHTML(
-            'screen.dataExploration.tabs.biospecimens.request.modal.alert.infoMessage',
-          )}
-          description={intl.getHTML(
-            'screen.dataExploration.tabs.biospecimens.request.modal.alert.infoDescription',
-          )}
-        />
-      </Modal>
-    );
+  if (loading) return <></>;
+
+  if (!error && !samples.length) return <NoSampleModal isOpen={isOpen} onCancel={onCancel} />;
 
   return (
     <Modal
