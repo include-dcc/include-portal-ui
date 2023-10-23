@@ -1,8 +1,9 @@
-import { useKeycloak } from '@react-keycloak/web';
-import { REDIRECT_URI_KEY } from 'common/constants';
-import ConditionalWrapper from 'components/utils/ConditionalWrapper';
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { useKeycloak } from '@react-keycloak/web';
+
+import { REDIRECT_URI_KEY } from 'common/constants';
+import ConditionalWrapper from 'components/utils/ConditionalWrapper';
 import { useUser } from 'store/user';
 import { STATIC_ROUTES } from 'utils/routes';
 

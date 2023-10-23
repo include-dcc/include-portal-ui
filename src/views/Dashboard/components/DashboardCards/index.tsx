@@ -2,6 +2,7 @@ import { TSortableItems } from '@ferlab/ui/core/layout/SortableGrid/SortableItem
 import cx from 'classnames';
 
 import AuthorizedStudies from './AuthorizedStudies';
+import BiospecimenRequests from './BiospecimenRequests';
 import Cavatica from './Cavatica';
 import SavedFilters from './SavedFilters';
 import SavedSets from './SavedSets';
@@ -48,5 +49,13 @@ export const dashboardCards: TSortableItems[] = [
     xxl: 8,
     className: cx(styles.cardColxxl6, styles.cardColxxl5),
     component: <SavedSets id="4" className={styles.dashboardCard} />,
+  },
+  {
+    id: '5',
+    xs: 24,
+    md: 12,
+    xxl: 8,
+    className: cx(styles.cardColxxl6, styles.cardColxxl5),
+    component: <BiospecimenRequests id="5" className={styles.dashboardCard} />,
   },
 ];

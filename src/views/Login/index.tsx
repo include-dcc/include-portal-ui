@@ -1,10 +1,11 @@
+import intl from 'react-intl-universal';
 import { useKeycloak } from '@react-keycloak/web';
 import { Button, Divider, Space, Typography } from 'antd';
+
 import { REDIRECT_URI_KEY } from 'common/constants';
 import IncludeIconLogin from 'components/Icons/IncludeIconLogin';
 import DataRelease from 'components/uiKit/DataRelease';
 import useQueryParams from 'hooks/useQueryParams';
-import intl from 'react-intl-universal';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from './index.module.scss';
