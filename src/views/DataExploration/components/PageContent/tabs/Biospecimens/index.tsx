@@ -36,6 +36,7 @@ import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
+import { BIOSPECIMEN_REQUEST_KEY } from 'components/Biospecimens/Request/requestBiospecimen.utils';
 import RequestBiospecimenButton from 'components/Biospecimens/Request/RequestBiospecimenButton';
 import { SetType } from 'services/api/savedSet/models';
 import { fetchTsvReport } from 'store/report/thunks';
@@ -234,8 +235,6 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     },
   },
 ];
-
-const BIOSPECIMEN_REQUEST_KEY = 'BIOSPECIMEN_REQUEST';
 
 const BioSpecimenTab = ({ sqon }: OwnProps) => {
   const dispatch = useDispatch();

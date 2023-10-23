@@ -2,6 +2,7 @@ import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import EntityPage, { EntityDescriptions } from '@ferlab/ui/core/pages/EntityPage';
 import { useParticipantEntity } from 'graphql/participants/actions';
+import { IFamilyRelationToProband } from 'graphql/participants/models';
 
 import { getLinks, SectionId } from './utils/anchorLinks';
 import getProfileItems from './utils/getProfileItems';
@@ -13,7 +14,6 @@ import FileTable from './FileTable';
 import PhenotypeTable from './PhenotypeTable';
 import SummaryHeader from './SummaryHeader';
 import ParticipantEntityTitle from './Title';
-import { IFamilyRelationToProband } from 'graphql/participants/models';
 
 const ParticipantEntity = () => {
   const { participant_id } = useParams<{ participant_id: string }>();

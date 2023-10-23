@@ -15,6 +15,7 @@ export interface ISavedSet {
 export type initialState = {
   defaultFilter?: ISavedSet;
   savedSets: IUserSetOutput[];
+  sharedBiospecimenRequest?: IUserSetOutput;
   isLoading: boolean;
   isUpdating: boolean;
   error?: any;

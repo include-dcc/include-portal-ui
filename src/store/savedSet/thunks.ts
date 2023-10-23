@@ -1,13 +1,20 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { SavedSetApi } from 'services/api/savedSet';
-import { handleThunkApiReponse } from 'store/utils';
 import intl from 'react-intl-universal';
-import { globalActions } from 'store/global';
+import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
+
+import { SavedSetApi } from 'services/api/savedSet';
 import {
   IUserSetOutput,
   TUserSavedSetInsert,
   TUserSavedSetUpdate,
 } from 'services/api/savedSet/models';
+import { globalActions } from 'store/global';
+import { handleThunkApiReponse } from 'store/utils';
+
+import { getSetFieldId } from '.';
 
 const fetchSavedSet = createAsyncThunk<IUserSetOutput[], void | string, { rejectValue: string }>(
   'savedsets/fetch',
@@ -24,10 +31,11 @@ const fetchSavedSet = createAsyncThunk<IUserSetOutput[], void | string, { reject
 
 const createSavedSet = createAsyncThunk<
   IUserSetOutput,
-  TUserSavedSetInsert & { onCompleteCb: () => void },
+  TUserSavedSetInsert & { onCompleteCb: () => void; isBiospecimenRequest?: boolean },
   { rejectValue: string }
 >('savedsets/create', async (set, thunkAPI) => {
-  const { data, error } = await SavedSetApi.create(set);
+  const { isBiospecimenRequest, ...setInfo } = set;
+  const { data, error } = await SavedSetApi.create(setInfo);
   set.onCompleteCb();
 
   return handleThunkApiReponse({
@@ -38,16 +46,22 @@ const createSavedSet = createAsyncThunk<
       thunkAPI.dispatch(
         globalActions.displayNotification({
           type: 'success',
-          message: intl.get('api.savedSet.success.titleCreate'),
-          description: intl.get('api.savedSet.success.messageCreate'),
+          message: isBiospecimenRequest
+            ? intl.get('api.biospecimenRequest.success.titleCreate')
+            : intl.get('api.savedSet.success.titleCreate'),
+          description: isBiospecimenRequest
+            ? intl.get('api.biospecimenRequest.success.messageCreate')
+            : intl.get('api.savedSet.success.messageCreate'),
         }),
       ),
-    onError: (_) =>
+    onError: () =>
       thunkAPI.dispatch(
         globalActions.displayNotification({
           type: 'error',
           message: intl.get('api.savedSet.error.title'),
-          description: intl.get('api.savedSet.error.messageCreate'),
+          description: isBiospecimenRequest
+            ? intl.get('api.biospecimenRequest.error.messageCreate')
+            : intl.get('api.savedSet.error.messageCreate'),
         }),
       ),
   });
@@ -55,10 +69,10 @@ const createSavedSet = createAsyncThunk<
 
 const updateSavedSet = createAsyncThunk<
   IUserSetOutput,
-  TUserSavedSetUpdate & { id: string; onCompleteCb: () => void },
+  TUserSavedSetUpdate & { id: string; onCompleteCb: () => void; isBiospecimenRequest?: boolean },
   { rejectValue: string }
 >('savedsets/update', async (set, thunkAPI) => {
-  const { id, ...setInfo } = set;
+  const { id, isBiospecimenRequest, ...setInfo } = set;
   const { data, error } = await SavedSetApi.update(id, setInfo);
   set.onCompleteCb();
 
@@ -66,12 +80,14 @@ const updateSavedSet = createAsyncThunk<
     error,
     data: data!,
     reject: thunkAPI.rejectWithValue,
-    onError: (error) =>
+    onError: () =>
       thunkAPI.dispatch(
         globalActions.displayNotification({
           type: 'error',
-          message: intl.get('api.savedFilter.error.title'),
-          description: intl.get('api.savedFilter.error.messageUpdate'),
+          message: intl.get('api.savedSet.error.title'),
+          description: isBiospecimenRequest
+            ? intl.get('api.biospecimenRequest.error.messageUpdate')
+            : intl.get('api.savedSet.error.messageUpdate'),
         }),
       ),
     onSuccess: () =>
@@ -79,7 +95,9 @@ const updateSavedSet = createAsyncThunk<
         globalActions.displayNotification({
           type: 'success',
           message: intl.get('api.savedSet.success.titleUpdate'),
-          description: intl.get('api.savedSet.success.messageUpdate'),
+          description: isBiospecimenRequest
+            ? intl.get('api.biospecimenRequest.success.messageUpdate')
+            : intl.get('api.savedSet.success.messageUpdate'),
         }),
       ),
   });
@@ -106,4 +124,47 @@ const deleteSavedSet = createAsyncThunk<string, string, { rejectValue: string }>
   },
 );
 
-export { fetchSavedSet, createSavedSet, updateSavedSet, deleteSavedSet };
+const fetchSharedBispecimenRequest = createAsyncThunk<
+  IUserSetOutput | undefined,
+  string,
+  { rejectValue: string }
+>('shared/savedsets/fetch', async (id, thunkAPI) => {
+  const { data, error } = await SavedSetApi.fetchById(id);
+
+  // if (data) {
+  //   setQueryBuilderState(FILTER_TAG_QB_ID_MAPPING[data.tag], {
+  //     active: isEmpty(data.queries) ? v4() : data.queries[0].id,
+  //     state: data.queries ?? [],
+  //   });
+  // }
+  if (data) {
+    const setValue = `${SET_ID_PREFIX}${data.id}`;
+    addQuery({
+      queryBuilderId: DATA_EXPLORATION_QB_ID,
+      query: generateQuery({
+        newFilters: [
+          generateValueFilter({
+            field: getSetFieldId(data.setType),
+            value: [setValue],
+            index: data.setType,
+          }),
+        ],
+      }),
+      setAsActive: true,
+    });
+  }
+
+  return handleThunkApiReponse({
+    error,
+    data: data,
+    reject: thunkAPI.rejectWithValue,
+  });
+});
+
+export {
+  fetchSavedSet,
+  createSavedSet,
+  updateSavedSet,
+  deleteSavedSet,
+  fetchSharedBispecimenRequest,
+};

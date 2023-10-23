@@ -14,19 +14,21 @@ import { getDefaultContentType } from 'common/downloader';
 import { ArrangerApi } from 'services/api/arranger';
 import { ArrangerColumnStateResults } from 'services/api/arranger/models';
 import { ReportApi } from 'services/api/reports';
-import { ReportConfig } from 'services/api/reports/models';
+import { IDownloadTranslation, ReportConfig } from 'services/api/reports/models';
 import { globalActions } from 'store/global';
 
 import { TFetchTSVArgs } from './types';
 
 export const SUPPORT_EMAIL = 'support@includedcc.org';
 
-const showErrorReportNotif = (thunkApi: any) =>
+const showErrorReportNotif = (thunkApi: any, errorMessage?: string) =>
   thunkApi.dispatch(
     globalActions.displayNotification({
       type: 'error',
       message: intl.get('api.report.error.title'),
-      description: (
+      description: errorMessage ? (
+        errorMessage
+      ) : (
         <div>
           {intl.get('api.report.error.message')}
           <a
@@ -45,6 +47,7 @@ const fetchReport = createAsyncThunk<
   void,
   {
     data: ReportConfig;
+    translation?: IDownloadTranslation;
     callback?: () => void;
   },
   { rejectValue: string }
@@ -67,13 +70,14 @@ const fetchReport = createAsyncThunk<
         globalActions.displayNotification({
           type: 'success',
           message: intl.get('api.report.onSuccess.title'),
-          description: intl.get('api.report.onSuccess.fetchReport'),
+          description:
+            args.translation?.successMessage || intl.get('api.report.onSuccess.fetchReport'),
         }),
       );
     });
   } catch (e) {
     thunkAPI.dispatch(globalActions.destroyMessages([messageKey]));
-    showErrorReportNotif(thunkAPI);
+    showErrorReportNotif(thunkAPI, args.translation?.errorMessage);
   }
 });
 

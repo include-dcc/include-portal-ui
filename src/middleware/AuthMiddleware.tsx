@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useKeycloak } from '@react-keycloak/web';
-import Spinner from 'components/uiKit/Spinner';
-import { useUser } from 'store/user';
-import { fetchUser } from 'store/user/thunks';
-import { userActions } from 'store/user/slice';
-import { fetchSavedFilters, fetchSharedSavedFilter } from 'store/savedFilter/thunks';
-import { useSavedFilter } from 'store/savedFilter';
-import useQueryParams from 'hooks/useQueryParams';
+
 import { SHARED_FILTER_ID_QUERY_PARAM_KEY } from 'common/constants';
-import { fetchSavedSet } from 'store/savedSet/thunks';
+import { SHARED_BIOSPECIMEN_REQUEST_ID_QUERY_PARAM_KEY } from 'components/Biospecimens/Request/requestBiospecimen.utils';
+import Spinner from 'components/uiKit/Spinner';
+import useQueryParams from 'hooks/useQueryParams';
+import { useSavedFilter } from 'store/savedFilter';
+import { fetchSavedFilters, fetchSharedSavedFilter } from 'store/savedFilter/thunks';
+import { fetchSavedSet, fetchSharedBispecimenRequest } from 'store/savedSet/thunks';
+import { useUser } from 'store/user';
+import { userActions } from 'store/user/slice';
+import { fetchUser } from 'store/user/thunks';
 
 type Props = {
   children: React.ReactElement;
@@ -24,8 +26,12 @@ const AuthMiddleware = ({ children }: Props) => {
 
   useEffect(() => {
     const sharedFilterId = params.get(SHARED_FILTER_ID_QUERY_PARAM_KEY);
+    const biospecimenRequestId = params.get(SHARED_BIOSPECIMEN_REQUEST_ID_QUERY_PARAM_KEY);
     if (sharedFilterId) {
       dispatch(fetchSharedSavedFilter(sharedFilterId));
+    }
+    if (biospecimenRequestId) {
+      dispatch(fetchSharedBispecimenRequest(biospecimenRequestId));
     }
     // eslint-disable-next-line
   }, []);

@@ -27,13 +27,15 @@ const RequestBiospecimenButton = ({
       <Button type={type} disabled={disabled} onClick={() => setIsOpen(true)}>
         {intl.get('screen.dataExploration.tabs.biospecimens.request.buttonLabel')}
       </Button>
-      <RequestBiospecimenModal
-        biospecimenIds={biospecimenIds}
-        idField={idField}
-        isOpen={isOpen}
-        onCancel={() => setIsOpen(false)}
-        sqon={sqon}
-      />
+      {isOpen && (
+        <RequestBiospecimenModal
+          biospecimenIds={biospecimenIds}
+          idField={idField}
+          isOpen={isOpen}
+          onCancel={() => setIsOpen(false)}
+          sqon={sqon}
+        />
+      )}
     </>
   );
 };

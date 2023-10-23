@@ -14,6 +14,7 @@ const REPORTS_ROUTES = {
   [ReportType.CLINICAL_DATA]: `${REPORT_API_URL}/reports/clinical-data`,
   [ReportType.CLINICAL_DATA_FAM]: `${REPORT_API_URL}/reports/family-clinical-data`,
   [ReportType.BIOSEPCIMEN_DATA]: `${REPORT_API_URL}/reports/biospecimen-data`,
+  [ReportType.BIOSEPCIMEN_REQUEST]: `${REPORT_API_URL}/reports/biospecimen-request`,
 };
 
 const joinWithPadding = (l: number[]) => l.reduce((xs, x) => xs + `${x}`.padStart(2, '0'), '');
@@ -59,6 +60,7 @@ const generateReport = (config: ReportConfig) => {
       sqon: reportSqon,
       projectId: arrangerProjectId,
       filename: `include_${config.fileName || config.name}_${makeFilenameDatePart(new Date())}`,
+      biospecimenRequestName: config.biospecimenRequestName,
     },
     headers: headers(),
   });
