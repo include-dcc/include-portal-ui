@@ -79,7 +79,7 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, onCancel, sqon }: Own
       ]);
     } else {
       // set creation and download zip
-      dispatch(
+      await dispatch(
         fetchReport({
           data: {
             sqon: sqon!,
@@ -94,8 +94,8 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, onCancel, sqon }: Own
           callback: () => onCancel(),
         }),
       );
-      onCancel();
       dispatch(fetchSavedSet());
+      onCancel();
     }
   };
 
