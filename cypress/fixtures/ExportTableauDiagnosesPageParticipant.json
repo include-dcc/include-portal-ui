@@ -1,0 +1,8 @@
+{
+  "headers": ["Diagnosis (MONDO)",
+              "Condition (Source Text)",
+              "Age"],
+  "content": ["Down syndrome (MONDO:0008608)",
+              "Down syndrome",
+              "--"]
+}

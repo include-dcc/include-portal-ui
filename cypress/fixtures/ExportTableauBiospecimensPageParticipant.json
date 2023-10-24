@@ -1,0 +1,14 @@
+{
+  "headers": ["Sample ID",
+              "Collection ID",
+              "Container ID",
+              "Sample Type",
+              "Collection Sample Type",
+              "Age"],
+  "content": ["BS_AFRQAF6C",
+              "BS_AFRQAF6C_Peripheral_Whole_Blood",
+              "",
+              "DNA",
+              "Peripheral Whole Blood",
+              "--"]
+}

@@ -1,0 +1,16 @@
+{
+  "headers": ["Participant ID",
+              "Study",
+              "Down Syndrome Status",
+              "Sample ID",
+              "Sample Type",
+              "Collection ID",
+              "Collection Sample Type"],
+  "content": ["PT_QWWDKAXP",
+              "DS360-CHD",
+              "T21",
+              "BS_AFRQAF6C",
+              "DNA",
+              "BS_AFRQAF6C_Peripheral_Whole_Blood",
+              "Peripheral Whole Blood"]
+}
