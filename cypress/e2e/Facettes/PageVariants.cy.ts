@@ -5,7 +5,7 @@ beforeEach(() => {
   cy.login();
 });
 
-describe('Page Variants (Participant) - Filtrer avec les facettes', () => {
+describe('Page des variants (Participant) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitVariantsPage();
     cy.get('li[data-key="1"]').click();
@@ -37,7 +37,7 @@ describe('Page Variants (Participant) - Filtrer avec les facettes', () => {
   });
 });
 
-describe('Page Variants (Variant) - Filtrer avec les facettes', () => {
+describe('Page des variants (Variant) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitVariantsPage();
     cy.get('li[data-key="2"]').click();
@@ -150,7 +150,7 @@ describe('Page Variants (Variant) - Filtrer avec les facettes', () => {
   });
 });
 
-describe('Page Variants (Gene) - Filtrer avec les facettes', () => {
+describe('Page des variants (Gene) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitVariantsPage();
     cy.get('li[data-key="3"]').click();
@@ -292,7 +292,7 @@ describe('Page Variants (Gene) - Filtrer avec les facettes', () => {
   });
 });
 
-describe('Page Variants (Pathogenicity) - Filtrer avec les facettes', () => {
+describe('Page des variants (Pathogenicity) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitVariantsPage();
     cy.get('li[data-key="4"]').click();
@@ -424,7 +424,7 @@ describe('Page Variants (Pathogenicity) - Filtrer avec les facettes', () => {
   });
 });
 
-describe('Page Variants (Frequency) - Filtrer avec les facettes', () => {
+describe('Page des variants (Frequency) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitVariantsPage();
     cy.get('li[data-key="5"]').click();

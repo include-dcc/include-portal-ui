@@ -61,6 +61,7 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
     cy.get('[class*="EntityTitle"]').contains('PT_QWWDKAXP');
   });
 
+  // Ne fonctionne pas pour une raison inconnue
   it.skip('Lien dbGap du tableau', () => {
     cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class="ant-table-cell"]').eq(3).find('[href]')
       .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');

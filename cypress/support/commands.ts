@@ -135,7 +135,7 @@ Cypress.Commands.add('resetColumns', (table_id?: string) => {
   cy.get('[class*="Header_logo"]').click({force: true});
 });
 
-Cypress.Commands.add('showColumn', (column: string) => {
+Cypress.Commands.add('showColumn', (column: string|RegExp) => {
   cy.intercept('PUT', '**/user').as('getPOSTuser');
 
   cy.get('div[class="ant-popover-inner"]')
