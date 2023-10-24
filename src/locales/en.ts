@@ -843,7 +843,7 @@ const en = {
               cancelText: 'Cancel',
               closeText: 'Close',
               description:
-                'You are about to download the guidelines and supporting documents needed to request the selected biospecimen. The report will include information on <strong>{availableSamplesCount} available samples</strong> (out of {totalCount} selected)',
+                'You are about to download the guidelines and supporting documents needed to request the selected biospecimen. The report will include information on <strong>{availableSamplesCount} available samples</strong> (out of {totalCount} selected).',
               nameForm: {
                 title: 'Provide a name for your request',
                 note: 'This request will be saved to your dashboard for future reference.',
@@ -856,6 +856,8 @@ const en = {
                 studyCode: 'Study Name',
                 nbParticipants: 'Participants',
                 nbAvailableSamples: 'Available Samples',
+                nbAvailableSamplesTooltip:
+                  'Biobank samples available for sharing through the Virtual Biorepository based on your biospecimen selection.',
                 nbContainers: 'Containers',
               },
               alert: {

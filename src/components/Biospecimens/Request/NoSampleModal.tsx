@@ -18,6 +18,7 @@ const NoSampleModal = ({ isOpen, onCancel }: OwnProps) => (
     }}
     open={isOpen}
     title={intl.get('screen.dataExploration.tabs.biospecimens.request.modal.title')}
+    width={680}
   >
     <Alert
       type="info"

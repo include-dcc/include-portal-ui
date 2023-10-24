@@ -2,7 +2,7 @@ import intl from 'react-intl-universal';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
-import { Table } from 'antd';
+import { Table, Tooltip } from 'antd';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
@@ -32,8 +32,17 @@ export const getDataTypeColumns = (): ProColumnType<any>[] => [
   {
     key: 'nb_available_samples',
     dataIndex: 'nb_available_samples',
-    title: intl.get(
-      'screen.dataExploration.tabs.biospecimens.request.modal.table.nbAvailableSamples',
+    title: (
+      <Tooltip
+        className={styles.tooltip}
+        title={intl.get(
+          'screen.dataExploration.tabs.biospecimens.request.modal.table.nbAvailableSamplesTooltip',
+        )}
+      >
+        {intl.get(
+          'screen.dataExploration.tabs.biospecimens.request.modal.table.nbAvailableSamples',
+        )}
+      </Tooltip>
     ),
     render: (nb_samples: number) =>
       nb_samples ? numberWithCommas(nb_samples) : TABLE_EMPTY_PLACE_HOLDER,
