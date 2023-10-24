@@ -20,7 +20,7 @@ import { STATIC_ROUTES } from 'utils/routes';
 
 import EditBiospecimenRequestModal from './EditBiospecimenRequestModal';
 
-import styles from './index.module.scss';
+import styles from './listItem.module.scss';
 
 interface OwnProps {
   data: IUserSetOutput;
@@ -36,7 +36,6 @@ const ListItem = ({ data, queryBuilderId }: OwnProps) => {
     <>
       <ListItemWithActions
         key={data.id}
-        className={styles.biospecimenRequestListItem}
         onEdit={() => setIsOpen(true)}
         onDelete={() =>
           Modal.confirm({
@@ -95,6 +94,7 @@ const ListItem = ({ data, queryBuilderId }: OwnProps) => {
           });
         }}
         title={data.tag}
+        titleClassName={styles.title}
         description={
           data.updated_date
             ? intl.get('screen.dashboard.cards.biospecimenRequest.lastSaved', {

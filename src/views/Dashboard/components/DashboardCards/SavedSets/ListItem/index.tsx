@@ -119,6 +119,7 @@ const ListItem = ({ data, icon, queryBuilderId }: OwnProps) => {
           });
         }}
         title={data.tag}
+        titleClassName={styles.title}
         description={
           data.updated_date
             ? intl.get('screen.dashboard.cards.savedFilters.lastSaved', {
