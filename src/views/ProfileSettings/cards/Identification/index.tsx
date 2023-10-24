@@ -82,16 +82,17 @@ const IdentificationCard = () => {
               initialValues={initialValues}
               hasChangedInitialValue={hasChanged}
               onHasChanged={setHasChanged}
-              onFinish={(values: any) => {
-                const linkedinValue = values.linkedin ?? null;
-                // Empty values must be nullify.
-                const sanitzedLinkedInValue = linkedinValue === '' ? null : linkedinValue;
-                return dispatch(
+              onFinish={(values: any) =>
+                dispatch(
                   updateUser({
-                    data: { ...values, linkedin: sanitzedLinkedInValue },
+                    data: {
+                      ...values,
+                      linkedin: values.linkedin || null,
+                      public_email: values.public_email || null,
+                    },
                   }),
-                );
-              }}
+                )
+              }
             >
               <Form.Item
                 name={FORM_FIELDS.FIRST_NAME}
