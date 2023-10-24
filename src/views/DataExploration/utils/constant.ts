@@ -3,7 +3,7 @@ import { IQueryConfig, ISort } from '@ferlab/ui/core/graphql/types';
 
 export const PARTICIPANTS_SAVED_SETS_FIELD = 'participant_id';
 export const DATA_FILES_SAVED_SETS_FIELD = 'file_id';
-export const BIOSPECIMENS_SAVED_SETS_FIELD = 'sample_id';
+export const BIOSPECIMENS_SAVED_SETS_FIELD = 'biospecimen_id';
 
 export const DATA_EXPLORATION_QB_ID = 'data-exploration-repo-key';
 
