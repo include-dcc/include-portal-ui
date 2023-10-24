@@ -115,6 +115,7 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, onCancel, sqon }: Own
       okButtonProps={{ disabled: isLoading || error, loading: isLoading }}
       okText={intl.get('screen.dataExploration.tabs.biospecimens.request.modal.okText')}
       onOk={() => editForm.submit()}
+      width={680}
     >
       {error && (
         <Alert
