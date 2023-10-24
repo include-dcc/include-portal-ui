@@ -15,6 +15,8 @@ import { deleteSavedFilter } from 'store/savedFilter/thunks';
 
 import EditModal from '../EditModal';
 
+import styles from './index.module.scss';
+
 interface OwnProps {
   id: any;
   data: TUserSavedFilter;
@@ -52,6 +54,7 @@ const SavedFiltersListItem = ({ data }: OwnProps) => {
           });
         }}
         title={data.title}
+        titleClassName={styles.title}
         description={intl.get('screen.dashboard.cards.savedFilters.lastSaved', {
           date: formatDistance(new Date(), new Date(data.updated_date)),
         })}
