@@ -22,6 +22,7 @@ import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
+  BIOSPECIMENS_SAVED_SETS_FIELD,
   DATA_EXPLORATION_QB_ID,
   DEFAULT_BIOSPECIMEN_QUERY_SORT,
   DEFAULT_PAGE_INDEX,
@@ -361,7 +362,7 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
             />
           ),
           <SetsManagementDropdown
-            idField="fhir_id"
+            idField={BIOSPECIMENS_SAVED_SETS_FIELD}
             key="setManagementDropdown"
             results={results}
             sqon={getCurrentSqon()}

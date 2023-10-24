@@ -85,7 +85,7 @@ const ListItem = ({ data, queryBuilderId }: OwnProps) => {
             query: generateQuery({
               newFilters: [
                 generateValueFilter({
-                  field: getSetFieldId(SetType.BIOSPECIMEN),
+                  field: getSetFieldId(SetType.BIOSPECIMEN_REQUEST),
                   value: [setValue],
                   index: SetType.BIOSPECIMEN,
                 }),
