@@ -12,7 +12,7 @@ import copy from 'copy-to-clipboard';
 import { formatDistance } from 'date-fns';
 
 import { SHARED_BIOSPECIMEN_REQUEST_ID_QUERY_PARAM_KEY } from 'components/Biospecimens/Request/requestBiospecimen.utils';
-import { IUserSetOutput } from 'services/api/savedSet/models';
+import { IUserSetOutput, SetType } from 'services/api/savedSet/models';
 import { globalActions } from 'store/global';
 import { getSetFieldId } from 'store/savedSet';
 import { deleteSavedSet } from 'store/savedSet/thunks';
@@ -85,9 +85,9 @@ const ListItem = ({ data, queryBuilderId }: OwnProps) => {
             query: generateQuery({
               newFilters: [
                 generateValueFilter({
-                  field: getSetFieldId(data.setType),
+                  field: getSetFieldId(SetType.BIOSPECIMEN),
                   value: [setValue],
-                  index: data.setType,
+                  index: SetType.BIOSPECIMEN,
                 }),
               ],
             }),

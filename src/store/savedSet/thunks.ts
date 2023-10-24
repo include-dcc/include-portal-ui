@@ -8,6 +8,7 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { SavedSetApi } from 'services/api/savedSet';
 import {
   IUserSetOutput,
+  SetType,
   TUserSavedSetInsert,
   TUserSavedSetUpdate,
 } from 'services/api/savedSet/models';
@@ -137,9 +138,9 @@ const fetchSharedBispecimenRequest = createAsyncThunk<
       query: generateQuery({
         newFilters: [
           generateValueFilter({
-            field: getSetFieldId(data.setType),
+            field: getSetFieldId(SetType.BIOSPECIMEN),
             value: [setValue],
-            index: data.setType,
+            index: SetType.BIOSPECIMEN,
           }),
         ],
       }),
