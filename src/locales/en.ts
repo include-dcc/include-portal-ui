@@ -138,12 +138,12 @@ const en = {
       error: {
         messageUpdate: 'Unable to update biospecimen request',
         messageDelete: 'Unable to delete biospecimen request',
-        guidelinesReport:
+        manifestReport:
           'An error occurred and we were unable to download your file. Please try again.',
       },
       success: {
         messageUpdate: 'Your biospecimen request has been updated.',
-        guidelinesReport: 'Guidelines downloaded successfully.',
+        manifestReport: 'Manifest downloaded successfully.',
       },
     },
     cavatica: {
@@ -839,11 +839,11 @@ const en = {
             buttonLabel: 'Request biospecimen',
             modal: {
               title: 'Request biospecimen',
-              okText: 'Download guidelines',
+              okText: 'Download manifest',
               cancelText: 'Cancel',
               closeText: 'Close',
               description:
-                'You are about to download the guidelines and supporting documents needed to request the selected biospecimen. The report will include information on <strong>{availableSamplesCount} available samples</strong> (out of {totalCount} selected).',
+                'You are about to download the manifest and supporting documents needed to request the selected biospecimen. The report will include information on <strong>{availableSamplesCount} available samples</strong> (out of {totalCount} selected).',
               nameForm: {
                 title: 'Provide a name for your request',
                 note: 'This request will be saved to your dashboard for future reference.',
