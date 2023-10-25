@@ -29,7 +29,7 @@ const RequestBiospecimenButton = ({
         <RequestBiospecimenModal
           biospecimenIds={biospecimenIds}
           isOpen={isOpen}
-          onCancel={() => setIsOpen(false)}
+          closeModal={() => setIsOpen(false)}
           sqon={sqon}
         />
       )}

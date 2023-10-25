@@ -3,18 +3,18 @@ import { Alert, Modal } from 'antd';
 
 type OwnProps = {
   isOpen: boolean;
-  onCancel: () => void;
+  closeModal: () => void;
 };
 
-const NoSampleModal = ({ isOpen, onCancel }: OwnProps) => (
+const NoSampleModal = ({ isOpen, closeModal }: OwnProps) => (
   <Modal
     cancelButtonProps={{ style: { display: 'none' } }}
     okText={intl.get('screen.dataExploration.tabs.biospecimens.request.modal.closeText')}
     onCancel={() => {
-      onCancel();
+      closeModal();
     }}
     onOk={() => {
-      onCancel();
+      closeModal();
     }}
     open={isOpen}
     title={intl.get('screen.dataExploration.tabs.biospecimens.request.modal.title')}

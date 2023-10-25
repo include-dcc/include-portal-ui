@@ -27,7 +27,7 @@ const REPORTS_API_URL = EnvironmentVariables.configFor('REPORTS_API_URL');
 type OwnProps = {
   biospecimenIds: string[];
   isOpen: boolean;
-  onCancel: () => void;
+  closeModal: () => void;
   sqon?: ISqonGroupFilter;
 };
 
@@ -39,7 +39,7 @@ export const headers = () => ({
   Authorization: `Bearer ${keycloak.token}`,
 });
 
-const RequestBiospecimenModal = ({ biospecimenIds, isOpen, onCancel, sqon }: OwnProps) => {
+const RequestBiospecimenModal = ({ biospecimenIds, isOpen, closeModal, sqon }: OwnProps) => {
   const [editForm] = Form.useForm();
   const dispatch = useDispatch();
   const { isLoading, savedSets } = useSavedSet();
@@ -91,17 +91,19 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, onCancel, sqon }: Own
             errorMessage: intl.get('api.biospecimenRequest.error.guidelinesReport'),
             successMessage: intl.get('api.biospecimenRequest.success.guidelinesReport'),
           },
-          callback: () => onCancel(),
+          callback: () => {
+            dispatch(fetchSavedSet());
+            closeModal();
+          },
+          errorCallback: () => closeModal(),
         }),
       );
-      dispatch(fetchSavedSet());
-      onCancel();
     }
   };
 
   if (loading) return <></>;
 
-  if (!error && !samples.length) return <NoSampleModal isOpen={isOpen} onCancel={onCancel} />;
+  if (!error && !samples.length) return <NoSampleModal isOpen={isOpen} closeModal={closeModal} />;
 
   return (
     <Modal
@@ -110,7 +112,7 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, onCancel, sqon }: Own
       open={isOpen}
       onCancel={() => {
         editForm.resetFields();
-        onCancel();
+        closeModal();
       }}
       okButtonProps={{ disabled: isLoading || error, loading: isLoading }}
       okText={intl.get('screen.dataExploration.tabs.biospecimens.request.modal.okText')}

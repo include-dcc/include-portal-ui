@@ -49,6 +49,7 @@ const fetchReport = createAsyncThunk<
     data: ReportConfig;
     translation?: IDownloadTranslation;
     callback?: () => void;
+    errorCallback?: () => void;
   },
   { rejectValue: string }
 >('report/generateReport', async (args, thunkAPI) => {
@@ -75,9 +76,12 @@ const fetchReport = createAsyncThunk<
         }),
       );
     });
+
+    if (args.callback) await args.callback();
   } catch (e) {
     thunkAPI.dispatch(globalActions.destroyMessages([messageKey]));
     showErrorReportNotif(thunkAPI, args.translation?.errorMessage);
+    if (args.errorCallback) args.errorCallback();
   }
 });
 
