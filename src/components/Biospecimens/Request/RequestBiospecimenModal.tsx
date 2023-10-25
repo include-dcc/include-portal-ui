@@ -79,7 +79,7 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, closeModal, sqon }: O
       ]);
     } else {
       // set creation and download zip
-      await dispatch(
+      dispatch(
         fetchReport({
           data: {
             sqon: sqon!,
