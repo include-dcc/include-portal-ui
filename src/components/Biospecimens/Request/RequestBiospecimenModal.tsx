@@ -88,8 +88,8 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, closeModal, sqon }: O
             biospecimenRequestName: name,
           },
           translation: {
-            errorMessage: intl.get('api.biospecimenRequest.error.guidelinesReport'),
-            successMessage: intl.get('api.biospecimenRequest.success.guidelinesReport'),
+            errorMessage: intl.get('api.biospecimenRequest.error.manifestReport'),
+            successMessage: intl.get('api.biospecimenRequest.success.manifestReport'),
           },
           callback: () => {
             dispatch(fetchSavedSet());
