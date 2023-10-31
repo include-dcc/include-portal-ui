@@ -6,14 +6,14 @@ import { Button } from 'antd';
 import RequestBiospecimenModal from './RequestBiospecimenModal';
 
 interface OwnProps {
-  biospecimenIds: string[];
+  nbBiospecimenSelected: number;
   disabled?: boolean;
   sqon?: ISqonGroupFilter;
   type?: 'default' | 'primary';
 }
 
 const RequestBiospecimenButton = ({
-  biospecimenIds,
+  nbBiospecimenSelected,
   disabled = false,
   type = 'default',
   sqon,
@@ -27,9 +27,9 @@ const RequestBiospecimenButton = ({
       </Button>
       {isOpen && (
         <RequestBiospecimenModal
-          biospecimenIds={biospecimenIds}
           isOpen={isOpen}
           closeModal={() => setIsOpen(false)}
+          nbBiospecimenSelected={nbBiospecimenSelected}
           sqon={sqon}
         />
       )}

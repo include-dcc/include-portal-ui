@@ -70,7 +70,7 @@ const RequestBiospecimenTable = ({
   return (
     <Table
       columns={getDataTypeColumns()}
-      dataSource={data}
+      dataSource={data.map((i) => ({ ...i, key: i.study_code }))}
       pagination={false}
       size="small"
       rowClassName={styles.notStriped}

@@ -354,9 +354,9 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
         extra: [
           hasRequestBio === 'true' && (
             <RequestBiospecimenButton
-              biospecimenIds={selectedAllResults ? [] : selectedKeys}
               disabled={selectedKeys.length === 0 && !selectedAllResults}
               key="requestBiospecimen"
+              nbBiospecimenSelected={selectedAllResults ? results.total : selectedKeys.length}
               sqon={getCurrentSqon()}
               type="primary"
             />
