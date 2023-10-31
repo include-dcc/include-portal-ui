@@ -25,7 +25,7 @@ const ARRANGER_PROJECT_ID = EnvironmentVariables.configFor('ARRANGER_PROJECT_ID'
 const REPORTS_API_URL = EnvironmentVariables.configFor('REPORTS_API_URL');
 
 type OwnProps = {
-  biospecimenIds: string[];
+  nbBiospecimenSelected: number;
   isOpen: boolean;
   closeModal: () => void;
   sqon?: ISqonGroupFilter;
@@ -39,7 +39,7 @@ export const headers = () => ({
   Authorization: `Bearer ${keycloak.token}`,
 });
 
-const RequestBiospecimenModal = ({ biospecimenIds, isOpen, closeModal, sqon }: OwnProps) => {
+const RequestBiospecimenModal = ({ nbBiospecimenSelected, isOpen, closeModal, sqon }: OwnProps) => {
   const [editForm] = Form.useForm();
   const dispatch = useDispatch();
   const { isLoading, savedSets } = useSavedSet();
@@ -136,7 +136,7 @@ const RequestBiospecimenModal = ({ biospecimenIds, isOpen, closeModal, sqon }: O
             <Text>
               {intl.getHTML(`screen.dataExploration.tabs.biospecimens.request.modal.description`, {
                 availableSamplesCount,
-                totalCount: biospecimenIds.length,
+                totalCount: nbBiospecimenSelected,
               })}
             </Text>
           </div>
