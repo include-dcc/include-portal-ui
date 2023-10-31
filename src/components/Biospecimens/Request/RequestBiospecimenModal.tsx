@@ -25,7 +25,6 @@ const ARRANGER_PROJECT_ID = EnvironmentVariables.configFor('ARRANGER_PROJECT_ID'
 const REPORTS_API_URL = EnvironmentVariables.configFor('REPORTS_API_URL');
 
 type OwnProps = {
-  nbBiospecimenSelected: number;
   isOpen: boolean;
   closeModal: () => void;
   sqon?: ISqonGroupFilter;
@@ -39,7 +38,7 @@ export const headers = () => ({
   Authorization: `Bearer ${keycloak.token}`,
 });
 
-const RequestBiospecimenModal = ({ nbBiospecimenSelected, isOpen, closeModal, sqon }: OwnProps) => {
+const RequestBiospecimenModal = ({ isOpen, closeModal, sqon }: OwnProps) => {
   const [editForm] = Form.useForm();
   const dispatch = useDispatch();
   const { isLoading, savedSets } = useSavedSet();
@@ -57,11 +56,6 @@ const RequestBiospecimenModal = ({ nbBiospecimenSelected, isOpen, closeModal, sq
 
   const { error, loading, result } = useApi({ config });
   const samples = (result as IRequestBioDataRow[]) || [];
-
-  let availableSamplesCount = 0;
-  samples.forEach((data: IRequestBioDataRow) => {
-    availableSamplesCount += data.nb_available_samples;
-  });
 
   const onFinish = async (values: Store) => {
     const { name } = values;
@@ -134,10 +128,7 @@ const RequestBiospecimenModal = ({ nbBiospecimenSelected, isOpen, closeModal, sq
         <div className={styles.modalWrapper}>
           <div className={styles.description}>
             <Text>
-              {intl.getHTML(`screen.dataExploration.tabs.biospecimens.request.modal.description`, {
-                availableSamplesCount,
-                totalCount: nbBiospecimenSelected,
-              })}
+              {intl.get(`screen.dataExploration.tabs.biospecimens.request.modal.description`)}
             </Text>
           </div>
           <div className={styles.nameForm}>
