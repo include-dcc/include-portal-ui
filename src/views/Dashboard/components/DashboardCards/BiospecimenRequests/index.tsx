@@ -58,7 +58,7 @@ const getItemList = (
       }}
       dataSource={fetchingError ? [] : dataSource}
       loading={isLoading}
-      renderItem={(item) => <ListItem data={item} queryBuilderId={queryBuilderId} />}
+      renderItem={(item) => <ListItem set={item} queryBuilderId={queryBuilderId} />}
     />
   );
 };
