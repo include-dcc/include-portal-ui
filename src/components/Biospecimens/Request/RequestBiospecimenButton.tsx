@@ -6,18 +6,12 @@ import { Button } from 'antd';
 import RequestBiospecimenModal from './RequestBiospecimenModal';
 
 interface OwnProps {
-  nbBiospecimenSelected: number;
   disabled?: boolean;
   sqon?: ISqonGroupFilter;
   type?: 'default' | 'primary';
 }
 
-const RequestBiospecimenButton = ({
-  nbBiospecimenSelected,
-  disabled = false,
-  type = 'default',
-  sqon,
-}: OwnProps) => {
+const RequestBiospecimenButton = ({ disabled = false, type = 'default', sqon }: OwnProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -26,12 +20,7 @@ const RequestBiospecimenButton = ({
         {intl.get('screen.dataExploration.tabs.biospecimens.request.buttonLabel')}
       </Button>
       {isOpen && (
-        <RequestBiospecimenModal
-          isOpen={isOpen}
-          closeModal={() => setIsOpen(false)}
-          nbBiospecimenSelected={nbBiospecimenSelected}
-          sqon={sqon}
-        />
+        <RequestBiospecimenModal isOpen={isOpen} closeModal={() => setIsOpen(false)} sqon={sqon} />
       )}
     </>
   );

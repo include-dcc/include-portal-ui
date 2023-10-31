@@ -851,7 +851,7 @@ const en = {
               cancelText: 'Cancel',
               closeText: 'Close',
               description:
-                'You are about to download the manifest and supporting documents needed to request the selected biospecimen. The report will include information on <strong>{availableSamplesCount} available samples</strong> (out of {totalCount} selected).',
+                'You are about to download the manifest and supporting documents needed to request the selected biospecimen. The report will include information on available samples from your selection.',
               nameForm: {
                 title: 'Provide a name for your request',
                 note: 'This request will be saved to your dashboard for future reference.',
