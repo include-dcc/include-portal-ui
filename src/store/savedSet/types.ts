@@ -1,7 +1,7 @@
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { ISort } from '@ferlab/ui/core/graphql/types';
 
-import { IUserSetOutput } from 'services/api/savedSet/models';
+import { IUserSetOutput, TBiospecimenRequest } from 'services/api/savedSet/models';
 
 export interface ISavedSet {
   idField: string;
@@ -15,7 +15,7 @@ export interface ISavedSet {
 export type initialState = {
   defaultFilter?: ISavedSet;
   savedSets: IUserSetOutput[];
-  sharedBiospecimenRequest?: IUserSetOutput;
+  sharedBiospecimenRequest?: TBiospecimenRequest;
   isLoading: boolean;
   isUpdating: boolean;
   error?: any;

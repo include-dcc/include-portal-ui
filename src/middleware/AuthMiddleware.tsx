@@ -8,7 +8,7 @@ import Spinner from 'components/uiKit/Spinner';
 import useQueryParams from 'hooks/useQueryParams';
 import { useSavedFilter } from 'store/savedFilter';
 import { fetchSavedFilters, fetchSharedSavedFilter } from 'store/savedFilter/thunks';
-import { fetchSavedSet, fetchSharedBispecimenRequest } from 'store/savedSet/thunks';
+import { fetchSavedSet, fetchSharedBiospecimenRequest } from 'store/savedSet/thunks';
 import { useUser } from 'store/user';
 import { userActions } from 'store/user/slice';
 import { fetchUser } from 'store/user/thunks';
@@ -31,7 +31,7 @@ const AuthMiddleware = ({ children }: Props) => {
       dispatch(fetchSharedSavedFilter(sharedFilterId));
     }
     if (biospecimenRequestId) {
-      dispatch(fetchSharedBispecimenRequest(biospecimenRequestId));
+      dispatch(fetchSharedBiospecimenRequest(biospecimenRequestId));
     }
     // eslint-disable-next-line
   }, []);

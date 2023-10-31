@@ -606,9 +606,16 @@ const en = {
             existingNameError: 'A biospecimen request with this name already exists',
             maximumLength: 'characters maximum',
           },
+          shareModal: {
+            title: 'Confirm public set',
+            cancelText: 'Cancel',
+            okText: 'Confirm',
+            content:
+              'By confirming, you will make your biospecimen request public in order to be able to share it.',
+          },
           shareLink: {
-            success: 'Link copied to clipboard',
-            error: 'Unable to copy link to clipboard',
+            success: { title: 'Success', description: 'Link copied to clipboard' },
+            error: { title: 'Error', description: 'Unable to copy link to clipboard' },
           },
         },
       },
@@ -913,7 +920,7 @@ const en = {
       biospecimen_fhir_id_1: 'Sample ID',
       biospecimen_fhir_id_2: 'Sample ID',
     },
-    biospecimen_id: 'Sample ID',
+    biospecimen_id: 'Biospecimen',
     study: {
       study_code: 'Study Code',
       study_name: 'Study Name',

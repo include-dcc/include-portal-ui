@@ -1,24 +1,40 @@
 import EnvironmentVariables from 'helpers/EnvVariables';
-import {TUserSavedSetInsert, TUserSavedSetUpdate, TUserSavedSet, IUserSetOutput} from './models';
+
 import { sendRequest } from 'services/api';
 
+import {
+  IUserSetOutput,
+  TBiospecimenRequest,
+  TUserSavedSet,
+  TUserSavedSetInsert,
+  TUserSavedSetUpdate,
+} from './models';
+
 const SETS_API_URL = `${EnvironmentVariables.configFor('ARRANGER_API')}/sets`;
+const USERS_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user-sets`;
 
 const headers = () => ({
   'Content-Type': 'application/json',
 });
 
-const fetchAll = (tag?: string) =>
+const fetchAll = () =>
   sendRequest<IUserSetOutput[]>({
     method: 'GET',
     url: SETS_API_URL,
     headers: headers(),
   });
 
-const fetchById = (id: string) =>
+const shareById = (id: string) =>
   sendRequest<IUserSetOutput>({
+    method: 'PUT',
+    url: `${USERS_API_URL}/shared/${id}`,
+    headers: headers(),
+  });
+
+const getSharedById = (id: string) =>
+  sendRequest<TBiospecimenRequest>({
     method: 'GET',
-    url: `${SETS_API_URL}/${id}`,
+    url: `${USERS_API_URL}/shared/${id}`,
     headers: headers(),
   });
 
@@ -55,9 +71,10 @@ const destroy = (id: string) =>
 
 export const SavedSetApi = {
   fetchAll,
-  fetchById,
   create,
   update,
   destroy,
   setAsDefault,
+  shareById,
+  getSharedById,
 };

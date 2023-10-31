@@ -7,7 +7,7 @@ import {
   createSavedSet,
   deleteSavedSet,
   fetchSavedSet,
-  fetchSharedBispecimenRequest,
+  fetchSharedBiospecimenRequest,
   updateSavedSet,
 } from './thunks';
 
@@ -48,16 +48,16 @@ const savedSetSlice = createSlice({
       isLoading: false,
     }));
     // Fetch Shared
-    builder.addCase(fetchSharedBispecimenRequest.pending, (state) => {
+    builder.addCase(fetchSharedBiospecimenRequest.pending, (state) => {
       state.isLoading = true;
       state.fetchingError = undefined;
     });
-    builder.addCase(fetchSharedBispecimenRequest.fulfilled, (state, action) => ({
+    builder.addCase(fetchSharedBiospecimenRequest.fulfilled, (state, action) => ({
       ...state,
       sharedBiospecimenRequest: action.payload,
       isLoading: false,
     }));
-    builder.addCase(fetchSharedBispecimenRequest.rejected, (state, action) => ({
+    builder.addCase(fetchSharedBiospecimenRequest.rejected, (state, action) => ({
       ...state,
       fetchingError: action.payload,
       isLoading: false,

@@ -9,6 +9,7 @@ import { SavedSetApi } from 'services/api/savedSet';
 import {
   IUserSetOutput,
   SetType,
+  TBiospecimenRequest,
   TUserSavedSetInsert,
   TUserSavedSetUpdate,
 } from 'services/api/savedSet/models';
@@ -20,7 +21,7 @@ import { getSetFieldId } from '.';
 const fetchSavedSet = createAsyncThunk<IUserSetOutput[], void | string, { rejectValue: string }>(
   'savedsets/fetch',
   async (tag, thunkAPI) => {
-    const { data, error } = await SavedSetApi.fetchAll(tag as string);
+    const { data, error } = await SavedSetApi.fetchAll();
 
     return handleThunkApiReponse({
       error,
@@ -118,19 +119,13 @@ const deleteSavedSet = createAsyncThunk<string, string, { rejectValue: string }>
   },
 );
 
-const fetchSharedBispecimenRequest = createAsyncThunk<
-  IUserSetOutput | undefined,
+const fetchSharedBiospecimenRequest = createAsyncThunk<
+  TBiospecimenRequest | undefined,
   string,
   { rejectValue: string }
 >('shared/savedsets/fetch', async (id, thunkAPI) => {
-  const { data, error } = await SavedSetApi.fetchById(id);
+  const { data, error } = await SavedSetApi.getSharedById(id);
 
-  // if (data) {
-  //   setQueryBuilderState(FILTER_TAG_QB_ID_MAPPING[data.tag], {
-  //     active: isEmpty(data.queries) ? v4() : data.queries[0].id,
-  //     state: data.queries ?? [],
-  //   });
-  // }
   if (data) {
     const setValue = `${SET_ID_PREFIX}${data.id}`;
     addQuery({
@@ -138,7 +133,7 @@ const fetchSharedBispecimenRequest = createAsyncThunk<
       query: generateQuery({
         newFilters: [
           generateValueFilter({
-            field: getSetFieldId(SetType.BIOSPECIMEN),
+            field: getSetFieldId(SetType.BIOSPECIMEN_REQUEST),
             value: [setValue],
             index: SetType.BIOSPECIMEN,
           }),
@@ -160,5 +155,5 @@ export {
   createSavedSet,
   updateSavedSet,
   deleteSavedSet,
-  fetchSharedBispecimenRequest,
+  fetchSharedBiospecimenRequest,
 };
