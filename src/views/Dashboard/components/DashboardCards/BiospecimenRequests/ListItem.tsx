@@ -59,8 +59,22 @@ const ListItem = ({ set, queryBuilderId }: OwnProps) => {
           Modal.confirm({
             title: intl.get('screen.dashboard.cards.biospecimenRequest.shareModal.title'),
             okText: intl.get('screen.dashboard.cards.biospecimenRequest.shareModal.okText'),
-            content: intl.get('screen.dashboard.cards.biospecimenRequest.shareModal.content'),
-            cancelText: intl.get('screen.dashboard.cards.biospecimenRequest.shareModal.cancelText'),
+            content: (
+              <>
+                {intl.get('screen.dashboard.cards.biospecimenRequest.shareModal.content')}
+                <ul>
+                  <li>
+                    {intl.get('screen.dashboard.cards.biospecimenRequest.shareModal.firstPoint')}
+                  </li>
+                  <li>
+                    {intl.get('screen.dashboard.cards.biospecimenRequest.shareModal.secondPoint')}
+                  </li>
+                </ul>
+              </>
+            ),
+            cancelText: intl.getHTML(
+              'screen.dashboard.cards.biospecimenRequest.shareModal.cancelText',
+            ),
             onOk: async () => {
               // call back to change sharedpublicly boolean
               const { data } = await SavedSetApi.shareById(set.id);
@@ -94,6 +108,7 @@ const ListItem = ({ set, queryBuilderId }: OwnProps) => {
                 );
               }
             },
+            width: 440,
           })
         }
         onClick={() => {

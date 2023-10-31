@@ -136,6 +136,7 @@ const fetchSharedBiospecimenRequest = createAsyncThunk<
             field: getSetFieldId(SetType.BIOSPECIMEN_REQUEST),
             value: [setValue],
             index: SetType.BIOSPECIMEN,
+            overrideValuesName: data.alias,
           }),
         ],
       }),

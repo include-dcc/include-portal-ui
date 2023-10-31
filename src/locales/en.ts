@@ -607,11 +607,12 @@ const en = {
             maximumLength: 'characters maximum',
           },
           shareModal: {
-            title: 'Confirm public set',
+            title: 'Share link to biospecimen request?',
             cancelText: 'Cancel',
-            okText: 'Confirm',
-            content:
-              'By confirming, you will make your biospecimen request public in order to be able to share it.',
+            okText: 'Copy link',
+            content: 'Note that anyone with this link will have access to:',
+            firstPoint: 'The biospecimen request title',
+            secondPoint: 'The list of biospecimens in the request',
           },
           shareLink: {
             success: { title: 'Success', description: 'Link copied to clipboard' },
