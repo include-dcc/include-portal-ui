@@ -10,11 +10,15 @@ import { ReportConfig, ReportType } from './models';
 const REPORTS_API_URL = EnvironmentVariables.configFor('REPORTS_API_URL');
 const arrangerProjectId = EnvironmentVariables.configFor('ARRANGER_PROJECT_ID');
 
-const REPORTS_ROUTES = {
+export const REPORTS_ROUTES = {
   [ReportType.CLINICAL_DATA]: `${REPORTS_API_URL}/reports/clinical-data`,
   [ReportType.CLINICAL_DATA_FAM]: `${REPORTS_API_URL}/reports/family-clinical-data`,
   [ReportType.BIOSEPCIMEN_DATA]: `${REPORTS_API_URL}/reports/biospecimen-data`,
   [ReportType.BIOSEPCIMEN_REQUEST]: `${REPORTS_API_URL}/reports/biospecimen-request`,
+  [ReportType.FILE_MANIFEST]: `${REPORTS_API_URL}/reports/file-manifest`,
+  [ReportType.FILE_MANIFEST_STATS]: `${REPORTS_API_URL}/reports/file-manifest/stats`,
+  [ReportType.FILE_REQUEST_ACCESS]: `${REPORTS_API_URL}/reports/file-request-access`,
+  [ReportType.FILE_REQUEST_ACCESS_STATS]: `${REPORTS_API_URL}/reports/file-request-access/stats`,
 };
 
 const joinWithPadding = (l: number[]) => l.reduce((xs, x) => xs + `${x}`.padStart(2, '0'), '');
@@ -32,7 +36,7 @@ const makeFilenameDatePart = (date = new Date()) => {
   return `${prefixes}T${suffixes}Z`;
 };
 
-const headers = () => ({
+export const headers = () => ({
   'Content-Type': 'application/json',
   Accept: '*/*',
   Authorization: `Bearer ${keycloak.token}`,
@@ -61,6 +65,7 @@ const generateReport = (config: ReportConfig) => {
       projectId: arrangerProjectId,
       filename: `include_${config.fileName || config.name}_${makeFilenameDatePart(new Date())}`,
       biospecimenRequestName: config.biospecimenRequestName,
+      withFamily: config.withFamily,
     },
     headers: headers(),
   });

@@ -33,9 +33,10 @@ import {
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
 import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
-import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import { MAX_ITEMS_QUERY, TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { FENCE_CONNECTION_STATUSES } from 'common/fenceTypes';
 import CavaticaAnalyzeButton from 'components/Cavatica/AnalyzeButton';
+import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
 import { SetType } from 'services/api/savedSet/models';
 import { useFenceConnection } from 'store/fenceConnection';
 import { fetchTsvReport } from 'store/report/thunks';
@@ -329,6 +330,10 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
     });
   }, [queryConfig]);
 
+  const hasTooManyFiles =
+    selectedKeys.length > MAX_ITEMS_QUERY ||
+    (selectedAllResults && results.total > MAX_ITEMS_QUERY);
+
   return (
     <>
       <ProTable<ITableFileEntity>
@@ -409,6 +414,12 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
               fileIds={selectedAllResults ? [] : selectedKeys}
               sqon={sqon}
               key="file-cavatica-upload"
+            />,
+            <DownloadFileManifestModal
+              key="download-file-manifest"
+              sqon={getCurrentSqon()}
+              isDisabled={!selectedKeys.length && !selectedAllResults}
+              hasTooManyFiles={hasTooManyFiles}
             />,
           ],
         }}
