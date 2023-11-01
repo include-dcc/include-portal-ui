@@ -13,7 +13,6 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { VARIANT_REPO_QB_ID } from 'views/Variants/utils/constants';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
-import PopoverContentLink from 'components/uiKit/PopoverContentLink';
 import { IUserSetOutput, SetType } from 'services/api/savedSet/models';
 import { SUPPORT_EMAIL } from 'store/report/thunks';
 import { useSavedSet } from 'store/savedSet';
@@ -81,15 +80,10 @@ const SavedSets = ({ id, key, className = '' }: DashboardCardProps) => {
             title: 'Managing saved sets',
             content: (
               <Text>
-                A saved set is a set of one or more entity IDs that can be saved and revisited for
-                later use without having to manually reselect entity IDs. You can create
-                Participant, Biospecimen, and File saved sets at the top of the table of results in
-                the{' '}
-                <PopoverContentLink
-                  to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
-                  title="Data Exploration page"
-                />
-                .
+                {intl.getHTML('screen.dashboard.cards.savedSets.infoPopover.content', {
+                  dataExploHref: STATIC_ROUTES.DATA_EXPLORATION,
+                  variantsHref: STATIC_ROUTES.VARIANTS,
+                })}
               </Text>
             ),
           }}
