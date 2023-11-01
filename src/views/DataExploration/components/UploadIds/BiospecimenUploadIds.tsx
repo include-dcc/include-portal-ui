@@ -7,7 +7,6 @@ import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { CHECK_BIOSPECIMEN_MATCH } from 'graphql/biospecimens/queries';
 import { INDEXES } from 'graphql/constants';
 import { hydrateResults } from 'graphql/models';
-import { uniqBy } from 'lodash';
 
 import { ArrangerApi } from 'services/api/arranger';
 
@@ -46,18 +45,24 @@ const BiospecimenUploadIds = ({ queryBuilderId }: OwnProps) => (
         response.data?.data?.biospecimen?.hits?.edges || [],
       );
 
-      return uniqBy(biospecimens, 'sample_id').map((biospecimen) => ({
-        key: biospecimen.fhir_id,
-        submittedId: ids.find((id) => [biospecimen.sample_id].includes(id))!,
-        mappedTo: biospecimen.sample_id,
-        matchTo: biospecimen.study_id,
-      }));
+      return biospecimens?.flatMap((biospecimen) => {
+        const matchedIds: string[] = ids.filter(
+          (id: string) => biospecimen.sample_id.toLocaleLowerCase() === id.toLocaleLowerCase(),
+        );
+
+        return matchedIds.map((id, index) => ({
+          key: `${biospecimen.sample_id}:${index}`,
+          submittedId: id,
+          mappedTo: biospecimen.study_id,
+          matchTo: biospecimen.sample_id,
+        }));
+      });
     }}
-    onUpload={(match) =>
+    onUpload={(matches) =>
       updateActiveQueryField({
         queryBuilderId,
         field: 'biospecimen_facet_ids.biospecimen_fhir_id_2',
-        value: match.map((value) => value.key),
+        value: matches.map((match) => match.matchTo),
         index: INDEXES.BIOSPECIMEN,
         overrideValuesName: intl.get('components.uploadIds.modal.pillTitle'),
         merge_strategy: MERGE_VALUES_STRATEGIES.OVERRIDE_VALUES,

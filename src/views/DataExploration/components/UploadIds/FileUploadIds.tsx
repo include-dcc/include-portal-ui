@@ -43,18 +43,24 @@ const FileUploadIds = ({ queryBuilderId }: OwnProps) => (
 
       const files: IFileEntity[] = hydrateResults(response.data?.data?.file?.hits?.edges || []);
 
-      return files.map((file) => ({
-        key: file.fhir_id,
-        submittedId: ids.find((id) => [file.file_id].includes(id))!,
-        mappedTo: file.study.study_id,
-        matchTo: file.file_id,
-      }));
+      return files?.flatMap((file) => {
+        const matchedIds: string[] = ids.filter(
+          (id: string) => file.file_id.toLocaleLowerCase() === id.toLocaleLowerCase(),
+        );
+
+        return matchedIds.map((id, index) => ({
+          key: `${file.file_id}:${index}`,
+          submittedId: id,
+          mappedTo: file.study.study_id,
+          matchTo: file.file_id,
+        }));
+      });
     }}
-    onUpload={(match) =>
+    onUpload={(matches) =>
       updateActiveQueryField({
         queryBuilderId,
         field: 'file_facet_ids.file_fhir_id_2',
-        value: match.map((value) => value.key),
+        value: matches.map((match) => match.matchTo),
         index: INDEXES.FILE,
         overrideValuesName: intl.get('components.uploadIds.modal.pillTitle'),
         merge_strategy: MERGE_VALUES_STRATEGIES.OVERRIDE_VALUES,
