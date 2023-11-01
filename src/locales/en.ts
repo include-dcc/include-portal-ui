@@ -569,11 +569,21 @@ const en = {
           title: 'Saved Filters',
           noSavedFilters: 'You have no saved filters',
           lastSaved: 'Last saved: {date} ago',
+          infoPopover: {
+            content:
+              'A saved filter is a virtual query created by applying one or more filters to a data set. They can be saved and revisited for later use. You can create and manage saved filters from the query builder at the top of the <a href="{dataExploHref}" style="text-decoration: underline;">Data Exploration</a> and <a href="{variantsHref}" style="text-decoration: underline;">Variants</a> pages.',
+            title: 'Managing Saved Filters',
+          },
         },
         savedSets: {
           title: 'Saved Sets',
           noSavedFilters: 'You have no saved sets',
           lastSaved: 'Last saved: {date} ago',
+          infoPopover: {
+            content:
+              'A saved set is a collection of one or more entity IDs which can be saved and revisited for later use. You can create saved sets at the top of the table of results in the <a href="{dataExploHref}" style="text-decoration: underline;">Data Exploration</a> and <a href="{variantsHref}" style="text-decoration: underline;">Variants</a> pages.',
+            title: 'Managing Saved Sets',
+          },
         },
         biospecimenRequest: {
           title: 'Biospecimen Requests',

@@ -10,7 +10,6 @@ import CardHeader from 'views/Dashboard/components/CardHeader';
 import { DashboardCardProps } from 'views/Dashboard/components/DashboardCards';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
-import PopoverContentLink from 'components/uiKit/PopoverContentLink';
 import { SavedFilterTag, TUserSavedFilter } from 'services/api/savedFilter/models';
 import { SUPPORT_EMAIL } from 'store/report/thunks';
 import { useSavedFilter } from 'store/savedFilter';
@@ -84,14 +83,10 @@ const SavedFilters = ({ id, key, className = '' }: DashboardCardProps) => {
             title: 'Managing saved filters',
             content: (
               <Text>
-                A saved filter is a virtual query created by applying one or more filters to a
-                search query. They can be saved and revisited for later use without having to
-                manually reselect filters in the sidebar. You can create saved filters using the
-                Query Management tool above the table of results in the{' '}
-                <PopoverContentLink
-                  to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
-                  title="Data Exploration page"
-                />
+                {intl.getHTML('screen.dashboard.cards.savedFilters.infoPopover.content', {
+                  dataExploHref: STATIC_ROUTES.DATA_EXPLORATION,
+                  variantsHref: STATIC_ROUTES.VARIANTS,
+                })}
               </Text>
             ),
           }}
