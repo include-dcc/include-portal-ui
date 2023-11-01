@@ -45,18 +45,24 @@ const ParticipantUploadIds = ({ queryBuilderId }: OwnProps) => (
         response.data?.data?.participant?.hits?.edges || [],
       );
 
-      return participants.map((participant) => ({
-        key: participant.fhir_id,
-        submittedId: ids.find((id) => [participant.participant_id].includes(id))!,
-        mappedTo: participant.study_id,
-        matchTo: participant.participant_id,
-      }));
+      return participants?.flatMap((participant) => {
+        const matchedIds: string[] = ids.filter(
+          (id: string) => participant.participant_id.toLocaleLowerCase() === id.toLocaleLowerCase(),
+        );
+
+        return matchedIds.map((id, index) => ({
+          key: `${participant.participant_id}:${index}`,
+          submittedId: id,
+          mappedTo: participant.study_id,
+          matchTo: participant.participant_id,
+        }));
+      });
     }}
-    onUpload={(match) =>
+    onUpload={(matches) =>
       updateActiveQueryField({
         queryBuilderId,
         field: 'participant_facet_ids.participant_fhir_id_2',
-        value: match.map((value) => value.key),
+        value: matches.map((match) => match.matchTo),
         index: INDEXES.PARTICIPANT,
         overrideValuesName: intl.get('components.uploadIds.modal.pillTitle'),
         merge_strategy: MERGE_VALUES_STRATEGIES.OVERRIDE_VALUES,
