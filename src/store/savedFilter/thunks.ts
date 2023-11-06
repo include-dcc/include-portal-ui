@@ -56,25 +56,32 @@ const createSavedFilter = createAsyncThunk<
 >('savedfilters/create', async (filter, thunkAPI) => {
   const { data, error } = await SavedFilterApi.create(filter);
 
-  return handleThunkApiReponse({
-    error,
-    data: data!,
-    reject: thunkAPI.rejectWithValue,
-    onError: () =>
+  if (error) {
+    if (error.response?.status === 422) {
+      thunkAPI.dispatch(
+        globalActions.displayMessage({
+          type: 'error',
+          content: intl.get('api.savedFilter.error.nameAlreadyExists'),
+        }),
+      );
+    } else {
       thunkAPI.dispatch(
         globalActions.displayMessage({
           type: 'error',
           content: intl.get('api.savedFilter.error.messageUpdate'),
         }),
-      ),
-    onSuccess: () =>
-      thunkAPI.dispatch(
-        globalActions.displayMessage({
-          type: 'success',
-          content: intl.get('api.savedFilter.success.messageSaved'),
-        }),
-      ),
-  });
+      );
+    }
+    return thunkAPI.rejectWithValue(error.message);
+  }
+
+  thunkAPI.dispatch(
+    globalActions.displayMessage({
+      type: 'success',
+      content: intl.get('api.savedFilter.success.messageSaved'),
+    }),
+  );
+  return data!;
 });
 
 const updateSavedFilter = createAsyncThunk<
@@ -85,27 +92,35 @@ const updateSavedFilter = createAsyncThunk<
   const { id, ...filterInfo } = filter;
   const { data, error } = await SavedFilterApi.update(id, filterInfo);
 
-  return handleThunkApiReponse({
-    error,
-    data: data!,
-    reject: thunkAPI.rejectWithValue,
-    onError: () =>
+  if (error) {
+    if (error.response?.status === 422) {
+      thunkAPI.dispatch(
+        globalActions.displayNotification({
+          type: 'error',
+          message: intl.get('api.savedFilter.error.title'),
+          description: intl.get('api.savedFilter.error.nameAlreadyExists'),
+        }),
+      );
+    } else {
       thunkAPI.dispatch(
         globalActions.displayNotification({
           type: 'error',
           message: intl.get('api.savedFilter.error.title'),
           description: intl.get('api.savedFilter.error.messageUpdate'),
         }),
-      ),
-    onSuccess: () =>
-      thunkAPI.dispatch(
-        globalActions.displayMessage({
-          type: 'success',
-          content: intl.get('api.savedFilter.success.messageSaved'),
-          duration: 5,
-        }),
-      ),
-  });
+      );
+    }
+    return thunkAPI.rejectWithValue(error.message);
+  }
+
+  thunkAPI.dispatch(
+    globalActions.displayMessage({
+      type: 'success',
+      content: intl.get('api.savedFilter.success.messageSaved'),
+      duration: 5,
+    }),
+  );
+  return data!;
 });
 
 const setSavedFilterAsDefault = createAsyncThunk<

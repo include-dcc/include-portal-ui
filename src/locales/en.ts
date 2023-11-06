@@ -114,6 +114,7 @@ const en = {
         title: 'Error',
         messageUpdate: 'Unable to update filter',
         messageDelete: 'Unable to delete filter',
+        nameAlreadyExists: 'A filter with this name already exists',
       },
       success: {
         messageSaved: 'Filter saved',
