@@ -1,5 +1,6 @@
 import intl from 'react-intl-universal';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { extractUploadValues } from '@ferlab/ui/core/components/UploadIds/utils';
 import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
@@ -53,6 +54,7 @@ const FileUploadIds = ({ queryBuilderId }: OwnProps) => (
           submittedId: id,
           mappedTo: file.study.study_id,
           matchTo: file.file_id,
+          value: file.fhir_id,
         }));
       });
     }}
@@ -60,7 +62,7 @@ const FileUploadIds = ({ queryBuilderId }: OwnProps) => (
       updateActiveQueryField({
         queryBuilderId,
         field: 'file_facet_ids.file_fhir_id_2',
-        value: matches.map((match) => match.matchTo),
+        value: extractUploadValues(matches, 'value'),
         index: INDEXES.FILE,
         overrideValuesName: intl.get('components.uploadIds.modal.pillTitle'),
         merge_strategy: MERGE_VALUES_STRATEGIES.OVERRIDE_VALUES,
