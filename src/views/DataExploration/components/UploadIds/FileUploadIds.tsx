@@ -1,5 +1,6 @@
 import intl from 'react-intl-universal';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { extractUploadValues } from '@ferlab/ui/core/components/UploadIds/utils';
 import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
@@ -11,7 +12,6 @@ import { hydrateResults } from 'graphql/models';
 import { ArrangerApi } from 'services/api/arranger';
 
 import EntityUploadIds from './EntityUploadIds';
-import { extractUploadValues } from './utils';
 
 interface OwnProps {
   queryBuilderId: string;
