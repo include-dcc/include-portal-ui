@@ -32,10 +32,10 @@ const RequestBiospecimenLimitModal = ({ isOpen, closeModal }: OwnProps) => (
       </div>
       <Alert
         type="error"
-        message={intl.getHTML(
+        message={intl.get(
           'screen.dataExploration.tabs.biospecimens.request.modal.alert.limitMessage',
         )}
-        description={intl.getHTML(
+        description={intl.get(
           'screen.dataExploration.tabs.biospecimens.request.modal.alert.limitDescription',
         )}
       />
