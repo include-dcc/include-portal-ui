@@ -1,5 +1,4 @@
 import intl from 'react-intl-universal';
-import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { Alert, Modal, Typography } from 'antd';
 
 import styles from './requestBiospecimen.module.scss';
@@ -7,7 +6,6 @@ import styles from './requestBiospecimen.module.scss';
 type OwnProps = {
   isOpen: boolean;
   closeModal: () => void;
-  sqon?: ISqonGroupFilter;
 };
 
 const { Text } = Typography;
