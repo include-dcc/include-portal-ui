@@ -886,6 +886,9 @@ const en = {
                 infoMessage: 'No available samples',
                 infoDescription:
                   'There are no biospecimen samples available for your selection. Please make different selection and try again.',
+                limitMessage: 'Maximum number exceeded',
+                limitDescription:
+                  'A maximum of 10,000 biospecimens can be included at once. Please narrow down your selection and try again.',
               },
             },
           },

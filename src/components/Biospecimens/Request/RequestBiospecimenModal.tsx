@@ -116,10 +116,10 @@ const RequestBiospecimenModal = ({ isOpen, closeModal, sqon }: OwnProps) => {
       {error && (
         <Alert
           type="error"
-          message={intl.getHTML(
+          message={intl.get(
             'screen.dataExploration.tabs.biospecimens.request.modal.alert.errorMessage',
           )}
-          description={intl.getHTML(
+          description={intl.get(
             'screen.dataExploration.tabs.biospecimens.request.modal.alert.errorDescription',
           )}
         />
