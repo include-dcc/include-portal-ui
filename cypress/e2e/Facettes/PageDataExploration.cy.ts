@@ -48,7 +48,7 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.checkValueFacetAndApply(1, 'D21');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Down Syndrome Status').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains(/^D21$/).should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^1,529$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^1,521$/).should('exist');
   });
 
   it('Diagnosis (MONDO)', () => {
@@ -81,14 +81,14 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.checkValueFacetAndApply(3, 'Female');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sex').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Female').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^2,515$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^2,512$/).should('exist');
   });
 
   it('Sex - Male', () => {
     cy.checkValueFacetAndApply(3, /^Male$/);
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sex').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains(/^Male$/).should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^2,408$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^2,406$/).should('exist');
   });
 
   it('Race - White', () => {
@@ -143,7 +143,7 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.checkValueFacetAndApply(0, 'DNA');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sample Type').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('DNA').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^6,655$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^6,647$/).should('exist');
   });
 
   it('Sample Type - PBMCs', () => {
@@ -158,7 +158,7 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.checkValueFacetAndApply(1, 'Peripheral Whole Blood');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Collection Sample Type').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Peripheral Whole Blood').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^4,210$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^43,612$/).should('exist');
   });
 
   it('Collection Sample Type - Buffy Coat', () => {
@@ -185,7 +185,7 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.checkValueFacetAndApply(3, 'Unavailable');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Availability').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Unavailable').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^15,720$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^15,712$/).should('exist');
   });
 
   it('Laboratory Procedure - Centrifugation', () => {
@@ -240,14 +240,14 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.checkValueFacetAndApply(0, 'Controlled');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Access').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Controlled').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^12,900$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^13,248$/).should('exist');
   });
 
   it('Access - Registered', () => {
     cy.checkValueFacetAndApply(0, 'Registered');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Access').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Registered').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^7,747$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^7,387$/).should('exist');
   });
 
   it('Data Category - Genomics', () => {
@@ -255,7 +255,7 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.checkValueFacetAndApply(1, 'Genomics');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Data Category').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Genomics').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^13,991$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^13,975$/).should('exist');
   });
 
   it('Data Category - Transcriptomics', () => {
@@ -270,7 +270,7 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.checkValueFacetAndApply(2, 'GVCF');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Data Type').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('GVCF').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^3,874$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^3,870$/).should('exist');
   });
 
   it('Data Type - Somatic Copy Number Variations', () => {
@@ -285,7 +285,7 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.checkValueFacetAndApply(3, 'Whole Genome Sequencing');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Experimental Strategy').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Whole Genome Sequencing').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^13,991$/).should('exist');
+    cy.get('div[class*="Header_ProTableHeader"]').contains(/^13,975$/).should('exist');
   });
 
   it('Experimental Strategy - RNA-Seq', () => {

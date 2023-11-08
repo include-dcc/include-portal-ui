@@ -7,7 +7,7 @@ beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
 
   cy.login();
-  cy.visitDataExploration('biospecimens', '?sharedFilterId=6e01f0aa-b4ac-4769-978a-6d675084fbec');
+  cy.visitDataExploration('biospecimens', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
   cy.showColumn('External Sample ID');
   cy.showColumn('Volume');
   cy.showColumn('Volume Unit');
@@ -26,7 +26,7 @@ describe('Page Data Exploration (Biospecimens) - Exporter les biospecimens en TS
     cy.validateFileHeaders('ExportTableauBiospecimens.json');
   });
 
-  it('Valider le contenu du fichier [SJIP-600]', () => {
+  it('Valider le contenu du fichier', () => {
     cy.validateFileContent('ExportTableauBiospecimens.json');
   });
 });
