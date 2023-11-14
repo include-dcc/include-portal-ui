@@ -12,7 +12,7 @@ beforeEach(() => {
   cy.showColumn('Access Url');
   cy.wait(1000);
 
-  cy.clickAndIntercept('div[id="content"] svg[data-icon="download"]', 'POST', '**/download', 1);
+  cy.clickAndIntercept('div[id="content"] svg[data-icon="download"]', 'POST', '**/download', 1, 1);
 });
 
 describe('Page Data Exploration (Data Files) - Exporter les fichiers en TSV', () => {

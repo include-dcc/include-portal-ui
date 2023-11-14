@@ -12,7 +12,7 @@ describe('Page d\'un fichier - Exporter le tableau Participants-Samples en TSV',
   beforeEach(() => {
     cy.visitFileEntity('GF_0A0S5FSA');
     cy.resetColumns('participant-sample');
-    cy.get('div[id="content"] svg[data-icon="download"]').click({force:true});
+    cy.get('div[id="content"] svg[data-icon="download"]').eq(1).click({force:true});
     cy.wait(1000);
   });
   

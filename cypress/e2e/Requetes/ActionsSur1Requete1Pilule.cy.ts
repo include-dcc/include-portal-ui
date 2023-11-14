@@ -45,8 +45,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
     cy.validatePillSelectedQuery('Collection Sample Type', ['Saliva'], 1);
     cy.validateOperatorSelectedQuery('and');
-    cy.validateTotalSelectedQuery('334');
-    cy.validateTableResultsCount('334');
+    cy.validateTotalSelectedQuery('358');
+    cy.validateTableResultsCount('358');
     cy.validateClearAllButton(false);
   });
 
@@ -65,8 +65,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.checkValueFacetAndApply(1, 'Saliva');
 
     cy.validatePillSelectedQuery('Collection Sample Type', ['Saliva']);
-    cy.validateTotalSelectedQuery('334');
-    cy.validateTableResultsCount('334');
+    cy.validateTotalSelectedQuery('358');
+    cy.validateTableResultsCount('358');
     cy.validateClearAllButton(true);
   });
 
