@@ -207,6 +207,7 @@ const DataExploration = () => {
           fileMapping={fileMappingResults}
           biospecimenMapping={biospecimenMappingResults}
           participantMapping={participantMappingResults}
+          filterGroups={filterGroups}
           tabId={tab}
         />
       </ScrollContent>

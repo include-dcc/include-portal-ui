@@ -40,6 +40,7 @@ export const generateFilters = ({
   filterFooter = false,
   showSearchInput = false,
   useFilterSelector = false,
+  noDataInputOption,
   index,
 }: {
   queryBuilderId: string;
@@ -50,6 +51,7 @@ export const generateFilters = ({
   filterFooter: boolean;
   showSearchInput: boolean;
   useFilterSelector: boolean;
+  noDataInputOption?: boolean;
   index?: string;
 }) =>
   Object.keys(aggregations || []).map((key) => {
@@ -92,6 +94,7 @@ export const generateFilters = ({
           }}
           searchInputVisible={showSearchInput}
           selectedFilters={selectedFilters}
+          noDataInputOption={noDataInputOption}
         />
       </div>
     );
