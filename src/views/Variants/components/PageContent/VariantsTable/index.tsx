@@ -1,9 +1,8 @@
-// variant table
-
 import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ConsequencesCell from '@ferlab/ui/core/components/Consequences/Cell';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
@@ -46,8 +45,6 @@ import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { truncateString } from 'utils/string';
 import { getProTableDictionary } from 'utils/translation';
-
-import ConsequencesCell from '../../../components/ConsequencesCell';
 
 import styles from './index.module.scss';
 
@@ -122,7 +119,11 @@ const defaultColumns: ProColumnType[] = [
 
       const consequences = geneWithPickedConsequence.consequences?.hits?.edges;
       return (
-        <ConsequencesCell consequences={consequences} symbol={geneWithPickedConsequence.symbol} />
+        <ConsequencesCell
+          consequences={consequences}
+          emptyText={intl.get('no.data.available')}
+          symbol={geneWithPickedConsequence.symbol}
+        />
       );
     },
   },
