@@ -31,6 +31,8 @@
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "build:netlify": "npm ci && npm run build",
     "test": "react-scripts test",
+    "test:github": "react-scripts test --coverage --watchAll=false --no-watchman --coverageReporters=\"text-summary\"",
+    "coverage:changed": "npm test -- --coverage --watchAll=false --onlyChanged --coverageReporters=\"json-summary\"",
     "lint": "eslint $(git diff-index --name-only --diff-filter=d HEAD | grep \"[\\.js|\\.jsx|\\.tsx|\\.ts]$\" | xargs)",
     "lint:fix": "npm run lint -- --fix",
     "theme": "mkdir -p src/style/themes/include/dist && npm run theme:antd",
@@ -67,7 +69,6 @@
     "@react-keycloak/core": "^3.2.0",
     "@react-keycloak/web": "^3.4.0",
     "@reduxjs/toolkit": "^1.6.2",
-    "@testing-library/jest-dom": "^5.15.0",
     "@types/d3": "^7.1.0",
     "@types/file-saver": "^2.0.2",
     "@types/http-errors": "^1.8.2",
@@ -122,6 +123,7 @@
     "@commitlint/config-conventional": "^16.2.4",
     "@ferlab/eslint-config": "^1.0.1",
     "@testing-library/cypress": "^8.0.3",
+    "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "cypress": "^10.11.0",
@@ -147,16 +149,5 @@
     "prettier": "^2.0.5",
     "prettier-eslint": "^10.1.1",
     "web-vitals": "^2.1.2"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "<rootDir>/.jest/identity-obj-proxy-esm.js"
-    },
-    "coverageThreshold": {
-      "global": {
-        "lines": 80
-      }
-    }
   }
 }
