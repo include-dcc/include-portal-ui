@@ -142,7 +142,7 @@ describe('Navigation', () => {
     cy.visitDataExploration();
 
     // Facettes
-    cy.get('li[data-key="participants"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Participant"]').click();
 
     cy.get('button[class*="UploadIdsButton"]').click({force: true});
     cy.get('[class="ant-modal-header"]').contains('Participant').should('exist');
@@ -156,13 +156,13 @@ describe('Navigation', () => {
     cy.get('[class*="ant-modal-header"]').contains('Diagnosis (MONDO) Browser').should('exist'); // data-cy="TreeFacet_Modal_mondoTree"
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
-    cy.get('li[data-key="biospecimens"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click();
 
     cy.get('button[class*="UploadIdsButton"]').click({force: true});
     cy.get('[class="ant-modal-header"]').contains('Sample').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
-    cy.get('li[data-key="datafiles"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Data File"]').click();
 
     cy.get('button[class*="UploadIdsButton"]').click({force: true});
     cy.get('[class="ant-modal-header"]').contains('File').should('exist');
@@ -180,7 +180,7 @@ describe('Navigation', () => {
  
   it('Modals de la page des variants', () => {
     cy.visitVariantsPage();
-    cy.get('li[data-key="3"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Gene"]').click();
 
     cy.get('button[class*="UploadIdsButton"]').click({force: true});
     cy.get('[class="ant-modal-header"]').contains('gene').should('exist');

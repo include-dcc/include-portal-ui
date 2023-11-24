@@ -10,7 +10,7 @@ describe('Page Data Exploration - Requêtes', () => {
   beforeEach(() => {
     cy.visitDataExploration('participants', '?sharedFilterId=11165f81-edb0-4b99-9b71-690ba67aa812');
 
-    cy.get('li[data-key="biospecimens"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click();
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button').click({force: true}); // data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button').contains('Collapse all').should('exist'); // data-cy="ExpandAll"
   });

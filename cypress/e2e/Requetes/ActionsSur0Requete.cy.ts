@@ -10,7 +10,7 @@ describe('Page Data Exploration - Requêtes', () => {
   beforeEach(() => {
     cy.visitDataExploration('participants', '?sharedFilterId=b1f9898e-d050-492e-b1fd-7055ad8d9f8e');
 
-    cy.get('li[data-key="biospecimens"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click();
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button').click({force: true}); // data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button').contains('Collapse all').should('exist'); // data-cy="ExpandAll"
   });
@@ -20,7 +20,7 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.validateTotalSelectedQuery('4,922');
     cy.validateTableResultsCount('4,922');
 
-    cy.checkValueFacetAndApply(0, 'DNA');
+    cy.checkValueFacetAndApply('Sample Type', 'DNA');
 
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
     cy.validateTotalSelectedQuery('4,694');
