@@ -14,6 +14,9 @@ declare namespace Cypress {
     sortTableAndWait(column: string): cy & CyEventEmitter;
     typeAndIntercept(selector: string, text: string, methodHTTP: string, routeMatcher: string, nbCalls: number): cy & CyEventEmitter;
     validateClearAllButton(shouldExist: boolean): cy & CyEventEmitter;
+    validateFacetFilter(facetTitle: string, valueFront: string, valueBack: string, expectedCount: string|RegExp): cy & CyEventEmitter;
+    validateFacetNumFilter(facetTitle: string, value: string, expectedCount: string|RegExp): cy & CyEventEmitter;
+    validateFacetRank(facetRank: number, facetTitle: string): cy & CyEventEmitter;
     validateFileContent(fixture: string, replacements?: Replacement[]): cy & CyEventEmitter;
     validateFileHeaders(fixture: string): cy & CyEventEmitter;
     validateFileName(namePattern: string): cy & CyEventEmitter;

@@ -241,7 +241,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Diagnosis (MONDO)').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Complete atrioventricular canal (MONDO:0015273)').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^307$/).should('exist');
+    cy.validateTableResultsCount(/^307$/);
   });
 
   it('Lien HP du panneau Phenotypes', () => {
@@ -256,7 +256,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Phenotype (HPO)').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Complete atrioventricular canal defect (HP:0001674)').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^273$/).should('exist');
+    cy.validateTableResultsCount(/^273$/);
   });
 
   it('Lien DataExploration du panneau Biospecimens', () => {
