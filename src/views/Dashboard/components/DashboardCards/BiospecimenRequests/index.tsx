@@ -2,13 +2,11 @@ import intl from 'react-intl-universal';
 import Empty from '@ferlab/ui/core/components/Empty';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { List, Typography } from 'antd';
-import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 import CardErrorPlaceholder from 'views/Dashboard/components/CardErrorPlaceHolder';
 import CardHeader from 'views/Dashboard/components/CardHeader';
 import { DashboardCardProps } from 'views/Dashboard/components/DashboardCards';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
-import { BIOSPECIMEN_REQUEST_KEY } from 'components/Biospecimens/Request/requestBiospecimen.utils';
 import { IUserSetOutput, SetType } from 'services/api/savedSet/models';
 import { SUPPORT_EMAIL } from 'store/report/thunks';
 import { useSavedSet } from 'store/savedSet';
@@ -64,10 +62,7 @@ const getItemList = (
 };
 
 const BiospecimenRequests = ({ id, key, className = '' }: DashboardCardProps) => {
-  const hasRequestBio = getFTEnvVarByKey(BIOSPECIMEN_REQUEST_KEY);
   const { savedSets, isLoading, fetchingError } = useSavedSet();
-
-  if (hasRequestBio !== 'true') return <></>;
 
   return (
     <GridCard
