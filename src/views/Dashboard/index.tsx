@@ -5,12 +5,13 @@ import { Space, Typography } from 'antd';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
 import { AlterTypes } from 'common/types';
+import { BIOSPECIMEN_REQUEST_KEY } from 'components/Biospecimens/Request/requestBiospecimen.utils';
 import NotificationBanner from 'components/featureToggle/NotificationBanner';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { orderCardIfNeeded } from 'utils/helper';
 
-import { dashboardCards } from './components/DashboardCards';
+import { biospecimenRequestCard, dashboardCards } from './components/DashboardCards';
 import DataExplorationLinks from './components/DashboardCards/DataExplorationLinks';
 
 import styles from './index.module.scss';
@@ -24,6 +25,9 @@ const BANNER_MSG_KEY = FT_FLAG_KEY + '_MSG';
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
+  const hasRequestBio = getFTEnvVarByKey(BIOSPECIMEN_REQUEST_KEY);
+  const cards =
+    hasRequestBio === 'true' ? [...dashboardCards, biospecimenRequestCard] : dashboardCards;
 
   return (
     <Space direction="vertical" size={24} className={styles.dashboardWrapper}>
@@ -52,7 +56,7 @@ const Dashboard = () => {
             }),
           )
         }
-        items={orderCardIfNeeded(dashboardCards, userInfo?.config.dashboard?.cards?.order)}
+        items={orderCardIfNeeded(cards, userInfo?.config.dashboard?.cards?.order)}
         gutter={[24, 24]}
       />
     </Space>
