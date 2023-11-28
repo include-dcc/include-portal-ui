@@ -15,12 +15,13 @@ const SummaryTab = () => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
   const defaultLayouts = getDefaultLayouts();
+
   return (
     <Space className={styles.wrapper} direction="vertical">
       <ResizableGridLayout
         uid={UID}
         defaultLayouts={defaultLayouts}
-        layouts={userInfo?.config.data_exploration?.summary?.layouts || defaultLayouts}
+        layouts={userInfo?.config.data_exploration?.summary?.layouts}
         onReset={(layouts: TSerializedResizableGridLayoutConfig[]) => {
           dispatch(
             updateUserConfig({
