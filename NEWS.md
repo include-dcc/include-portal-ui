@@ -7,6 +7,22 @@
 
 ### Technical / Other changes
 -->
+
+## 2023-11-28 include-portal-ui 1.9.0
+### Features:
+[SJIP-109] (https://d3b.atlassian.net/browse/SJIP-109) Feature: [Data Exploration] Added Download file manifest button to generate a file metadata report
+[SJIP-594] (https://d3b.atlassian.net/browse/SJIP-594) Feature: [QA] Addition of automated quality assurance testing of the portal using Cypress
+[SJIP-556] (https://d3b.atlassian.net/browse/SJIP-556) Feature: [Biospecimen Request] Implemented request for a generation of a biospecimen report and Biospecimen Request history dashboard widget 
+### Technical/ Other changes:
+[SJIP-545] (https://d3b.atlassian.net/browse/SJIP-545) Fix: [Variant Exploration] Masked NO GENE label on intergenic type of consequences causing a 500 error
+[SJIP-582] (https://d3b.atlassian.net/browse/SJIP-582) Fix: [Upload list] Modified the upload list to accept case insensitive entries
+[SJIP-598] (https://d3b.atlassian.net/browse/SJIP-598) Fix: [Variant Entity] Aligned the values for participant count in the Studies table
+[SJIP-605] (https://d3b.atlassian.net/browse/SJIP-605) Fix: [Saved Sets] Fixed issue with creation of a saved set
+[SJIP-612] (https://d3b.atlassian.net/browse/SJIP-612) Fix: [Variant Exploration] Masked the No data checkbox in the numerical facets
+[SJIP-617] (https://d3b.atlassian.net/browse/SJIP-617) Refactor: [Saved Sets] Set unique values based on container ID and sample ID when applicable
+[SJIP-622] (https://d3b.atlassian.net/browse/SJIP-622) Fix: [Profile Page] Fixed an error 500 when users save an email, remove it, and save another email
+[SJIP-630] (https://d3b.atlassian.net/browse/SJIP-635) Refactor: [Dashboard] Updated Saved Filters and Saved Sets empty states and tooltips
+
 ## 2023-10-19 include-portal-ui 1.8.1
 ### Technical / Other changes
 [SJIP-484] (https://d3b.atlassian.net/browse/SJIP-484) Refactor: [Registration] Updated text to Terms and Condition and prompt for existing users
