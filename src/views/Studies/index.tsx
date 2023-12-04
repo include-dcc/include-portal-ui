@@ -198,6 +198,11 @@ const Studies = () => {
     ],
   });
 
+  const updatedData = data.map((study) => ({
+    ...study,
+    key: study.study_code,
+  }));
+
   return (
     <Space direction="vertical" size={16} className={styles.studiesWrapper}>
       <Title className={styles.title} level={4}>
@@ -211,7 +216,7 @@ const Studies = () => {
             size="small"
             bordered
             columns={columns}
-            dataSource={data}
+            dataSource={updatedData}
             loading={loading}
             headerConfig={{
               itemCount: {
