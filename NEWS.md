@@ -8,6 +8,10 @@
 ### Technical / Other changes
 -->
 
+## 2023-12-05 include-portal-ui 1.9.1
+### Technical / Other changes
+[SJIP-638] (https://d3b.atlassian.net/browse/SJIP-638) Fix: [Variant Entity] Error 500 on update after redirect
+
 ## 2023-11-28 include-portal-ui 1.9.0
 ### Features:
 [SJIP-109] (https://d3b.atlassian.net/browse/SJIP-109) Feature: [Data Exploration] Added Download file manifest button to generate a file metadata report
