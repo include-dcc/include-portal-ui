@@ -1,7 +1,7 @@
 import intl from 'react-intl-universal';
-import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { Table } from 'antd';
+import { ColumnType } from 'antd/lib/table';
 import { AxiosRequestConfig } from 'axios';
 import EnvironmentVariables from 'helpers/EnvVariables';
 
@@ -20,7 +20,7 @@ interface IFileByStudy {
   nb_files: number;
 }
 
-export const getColumns = (): ProColumnType<any>[] => [
+export const getColumns = (): ColumnType<any>[] => [
   {
     key: 'study_name',
     dataIndex: 'study_name',

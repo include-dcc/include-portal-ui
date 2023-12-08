@@ -317,6 +317,7 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
         setQueryConfig({
           pageIndex: DEFAULT_PAGE_INDEX,
           size: queryConfig.size!,
+          // @ts-ignore
           sort: formatQuerySortList(sorter),
         });
       }}

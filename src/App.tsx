@@ -75,67 +75,77 @@ const App = () => {
         <div className="App" id="appContainer">
           {keycloakIsReady ? (
             <AuthMiddleware>
-              <Router>
-                <Switch>
-                  <Route
-                    path={STATIC_ROUTES.GEN3_FENCE_REDIRECT}
-                    exact
-                    render={() => <FenceRedirect fence={FENCE_NAMES.gen3} />}
-                  />
-                  <Route
-                    path={STATIC_ROUTES.CAVATICA_FENCE_REDIRECT}
-                    exact
-                    render={() => <FenceRedirect fence={FENCE_NAMES.cavatica} />}
-                  />
-                  <Route exact path={STATIC_ROUTES.LOGIN}>
-                    <SideImageLayout sideImgSrc={MainSideImage}>
-                      <Login />
-                    </SideImageLayout>
-                  </Route>
-                  <Route
-                    path={DYNAMIC_ROUTES.ERROR}
-                    render={(props: RouteComponentProps<{ status?: any }>) => (
-                      <ErrorPage status={props.match.params.status} />
-                    )}
-                  />
-                  <ProtectedRoute exact path={STATIC_ROUTES.DASHBOARD} layout={PageLayout}>
-                    <Dashboard />
-                  </ProtectedRoute>
-                  <ProtectedRoute exact path={STATIC_ROUTES.COMMUNITY} layout={PageLayout}>
-                    <Community />
-                  </ProtectedRoute>
-                  <ProtectedRoute exact path={DYNAMIC_ROUTES.COMMUNITY_MEMBER} layout={PageLayout}>
-                    <CommunityMember />
-                  </ProtectedRoute>
-                  <ProtectedRoute exact path={STATIC_ROUTES.PROFILE_SETTINGS} layout={PageLayout}>
-                    <ProfileSettings />
-                  </ProtectedRoute>
-                  <ProtectedRoute exact path={STATIC_ROUTES.STUDIES} layout={PageLayout}>
-                    <Studies />
-                  </ProtectedRoute>
-                  <ProtectedRoute exact path={DYNAMIC_ROUTES.DATA_EXPLORATION} layout={PageLayout}>
-                    <DataExploration />
-                  </ProtectedRoute>
-                  <ProtectedRoute exact path={STATIC_ROUTES.VARIANTS} layout={PageLayout}>
-                    <Variants />
-                  </ProtectedRoute>
-                  <ProtectedRoute exact path={DYNAMIC_ROUTES.VARIANT_ENTITY} layout={PageLayout}>
-                    <VariantEntity />
-                  </ProtectedRoute>
-                  <ProtectedRoute exact path={DYNAMIC_ROUTES.FILE_ENTITY} layout={PageLayout}>
-                    <FileEntity />
-                  </ProtectedRoute>
-                  <ProtectedRoute
-                    exact
-                    path={DYNAMIC_ROUTES.PARTICIPANT_ENTITY}
-                    layout={PageLayout}
-                  >
-                    <ParticipantEntity />
-                  </ProtectedRoute>
-                  <Redirect from="*" to={STATIC_ROUTES.DASHBOARD} />
-                </Switch>
-                <NotificationContextHolder />
-              </Router>
+              <>
+                <Router>
+                  <Switch>
+                    <Route
+                      path={STATIC_ROUTES.GEN3_FENCE_REDIRECT}
+                      exact
+                      render={() => <FenceRedirect fence={FENCE_NAMES.gen3} />}
+                    />
+                    <Route
+                      path={STATIC_ROUTES.CAVATICA_FENCE_REDIRECT}
+                      exact
+                      render={() => <FenceRedirect fence={FENCE_NAMES.cavatica} />}
+                    />
+                    <Route exact path={STATIC_ROUTES.LOGIN}>
+                      <SideImageLayout sideImgSrc={MainSideImage}>
+                        <Login />
+                      </SideImageLayout>
+                    </Route>
+                    <Route
+                      path={DYNAMIC_ROUTES.ERROR}
+                      render={(props: RouteComponentProps<{ status?: any }>) => (
+                        <ErrorPage status={props.match.params.status} />
+                      )}
+                    />
+                    <ProtectedRoute exact path={STATIC_ROUTES.DASHBOARD} layout={PageLayout}>
+                      <Dashboard />
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path={STATIC_ROUTES.COMMUNITY} layout={PageLayout}>
+                      <Community />
+                    </ProtectedRoute>
+                    <ProtectedRoute
+                      exact
+                      path={DYNAMIC_ROUTES.COMMUNITY_MEMBER}
+                      layout={PageLayout}
+                    >
+                      <CommunityMember />
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path={STATIC_ROUTES.PROFILE_SETTINGS} layout={PageLayout}>
+                      <ProfileSettings />
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path={STATIC_ROUTES.STUDIES} layout={PageLayout}>
+                      <Studies />
+                    </ProtectedRoute>
+                    <ProtectedRoute
+                      exact
+                      path={DYNAMIC_ROUTES.DATA_EXPLORATION}
+                      layout={PageLayout}
+                    >
+                      <DataExploration />
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path={STATIC_ROUTES.VARIANTS} layout={PageLayout}>
+                      <Variants />
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path={DYNAMIC_ROUTES.VARIANT_ENTITY} layout={PageLayout}>
+                      <VariantEntity />
+                    </ProtectedRoute>
+                    <ProtectedRoute exact path={DYNAMIC_ROUTES.FILE_ENTITY} layout={PageLayout}>
+                      <FileEntity />
+                    </ProtectedRoute>
+                    <ProtectedRoute
+                      exact
+                      path={DYNAMIC_ROUTES.PARTICIPANT_ENTITY}
+                      layout={PageLayout}
+                    >
+                      <ParticipantEntity />
+                    </ProtectedRoute>
+                    <Redirect from="*" to={STATIC_ROUTES.DASHBOARD} />
+                  </Switch>
+                  <NotificationContextHolder />
+                </Router>
+              </>
             </AuthMiddleware>
           ) : (
             <Spinner size={'large'} />
