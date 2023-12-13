@@ -107,7 +107,7 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('PT QWWDKAXP').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^1$/).should('exist');
+    cy.validateTableResultsCount(/^1$/);
   });
 
   it('Lien Files du tableau', () => {
@@ -115,7 +115,7 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('PT QWWDKAXP').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^5$/).should('exist');
+    cy.validateTableResultsCount(/^5$/);
   });
 });
 

@@ -8,19 +8,19 @@ export interface Replacement {
 }
 
 Cypress.Commands.add('checkValueFacetAndApply', (facetTitle: string, value: string) => {
-  cy.get('[aria-expanded="true"] [data-cy="FilterContainer_' + facetTitle + '"]').should('exist');
+  cy.get(`[aria-expanded="true"] [data-cy="FilterContainer_${facetTitle}"]`).should('exist');
   cy.wait(1000);
-  cy.get('[data-cy="FilterContainer_' + facetTitle + '"]').parentsUntil('.FilterContainer_filterContainer__O6v-O')
+  cy.get(`[data-cy="FilterContainer_${facetTitle}"]`).parentsUntil('.FilterContainer_filterContainer__O6v-O')
     .find('button').then(($button) => {
     if ($button.hasClass('ant-btn-link')) {
-      cy.get('[data-cy="FilterContainer_' + facetTitle + '"]').parentsUntil('.FilterContainer_filterContainer__O6v-O')
+      cy.get(`[data-cy="FilterContainer_${facetTitle}"]`).parentsUntil('.FilterContainer_filterContainer__O6v-O')
         .find('button[class*="CheckboxFilter_filtersTypesFooter"]').click({force: true});
       cy.wait(1000);
     };
   });
  
-  cy.get('[data-cy="Checkbox_' + facetTitle + '_' + value + '"]').check({force: true});
-  cy.clickAndIntercept('[data-cy="Apply_' + facetTitle + '"]', 'POST', '**/graphql', 3);
+  cy.get(`[data-cy="Checkbox_${facetTitle}_${value}"]`).check({force: true});
+  cy.clickAndIntercept(`[data-cy="Apply_${facetTitle}"]`, 'POST', '**/graphql', 3);
 });
 
 Cypress.Commands.add('clickAndIntercept', (selector: string, methodHTTP: string, routeMatcher: string, nbCalls: number, eq?: number) => {
@@ -115,7 +115,7 @@ Cypress.Commands.add('resetColumns', (table_id?: string) => {
     cySettings = cy.get('svg[data-icon="setting"]');
   }
   else {
-    cySettings = cy.get('[id="' + table_id + '"]').find('svg[data-icon="setting"]');
+    cySettings = cy.get(`[id="${table_id}"]`).find('svg[data-icon="setting"]');
   }
 
   cySettings.click({force: true});
@@ -164,6 +164,25 @@ Cypress.Commands.add('typeAndIntercept', (selector: string, text: string, method
 Cypress.Commands.add('validateClearAllButton', (shouldExist: boolean) => {
   const strExist = shouldExist ? 'exist' : 'not.exist';
   cy.get('[id="query-builder-header-tools"]').contains('Clear all').should(strExist);
+});
+
+Cypress.Commands.add('validateFacetFilter', (facetTitle: string, valueFront: string, valueBack: string, expectedCount: string|RegExp) => {
+  cy.checkValueFacetAndApply(facetTitle, valueBack);
+  cy.validatePillSelectedQuery(facetTitle, [valueFront]);
+  cy.validateTableResultsCount(expectedCount);
+});
+
+Cypress.Commands.add('validateFacetNumFilter', (facetTitle: string, value: string, expectedCount: string|RegExp) => {
+  cy.wait(2000);
+  cy.get(`[data-cy="InputNumber_Max_${facetTitle}"]`).type(value, {force: true});
+  cy.get(`[data-cy="Button_Apply_${facetTitle}"]`).click({force: true});
+
+  cy.validatePillSelectedQuery(facetTitle, [value]);
+  cy.get('body').contains(expectedCount).should('exist');
+});
+
+Cypress.Commands.add('validateFacetRank', (facetRank: number, facetTitle: string) => {
+  cy.get('div[class*="Filter_facetCollapse"], div[class*="Filters_customFilterContainer"]').eq(facetRank).contains(facetTitle).should('exist');
 });
 
 Cypress.Commands.add('validateFileContent', (fixture: string, replacements?: Replacement[]) => {
@@ -266,7 +285,7 @@ Cypress.Commands.add('visitDataExploration', (tab?: string, sharedFilterOption?:
   const strTab = tab !== undefined ? tab : '';
   const strSharedFilterOption = sharedFilterOption !== undefined ? sharedFilterOption : '';
   
-  cy.visitAndIntercept('/data-exploration/' + strTab + strSharedFilterOption,
+  cy.visitAndIntercept(`/data-exploration/${strTab}${strSharedFilterOption}`,
                        'POST',
                        '**/graphql',
                        9);
@@ -276,14 +295,14 @@ Cypress.Commands.add('visitDataExploration', (tab?: string, sharedFilterOption?:
 });
 
 Cypress.Commands.add('visitFileEntity', (fileId: string) => {
-  cy.visitAndIntercept('/files/' + fileId,
+  cy.visitAndIntercept(`/files/${fileId}`,
                        'POST',
                        '**/graphql',
                        1);
 });
 
 Cypress.Commands.add('visitParticipantEntity', (participantId: string) => {
-  cy.visitAndIntercept('/participants/' + participantId,
+  cy.visitAndIntercept(`/participants/${participantId}`,
                        'POST',
                        '**/graphql',
                        10);
@@ -295,7 +314,7 @@ Cypress.Commands.add('visitProfileSettingsPage', () => {
 });
 
 Cypress.Commands.add('visitStudyEntity', (studyId: string, nbCalls: number) => {
-  cy.visitAndIntercept('/studies/' + studyId,
+  cy.visitAndIntercept(`/studies/${studyId}`,
                        'POST',
                        '**/graphql',
                        nbCalls);
@@ -309,7 +328,7 @@ Cypress.Commands.add('visitStudiesPage', () => {
 });
 
 Cypress.Commands.add('visitVariantEntityPage', (locusId: string, nbGraphqlCalls: number) => {
-  cy.visitAndIntercept('/variants/' + locusId,
+  cy.visitAndIntercept(`/variants/${locusId}`,
                        'POST',
                        '**/graphql',
                        nbGraphqlCalls);
@@ -317,7 +336,7 @@ Cypress.Commands.add('visitVariantEntityPage', (locusId: string, nbGraphqlCalls:
 
 Cypress.Commands.add('visitVariantsPage', (sharedFilterOption?: string) => {
   const strSharedFilterOption = sharedFilterOption !== undefined ? sharedFilterOption : '';
-  cy.visitAndIntercept('/variants'+strSharedFilterOption,
+  cy.visitAndIntercept(`/variants${strSharedFilterOption}`,
                        'POST',
                        '**/graphql',
                        3);

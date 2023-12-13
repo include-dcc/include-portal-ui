@@ -24,33 +24,21 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
   });
 
   it('Study Code - DS360-CHD', () => {
-    cy.get('[data-cy="FilterContainer_Study Code"]').should('exist');
-    cy.checkValueFacetAndApply('Study Code', 'DS360-CHD');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('DS360-CHD').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^1,332$/).should('exist');
+    cy.validateFacetFilter('Study Code', 'DS360-CHD', 'DS360-CHD', /^1,332$/);
+    cy.validateFacetRank(0, 'Study Code');
   });
 
   it('Study Code - DS-NEXUS', () => {
-    cy.checkValueFacetAndApply('Study Code', 'DS-NEXUS');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('DS-NEXUS').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^41$/).should('exist');
+    cy.validateFacetFilter('Study Code', 'DS-NEXUS', 'DS-NEXUS', /^41$/);
   });
 
   it('Down Syndrome Status - T21 [SJIP-553]', () => {
-    cy.get('[data-cy="FilterContainer_Down Syndrome Status"]').should('exist');
-    cy.checkValueFacetAndApply('Down Syndrome Status', 'T21');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Down Syndrome Status').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains(/^T21$/).should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^3,401$/).should('exist');
+    cy.validateFacetFilter('Down Syndrome Status', 'T21', 'T21', /^3,401$/);
+    cy.validateFacetRank(1, 'Down Syndrome Status');
   });
 
   it('Down Syndrome Status - D21 [SJIP-553]', () => {
-    cy.checkValueFacetAndApply('Down Syndrome Status', 'D21');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Down Syndrome Status').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains(/^D21$/).should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^1,521$/).should('exist');
+    cy.validateFacetFilter('Down Syndrome Status', 'D21', 'D21', /^1,521$/);
   });
 
   it('Diagnosis (MONDO)', () => {
@@ -64,63 +52,39 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
   });
 
   it('Family Unit - Proband-only', () => {
-    cy.get('[data-cy="FilterContainer_Family Unit"]').should('exist');
-    cy.checkValueFacetAndApply('Family Unit', 'proband-only');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Family Unit').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Proband-only').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^2,724$/).should('exist');
+    cy.validateFacetFilter('Family Unit', 'Proband-only', 'proband-only', /^2,724$/);
+    cy.validateFacetRank(2, 'Family Unit');
   });
 
   it('Family Unit - Trio+', () => {
-    cy.checkValueFacetAndApply('Family Unit', 'trio+');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Family Unit').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Trio+').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^103$/).should('exist');
+    cy.validateFacetFilter('Family Unit', 'Trio+', 'trio+', /^103$/);
   });
 
   it('Sex - Female', () => {
-    cy.get('[data-cy="FilterContainer_Sex"]').should('exist');
-    cy.checkValueFacetAndApply('Sex', 'female');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sex').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Female').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^2,512$/).should('exist');
+    cy.validateFacetFilter('Sex', 'Female', 'female', /^2,512$/);
+    cy.validateFacetRank(3, 'Sex');
   });
 
   it('Sex - Male', () => {
-    cy.checkValueFacetAndApply('Sex', 'male');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sex').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains(/^Male$/).should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^2,406$/).should('exist');
+    cy.validateFacetFilter('Sex', 'Male', 'male', /^2,406$/);
   });
 
   it('Race - White', () => {
-    cy.get('[data-cy="FilterContainer_Race"]').should('exist');
-    cy.checkValueFacetAndApply('Race', 'White');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Race').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('White').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^3,778$/).should('exist');
+    cy.validateFacetFilter('Race', 'White', 'White', /^3,778$/);
+    cy.validateFacetRank(4, 'Race');
   });
 
   it('Race - American Indian or Alaska Native', () => {
-    cy.checkValueFacetAndApply('Race', 'American Indian or Alaska Native');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Race').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('American Indian or Alaska Native').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^18$/).should('exist');
+    cy.validateFacetFilter('Race', 'American Indian or Alaska Native', 'American Indian or Alaska Native', /^18$/);
   });
 
   it('Ethnicity - Not Hispanic or Latino', () => {
-    cy.get('[data-cy="FilterContainer_Ethnicity"]').should('exist');
-    cy.checkValueFacetAndApply('Ethnicity', 'Not Hispanic or Latino');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Ethnicity').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Not Hispanic or Latino').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^3,771$/).should('exist');
+    cy.validateFacetFilter('Ethnicity', 'Not Hispanic or Latino', 'Not Hispanic or Latino', /^3,771$/);
+    cy.validateFacetRank(5, 'Ethnicity');
   });
 
   it('Ethnicity - Hispanic or Latino', () => {
-    cy.checkValueFacetAndApply('Ethnicity', 'Hispanic or Latino');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Ethnicity').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains(/^Hispanic or Latino$/).should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^578$/).should('exist');
+    cy.validateFacetFilter('Ethnicity', 'Hispanic or Latino', 'Hispanic or Latino', /^578$/);
   });
 });
 
@@ -143,83 +107,53 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
   });
 
   it('Sample Type - DNA', () => {
-    cy.get('[data-cy="FilterContainer_Sample Type"]').should('exist');
-    cy.checkValueFacetAndApply('Sample Type', 'DNA');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sample Type').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('DNA').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^6,647$/).should('exist');
+    cy.validateFacetFilter('Sample Type', 'DNA', 'DNA', /^6,647$/);
+    cy.validateFacetRank(0, 'Sample Type');
   });
 
   it('Sample Type - PBMCs', () => {
-    cy.checkValueFacetAndApply('Sample Type', 'PBMCs');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sample Type').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('PBMCs').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^1,279$/).should('exist');
+    cy.validateFacetFilter('Sample Type', 'PBMCs', 'PBMCs', /^1,279$/);
   });
 
   it('Collection Sample Type - Peripheral Whole Blood', () => {
-    cy.get('[data-cy="FilterContainer_Collection Sample Type"]').should('exist');
-    cy.checkValueFacetAndApply('Collection Sample Type', 'Peripheral Whole Blood');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Collection Sample Type').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Peripheral Whole Blood').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^43,612$/).should('exist');
+    cy.validateFacetFilter('Collection Sample Type', 'Peripheral Whole Blood', 'Peripheral Whole Blood', /^43,612$/);
+    cy.validateFacetRank(1, 'Collection Sample Type');
   });
 
   it('Collection Sample Type - Buffy Coat', () => {
-    cy.checkValueFacetAndApply('Collection Sample Type', 'Buffy Coat');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Collection Sample Type').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Buffy Coat').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^4$/).should('exist');
+    cy.validateFacetFilter('Collection Sample Type', 'Buffy Coat', 'Buffy Coat', /^4$/);
   });
 
-  it('Age At Biospecimen Collection', () => {
-    cy.get('[data-cy="FilterContainer_Age At Biospecimen Collection"]').should('exist');
-    // TODO Filtrer
+  it('Age At Biospecimen Collection [SJIP-601]', () => {
+    cy.validateFacetNumFilter('Age At Biospecimen Collection', '0.01', '436');
+    cy.validateFacetRank(2, 'Age At Biospecimen Collection');
   });
 
   it('Availability - Available', () => {
-    cy.get('[data-cy="FilterContainer_Availability"]').should('exist');
-    cy.checkValueFacetAndApply('Availability', 'available');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Availability').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Available').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^28,657$/).should('exist');
+    cy.validateFacetFilter('Availability', 'Available', 'available', /^28,657$/);
+    cy.validateFacetRank(3, 'Availability');
   });
 
   it('Availability - Unavailable', () => {
-    cy.checkValueFacetAndApply('Availability', 'unavailable');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Availability').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Unavailable').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^15,712$/).should('exist');
+    cy.validateFacetFilter('Availability', 'Unavailable', 'unavailable', /^15,712$/);
   });
 
   it('Laboratory Procedure - Centrifugation', () => {
-    cy.get('[data-cy="FilterContainer_Laboratory Procedure"]').should('exist');
-    cy.checkValueFacetAndApply('Laboratory Procedure', 'Centrifugation');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Laboratory Procedure').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Centrifugation').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^21,009$/).should('exist');
+    cy.validateFacetFilter('Laboratory Procedure', 'Centrifugation', 'Centrifugation', /^21,009$/);
+    cy.validateFacetRank(4, 'Laboratory Procedure');
   });
 
   it('Laboratory Procedure - Ficoll', () => {
-    cy.checkValueFacetAndApply('Laboratory Procedure', 'FICOLL gradient');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Laboratory Procedure').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('FICOLL gradient').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^895$/).should('exist');
+    cy.validateFacetFilter('Laboratory Procedure', 'FICOLL gradient', 'FICOLL gradient', /^895$/);
   });
 
   it('Biospecimen Storage - -80C Freezer', () => {
-    cy.get('[data-cy="FilterContainer_Biospecimen Storage"]').should('exist');
-    cy.checkValueFacetAndApply('Biospecimen Storage', '-80C Freezer');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Biospecimen Storage').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('-80C Freezer').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^28,821$/).should('exist');
+    cy.validateFacetFilter('Biospecimen Storage', '-80C Freezer', '-80C Freezer', /^28,821$/);
+    cy.validateFacetRank(5, 'Biospecimen Storage');
   });
 
   it('Biospecimen Storage - Other', () => {
-    cy.checkValueFacetAndApply('Biospecimen Storage', 'Other');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Biospecimen Storage').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Other').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^7,567$/).should('exist');
+    cy.validateFacetFilter('Biospecimen Storage', 'Other', 'Other', /^7,567$/);
   });
 });
 
@@ -242,77 +176,47 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
   });
 
   it('Access - Controlled', () => {
-    cy.get('[data-cy="FilterContainer_Access"]').should('exist');
-    cy.checkValueFacetAndApply('Access', 'Controlled');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Access').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Controlled').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^13,248$/).should('exist');
+    cy.validateFacetFilter('Access', 'Controlled', 'Controlled', /^13,248$/);
+    cy.validateFacetRank(0, 'Access');
   });
 
   it('Access - Registered', () => {
-    cy.checkValueFacetAndApply('Access', 'Registered');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Access').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Registered').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^7,387$/).should('exist');
+    cy.validateFacetFilter('Access', 'Registered', 'Registered', /^7,387$/);
   });
 
   it('Data Category - Genomics', () => {
-    cy.get('[data-cy="FilterContainer_Data Category"]').should('exist');
-    cy.checkValueFacetAndApply('Data Category', 'Genomics');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Data Category').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Genomics').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^13,975$/).should('exist');
+    cy.validateFacetFilter('Data Category', 'Genomics', 'Genomics', /^13,975$/);
+    cy.validateFacetRank(1, 'Data Category');
   });
 
   it('Data Category - Transcriptomics', () => {
-    cy.checkValueFacetAndApply('Data Category', 'Transcriptomics');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Data Category').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Transcriptomics').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^5,765$/).should('exist');
+    cy.validateFacetFilter('Data Category', 'Transcriptomics', 'Transcriptomics', /^5,765$/);
   });
 
   it('Data Type - GVCF', () => {
-    cy.get('[data-cy="FilterContainer_Data Type"]').should('exist');
-    cy.checkValueFacetAndApply('Data Type', 'gVCF');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Data Type').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('GVCF').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^3,870$/).should('exist');
+    cy.validateFacetFilter('Data Type', 'GVCF', 'gVCF', /^3,870$/);
+    cy.validateFacetRank(2, 'Data Type');
   });
 
   it('Data Type - Somatic Copy Number Variations', () => {
-    cy.checkValueFacetAndApply('Data Type', 'Somatic Copy Number Variations');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Data Type').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Somatic Copy Number Variations').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^783$/).should('exist');
+    cy.validateFacetFilter('Data Type', 'Somatic Copy Number Variations', 'Somatic Copy Number Variations', /^783$/);
   });
 
   it('Experimental Strategy - Whole Genome Sequencing', () => {
-    cy.get('[data-cy="FilterContainer_Experimental Strategy"]').should('exist');
-    cy.checkValueFacetAndApply('Experimental Strategy', 'Whole Genome Sequencing');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Experimental Strategy').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Whole Genome Sequencing').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^13,975$/).should('exist');
+    cy.validateFacetFilter('Experimental Strategy', 'Whole Genome Sequencing', 'Whole Genome Sequencing', /^13,975$/);
+    cy.validateFacetRank(3, 'Experimental Strategy');
   });
 
   it('Experimental Strategy - RNA-Seq', () => {
-    cy.checkValueFacetAndApply('Experimental Strategy', 'RNA-Seq');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Experimental Strategy').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('RNA-Seq').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^5,765$/).should('exist');
+    cy.validateFacetFilter('Experimental Strategy', 'RNA-Seq', 'RNA-Seq', /^5,765$/);
   });
 
   it('File Format - gVCF [SJIP-553]', () => {
-    cy.get('[data-cy="FilterContainer_File Format"]').should('exist');
-    cy.checkValueFacetAndApply('File Format', 'gvcf');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File Format').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('GVCF').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^3,874$/).should('exist');
+    cy.validateFacetFilter('File Format', 'GVCF', 'gvcf', /^3,874$/);
+    cy.validateFacetRank(4, 'File Format');
   });
 
   it('File Format - png [SJIP-553]', () => {
-    cy.checkValueFacetAndApply('File Format', 'png');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File Format').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('png').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^207$/).should('exist');
+    cy.validateFacetFilter('File Format', 'png', 'png', /^207$/);
   });
 });

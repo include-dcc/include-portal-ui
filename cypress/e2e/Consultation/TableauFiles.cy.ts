@@ -52,7 +52,7 @@ describe('Page Data Exploration (Data Files) - Valider les liens disponibles', (
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('GF 0A0S5FSA').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^3$/).should('exist');
+    cy.validateTableResultsCount(/^3$/);
   });
 
   it('Lien Biospecimens du tableau', () => {
@@ -60,7 +60,7 @@ describe('Page Data Exploration (Data Files) - Valider les liens disponibles', (
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('GF 0A0S5FSA').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^3$/).should('exist');
+    cy.validateTableResultsCount(/^3$/);
   });
 });
 

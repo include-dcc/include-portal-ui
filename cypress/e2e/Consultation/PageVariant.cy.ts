@@ -250,7 +250,7 @@ describe('Page d\'un variant - Valider les liens disponibles', () => {
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('PT').should('exist');
-    cy.get('div[class*="Header_ProTableHeader"]').contains(/^10$/).should('exist');
+    cy.validateTableResultsCount(/^10$/);
   });
 
   it('Lien TopMed du panneau Public Cohort', () => {
