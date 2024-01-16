@@ -104,22 +104,22 @@ describe('Navigation', () => {
 
   it('Modals de la page Dashboard [SJIP-347]', () => {
     cy.visitDashboard();
-    cy.get('[class*="ListItem_savedSetListItem"]').find('svg[data-icon="edit"]').click({force: true}); // data-cy="SavedSets"
+    cy.get('[class*="ListItem_savedSetListItem"]').find('svg[data-icon="edit"]').eq(0).click({force: true}); // data-cy="SavedSets"
     cy.contains('Edit set').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
     cy.visitDashboard();
-    cy.get('[class*="ListItem_savedSetListItem"]').find('svg[data-icon="delete"]').click({force: true}); // data-cy="SavedSets"
+    cy.get('[class*="ListItem_savedSetListItem"]').find('svg[data-icon="delete"]').eq(0).click({force: true}); // data-cy="SavedSets"
     cy.contains('Permanently delete this set?').should('exist');
     cy.get('button[type="button"]').contains('Cancel').click({force: true});
 
     cy.visitDashboard();
-    cy.get('[class*="ListItemWithActions"]').find('svg[data-icon="edit"]').click({force: true}); // data-cy="SavedFilters"
+    cy.get('[class*="ListItemWithActions"]').find('svg[data-icon="edit"]').eq(0).click({force: true}); // data-cy="SavedFilters"
     cy.contains('Edit filter').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
     cy.visitDashboard();
-    cy.get('[class*="ListItemWithActions"]').find('svg[data-icon="delete"]').click({force: true}); // data-cy="SavedFilters"
+    cy.get('[class*="ListItemWithActions"]').find('svg[data-icon="delete"]').eq(0).click({force: true}); // data-cy="SavedFilters"
     cy.contains('Permanently delete this filter?').should('exist');
     cy.get('button[type="button"]').contains('Cancel').click({force: true});
   });
@@ -195,7 +195,7 @@ describe('Navigation', () => {
     cy.visitFileEntity('GF_016DGJE7');
 
     cy.get('[data-icon="cloud-upload"]').click({force: true});
-    cy.contains('You are not connected to Cavatica').should('exist');
+    cy.contains(/(You are not connected to Cavatica|Analyze in Cavatica)/).should('exist');
     cy.get('button[class*="ant-btn-default"]').invoke('click');
   });
  

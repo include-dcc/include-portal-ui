@@ -12,8 +12,8 @@ describe('Page Data Exploration - Requêtes', () => {
   });
 
   it.skip('Validation Facette numérique ou No Data', () => {
-    cy.validateTotalSelectedQuery('1,966');
-    cy.validateTableResultsCount('1,966');
+    cy.validateTotalSelectedQuery('1,989');
+    cy.validateTableResultsCount('1,989');
   });
 
   it('Validation Facette numérique OU Facette standard', () => {
@@ -21,8 +21,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(1).click();
     cy.wait('@getPOSTgraphql', {timeout: 20*1000});
 
-    cy.validateTotalSelectedQuery('4,725');
-    cy.validateTableResultsCount('4,725');
+    cy.validateTotalSelectedQuery('3,416');
+    cy.validateTableResultsCount('3,416');
   });
 
   it.skip('Validation Facette numérique ou No Data ET Facette standard', () => {
@@ -39,8 +39,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(3).click();
     cy.wait('@getPOSTgraphql', {timeout: 20*1000});
 
-    cy.validateTotalSelectedQuery('4,720');
-    cy.validateTableResultsCount('4,720');
+    cy.validateTotalSelectedQuery('3,411');
+    cy.validateTableResultsCount('3,411');
   });
 
   it('Validation Facette standard (All of)', () => {
@@ -57,8 +57,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(5).click();
     cy.wait('@getPOSTgraphql', {timeout: 20*1000});
 
-    cy.validateTotalSelectedQuery('202');
-    cy.validateTableResultsCount('202');
+    cy.validateTotalSelectedQuery('5,399');
+    cy.validateTableResultsCount('5,399');
   });
 
   it('Validation Facette standard (None of) ET Facette numérique', () => {
@@ -66,7 +66,7 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(6).click();
     cy.wait('@getPOSTgraphql', {timeout: 20*1000});
 
-    cy.validateTotalSelectedQuery('31');
-    cy.validateTableResultsCount('31');
+    cy.validateTotalSelectedQuery('54');
+    cy.validateTableResultsCount('54');
   });
 });

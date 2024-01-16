@@ -22,7 +22,7 @@ describe('Page Data Exploration (Biospecimens) - Exporter les biospecimens en TS
     cy.validateFileName('include-biospecimen-table-'+`${strDate.slice(0, 4)}-${strDate.slice(4, 6)}-${strDate.slice(6, 8)}`+'.tsv');
   });
 
-  it('Valider les en-têtes du fichier [SJIP-600]', () => {
+  it('Valider les en-têtes du fichier', () => {
     cy.validateFileHeaders('ExportTableauBiospecimens.json');
   });
 

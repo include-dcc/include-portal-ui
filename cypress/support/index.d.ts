@@ -10,7 +10,7 @@ declare namespace Cypress {
     removeFilesFromFolder(folder: string): cy & CyEventEmitter;
     resetColumns(table_id?: string): cy & CyEventEmitter;
     showColumn(column: string|RegExp): cy & CyEventEmitter;
-    sortTableAndIntercept(column: string, nbCalls: number): cy & CyEventEmitter;
+    sortTableAndIntercept(column: string|RegExp, nbCalls: number): cy & CyEventEmitter;
     sortTableAndWait(column: string): cy & CyEventEmitter;
     typeAndIntercept(selector: string, text: string, methodHTTP: string, routeMatcher: string, nbCalls: number): cy & CyEventEmitter;
     validateClearAllButton(shouldExist: boolean): cy & CyEventEmitter;
@@ -30,7 +30,7 @@ declare namespace Cypress {
     visitDashboard(): cy & CyEventEmitter;
     visitDataExploration(tab?: string, sharedFilterOption?: string): cy & CyEventEmitter;
     visitFileEntity(fileId: string): cy & CyEventEmitter;
-    visitParticipantEntity(participantId: string): cy & CyEventEmitter;
+    visitParticipantEntity(participantId: string, nbCalls?: number): cy & CyEventEmitter;
     visitProfileSettingsPage(): cy & CyEventEmitter;
     visitStudyEntity(studyId: string, nbCalls: number): cy & CyEventEmitter;
     visitStudiesPage(): cy & CyEventEmitter;

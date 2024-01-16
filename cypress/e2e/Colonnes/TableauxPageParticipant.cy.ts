@@ -7,7 +7,7 @@ beforeEach(() => {
 
 describe('Page d\'un participant - Colonnes du tableau Family', () => {
   beforeEach(() => {
-    cy.visitParticipantEntity('PT_QWWDKAXP');
+    cy.visitParticipantEntity('pt-0dxdyebh');
     cy.resetColumns('family');
   });
 
@@ -56,7 +56,7 @@ describe('Page d\'un participant - Colonnes du tableau Family', () => {
 
 describe('Page d\'un participant - Colonnes du tableau Diagnoses', () => {
   beforeEach(() => {
-    cy.visitParticipantEntity('PT_QWWDKAXP');
+    cy.visitParticipantEntity('pt-0dxdyebh');
     cy.resetColumns('diagnosis');
   });
 
@@ -111,7 +111,7 @@ describe('Page d\'un participant - Colonnes du tableau Diagnoses', () => {
 
 describe('Page d\'un participant - Colonnes du tableau Phenotypes', () => {
   beforeEach(() => {
-    cy.visitParticipantEntity('PT_QWWDKAXP');
+    cy.visitParticipantEntity('pt-0dxdyebh');
     cy.resetColumns('phenotype');
   });
 
@@ -166,7 +166,7 @@ describe('Page d\'un participant - Colonnes du tableau Phenotypes', () => {
 
 describe('Page d\'un participant - Colonnes du tableau Biospecimens', () => {
   beforeEach(() => {
-    cy.visitParticipantEntity('PT_QWWDKAXP');
+    cy.visitParticipantEntity('pt-0dxdyebh');
     cy.resetColumns('biospecimen');
   });
 

@@ -7,7 +7,7 @@ beforeEach(() => {
 
 describe('Page Data Exploration (Participants) - Vérifier les informations affichées', () => {
   beforeEach(() => {
-    cy.visitDataExploration('participants', '?sharedFilterId=6e01f0aa-b4ac-4769-978a-6d675084fbec');
+    cy.visitDataExploration('participants', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
     cy.showColumn('Race');
     cy.showColumn('Ethnicity');
     cy.showColumn('External Participant ID');
@@ -20,34 +20,34 @@ describe('Page Data Exploration (Participants) - Vérifier les informations affi
   });
 
   it('Tableau', () => {
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(1).contains('PT_QWWDKAXP').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(2).contains('DS360-CHD').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(3).contains('phs002330').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(4).contains('T21').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(5).contains('Female').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(5).find('[class*="ant-tag-magenta"]').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(6).contains('White').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(7).contains('Not Hispanic or Latino').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(8).contains('SSHCC10038_00').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(9).contains('Trio').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(10).contains('complete atrioventricular canal').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(10).contains('See more').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(11).contains('Complete atrioventricular canal').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(11).contains('MONDO:').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(11).contains('0015273').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(11).contains('See more').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(12).contains('Complete atrioventricular canal defect').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(12).contains('HP:').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(12).contains('0001674').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(12).contains('See more').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(13).contains(/^1$/).should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(14).contains(/^5$/).should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(1).contains('pt-as0aepqm').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(2).contains('HTP').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(3).contains('phs002330').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(4).contains('T21').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(5).contains('Female').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(5).find('[class*="ant-tag-magenta"]').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(6).contains('White').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(7).contains('Not Hispanic or Latino').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(8).contains('HTP0577').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(9).contains('Proband-only').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(10).contains('Atrial septal defect (ASD)').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(10).contains('See more').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('Atrial septal defect').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('MONDO:').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('0006664').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('See more').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('Abnormal heart morphology').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('HP:').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('0001627').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('See more').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(13).contains(/^26$/).should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(14).contains(/^13$/).should('exist');
   });
 });
 
 describe('Page Data Exploration (Participants) - Valider les liens disponibles', () => {
   beforeEach(() => {
-    cy.visitDataExploration('participants', '?sharedFilterId=6e01f0aa-b4ac-4769-978a-6d675084fbec');
+    cy.visitDataExploration('participants', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
     cy.showColumn('Race');
     cy.showColumn('Ethnicity');
     cy.showColumn('External Participant ID');
@@ -56,38 +56,38 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
   });
 
   it('Lien Participant du tableau', () => {
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(1).find('[href]').click({force: true});
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(1).find('[href]').click({force: true});
     cy.get('[id="participant-entity-page"]').should('exist');
-    cy.get('[class*="EntityTitle"]').contains('PT_QWWDKAXP');
+    cy.get('[class*="EntityTitle"]').contains('pt-as0aepqm');
   });
 
   // Ne fonctionne pas pour une raison inconnue
   it.skip('Lien dbGap du tableau', () => {
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class="ant-table-cell"]').eq(3).find('[href]')
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class="ant-table-cell"]').eq(3).find('[href]')
       .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
   });
 
   it('Lien \'See more\' de Condition (Source Text) du tableau', () => {
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(10).contains('See more').click({force: true});
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(10).contains('Down syndrome').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(10).contains('See less').click({force: true});
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(10).contains('Down syndrome').should('not.exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(10).contains('See more').click({force: true});
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(10).contains('Complete trisomy 21').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(10).contains('See less').click({force: true});
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(10).contains('Complete trisomy 21').should('not.exist');
   });
 
   it('Lien Mondo de Diagnosis (MONDO) du tableau', () => {
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(11).find('[href]')
-      .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/MONDO_0015273');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).find('[href]')
+      .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/MONDO_0006664');
   });
 
   it('Lien \'See more\' de Diagnosis (MONDO) du tableau', () => {
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(11).contains('See more').click({force: true});
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(11).contains('Down syndrome').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(11).contains('See less').click({force: true});
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(11).contains('Down syndrome').should('not.exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('See more').click({force: true});
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('Complete trisomy 21').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('See less').click({force: true});
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('Complete trisomy 21').should('not.exist');
   });
 
   it('Lien HP de Phenotype (HPO) du tableau', () => {
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(12).find('[href]')
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).find('[href]')
       .should(($element) => {
         const hrefValue = $element.attr('href');
         const regex = /http:\/\/purl\.obolibrary\.org\/obo\/HP_00/;
@@ -96,26 +96,26 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
   });
   
   it('Lien \'See more\' de Phenotype (HPO) du tableau', () => {
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(12).contains('See more').click({force: true});
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(12).contains('Atrioventricular canal defect').should('exist');
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(12).contains('See less').click({force: true});
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(12).contains('Atrioventricular canal defect').should('not.exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('See more').click({force: true});
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('Acne inversa').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('See less').click({force: true});
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('Acne inversa').should('not.exist');
   });
 
   it('Lien Biospecimens du tableau', () => {
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(13).find('[href]').click({force: true});
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(13).find('[href]').click({force: true});
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('PT QWWDKAXP').should('exist');
-    cy.validateTableResultsCount(/^1$/);
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Pt-as0aepqm').should('exist');
+    cy.validateTableResultsCount(/^26$/);
   });
 
   it('Lien Files du tableau', () => {
-    cy.get('tr[data-row-key="PT_QWWDKAXP"]').find('[class*="ant-table-cell"]').eq(14).find('[href]').click({force: true});
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(14).find('[href]').click({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('PT QWWDKAXP').should('exist');
-    cy.validateTableResultsCount(/^5$/);
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Pt-as0aepqm').should('exist');
+    cy.validateTableResultsCount(/^13$/);
   });
 });
 
@@ -138,7 +138,7 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Study [SJIP-548]', () => {
     cy.sortTableAndIntercept('Study', 1);
-    cy.validateTableFirstRow('DS360-CHD', 2);
+    cy.validateTableFirstRow('HTP', 2);
     cy.sortTableAndIntercept('Study', 1);
     cy.validateTableFirstRow('X01-deSmith', 2);
   });
@@ -159,23 +159,23 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Race', () => {
     cy.sortTableAndIntercept('Race', 1);
-    cy.validateTableFirstRow('-', 6);
+    cy.validateTableFirstRow('American Indian or Alaska Native', 6);
     cy.sortTableAndIntercept('Race', 1);
-    cy.validateTableFirstRow('other', 6);
+    cy.validateTableFirstRow('unknown', 6);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Ethnicity', () => {
     cy.sortTableAndIntercept('Ethnicity', 1);
     cy.validateTableFirstRow('-', 7);
     cy.sortTableAndIntercept('Ethnicity', 1);
-    cy.validateTableFirstRow('Not Hispanic or Latino', 7);
+    cy.validateTableFirstRow('unknown', 7);
   });
 
   it('Valider les fonctionnalités du tableau - Tri External Participant ID', () => {
     cy.sortTableAndIntercept('External Participant ID', 1);
-    cy.validateTableFirstRow('1030', 8);
+    cy.validateTableFirstRow('10001', 8);
     cy.sortTableAndIntercept('External Participant ID', 1);
-    cy.validateTableFirstRow('SSHYY10031_20', 8);
+    cy.validateTableFirstRow('SSHYY10031_00', 8);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Family Unit', () => {

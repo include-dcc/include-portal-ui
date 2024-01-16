@@ -7,7 +7,7 @@ beforeEach(() => {
 
 describe('Page d\'un fichier - Colonnes du tableau Participants-Samples', () => {
   beforeEach(() => {
-    cy.visitFileEntity('GF_0A0S5FSA');
+    cy.visitFileEntity('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz');
     cy.resetColumns('participant-sample');
   });
 

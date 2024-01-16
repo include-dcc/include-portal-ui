@@ -17,14 +17,14 @@ describe('Page Data Exploration - Requêtes', () => {
 
   it('Construire une première requête', () => {
     cy.get('body').contains('Use the search tools & facets on the left to build a query').should('exist');
-    cy.validateTotalSelectedQuery('4,922');
-    cy.validateTableResultsCount('4,922');
+    cy.validateTotalSelectedQuery('8,810');
+    cy.validateTableResultsCount('8,810');
 
     cy.checkValueFacetAndApply('Sample Type', 'DNA');
 
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
-    cy.validateTotalSelectedQuery('4,694');
-    cy.validateTableResultsCount('4,694');
+    cy.validateTotalSelectedQuery('3,362');
+    cy.validateTableResultsCount('3,362');
     cy.validateClearAllButton(false);
   });
 });
