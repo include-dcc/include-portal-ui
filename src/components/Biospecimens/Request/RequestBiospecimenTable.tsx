@@ -1,8 +1,8 @@
 import intl from 'react-intl-universal';
-import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { Table, Tooltip } from 'antd';
+import { ColumnType } from 'antd/lib/table';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
@@ -15,7 +15,7 @@ export interface IRequestBioDataRow {
   nb_containers: number;
 }
 
-export const getDataTypeColumns = (): ProColumnType<any>[] => [
+export const getDataTypeColumns = (): ColumnType<any>[] => [
   {
     key: 'study_code',
     dataIndex: 'study_code',
