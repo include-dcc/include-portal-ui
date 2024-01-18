@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ConsequencesCell from '@ferlab/ui/core/components/Consequences/Cell';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
+import FixedSizeTable from '@ferlab/ui/core/components/FixedSizeTable';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
@@ -55,27 +56,34 @@ interface OwnProps {
   results: IQueryResults<IVariantEntity[]>;
   setQueryConfig: TQueryConfigCb;
   queryConfig: IQueryConfig;
+  queryBuilderId: string;
 }
 
 const isNumber = (n: number) => n && !Number.isNaN(n);
 
-const defaultColumns: ProColumnType[] = [
+const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): ProColumnType[] => [
   {
     title: intl.get('screen.variants.table.variant'),
     key: 'hgvsg',
     dataIndex: 'hgvsg',
-    className: cx(styles.variantTableCell, styles.variantTableCellElipsis),
+    className: noData
+      ? `${styles.fixedVariantTableCellNoData} ${styles.fixedVariantTableCellElipsis}`
+      : styles.fixedVariantTableCellElipsis,
     sorter: {
       multiple: 1,
     },
+    fixed: 'left',
     render: (hgvsg: string, entity: IVariantEntity) =>
       hgvsg ? (
         <Tooltip placement="topLeft" title={hgvsg}>
-          <Link to={`${STATIC_ROUTES.VARIANTS}/${entity?.locus}`}>{hgvsg}</Link>
+          <div>
+            <Link to={`${STATIC_ROUTES.VARIANTS}/${entity?.locus}`}>{hgvsg}</Link>
+          </div>
         </Tooltip>
       ) : (
         TABLE_EMPTY_PLACE_HOLDER
       ),
+    width: 150,
   },
   {
     key: 'variant_class',
@@ -85,6 +93,7 @@ const defaultColumns: ProColumnType[] = [
       multiple: 1,
     },
     render: (variant_class: string) => variant_class || TABLE_EMPTY_PLACE_HOLDER,
+    width: 65,
   },
   {
     key: 'rsnumber',
@@ -102,6 +111,7 @@ const defaultColumns: ProColumnType[] = [
       ) : (
         TABLE_EMPTY_PLACE_HOLDER
       ),
+    width: 65,
   },
   {
     key: 'consequences',
@@ -126,6 +136,7 @@ const defaultColumns: ProColumnType[] = [
         />
       );
     },
+    width: 180,
   },
   {
     key: 'clinvar',
@@ -147,6 +158,7 @@ const defaultColumns: ProColumnType[] = [
       ) : (
         TABLE_EMPTY_PLACE_HOLDER
       ),
+    width: 92,
   },
   {
     key: 'external_frequencies.gnomad_genomes_3.af',
@@ -160,6 +172,7 @@ const defaultColumns: ProColumnType[] = [
       externalFrequencies?.gnomad_genomes_3?.af
         ? toExponentialNotation(externalFrequencies?.gnomad_genomes_3.af)
         : TABLE_EMPTY_PLACE_HOLDER,
+    width: 90,
   },
   {
     title: 'Studies',
@@ -198,6 +211,7 @@ const defaultColumns: ProColumnType[] = [
         </Link>
       );
     },
+    width: 80,
   },
   {
     title: intl.get('screen.variants.table.participant.title'),
@@ -237,6 +251,7 @@ const defaultColumns: ProColumnType[] = [
         </Link>
       );
     },
+    width: 125,
   },
   {
     title: intl.get('screen.variants.table.frequence.title'),
@@ -250,6 +265,7 @@ const defaultColumns: ProColumnType[] = [
       internalFrequencies?.total?.af && isNumber(internalFrequencies.total.af)
         ? toExponentialNotation(internalFrequencies?.total?.af)
         : TABLE_EMPTY_PLACE_HOLDER,
+    width: 125,
   },
   {
     title: intl.get('screen.variants.table.alt.title'),
@@ -260,6 +276,7 @@ const defaultColumns: ProColumnType[] = [
       multiple: 1,
     },
     render: (ac: string) => ac || TABLE_EMPTY_PLACE_HOLDER,
+    width: 60,
   },
   {
     title: intl.get('screen.variants.table.homozygotes.title'),
@@ -271,6 +288,7 @@ const defaultColumns: ProColumnType[] = [
     },
     render: (internalFrequencies: IVariantInternalFrequencies) =>
       internalFrequencies.total.hom ? numberWithCommas(internalFrequencies.total.hom) : 0,
+    width: 75,
   },
 ];
 
@@ -278,6 +296,7 @@ const VariantsTable = ({
   results,
   sqon,
   setQueryConfig,
+  queryBuilderId,
   queryConfig,
   pageIndex,
   setPageIndex,
@@ -314,89 +333,95 @@ const VariantsTable = ({
   return (
     <GridCard
       content={
-        <ProTable<ITableVariantEntity>
-          tableId="variants_table"
-          columns={defaultColumns}
-          enableRowSelection
-          initialColumnState={userInfo?.config.variants?.tables?.variants?.columns}
-          wrapperClassName={styles.variantTabWrapper}
-          loading={results.loading}
-          initialSelectedKey={selectedKeys}
-          showSorterTooltip={false}
-          // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-          onChange={({ current }, _, sorter) => {
-            setPageIndex(DEFAULT_PAGE_INDEX);
-            setQueryConfig({
-              pageIndex: DEFAULT_PAGE_INDEX,
-              size: queryConfig.size!,
-              sort: formatQuerySortList(sorter),
-            });
-          }}
-          headerConfig={{
-            itemCount: {
-              pageIndex: pageIndex,
-              pageSize: queryConfig.size,
-              total: results.total,
-            },
-            enableColumnSort: true,
-            onColumnSortChange: (newState) =>
-              dispatch(
-                updateUserConfig({
-                  variants: {
-                    tables: {
+        <FixedSizeTable
+          elementId="query-builder-header-tools"
+          fixedProTable={(dimension) => (
+            <ProTable<ITableVariantEntity>
+              tableId="variants_table"
+              columns={getDefaultColumns(queryBuilderId, results.data.length === 0 ? true : false)}
+              enableRowSelection
+              initialColumnState={userInfo?.config.variants?.tables?.variants?.columns}
+              wrapperClassName={styles.variantTabWrapper}
+              loading={results.loading}
+              initialSelectedKey={selectedKeys}
+              showSorterTooltip={false}
+              // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+              onChange={({ current }, _, sorter) => {
+                setPageIndex(DEFAULT_PAGE_INDEX);
+                setQueryConfig({
+                  pageIndex: DEFAULT_PAGE_INDEX,
+                  size: queryConfig.size!,
+                  sort: formatQuerySortList(sorter),
+                });
+              }}
+              headerConfig={{
+                itemCount: {
+                  pageIndex: pageIndex,
+                  pageSize: queryConfig.size,
+                  total: results.total,
+                },
+                enableColumnSort: true,
+                onColumnSortChange: (newState) =>
+                  dispatch(
+                    updateUserConfig({
                       variants: {
-                        columns: newState,
+                        tables: {
+                          variants: {
+                            columns: newState,
+                          },
+                        },
                       },
-                    },
-                  },
-                }),
-              ),
-            onSelectAllResultsChange: setSelectedAllResults,
-            onSelectedRowsChange: (keys, selectedRows) => {
-              setSelectedKeys(keys);
-              setSelectedRows(selectedRows);
-            },
-            extra: [
-              <SetsManagementDropdown
-                idField={VARIANT_SAVED_SETS_FIELD}
-                results={results}
-                selectedKeys={selectedKeys}
-                selectedAllResults={selectedAllResults}
-                sqon={getCurrentSqon()}
-                type={SetType.VARIANT}
-                key="variants-set-management"
-              />,
-            ],
-          }}
-          bordered
-          size="small"
-          pagination={{
-            current: pageIndex,
-            queryConfig,
-            setQueryConfig,
-            onChange: (page: number) => {
-              scrollToTop(SCROLL_WRAPPER_ID);
-              setPageIndex(page);
-            },
-            searchAfter: results.searchAfter,
-            onViewQueryChange: (viewPerQuery: PaginationViewPerQuery) => {
-              dispatch(
-                updateUserConfig({
-                  variants: {
-                    tables: {
+                    }),
+                  ),
+                onSelectAllResultsChange: setSelectedAllResults,
+                onSelectedRowsChange: (keys, selectedRows) => {
+                  setSelectedKeys(keys);
+                  setSelectedRows(selectedRows);
+                },
+                extra: [
+                  <SetsManagementDropdown
+                    idField={VARIANT_SAVED_SETS_FIELD}
+                    results={results}
+                    selectedKeys={selectedKeys}
+                    selectedAllResults={selectedAllResults}
+                    sqon={getCurrentSqon()}
+                    type={SetType.VARIANT}
+                    key="variants-set-management"
+                  />,
+                ],
+              }}
+              bordered
+              size="small"
+              scroll={{ x: dimension.x, y: 'max-content' }}
+              pagination={{
+                current: pageIndex,
+                queryConfig,
+                setQueryConfig,
+                onChange: (page: number) => {
+                  scrollToTop(SCROLL_WRAPPER_ID);
+                  setPageIndex(page);
+                },
+                searchAfter: results.searchAfter,
+                onViewQueryChange: (viewPerQuery: PaginationViewPerQuery) => {
+                  dispatch(
+                    updateUserConfig({
                       variants: {
-                        ...userInfo?.config.variants?.tables?.variants,
-                        viewPerQuery,
+                        tables: {
+                          variants: {
+                            ...userInfo?.config.variants?.tables?.variants,
+                            viewPerQuery,
+                          },
+                        },
                       },
-                    },
-                  },
-                }),
-              );
-            },
-            defaultViewPerQuery: queryConfig.size,
-          }}
-          dataSource={results.data.map((i) => ({ ...i, key: i.id }))}
-          dictionary={getProTableDictionary()}
+                    }),
+                  );
+                },
+                defaultViewPerQuery: queryConfig.size,
+              }}
+              dataSource={results.data.map((i) => ({ ...i, key: i.id }))}
+              dictionary={getProTableDictionary()}
+            />
+          )}
         />
       }
     />

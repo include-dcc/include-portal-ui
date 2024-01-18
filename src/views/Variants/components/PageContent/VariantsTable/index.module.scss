@@ -4,6 +4,31 @@
   :global(.ant-pagination) {
     margin-bottom: 0;
   }
+
+  :global(.ant-table-body) {
+    overflow: auto !important;
+  }
+}
+
+.fixedVariantTableCellElipsis {
+  min-width: 150px;
+  max-width: 150px;
+  width: 150px;
+  div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: unset;
+    white-space: nowrap;
+  }
+
+  div::after {
+    content: '';
+    display: block;
+  }
+}
+
+.fixedVariantTableCellNoData {
+  left: 0 !important;
 }
 
 .variantTableCellElipsis {
