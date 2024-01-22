@@ -64,15 +64,13 @@ export const renderOmim = (
   return (
     <StackLayout horizontal>
       <Space size={4} className={style.variantSnvOmimCellItem}>
-        {inheritance.length
-          ? inheritance.map((code) => (
-              <Tooltip key={code} title={intl.get(`screen.variants.table.inheritant.code.${code}`)}>
-                <Tag color="blue">
-                  <ExternalLink href={omimLink}>{code}</ExternalLink>
-                </Tag>
-              </Tooltip>
-            ))
-          : TABLE_EMPTY_PLACE_HOLDER}
+        {inheritance.map((code) => (
+          <Tooltip key={code} title={intl.get(`screen.variants.table.inheritant.code.${code}`)}>
+            <Tag color="blue">
+              <ExternalLink href={omimLink}>{code}</ExternalLink>
+            </Tag>
+          </Tooltip>
+        ))}
       </Space>
     </StackLayout>
   );
