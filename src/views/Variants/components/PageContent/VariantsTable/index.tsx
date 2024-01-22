@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import ConsequencesCell from '@ferlab/ui/core/components/Consequences/Cell';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import FixedSizeTable from '@ferlab/ui/core/components/FixedSizeTable';
+import GeneCell from '@ferlab/ui/core/components/Gene/Cell';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
@@ -19,10 +20,8 @@ import {
   TQueryConfigCb,
 } from '@ferlab/ui/core/graphql/types';
 import { numberWithCommas, toExponentialNotation } from '@ferlab/ui/core/utils/numberUtils';
-import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Tooltip } from 'antd';
-import cx from 'classnames';
+import { Space, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { hydrateResults } from 'graphql/models';
 import {
@@ -34,18 +33,22 @@ import {
   IVariantInternalFrequencies,
   IVariantStudyEntity,
 } from 'graphql/variants/models';
+import { capitalize } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import { DATA_EXPLORATION_QB_ID, DEFAULT_PAGE_INDEX } from 'views/DataExploration/utils/constant';
 import { SCROLL_WRAPPER_ID, VARIANT_SAVED_SETS_FIELD } from 'views/Variants/utils/constants';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
+import ManeCell from 'components/ManeCell';
 import { SetType } from 'services/api/savedSet/models';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
-import { truncateString } from 'utils/string';
 import { getProTableDictionary } from 'utils/translation';
+
+import { GnomadCircle, renderClinvar, renderOmim } from './utils';
 
 import styles from './index.module.scss';
 
@@ -87,12 +90,25 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
   },
   {
     key: 'variant_class',
-    title: 'Type',
+    title: intl.get('screen.variants.table.type'),
     dataIndex: 'variant_class',
     sorter: {
       multiple: 1,
     },
-    render: (variant_class: string) => variant_class || TABLE_EMPTY_PLACE_HOLDER,
+    render: (variant_class: string) =>
+      variant_class ? (
+        <Tooltip
+          title={intl
+            .get(`entities.variant.type.tooltip.${variant_class.toLowerCase()}`)
+            .defaultMessage(capitalize(variant_class))}
+        >
+          {intl
+            .get(`entities.variant.type.abrv.${variant_class.toLowerCase()}`)
+            .defaultMessage(capitalize(variant_class))}
+        </Tooltip>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
     width: 65,
   },
   {
@@ -106,18 +122,47 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
     render: (rsNumber: string) =>
       rsNumber ? (
         <ExternalLink href={`https://www.ncbi.nlm.nih.gov/snp/${rsNumber}`}>
-          {rsNumber}
+          <ExternalLinkIcon />
         </ExternalLink>
       ) : (
         TABLE_EMPTY_PLACE_HOLDER
       ),
-    width: 65,
+    width: 75,
+  },
+  {
+    title: intl.get('screen.variants.table.gene'),
+    key: 'genes',
+    dataIndex: 'genes',
+    render: (genes: IArrangerResultsTree<IGeneEntity>) => {
+      const geneWithPickedConsequence = genes?.hits?.edges?.find((e) =>
+        (e.node.consequences || [])?.hits?.edges?.some((e) => e.node?.picked),
+      )?.node;
+      if (!geneWithPickedConsequence) {
+        //must never happen or it is a bug
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+
+      const geneSymbol = geneWithPickedConsequence.symbol;
+      const geneInfo = genes.hits.edges.find(({ node }) => node.symbol === geneSymbol);
+
+      return (
+        <GeneCell
+          queryBuilderId={queryBuilderId}
+          queryValue={geneSymbol}
+          queryIndex={INDEXES.VARIANTS}
+          symbol={geneSymbol}
+          omimGeneId={geneInfo?.node.omim_gene_id}
+        />
+      );
+    },
+    width: 100,
   },
   {
     key: 'consequences',
     title: intl.get('screen.variants.table.consequences.title'),
     dataIndex: 'genes',
     tooltip: intl.get('screen.variants.table.consequences.tooltip'),
+    className: noData ? styles.csqCell : '',
     render: (genes: IArrangerResultsTree<IGeneEntity>) => {
       const geneWithPickedConsequence = genes?.hits?.edges?.find((e) =>
         (e.node.consequences || [])?.hits?.edges?.some((e) => e.node?.picked),
@@ -132,32 +177,63 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
         <ConsequencesCell
           consequences={consequences}
           emptyText={intl.get('no.data.available')}
+          layoutClassName={styles.csqCellLayout}
           symbol={geneWithPickedConsequence.symbol}
+          withoutSymbol
         />
       );
     },
     width: 180,
   },
+
+  {
+    key: 'MANE',
+    title: intl.get('screen.variants.table.mane'),
+    dataIndex: 'genes',
+    render: (genes: IArrangerResultsTree<IGeneEntity>) => {
+      const geneWithPickedConsequence = genes?.hits?.edges?.find((e) =>
+        (e.node.consequences || [])?.hits?.edges?.some((e) => e.node?.picked),
+      )?.node;
+      if (!geneWithPickedConsequence) {
+        //must never happen or it is a bug
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+
+      const pickedConsequence = geneWithPickedConsequence.consequences?.hits?.edges?.find(
+        (c) => c.node.picked,
+      );
+
+      return pickedConsequence ? (
+        <ManeCell consequence={pickedConsequence.node} />
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      );
+    },
+    width: 80,
+  },
+  {
+    key: 'omim',
+    title: intl.get('screen.variants.table.omim.title'),
+    tooltip: intl.get('screen.variants.table.omim.tooltip'),
+    dataIndex: 'genes',
+    render: (genes: IArrangerResultsTree<IGeneEntity>) => {
+      const geneWithPickedConsequence = genes?.hits?.edges?.find((e) =>
+        (e.node.consequences || [])?.hits?.edges?.some((e) => e.node?.picked),
+      )?.node;
+      if (!geneWithPickedConsequence) {
+        //must never happen or it is a bug
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+
+      return renderOmim(genes, geneWithPickedConsequence.symbol);
+    },
+    width: 95,
+  },
   {
     key: 'clinvar',
     title: intl.get('screen.variants.table.clinvar'),
     dataIndex: 'clinvar',
-    className: cx(styles.variantTableCell, styles.variantTableCellElipsis),
-    render: (clinVar: IClinVar) =>
-      clinVar?.clin_sig && clinVar.clinvar_id ? (
-        <Tooltip
-          placement="topLeft"
-          title={removeUnderscoreAndCapitalize(clinVar.clin_sig.join(', '))}
-        >
-          <ExternalLink
-            href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${clinVar.clinvar_id}`}
-          >
-            {truncateString(removeUnderscoreAndCapitalize(clinVar.clin_sig.join(', ')), 29)}
-          </ExternalLink>
-        </Tooltip>
-      ) : (
-        TABLE_EMPTY_PLACE_HOLDER
-      ),
+    render: (clinVar: IClinVar) => renderClinvar(clinVar),
     width: 92,
   },
   {
@@ -168,14 +244,95 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
     sorter: {
       multiple: 1,
     },
+    render: (externalFrequencies: IExternalFrequenciesEntity) => {
+      const af = externalFrequencies?.gnomad_genomes_3?.af;
+      if (!af) return TABLE_EMPTY_PLACE_HOLDER;
+      return (
+        <Space direction="horizontal">
+          <GnomadCircle underOnePercent={af < 0.01} />
+          <span>{toExponentialNotation(af)}</span>
+        </Space>
+      );
+    },
+    width: 90,
+  },
+  {
+    key: 'external_frequencies.gnomad_genomes_3.ac',
+    title: intl.get('screen.variants.table.gnomADAlt.title'),
+    tooltip: intl.get('screen.variants.table.gnomADAlt.tooltip'),
+    dataIndex: 'external_frequencies',
+    sorter: {
+      multiple: 1,
+    },
     render: (externalFrequencies: IExternalFrequenciesEntity) =>
-      externalFrequencies?.gnomad_genomes_3?.af
-        ? toExponentialNotation(externalFrequencies?.gnomad_genomes_3.af)
+      externalFrequencies?.gnomad_genomes_3?.ac
+        ? numberWithCommas(externalFrequencies?.gnomad_genomes_3?.ac)
         : TABLE_EMPTY_PLACE_HOLDER,
     width: 90,
   },
   {
-    title: 'Studies',
+    title: intl.get('screen.variants.table.participant.title'),
+    tooltip: intl.get('screen.variants.table.participant.tooltip'),
+    key: 'internal_frequencies.total.pc',
+    sorter: {
+      multiple: 1,
+    },
+    render: (v: IVariantEntity) => {
+      const totalNbOfParticipants = v.internal_frequencies?.total?.pc || 0;
+      const studies = v.studies;
+      const participantIds =
+        studies?.hits?.edges?.map((study) => study.node.participant_ids || [])?.flat() || [];
+      if (!participantIds.length) {
+        return (
+          <>
+            {totalNbOfParticipants}
+            {v.internal_frequencies?.total?.af && isNumber(v.internal_frequencies.total.af) && (
+              <span className={styles.partCell}>
+                ({toExponentialNotation(v.internal_frequencies.total.af)})
+              </span>
+            )}
+          </>
+        );
+      }
+      return (
+        <>
+          {participantIds.length > 10 ? (
+            <Link
+              to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
+              onClick={() => {
+                addQuery({
+                  queryBuilderId: DATA_EXPLORATION_QB_ID,
+                  query: generateQuery({
+                    newFilters: [
+                      generateValueFilter({
+                        field: 'participant_id',
+                        value: participantIds,
+                        index: INDEXES.PARTICIPANT,
+                      }),
+                    ],
+                  }),
+                  setAsActive: true,
+                });
+              }}
+            >
+              {numberWithCommas(totalNbOfParticipants)}
+            </Link>
+          ) : (
+            numberWithCommas(totalNbOfParticipants)
+          )}
+          {v.internal_frequencies?.total?.af && isNumber(v.internal_frequencies.total.af) && (
+            <span className={styles.partCell}>
+              ({toExponentialNotation(v.internal_frequencies.total.af)})
+            </span>
+          )}
+        </>
+      );
+    },
+    width: 125,
+  },
+  {
+    title: intl.get('screen.variants.table.studies.title'),
+    tooltip: intl.get('screen.variants.table.studies.tooltip'),
     dataIndex: 'studies',
     key: 'studies',
     render: (studies: IArrangerResultsTree<IVariantStudyEntity>) => {
@@ -214,74 +371,70 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
     width: 80,
   },
   {
-    title: intl.get('screen.variants.table.participant.title'),
-    tooltip: intl.get('screen.variants.table.participant.tooltip'),
-    key: 'internal_frequencies.total.pc',
-    sorter: {
-      multiple: 1,
-    },
-    render: (v: IVariantEntity) => {
-      const totalNbOfParticipants = v.internal_frequencies?.total?.pc || 0;
-      const studies = v.studies;
-      const participantIds =
-        studies?.hits?.edges?.map((study) => study.node.participant_ids || [])?.flat() || [];
-      if (!participantIds.length) {
-        return totalNbOfParticipants;
+    key: 'CADD',
+    title: intl.get('screen.variants.table.CADD.title'),
+    tooltip: intl.get('screen.variants.table.CADD.tooltip'),
+    dataIndex: 'genes',
+    defaultHidden: true,
+    render: (genes: IArrangerResultsTree<IGeneEntity>) => {
+      const geneWithPickedConsequence = genes?.hits?.edges?.find((e) =>
+        (e.node.consequences || [])?.hits?.edges?.some((e) => e.node?.picked),
+      )?.node;
+      if (!geneWithPickedConsequence) {
+        //must never happen or it is a bug
+        return TABLE_EMPTY_PLACE_HOLDER;
       }
-      return (
-        <Link
-          to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
-          onClick={() => {
-            addQuery({
-              queryBuilderId: DATA_EXPLORATION_QB_ID,
-              query: generateQuery({
-                newFilters: [
-                  generateValueFilter({
-                    field: 'participant_id',
-                    value: participantIds,
-                    index: INDEXES.PARTICIPANT,
-                  }),
-                ],
-              }),
-              setAsActive: true,
-            });
-          }}
-        >
-          {numberWithCommas(totalNbOfParticipants)}
-        </Link>
+
+      const pickedConsequence = geneWithPickedConsequence.consequences?.hits?.edges?.find(
+        (c) => c.node.picked,
       );
+      return pickedConsequence?.node?.predictions?.cadd_score
+        ? pickedConsequence.node.predictions.cadd_score
+        : TABLE_EMPTY_PLACE_HOLDER;
     },
-    width: 125,
+    width: 90,
   },
   {
-    title: intl.get('screen.variants.table.frequence.title'),
-    tooltip: intl.get('screen.variants.table.frequence.tooltip'),
-    dataIndex: 'internal_frequencies',
-    key: 'internal_frequencies.total.af',
-    sorter: {
-      multiple: 1,
+    key: 'REVEL',
+    title: intl.get('screen.variants.table.revel'),
+    dataIndex: 'genes',
+    defaultHidden: true,
+    render: (genes: IArrangerResultsTree<IGeneEntity>) => {
+      const geneWithPickedConsequence = genes?.hits?.edges?.find((e) =>
+        (e.node.consequences || [])?.hits?.edges?.some((e) => e.node?.picked),
+      )?.node;
+      if (!geneWithPickedConsequence) {
+        //must never happen or it is a bug
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+
+      const pickedConsequence = geneWithPickedConsequence.consequences?.hits?.edges?.find(
+        (c) => c.node.picked,
+      );
+      return pickedConsequence?.node?.predictions?.revel_score
+        ? pickedConsequence.node.predictions.revel_score
+        : TABLE_EMPTY_PLACE_HOLDER;
     },
-    render: (internalFrequencies: IVariantInternalFrequencies) =>
-      internalFrequencies?.total?.af && isNumber(internalFrequencies.total.af)
-        ? toExponentialNotation(internalFrequencies?.total?.af)
-        : TABLE_EMPTY_PLACE_HOLDER,
-    width: 125,
+    width: 90,
   },
   {
     title: intl.get('screen.variants.table.alt.title'),
     tooltip: intl.get('screen.variants.table.alt.tooltip'),
     dataIndex: ['internal_frequencies', 'total', 'ac'],
+    defaultHidden: true,
     key: 'internal_frequencies.total.ac',
     sorter: {
       multiple: 1,
     },
-    render: (ac: string) => ac || TABLE_EMPTY_PLACE_HOLDER,
+    render: (ac: string) =>
+      ac && !isNaN(parseInt(ac)) ? numberWithCommas(parseInt(ac)) : TABLE_EMPTY_PLACE_HOLDER,
     width: 60,
   },
   {
     title: intl.get('screen.variants.table.homozygotes.title'),
     tooltip: intl.get('screen.variants.table.homozygotes.tooltip'),
     dataIndex: 'internal_frequencies',
+    defaultHidden: true,
     key: 'internal_frequencies.total.hom',
     sorter: {
       multiple: 1,
