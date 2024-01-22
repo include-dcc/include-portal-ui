@@ -286,9 +286,9 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
         return (
           <>
             {totalNbOfParticipants}
-            {v.internal_frequencies?.total?.af && isNumber(v.internal_frequencies.total.af) && (
+            {v.internal_frequencies?.total?.pf && isNumber(v.internal_frequencies.total.pf) && (
               <span className={styles.partCell}>
-                ({toExponentialNotation(v.internal_frequencies.total.af)})
+                ({toExponentialNotation(v.internal_frequencies.total.pf)})
               </span>
             )}
           </>
@@ -320,9 +320,9 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
           ) : (
             numberWithCommas(totalNbOfParticipants)
           )}
-          {v.internal_frequencies?.total?.af && isNumber(v.internal_frequencies.total.af) && (
+          {v.internal_frequencies?.total?.pf && isNumber(v.internal_frequencies.total.pf) && (
             <span className={styles.partCell}>
-              ({toExponentialNotation(v.internal_frequencies.total.af)})
+              ({toExponentialNotation(v.internal_frequencies.total.pf)})
             </span>
           )}
         </>
