@@ -79,30 +79,23 @@ export const renderOmim = (
 };
 
 export const renderClinvar = (clinVar: IClinVar) => {
+  if (!clinVar?.clin_sig || !clinVar?.clinvar_id) return TABLE_EMPTY_PLACE_HOLDER;
+
   const clinVarSigKey: string[] = [];
 
-  clinVar?.clin_sig &&
-    clinVar.clin_sig.map((c) => {
-      clinVarSigKey.push(c.toLowerCase());
-    });
+  clinVar.clin_sig.map((c) => {
+    clinVarSigKey.push(c.toLowerCase());
+  });
 
-  return clinVar?.clin_sig && clinVar.clinvar_id
-    ? clinVarSigKey.map((clinvarKey) => (
-        <Tooltip
-          key={clinvarKey}
-          placement="topLeft"
-          title={removeUnderscoreAndCapitalize(clinvarKey)}
-        >
-          <Tag color={ClinvarColorMap[clinvarKey]}>
-            <ExternalLink
-              href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${clinVar.clinvar_id}`}
-            >
-              {intl.get(`screen.variants.table.clinvarAbrv.${clinvarKey}`)}
-            </ExternalLink>
-          </Tag>
-        </Tooltip>
-      ))
-    : TABLE_EMPTY_PLACE_HOLDER;
+  return clinVarSigKey.map((clinvarKey) => (
+    <Tooltip key={clinvarKey} placement="topLeft" title={removeUnderscoreAndCapitalize(clinvarKey)}>
+      <Tag color={ClinvarColorMap[clinvarKey]}>
+        <ExternalLink href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${clinVar.clinvar_id}`}>
+          {intl.get(`screen.variants.table.clinvarAbrv.${clinvarKey}`)}
+        </ExternalLink>
+      </Tag>
+    </Tooltip>
+  ));
 };
 
 interface GnomadCircleProps {
