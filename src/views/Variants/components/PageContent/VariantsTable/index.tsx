@@ -116,9 +116,6 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
     title: intl.get('screen.variants.table.dbsnp'),
     dataIndex: 'rsnumber',
     className: styles.dbSnpTableCell,
-    sorter: {
-      multiple: 1,
-    },
     render: (rsNumber: string) =>
       rsNumber ? (
         <ExternalLink href={`https://www.ncbi.nlm.nih.gov/snp/${rsNumber}`}>
