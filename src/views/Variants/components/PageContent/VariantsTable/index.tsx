@@ -124,7 +124,7 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
       ) : (
         TABLE_EMPTY_PLACE_HOLDER
       ),
-    width: 75,
+    width: 65,
   },
   {
     title: intl.get('screen.variants.table.gene'),
