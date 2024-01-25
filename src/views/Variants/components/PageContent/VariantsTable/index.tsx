@@ -116,9 +116,6 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
     title: intl.get('screen.variants.table.dbsnp'),
     dataIndex: 'rsnumber',
     className: styles.dbSnpTableCell,
-    sorter: {
-      multiple: 1,
-    },
     render: (rsNumber: string) =>
       rsNumber ? (
         <ExternalLink href={`https://www.ncbi.nlm.nih.gov/snp/${rsNumber}`}>
@@ -127,7 +124,7 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
       ) : (
         TABLE_EMPTY_PLACE_HOLDER
       ),
-    width: 75,
+    width: 65,
   },
   {
     title: intl.get('screen.variants.table.gene'),
