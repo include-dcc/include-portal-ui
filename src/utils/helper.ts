@@ -19,7 +19,7 @@ export const orderCardIfNeeded = (cards: TSortableItems[], userCardConfig: strin
 export const getOrderFromAntdValue = (order: string): SortDirection =>
   order === 'ascend' ? SortDirection.Asc : SortDirection.Desc;
 
-export const formatQuerySortList = (sorter: SorterResult<any> | SorterResult<any>[]) =>
+export const formatQuerySortList = <T>(sorter: SorterResult<T> | SorterResult<T>[]) =>
   isEmpty(sorter)
     ? []
     : [sorter].flat().map((sorter) => ({

@@ -1,8 +1,8 @@
 import intl from 'react-intl-universal';
-import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { Table } from 'antd';
+import { ColumnType } from 'antd/lib/table';
 import { AxiosRequestConfig } from 'axios';
 import EnvironmentVariables from 'helpers/EnvVariables';
 
@@ -24,7 +24,7 @@ interface IFileByDataType {
   size: number;
 }
 
-export const getDataTypeColumns = (): ProColumnType<any>[] => [
+export const getDataTypeColumns = (): ColumnType<any>[] => [
   {
     key: 'value',
     dataIndex: 'value',
@@ -56,7 +56,6 @@ export const getDataTypeColumns = (): ProColumnType<any>[] => [
 
 const FilesTable = ({ sqon }: { sqon: ISyntheticSqon }) => {
   const config: AxiosRequestConfig = {
-    // @ts-ignore
     url: REPORTS_ROUTES[ReportType.FILE_MANIFEST_STATS],
     method: 'POST',
     responseType: 'json',
