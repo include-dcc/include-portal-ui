@@ -1,6 +1,8 @@
 import intl from 'react-intl-universal';
 import { Alert, Modal } from 'antd';
 
+import styles from './requestBiospecimen.module.scss';
+
 type OwnProps = {
   isOpen: boolean;
   closeModal: () => void;
@@ -22,9 +24,11 @@ const NoSampleModal = ({ isOpen, closeModal }: OwnProps) => (
   >
     <Alert
       type="info"
-      message={intl.getHTML(
-        'screen.dataExploration.tabs.biospecimens.request.modal.alert.infoMessage',
-      )}
+      message={
+        <span className={styles.alertTitle}>
+          {intl.getHTML('screen.dataExploration.tabs.biospecimens.request.modal.alert.infoMessage')}
+        </span>
+      }
       description={intl.getHTML(
         'screen.dataExploration.tabs.biospecimens.request.modal.alert.infoDescription',
       )}
