@@ -214,7 +214,9 @@ const fetchTsxReport = async (
         key: col.key,
         visible: col.defaultHidden || true,
       }));
-  colStates = colStates.filter(({ visible }) => !!visible);
+  colStates = colStates
+    .filter(({ visible }) => !!visible)
+    .map((column) => (column.key === 'study' ? { ...column, key: 'study.study_code' } : column));
 
   const columnKeyOrdered = [...colStates].sort((a, b) => a.index - b.index).map(({ key }) => key);
   const tsvColumnsConfig = data!.data[args.index].columnsState.state.columns.filter(({ field }) =>
@@ -257,7 +259,9 @@ const fetchTsxReport = async (
 };
 
 const getTitleFromColumns = (columns: ProColumnType[], field: string) => {
-  const column = columns.find(({ key }) => key === field);
+  const fieldToUse = field === 'study.study_code' ? 'study' : field;
+
+  const column = columns.find(({ key }) => key === fieldToUse);
 
   if (!column || (column.title && typeof column.title !== 'string')) {
     return startCase(field.replace(/\./g, ' '));
