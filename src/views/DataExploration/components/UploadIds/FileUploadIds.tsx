@@ -1,5 +1,6 @@
 import intl from 'react-intl-universal';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { MatchTableItem } from '@ferlab/ui/core/components/UploadIds/types';
 import { extractUploadValues } from '@ferlab/ui/core/components/UploadIds/utils';
 import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
@@ -52,13 +53,13 @@ const FileUploadIds = ({ queryBuilderId }: OwnProps) => (
         return matchedIds.map((id, index) => ({
           key: `${file.file_id}:${index}`,
           submittedId: id,
-          mappedTo: file.study.study_id,
+          mappedTo: file.study.study_code,
           matchTo: file.file_id,
           value: file.fhir_id,
         }));
       });
     }}
-    onUpload={(matches) =>
+    onUpload={(matches: MatchTableItem[]) =>
       updateActiveQueryField({
         queryBuilderId,
         field: 'file_facet_ids.file_fhir_id_2',

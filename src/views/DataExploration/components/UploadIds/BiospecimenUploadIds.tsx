@@ -1,5 +1,7 @@
 import intl from 'react-intl-universal';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { MatchTableItem } from '@ferlab/ui/core/components/UploadIds/types';
+import { extractUploadValues } from '@ferlab/ui/core/components/UploadIds/utils';
 import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
@@ -53,16 +55,17 @@ const BiospecimenUploadIds = ({ queryBuilderId }: OwnProps) => (
         return matchedIds.map((id, index) => ({
           key: `${biospecimen.sample_id}:${index}`,
           submittedId: id,
-          mappedTo: biospecimen.study_id,
           matchTo: biospecimen.sample_id,
+          mappedTo: biospecimen.study.study_code,
+          value: biospecimen.fhir_id,
         }));
       });
     }}
-    onUpload={(matches) =>
+    onUpload={(matches: MatchTableItem[]) =>
       updateActiveQueryField({
         queryBuilderId,
         field: 'biospecimen_facet_ids.biospecimen_fhir_id_2',
-        value: matches.map((match) => match.matchTo),
+        value: extractUploadValues(matches, 'value'),
         index: INDEXES.BIOSPECIMEN,
         overrideValuesName: intl.get('components.uploadIds.modal.pillTitle'),
         merge_strategy: MERGE_VALUES_STRATEGIES.OVERRIDE_VALUES,
