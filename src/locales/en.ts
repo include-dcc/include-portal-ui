@@ -823,7 +823,7 @@ const en = {
         cohort: 'Cohort',
         altRef: 'Alleles (ALT + REF)',
         altRefTooltip: 'Alternative alleles + Reference alleles',
-        noDataAvailable: 'No data available for this variant',
+        noDataAvailable: 'No data available',
       },
       pathogenicity: {
         pathogenicity: 'Pathogenicity',
