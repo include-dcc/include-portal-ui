@@ -89,6 +89,7 @@ export const filterGroups: {
       {
         facets: [
           'sample_type',
+          'parent_sample_type',
           'collection_sample_type',
           'age_at_biospecimen_collection',
           'status',
