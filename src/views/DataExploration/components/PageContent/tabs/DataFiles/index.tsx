@@ -86,12 +86,13 @@ const getDefaultColumns = (
   },
   {
     key: 'controlled_access',
-    tooltip: 'Data access',
-    title: 'Data access',
+    tooltip: 'Data Access',
+    title: 'Data Access',
     iconTitle: <SafetyOutlined />,
     dataIndex: 'controlled_access',
     align: 'center',
     width: 75,
+    sorter: { multiple: 1 },
     render: (controlled_access: string) => {
       if (!controlled_access) {
         return TABLE_EMPTY_PLACE_HOLDER;
