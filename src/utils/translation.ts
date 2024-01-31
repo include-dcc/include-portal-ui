@@ -319,17 +319,17 @@ export const getFacetsDictionary = () => ({
       consequence: 'Consequence',
       vep_impact: 'VEP',
       predictions: {
-        cadd_score: 'CADD',
+        cadd_score: 'CADD (Raw)',
         cadd_phred: 'CADD (Phred)',
         dann_score: 'DANN',
         fathmm_pred: 'FATHMM',
         lrt_pred: 'LRT',
-        polyphen2_hvar_pred: 'PolyPhen2 HVAR',
+        polyphen2_hvar_pred: 'PolyPhen-2 HVAR',
         revel_score: 'REVEL',
         sift_pred: 'SIFT',
       },
     },
-    biotype: 'Gene type',
+    biotype: 'Gene Type',
     gnomad: {
       pli: 'gnomAD pLI',
       loeuf: 'gnomAD LOEUF',
@@ -375,6 +375,7 @@ export const getFacetsDictionary = () => ({
       af: '1000 Genomes',
     },
   },
+  age_at_biospecimen_collection: 'Age at Biospecimen Collection (days)',
   tooltips: {
     genes: {
       consequences: {
