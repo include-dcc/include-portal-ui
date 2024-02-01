@@ -1073,7 +1073,7 @@ const en = {
     derived_sample_type: 'Derived Sample Type',
     ncit_id_tissue_type: 'Tissue Type (NCIT)',
     status: 'Availability',
-    age_at_biospecimen_collection: 'Age at Biospec. Collection (days)',
+    age_at_biospecimen_collection: 'Age at Biospecimen Collection (days)',
     bio_repository: 'Biorepository',
     collection_sample_id: 'Collection ID',
     sample_id: 'Sample ID',
