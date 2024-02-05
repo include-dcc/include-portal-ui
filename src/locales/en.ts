@@ -604,6 +604,10 @@ const en = {
               'A saved set is a collection of one or more entity IDs which can be saved and revisited for later use. You can create saved sets at the top of the table of results in the <a href="{dataExploHref}" style="text-decoration: underline;">Data Exploration</a> and <a href="{variantsHref}" style="text-decoration: underline;">Variants Exploration</a> pages.',
             title: 'Managing Saved Sets',
           },
+          participantsTab: 'Participants ({count})',
+          biospecimensTab: 'Biospecimens ({count})',
+          filesTab: 'Files ({count})',
+          variantsTab: 'Variants ({count})',
         },
         biospecimenRequest: {
           title: 'Biospecimen Requests',
