@@ -16,8 +16,9 @@ const ParticipantSearch = ({ queryBuilderId }: ICustomSearchProps) => {
     <GlobalSearch<IParticipantEntity>
       queryBuilderId={queryBuilderId}
       field="participant_id"
+      searchFields={['participant_id', 'external_id']}
       index={INDEXES.PARTICIPANT}
-      placeholder={'e.g. pt-005X8BR9'}
+      placeholder={'e.g. pt-005X8BR9, HTP0001'}
       emptyDescription={'No participants found'}
       query={PARTICIPANT_SEARCH_BY_ID_QUERY}
       sqon={activeQuery as ISqonGroupFilter}
@@ -27,12 +28,14 @@ const ParticipantSearch = ({ queryBuilderId }: ICustomSearchProps) => {
             <SelectItem
               icon={<UserOutlined />}
               title={highlightSearchMatch(option.participant_id, matchRegex, search)}
+              caption={highlightSearchMatch(option.external_id, matchRegex, search)}
             />
           ),
           value: option.participant_id,
         }))
       }
       title={'Search by Participant ID'}
+      tooltipText="Search by Participant ID or External Participant ID"
     />
   );
 };

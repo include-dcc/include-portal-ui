@@ -18,8 +18,9 @@ const BiospecimenSearch = ({ queryBuilderId }: ICustomSearchProps) => {
     <GlobalSearch<IBiospecimenEntity>
       queryBuilderId={queryBuilderId}
       field="sample_id"
+      searchFields={['sample_id', 'external_sample_id']}
       index={INDEXES.BIOSPECIMEN}
-      placeholder={'e.g. bs-019260B4'}
+      placeholder={'e.g. bs-019260B4, SSH3953290'}
       emptyDescription={'No samples found'}
       query={BIOSPECIMEN_SEARCH_BY_ID_QUERY}
       sqon={activeQuery as ISqonGroupFilter}
@@ -29,12 +30,14 @@ const BiospecimenSearch = ({ queryBuilderId }: ICustomSearchProps) => {
             <SelectItem
               icon={<ExperimentOutlined />}
               title={highlightSearchMatch(option.sample_id, matchRegex, search)}
+              caption={highlightSearchMatch(option.external_sample_id, matchRegex, search)}
             />
           ),
           value: option.sample_id,
         }))
       }
       title={'Search by Sample ID'}
+      tooltipText="Search by Sample ID or External Sample ID"
     />
   );
 };

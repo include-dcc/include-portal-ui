@@ -22,8 +22,8 @@ const ParticipantUploadIds = ({ queryBuilderId }: OwnProps) => (
   <EntityUploadIds
     entityId="participant"
     entityIdTrans="Participant"
-    entityIdentifiers="Participant ID"
-    placeHolder="e.g. pt-005X8BR9"
+    entityIdentifiers="Participant ID, Participant External ID"
+    placeHolder="e.g. pt-005X8BR9, HTP0001"
     fetchMatch={async (ids) => {
       const response = await ArrangerApi.graphqlRequest({
         query: CHECK_PARTICIPANT_MATCH.loc?.source.body,
@@ -32,7 +32,7 @@ const ParticipantUploadIds = ({ queryBuilderId }: OwnProps) => (
           offset: 0,
           sqon: generateQuery({
             operator: BooleanOperators.or,
-            newFilters: ['participant_id'].map((field) =>
+            newFilters: ['participant_id', 'external_id'].map((field) =>
               generateValueFilter({
                 field,
                 value: ids,
@@ -49,7 +49,9 @@ const ParticipantUploadIds = ({ queryBuilderId }: OwnProps) => (
 
       return participants?.flatMap((participant) => {
         const matchedIds: string[] = ids.filter(
-          (id: string) => participant.participant_id.toLocaleLowerCase() === id.toLocaleLowerCase(),
+          (id: string) =>
+            participant.participant_id.toLocaleLowerCase() === id.toLocaleLowerCase() ||
+            participant.external_id.toLocaleLowerCase() === id.toLocaleLowerCase(),
         );
 
         return matchedIds.map((id, index) => ({
