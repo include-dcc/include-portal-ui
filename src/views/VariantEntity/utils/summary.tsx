@@ -31,7 +31,7 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
           },
           {
             label: intl.get('screen.variants.summary.cytoband'),
-            value: variant?.genes?.hits?.edges[0]
+            value: variant?.genes?.hits?.edges?.[0]?.node?.location
               ? variant.genes.hits.edges[0].node.location
               : TABLE_EMPTY_PLACE_HOLDER,
           },
@@ -62,22 +62,24 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
           },
           {
             label: intl.get('screen.variants.summary.omim'),
-            value: variant?.genes?.hits?.edges?.length
-              ? variant.genes.hits.edges.map((gene) => {
-                  if (!gene?.node?.omim_gene_id) {
-                    return;
-                  }
-                  return (
-                    <ExternalLink
-                      key={gene.node.omim_gene_id}
-                      className={styles.geneExternalLink}
-                      href={`https://omim.org/entry/${gene.node.omim_gene_id}`}
-                    >
-                      {gene.node.omim_gene_id}
-                    </ExternalLink>
-                  );
-                })
-              : TABLE_EMPTY_PLACE_HOLDER,
+            value:
+              variant?.genes?.hits?.edges?.length &&
+              variant.genes.hits.edges.find((gene) => gene?.node?.omim_gene_id)
+                ? variant.genes.hits.edges.map((gene) => {
+                    if (!gene?.node?.omim_gene_id) {
+                      return;
+                    }
+                    return (
+                      <ExternalLink
+                        key={gene.node.omim_gene_id}
+                        className={styles.geneExternalLink}
+                        href={`https://omim.org/entry/${gene.node.omim_gene_id}`}
+                      >
+                        {gene.node.omim_gene_id}
+                      </ExternalLink>
+                    );
+                  })
+                : TABLE_EMPTY_PLACE_HOLDER,
           },
           {
             label: intl.get('screen.variants.summary.clinVar'),
