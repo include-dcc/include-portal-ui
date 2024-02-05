@@ -15,15 +15,18 @@ const { Title } = Typography;
 
 const ProfileSettings = () => {
   const { userInfo } = useUser();
+  const keycloak_id = userInfo?.keycloak_id;
 
   return (
     <div className={styles.profileSettingsWrapper}>
       <Space size={16} direction="vertical" className={styles.profileSettings}>
         <div className={styles.profileSettingsHeader}>
           <Title level={4}>{intl.get('screen.profileSettings.title')}</Title>
-          <Link to={`/member/${userInfo?.keycloak_id}`}>
-            <Button type="primary">{intl.get('screen.profileSettings.viewProfile')}</Button>
-          </Link>
+          {keycloak_id && (
+            <Link to={`/member/${keycloak_id}`}>
+              <Button type="primary">{intl.get('screen.profileSettings.viewProfile')}</Button>
+            </Link>
+          )}
         </div>
         <Space size={24} direction="vertical" className={styles.cardsWrapper}>
           <IdentificationCard />
