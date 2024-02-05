@@ -399,7 +399,11 @@ const en = {
         inputLabel: 'Copy-paste a list of identifiers or upload a file',
         match: 'Matched ({count})',
         unmatch: 'Unmatched ({count})',
-        identifiers: '{entity} ID, External {entity} ID',
+        identifiers: {
+          participant: 'Participant ID, External Participant ID',
+          biospecimen: 'Sample ID, External Sample ID',
+          file: 'File ID',
+        },
         placeholders: {
           participant: 'e.g. pt-005X8BR9, HTP0001',
           biospecimen: 'e.g. bs-022KAEZW, SSH3953290',
