@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal';
 import { ExperimentOutlined } from '@ant-design/icons';
 import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
@@ -20,8 +21,8 @@ const BiospecimenSearch = ({ queryBuilderId }: ICustomSearchProps) => {
       field="sample_id"
       searchFields={['sample_id', 'external_sample_id']}
       index={INDEXES.BIOSPECIMEN}
-      placeholder={'e.g. bs-019260B4, SSH3953290'}
-      emptyDescription={'No samples found'}
+      placeholder={intl.get('global.search.biospecimen.placeholder')}
+      emptyDescription={intl.get('global.search.biospecimen.emptyText')}
       query={BIOSPECIMEN_SEARCH_BY_ID_QUERY}
       sqon={activeQuery as ISqonGroupFilter}
       optionsFormatter={(options, matchRegex, search) =>
@@ -36,8 +37,8 @@ const BiospecimenSearch = ({ queryBuilderId }: ICustomSearchProps) => {
           value: option.sample_id,
         }))
       }
-      title={'Search by Sample ID'}
-      tooltipText="Search by Sample ID or External Sample ID"
+      title={intl.get('global.search.biospecimen.title')}
+      tooltipText={intl.get('global.search.biospecimen.tooltip')}
     />
   );
 };
@@ -50,8 +51,8 @@ const BiospecimenCollectionSearch = ({ queryBuilderId }: ICustomSearchProps) => 
       queryBuilderId={queryBuilderId}
       field="collection_sample_id"
       index={INDEXES.BIOSPECIMEN}
-      placeholder={'e.g. bs-022KAEZW'}
-      emptyDescription={'No collection ID found'}
+      placeholder={intl.get('global.search.biospecimen.collection.placeholder')}
+      emptyDescription={intl.get('global.search.biospecimen.collection.emptyText')}
       query={BIOSPECIMEN_SEARCH_BY_ID_QUERY}
       sqon={sqon}
       optionsFormatter={(options, matchRegex, search) =>
@@ -65,7 +66,7 @@ const BiospecimenCollectionSearch = ({ queryBuilderId }: ICustomSearchProps) => 
           value: option.collection_sample_id,
         }))
       }
-      title={'Search by Collection ID'}
+      title={intl.get('global.search.biospecimen.collection.title')}
     />
   );
 };

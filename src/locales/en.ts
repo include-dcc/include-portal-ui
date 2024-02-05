@@ -49,6 +49,28 @@ const en = {
         title: 'Search by study',
         tooltip: 'Search by Study Code, Study Name, dbGaP Accession Number',
       },
+      participant: {
+        emptyText: 'No participants found',
+        placeholder: 'e.g. pt-005X8BR9, HTP0001',
+        title: 'Search by Participant ID',
+        tooltip: 'Search by Participant ID or External Participant ID',
+      },
+      biospecimen: {
+        emptyText: 'No samples found',
+        placeholder: 'e.g. bs-019260B4, SSH3953290',
+        title: 'Search by Sample ID',
+        tooltip: 'Search by Sample ID or External Sample ID',
+        collection: {
+          emptyText: 'No collection ID found',
+          placeholder: 'e.g. bs-022KAEZW',
+          title: 'Search by Collection ID',
+        },
+      },
+      file: {
+        emptyText: 'No files found',
+        placeholder: 'e.g. GF_001CSF26',
+        title: 'Search by File ID',
+      },
     },
     filters: {
       actions: {
@@ -377,6 +399,12 @@ const en = {
         inputLabel: 'Copy-paste a list of identifiers or upload a file',
         match: 'Matched ({count})',
         unmatch: 'Unmatched ({count})',
+        identifiers: '{entity} ID, External {entity} ID',
+        placeholders: {
+          participant: 'e.g. pt-005X8BR9, HTP0001',
+          biospecimen: 'e.g. bs-022KAEZW, SSH3953290',
+          file: 'e.g. GF_001CSF26, HTP.007855d5-e22e-405f-91f4-d54b4b8a9136.g.vcf.gz',
+        },
         tableMessage:
           '{submittedCount} submitted identifiers mapped to {mappedCount} unique system identifiers',
         matchTable: {

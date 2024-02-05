@@ -22,8 +22,10 @@ const BiospecimenUploadIds = ({ queryBuilderId }: OwnProps) => (
   <EntityUploadIds
     entityId="biospecimen"
     entityIdTrans="Sample"
-    entityIdentifiers="Sample ID, External Sample ID"
-    placeHolder="e.g. bs-022KAEZW, SSH3953290"
+    entityIdentifiers={intl.get('components.uploadIds.modal.identifiers', {
+      entity: 'Sample',
+    })}
+    placeHolder={intl.get('components.uploadIds.modal.placeholders.biospecimen')}
     fetchMatch={async (ids) => {
       const response = await ArrangerApi.graphqlRequest({
         query: CHECK_BIOSPECIMEN_MATCH.loc?.source.body,
