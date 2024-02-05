@@ -927,6 +927,9 @@ const en = {
             },
             empty: 'No diagnoses reported for these participants',
           },
+          studies: {
+            cardTitle: 'Studies',
+          },
         },
         participants: {
           title: 'Participants ({count})',
