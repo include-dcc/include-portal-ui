@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import intl from 'react-intl-universal';
 import { NO_GENE } from '@ferlab/ui/core/components/Consequences/Cell';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
@@ -9,6 +10,40 @@ import { IVariantEntity } from 'graphql/variants/models';
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
 import styles from '../index.module.scss';
+
+const getGenesValue = (variant?: IVariantEntity): ReactNode | string => {
+  const genesWithSymbol = variant?.genes?.hits?.edges?.filter(
+    (gene) => gene?.node?.symbol && gene.node.symbol !== NO_GENE,
+  );
+
+  if (!genesWithSymbol?.length) return TABLE_EMPTY_PLACE_HOLDER;
+
+  return genesWithSymbol.map((gene) => (
+    <ExternalLink
+      key={gene.node.symbol}
+      className={styles.geneExternalLink}
+      href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${gene.node.symbol}`}
+    >
+      {gene.node.symbol}
+    </ExternalLink>
+  ));
+};
+
+const getOmimValue = (variant?: IVariantEntity): ReactNode | string => {
+  const geneWithOmim = variant?.genes?.hits?.edges?.filter((gene) => gene?.node?.omim_gene_id);
+
+  if (!geneWithOmim?.length) return TABLE_EMPTY_PLACE_HOLDER;
+
+  return geneWithOmim.map((gene) => (
+    <ExternalLink
+      key={gene.node.omim_gene_id}
+      className={styles.geneExternalLink}
+      href={`https://omim.org/entry/${gene.node.omim_gene_id}`}
+    >
+      {gene.node.omim_gene_id}
+    </ExternalLink>
+  ));
+};
 
 export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns[] => [
   {
@@ -41,45 +76,11 @@ export const getSummaryItems = (variant?: IVariantEntity): IEntitySummaryColumns
           },
           {
             label: intl.get('screen.variants.summary.genes'),
-            value:
-              variant?.genes?.hits?.edges?.length &&
-              variant.genes.hits.edges.filter((gene) => gene?.node?.symbol !== NO_GENE).length
-                ? variant.genes.hits.edges.map((gene) => {
-                    if (!gene?.node?.symbol) {
-                      return;
-                    }
-                    return (
-                      <ExternalLink
-                        key={gene.node.symbol}
-                        className={styles.geneExternalLink}
-                        href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${gene.node.symbol}`}
-                      >
-                        {gene.node.symbol}
-                      </ExternalLink>
-                    );
-                  })
-                : TABLE_EMPTY_PLACE_HOLDER,
+            value: getGenesValue(variant),
           },
           {
             label: intl.get('screen.variants.summary.omim'),
-            value:
-              variant?.genes?.hits?.edges?.length &&
-              variant.genes.hits.edges.find((gene) => gene?.node?.omim_gene_id)
-                ? variant.genes.hits.edges.map((gene) => {
-                    if (!gene?.node?.omim_gene_id) {
-                      return;
-                    }
-                    return (
-                      <ExternalLink
-                        key={gene.node.omim_gene_id}
-                        className={styles.geneExternalLink}
-                        href={`https://omim.org/entry/${gene.node.omim_gene_id}`}
-                      >
-                        {gene.node.omim_gene_id}
-                      </ExternalLink>
-                    );
-                  })
-                : TABLE_EMPTY_PLACE_HOLDER,
+            value: getOmimValue(variant),
           },
           {
             label: intl.get('screen.variants.summary.clinVar'),
