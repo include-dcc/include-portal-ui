@@ -22,8 +22,8 @@ const FileUploadIds = ({ queryBuilderId }: OwnProps) => (
   <EntityUploadIds
     entityId="file"
     entityIdTrans="File"
-    entityIdentifiers="File ID"
-    placeHolder="e.g. GF_001CSF26, HTP.007855d5-e22e-405f-91f4-d54b4b8a9136.g.vcf.gz"
+    entityIdentifiers={intl.get('components.uploadIds.modal.identifiers.file')}
+    placeHolder={intl.get('components.uploadIds.modal.placeholders.file')}
     fetchMatch={async (ids) => {
       const response = await ArrangerApi.graphqlRequest({
         query: CHECK_FILE_MATCH.loc?.source.body,

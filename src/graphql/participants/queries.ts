@@ -228,6 +228,7 @@ export const PARTICIPANT_SEARCH_BY_ID_QUERY = gql`
         edges {
           node {
             participant_id
+            external_id
           }
         }
       }

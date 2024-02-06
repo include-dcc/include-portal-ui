@@ -30,6 +30,7 @@ export interface IBiospecimenEntity {
   collection_sample_type: string;
   parent_sample_id: string;
   parent_sample_type: string;
+  external_sample_id: string;
   sample_id: string;
   sample_type: string;
   files: ArrangerResultsTree<IFileEntity>;
