@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { tieBreaker } from '@ferlab/ui/core/components/ProTable/utils';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
@@ -14,13 +16,19 @@ import { IStudyEntity } from 'graphql/studies/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import { formatQuerySortList } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { numberWithCommas } from 'utils/string';
 import { getProTableDictionary } from 'utils/translation';
 
 import StudyPopoverRedirect from '../DataExploration/components/StudyPopoverRedirect';
 
-import { DEFAULT_PAGE_SIZE } from './utils/constants';
+import {
+  DEFAULT_PAGE_INDEX,
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_QUERY_CONFIG,
+  DEFAULT_STUDY_QUERY_SORT,
+} from './utils/constants';
 
 import styles from './index.module.scss';
 
@@ -42,6 +50,7 @@ const columns: ProColumnType<any>[] = [
   {
     key: 'study_id',
     title: 'Study Code',
+    sorter: { multiple: 1 },
     render: (record: IStudyEntity) =>
       record.website ? (
         <ExternalLink href={record.website}>{record.study_code}</ExternalLink>
@@ -53,6 +62,7 @@ const columns: ProColumnType<any>[] = [
     key: 'study_name',
     title: 'Name',
     width: 500,
+    sorter: { multiple: 1 },
     render: (record: IStudyEntity) => (
       <StudyPopoverRedirect
         studyId={record?.study_id}
@@ -84,6 +94,7 @@ const columns: ProColumnType<any>[] = [
   {
     key: 'participant_count',
     title: 'Participants',
+    sorter: { multiple: 1 },
     render: (record: IStudyEntity) => {
       const participantCount = record?.participant_count || 0;
 
@@ -117,12 +128,14 @@ const columns: ProColumnType<any>[] = [
     key: 'family_count',
     title: 'Families',
     dataIndex: 'family_count',
+    sorter: { multiple: 1 },
     render: (family_count: number) =>
       family_count ? numberWithCommas(family_count) : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'biospecimen_count',
     title: 'Biospecimens',
+    sorter: { multiple: 1 },
     render: (record: IStudyEntity) => {
       const biospecimenCount = record?.biospecimen_count || 0;
 
@@ -188,14 +201,16 @@ const columns: ProColumnType<any>[] = [
 ];
 
 const Studies = () => {
+  const [queryConfig, setQueryConfig] = useState(DEFAULT_QUERY_CONFIG);
+
   const { loading, data, total } = useStudies({
     first: DEFAULT_PAGE_SIZE,
-    sort: [
-      {
-        field: 'study_code',
-        order: SortDirection.Asc,
-      },
-    ],
+    sort: tieBreaker({
+      sort: queryConfig.sort,
+      defaultSort: DEFAULT_STUDY_QUERY_SORT,
+      field: 'study_code',
+      order: queryConfig.operations?.previous ? SortDirection.Desc : SortDirection.Asc,
+    }),
   });
 
   const updatedData = data.map((study) => ({
@@ -225,6 +240,14 @@ const Studies = () => {
                 total,
               },
             }}
+            onChange={(_pagination, _filter, sorter) => {
+              setQueryConfig({
+                pageIndex: DEFAULT_PAGE_INDEX,
+                size: queryConfig.size!,
+                sort: formatQuerySortList(sorter),
+              });
+            }}
+            showSorterTooltip={false}
             dictionary={getProTableDictionary()}
           />
         }
