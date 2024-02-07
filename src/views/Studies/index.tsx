@@ -79,6 +79,7 @@ const columns: ProColumnType<any>[] = [
   {
     key: 'external_id',
     title: 'dbGaP',
+    sorter: { multiple: 1 },
     dataIndex: 'external_id',
     render: (external_id: string) =>
       external_id ? (
