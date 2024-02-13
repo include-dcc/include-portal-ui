@@ -11,6 +11,7 @@ export const SEARCH_FILES_QUERY = gql`
             id
             fhir_id
             file_id
+            external_id
             data_category
             data_type
             file_format
@@ -37,6 +38,90 @@ export const SEARCH_FILES_QUERY = gql`
                 edges {
                   node {
                     experiment_strategy
+                  }
+                }
+              }
+            }
+            participants {
+              hits {
+                edges {
+                  node {
+                    participant_id
+                    down_syndrome_status
+                    external_id
+                    ethnicity
+                    sex
+                    race
+                    families_id
+                    family_type
+                    family {
+                      relations_to_proband {
+                        hits {
+                          edges {
+                            node {
+                              role
+                            }
+                          }
+                        }
+                      }
+                    }
+                    diagnosis {
+                      hits {
+                        total
+                        edges {
+                          node {
+                            mondo_id_diagnosis
+                            source_text
+                            age_at_event_days
+                          }
+                        }
+                      }
+                    }
+                    outcomes {
+                      hits {
+                        total
+                        edges {
+                          node {
+                            vital_status
+                            age_at_event_days {
+                              value
+                            }
+                          }
+                        }
+                      }
+                    }
+                    phenotype {
+                      hits {
+                        total
+                        edges {
+                          node {
+                            age_at_event_days
+                            hpo_phenotype_observed
+                          }
+                        }
+                      }
+                    }
+                    biospecimens {
+                      hits {
+                        edges {
+                          node {
+                            sample_type
+                            external_sample_id
+                            collection_sample_type
+                            age_at_biospecimen_collection
+                            collection_sample_id
+                            parent_sample_id
+                            parent_sample_type
+                            biospecimen_storage
+                            container_id
+                            volume
+                            volume_unit
+                            laboratory_procedure
+                            status
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }

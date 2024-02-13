@@ -1,7 +1,6 @@
 import { IArrangerResultsTree } from '@ferlab/ui/core/graphql/types';
 import { ArrangerResultsTree } from 'graphql/models';
 import { IParticipantEntity } from 'graphql/participants/models';
-import { IStudyEntity } from 'graphql/studies/models';
 
 import { IBiospecimenEntity } from '../biospecimens/models';
 
@@ -25,9 +24,28 @@ export interface ISequencingExperiment {
   sequencing_center_id: string;
 }
 
+export interface IFileStudyEntity {
+  id: string;
+  study_id: string;
+  fhir_id: string;
+  study_code: string;
+  study_name: string;
+  program: string;
+  domain: string;
+  external_id: string;
+  experimental_strategy: string[];
+  family_count: number;
+  participant_count: number;
+  biospecimen_count: number;
+  data_category: string[];
+  family_data: boolean;
+  controlled_access: string[];
+}
+
 export interface IFileEntity {
   key?: string;
   id: string;
+  external_id: string;
   fhir_id: string;
   score: number;
   acl: string[];
@@ -43,7 +61,7 @@ export interface IFileEntity {
     etag: string;
   };
   repository: string;
-  study: IStudyEntity;
+  study: IFileStudyEntity;
   nb_participants: number;
   nb_biospecimens: number;
   fhir_document_reference: string;
