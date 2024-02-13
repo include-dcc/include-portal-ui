@@ -105,6 +105,9 @@ export const SEARCH_FILES_QUERY = gql`
                       hits {
                         edges {
                           node {
+                            external_parent_sample_id
+                            external_collection_sample_id
+                            external_container_id
                             sample_type
                             external_sample_id
                             collection_sample_type

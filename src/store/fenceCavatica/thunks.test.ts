@@ -144,6 +144,9 @@ describe(`${extractMetadata.name}()`, () => {
                           sample_type: 'DNA',
                           external_sample_id: '595495',
                           collection_sample_type: 'Buccal Cells',
+                          external_parent_sample_id: 'external_parent_sample_id',
+                          external_collection_sample_id: 'external_collection_sample_id',
+                          external_container_id: 'external_container_id',
                           age_at_biospecimen_collection: 2345,
                           id: 'biospecimens_test_id',
                           age_at_biospecimen_collection_years: 4,
@@ -301,6 +304,9 @@ describe(`${extractMetadata.name}()`, () => {
       condition_source_text: 'Neuroblastoma',
       container_id: 'biospecimens_test_container_id',
       laboratory_procedure: 'laboratory_procedure',
+      external_collection_sample_id: 'external_collection_sample_id',
+      external_container_id: 'external_container_id',
+      external_parent_sample_id: 'external_parent_sample_id',
     };
 
     expect(extractMetadata(file)).toEqual(expectedMetaData);

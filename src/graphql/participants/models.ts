@@ -32,6 +32,9 @@ export interface IParticipantBiospecimen {
   age_at_biospecimen_collection: number;
   age_at_biospecimen_collection_years: number;
   age_at_biospecimen_collection_onset: string;
+  external_parent_sample_id: string;
+  external_collection_sample_id: string;
+  external_container_id: string;
   sample_id: string;
   sample_type: string;
   parent_sample_id: string;

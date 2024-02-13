@@ -287,9 +287,11 @@ const extractBioSpecimenMetaData = (biospecimens: any[]) => ({
     biospecimens.map((x) => x.age_at_biospecimen_collection),
   ),
   sample_availability: joinUniquely(biospecimens.map((x) => x.status)),
-  // external_parent_sample_id: TODO,
-  // external_collection_id: TODO,
-  // external_container_id: TODO,
+  external_parent_sample_id: joinUniquely(biospecimens.map((x) => x.external_parent_sample_id)),
+  external_collection_sample_id: joinUniquely(
+    biospecimens.map((x) => x.external_collection_sample_id),
+  ),
+  external_container_id: joinUniquely(biospecimens.map((x) => x.external_container_id)),
 });
 
 const extractSequentialExperimentMetaData = (sequentialExperiments: any[]) => ({
