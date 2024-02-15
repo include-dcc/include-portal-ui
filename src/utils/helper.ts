@@ -35,3 +35,8 @@ export const toKebabCase = (str: string) => {
   const match: string[] = (str && str.match(KEBAB_REGEX)) || [];
   return match.map((x: string) => x.toLowerCase()).join('-');
 };
+
+export const keepOnly = (
+  o: Object,
+  fn: ([key, value]: [string, any]) => boolean = ([, v]) => !!v,
+) => Object.fromEntries(Object.entries(o).filter(fn));

@@ -28,9 +28,13 @@ export interface IParticipantPhenotype {
 
 export interface IParticipantBiospecimen {
   id: string;
+  external_sample_id: string;
   age_at_biospecimen_collection: number;
   age_at_biospecimen_collection_years: number;
   age_at_biospecimen_collection_onset: string;
+  external_parent_sample_id: string;
+  external_collection_sample_id: string;
+  external_container_id: string;
   sample_id: string;
   sample_type: string;
   parent_sample_id: string;
@@ -73,6 +77,20 @@ export interface IParticipantFamily {
   relations_to_proband: ArrangerResultsTree<IFamilyRelationToProband>;
 }
 
+export interface IParticipantOutcomes {
+  id: string;
+  fhir_id: string;
+  release_id: string;
+  study_id: string;
+  participant_fhir_id: string;
+  vital_status: string;
+  observation_id: string;
+  age_at_event_days: {
+    value: number;
+    units: string;
+  };
+}
+
 export interface IParticipantEntity {
   id: string;
   score: number;
@@ -96,8 +114,10 @@ export interface IParticipantEntity {
   diagnosis: ArrangerResultsTree<IParticipantDiagnosis>;
   files: ArrangerResultsTree<IFileEntity>;
   phenotype: ArrangerResultsTree<IParticipantPhenotype>;
+  outcomes: ArrangerResultsTree<IParticipantOutcomes>;
   study: IStudyEntity;
   family: IParticipantFamily;
+  families_id: string;
   biospecimens: ArrangerResultsTree<IParticipantBiospecimen>;
 }
 
