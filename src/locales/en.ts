@@ -29,6 +29,7 @@ const en = {
     cancel: 'Cancel',
     save: 'Save',
     pleaseDescribe: 'Please describe',
+    connect: 'Connect',
     search: {
       genes: {
         emptyText: 'No gene found',
@@ -191,6 +192,9 @@ const en = {
       },
       success: {
         title: 'Success',
+        description: `<div><p>Your files have been copied to: <strong>{destination}</strong></p>
+          <p>If you have uploaded more than 10000 files in the last 5 minutes, the import may take a little longer.</p>
+          <a href="{userBaseUrl}" rel="noreferrer" style="color:unset;text-decoration:underline;" target="_blank">Open project in Cavatica</a><div>`,
         projects: {
           create: 'Project created successfully',
         },
@@ -591,7 +595,7 @@ const en = {
           authorization: 'Authorization',
           of: 'of',
           files: 'Files',
-          dataGroups: 'Data use groups: {groups}',
+          dataGroups: 'Data use groups:',
           infoPopover: {
             title: 'Accessing Data',
             content:
@@ -614,6 +618,19 @@ const en = {
             readMore: 'Read more',
           },
           newProject: 'New project',
+          billingGroups: {
+            label: 'Project billing group',
+            empty: 'You have no project billing group',
+          },
+          createProject: 'Create project',
+          cancelText: 'Cancel',
+          error: {
+            create: {
+              title: 'Unable to create project',
+              subtitle:
+                'An error has occurred and we were unable to create your project. Please try again or',
+            },
+          },
         },
         savedFilters: {
           title: 'Saved Filters',
@@ -1025,17 +1042,20 @@ const en = {
                 'You can copy a maximum of <strong>{limit} files</strong> at a time. Please select fewer files and try again.',
             },
             authWarning: {
-              title: 'You are not connected to Cavatica',
+              title: 'Connect to Cavatica',
               description:
                 'In order to analyze your files you must first connect your Cavatica account. Once you are connected, you will be redirected back to this page.',
               connect: 'Connect',
+              cancel: 'Cancel',
             },
             analyseModal: {
+              title: 'Analyze in Cavatica',
               newProject: 'New project',
               copyFiles: 'Copy files',
               copyFilesTo: 'Copy files to...',
               createProjectToPushFileTo: 'Create a project to push your files to.',
               youAreAuthorizedToCopy: 'You are authorized to copy',
+              disabledButtonTooltip: 'You must select at least 1 item',
             },
           },
         },

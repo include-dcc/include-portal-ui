@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ListItemWithActions from '@ferlab/ui/core/components/List/ListItemWithActions';
 import { setQueryBuilderState } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
@@ -25,7 +25,7 @@ interface OwnProps {
 const SavedFiltersListItem = ({ data }: OwnProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -44,14 +44,12 @@ const SavedFiltersListItem = ({ data }: OwnProps) => {
           })
         }
         onClick={() => {
-          history.push(
-            `${FILTER_TAG_PAGE_MAPPING[data.tag]}?${FILTER_ID_QUERY_PARAM_KEY}=${data.id}`,
-          );
-
           setQueryBuilderState(FILTER_TAG_QB_ID_MAPPING[data.tag], {
             active: data.queries[0].id,
             state: data.queries,
           });
+
+          navigate(`${FILTER_TAG_PAGE_MAPPING[data.tag]}?${FILTER_ID_QUERY_PARAM_KEY}=${data.id}`);
         }}
         title={data.title}
         titleClassName={styles.title}

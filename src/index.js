@@ -1,21 +1,26 @@
+/* eslint-disable simple-import-sort/imports */
 // Import css before everything to make sure it is applied correctly
-import "style/themes/include/dist/antd.css";
-import "style/themes/include/main.scss";
-import "./index.css";
 
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { initUserSnap } from "services/initUsersnap";
+import 'style/themes/include/dist/antd.css';
+import 'style/themes/include/main.scss';
+import './index.css';
+
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+
+import { initUserSnap } from 'services/initUsersnap';
+
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
 initUserSnap();
 
-ReactDOM.render(
-  <React.StrictMode>
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(
+  <BrowserRouter>
     <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </BrowserRouter>,
 );
 
 // If you want to start measuring performance in your app, pass a function

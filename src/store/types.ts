@@ -1,9 +1,8 @@
-import { FenceConnectionInitialState } from 'store/fenceConnection';
 import { GlobalInitialState } from 'store/global';
 import { UserInitialState } from 'store/user';
 
-import { FenceCavaticaInitialState } from './fenceCavatica';
-import { fenceStudiesInitialState } from './fenceStudies';
+import { FencesInitialState } from './fences';
+import { PassportInitialState } from './passport';
 import { RemoteInitialState } from './remote';
 import { ReportInitialState } from './report';
 import { SavedFilterInitialState } from './savedFilter';
@@ -13,10 +12,9 @@ export type RootState = {
   global: GlobalInitialState;
   user: UserInitialState;
   report: ReportInitialState;
-  fenceConnection: FenceConnectionInitialState;
-  fenceStudies: fenceStudiesInitialState;
   savedFilter: SavedFilterInitialState;
   savedSet: SavedSetInitialState;
-  fenceCavatica: FenceCavaticaInitialState;
+  fences: FencesInitialState;
   remote: RemoteInitialState;
+  passport: PassportInitialState;
 };

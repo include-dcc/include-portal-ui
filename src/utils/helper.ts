@@ -36,6 +36,10 @@ export const toKebabCase = (str: string) => {
   return match.map((x: string) => x.toLowerCase()).join('-');
 };
 
+//Source: https://www.w3resource.com/javascript-exercises/fundamental/javascript-fundamental-exercise-265.php
+export const chunkIt = (l: any[] = [], size: number = 1) =>
+  Array.from({ length: Math.ceil(l.length / size) }, (_, i) => l.slice(i * size, i * size + size));
+
 export const keepOnly = (
   o: Object,
   fn: ([key, value]: [string, any]) => boolean = ([, v]) => !!v,

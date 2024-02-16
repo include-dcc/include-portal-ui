@@ -1,125 +1,98 @@
 import { useEffect } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { DisconnectOutlined, SafetyOutlined } from '@ant-design/icons';
-import Empty from '@ferlab/ui/core/components/Empty';
-import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Button, List, Space } from 'antd';
-import Text from 'antd/lib/typography/Text';
-import CardConnectPlaceholder from 'views/Dashboard/components/CardConnectPlaceholder';
-import CardErrorPlaceholder from 'views/Dashboard/components/CardErrorPlaceHolder';
-import CardHeader from 'views/Dashboard/components/CardHeader';
-import { DashboardCardProps } from 'views/Dashboard/components/DashboardCards';
+import AuthorizedStudiesWidget, {
+  FENCE_AUTHENTIFICATION_STATUS,
+  IFenceService,
+} from '@ferlab/ui/core/components/Widgets/AuthorizedStudies';
+import { INDEXES } from 'graphql/constants';
+import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { FENCE_NAMES } from 'common/fenceTypes';
-import PopoverContentLink from 'components/uiKit/PopoverContentLink';
-import { connectToFence, disconnectFromFence } from 'store/fenceConnection/thunks';
-import { useFenceStudies } from 'store/fenceStudies';
-import { fetchAllFenceStudies } from 'store/fenceStudies/thunks';
-import { TFenceStudy } from 'store/fenceStudies/types';
+import IncludeIcon from 'components/Icons/IncludeIcon';
+import { useFenceAuthentification, useFencesAuthorizedStudies } from 'store/fences';
+import {
+  fenceDisconnection,
+  fenceOpenAuhentificationTab,
+  fetchAuthorizedStudies,
+} from 'store/fences/thunks';
+import { SUPPORT_EMAIL } from 'store/report/thunks';
+import { STATIC_ROUTES } from 'utils/routes';
 
-import AuthorizedStudiesListItem from './ListItem';
-
-import styles from './index.module.scss';
+import { DashboardCardProps } from '..';
 
 const AuthorizedStudies = ({ id, className = '' }: DashboardCardProps) => {
   const dispatch = useDispatch();
-  const { loadingStudiesForFences, fenceStudiesAcls, isConnected, hasErrors, connectionLoading } =
-    useFenceStudies();
-  const fenceStudiesLoading = loadingStudiesForFences.length > 0;
+  const gen3 = useFenceAuthentification(FENCE_NAMES.gen3);
+  const fences = [gen3];
+  const authorizedStudies = useFencesAuthorizedStudies();
+  const services: IFenceService[] = [
+    {
+      fence: FENCE_NAMES.gen3,
+      name: 'Inludes Framework Services',
+      icon: <IncludeIcon width={45} height={45} />,
+      onConnectToFence: () => {
+        dispatch(fenceOpenAuhentificationTab(FENCE_NAMES.gen3));
+      },
+      onDisconnectFromFence: () => {
+        dispatch(fenceDisconnection(FENCE_NAMES.gen3));
+      },
+    },
+  ];
 
   useEffect(() => {
-    if (isConnected) {
-      dispatch(fetchAllFenceStudies());
+    if (!fences.some(({ status }) => status === FENCE_AUTHENTIFICATION_STATUS.connected)) {
+      return;
     }
-    // eslint-disable-next-line
-  }, [isConnected]);
+
+    dispatch(fetchAuthorizedStudies(fences));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gen3.status]);
 
   return (
-    <GridCard
-      theme="shade"
-      wrapperClassName={className}
-      title={
-        <CardHeader
-          id={id}
-          title={intl.get('screen.dashboard.cards.authorizedStudies.title', {
-            count: isConnected ? fenceStudiesAcls.length : 0,
-          })}
-          infoPopover={{
-            title: intl.get('screen.dashboard.cards.authorizedStudies.infoPopover.title'),
-            content: (
-              <Space direction="vertical" className={styles.content} size={0}>
-                <Text>
-                  {intl.getHTML('screen.dashboard.cards.authorizedStudies.infoPopover.content')}{' '}
-                  <PopoverContentLink
-                    externalHref="https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?login=&page=login"
-                    title={intl.get(
-                      'screen.dashboard.cards.authorizedStudies.infoPopover.applyingForDataAccess',
-                    )}
-                  />
-                  .
-                </Text>
-              </Space>
-            ),
-          }}
-          withHandle
-        />
-      }
-      content={
-        <div className={styles.authorizedWrapper}>
-          {isConnected && !hasErrors && !fenceStudiesLoading && (
-            <Space className={styles.authenticatedHeader} direction="horizontal">
-              <Space align="start">
-                <SafetyOutlined className={styles.safetyIcon} />
-                <Text className={styles.notice}>
-                  {intl.get('screen.dashboard.cards.authorizedStudies.connectedNotice')}{' '}
-                  <Button
-                    type="link"
-                    size="small"
-                    danger
-                    icon={<DisconnectOutlined />}
-                    onClick={() => dispatch(disconnectFromFence(FENCE_NAMES.gen3))}
-                    className={styles.disconnectBtn}
-                    loading={connectionLoading}
-                  >
-                    {intl.get('screen.dashboard.cards.authorizedStudies.disconnect')}
-                  </Button>
-                </Text>
-              </Space>
-            </Space>
-          )}
-          <List<TFenceStudy>
-            className={styles.authorizedStudiesList}
-            bordered
-            itemLayout="vertical"
-            loading={fenceStudiesLoading || connectionLoading}
-            locale={{
-              emptyText: hasErrors ? (
-                <CardErrorPlaceholder />
-              ) : isConnected ? (
-                <Empty
-                  imageType="grid"
-                  description={intl.get(
-                    'screen.dashboard.cards.authorizedStudies.noAvailableStudies',
-                  )}
-                />
-              ) : (
-                <CardConnectPlaceholder
-                  icon={<SafetyOutlined className={styles.safetyIcon} />}
-                  description={intl.get(
-                    'screen.dashboard.cards.authorizedStudies.disconnectedNotice',
-                  )}
-                  btnProps={{
-                    onClick: () => dispatch(connectToFence(FENCE_NAMES.gen3)),
-                  }}
-                />
-              ),
-            }}
-            dataSource={isConnected && !hasErrors ? fenceStudiesAcls : []}
-            renderItem={(item) => <AuthorizedStudiesListItem id={item.id} data={item} />}
-          ></List>
-        </div>
-      }
+    <AuthorizedStudiesWidget
+      id={id}
+      fences={fences}
+      queryProps={{
+        to: STATIC_ROUTES.DATA_EXPLORATION_DATAFILES,
+        queryBuilderId: DATA_EXPLORATION_QB_ID,
+        participantIndex: INDEXES.PARTICIPANT,
+        fileIndex: INDEXES.FILE,
+      }}
+      authorizedStudies={authorizedStudies}
+      className={className}
+      services={services}
+      dictionary={{
+        title: intl.get('screen.dashboard.cards.authorizedStudies.title', {
+          count: authorizedStudies.studies.length,
+        }),
+        connectedNotice: intl.get('screen.dashboard.cards.authorizedStudies.connectedNotice'),
+        manageConnections: intl.get('screen.dashboard.cards.authorizedStudies.manageConnections'),
+        noAvailableStudies: intl.get('screen.dashboard.cards.authorizedStudies.noAvailableStudies'),
+        authentification: {
+          description: intl.get('screen.dashboard.cards.authorizedStudies.disconnectedNotice'),
+          action: intl.get('global.connect'),
+        },
+        list: {
+          authorization: intl.get('screen.dashboard.cards.authorizedStudies.authorization'),
+          of: intl.get('screen.dashboard.cards.authorizedStudies.of'),
+          dataGroups: intl.get('screen.dashboard.cards.authorizedStudies.dataGroups'),
+          files: intl.get('screen.dashboard.cards.authorizedStudies.files'),
+        },
+        error: {
+          title: intl.get('screen.dashboard.cards.error.title'),
+          subtitle: intl.get('screen.dashboard.cards.error.subtitle'),
+          email: SUPPORT_EMAIL,
+          contactSupport: intl.get('screen.dashboard.cards.error.contactSupport'),
+        },
+        popover: {
+          title: intl.get('screen.dashboard.cards.authorizedStudies.infoPopover.title'),
+          applyingForDataAccess: intl.get(
+            'screen.dashboard.cards.authorizedStudies.infoPopover.applyingForDataAccess',
+          ),
+          content: intl.get('screen.dashboard.cards.authorizedStudies.infoPopover.content'),
+        },
+      }}
     />
   );
 };
