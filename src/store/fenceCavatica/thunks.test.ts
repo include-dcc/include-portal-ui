@@ -275,7 +275,7 @@ describe(`${extractMetadata.name}()`, () => {
       ethnicity: 'Not Hispanic or Latino',
       sex: 'female',
       race: 'White',
-      age_at_diagnosis: '174',
+      age_at_participant_diagnosis: '174',
       age_at_vital_status: '3137',
       age_at_phenotype_assignment: '31231',
       diagnosis_mondo: 'neuroblastoma (MONDO:0005072)',
