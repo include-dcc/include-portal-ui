@@ -888,6 +888,9 @@ const en = {
         add: 'Add to existing set',
         remove: 'Remove from existing set',
         selected: '{count, plural, =0 {# {type}} =1 {# {type}} other {# {type}s}} selected',
+        selectedTooltip:
+          'Max. {selectedLimit} items at a time. The first 10,000 will be processed.',
+        saveSet: 'Save {type} set',
       },
       hpoTree: {
         modal: {

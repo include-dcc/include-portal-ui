@@ -191,9 +191,12 @@ const SetsManagementDropdown = ({
                       <Tooltip
                         arrowPointAtCenter
                         placement="topRight"
-                        title={`Max. ${numberWithCommas(
-                          ROW_SELECTION_LIMIT,
-                        )} items at a time. The first 10,000 will be processed.`}
+                        title={intl.get(
+                          'screen.dataExploration.setsManagementDropdown.selectedTooltip',
+                          {
+                            selectedLimit: numberWithCommas(ROW_SELECTION_LIMIT),
+                          },
+                        )}
                       >
                         <InfoCircleOutlined className={styles.infoCircle} />
                       </Tooltip>
@@ -230,7 +233,9 @@ const SetsManagementDropdown = ({
             }
           >
             <Button className={'save-set-btn'} onClick={(e) => e.preventDefault()}>
-              {`Save ${singularizeSetTypeIfNeeded(type)} set`}
+              {intl.get('screen.dataExploration.setsManagementDropdown.saveSet', {
+                type: singularizeSetTypeIfNeeded(type),
+              })}
               <DownOutlined />
             </Button>
           </Dropdown>
