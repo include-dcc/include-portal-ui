@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { CloudUploadOutlined } from '@ant-design/icons';
 import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Tooltip } from 'antd';
 import { CAVATICA_FILE_BATCH_SIZE } from 'views/DataExploration/utils/constant';
 
 import { FENCE_NAMES } from 'common/fenceTypes';
@@ -79,33 +79,37 @@ const CavaticaAnalyzeButton: React.FC<OwnProps> = ({
 
   return (
     <>
-      <Button
-        type={type}
-        icon={<CloudUploadOutlined />}
-        loading={isInitializingAnalyse}
-        disabled={disabled}
-        onClick={() => {
-          if (isConnected) {
-            if (fileIds.length > CAVATICA_FILE_BATCH_SIZE) {
-              onCavaticaUploadLimitReached();
-            } else {
-              dispatch(
-                beginAnalyse({
-                  sqon: sqon || {
-                    op: BooleanOperators.and,
-                    content: [],
-                  },
-                  fileIds: fileIds,
-                }),
-              );
-            }
-          } else {
-            onCavaticaConnectionRequired();
-          }
-        }}
+      <Tooltip
+        title={disabled ? intl.get('screen.dataExploration.itemSelectionTooltip') : undefined}
       >
-        {intl.get('screen.dataExploration.tabs.datafiles.cavatica.analyseInCavatica')}
-      </Button>
+        <Button
+          type={type}
+          icon={<CloudUploadOutlined />}
+          loading={isInitializingAnalyse}
+          disabled={disabled}
+          onClick={() => {
+            if (isConnected) {
+              if (fileIds.length > CAVATICA_FILE_BATCH_SIZE) {
+                onCavaticaUploadLimitReached();
+              } else {
+                dispatch(
+                  beginAnalyse({
+                    sqon: sqon || {
+                      op: BooleanOperators.and,
+                      content: [],
+                    },
+                    fileIds: fileIds,
+                  }),
+                );
+              }
+            } else {
+              onCavaticaConnectionRequired();
+            }
+          }}
+        >
+          {intl.get('screen.dataExploration.tabs.datafiles.cavatica.analyseInCavatica')}
+        </Button>
+      </Tooltip>
       {isConnected && (
         <>
           <AnalyzeModal />
