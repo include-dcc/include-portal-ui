@@ -1,9 +1,8 @@
 export enum FENCE_NAMES {
   gen3 = 'gen3',
-  cavatica = 'cavatica',
 }
 
-export const ALL_FENCE_NAMES = [FENCE_NAMES.gen3, FENCE_NAMES.cavatica];
+export const ALL_FENCE_NAMES = [FENCE_NAMES.gen3];
 export const ALL_STUDIES_FENCE_NAMES = [FENCE_NAMES.gen3];
 
 export enum FENCE_CONNECTION_STATUSES {
@@ -14,7 +13,6 @@ export enum FENCE_CONNECTION_STATUSES {
 
 export type TFenceConnections = {
   [FENCE_NAMES.gen3]?: TConnection;
-  [FENCE_NAMES.cavatica]?: TConnection;
 };
 
 export type TProjects = { [index: string]: any };

@@ -8,10 +8,9 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createFilter from 'redux-persist-transform-filter';
 
-import FenceCavaticaReducer from 'store/fenceCavatica';
-import FenceConnectionReducer from 'store/fenceConnection';
-import FenceStudiesReducer from 'store/fenceStudies';
+import FencesReducer from 'store/fences';
 import GlobalReducer from 'store/global';
+import PassportReducer from 'store/passport';
 import RemoteReducer from 'store/remote';
 import ReportReducer from 'store/report';
 import SavedFilterReducer from 'store/savedFilter';
@@ -32,11 +31,10 @@ const rootReducer = combineReducers<RootState>({
   global: GlobalReducer,
   user: UserReducer,
   report: ReportReducer,
-  fenceConnection: FenceConnectionReducer,
-  fenceStudies: FenceStudiesReducer,
+  fences: FencesReducer,
+  passport: PassportReducer,
   savedFilter: SavedFilterReducer,
   savedSet: SavedSetReducer,
-  fenceCavatica: FenceCavaticaReducer,
   remote: RemoteReducer,
 });
 

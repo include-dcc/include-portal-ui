@@ -1,6 +1,19 @@
+import { IAuthorizedStudy } from '@ferlab/ui/core/components/Widgets/AuthorizedStudies';
+
 export interface IFenceAuthPayload {
   authenticated: boolean;
   expiration?: number;
+}
+
+export interface IFenceAclsPayload {
+  acl: string[];
+}
+
+export interface IAuthorizedStudiesPayload {
+  [key: string]: {
+    data: IAuthorizedStudy[];
+    error: boolean;
+  };
 }
 
 export interface IFenceAclsPayload {

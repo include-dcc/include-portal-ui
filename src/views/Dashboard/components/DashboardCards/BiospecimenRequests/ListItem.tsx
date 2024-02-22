@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ListItemWithActions from '@ferlab/ui/core/components/List/ListItemWithActions';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
@@ -31,7 +31,7 @@ interface OwnProps {
 const ListItem = ({ set, queryBuilderId }: OwnProps) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -112,8 +112,6 @@ const ListItem = ({ set, queryBuilderId }: OwnProps) => {
           })
         }
         onClick={() => {
-          history.push(STATIC_ROUTES.DATA_EXPLORATION_BIOSPECIMENS);
-
           const setValue = `${SET_ID_PREFIX}${set.id}`;
           addQuery({
             queryBuilderId: queryBuilderId,
@@ -128,6 +126,7 @@ const ListItem = ({ set, queryBuilderId }: OwnProps) => {
             }),
             setAsActive: true,
           });
+          navigate(STATIC_ROUTES.DATA_EXPLORATION_BIOSPECIMENS);
         }}
         title={set.tag}
         titleClassName={styles.title}

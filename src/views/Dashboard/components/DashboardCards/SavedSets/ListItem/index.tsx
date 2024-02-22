@@ -1,7 +1,7 @@
 import { ReactElement, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ListItemWithActions from '@ferlab/ui/core/components/List/ListItemWithActions';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
@@ -67,7 +67,7 @@ const getIdField = (setType: string) => {
 const ListItem = ({ data, icon, queryBuilderId }: OwnProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onCancel = () => {
     setModalVisible(false);
@@ -101,8 +101,6 @@ const ListItem = ({ data, icon, queryBuilderId }: OwnProps) => {
           </Row>
         }
         onClick={() => {
-          history.push(redirectToPage(data.setType));
-
           const setValue = `${SET_ID_PREFIX}${data.id}`;
           addQuery({
             queryBuilderId: queryBuilderId,
@@ -117,6 +115,8 @@ const ListItem = ({ data, icon, queryBuilderId }: OwnProps) => {
             }),
             setAsActive: true,
           });
+
+          navigate(redirectToPage(data.setType));
         }}
         title={data.tag}
         titleClassName={styles.title}
