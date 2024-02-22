@@ -2,7 +2,7 @@ import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { DownloadOutlined } from '@ant-design/icons';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import { Button, Dropdown } from 'antd';
+import { Button, Dropdown, Tooltip } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
 
@@ -19,6 +19,8 @@ const DownloadClinicalDataDropdown = ({ participantIds, sqon, type = 'default' }
   const dispatch = useDispatch();
 
   const getCurrentSqon = (): any => sqon || generateSelectionSqon('participant_id', participantIds);
+
+  const disabledDropdown = participantIds.length === 0;
 
   const menu = {
     onClick: (e: MenuInfo) =>
@@ -43,16 +45,22 @@ const DownloadClinicalDataDropdown = ({ participantIds, sqon, type = 'default' }
   };
 
   return (
-    <Dropdown
-      key="actionDropdown"
-      disabled={participantIds.length === 0}
-      menu={menu}
-      placement="bottomLeft"
+    <Tooltip
+      title={disabledDropdown ? intl.get('screen.dataExploration.itemSelectionTooltip') : undefined}
     >
-      <Button type={type} icon={<DownloadOutlined />}>
-        {intl.get('api.report.clinicalData.download')}
-      </Button>
-    </Dropdown>
+      <div>
+        <Dropdown
+          key="actionDropdown"
+          disabled={disabledDropdown}
+          menu={menu}
+          placement="bottomLeft"
+        >
+          <Button type={type} icon={<DownloadOutlined />}>
+            {intl.get('api.report.clinicalData.download')}
+          </Button>
+        </Dropdown>
+      </div>
+    </Tooltip>
   );
 };
 

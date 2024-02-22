@@ -880,6 +880,7 @@ const en = {
         biospecimen: 'Biospecimen',
         datafiles: 'Data File',
       },
+      itemSelectionTooltip: 'You must select at least 1 item',
       setsManagementDropdown: {
         newTitle: 'Save {filter} set',
         editTitle: 'Edit {filter} set',
@@ -887,6 +888,9 @@ const en = {
         add: 'Add to existing set',
         remove: 'Remove from existing set',
         selected: '{count, plural, =0 {# {type}} =1 {# {type}} other {# {type}s}} selected',
+        selectedTooltip:
+          'Max. {selectedLimit} items at a time. The first 10,000 will be processed.',
+        saveSet: 'Save {type} set',
       },
       hpoTree: {
         modal: {

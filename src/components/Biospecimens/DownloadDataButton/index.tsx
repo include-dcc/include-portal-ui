@@ -2,7 +2,7 @@ import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { DownloadOutlined } from '@ant-design/icons';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import { Button } from 'antd';
+import { Button, Tooltip } from 'antd';
 import { TAB_IDS } from 'views/DataExploration/utils/constant';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
 
@@ -25,23 +25,25 @@ const DownloadDataButton = ({
   const dispatch = useDispatch();
 
   return (
-    <Button
-      type={type}
-      icon={<DownloadOutlined />}
-      disabled={disabled}
-      onClick={() =>
-        dispatch(
-          fetchReport({
-            data: {
-              sqon: sqon || generateSelectionSqon(TAB_IDS.BIOSPECIMENS, biospecimenIds),
-              name: ReportType.BIOSEPCIMEN_DATA,
-            },
-          }),
-        )
-      }
-    >
-      {intl.get('api.report.biospecimenData.download')}
-    </Button>
+    <Tooltip title={disabled ? intl.get('screen.dataExploration.itemSelectionTooltip') : undefined}>
+      <Button
+        type={type}
+        icon={<DownloadOutlined />}
+        disabled={disabled}
+        onClick={() =>
+          dispatch(
+            fetchReport({
+              data: {
+                sqon: sqon || generateSelectionSqon(TAB_IDS.BIOSPECIMENS, biospecimenIds),
+                name: ReportType.BIOSEPCIMEN_DATA,
+              },
+            }),
+          )
+        }
+      >
+        {intl.get('api.report.biospecimenData.download')}
+      </Button>
+    </Tooltip>
   );
 };
 
