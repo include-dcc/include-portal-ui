@@ -28,11 +28,11 @@ const extractParticipantMetaData = (participants: any[]) => {
   );
 
   return {
-    participant_ids: joinUniquely(participants.map((x) => x.participant_id)),
+    case_id: joinUniquely(participants.map((x) => x.participant_id)),
     external_participant_ids: joinUniquely(participants.map((x) => x.external_id)),
     down_syndrom_status: joinUniquely(participants.map((x) => x.down_syndrome_status)),
     ethnicity: joinUniquely(participants.map((x) => x.ethnicity)),
-    sex: joinUniquely(participants.map((x) => x.sex)),
+    gender: joinUniquely(participants.map((x) => x.sex)),
     race: joinUniquely(participants.map((x) => x.race)),
     age_at_participant_diagnosis: joinUniquely(diagnosis.map((d) => d.age_at_event_days)),
     age_at_vital_status: joinUniquely(outcomes.map((o) => o.age_at_event_days.value)),
