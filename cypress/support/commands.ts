@@ -20,7 +20,7 @@ Cypress.Commands.add('checkValueFacetAndApply', (facetTitle: string, value: stri
   });
  
   cy.get(`[data-cy="Checkbox_${facetTitle}_${value}"]`).check({force: true});
-  cy.clickAndIntercept(`[data-cy="Apply_${facetTitle}"]`, 'POST', '**/graphql', 3);
+  cy.clickAndIntercept(`[data-cy="Apply_${facetTitle}"]`, 'POST', '**/graphql', 5);
 });
 
 Cypress.Commands.add('clickAndIntercept', (selector: string, methodHTTP: string, routeMatcher: string, nbCalls: number, eq?: number) => {
@@ -51,7 +51,7 @@ Cypress.Commands.add('login', () => {
     cy.visit('/dashboard');
 
     cy.request({
-      url: `https://keycloak-qa.373997854230.d3b.io/auth/realms/includedcc/protocol/openid-connect/auth`,
+      url: `https://keycloak-qa.373997854230.d3b.io/realms/includedcc/protocol/openid-connect/auth`,
       qs: {
         client_id: 'portal-ui',
         redirect_uri: Cypress.config('baseUrl'),
@@ -132,9 +132,10 @@ Cypress.Commands.add('showColumn', (column: string|RegExp) => {
     .find('div[class="ant-space-item"]').contains(column)
     .find('[type="checkbox"]').check({force: true});
   cy.wait('@getPOSTuser', {timeout: 20*1000});
+  cy.get('[class*="Header_logo"]').click({force: true});
 });
 
-Cypress.Commands.add('sortTableAndIntercept', (column: string, nbCalls: number) => {
+Cypress.Commands.add('sortTableAndIntercept', (column: string|RegExp, nbCalls: number) => {
   cy.intercept('POST', '**/graphql').as('getPOSTgraphql');
 
   cy.get('thead[class="ant-table-thead"]').contains(column).click({force: true});
@@ -267,7 +268,7 @@ Cypress.Commands.add('visitAndIntercept', (url: string, methodHTTP: string, rout
   cy.visit(url);
 
   for (let i = 0; i < nbCalls; i++) {
-    cy.wait('@getRouteMatcher', {timeout: 20*1000});
+    cy.wait('@getRouteMatcher', {timeout: 60*1000});
   };
 });
 
@@ -301,11 +302,12 @@ Cypress.Commands.add('visitFileEntity', (fileId: string) => {
                        1);
 });
 
-Cypress.Commands.add('visitParticipantEntity', (participantId: string) => {
+Cypress.Commands.add('visitParticipantEntity', (participantId: string, nbCalls?: number) => {
+  const numNbCalls = nbCalls !== undefined ? nbCalls : 40;
   cy.visitAndIntercept(`/participants/${participantId}`,
                        'POST',
                        '**/graphql',
-                       10);
+                       numNbCalls);
 });
 
 Cypress.Commands.add('visitProfileSettingsPage', () => {

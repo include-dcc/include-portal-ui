@@ -10,7 +10,7 @@ describe('Page Data Exploration (Files) - Colonnes du tableau', () => {
     cy.visitDataExploration('datafiles');
   });
 
-  it('Valider l\'affichage (par défaut/optionnel) et l\'ordre des colonnes [SJIP-581]', () => {
+  it('Valider l\'affichage (par défaut/optionnel) et l\'ordre des colonnes', () => {
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(1)
       .should('not.have.class', 'ant-table-column-has-sorters')

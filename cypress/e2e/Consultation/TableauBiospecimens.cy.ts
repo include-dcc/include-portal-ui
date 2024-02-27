@@ -114,16 +114,16 @@ describe('Page Data Exploration (Biospecimens) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Parent Sample Type', () => {
     cy.sortTableAndIntercept('Parent Sample Type', 1);
-    cy.validateTableFirstRow('-', 5);
+    cy.validateTableFirstRow('Bone Marrow', 5);
     cy.sortTableAndIntercept('Parent Sample Type', 1);
     cy.validateTableFirstRow('White Blood Cells', 5);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Participant ID', () => {
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow('PT_0001K4K1', 6);
+    cy.validateTableFirstRow('pt-005x8br9', 6);
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow('pt-zzmwq2axxh', 6);
+    cy.validateTableFirstRow('PT_ZYAS0Q37', 6);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Collection ID', () => {
@@ -135,12 +135,12 @@ describe('Page Data Exploration (Biospecimens) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Collection Sample Type', () => {
     cy.sortTableAndIntercept('Collection Sample Type', 1);
-    cy.validateTableFirstRow('-', 8);
+    cy.validateTableFirstRow('Bone Marrow', 8);
     cy.sortTableAndIntercept('Collection Sample Type', 1);
     cy.validateTableFirstRow('Saliva', 8);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Sample Availability', () => {
+  it('Valider les fonctionnalités du tableau - Tri Sample Availability [SJIP-548]', () => {
     cy.sortTableAndIntercept('Sample Availability', 1);
     cy.validateTableFirstRow('Yes', 14);
     cy.sortTableAndIntercept('Sample Availability', 1);
@@ -157,7 +157,7 @@ describe('Page Data Exploration (Biospecimens) - Valider les fonctionnalités du
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {
     cy.sortTableAndIntercept('Collection Sample Type', 1);
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow('PT_422NA24Y', 6);
+    cy.validateTableFirstRow('PT_0001K4K1', 6);
   });
 
   it('Valider les fonctionnalités du tableau - Pagination', () => {

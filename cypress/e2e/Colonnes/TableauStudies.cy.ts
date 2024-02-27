@@ -13,12 +13,12 @@ describe('Page des études - Colonnes du tableau', () => {
   it('Valider l\'affichage (par défaut/optionnel) et l\'ordre des colonnes', () => {
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(0)
-      .should('not.have.class', 'ant-table-column-has-sorters')
+      .should('have.class', 'ant-table-column-has-sorters')
       .contains('Study Code').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(1)
-      .should('not.have.class', 'ant-table-column-has-sorters')
+      .should('have.class', 'ant-table-column-has-sorters')
       .contains('Name').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
@@ -28,22 +28,22 @@ describe('Page des études - Colonnes du tableau', () => {
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(3)
-      .should('not.have.class', 'ant-table-column-has-sorters')
+      .should('have.class', 'ant-table-column-has-sorters')
       .contains('dbGaP').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(4)
-      .should('not.have.class', 'ant-table-column-has-sorters')
+      .should('have.class', 'ant-table-column-has-sorters')
       .contains('Participants').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(5)
-      .should('not.have.class', 'ant-table-column-has-sorters')
+      .should('have.class', 'ant-table-column-has-sorters')
       .contains('Families').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(6)
-      .should('not.have.class', 'ant-table-column-has-sorters')
+      .should('have.class', 'ant-table-column-has-sorters')
       .contains('Biospecimens').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')

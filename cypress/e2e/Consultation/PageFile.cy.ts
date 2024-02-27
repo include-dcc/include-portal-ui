@@ -3,7 +3,7 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitFileEntity('GF_0A0S5FSA');
+  cy.visitFileEntity('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz');
 });
 
 describe('Page d\'un fichier - Valider les redirections', () => {
@@ -11,27 +11,27 @@ describe('Page d\'un fichier - Valider les redirections', () => {
     cy.get('a[class*="SummaryHeader_link"]').eq(0).click({force: true}); // data-cy="SummaryHeader_Studies_Button"
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('DS360-CHD').should('exist');
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP').should('exist');
   });
   
   it('Participant', () => {
     cy.get('a[class*="SummaryHeader_link"]').eq(1).click({force: true}); // data-cy="SummaryHeader_Participants_Button"
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('GF 0A0S5FSA').should('exist');
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
   });
   
   it('Sample', () => {
     cy.get('a[class*="SummaryHeader_link"]').eq(2).click({force: true}); // data-cy="SummaryHeader_Samples_Button"
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('GF 0A0S5FSA').should('exist');
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
   });
 });
 
 describe('Page d\'un fichier - Vérifier les informations affichées', () => {
   it('Titre', () => {
-    cy.get('[class*="EntityTitle"]').contains('GF_0A0S5FSA');
+    cy.get('[class*="EntityTitle"]').contains('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz');
   });
 
   it('Panneau Summary', () => {
@@ -39,22 +39,22 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
     cy.get('a[class*="SummaryHeader_link"]').eq(0).contains('Study'); // data-cy="SummaryHeader_Studies_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(1).contains(/^3$/); // data-cy="SummaryHeader_Participants_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(1).contains('Participants'); // data-cy="SummaryHeader_Participants_Button"
-    cy.get('a[class*="SummaryHeader_link"]').eq(2).contains(/^3$/); // data-cy="SummaryHeader_Samples_Button"
+    cy.get('a[class*="SummaryHeader_link"]').eq(2).contains(/^7$/); // data-cy="SummaryHeader_Samples_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(2).contains('Biospecimens'); // data-cy="SummaryHeader_Samples_Button"
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(0).contains('ID').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(0).contains('GF_0A0S5FSA').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(0).contains('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(1).contains('Name').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(1).contains('47df08f9-1ff7-41e1-ad72-de4acc9db9ef.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(1).contains('1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(2).contains('Study').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(2).contains('INCLUDE: (Sherman) Genomic Analysis of Congenital Heart Defects and Acute Lymphoblastic Leukemia in Children with Down Syndrome (DS360-CHD)').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(2).contains('Crnic Institute Human Trisome Project (HTP)').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(3).contains('Format').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains(/^vcf$/).should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(4).contains('Size').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(4).contains('1.05 GB').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(4).contains('1.04 GB').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(5).contains('URL').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(5).contains('drs://data.kidsfirstdrc.org/aab35c81-391a-46d7-bdf7-a3a9e3c5e512').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(5).contains('drs://data.kidsfirstdrc.org/ed48ab77-ac23-41a9-bd3f-74bef40b11b5').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(6).contains('Hash').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(6).contains('54335abbd3fbe773d1ce73f88febdf79-4').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(6).contains('-').should('exist');
   });
 
   it('Panneau Data Access', () => {
@@ -75,7 +75,7 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
 
   it('Panneau Participants-Samples', () => {
     cy.resetColumns('participant-sample');
-    cy.get('[id="participant-sample"]').find('[class="ant-collapse-header"]').contains('(3)').should('exist');
+    cy.get('[id="participant-sample"]').find('[class="ant-collapse-header"]').contains('(7)').should('exist');
     cy.get('[id="participant-sample"]').find('[class="ant-collapse-header"]').contains('View in data exploration').should('exist');
     cy.get('[id="participant-sample"]').find('[class="ant-collapse-header"]').find('svg[class="anticon"]').should('exist');
     cy.get('[id="participant-sample"]').find('thead').find('th[class="ant-table-cell"]').eq(0).contains('Participant ID').should('exist');
@@ -85,13 +85,13 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
     cy.get('[id="participant-sample"]').find('thead').find('th[class="ant-table-cell"]').eq(4).contains('Sample Type').should('exist');
     cy.get('[id="participant-sample"]').find('thead').find('th[class="ant-table-cell"]').eq(5).contains('Collection ID').should('exist');
     cy.get('[id="participant-sample"]').find('thead').find('th[class="ant-table-cell"]').eq(6).contains('Collection Sample Type').should('exist');
-    cy.get('[data-row-key="PT_YHVEKQGN"]').find('td[class="ant-table-cell"]').eq(0).contains('PT_YHVEKQGN').should('exist');
-    cy.get('[data-row-key="PT_YHVEKQGN"]').find('td[class="ant-table-cell"]').eq(1).contains('DS360-CHD').should('exist');
-    cy.get('[data-row-key="PT_YHVEKQGN"]').find('td[class="ant-table-cell"]').eq(2).contains('D21').should('exist');
-    cy.get('[data-row-key="PT_YHVEKQGN"]').find('td[class="ant-table-cell"]').eq(3).contains('BS_MQZGQQKE').should('exist');
-    cy.get('[data-row-key="PT_YHVEKQGN"]').find('td[class="ant-table-cell"]').eq(4).contains('DNA').should('exist');
-    cy.get('[data-row-key="PT_YHVEKQGN"]').find('td[class="ant-table-cell"]').eq(5).contains('BS_MQZGQQKE_Peripheral_Whole_Blood').should('exist');
-    cy.get('[data-row-key="PT_YHVEKQGN"]').find('td[class="ant-table-cell"]').eq(6).contains('Peripheral Whole Blood').should('exist');
+    cy.get('[data-row-key="pt-0dxdyebh"]').find('td[class="ant-table-cell"]').eq(0).contains('pt-0dxdyebh').should('exist');
+    cy.get('[data-row-key="pt-0dxdyebh"]').find('td[class="ant-table-cell"]').eq(1).contains('HTP').should('exist');
+    cy.get('[data-row-key="pt-0dxdyebh"]').find('td[class="ant-table-cell"]').eq(2).contains('D21').should('exist');
+    cy.get('[data-row-key="pt-0dxdyebh"]').find('td[class="ant-table-cell"]').eq(3).contains('bs-4fvnakv6').should('exist');
+    cy.get('[data-row-key="pt-0dxdyebh"]').find('td[class="ant-table-cell"]').eq(4).contains('DNA').should('exist');
+    cy.get('[data-row-key="pt-0dxdyebh"]').find('td[class="ant-table-cell"]').eq(5).contains('bs-aezhntnkak').should('exist');
+    cy.get('[data-row-key="pt-0dxdyebh"]').find('td[class="ant-table-cell"]').eq(6).contains('Peripheral Whole Blood').should('exist');
   });
 });
 
@@ -105,14 +105,14 @@ describe('Page d\'un fichier - Valider les liens disponibles', () => {
     cy.get('[id="participant-sample"] a[class*="EntityTableRedirectLink"]').click({force: true}); // data-cy="Participants_RedirectLink"
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('GF 0A0S5FSA').should('exist');
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
   });
 
   it('Lien Participant ID du panneau Participants-Samples', () => {
     cy.resetColumns('participant-sample');
-    cy.get('[data-row-key="PT_YHVEKQGN"]').find('td[class="ant-table-cell"]').eq(0).find('[href]').click({force: true});
+    cy.get('[data-row-key="pt-0dxdyebh"]').find('td[class="ant-table-cell"]').eq(0).find('[href]').click({force: true});
     cy.get('[id="participant-entity-page"]').should('exist');
-    cy.get('[class*="EntityTitle"]').contains('PT_YHVEKQGN');
+    cy.get('[class*="EntityTitle"]').contains('pt-0dxdyebh');
   });
 });
 

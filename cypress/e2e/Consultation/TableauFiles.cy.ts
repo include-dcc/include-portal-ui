@@ -7,7 +7,7 @@ beforeEach(() => {
 
 describe('Page Data Exploration (Data Files) - Vérifier les informations affichées', () => {
   beforeEach(() => {
-    cy.visitDataExploration('datafiles', '?sharedFilterId=6e01f0aa-b4ac-4769-978a-6d675084fbec');
+    cy.visitDataExploration('datafiles', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
     cy.showColumn('File Name');
     cy.showColumn('Access Url');
   });
@@ -17,50 +17,50 @@ describe('Page Data Exploration (Data Files) - Vérifier les informations affich
   });
 
   it('Tableau', () => {
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(1).find('svg[data-icon="lock"]').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(2).contains('C').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(2).find('[class*="ant-tag-geekblue"]').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(3).contains('GF_0A0S5FSA').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(4).contains('47df08f9-1ff7-41e1-ad72-de4acc9db9ef.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(5).contains('DS360-CHD').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(6).contains('Genomics').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(7).contains('Variant Calls').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(8).contains('Whole Genome Sequencing').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(9).contains('drs://data.kidsfirstdrc.org/aab35c81-391a-46d7-bdf7-a3a9e3c5e512').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(10).contains(/^vcf$/).should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(11).contains('1.05 GB').should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(12).contains(/^3$/).should('exist');
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(13).contains(/^3$/).should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(1).find('svg[data-icon="lock"]').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(2).contains('C').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(2).find('[class*="ant-tag-geekblue"]').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(3).contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(4).contains('HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(5).contains('HTP').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(6).contains('Transcriptomics').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(7).contains('Unaligned Reads').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(8).contains('RNA-Seq').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(9).contains('drs://data.kidsfirstdrc.org/1cd34bd9-d780-47f4-907e-0f04be67ef68').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(10).contains('fastq').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(11).contains('3.13 GB').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(12).contains(/^1$/).should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(13).contains(/^1$/).should('exist');
   });
 });
 
 describe('Page Data Exploration (Data Files) - Valider les liens disponibles', () => {
   beforeEach(() => {
-    cy.visitDataExploration('datafiles', '?sharedFilterId=6e01f0aa-b4ac-4769-978a-6d675084fbec');
+    cy.visitDataExploration('datafiles', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
     cy.showColumn('File Name');
     cy.showColumn('Access Url');
   });
 
   it('Lien File ID du tableau', () => {
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(3).find('[href]').click({force: true});
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(3).find('[href]').click({force: true});
     cy.get('[id="file-entity-page"]').should('exist');
-    cy.get('[class*="EntityTitle"]').contains('GF_0A0S5FSA');
+    cy.get('[class*="EntityTitle"]').contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz');
   });
 
   it('Lien Participants du tableau', () => {
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(12).find('[href]').click({force: true});
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(12).find('[href]').click({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('GF 0A0S5FSA').should('exist');
-    cy.validateTableResultsCount(/^3$/);
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.HTP0577A FRRB192320222-1a HWHKMDSXX L1 1.fq.gz').should('exist');
+    cy.validateTableResultsCount(/^1$/);
   });
 
   it('Lien Biospecimens du tableau', () => {
-    cy.get('tr[data-row-key="GF_0A0S5FSA"]').find('[class*="ant-table-cell"]').eq(13).find('[href]').click({force: true});
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(13).find('[href]').click({force: true});
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('GF 0A0S5FSA').should('exist');
-    cy.validateTableResultsCount(/^3$/);
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.HTP0577A FRRB192320222-1a HWHKMDSXX L1 1.fq.gz').should('exist');
+    cy.validateTableResultsCount(/^1$/);
   });
 });
 
@@ -73,14 +73,14 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
 
   it('Valider les fonctionnalités du tableau - Tri File ID', () => {
     cy.sortTableAndWait('File ID',);
-    cy.validateTableFirstRow('GF_001CSF26', 3);
+    cy.validateTableFirstRow('BRI-DSR.09729910-2420-4ce3-990a-ad8f202b0139.annoFuse_filter.tsv', 3);
     cy.sortTableAndIntercept('File ID', 1);
-    cy.validateTableFirstRow('X01-Hakonarson.ff1ffbfc-5677-4f97-a0ec-a3bfeb4af9e4.STAR-1.10.1.fusion_predictions.abridged.coding_effect.tsv', 3);
+    cy.validateTableFirstRow('X01-Hakonarson.KFDS9991733806_D1.cram', 3);
   });
 
   it('Valider les fonctionnalités du tableau - Tri File Name', () => {
     cy.sortTableAndIntercept('File Name', 1);
-    cy.validateTableFirstRow('0012022d-c855-4087-9dde-c522f0632024.STAR.fusion_predictions.abridged.coding_effect.tsv', 4);
+    cy.validateTableFirstRow('0009074b-d49e-4b2d-a027-5c84f8e33658.single.vqsr.filtered.vep_105.vcf.gz', 4);
     cy.sortTableAndIntercept('File Name', 1);
     cy.validateTableFirstRow('ffe980c5-245f-4c53-904c-0b7f4ac67e92.g.vcf.gz', 4);
   });
@@ -115,14 +115,14 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
 
   it('Valider les fonctionnalités du tableau - Tri Access Url', () => {
     cy.sortTableAndIntercept('Access Url', 1);
-    cy.validateTableFirstRow('drs://cavatica-ga4gh-api.sbgenomics.com/00035407-43f4-45f9-879b-a18e188d5fb1', 9);
+    cy.validateTableFirstRow('drs://cavatica-ga4gh-api.sbgenomics.com/00007f21-0a2f-4152-98ba-86fe2631a361', 9);
     cy.sortTableAndIntercept('Access Url', 1);
     cy.validateTableFirstRow('drs://data.kidsfirstdrc.org/fff6ff01-6bd3-4042-b22f-a340634f71e1', 9);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Format', () => {
     cy.sortTableAndIntercept('Format', 1);
-    cy.validateTableFirstRow('cns', 10);
+    cy.validateTableFirstRow('bam', 10);
     cy.sortTableAndIntercept('Format', 1);
     cy.validateTableFirstRow('vcf', 10);
   });
@@ -131,14 +131,14 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
     cy.sortTableAndIntercept('Size', 1);
     cy.validateTableFirstRow('105 B', 11);
     cy.sortTableAndIntercept('Size', 1);
-    cy.validateTableFirstRow('73.49 GB', 11);
+    cy.validateTableFirstRow('62.5 GB', 11);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Participants', () => {
     cy.sortTableAndIntercept('Participants', 1);
     cy.validateTableFirstRow(/^1$/, 12);
     cy.sortTableAndIntercept('Participants', 1);
-    cy.validateTableFirstRow(/^3$/, 12);
+    cy.validateTableFirstRow(/^9$/, 12);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Biospecimens', () => {
@@ -151,7 +151,7 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {
     cy.sortTableAndWait('Format');
     cy.sortTableAndWait('Size');
-    cy.validateTableFirstRow('344.66 KB', 11);
+    cy.validateTableFirstRow('61.81 MB', 11);
   });
 
   it('Valider les fonctionnalités du tableau - Pagination', () => {

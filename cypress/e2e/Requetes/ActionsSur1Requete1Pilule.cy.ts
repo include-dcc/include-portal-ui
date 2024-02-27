@@ -19,19 +19,19 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.checkValueFacetAndApply('Sample Type', 'RNA');
 
     cy.validatePillSelectedQuery('Sample Type', ['DNA','RNA']);
-    cy.validateTotalSelectedQuery('4,720');
-    cy.validateTableResultsCount('4,720');
+    cy.validateTotalSelectedQuery('3,411');
+    cy.validateTableResultsCount('3,411');
     cy.validateClearAllButton(false);
   });
 
   it('Éditer une pilule via son popup', () => {
     cy.get('[class*="QueryValues_queryValuesContainer"]').contains('DNA').click({force:true});
-    cy.get('input[id="input-RNA"]').check({force: true});
-    cy.clickAndIntercept('[data-cy="Apply_Sample Type"]', 'POST', '**/graphql', 16);
+    cy.get('[class*="filtersDropdown"] input[id="input-RNA"]').check({force: true});
+    cy.clickAndIntercept('[class*="filtersDropdown"] [data-cy="Apply_Sample Type"]', 'POST', '**/graphql', 16);
 
     cy.validatePillSelectedQuery('Sample Type', ['DNA','RNA']);
-    cy.validateTotalSelectedQuery('4,720');
-    cy.validateTableResultsCount('4,720');
+    cy.validateTotalSelectedQuery('3,411');
+    cy.validateTableResultsCount('3,411');
     cy.validateClearAllButton(false);
   });
 
@@ -41,8 +41,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
     cy.validatePillSelectedQuery('Collection Sample Type', ['Saliva'], 1);
     cy.validateOperatorSelectedQuery('and');
-    cy.validateTotalSelectedQuery('358');
-    cy.validateTableResultsCount('358');
+    cy.validateTotalSelectedQuery('225');
+    cy.validateTableResultsCount('225');
     cy.validateClearAllButton(false);
   });
 
@@ -54,15 +54,15 @@ describe('Page Data Exploration - Requêtes', () => {
     };
 
     cy.get('body').contains('Use the search tools & facets on the left to build a query').should('exist');
-    cy.validateTotalSelectedQuery('4,922');
-    cy.validateTableResultsCount('4,922');
+    cy.validateTotalSelectedQuery('8,810');
+    cy.validateTableResultsCount('8,810');
     cy.validateClearAllButton(false);
 
     cy.checkValueFacetAndApply('Collection Sample Type', 'Saliva');
 
     cy.validatePillSelectedQuery('Collection Sample Type', ['Saliva']);
-    cy.validateTotalSelectedQuery('358');
-    cy.validateTableResultsCount('358');
+    cy.validateTotalSelectedQuery('225');
+    cy.validateTableResultsCount('225');
     cy.validateClearAllButton(true);
   });
 
@@ -72,8 +72,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.wait('@getPOSTgraphql', {timeout: 20*1000});
 
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
-    cy.validateTotalSelectedQuery('4,694');
-    cy.validateTableResultsCount('4,694');
+    cy.validateTotalSelectedQuery('3,362');
+    cy.validateTableResultsCount('3,362');
     cy.validateClearAllButton(true);
   });
 });

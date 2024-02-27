@@ -23,9 +23,9 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.wait('@getPOSTgraphql1', {timeout: 20*1000});
 
     cy.get('[class*="QueryBar_queryBarWrapper"]').its('length').should('eq', 2);
-    cy.validatePillSelectedQuery('Age at Biospec. Collection (days)', ['20000']);
-    cy.validateTotalSelectedQuery('1,966');
-    cy.validateTableResultsCount('1,966');
+    cy.validatePillSelectedQuery('Age at Biospecimen Collection (days)', ['20000']);
+    cy.validateTotalSelectedQuery('1,989');
+    cy.validateTableResultsCount('1,989');
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(1).find('[class*="QueryValues_queryValuesContainer"]').contains('Q1').should('exist');
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(1).find('[class*="QueryValues_queryValuesContainer"]').contains('Q2').should('not.exist');
     cy.validateClearAllButton(true);

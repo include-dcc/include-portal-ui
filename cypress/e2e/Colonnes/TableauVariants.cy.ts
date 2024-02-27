@@ -23,51 +23,80 @@ describe('Page des variants - Colonnes du tableau', () => {
   
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(3)
-      .should('have.class', 'ant-table-column-has-sorters')
+      .should('not.have.class', 'ant-table-column-has-sorters')
       .contains('dbSNP').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(4)
       .should('not.have.class', 'ant-table-column-has-sorters')
-      .contains('Most Deleterious Consequence').should('exist');
+      .contains('Gene').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(5)
       .should('not.have.class', 'ant-table-column-has-sorters')
-      .contains('ClinVar').should('exist');
+      .contains('Most Deleterious Consequence').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(6)
-      .should('have.class', 'ant-table-column-has-sorters')
-      .contains('gnomAD').should('exist');
+      .should('not.have.class', 'ant-table-column-has-sorters')
+      .contains('MANE').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(7)
       .should('not.have.class', 'ant-table-column-has-sorters')
-      .contains('Studies').should('exist');
+      .contains('OMIM').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(8)
-      .should('have.class', 'ant-table-column-has-sorters')
-      .contains('Part.').should('exist');
+      .should('not.have.class', 'ant-table-column-has-sorters')
+      .contains('ClinVar').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(9)
       .should('have.class', 'ant-table-column-has-sorters')
-      .contains('Freq.').should('exist');
+      .contains(/^gnomAD$/).should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(10)
       .should('have.class', 'ant-table-column-has-sorters')
-      .contains('ALT').should('exist');
+      .contains('gnomAD ALT').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(11)
       .should('have.class', 'ant-table-column-has-sorters')
+      .contains('Part.').should('exist');
+
+    cy.get('thead[class="ant-table-thead"]')
+      .find('th[class*="ant-table-cell"]').eq(12)
+      .should('not.have.class', 'ant-table-column-has-sorters')
+      .contains('Studies').should('exist');
+
+    cy.get('thead[class="ant-table-thead"]')
+      .contains('CADD').should('not.exist');
+    cy.get('div[class="ant-popover-inner"]')
+      .find('div[class="ant-space-item"]').eq(12)
+      .contains('CADD').should('exist');
+
+    cy.get('thead[class="ant-table-thead"]')
+      .contains('REVEL').should('not.exist');
+    cy.get('div[class="ant-popover-inner"]')
+      .find('div[class="ant-space-item"]').eq(13)
+      .contains('REVEL').should('exist');
+
+    cy.get('thead[class="ant-table-thead"]')
+      .contains(/^ALT$/).should('not.exist');
+    cy.get('div[class="ant-popover-inner"]')
+      .find('div[class="ant-space-item"]').eq(14)
+      .contains(/^ALT$/).should('exist');
+
+    cy.get('thead[class="ant-table-thead"]')
+      .contains('Homo.').should('not.exist');
+    cy.get('div[class="ant-popover-inner"]')
+      .find('div[class="ant-space-item"]').eq(15)
       .contains('Homo.').should('exist');
   });
 
-  it('Masquer/Afficher une colonne affichée', () => {
+  it('Masquer une colonne affichée', () => {
     cy.get('thead[class="ant-table-thead"]')
       .contains('Type').should('exist');
 
@@ -77,12 +106,17 @@ describe('Page des variants - Colonnes du tableau', () => {
 
     cy.get('thead[class="ant-table-thead"]')
       .contains('Type').should('not.exist');
+  });
+
+  it('Afficher une colonne masquée', () => {
+    cy.get('thead[class="ant-table-thead"]')
+      .contains('CADD').should('not.exist');
 
     cy.get('div[class="ant-popover-inner"]')
-      .find('div[class="ant-space-item"]').contains('Type')
+      .find('div[class="ant-space-item"]').contains('CADD')
       .find('[type="checkbox"]').check({force: true});
 
     cy.get('thead[class="ant-table-thead"]')
-      .contains('Type').should('exist');
+      .contains('CADD').should('exist');
   });
 });

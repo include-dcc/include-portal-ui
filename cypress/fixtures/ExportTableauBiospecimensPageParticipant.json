@@ -5,10 +5,10 @@
               "Sample Type",
               "Collection Sample Type",
               "Age"],
-  "content": ["BS_AFRQAF6C",
-              "BS_AFRQAF6C_Peripheral_Whole_Blood",
-              "",
-              "DNA",
+  "content": ["bs-0nkygf7w",
+              "bs-aezhntnkak",
+              "bs-kakk7hjtrg",
+              "RNA",
               "Peripheral Whole Blood",
-              "--"]
+              "20294"]
 }

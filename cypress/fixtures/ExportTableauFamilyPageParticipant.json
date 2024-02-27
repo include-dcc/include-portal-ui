@@ -2,7 +2,7 @@
   "headers": ["Participant ID",
               "Family Relationship",
               "Down Syndrome Status"],
-  "content": ["PT_M12NVZYF",
-              "mother",
+  "content": ["pt-v66khv4x",
+              "father",
               "D21"]
 }
