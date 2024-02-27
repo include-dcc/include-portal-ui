@@ -34,8 +34,8 @@ const graphSetting = {
 
 const graphModalSettings = {
   margin: {
-    top: 0,
-    bottom: 150,
+    top: -32,
+    bottom: 116,
     left: 12,
     right: 12,
   },
