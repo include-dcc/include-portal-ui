@@ -3,6 +3,8 @@ import intl from 'react-intl-universal';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { Button, Tooltip } from 'antd';
 
+import { trackRequestBiospecimen } from 'services/analytics';
+
 import RequestBiospecimenLimitModal from './RequestBiospecimenLimitModal';
 import RequestBiospecimenModal from './RequestBiospecimenModal';
 
@@ -22,16 +24,21 @@ const RequestBiospecimenButton = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLimitOpen, setIsLimitOpen] = useState<boolean>(false);
 
+  const handleClick = () => {
+    trackRequestBiospecimen('open modal');
+    if (nbBiospecimenSelected <= 10000) {
+      setIsOpen(true);
+    } else {
+      setIsLimitOpen(true);
+    }
+  };
+
   return (
     <>
       <Tooltip
         title={disabled ? intl.get('screen.dataExploration.itemSelectionTooltip') : undefined}
       >
-        <Button
-          type={type}
-          disabled={disabled}
-          onClick={() => (nbBiospecimenSelected <= 10000 ? setIsOpen(true) : setIsLimitOpen(true))}
-        >
+        <Button type={type} disabled={disabled} onClick={handleClick}>
           {intl.get('screen.dataExploration.tabs.biospecimens.request.buttonLabel')}
         </Button>
       </Tooltip>

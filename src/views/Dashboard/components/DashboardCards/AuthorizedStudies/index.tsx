@@ -10,6 +10,7 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { FENCE_NAMES } from 'common/fenceTypes';
 import IncludeIcon from 'components/Icons/IncludeIcon';
+import { trackKFConnection } from 'services/analytics';
 import { useFenceAuthentification, useFencesAuthorizedStudies } from 'store/fences';
 import {
   fenceDisconnection,
@@ -32,9 +33,11 @@ const AuthorizedStudies = ({ id, className = '' }: DashboardCardProps) => {
       name: 'Inludes Framework Services',
       icon: <IncludeIcon width={45} height={45} />,
       onConnectToFence: () => {
+        trackKFConnection(true);
         dispatch(fenceOpenAuhentificationTab(FENCE_NAMES.gen3));
       },
       onDisconnectFromFence: () => {
+        trackKFConnection(false);
         dispatch(fenceDisconnection(FENCE_NAMES.gen3));
       },
     },

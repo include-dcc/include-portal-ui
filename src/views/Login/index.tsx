@@ -44,10 +44,10 @@ const Login = (): React.ReactElement => {
           </div>
           <div className={styles.loginDescription}>
             <Title level={2} className={styles.loginDescTitle}>
-              {intl.get('screen.loginPage.uncover')}{' '}
+              {intl.get('screen.loginPage.uncover')}
               <span className={styles.titleEmphase}>
                 {intl.get('screen.loginPage.newInsights')}
-              </span>{' '}
+              </span>
               {intl.get('screen.loginPage.biologyConditions')}
             </Title>
             <span className={styles.loginDescText}>

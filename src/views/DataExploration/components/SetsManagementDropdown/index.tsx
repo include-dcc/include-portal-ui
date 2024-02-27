@@ -47,6 +47,7 @@ export enum SetActionType {
   CREATE_SET = 'CREATE_SET',
   HIDDEN = 'HIDDEN',
   UPDATE_SET = 'UPDATE_SET',
+  REMOVE_SET = 'REMOVE_SET',
 }
 
 type ModalState = {
