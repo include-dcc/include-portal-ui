@@ -12,6 +12,7 @@ import {
 import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { termToSqon } from '@ferlab/ui/core/data/sqon/utils';
+import { ISort } from '@ferlab/ui/core/graphql/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IFileEntity, IFileResultTree } from 'graphql/files/models';
 import { SEARCH_FILES_QUERY } from 'graphql/files/queries';
@@ -217,6 +218,7 @@ export const beginCavaticaAnalyse = createAsyncThunk<
   },
   {
     sqon: ISqonGroupFilter;
+    sort: ISort[];
     fileIds: string[];
   },
   { rejectValue: string; state: RootState }
@@ -254,6 +256,7 @@ export const beginCavaticaAnalyse = createAsyncThunk<
     query: SEARCH_FILES_QUERY.loc?.source.body,
     variables: {
       sqon,
+      sort: args.sort,
       first: CAVATICA_FILE_BATCH_SIZE,
     },
   });
