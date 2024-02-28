@@ -35,6 +35,7 @@ const Dashboard = loadable(() => import('views/Dashboard'), loadableProps);
 const Community = loadable(() => import('views/Community'), loadableProps);
 const CommunityMember = loadable(() => import('views/Community/Member'), loadableProps);
 const Studies = loadable(() => import('views/Studies'), loadableProps);
+const StudyEntity = loadable(() => import('views/StudyEntity'), loadableProps);
 const DataExploration = loadable(() => import('views/DataExploration'), loadableProps);
 const Variants = loadable(() => import('views/Variants'), loadableProps);
 const VariantEntity = loadable(() => import('views/VariantEntity'), loadableProps);
@@ -125,6 +126,14 @@ const App = () => {
                     element={
                       <ProtectedRoute>
                         <Studies />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={DYNAMIC_ROUTES.STUDY_ENTITY}
+                    element={
+                      <ProtectedRoute>
+                        <StudyEntity />
                       </ProtectedRoute>
                     }
                   />
