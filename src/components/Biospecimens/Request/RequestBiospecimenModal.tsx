@@ -10,6 +10,7 @@ import EnvironmentVariables from 'helpers/EnvVariables';
 import { MAX_TITLE_LENGTH } from 'views/DataExploration/components/PageContent';
 
 import useApi from 'hooks/useApi';
+import { trackRequestBiospecimen } from 'services/analytics';
 import { ReportType } from 'services/api/reports/models';
 import { fetchReport } from 'store/report/thunks';
 import { PROJECT_ID, useSavedSet } from 'store/savedSet';
@@ -58,6 +59,7 @@ const RequestBiospecimenModal = ({ isOpen, closeModal, sqon }: OwnProps) => {
   const samples = (result as IRequestBioDataRow[]) || [];
 
   const onFinish = async (values: Store) => {
+    trackRequestBiospecimen('download manifest');
     const { name } = values;
 
     if (isNameExists(name, savedSets)) {

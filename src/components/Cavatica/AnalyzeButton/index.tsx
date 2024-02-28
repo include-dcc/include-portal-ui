@@ -11,6 +11,7 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { ISort } from '@ferlab/ui/core/graphql/types';
 import { CAVATICA_FILE_BATCH_SIZE } from 'views/DataExploration/utils/constant';
 
+import { trackCavaticaAction } from 'services/analytics';
 import { CavaticaApi } from 'services/api/cavatica';
 import { ICavaticaCreateProjectBody } from 'services/api/cavatica/models';
 import { fetchAllFencesAuthentificationStatus } from 'store/fences/thunks';
@@ -32,6 +33,7 @@ interface OwnProps {
   sort?: ISort[];
   type?: 'default' | 'primary';
   disabled?: boolean;
+  index: string;
 }
 
 const CavaticaAnalyzeButton: React.FC<OwnProps> = ({
@@ -40,6 +42,7 @@ const CavaticaAnalyzeButton: React.FC<OwnProps> = ({
   sort = [],
   type = 'default',
   disabled = false,
+  index,
 }) => {
   const dispatch = useDispatch();
   const cavatica = useCavaticaPassport();
@@ -91,6 +94,7 @@ const CavaticaAnalyzeButton: React.FC<OwnProps> = ({
         dispatch(passportActions.setCavaticaBulkImportDataStatus(CAVATICA_ANALYSE_STATUS.unknow));
       }}
       handleImportBulkData={(value) => {
+        trackCavaticaAction(index);
         dispatch(startBulkImportJob(value));
       }}
       createProjectModalProps={{

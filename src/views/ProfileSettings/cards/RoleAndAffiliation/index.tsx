@@ -6,6 +6,7 @@ import { useForm } from 'antd/lib/form/Form';
 import cx from 'classnames';
 import { roleOptions } from 'views/Community/contants';
 
+import { trackRegistrationStarted } from 'services/analytics';
 import { useUser } from 'store/user';
 import { updateUser } from 'store/user/thunks';
 import { lowerAll } from 'utils/array';
@@ -64,7 +65,7 @@ const RoleAndAffiliationCard = () => {
     };
     form.setFieldsValue(initialValues.current);
     setHasChanged(initialChangedValues);
-  }, [userInfo]);
+  }, [form, userInfo]);
 
   return (
     <BaseCard
@@ -79,6 +80,7 @@ const RoleAndAffiliationCard = () => {
         initialValues={initialValues}
         hasChangedInitialValue={hasChanged}
         onFinish={(values: any) => {
+          trackRegistrationStarted();
           const otherRole = hasOtherRole(values[FORM_FIELDS.ROLES]);
           dispatch(
             updateUser({

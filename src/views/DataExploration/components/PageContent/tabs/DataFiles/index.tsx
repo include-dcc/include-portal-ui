@@ -421,6 +421,7 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
               sqon={sqon}
               sort={queryConfig.sort ?? DEFAULT_FILE_QUERY_SORT}
               key="file-cavatica-upload"
+              index={INDEXES.FILE}
             />,
             <DownloadFileManifestModal
               key="download-file-manifest"
