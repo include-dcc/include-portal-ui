@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProTable from '@ferlab/ui/core/components/ProTable';
@@ -13,6 +14,7 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
+import { Tooltip } from 'antd';
 import { useBiospecimen } from 'graphql/biospecimens/actions';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
@@ -56,7 +58,7 @@ interface OwnProps {
 const getDefaultColumns = (): ProColumnType<any>[] => [
   {
     key: 'sample_id',
-    title: 'Sample ID',
+    title: intl.get('entities.biospecimen.sample_id'),
     dataIndex: 'sample_id',
     sorter: { multiple: 1 },
     className: styles.sampleIdCell,
@@ -65,42 +67,43 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
   {
     key: 'study',
     dataIndex: 'study',
-    title: 'Study',
+    title: intl.get('entities.study.study'),
     sorter: { multiple: 1 },
     render: (study: IStudyEntity) =>
       study?.study_id ? (
         <StudyPopoverRedirect
           studyId={study.study_id}
+          studyName={study.study_name}
           text={study.study_code || ''}
         ></StudyPopoverRedirect>
       ) : (
-        study?.study_code || TABLE_EMPTY_PLACE_HOLDER
+        <Tooltip title={study?.study_name}>{study?.study_code}</Tooltip> || TABLE_EMPTY_PLACE_HOLDER
       ),
   },
   {
     key: 'sample_type',
-    title: 'Sample Type',
+    title: intl.get('entities.biospecimen.sample_type'),
     dataIndex: 'sample_type',
     sorter: { multiple: 1 },
     render: (sample_type: string) => sample_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'parent_sample_id',
-    title: 'Parent Sample ID',
+    title: intl.get('entities.biospecimen.parent_sample_id'),
     dataIndex: 'parent_sample_id',
     sorter: { multiple: 1 },
     render: (parent_sample_id: string) => parent_sample_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'parent_sample_type',
-    title: 'Parent Sample Type',
+    title: intl.get('entities.biospecimen.parent_sample_type'),
     dataIndex: 'parent_sample_type',
     sorter: { multiple: 1 },
     render: (parent_sample_type: string) => parent_sample_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'participant.participant_id',
-    title: 'Participant ID',
+    title: intl.get('entities.participant.participant_id'),
     dataIndex: 'participant',
     sorter: { multiple: 1 },
     render: (participant: IParticipantEntity) =>
@@ -114,7 +117,7 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
   },
   {
     key: 'collection_sample_id',
-    title: 'Collection ID',
+    title: intl.get('entities.biospecimen.collection_id'),
     dataIndex: 'collection_sample_id',
     sorter: { multiple: 1 },
     render: (collection_sample_id: string) => {
@@ -140,21 +143,21 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
   },
   {
     key: 'collection_sample_type',
-    title: 'Collection Sample Type',
+    title: intl.get('entities.biospecimen.collection_sample_type'),
     dataIndex: 'collection_sample_type',
     sorter: { multiple: 1 },
     render: (collection_sample_type: string) => collection_sample_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'container_id',
-    title: 'Container ID',
+    title: intl.get('entities.biospecimen.container_id'),
     dataIndex: 'container_id',
     render: (container_id: string) => container_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'age_at_biospecimen_collection',
-    tooltip: 'Age at Biospecimen Collection',
-    title: 'Age',
+    tooltip: intl.get('entities.biospecimen.age_tooltip'),
+    title: intl.get('entities.biospecimen.age'),
     dataIndex: 'age_at_biospecimen_collection',
     render: (age_at_biospecimen_collection) => (
       <AgeCell ageInDays={age_at_biospecimen_collection} />
@@ -162,49 +165,49 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
   },
   {
     key: 'external_sample_id',
-    title: 'External Sample ID',
+    title: intl.get('entities.biospecimen.external_sample_id'),
     dataIndex: 'external_sample_id',
     defaultHidden: true,
     render: (external_sample_id: string) => external_sample_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'volume',
-    title: 'Volume',
+    title: intl.get('entities.biospecimen.volume'),
     dataIndex: 'volume',
     defaultHidden: true,
     render: (volume: number) => (volume ? numberWithCommas(volume) : TABLE_EMPTY_PLACE_HOLDER),
   },
   {
     key: 'volume_unit',
-    title: 'Volume Unit',
+    title: intl.get('entities.biospecimen.volume_unit'),
     defaultHidden: true,
     render: (record: IBiospecimenEntity) =>
       record?.volume ? record.volume_unit : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'status',
-    title: 'Sample Availability',
+    title: intl.get('entities.biospecimen.sample_availabilty'),
     dataIndex: 'status',
     sorter: { multiple: 1 },
     render: (status: string) => (status?.toLowerCase() === 'available' ? 'Yes' : 'No'),
   },
   {
     key: 'laboratory_procedure',
-    title: 'Laboratory Procedure',
+    title: intl.get('entities.biospecimen.laboratory_procedure'),
     dataIndex: 'laboratory_procedure',
     defaultHidden: true,
     render: (laboratory_procedure: string) => laboratory_procedure || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'biospecimen_storage',
-    title: 'Biospecimen Storage',
+    title: intl.get('entities.biospecimen.biospecimen_storage'),
     dataIndex: 'biospecimen_storage',
     defaultHidden: true,
     render: (biospecimen_storage: string) => biospecimen_storage || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'nb_files',
-    title: 'Files',
+    title: intl.get('entities.file.files'),
     sorter: { multiple: 1 },
     render: (record: IBiospecimenEntity) => {
       const nbFiles = record?.nb_files || 0;

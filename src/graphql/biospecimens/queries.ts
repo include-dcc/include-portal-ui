@@ -33,6 +33,7 @@ export const SEARCH_BIOSPECIMEN_QUERY = gql`
             study {
               study_code
               study_id
+              study_name
             }
             nb_files
 
