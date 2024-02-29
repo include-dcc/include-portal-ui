@@ -25,12 +25,7 @@ const StudyPopoverRedirect = ({ text, studyId, studyName }: Props) => {
         <div className={styles.studyName}>{text}</div>
       </Popover>
     );
-  } else
-    return (
-      <div>
-        <Tooltip title={studyName}>{text}</Tooltip>
-      </div>
-    );
+  } else return <Tooltip title={studyName}>{text}</Tooltip>;
 };
 
 export default StudyPopoverRedirect;
