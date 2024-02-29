@@ -135,10 +135,11 @@ const getDefaultColumns = (
       study?.study_id ? (
         <StudyPopoverRedirect
           studyId={study.study_id}
+          studyName={study.study_name}
           text={study.study_code || ''}
         ></StudyPopoverRedirect>
       ) : (
-        study?.study_code || TABLE_EMPTY_PLACE_HOLDER
+        <Tooltip title={study?.study_name}>{study?.study_code}</Tooltip> || TABLE_EMPTY_PLACE_HOLDER
       ),
   },
   {

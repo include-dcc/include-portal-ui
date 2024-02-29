@@ -66,6 +66,7 @@ const columns: ProColumnType<any>[] = [
     render: (record: IStudyEntity) => (
       <StudyPopoverRedirect
         studyId={record?.study_id}
+        studyName={record?.study_name}
         text={record?.study_name}
       ></StudyPopoverRedirect>
     ),

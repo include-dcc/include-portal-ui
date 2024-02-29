@@ -13,6 +13,7 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
+import { Tooltip } from 'antd';
 import { useBiospecimen } from 'graphql/biospecimens/actions';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
@@ -71,10 +72,11 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
       study?.study_id ? (
         <StudyPopoverRedirect
           studyId={study.study_id}
+          studyName={study.study_name}
           text={study.study_code || ''}
         ></StudyPopoverRedirect>
       ) : (
-        study?.study_code || TABLE_EMPTY_PLACE_HOLDER
+        <Tooltip title={study?.study_name}>{study?.study_code}</Tooltip> || TABLE_EMPTY_PLACE_HOLDER
       ),
   },
   {
