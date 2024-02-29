@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LockOutlined, SafetyOutlined, UnlockFilled } from '@ant-design/icons';
@@ -64,8 +65,8 @@ const getDefaultColumns = (
 ): ProColumnType<any>[] => [
   {
     key: 'lock',
-    tooltip: 'File Authorization',
-    title: 'File Authorization',
+    tooltip: intl.get('entities.file.fileAuthorization'),
+    title: intl.get('entities.file.fileAuthorization'),
     iconTitle: <LockOutlined />,
     align: 'center',
     render: (record: IFileEntity) => {
@@ -89,8 +90,8 @@ const getDefaultColumns = (
   },
   {
     key: 'controlled_access',
-    tooltip: 'Data Access',
-    title: 'Data Access',
+    tooltip: intl.get('entities.file.data_access'),
+    title: intl.get('entities.file.data_access'),
     iconTitle: <SafetyOutlined />,
     dataIndex: 'controlled_access',
     align: 'center',
@@ -113,14 +114,14 @@ const getDefaultColumns = (
   },
   {
     key: 'file_id',
-    title: 'File ID',
+    title: intl.get('entities.file.file_id_full'),
     dataIndex: 'file_id',
     sorter: { multiple: 1 },
     render: (file_id: string) => <Link to={`${STATIC_ROUTES.FILES}/${file_id}`}>{file_id}</Link>,
   },
   {
     key: 'file_name',
-    title: 'File Name',
+    title: intl.get('entities.file.file_name_full'),
     dataIndex: 'file_name',
     sorter: { multiple: 1 },
     defaultHidden: true,
@@ -129,7 +130,7 @@ const getDefaultColumns = (
   {
     dataIndex: 'study',
     key: 'study',
-    title: 'Study',
+    title: intl.get('entities.study.study'),
     sorter: { multiple: 1 },
     render: (study: IStudyEntity) =>
       study?.study_id ? (
@@ -144,21 +145,21 @@ const getDefaultColumns = (
   },
   {
     key: 'data_category',
-    title: 'Data Category',
+    title: intl.get('entities.file.data_category'),
     dataIndex: 'data_category',
     sorter: { multiple: 1 },
     render: (data_category: string) => data_category || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'data_type',
-    title: 'Data Type',
+    title: intl.get('entities.file.data_type'),
     dataIndex: 'data_type',
     sorter: { multiple: 1 },
     render: (data_type: string) => data_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'sequencing_experiment.experiment_strategy',
-    title: 'Experimental Strategy',
+    title: intl.get('entities.file.experimental_strategy'),
     sorter: { multiple: 1 },
     render: (record: IFileEntity) => {
       if (!record?.sequencing_experiment?.hits?.edges) {
@@ -172,7 +173,7 @@ const getDefaultColumns = (
   },
   {
     key: 'access_urls',
-    title: 'Access Url',
+    title: intl.get('entities.file.access_url'),
     dataIndex: 'access_urls',
     sorter: { multiple: 1 },
     defaultHidden: true,
@@ -180,21 +181,21 @@ const getDefaultColumns = (
   },
   {
     key: 'file_format',
-    title: 'Format',
+    title: intl.get('entities.file.format'),
     dataIndex: 'file_format',
     sorter: { multiple: 1 },
     render: (file_format: string) => file_format || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'size',
-    title: 'Size',
+    title: intl.get('entities.file.size'),
     dataIndex: 'size',
     sorter: { multiple: 1 },
     render: (size: number) => formatFileSize(size, { output: 'string' }),
   },
   {
     key: 'nb_participants',
-    title: 'Participants',
+    title: intl.get('entities.file.participants'),
     sorter: { multiple: 1 },
     render: (record: IFileEntity) => {
       const nb_participants = record?.nb_participants || 0;
@@ -227,7 +228,7 @@ const getDefaultColumns = (
   },
   {
     key: 'nb_biospecimens',
-    title: 'Biospecimens',
+    title: intl.get('entities.file.biospecimens'),
     sorter: { multiple: 1 },
     render: (record: IFileEntity) => {
       const nb_biospecimens = record?.nb_biospecimens || 0;
