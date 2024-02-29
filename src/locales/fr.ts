@@ -445,9 +445,8 @@ const fr = {
       datarelease: {
         title: 'Available Data',
       },
-      uncover: 'Uncover',
-      newInsights: 'new insights',
-      biologyConditions: 'into the biology of Down Syndrome and co-occurring conditions.',
+      message:
+        'Uncover <span style="color:#7dd3fc;">new insights</span> into the biology of Down Syndrome and co-occurring conditions.',
       accessLargeScale:
         'Access large-scale data resources and explore custom built cohort datasets based on participant, biospecimen, clinical and omics data.',
       login: 'Login',
