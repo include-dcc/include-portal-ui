@@ -15,13 +15,9 @@ const StudyPopoverRedirect = ({ text, studyId, studyName }: Props) => {
   if (AFFECTED_STUDY.includes(studyId)) {
     return (
       <Popover
-        content={
-          <div>
-            {intl.getHTML('entities.study.affectedStudies.message', {
-              href: 'https://pitt.co1.qualtrics.com/jfe/form/SV_cu0pNCZZlrdSxUN',
-            })}
-          </div>
-        }
+        content={intl.getHTML('entities.study.affectedStudies.message', {
+          href: 'https://pitt.co1.qualtrics.com/jfe/form/SV_cu0pNCZZlrdSxUN',
+        })}
         title={intl.get('entities.study.affectedStudies.title')}
         trigger="hover"
         overlayStyle={{ maxWidth: 410 }}
