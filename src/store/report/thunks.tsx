@@ -90,7 +90,7 @@ const fetchTsvReport = createAsyncThunk<void, TFetchTSVArgs, { rejectValue: stri
   async (args, thunkAPI) => {
     const messageKey = 'report_pending';
 
-    trackReportDownload(`${capitalize(args.index)}-export-tsv`);
+    trackReportDownload(`${capitalize(args.index)}-Export-Tsv`);
 
     thunkAPI.dispatch(
       globalActions.displayMessage({
@@ -160,7 +160,7 @@ const generateLocalTsvReport = createAsyncThunk<
   // !! This function assumes that it is called only when the table is not empty. Said otherwise, data is never empty !!
   const messageKey = 'report_pending';
 
-  trackReportDownload(`${capitalize(args.index)}-${args.fileName}-tsv`);
+  trackReportDownload(`${capitalize(args.index)}Entity-${args.fileName}-tsv`);
 
   try {
     const formattedDate = format(new Date(), 'yyyy-MM-dd');
