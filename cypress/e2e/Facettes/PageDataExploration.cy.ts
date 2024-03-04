@@ -64,22 +64,22 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
   });
 
   it('Family Unit - Proband-only', () => {
-    cy.validateFacetFilter('Family Unit', 'Proband-only', 'proband-only', /^6,139$/);
+    cy.validateFacetFilter('Family Unit', 'Proband-only', 'proband-only', /^2,703$/);
     cy.validateFacetRank(2, 'Family Unit');
   });
 
   it('Sex - Female', () => {
-    cy.validateFacetFilter('Sex', 'Female', 'female', /^4,351$/);
+    cy.validateFacetFilter('Sex', 'Female', 'female', /^2,724$/);
     cy.validateFacetRank(3, 'Sex');
   });
 
   it('Race - White', () => {
-    cy.validateFacetFilter('Race', 'White', 'White', /^7,132$/);
+    cy.validateFacetFilter('Race', 'White', 'White', /^4,173$/);
     cy.validateFacetRank(4, 'Race');
   });
 
   it('Ethnicity - Not Hispanic or Latino', () => {
-    cy.validateFacetFilter('Ethnicity', 'Not Hispanic or Latino', 'Not Hispanic or Latino', /^6,776$/);
+    cy.validateFacetFilter('Ethnicity', 'Not Hispanic or Latino', 'Not Hispanic or Latino', /^4,180$/);
     cy.validateFacetRank(5, 'Ethnicity');
   });
 });

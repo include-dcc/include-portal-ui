@@ -13,12 +13,12 @@ describe('Page des études - Vérifier les informations affichées', () => {
 
   it('Tableau', () => {
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(0).contains('HTP').should('exist');
-    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(1).contains('Crnic Institute Human Trisome Project').should('exist');
+    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(1).contains('The Human Trisome Project').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(2).contains('INCLUDE').should('exist');
-    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(3).contains('phs002330').should('exist');
-    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(4).contains('1,055').should('exist');
+    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(3).contains('phs001138').should('exist');
+    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(4).contains('1,062').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(5).contains('164').should('exist');
-    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(6).contains('39,203').should('exist');
+    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(6).contains('39,430').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(7).find('[data-icon="check"]').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(8).find('[data-icon="check"]').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(9).find('[data-icon="check"]').should('exist');
@@ -28,14 +28,14 @@ describe('Page des études - Vérifier les informations affichées', () => {
 });
 
 describe('Page des études - Valider les liens disponibles', () => {
-  it('Lien Code du tableau', () => {
+  it('Lien Code du tableau [SJIP-730]', () => {
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(0).find('[href]')
       .should('have.attr', 'href', 'https://includedcc.org/studies/human-trisome-project');
   });
 
   it('Lien dbGap du tableau', () => {
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(3).find('[href]')
-      .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
+      .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs001138');
   });
 
   it('Lien Participants du tableau', () => {
@@ -88,7 +88,7 @@ describe('Page des études - Consultation du tableau', () => {
     cy.sortTableAndIntercept('Participants', 1);
     cy.validateTableFirstRow(/^41$/, 4);
     cy.sortTableAndIntercept('Participants', 1);
-    cy.validateTableFirstRow('3,484', 4);
+    cy.validateTableFirstRow('1,152', 4);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Families', () => {
@@ -106,7 +106,7 @@ describe('Page des études - Consultation du tableau', () => {
     cy.sortTableAndIntercept('Biospecimens', 1);
     cy.validateTableFirstRow(/^0$/, 6);
     cy.sortTableAndIntercept('Biospecimens', 1);
-    cy.validateTableFirstRow('39,203', 6);
+    cy.validateTableFirstRow('39,430', 6);
   });
 
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {
