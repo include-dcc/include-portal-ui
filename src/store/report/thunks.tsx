@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import { saveAs } from 'file-saver';
 import { INDEXES } from 'graphql/constants';
 import { getColumnStateQuery } from 'graphql/reports/queries';
-import { startCase } from 'lodash';
+import { capitalize, startCase } from 'lodash';
 import { v4 } from 'uuid';
 
 import { getDefaultContentType } from 'common/downloader';
@@ -90,7 +90,7 @@ const fetchTsvReport = createAsyncThunk<void, TFetchTSVArgs, { rejectValue: stri
   async (args, thunkAPI) => {
     const messageKey = 'report_pending';
 
-    trackReportDownload(`${args.index}Tsv`);
+    trackReportDownload(`${capitalize(args.index)}-export-tsv`);
 
     thunkAPI.dispatch(
       globalActions.displayMessage({
@@ -160,7 +160,7 @@ const generateLocalTsvReport = createAsyncThunk<
   // !! This function assumes that it is called only when the table is not empty. Said otherwise, data is never empty !!
   const messageKey = 'report_pending';
 
-  trackReportDownload(`${args.index}-${args.fileName}-tsv`);
+  trackReportDownload(`${capitalize(args.index)}-${args.fileName}-tsv`);
 
   try {
     const formattedDate = format(new Date(), 'yyyy-MM-dd');
