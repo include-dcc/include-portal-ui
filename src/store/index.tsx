@@ -15,7 +15,6 @@ import RemoteReducer from 'store/remote';
 import ReportReducer from 'store/report';
 import SavedFilterReducer from 'store/savedFilter';
 import SavedSetReducer from 'store/savedSet';
-import StudyReducer from 'store/study';
 import { RootState } from 'store/types';
 import UserReducer from 'store/user';
 
@@ -37,7 +36,6 @@ const rootReducer = combineReducers<RootState>({
   savedFilter: SavedFilterReducer,
   savedSet: SavedSetReducer,
   remote: RemoteReducer,
-  study: StudyReducer,
 });
 
 const store = configureStore({
