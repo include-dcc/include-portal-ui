@@ -7,7 +7,6 @@ import { RemoteInitialState } from './remote';
 import { ReportInitialState } from './report';
 import { SavedFilterInitialState } from './savedFilter';
 import { SavedSetInitialState } from './savedSet';
-import { StudyInitialState } from './study';
 
 export type RootState = {
   global: GlobalInitialState;
@@ -18,5 +17,4 @@ export type RootState = {
   fences: FencesInitialState;
   remote: RemoteInitialState;
   passport: PassportInitialState;
-  study: StudyInitialState;
 };
