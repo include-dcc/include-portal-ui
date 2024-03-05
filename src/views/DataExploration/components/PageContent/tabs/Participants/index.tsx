@@ -45,7 +45,6 @@ import {
   extractPhenotypeTitleAndCode,
 } from 'views/DataExploration/utils/helper';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
-import { familyTypeText } from 'views/ParticipantEntity/utils/summary';
 import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
@@ -176,9 +175,7 @@ const getDefaultColumns = (): ProColumnType[] => [
       multiple: 1,
     },
     render: (family_type: FamilyType) =>
-      family_type && familyTypeText[family_type]
-        ? familyTypeText[family_type]
-        : TABLE_EMPTY_PLACE_HOLDER,
+      family_type ? intl.get(`entities.participant.${family_type}`) : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'diagnosis.source_text',

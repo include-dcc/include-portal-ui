@@ -1,20 +1,11 @@
 import intl from 'react-intl-universal';
+import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Tag, Tooltip } from 'antd';
-import { FamilyType, IParticipantEntity } from 'graphql/participants/models';
-
-import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import { IParticipantEntity } from 'graphql/participants/models';
 
 import styles from '../styles/styles.module.scss';
-
-export const familyTypeText = {
-  [FamilyType.PROBAND]: intl.get('entities.participant.proband_only'),
-  [FamilyType.DUO]: intl.get('entities.participant.duo'),
-  [FamilyType.TRIO]: intl.get('entities.participant.trio'),
-  [FamilyType.TRIO_PLUS]: intl.get('entities.participant.trio_plus'),
-  [FamilyType.OTHER]: intl.get('entities.participant.other'),
-};
 
 export const getSummaryItems = (participant?: IParticipantEntity): IEntityDescriptionsItem[] => [
   {
@@ -54,7 +45,7 @@ export const getSummaryItems = (participant?: IParticipantEntity): IEntityDescri
   {
     label: intl.get('entities.participant.family_unit'),
     value: participant?.family_type ? (
-      <Tag color="cyan">{familyTypeText[participant.family_type]}</Tag>
+      <Tag color="cyan">{intl.get(`entities.participant.${participant.family_type}`)}</Tag>
     ) : (
       TABLE_EMPTY_PLACE_HOLDER
     ),
