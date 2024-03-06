@@ -38,11 +38,15 @@ const getDataAccessDescriptions = (study?: IStudyEntity): IEntityDescriptionsIte
   return [
     {
       label: intl.get('entities.study.access_limitation'),
-      value: renderAccess(flatDataset?.accessLimitation),
+      value: flatDataset?.accessLimitation.size
+        ? renderAccess(flatDataset?.accessLimitation)
+        : TABLE_EMPTY_PLACE_HOLDER,
     },
     {
       label: intl.get('entities.study.access_requirement'),
-      value: renderAccess(flatDataset?.accessRequirement),
+      value: flatDataset?.accessRequirement.size
+        ? renderAccess(flatDataset.accessRequirement)
+        : TABLE_EMPTY_PLACE_HOLDER,
     },
     {
       label: intl.get('entities.study.study_contact'),
