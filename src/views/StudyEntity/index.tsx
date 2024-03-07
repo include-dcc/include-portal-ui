@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import EntityPage, { EntityDescriptions } from '@ferlab/ui/core/pages/EntityPage';
 import { useStudy } from 'graphql/studies/actions';
 
+import getDataAccessDescriptions from './utils/dataAccess';
 import getSummaryDescriptions from './utils/summary';
 
 enum SectionId {
@@ -38,7 +39,19 @@ const StudyEntity = () => {
           header={intl.get('entities.global.summary')}
           descriptions={getSummaryDescriptions(study)}
           loading={loading}
+          noDataLabel={intl.get('no.data.available')}
         />
+
+        {study?.dataset?.hits?.edges?.length && (
+          <EntityDescriptions
+            descriptions={getDataAccessDescriptions(study)}
+            header={intl.get('entities.study.data_access')}
+            id={SectionId.DATA_ACCESS}
+            loading={loading}
+            noDataLabel={intl.get('no.data.available')}
+            title={intl.get('entities.study.data_access')}
+          />
+        )}
       </>
     </EntityPage>
   );
