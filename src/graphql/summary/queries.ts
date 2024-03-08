@@ -64,6 +64,48 @@ export const PARTICIPANT_BY_STUDIES_QUERY = `
   }
 `;
 
+export const PARTICIPANT_DOWN_SYNDROME_STATUS_QUERY = `
+  query($sqon: JSON) {
+    participant {
+      hits(filters: $sqon) {
+        total
+      }
+      aggregations(filters: $sqon, aggregations_filter_themselves: true, include_missing: false) {
+        down_syndrome_status {
+          buckets {
+            key
+            doc_count
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const SAMPLES_QUERY = `
+  query($sqon: JSON) {
+    biospecimen {
+      hits(filters: $sqon) {
+        total
+      }
+      aggregations(filters: $sqon, aggregations_filter_themselves: true, include_missing: false) {
+        sample_type {
+          buckets {
+            key
+            doc_count
+          }
+        }
+        status {
+          buckets {
+            key
+            doc_count
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const DATA_CATEGORY_QUERY = `
   query($sqon: JSON) {
     participant {
@@ -75,23 +117,6 @@ export const DATA_CATEGORY_QUERY = `
           buckets {
             key
             doc_count
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const SUNBURST_QUERY = `
-  query ($sqon: JSON, $term_filters: JSON) {
-    participant {
-      aggregations(filters: $sqon, aggregations_filter_themselves: true) {
-        observed_phenotype__name {
-          buckets {
-            key
-            doc_count
-            top_hits(_source: ["observed_phenotype.parents"], size: 1)
-            filter_by_term(filter: $term_filters)
           }
         }
       }

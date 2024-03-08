@@ -1051,8 +1051,18 @@ const en = {
             dataTypeTitle: 'Participants by Data Type',
             studiesTitle: 'Participants by Study',
           },
+          sampleType: {
+            cardTitle: 'Sample Type',
+          },
+          sampleAvailability: {
+            cardTitle: 'Sample Availability',
+          },
+          downSyndromeStatus: {
+            cardTitle: 'Down Syndrome Status',
+          },
           observed_phenotype: {
             cardTitle: 'Observed Phenotypes (HPO)',
+            legendAxisBottom: '# of participants',
             phenotypeTree: {
               nbParticipant: '{count} participants (including descendant terms on this path)',
               addTermToQuery: 'Add term to active query',
@@ -1062,6 +1072,7 @@ const en = {
           },
           mondo: {
             cardTitle: ' Diagnosis (MONDO)',
+            legendAxisBottom: '# of participants',
             phenotypeTree: {
               nbParticipant: '{count} participants (including descendant terms on this path)',
               addTermToQuery: 'Add term to active query',
@@ -1467,12 +1478,15 @@ const en = {
     study: {
       access_limitation: 'Access Limitation',
       access_requirement: 'Access Requirement',
+      title: 'Data',
+      header: 'Summary Statistics',
+      count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
+      study: 'Study',
       affectedStudies: {
         message:
           'Access to the full ABC-DS dataset, including clinical, cognitive, neuroimaging, and genetic data, must be requested from ABC-DS using this <a href="{href}" style="color:inherit;text-decoration-line:underline;" target="_blank" rel="noopener noreferrer">data request form</a>.',
         title: 'Study Access',
       },
-      count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
       datasets: 'Datasets',
       dataset: {
         data_type: 'Data Type',
@@ -1499,7 +1513,6 @@ const en = {
       program: 'Program',
       publication: 'Publication',
       selection_criteria: 'Selection Criteria',
-      study: 'Study',
       study_code: 'Study Code',
       study_contact: 'Study Contact',
       study_design: 'Study Design',
