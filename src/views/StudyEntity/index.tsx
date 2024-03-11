@@ -1,10 +1,14 @@
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router';
-import EntityPage, { EntityDescriptions } from '@ferlab/ui/core/pages/EntityPage';
+import EntityPage, { EntityDataset, EntityDescriptions } from '@ferlab/ui/core/pages/EntityPage';
+import { Typography } from 'antd';
 import { useStudy } from 'graphql/studies/actions';
 
 import getDataAccessDescriptions from './utils/dataAccess';
+import getDatasetDescription from './utils/datasets';
 import getSummaryDescriptions from './utils/summary';
+
+import style from './index.module.scss';
 
 enum SectionId {
   SUMMARY = 'summary',
@@ -52,6 +56,28 @@ const StudyEntity = () => {
             noDataLabel={intl.get('no.data.available')}
             title={intl.get('entities.study.data_access')}
           />
+        )}
+
+        {study?.dataset?.hits?.edges?.length && (
+          <>
+            <Typography.Title level={4}>{intl.get('entities.study.datasets')}</Typography.Title>
+            {study.dataset.hits.edges.map(({ node: dataset }) => (
+              <EntityDataset
+                containerClassName={style.datasetContainer}
+                descriptions={getDatasetDescription(dataset)}
+                dictionnary={{
+                  participants: intl.get('entities.participant.participants'),
+                  files: intl.get('entities.file.files'),
+                }}
+                file_count={dataset?.file_count || 0}
+                header={dataset?.dataset_name || ''}
+                id={SectionId.DATASET}
+                key={dataset?.id}
+                loading={loading}
+                participant_count={dataset?.participant_count || 0}
+              />
+            ))}
+          </>
         )}
       </>
     </EntityPage>
