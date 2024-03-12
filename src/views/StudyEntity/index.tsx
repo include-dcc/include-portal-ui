@@ -22,6 +22,7 @@ const StudyEntity = () => {
 
   const defaultLinks = [
     { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
+    { href: `#${SectionId.DATA_ACCESS}`, title: intl.get('entities.study.data_access') },
   ];
 
   return (
