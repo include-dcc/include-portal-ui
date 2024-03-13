@@ -1378,7 +1378,7 @@ const en = {
     },
     study: {
       access_limitation: 'Access Limitation',
-      access_requirement: ' Access Requirement',
+      access_requirement: 'Access Requirement',
       affectedStudies: {
         message:
           'Access to the full ABC-DS dataset, including clinical, cognitive, neuroimaging, and genetic data, must be requested from ABC-DS using this <a href="{href}" style="color:inherit;text-decoration-line:underline;" target="_blank" rel="noopener noreferrer">data request form</a>.',
