@@ -31,7 +31,6 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
     value: dataset.publication?.length ? (
       <>
         {dataset.publication.map((pub: string) => (
-          // TODO link - extract id
           <div>{pub}</div>
         ))}
       </>
