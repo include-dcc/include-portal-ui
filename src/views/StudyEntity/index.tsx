@@ -24,11 +24,17 @@ const StudyEntity = () => {
     value: study_code ?? '',
   });
 
+  const hasDataset = study?.dataset?.hits?.edges && study.dataset.hits.edges.length > 0;
+
   const defaultLinks = [
     { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
-    { href: `#${SectionId.DATA_ACCESS}`, title: intl.get('entities.study.data_access') },
-    { href: `#${SectionId.DATASET}`, title: intl.get('entities.study.datasets') },
   ];
+
+  if (hasDataset)
+    defaultLinks.push(
+      { href: `#${SectionId.DATA_ACCESS}`, title: intl.get('entities.study.data_access') },
+      { href: `#${SectionId.DATASET}`, title: intl.get('entities.study.datasets') },
+    );
 
   return (
     <EntityPage
@@ -48,7 +54,7 @@ const StudyEntity = () => {
           noDataLabel={intl.get('no.data.available')}
         />
 
-        {study?.dataset?.hits?.edges?.length && (
+        {hasDataset && (
           <EntityDescriptions
             descriptions={getDataAccessDescriptions(study)}
             header={intl.get('entities.study.data_access')}
@@ -59,10 +65,10 @@ const StudyEntity = () => {
           />
         )}
 
-        {study?.dataset?.hits?.edges?.length && (
+        {hasDataset && (
           <>
             <Typography.Title level={4}>{intl.get('entities.study.datasets')}</Typography.Title>
-            {study.dataset.hits.edges.map(({ node: dataset }) => (
+            {study?.dataset?.hits.edges.map(({ node: dataset }) => (
               <EntityDataset
                 containerClassName={style.datasetContainer}
                 descriptions={getDatasetDescription(dataset)}
