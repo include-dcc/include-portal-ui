@@ -1363,6 +1363,7 @@ const en = {
       mondo_term: 'MONDO Term',
       mondo_term_tooltip: '# of participants with this exact MONDO term',
       other: 'Other',
+      participants: 'Participants',
       participant_id: 'Participant ID',
       phenotype: 'Phenotype',
       phenotype_hpo: 'Phenotype (HPO)',
@@ -1377,13 +1378,22 @@ const en = {
     },
     study: {
       access_limitation: 'Access Limitation',
-      access_requirement: ' Access Requirement',
+      access_requirement: 'Access Requirement',
       affectedStudies: {
         message:
           'Access to the full ABC-DS dataset, including clinical, cognitive, neuroimaging, and genetic data, must be requested from ABC-DS using this <a href="{href}" style="color:inherit;text-decoration-line:underline;" target="_blank" rel="noopener noreferrer">data request form</a>.',
         title: 'Study Access',
       },
       count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
+      datasets: 'Datasets',
+      dataset: {
+        data_type: 'Data Type',
+        dataset_id: 'Dataset ID',
+        experimental_platform: 'Experimental Platform',
+        experimental_strategy: 'Experimental Strategy',
+        publication: 'Publication',
+        repository: 'Repository',
+      },
       data_access: 'Data Access',
       data_source: 'Clinical Data Source Type',
       date_collection_end: 'Date Collection End (Year)',

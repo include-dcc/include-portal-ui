@@ -1,10 +1,14 @@
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router';
-import EntityPage, { EntityDescriptions } from '@ferlab/ui/core/pages/EntityPage';
+import EntityPage, { EntityDataset, EntityDescriptions } from '@ferlab/ui/core/pages/EntityPage';
+import { Typography } from 'antd';
 import { useStudy } from 'graphql/studies/actions';
 
 import getDataAccessDescriptions from './utils/dataAccess';
+import getDatasetDescription from './utils/datasets';
 import getSummaryDescriptions from './utils/summary';
+
+import style from './index.module.scss';
 
 enum SectionId {
   SUMMARY = 'summary',
@@ -20,10 +24,17 @@ const StudyEntity = () => {
     value: study_code ?? '',
   });
 
+  const hasDataset = study?.dataset?.hits?.edges && study.dataset.hits.edges.length > 0;
+
   const defaultLinks = [
     { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
-    { href: `#${SectionId.DATA_ACCESS}`, title: intl.get('entities.study.data_access') },
   ];
+
+  if (hasDataset)
+    defaultLinks.push(
+      { href: `#${SectionId.DATA_ACCESS}`, title: intl.get('entities.study.data_access') },
+      { href: `#${SectionId.DATASET}`, title: intl.get('entities.study.datasets') },
+    );
 
   return (
     <EntityPage
@@ -43,7 +54,7 @@ const StudyEntity = () => {
           noDataLabel={intl.get('no.data.available')}
         />
 
-        {study?.dataset?.hits?.edges?.length && (
+        {hasDataset && (
           <EntityDescriptions
             descriptions={getDataAccessDescriptions(study)}
             header={intl.get('entities.study.data_access')}
@@ -52,6 +63,28 @@ const StudyEntity = () => {
             noDataLabel={intl.get('no.data.available')}
             title={intl.get('entities.study.data_access')}
           />
+        )}
+
+        {hasDataset && (
+          <>
+            <Typography.Title level={4}>{intl.get('entities.study.datasets')}</Typography.Title>
+            {study?.dataset?.hits.edges.map(({ node: dataset }) => (
+              <EntityDataset
+                containerClassName={style.datasetContainer}
+                descriptions={getDatasetDescription(dataset)}
+                dictionnary={{
+                  participants: intl.get('entities.participant.participants'),
+                  files: intl.get('entities.file.files'),
+                }}
+                file_count={dataset?.file_count || 0}
+                header={dataset?.dataset_name || ''}
+                id={SectionId.DATASET}
+                key={dataset?.id}
+                loading={loading}
+                participant_count={dataset?.participant_count || 0}
+              />
+            ))}
+          </>
         )}
       </>
     </EntityPage>

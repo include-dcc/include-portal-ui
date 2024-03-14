@@ -1,3 +1,7 @@
 .externalLink {
- display: block;
+  display: block;
+}
+
+.datasetContainer:not(:last-child) {
+  margin-bottom: 16px;
 }

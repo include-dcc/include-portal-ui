@@ -15,14 +15,14 @@ export interface IStudyDataset {
   expected_data_categories?: string[];
   experimental_strategy?: string;
   experimental_platform?: string;
-  publication?: string;
+  publication?: string[];
   access_limitation?: string[];
   access_requirement?: string[];
   repository?: string;
   repository_url?: string;
-  participant_count?: string;
-  biospecimen_count?: string;
-  file_count?: string;
+  participant_count?: number;
+  biospecimen_count?: number;
+  file_count?: number;
 }
 
 export interface IStudyEntity {
