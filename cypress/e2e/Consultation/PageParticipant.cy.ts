@@ -112,7 +112,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[data-row-key="HTP0026.Anxiety.HP:0000739.MONDO:0011918.NA"]').find('td[class="ant-table-cell"]').eq(0).contains('0011918').should('exist');
     cy.get('[data-row-key="HTP0026.Anxiety.HP:0000739.MONDO:0011918.NA"]').find('td[class="ant-table-cell"]').eq(1).contains('Anxiety').should('exist');
     cy.get('[data-row-key="HTP0026.Anxiety.HP:0000739.MONDO:0011918.NA"]').find('td[class="ant-table-cell"]').eq(2).contains('-').should('exist');
-    cy.get('[data-row-key="HTP0026.Anxiety.HP:0000739.MONDO:0011918.NA"]').find('td[class="ant-table-cell"]').eq(3).contains('303').should('exist');
+    cy.get('[data-row-key="HTP0026.Anxiety.HP:0000739.MONDO:0011918.NA"]').find('td[class="ant-table-cell"]').eq(3).contains('93').should('exist');
   });
   
   it('Panneau Phenotypes', () => {
@@ -129,7 +129,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(0).contains('0000739').should('exist');
     cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(1).contains('Anxiety').should('exist');
     cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(2).contains('-').should('exist');
-    cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(3).contains('303').should('exist');
+    cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(3).contains('93').should('exist');
   });
   
   it('Panneau Biospecimens', () => {
@@ -243,7 +243,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Diagnosis (MONDO)').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Anxiety (MONDO:0011918)').should('exist');
-    cy.validateTableResultsCount(/^303$/);
+    cy.validateTableResultsCount(/^93$/);
   });
 
   it('Lien HP du panneau Phenotypes', () => {
@@ -258,7 +258,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Phenotype (HPO)').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Anxiety (HP:0000739)').should('exist');
-    cy.validateTableResultsCount(/^303$/);
+    cy.validateTableResultsCount(/^93$/);
   });
 
   it('Lien DataExploration du panneau Biospecimens', () => {

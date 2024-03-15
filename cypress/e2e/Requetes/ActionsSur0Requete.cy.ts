@@ -17,8 +17,8 @@ describe('Page Data Exploration - Requêtes', () => {
 
   it('Construire une première requête', () => {
     cy.get('body').contains('Use the search tools & facets on the left to build a query').should('exist');
-    cy.validateTotalSelectedQuery('8,810');
-    cy.validateTableResultsCount('8,810');
+    cy.validateTotalSelectedQuery('5,326');
+    cy.validateTableResultsCount('5,326');
 
     cy.checkValueFacetAndApply('Sample Type', 'DNA');
 

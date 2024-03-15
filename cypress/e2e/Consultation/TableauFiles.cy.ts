@@ -87,7 +87,7 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
 
   it('Valider les fonctionnalités du tableau - Tri Study [SJIP-548]', () => {
     cy.sortTableAndIntercept('Study', 1);
-    cy.validateTableFirstRow('DS360-CHD', 5);
+    cy.validateTableFirstRow('BRI_DRS', 5);
     cy.sortTableAndIntercept('Study', 1);
     cy.validateTableFirstRow('X01-Hakonarson', 5);
   });

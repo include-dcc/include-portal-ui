@@ -69,7 +69,7 @@ describe('Page Data Exploration (Participants) - Colonnes du tableau', () => {
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(6)
       .should('not.have.class', 'ant-table-column-has-sorters')
-      .contains('Diagnosis (Mondo)').should('exist');
+      .contains('Diagnosis (MONDO)').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(7)

@@ -57,8 +57,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(5).click();
     cy.wait('@getPOSTgraphql', {timeout: 20*1000});
 
-    cy.validateTotalSelectedQuery('5,399');
-    cy.validateTableResultsCount('5,399');
+    cy.validateTotalSelectedQuery('1,915');
+    cy.validateTableResultsCount('1,915');
   });
 
   it('Validation Facette standard (None of) ET Facette numérique', () => {
