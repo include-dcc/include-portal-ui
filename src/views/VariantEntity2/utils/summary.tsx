@@ -291,7 +291,11 @@ export const getSummaryItems = (variant?: IVariantEntity) => {
     ],
     details: {
       leftSection: {
-        title: intl.get('screen.variants.summary.details.functionalScores'),
+        title: (
+          <Text className={style.functionalScores}>
+            {intl.get('screen.variants.summary.details.functionalScores')}
+          </Text>
+        ),
         items: [
           {
             label: intl.get('screen.variants.summary.details.sift'),
