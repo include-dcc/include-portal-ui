@@ -3,16 +3,27 @@ import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 import { NO_GENE } from '@ferlab/ui/core/components/Consequences/Cell';
 import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
-import EntityPageWrapper, { EntityTitle } from '@ferlab/ui/core/pages/EntityPage';
+import EntityPageWrapper, {
+  EntityPublicCohortTable,
+  EntityTable,
+  EntityTitle,
+} from '@ferlab/ui/core/pages/EntityPage';
 import EntityNestedTable from '@ferlab/ui/core/pages/EntityPage/EntityNestedTable';
 import EntityVariantSummary from '@ferlab/ui/core/pages/EntityPage/EntityVariantSummary';
 import { Tag } from 'antd';
+import { ArrangerEdge } from 'graphql/models';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 
 import { useVariantEntity } from '../../graphql/variants/actions';
+import { IVariantStudyEntity } from '../../graphql/variants/models';
 
 import { expandedRowRender, getColumn } from './utils/consequence';
+import {
+  getFrequencyItems,
+  getFrequencyTableSummaryColumns,
+  getPublicCohorts,
+} from './utils/frequency';
 import { getSummaryItems } from './utils/summary';
 
 import styles from './index.module.scss';
@@ -49,6 +60,10 @@ export default function VariantEntity() {
     field: 'locus',
     values: locus ? [locus] : [],
   });
+
+  const variantStudies = (data?.studies.hits.edges || []).map(
+    (e: ArrangerEdge<IVariantStudyEntity>) => e.node,
+  );
 
   const geneSymbolOfPicked = data?.genes?.hits?.edges?.find((e) =>
     (e.node.consequences || [])?.hits?.edges?.some((e) => e.node?.picked),
@@ -95,6 +110,26 @@ export default function VariantEntity() {
           title={intl.get('screen.variants.consequences.consequence')}
           header={intl.get('screen.variants.consequences.transcripts')}
           noDataLabel={intl.get('no.data.available')}
+        />
+
+        <EntityTable
+          id={SectionId.FREQUENCY}
+          columns={getFrequencyItems()}
+          data={variantStudies}
+          title={intl.get('screen.variants.frequencies.frequency')}
+          header={intl.get('screen.variants.frequencies.includeStudies')}
+          loading={loading}
+          summaryColumns={getFrequencyTableSummaryColumns(data, variantStudies)}
+        />
+
+        <EntityPublicCohortTable
+          columns={getPublicCohorts()}
+          frequencies={data?.external_frequencies}
+          locus={data?.locus}
+          header={intl.get('screen.variants.frequencies.publicCohorts')}
+          id=""
+          loading={loading}
+          emptyMessage={intl.get('no.data.available')}
         />
       </>
     </EntityPageWrapper>

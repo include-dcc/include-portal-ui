@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import EntityPageWrapper, {
+  EntityPublicCohortTable,
   EntitySummary,
   EntityTable,
   EntityTitle,
@@ -17,7 +18,6 @@ import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import { getEntityExpandableTableMultiple } from 'utils/translation';
 
 import EntityGeneConsequences from './FerlabComponent/EntityGeneConsequence';
-import EntityPublicCohortTable from './FerlabComponent/EntityPublicCohortTable';
 import { makeGenesOrderedRow } from './FerlabComponent/Pathogenecity.utils';
 import { getConsequencesProColumn } from './utils/consequences';
 import {
@@ -114,7 +114,7 @@ export default function VariantEntity() {
           header={intl.get('screen.variants.frequencies.publicCohorts')}
           id=""
           loading={loading}
-          emptyMessage={intl.get('screen.variants.frequencies.noDataAvailable')}
+          emptyMessage={intl.get('no.data.available')}
         />
 
         <EntityTable
