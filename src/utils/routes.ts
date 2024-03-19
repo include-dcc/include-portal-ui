@@ -27,6 +27,7 @@ export enum DYNAMIC_ROUTES {
   DATA_EXPLORATION = '/data-exploration/:tab?',
   STUDY_ENTITY = '/studies/:study_code?',
   VARIANT_ENTITY = '/variants/:locus?',
+  VARIANT_ENTITY_2 = '/variants2/:locus?',
   FILE_ENTITY = '/files/:file_id?',
   PARTICIPANT_ENTITY = '/participants/:participant_id?',
   ERROR = '/error/:status?',

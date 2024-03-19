@@ -822,6 +822,7 @@ const en = {
         gnomadGenome311: 'gnomAD Genome (v3.1.1)',
         gnomadGenome3: 'gnomAD Genome (v3.1.2)',
         dbSNP: 'dbSNP',
+        germline: 'Germline',
       },
       consequences: {
         consequence: 'Consequence',
@@ -887,6 +888,9 @@ const en = {
         inheritance: 'Inheritance',
         inheritances: 'Inheritances',
         interpretation: 'Interpretation',
+      },
+      conditions: {
+        title: 'Condition',
       },
     },
     dataExploration: {
