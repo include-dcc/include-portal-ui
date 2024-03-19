@@ -10,7 +10,7 @@ import { IClinVar, IGeneEntity } from 'graphql/variants/models';
 
 import style from './index.module.scss';
 
-const ClinvarColorMap: Record<any, string> = {
+export const ClinvarColorMap: Record<any, string> = {
   affects: 'default',
   association: 'default',
   association_not_found: 'default',

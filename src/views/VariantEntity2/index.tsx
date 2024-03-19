@@ -2,11 +2,14 @@ import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 import EntityPageWrapper, { EntityTitle } from '@ferlab/ui/core/pages/EntityPage';
+import EntityVariantSummary from '@ferlab/ui/core/pages/EntityPage/EntityVariantSummary';
 import { Tag } from 'antd';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 
 import { useVariantEntity } from '../../graphql/variants/actions';
+
+import { getSummaryItems } from './utils/summary';
 
 import styles from './index.module.scss';
 
@@ -64,6 +67,13 @@ export default function VariantEntity() {
               </Tag>
             </>
           }
+        />
+
+        <EntityVariantSummary
+          id={SectionId.SUMMARY}
+          loading={loading}
+          data={getSummaryItems(data)}
+          noDataLabel={intl.get('no.data.available')}
         />
       </>
     </EntityPageWrapper>
