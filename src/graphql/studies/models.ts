@@ -25,6 +25,18 @@ export interface IStudyDataset {
   file_count?: number;
 }
 
+export interface IDataType {
+  id: string;
+  data_type: string;
+  file_count: number;
+}
+
+export interface IExperimentalStrategy {
+  id: string;
+  experimental_strategy: string;
+  file_count: number;
+}
+
 export interface IStudyEntity {
   id: string;
   study_id: string;
@@ -39,13 +51,16 @@ export interface IStudyEntity {
   part_lifespan_stage?: string[];
   data_category: string[];
   data_source?: string[];
+  data_types?: ArrangerResultsTree<IDataType>;
   dataset?: ArrangerResultsTree<IStudyDataset>;
   date_collection_start_year?: string;
   date_collection_end_year?: string;
   description?: string;
   domain?: string;
+  experimental_strategies?: ArrangerResultsTree<IExperimentalStrategy>;
   external_id: string;
   family_count?: number;
+  file_count?: number;
   institution?: string;
   investigator_name?: string;
   program: string;

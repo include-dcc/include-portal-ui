@@ -2,6 +2,10 @@
   display: block;
 }
 
-.datasetContainer:not(:last-child) {
+.datasetTitle {
+  margin-bottom: 16px !important;
+}
+
+.datasetContainer {
   margin-bottom: 16px;
 }
