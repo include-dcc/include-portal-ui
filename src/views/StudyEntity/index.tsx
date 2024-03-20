@@ -1,11 +1,16 @@
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router';
-import EntityPage, { EntityDataset, EntityDescriptions } from '@ferlab/ui/core/pages/EntityPage';
+import EntityPage, {
+  EntityDataset,
+  EntityDescriptions,
+  EntityTableMultiple,
+} from '@ferlab/ui/core/pages/EntityPage';
 import { Typography } from 'antd';
 import { useStudy } from 'graphql/studies/actions';
 
 import getDataAccessDescriptions from './utils/dataAccess';
 import getDatasetDescription from './utils/datasets';
+import getFileTables from './utils/file';
 import getSummaryDescriptions from './utils/summary';
 
 import style from './index.module.scss';
@@ -29,12 +34,16 @@ const StudyEntity = () => {
   const defaultLinks = [
     { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
   ];
-
-  if (hasDataset)
+  let datasetLength = 0;
+  if (hasDataset) {
     defaultLinks.push(
       { href: `#${SectionId.DATA_ACCESS}`, title: intl.get('entities.study.data_access') },
       { href: `#${SectionId.DATASET}`, title: intl.get('entities.study.datasets') },
     );
+    datasetLength = study?.dataset?.hits.edges.length || 0;
+  }
+
+  defaultLinks.push({ href: `#${SectionId.DATA_FILE}`, title: intl.get('entities.study.file') });
 
   return (
     <EntityPage
@@ -67,10 +76,12 @@ const StudyEntity = () => {
 
         {hasDataset && (
           <>
-            <Typography.Title level={4}>{intl.get('entities.study.datasets')}</Typography.Title>
-            {study?.dataset?.hits.edges.map(({ node: dataset }) => (
+            <Typography.Title level={4} className={style.datasetTitle}>
+              {intl.get('entities.study.datasets')}
+            </Typography.Title>
+            {study?.dataset?.hits.edges.map(({ node: dataset }, index: number) => (
               <EntityDataset
-                containerClassName={style.datasetContainer}
+                containerClassName={index != datasetLength - 1 ? style.datasetContainer : ''}
                 descriptions={getDatasetDescription(dataset)}
                 dictionnary={{
                   participants: intl.get('entities.participant.participants'),
@@ -86,6 +97,15 @@ const StudyEntity = () => {
             ))}
           </>
         )}
+
+        <EntityTableMultiple
+          header={intl.get('entities.study.file')}
+          id={SectionId.DATA_FILE}
+          loading={loading}
+          tables={getFileTables(study)}
+          title={intl.get('entities.study.file')}
+          total={study?.file_count}
+        />
       </>
     </EntityPage>
   );
