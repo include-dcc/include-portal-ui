@@ -2,6 +2,7 @@ import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 import { NO_GENE } from '@ferlab/ui/core/components/Consequences/Cell';
+import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
   EntityPublicCohortTable,
@@ -10,7 +11,8 @@ import EntityPageWrapper, {
 } from '@ferlab/ui/core/pages/EntityPage';
 import EntityNestedTable from '@ferlab/ui/core/pages/EntityPage/EntityNestedTable';
 import EntityVariantSummary from '@ferlab/ui/core/pages/EntityPage/EntityVariantSummary';
-import { Tag } from 'antd';
+import { makeClinvarRows } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
+import { Space, Tag } from 'antd';
 import { ArrangerEdge } from 'graphql/models';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
@@ -24,6 +26,7 @@ import {
   getFrequencyTableSummaryColumns,
   getPublicCohorts,
 } from './utils/frequency';
+import { getClinvarColumns } from './utils/pathogenicity';
 import { getSummaryItems } from './utils/summary';
 
 import styles from './index.module.scss';
@@ -130,6 +133,27 @@ export default function VariantEntity() {
           id=""
           loading={loading}
           emptyMessage={intl.get('no.data.available')}
+        />
+
+        <EntityTable
+          id={SectionId.PATHOGENICITY}
+          loading={loading}
+          title={intl.get('screen.variants.pathogenicity.pathogenicity')}
+          header={
+            <Space size={4}>
+              {intl.get('screen.variants.pathogenicity.clinVar')}
+              {data?.clinvar?.clinvar_id && (
+                <ExternalLink
+                  href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${data?.clinvar.clinvar_id}`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {data?.clinvar?.clinvar_id}
+                </ExternalLink>
+              )}
+            </Space>
+          }
+          data={makeClinvarRows(data?.clinvar)}
+          columns={getClinvarColumns()}
         />
       </>
     </EntityPageWrapper>
