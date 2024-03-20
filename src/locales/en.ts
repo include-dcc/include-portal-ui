@@ -965,9 +965,14 @@ const en = {
         inheritance: 'Inheritance',
         inheritances: 'Inheritances',
         interpretation: 'Interpretation',
+        germlineAbvr: 'GER',
+        somaticAbvr: 'SOM',
+        germline: 'Germline',
+        somatic: 'Somatic',
       },
       conditions: {
         title: 'Condition',
+        tableTitle: 'Gene - Phenotype Association',
       },
     },
     dataExploration: {
