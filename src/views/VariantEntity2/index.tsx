@@ -11,7 +11,10 @@ import EntityPageWrapper, {
 } from '@ferlab/ui/core/pages/EntityPage';
 import EntityNestedTable from '@ferlab/ui/core/pages/EntityPage/EntityNestedTable';
 import EntityVariantSummary from '@ferlab/ui/core/pages/EntityPage/EntityVariantSummary';
-import { makeClinvarRows } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
+import {
+  makeClinvarRows,
+  makeGenesOrderedRow,
+} from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
 import { Space, Tag } from 'antd';
 import { ArrangerEdge } from 'graphql/models';
 
@@ -26,7 +29,7 @@ import {
   getFrequencyTableSummaryColumns,
   getPublicCohorts,
 } from './utils/frequency';
-import { getClinvarColumns } from './utils/pathogenicity';
+import { getClinvarColumns, getGenePhenotypeColumns } from './utils/pathogenicity';
 import { getSummaryItems } from './utils/summary';
 
 import styles from './index.module.scss';
@@ -154,6 +157,15 @@ export default function VariantEntity() {
           }
           data={makeClinvarRows(data?.clinvar)}
           columns={getClinvarColumns()}
+        />
+
+        <EntityTable
+          id={SectionId.CONDITION}
+          loading={loading}
+          title={intl.get('screen.variants.conditions.title')}
+          header={intl.get('screen.variants.conditions.tableTitle')}
+          data={makeGenesOrderedRow(data?.genes)}
+          columns={getGenePhenotypeColumns()}
         />
       </>
     </EntityPageWrapper>
