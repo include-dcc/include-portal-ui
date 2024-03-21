@@ -5,6 +5,7 @@ export type initialState = {
   isLoading: boolean;
   isUpdating: boolean;
   isDeleting: boolean;
+  newsletterError?: string;
   error?: string;
 };
 
