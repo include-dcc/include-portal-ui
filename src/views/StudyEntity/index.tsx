@@ -69,7 +69,7 @@ const StudyEntity = () => {
   const [phenotypesLoading, setPhenotypesLoading] = useState<boolean>(true);
   const [mondoLoading, setMondoLoading] = useState<boolean>(true);
 
-  /** We initialize here a sqon by queryBuilderId to handle graphs and actions */
+  /** We initialize here a sqon by queryBuilderId to handle actions */
   useEffect(() => {
     if (study_code) {
       addQuery({
