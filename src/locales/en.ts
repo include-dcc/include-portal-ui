@@ -548,6 +548,16 @@ const en = {
           provideABriefLink:
             'Provide a brief description and a link to your professional biography or organization website, if available',
         },
+        newsletter: {
+          title: 'Newsletter',
+          consent:
+            "By subscribing to our newsletter, you agree to be added to our email list, through which you will receive periodic portal updates, important announcements, promotions, and relevant information. You can unsubscribe anytime by clicking the 'unsubscribe' link in our emails. You can review our {policyLink}.",
+          checkbox:
+            'I agree to receive the INCLUDE Data Hub quarterly newsletter to get the latest news.',
+          policyLink: 'INCLUDE DCC privacy policy',
+          warning: 'Your subscription status could not be confirmed. Please try again.',
+          placeholder: 'email@domain.com',
+        },
         saveChanges: 'Save changes',
         discardChanges: 'Discard changes',
       },

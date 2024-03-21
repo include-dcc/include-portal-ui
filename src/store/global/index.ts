@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+
 import { globalSelector } from './selector';
 
 export type { initialState as GlobalInitialState } from './types';

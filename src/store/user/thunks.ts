@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { cloneDeep, get, keys, merge, set } from 'lodash';
 
 import { UserApi } from 'services/api/user';
-import { TUser, TUserConfig, TUserUpdate } from 'services/api/user/models';
+import { TNewsletterUpdate, TUser, TUserConfig, TUserUpdate } from 'services/api/user/models';
 import { globalActions } from 'store/global';
 import { RootState } from 'store/types';
 import { handleThunkApiReponse } from 'store/utils';
@@ -58,6 +58,64 @@ const updateUser = createAsyncThunk<
     },
   },
 );
+
+const updateNewsletterSubscription = createAsyncThunk<
+  TUser,
+  {
+    data: TNewsletterUpdate;
+    callback?: () => void;
+  },
+  { rejectValue: string }
+>(
+  'user/update',
+  async (args, thunkAPI) => {
+    if (args.data.newsletter_subscription_status === 'subscribed' && args.data.newsletter_email) {
+      const { data, error } = await UserApi.subscribeNewsletter({
+        newsletter_email: args.data.newsletter_email,
+      });
+
+      return handleThunkApiReponse({
+        error,
+        data: data!,
+        reject: thunkAPI.rejectWithValue,
+        onSuccess: args.callback,
+      });
+    } else {
+      const { data, error } = await UserApi.unsubscribeNewsletter();
+
+      return handleThunkApiReponse({
+        error,
+        data: data!,
+        reject: thunkAPI.rejectWithValue,
+        onSuccess: args.callback,
+      });
+    }
+  },
+  {
+    condition: (args) => {
+      if (Object.keys(args.data).length < 1) {
+        return false;
+      }
+    },
+  },
+);
+
+const refreshNewsletterStatus = createAsyncThunk<
+  TUser,
+  {
+    callback?: () => void;
+  },
+  { rejectValue: string }
+>('user/update', async (args, thunkAPI) => {
+  const { data, error } = await UserApi.refreshNewsletter();
+
+  return handleThunkApiReponse({
+    error,
+    data: data!,
+    reject: thunkAPI.rejectWithValue,
+    onSuccess: args.callback,
+  });
+});
 
 export const cleanupConfig = (updateConfig: TUserConfig, config?: TUserConfig): TUserConfig => {
   // keep last item
@@ -119,4 +177,11 @@ const deleteUser = createAsyncThunk<void, void, { rejectValue: string; state: Ro
   },
 );
 
-export { fetchUser, updateUser, updateUserConfig, deleteUser };
+export {
+  fetchUser,
+  updateUser,
+  updateUserConfig,
+  updateNewsletterSubscription,
+  refreshNewsletterStatus,
+  deleteUser,
+};

@@ -27,6 +27,8 @@ export type TUser = {
   config: TUserConfig;
   linkedin?: string;
   profile_image_key?: string | null;
+  newsletter_email?: string | null;
+  newsletter_subscription_status?: string;
 };
 
 export type TProfileImagePresignedOutput = {
@@ -77,3 +79,5 @@ export type TUserConfig = {
 
 export type TUserInsert = Omit<TUser, 'id' | 'keycloak_id' | 'creation_date' | 'update_date'>;
 export type TUserUpdate = Partial<TUserInsert>;
+export type TNewsletterUpdate = Pick<TUser, 'newsletter_email' | 'newsletter_subscription_status'>;
+export type TNewsletterSubscribe = { newsletter_email: string };
