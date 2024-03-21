@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router';
+import { ReadOutlined } from '@ant-design/icons';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import {
   aggregationToChartData,
   treeNodeToChartData,
 } from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
-import { ReadOutlined } from '@ant-design/icons';
 import EntityPage, {
   EntityDataset,
   EntityDescriptions,
@@ -39,7 +39,7 @@ import style from './index.module.scss';
 
 enum SectionId {
   SUMMARY = 'summary',
-  DATA = 'data',
+  STATISTIC = 'statistic',
   DATA_ACCESS = 'data_access',
   DATA_FILE = 'data_file',
   DATASET = 'dataset',
@@ -178,7 +178,7 @@ const StudyEntity = () => {
 
   const defaultLinks = [
     { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
-    { href: `#${SectionId.DATA}`, title: intl.get('entities.study.title') },
+    { href: `#${SectionId.STATISTIC}`, title: intl.get('entities.study.statistic.title') },
   ];
   let datasetLength = 0;
   if (hasDataset) {
@@ -213,25 +213,21 @@ const StudyEntity = () => {
         />
 
         <EntityStatistics
-          id={SectionId.DATA}
-          title={intl.get('entities.study.title')}
+          id={SectionId.STATISTIC}
+          title={intl.get('entities.study.statistic.title')}
           loading={loading}
-          header={intl.get('entities.study.header')}
+          header={intl.get('entities.study.statistic.header')}
           dictionary={{
             phenotype: {
-              headerTitle: intl.get(
-                'screen.dataExploration.tabs.summary.observed_phenotype.cardTitle',
-              ),
-              legendAxisLeft: intl.get(
-                'screen.dataExploration.tabs.summary.observed_phenotype.cardTitle',
-              ),
+              headerTitle: intl.get('entities.study.statistic.phenotype'),
+              legendAxisLeft: intl.get('entities.study.statistic.phenotype'),
               legendAxisBottom: intl.get(
                 'screen.dataExploration.tabs.summary.observed_phenotype.legendAxisBottom',
               ),
             },
             mondo: {
-              headerTitle: intl.get('screen.dataExploration.tabs.summary.mondo.cardTitle'),
-              legendAxisLeft: intl.get('screen.dataExploration.tabs.summary.mondo.cardTitle'),
+              headerTitle: intl.get('entities.study.statistic.mondo'),
+              legendAxisLeft: intl.get('entities.study.statistic.mondo'),
               legendAxisBottom: intl.get(
                 'screen.dataExploration.tabs.summary.mondo.legendAxisBottom',
               ),

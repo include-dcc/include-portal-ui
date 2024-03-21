@@ -1479,8 +1479,13 @@ const en = {
     study: {
       access_limitation: 'Access Limitation',
       access_requirement: 'Access Requirement',
+      statistic: {
+        title: 'Statistic',
+        header: 'Summary Statistics',
+        phenotype: 'Most Frequent Phenotypes (HPO)',
+        mondo: 'Most Frequent Diagnoses (MONDO)',
+      },
       title: 'Data',
-      header: 'Summary Statistics',
       count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
       study: 'Study',
       affectedStudies: {
