@@ -6,11 +6,13 @@ import {
   aggregationToChartData,
   treeNodeToChartData,
 } from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
+import { ReadOutlined } from '@ant-design/icons';
 import EntityPage, {
   EntityDataset,
   EntityDescriptions,
   EntityStatistics,
   EntityTableMultiple,
+  EntityTitle,
 } from '@ferlab/ui/core/pages/EntityPage';
 import { Typography } from 'antd';
 import { useStudy } from 'graphql/studies/actions';
@@ -31,6 +33,7 @@ import getDataAccessDescriptions from './utils/dataAccess';
 import getDatasetDescription from './utils/datasets';
 import getFileTables from './utils/file';
 import getSummaryDescriptions from './utils/summary';
+import SummaryHeader from './SummaryHeader';
 
 import style from './index.module.scss';
 
@@ -197,6 +200,8 @@ const StudyEntity = () => {
       emptyText={intl.get('no.data.available')}
     >
       <>
+        <EntityTitle text={study?.study_name} icon={<ReadOutlined />} loading={loading} />
+
         <EntityDescriptions
           id={SectionId.SUMMARY}
           title={intl.get('global.summary')}
@@ -204,6 +209,7 @@ const StudyEntity = () => {
           descriptions={getSummaryDescriptions(study)}
           loading={loading}
           noDataLabel={intl.get('no.data.available')}
+          subheader={<SummaryHeader study={study} />}
         />
 
         <EntityStatistics
