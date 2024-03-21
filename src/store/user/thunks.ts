@@ -9,6 +9,7 @@ import { RootState } from 'store/types';
 import { handleThunkApiReponse } from 'store/utils';
 
 import { userActions } from './slice';
+import { SubscriptionStatus } from './types';
 
 const fetchUser = createAsyncThunk<TUser, void, { rejectValue: string; state: RootState }>(
   'user/fetch',
@@ -69,7 +70,10 @@ const updateNewsletterSubscription = createAsyncThunk<
 >(
   'user/update',
   async (args, thunkAPI) => {
-    if (args.data.newsletter_subscription_status === 'subscribed' && args.data.newsletter_email) {
+    if (
+      args.data.newsletter_subscription_status === SubscriptionStatus.SUBSCRIBED &&
+      args.data.newsletter_email
+    ) {
       const { data, error } = await UserApi.subscribeNewsletter({
         newsletter_email: args.data.newsletter_email,
       });

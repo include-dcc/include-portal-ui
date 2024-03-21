@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { MailOutlined } from '@ant-design/icons';
-import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { Alert, Checkbox, Form, Input, Space, Spin, Typography } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import cx from 'classnames';
@@ -13,6 +12,7 @@ import {
   refreshNewsletterStatus,
   updateNewsletterSubscription,
 } from '../../../../store/user/thunks';
+import { SubscriptionStatus } from '../../../../store/user/types';
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
 
@@ -82,8 +82,8 @@ const NewsletterCard = () => {
               data: {
                 ...values,
                 newsletter_subscription_status: values.newsletter_subscription_status
-                  ? 'subscribed'
-                  : 'unsubscribed',
+                  ? SubscriptionStatus.SUBSCRIBED
+                  : SubscriptionStatus.UNSUBSCRIBED,
               },
             }),
           );
@@ -91,7 +91,7 @@ const NewsletterCard = () => {
       >
         <Spin spinning={loading || isUpdating}>
           <Space size={24} direction="vertical">
-            {userInfo?.newsletter_subscription_status === 'failed' && (
+            {userInfo?.newsletter_subscription_status === SubscriptionStatus.FAILED && (
               <Alert
                 showIcon
                 type="warning"
@@ -100,14 +100,8 @@ const NewsletterCard = () => {
             )}
             <Typography.Text className={cardStyles.allFieldRequiredNotice}>
               {intl.getHTML('screen.profileSettings.cards.newsletter.consent', {
-                policyLink: (
-                  <ExternalLink
-                    className={cardStyles.link}
-                    href={`https://includedcc.org/policies`}
-                  >
-                    {intl.get('screen.profileSettings.cards.newsletter.policyLink')}
-                  </ExternalLink>
-                ),
+                policyLink: intl.get('screen.profileSettings.cards.newsletter.policyLink'),
+                policyLinkHref: 'https://includedcc.org/policies',
               })}
             </Typography.Text>
           </Space>
