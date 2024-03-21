@@ -85,7 +85,7 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
         renderItem={(sourceText) => (
           <ExternalLink
             className={styles.externalLink}
-            href={`https://pubmed.ncbi.nlm.nih.gov/${sourceText}`}
+            href={`https://pubmed.ncbi.nlm.nih.gov/${sourceText.replace('PMID: ', '')}`}
           >
             {sourceText}
           </ExternalLink>
