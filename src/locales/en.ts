@@ -1384,6 +1384,7 @@ const en = {
       age: 'Age',
       age_tooltip: 'Age at Biospecimen Collection',
       biospecimen: 'Biospecimen',
+      biospecimens: 'Biospecimens',
       biospecimen_storage: 'Biospecimen Storage',
       collection_id: 'Collection ID',
       collection_sample_type: 'Collection Sample Type',
