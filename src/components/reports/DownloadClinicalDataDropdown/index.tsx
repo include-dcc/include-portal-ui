@@ -10,17 +10,21 @@ import { ReportType } from 'services/api/reports/models';
 import { fetchReport } from 'store/report/thunks';
 
 interface OwnProps {
-  participantIds: string[];
+  participantIds?: string[];
   sqon?: ISqonGroupFilter;
   type?: 'default' | 'primary';
 }
 
-const DownloadClinicalDataDropdown = ({ participantIds, sqon, type = 'default' }: OwnProps) => {
+const DownloadClinicalDataDropdown = ({
+  participantIds = [],
+  sqon,
+  type = 'default',
+}: OwnProps) => {
   const dispatch = useDispatch();
 
   const getCurrentSqon = (): any => sqon || generateSelectionSqon('participant_id', participantIds);
 
-  const disabledDropdown = participantIds.length === 0;
+  const disabledDropdown = sqon ? false : participantIds.length === 0;
 
   const menu = {
     onClick: (e: MenuInfo) =>

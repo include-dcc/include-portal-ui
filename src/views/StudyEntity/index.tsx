@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router';
 import { ReadOutlined } from '@ant-design/icons';
+import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import {
   aggregationToChartData,
   treeNodeToChartData,
@@ -14,8 +16,14 @@ import EntityPage, {
   EntityTableMultiple,
   EntityTitle,
 } from '@ferlab/ui/core/pages/EntityPage';
-import { Typography } from 'antd';
+import { Space, Typography } from 'antd';
+import { INDEXES } from 'graphql/constants';
+import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
+import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { useStudy } from 'graphql/studies/actions';
+
+import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
+import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
 
 import {
   DATA_CATEGORY_QUERY,
@@ -37,6 +45,8 @@ import SummaryHeader from './SummaryHeader';
 
 import style from './index.module.scss';
 
+const queryId = 'include-study-repo-key';
+
 enum SectionId {
   SUMMARY = 'summary',
   STATISTIC = 'statistic',
@@ -47,6 +57,9 @@ enum SectionId {
 
 const StudyEntity = () => {
   const { study_code } = useParams<{ study_code: string }>();
+  const { sqon: participantSqon } = useParticipantResolvedSqon(queryId);
+  const { sqon: fileSqon } = useFileResolvedSqon(queryId);
+
   const { data: study, loading } = useStudy({
     field: 'study_code',
     value: study_code ?? '',
@@ -55,6 +68,25 @@ const StudyEntity = () => {
   const [mondo, setMondo] = useState<any>([]);
   const [phenotypesLoading, setPhenotypesLoading] = useState<boolean>(true);
   const [mondoLoading, setMondoLoading] = useState<boolean>(true);
+
+  /** We initialize here a sqon by queryBuilderId to handle actions */
+  useEffect(() => {
+    if (study_code) {
+      addQuery({
+        queryBuilderId: queryId,
+        query: generateQuery({
+          newFilters: [
+            generateValueFilter({
+              field: 'study.study_code',
+              value: [study_code],
+              index: INDEXES.PARTICIPANT,
+            }),
+          ],
+        }),
+        setAsActive: true,
+      });
+    }
+  }, [study_code]);
 
   const sqon = {
     content: [
@@ -200,7 +232,25 @@ const StudyEntity = () => {
       emptyText={intl.get('no.data.available')}
     >
       <>
-        <EntityTitle text={study?.study_name} icon={<ReadOutlined />} loading={loading} />
+        <EntityTitle
+          text={study?.study_name}
+          icon={<ReadOutlined />}
+          loading={loading}
+          extra={
+            <Space>
+              {study && (
+                <DownloadClinicalDataDropdown sqon={participantSqon} key="actionDropdown" />
+              )}
+              {study && (
+                <DownloadFileManifestModal
+                  key="download-file-manifest"
+                  sqon={fileSqon}
+                  type="primary"
+                />
+              )}
+            </Space>
+          }
+        />
 
         <EntityDescriptions
           id={SectionId.SUMMARY}
