@@ -156,7 +156,7 @@ export const getExpandedColumns = (): ColumnType<any>[] => [
   {
     key: 'predictions',
     dataIndex: 'predictions',
-    title: intl.get('screen.variants.consequences.predictions.prediction'),
+    title: intl.get('screen.variants.consequences.predictions.predictions'),
     render: (predictions: IPredictionEntity) => {
       const impact = getPredictionScore(predictions, getEntityConsequenceDictionary().predictions);
       if (!impact?.length) return TABLE_EMPTY_PLACE_HOLDER;
