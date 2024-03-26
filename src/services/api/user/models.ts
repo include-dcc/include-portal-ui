@@ -73,6 +73,11 @@ export type TUserConfig = {
       variants?: TUserTableConfig;
     };
   };
+  study?: {
+    tables?: {
+      study?: TUserTableConfig;
+    };
+  };
 };
 
 export type TUserInsert = Omit<TUser, 'id' | 'keycloak_id' | 'creation_date' | 'update_date'>;

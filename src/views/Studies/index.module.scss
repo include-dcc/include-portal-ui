@@ -1,14 +1,11 @@
 @import "src/style/themes/include/layout";
 
-.studiesWrapper {
+.studiesPage {
+  display: flex;
+}
+
+.scrollContent {
   width: 100%;
   padding: $default-page-content-padding;
-
-  .tableWrapper {
-    width: 100%;
-  }
-
-  .title {
-    margin: 0;
-  }
 }
+

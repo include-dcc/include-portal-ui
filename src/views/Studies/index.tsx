@@ -1,38 +1,28 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-import ProTable from '@ferlab/ui/core/components/ProTable';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
-import { tieBreaker } from '@ferlab/ui/core/components/ProTable/utils';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { SortDirection } from '@ferlab/ui/core/graphql/constants';
-import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Space, Typography } from 'antd';
+import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import { INDEXES } from 'graphql/constants';
-import { useStudies } from 'graphql/studies/actions';
 import { IStudyEntity } from 'graphql/studies/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { formatQuerySortList } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { numberWithCommas } from 'utils/string';
-import { getProTableDictionary } from 'utils/translation';
 
+import { FilterInfo } from '../../components/uiKit/FilterList/types';
+import useGetExtendedMappings from '../../hooks/graphql/useGetExtendedMappings';
 import StudyPopoverRedirect from '../DataExploration/components/StudyPopoverRedirect';
 
-import {
-  DEFAULT_PAGE_INDEX,
-  DEFAULT_PAGE_SIZE,
-  DEFAULT_QUERY_CONFIG,
-  DEFAULT_STUDY_QUERY_SORT,
-} from './utils/constants';
+import PageContent from './components/PageContent';
+import SideBarFacet from './components/SideBarFacet';
+import StudySearch from './components/StudySearch';
+import { SCROLL_WRAPPER_ID, STUDIES_REPO_QB_ID } from './utils/constants';
 
 import styles from './index.module.scss';
-
-const { Title } = Typography;
 
 const enum DataCategory {
   METABOLOMIC = 'Metabolomics',
@@ -45,6 +35,36 @@ const enum DataCategory {
 
 const hasDataCategory = (dataCategory: string[], category: DataCategory) =>
   dataCategory?.includes(category) ? <CheckOutlined /> : TABLE_EMPTY_PLACE_HOLDER;
+
+const filterInfo: FilterInfo = {
+  customSearches: [<StudySearch key={1} queryBuilderId={STUDIES_REPO_QB_ID} />],
+  defaultOpenFacets: [
+    'program',
+    'domain',
+    'data_category',
+    'experimental_strategy',
+    'part_lifespan_stage',
+    'family_data',
+    'data_source',
+    'study_design',
+    'controlled_access',
+  ],
+  groups: [
+    {
+      facets: [
+        'program',
+        'domain',
+        'data_category',
+        'experimental_strategy',
+        'part_lifespan_stage',
+        'family_data',
+        'data_source',
+        'study_design',
+        'controlled_access',
+      ],
+    },
+  ],
+};
 
 const columns: ProColumnType<any>[] = [
   {
@@ -203,58 +223,19 @@ const columns: ProColumnType<any>[] = [
 ];
 
 const Studies = () => {
-  const [queryConfig, setQueryConfig] = useState(DEFAULT_QUERY_CONFIG);
-
-  const { loading, data, total } = useStudies({
-    first: DEFAULT_PAGE_SIZE,
-    sort: tieBreaker({
-      sort: queryConfig.sort,
-      defaultSort: DEFAULT_STUDY_QUERY_SORT,
-      field: 'study_code',
-      order: queryConfig.operations?.previous ? SortDirection.Desc : SortDirection.Asc,
-    }),
-  });
-
-  const updatedData = data.map((study) => ({
-    ...study,
-    key: study.study_code,
-  }));
+  const studiesMappingResults = useGetExtendedMappings(INDEXES.STUDY);
 
   return (
-    <Space direction="vertical" size={16} className={styles.studiesWrapper}>
-      <Title className={styles.title} level={4}>
-        Studies
-      </Title>
-      <GridCard
-        content={
-          <ProTable
-            tableId="studies"
-            wrapperClassName={styles.tableWrapper}
-            size="small"
-            bordered
-            columns={columns}
-            dataSource={updatedData}
-            loading={loading}
-            headerConfig={{
-              itemCount: {
-                pageIndex: 1,
-                pageSize: 20,
-                total,
-              },
-            }}
-            onChange={(_pagination, _filter, sorter) => {
-              setQueryConfig({
-                pageIndex: DEFAULT_PAGE_INDEX,
-                size: queryConfig.size!,
-                sort: formatQuerySortList(sorter),
-              });
-            }}
-            showSorterTooltip={false}
-            dictionary={getProTableDictionary()}
-          />
-        }
+    <div className={styles.studiesPage}>
+      <SideBarFacet
+        extendedMappingResults={studiesMappingResults}
+        filterInfo={filterInfo}
+        filterWithFooter={false}
       />
-    </Space>
+      <ScrollContent id={SCROLL_WRAPPER_ID} className={styles.scrollContent}>
+        <PageContent defaultColumns={columns} extendedMappingResults={studiesMappingResults} />
+      </ScrollContent>
+    </div>
   );
 };
 
