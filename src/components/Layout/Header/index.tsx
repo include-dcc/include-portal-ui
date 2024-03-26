@@ -22,13 +22,12 @@ import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import IncludeIcon from 'components/Icons/IncludeIcon';
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import HeaderLink from 'components/Layout/Header/HeaderLink';
+import style from 'components/Layout/Header/index.module.scss';
 import UserAvatar from 'components/UserAvatar';
 import { trackLogout, trackVisitResources } from 'services/analytics';
 import { useUser } from 'store/user';
 import { userActions } from 'store/user/slice';
 import { STATIC_ROUTES } from 'utils/routes';
-
-import style from './index.module.scss';
 
 const iconSize = { width: 14, height: 14 };
 const FT_FLAG_KEY = 'SITE_WIDE_BANNER';
@@ -110,6 +109,7 @@ const Header = () => {
             title={intl.get('layout.main.menu.community')}
           />,
           <Dropdown
+            overlayClassName={style.dropdown}
             key="resources"
             trigger={['click']}
             menu={{
