@@ -1,5 +1,5 @@
-@import "src/style/themes/include/colors";
-@import "src/style/themes/include/layout";
+@import 'src/style/themes/include/colors';
+@import 'src/style/themes/include/layout';
 
 .mainHeader {
   height: $main-header-height;
@@ -12,21 +12,21 @@
     overflow: unset;
   }
 
-  div[class$="-header-heading"],
-  span[class$="-header-heading-title"],
-  div[class$="-header-heading-left"] {
+  div[class$='-header-heading'],
+  span[class$='-header-heading-title'],
+  div[class$='-header-heading-left'] {
     height: 100%;
   }
 
-  span[class$="-header-heading-title"] {
+  span[class$='-header-heading-title'] {
     margin-right: 28px;
   }
 
-  div[class$="-header-heading-left"] {
+  div[class$='-header-heading-left'] {
     margin: 0;
   }
 
-  span[class$="-header-heading-extra"] {
+  span[class$='-header-heading-extra'] {
     display: flex;
     align-items: center;
   }
@@ -34,28 +34,6 @@
   .logo {
     height: 100%;
     width: auto;
-  }
-
-  .headerMenu {
-    margin-left: 24px;
-  }
-
-  .headerBtn {
-    border: none;
-    color: $gray-8;
-    padding: 4px 8px;
-    margin: 0 5px;
-
-    &:hover,
-    &:focus {
-      background-color: $gray-4;
-      border: none;
-      color: $gray-8;
-    }
-  }
-
-  .icon path {
-    fill: $gray-8;
   }
 
   .userMenuTrigger {
@@ -78,6 +56,15 @@
       box-shadow: 0 0 0 2px $gray-8;
     }
   }
+
+  .resourcesMenuTrigger {
+    color: $gray-8;
+    margin: 5px 8px;
+
+    .resources {
+      margin-right: 8px;
+    }
+  }
 }
 
 .siteWideBanner {
@@ -86,4 +73,12 @@
 
 .userMenuEmail {
   cursor: default;
+}
+
+.linkText {
+  padding-left: 8px;
+}
+
+.dropdown {
+  min-width: 120px !important;
 }

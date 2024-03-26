@@ -6,13 +6,13 @@ import {
   FileSearchOutlined,
   HomeOutlined,
   LogoutOutlined,
+  MailOutlined,
   ReadOutlined,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { useKeycloak } from '@react-keycloak/web';
-import { Button, Dropdown, PageHeader, Space, Typography } from 'antd';
+import { Dropdown, PageHeader, Space, Typography } from 'antd';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
 import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
@@ -33,6 +33,8 @@ const iconSize = { width: 14, height: 14 };
 const FT_FLAG_KEY = 'SITE_WIDE_BANNER';
 const BANNER_TYPE_KEY = FT_FLAG_KEY + '_TYPE';
 const BANNER_MSG_KEY = FT_FLAG_KEY + '_MSG';
+
+const { Text } = Typography;
 
 const Header = () => {
   const { userInfo } = useUser();
@@ -106,26 +108,87 @@ const Header = () => {
             icon={<TeamOutlined />}
             title={intl.get('layout.main.menu.community')}
           />,
-          <ExternalLink key="include-website" href="https://includedcc.org">
-            <Button
-              key="external-website"
-              className={style.headerBtn}
-              onClick={() => trackVisitResources('website')}
-            >
-              {intl.get('layout.main.menu.website')}
-              <ExternalLinkIcon className={style.icon} {...iconSize} />
-            </Button>
-          </ExternalLink>,
-          <ExternalLink key="include-help" href="https://help.includedcc.org">
-            <Button
-              key="external-help"
-              className={style.headerBtn}
-              onClick={() => trackVisitResources('help')}
-            >
-              {intl.get('layout.main.menu.help')}
-              <ExternalLinkIcon className={style.icon} {...iconSize} />
-            </Button>
-          </ExternalLink>,
+          <Dropdown
+            overlayClassName={style.dropdown}
+            key="resources"
+            trigger={['click']}
+            menu={{
+              items: [
+                {
+                  key: 'website',
+                  disabled: false,
+                  label: (
+                    <a
+                      href="#"
+                      onClick={() => {
+                        trackVisitResources('website');
+                        window.open('https://includedcc.org/', '_blank');
+                      }}
+                    >
+                      <ExternalLinkIcon {...iconSize} />
+                      <Text className={style.linkText}>{intl.get('layout.main.menu.website')}</Text>
+                    </a>
+                  ),
+                },
+                {
+                  key: 'help',
+                  label: (
+                    <a
+                      href="#"
+                      onClick={() => {
+                        trackVisitResources('help');
+                        window.open('https://help.includedcc.org/docs/quick-start-guide', '_blank');
+                      }}
+                    >
+                      <ExternalLinkIcon {...iconSize} />
+                      <Text className={style.linkText}>{intl.get('layout.main.menu.help')}</Text>
+                    </a>
+                  ),
+                },
+                {
+                  key: 'forum',
+                  label: (
+                    <a
+                      href="#"
+                      onClick={() => {
+                        trackVisitResources('forum');
+                        window.open('https://help.includedcc.org/discuss', '_blank');
+                      }}
+                    >
+                      <ExternalLinkIcon {...iconSize} />
+                      <Text className={style.linkText}>{intl.get('layout.main.menu.forum')}</Text>
+                    </a>
+                  ),
+                },
+                {
+                  type: 'divider',
+                },
+                {
+                  key: 'contact',
+                  label: (
+                    <a
+                      href="#"
+                      onClick={() => {
+                        trackVisitResources('contact');
+                        window.open(
+                          'https://app.smartsheet.com/b/form/514745159a004c2e987fff0aa16ceaac',
+                          '_blank',
+                        );
+                      }}
+                    >
+                      <MailOutlined />
+                      <Text className={style.linkText}>{intl.get('layout.main.menu.contact')}</Text>
+                    </a>
+                  ),
+                },
+              ],
+            }}
+          >
+            <a className={style.resourcesMenuTrigger} onClick={(e) => e.preventDefault()} href="">
+              <span className={style.resources}>{intl.get('layout.main.menu.resources')}</span>
+              <DownOutlined />
+            </a>
+          </Dropdown>,
           <Dropdown
             key="user-menu"
             trigger={['click']}
@@ -136,7 +199,7 @@ const Header = () => {
                   disabled: true,
                   label: (
                     <Space size={4} className={style.userMenuEmail}>
-                      <Typography.Text>Signed in with</Typography.Text>
+                      <Typography.Text>{intl.get('layout.user.menu.signInWith')}</Typography.Text>
                       <Typography.Text strong>
                         {tokenParsed.email || tokenParsed.identity_provider_identity}
                       </Typography.Text>
