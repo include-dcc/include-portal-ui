@@ -7,12 +7,13 @@ import { useForm } from 'antd/lib/form/Form';
 import cx from 'classnames';
 
 import { useUser } from 'store/user';
-
 import {
   refreshNewsletterStatus,
-  updateNewsletterSubscription,
-} from '../../../../store/user/thunks';
-import { SubscriptionStatus } from '../../../../store/user/types';
+  subscribeNewsletter,
+  unsubscribeNewsletter,
+} from 'store/user/thunks';
+import { SubscriptionStatus } from 'store/user/types';
+
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
 
@@ -32,9 +33,8 @@ const initialChangedValues = {
 const NewsletterCard = () => {
   const [form] = useForm();
   const dispatch = useDispatch();
-  const { userInfo, isUpdating } = useUser();
+  const { userInfo, isUpdating, isLoading } = useUser();
   const [hasChanged, setHasChanged] = useState<Record<FORM_FIELDS, boolean>>(initialChangedValues);
-  const [loading, setLoading] = useState<boolean>(true);
   const initialValues = useRef<Record<FORM_FIELDS, boolean | string>>();
 
   const isValueChanged = () => Object.values(hasChanged).some((val) => val);
@@ -42,6 +42,22 @@ const NewsletterCard = () => {
   const onDiscardChanges = () => {
     setHasChanged(initialChangedValues);
     form.setFieldsValue(initialValues.current);
+  };
+
+  const handleSumbit = (values: any) => {
+    const { newsletter_subscription_status, newsletter_email } = values;
+
+    if (newsletter_subscription_status === SubscriptionStatus.SUBSCRIBED && newsletter_email) {
+      dispatch(
+        subscribeNewsletter({
+          data: {
+            newsletter_email,
+          },
+        }),
+      );
+    } else {
+      unsubscribeNewsletter({});
+    }
   };
 
   useEffect(() => {
@@ -55,13 +71,7 @@ const NewsletterCard = () => {
   }, [form, userInfo]);
 
   useEffect(() => {
-    dispatch(
-      refreshNewsletterStatus({
-        callback: () => {
-          setLoading(false);
-        },
-      }),
-    );
+    dispatch(refreshNewsletterStatus({}));
   }, [dispatch]);
 
   return (
@@ -76,20 +86,9 @@ const NewsletterCard = () => {
         onHasChanged={setHasChanged}
         initialValues={initialValues}
         hasChangedInitialValue={hasChanged}
-        onFinish={(values: any) => {
-          dispatch(
-            updateNewsletterSubscription({
-              data: {
-                ...values,
-                newsletter_subscription_status: values.newsletter_subscription_status
-                  ? SubscriptionStatus.SUBSCRIBED
-                  : SubscriptionStatus.UNSUBSCRIBED,
-              },
-            }),
-          );
-        }}
+        onFinish={handleSumbit}
       >
-        <Spin spinning={loading || isUpdating}>
+        <Spin spinning={isLoading || isUpdating}>
           <Space size={24} direction="vertical">
             {userInfo?.newsletter_subscription_status === SubscriptionStatus.FAILED && (
               <Alert

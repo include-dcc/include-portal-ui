@@ -557,6 +557,13 @@ const en = {
           policyLink: 'INCLUDE DCC privacy policy',
           warning: 'Your subscription status could not be confirmed. Please try again.',
           placeholder: 'email@domain.com',
+          error: {
+            title: 'Newsletter Subscription',
+            subscribeMessage:
+              'We encountered an issue while trying to subscribe you to our newsletter. Please try again later from your profile page or contact support for assistance.',
+            unsubscribeMessage:
+              'We encountered an issue while trying to subscribe you to our newsletter. Please try again later from your profile page or contact support for assistance.',
+          },
         },
         saveChanges: 'Save changes',
         discardChanges: 'Discard changes',

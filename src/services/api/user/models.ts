@@ -79,5 +79,4 @@ export type TUserConfig = {
 
 export type TUserInsert = Omit<TUser, 'id' | 'keycloak_id' | 'creation_date' | 'update_date'>;
 export type TUserUpdate = Partial<TUserInsert>;
-export type TNewsletterUpdate = Pick<TUser, 'newsletter_email' | 'newsletter_subscription_status'>;
-export type TNewsletterSubscribe = { newsletter_email: string };
+export type TNewsletterSubscribe = Pick<TUser, 'newsletter_email'>;

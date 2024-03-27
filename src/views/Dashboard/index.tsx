@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import SortableGrid from '@ferlab/ui/core/layout/SortableGrid';
@@ -11,6 +12,10 @@ import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { orderCardIfNeeded } from 'utils/helper';
 
+import useFeatureToggle from '../../hooks/useFeatureToggle';
+import { globalActions } from '../../store/global';
+import { SubscriptionStatus } from '../../store/user/types';
+
 import { biospecimenRequestCard, dashboardCards } from './components/DashboardCards';
 import DataExplorationLinks from './components/DashboardCards/DataExplorationLinks';
 
@@ -21,13 +26,28 @@ const { Title } = Typography;
 const FT_FLAG_KEY = 'DASHBOARD_BANNER';
 const BANNER_TYPE_KEY = FT_FLAG_KEY + '_TYPE';
 const BANNER_MSG_KEY = FT_FLAG_KEY + '_MSG';
+const FT_FLAG_NEWSLETTER_KEY = 'NEWSLETTER_NOTIFICATION';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const { isEnabled, hideFeature } = useFeatureToggle(FT_FLAG_NEWSLETTER_KEY);
   const { userInfo } = useUser();
   const hasRequestBio = getFTEnvVarByKey(BIOSPECIMEN_REQUEST_KEY);
   const cards =
     hasRequestBio === 'true' ? [...dashboardCards, biospecimenRequestCard] : dashboardCards;
+
+  useEffect(() => {
+    if (isEnabled && userInfo?.newsletter_subscription_status === SubscriptionStatus.FAILED) {
+      dispatch(
+        globalActions.displayNotification({
+          type: 'error',
+          message: intl.get('screen.profileSettings.cards.newsletter.error.title'),
+          description: intl.get('screen.profileSettings.cards.newsletter.error.unsubscribeMessage'),
+          onClose: hideFeature,
+        }),
+      );
+    }
+  }, [dispatch, hideFeature, isEnabled, userInfo?.newsletter_subscription_status]);
 
   return (
     <Space direction="vertical" size={24} className={styles.dashboardWrapper}>

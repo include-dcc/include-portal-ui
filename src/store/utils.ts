@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 
-export const handleThunkApiReponse = <T>(config: {
+export const handleThunkApiResponse = <T>(config: {
   error: AxiosError | undefined;
   data: T;
   reject: (error: string) => any;

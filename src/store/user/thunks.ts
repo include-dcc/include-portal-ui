@@ -1,15 +1,15 @@
+import intl from 'react-intl-universal';
 import { TColumnStates } from '@ferlab/ui/core/components/ProTable/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { cloneDeep, get, keys, merge, set } from 'lodash';
 
 import { UserApi } from 'services/api/user';
-import { TNewsletterUpdate, TUser, TUserConfig, TUserUpdate } from 'services/api/user/models';
+import { TNewsletterSubscribe, TUser, TUserConfig, TUserUpdate } from 'services/api/user/models';
 import { globalActions } from 'store/global';
 import { RootState } from 'store/types';
-import { handleThunkApiReponse } from 'store/utils';
+import { handleThunkApiResponse } from 'store/utils';
 
 import { userActions } from './slice';
-import { SubscriptionStatus } from './types';
 
 const fetchUser = createAsyncThunk<TUser, void, { rejectValue: string; state: RootState }>(
   'user/fetch',
@@ -44,7 +44,7 @@ const updateUser = createAsyncThunk<
   async (args, thunkAPI) => {
     const { data, error } = await UserApi.update(args.data);
 
-    return handleThunkApiReponse({
+    return handleThunkApiResponse({
       error,
       data: data!,
       reject: thunkAPI.rejectWithValue,
@@ -60,40 +60,63 @@ const updateUser = createAsyncThunk<
   },
 );
 
-const updateNewsletterSubscription = createAsyncThunk<
+const unsubscribeNewsletter = createAsyncThunk<
   TUser,
   {
-    data: TNewsletterUpdate;
+    callback?: () => void;
+  },
+  { rejectValue: string }
+>('user/update', async (args, thunkAPI) => {
+  const { data, error } = await UserApi.unsubscribeNewsletter();
+
+  if (error) {
+    thunkAPI.dispatch(
+      globalActions.displayNotification({
+        type: 'error',
+        message: intl.get('screen.profileSettings.cards.newsletter.error.title'),
+        description: intl.get('screen.profileSettings.cards.newsletter.error.unsubscribeMessage'),
+      }),
+    );
+  }
+
+  return handleThunkApiResponse({
+    error,
+    data: data!,
+    reject: thunkAPI.rejectWithValue,
+    onSuccess: args.callback,
+  });
+});
+
+const subscribeNewsletter = createAsyncThunk<
+  TUser,
+  {
+    data: TNewsletterSubscribe;
     callback?: () => void;
   },
   { rejectValue: string }
 >(
   'user/update',
   async (args, thunkAPI) => {
-    if (
-      args.data.newsletter_subscription_status === SubscriptionStatus.SUBSCRIBED &&
-      args.data.newsletter_email
-    ) {
-      const { data, error } = await UserApi.subscribeNewsletter({
-        newsletter_email: args.data.newsletter_email,
-      });
+    const { data, error } = await UserApi.subscribeNewsletter({
+      newsletter_email: args.data.newsletter_email,
+    });
 
-      return handleThunkApiReponse({
-        error,
-        data: data!,
-        reject: thunkAPI.rejectWithValue,
-        onSuccess: args.callback,
-      });
-    } else {
-      const { data, error } = await UserApi.unsubscribeNewsletter();
-
-      return handleThunkApiReponse({
-        error,
-        data: data!,
-        reject: thunkAPI.rejectWithValue,
-        onSuccess: args.callback,
-      });
+    if (error) {
+      thunkAPI.dispatch(
+        globalActions.displayNotification({
+          type: 'error',
+          message: intl.get('screen.profileSettings.cards.newsletter.error.title'),
+          description: intl.get('screen.profileSettings.cards.newsletter.error.subscribeMessage'),
+        }),
+      );
     }
+
+    return handleThunkApiResponse({
+      error,
+      data: data!,
+      reject: thunkAPI.rejectWithValue,
+      onSuccess: args.callback,
+    });
   },
   {
     condition: (args) => {
@@ -113,7 +136,7 @@ const refreshNewsletterStatus = createAsyncThunk<
 >('user/update', async (args, thunkAPI) => {
   const { data, error } = await UserApi.refreshNewsletter();
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     data: data!,
     reject: thunkAPI.rejectWithValue,
@@ -164,7 +187,7 @@ const deleteUser = createAsyncThunk<void, void, { rejectValue: string; state: Ro
   async (_, thunkAPI) => {
     const { error } = await UserApi.deleteUser();
 
-    return handleThunkApiReponse({
+    return handleThunkApiResponse({
       error: error,
       data: undefined,
       reject: thunkAPI.rejectWithValue,
@@ -185,7 +208,8 @@ export {
   fetchUser,
   updateUser,
   updateUserConfig,
-  updateNewsletterSubscription,
+  subscribeNewsletter,
+  unsubscribeNewsletter,
   refreshNewsletterStatus,
   deleteUser,
 };

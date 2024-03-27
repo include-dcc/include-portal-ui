@@ -33,7 +33,7 @@ import {
 import { FenceApi } from 'services/api/fence';
 import { globalActions } from 'store/global';
 import { RootState } from 'store/types';
-import { handleThunkApiReponse } from 'store/utils';
+import { handleThunkApiResponse } from 'store/utils';
 import { userHasAccessToFile } from 'utils/dataFiles';
 import { chunkIt } from 'utils/helper';
 
@@ -59,7 +59,7 @@ export const fetchCavaticaAuthentificationStatus = createAsyncThunk<
     acl = data?.acl || [];
   }
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     data: {
       status: data?.authenticated
@@ -77,7 +77,7 @@ export const disconnectCavaticaPassport = createAsyncThunk<any>(
   async (_, thunkAPI) => {
     const { data, error } = await FenceApi.disconnect(PASSPORT.cavatica);
 
-    return handleThunkApiReponse({
+    return handleThunkApiResponse({
       error,
       data,
       reject: thunkAPI.rejectWithValue,
@@ -167,7 +167,7 @@ export const fetchCavaticaBillingGroups = createAsyncThunk<
   async (_, thunkAPI) => {
     const { data, error } = await CavaticaApi.fetchBillingGroups();
 
-    return handleThunkApiReponse({
+    return handleThunkApiResponse({
       error,
       data: data?.items || [],
       reject: thunkAPI.rejectWithValue,
@@ -193,7 +193,7 @@ export const createCavaticaProjet = createAsyncThunk<
 >('passport/cavatica/create/project', async (args, thunkAPI) => {
   const { data, error } = await CavaticaApi.createProject(args.body);
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     reject: thunkAPI.rejectWithValue,
     onSuccess: () => {
@@ -280,7 +280,7 @@ export const beginCavaticaAnalyse = createAsyncThunk<
     thunkAPI.dispatch(fetchCavaticaProjects());
   }
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     reject: thunkAPI.rejectWithValue,
     data: {
@@ -325,7 +325,7 @@ export const startBulkImportJob = createAsyncThunk<
   );
 
   const error = responses.find((resp) => !!resp.error);
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error: error?.error,
     data: true,
     reject: thunkAPI.rejectWithValue,

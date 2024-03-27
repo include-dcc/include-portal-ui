@@ -12,7 +12,7 @@ import {
   TUserSavedFilterUpdate,
 } from 'services/api/savedFilter/models';
 import { globalActions } from 'store/global';
-import { handleThunkApiReponse } from 'store/utils';
+import { handleThunkApiResponse } from 'store/utils';
 
 const fetchSavedFilters = createAsyncThunk<
   TUserSavedFilter[],
@@ -21,7 +21,7 @@ const fetchSavedFilters = createAsyncThunk<
 >('savedfilters/fetch', async (tag, thunkAPI) => {
   const { data, error } = await SavedFilterApi.fetchAll(tag as string);
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     data: data || [],
     reject: thunkAPI.rejectWithValue,
@@ -42,7 +42,7 @@ const fetchSharedSavedFilter = createAsyncThunk<
     });
   }
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     data: data,
     reject: thunkAPI.rejectWithValue,
@@ -131,7 +131,7 @@ const setSavedFilterAsDefault = createAsyncThunk<
   const { id, ...filterInfo } = filter;
   const { data, error } = await SavedFilterApi.setAsDefault(id, filterInfo);
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     data: data!,
     reject: thunkAPI.rejectWithValue,
@@ -143,7 +143,7 @@ const deleteSavedFilter = createAsyncThunk<string, string, { rejectValue: string
   async (id, thunkAPI) => {
     const { data, error } = await SavedFilterApi.destroy(id);
 
-    return handleThunkApiReponse({
+    return handleThunkApiResponse({
       error,
       data: data!,
       reject: thunkAPI.rejectWithValue,

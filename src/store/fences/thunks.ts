@@ -8,7 +8,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ALL_FENCE_NAMES, FENCE_NAMES } from 'common/fenceTypes';
 import { FenceApi } from 'services/api/fence';
 import { RootState } from 'store/types';
-import { handleThunkApiReponse } from 'store/utils';
+import { handleThunkApiResponse } from 'store/utils';
 
 import { IAuthorizedStudiesFetchParams } from './types';
 
@@ -44,7 +44,7 @@ export const fetchAuthorizedStudies = createAsyncThunk<
     }
   }
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error: httpError,
     data: {
       studies,
@@ -80,7 +80,7 @@ export const fetchFenceAuthentificationStatus = createAsyncThunk<
     acl = data?.acl || [];
   }
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     data: {
       status: data?.authenticated
@@ -144,7 +144,7 @@ export const fenceDisconnection = createAsyncThunk<any, FENCE_NAMES>(
   async (fence, thunkAPI) => {
     const { data, error } = await FenceApi.disconnect(fence);
 
-    return handleThunkApiReponse({
+    return handleThunkApiResponse({
       error,
       data,
       reject: thunkAPI.rejectWithValue,
