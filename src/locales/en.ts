@@ -884,6 +884,26 @@ const en = {
             DG: 'Donor gain',
             DL: 'Donor loss',
           },
+          predictions: {
+            fathmm_pred: {
+              D: 'Deletrious',
+              T: 'Tolerated',
+            },
+            lrt_pred: {
+              D: 'Deleterious',
+              N: 'Neutral',
+              U: 'Unknown',
+            },
+            polyphen2_hvar_pred: {
+              B: 'Benign',
+              D: 'Probably Damaging',
+              P: 'Possibly Damaging',
+            },
+            sift_pred: {
+              D: 'Deleterious',
+              T: 'Tolerated',
+            },
+          },
         },
       },
       consequences: {
