@@ -44,6 +44,7 @@ const Dashboard = () => {
           message: intl.get('screen.profileSettings.cards.newsletter.error.title'),
           description: intl.get('screen.profileSettings.cards.newsletter.error.unsubscribeMessage'),
           onClose: hideFeature,
+          duration: 0,
         }),
       );
     }
