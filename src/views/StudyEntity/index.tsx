@@ -216,7 +216,7 @@ const StudyEntity = () => {
   if (hasDataset) {
     defaultLinks.push(
       { href: `#${SectionId.DATA_ACCESS}`, title: intl.get('entities.study.data_access') },
-      { href: `#${SectionId.DATASET}`, title: intl.get('entities.study.datasets') },
+      { href: `#${SectionId.DATASET}`, title: intl.get('entities.study.dataset.title') },
     );
     datasetLength = study?.dataset?.hits.edges.length || 0;
   }
@@ -423,7 +423,7 @@ const StudyEntity = () => {
         {hasDataset && (
           <>
             <Typography.Title level={4} className={style.datasetTitle}>
-              {intl.get('entities.study.datasets')}
+              {intl.get('entities.study.dataset.title')}
             </Typography.Title>
             {study?.dataset?.hits.edges.map(({ node: dataset }, index: number) => (
               <EntityDataset
@@ -445,7 +445,7 @@ const StudyEntity = () => {
         )}
 
         <EntityTableMultiple
-          header={intl.get('entities.study.file')}
+          header={intl.get('entities.study.files')}
           id={SectionId.DATA_FILE}
           loading={loading}
           tables={getFileTables(study)}
