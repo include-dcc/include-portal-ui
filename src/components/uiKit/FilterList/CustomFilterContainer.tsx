@@ -27,6 +27,7 @@ type OwnProps = {
   headerTooltip?: boolean;
   noDataInputOption?: boolean;
   intervalDecimal?: number;
+  filterWithFooter?: boolean;
 };
 
 const CustomFilterContainer = ({
@@ -41,6 +42,7 @@ const CustomFilterContainer = ({
   headerTooltip,
   noDataInputOption,
   intervalDecimal,
+  filterWithFooter = true,
 }: OwnProps) => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(defaultOpen);
@@ -71,7 +73,7 @@ const CustomFilterContainer = ({
     extendedMapping: found,
     aggregation: aggregations,
     rangeTypes: [],
-    filterFooter: true,
+    filterFooter: filterWithFooter,
     headerTooltip,
     dictionary: getFacetsDictionary(),
     noDataInputOption,
