@@ -821,7 +821,7 @@ const en = {
         participantsTooltip:
           'Due to participant confidentiality, redirect to the Data Exploration page if the number of affected participants across INCLUDE cohorts ≥ 10',
         participantTooltip:
-          '# of affected participants and frequency across Include cohorts</br></br>Due to participant confidentiality, redirect to the Data Exploration page is only permitted if the number of affected participants is ≥ 10 for a given cohort',
+          '# of affected participants and frequency across INCLUDE cohorts</br></br>Due to participant confidentiality, redirect to the Data Exploration page is only permitted if the number of affected participants is ≥ 10 for a given cohort',
         genes: 'Genes',
         omim: 'OMIM',
         clinVar: 'ClinVar',
@@ -965,7 +965,7 @@ const en = {
         domain: 'Domain',
         participants: 'Participants',
         participantsTooltip:
-          '# of affected participants across Include cohorts.\n\n Due to participant confidentiality, redirect to the Data Exploration page is only permitted if the number of affected participants is ≥ 10 for a given cohort',
+          '# of affected participants across INCLUDE cohorts.\n\n Due to participant confidentiality, redirect to the Data Exploration page is only permitted if the number of affected participants is ≥ 10 for a given cohort',
         participantsInfoIconTooltip:
           'Due to participant confidentiality, links may return a smaller number than displayed',
         frequencyTooltip: 'Frequency of the variant across INCLUDE studies',
