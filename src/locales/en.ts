@@ -1181,6 +1181,9 @@ const en = {
         },
       },
     },
+    studies: {
+      title: 'Studies',
+    },
   },
   facets: {
     // Participant
