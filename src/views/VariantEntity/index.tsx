@@ -1,43 +1,45 @@
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
+import { NO_GENE } from '@ferlab/ui/core/components/Consequences/Cell';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
+import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
   EntityPublicCohortTable,
-  EntitySummary,
   EntityTable,
   EntityTitle,
 } from '@ferlab/ui/core/pages/EntityPage';
+import EntityNestedTable from '@ferlab/ui/core/pages/EntityPage/EntityNestedTable';
+import EntityVariantSummary from '@ferlab/ui/core/pages/EntityPage/EntityVariantSummary';
 import {
   makeClinvarRows,
   makeGenesOrderedRow,
 } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
 import { Space, Tag } from 'antd';
 import { ArrangerEdge } from 'graphql/models';
-import { useVariantEntity } from 'graphql/variants/actions';
-import { IVariantStudyEntity } from 'graphql/variants/models';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
-import { getEntityExpandableTableMultiple } from 'utils/translation';
 
-import EntityGeneConsequences from './FerlabComponent/EntityGeneConsequence';
-import { getConsequencesProColumn } from './utils/consequences';
+import { useVariantEntity } from '../../graphql/variants/actions';
+import { IVariantStudyEntity } from '../../graphql/variants/models';
+
+import { expandedRowRender, getColumn } from './utils/consequence';
 import {
-  getFrequenciesItems,
-  getFrequenciesTableSummaryColumns,
+  getFrequencyItems,
+  getFrequencyTableSummaryColumns,
   getPublicCohorts,
-} from './utils/frequencies';
+} from './utils/frequency';
 import { getClinvarColumns, getGenePhenotypeColumns } from './utils/pathogenicity';
 import { getSummaryItems } from './utils/summary';
-import SummaryHeader from './SummaryHeader';
 
 import styles from './index.module.scss';
 
 enum SectionId {
   SUMMARY = 'summary',
   CONSEQUENCE = 'consequence',
-  FREQUENCIES = 'frequencies',
+  FREQUENCY = 'frequency',
   PATHOGENICITY = 'pathogenicity',
+  CONDITION = 'condition',
 }
 
 export default function VariantEntity() {
@@ -49,10 +51,14 @@ export default function VariantEntity() {
       href: `#${SectionId.CONSEQUENCE}`,
       title: intl.get('screen.variants.consequences.consequence'),
     },
-    { href: `#${SectionId.FREQUENCIES}`, title: intl.get('screen.variants.frequencies.frequency') },
+    { href: `#${SectionId.FREQUENCY}`, title: intl.get('screen.variants.frequencies.frequency') },
     {
       href: `#${SectionId.PATHOGENICITY}`,
       title: intl.get('screen.variants.pathogenicity.pathogenicity'),
+    },
+    {
+      href: `#${SectionId.CONDITION}`,
+      title: intl.get('screen.variants.conditions.title'),
     },
   ];
 
@@ -64,6 +70,10 @@ export default function VariantEntity() {
   const variantStudies = (data?.studies.hits.edges || []).map(
     (e: ArrangerEdge<IVariantStudyEntity>) => e.node,
   );
+
+  const geneSymbolOfPicked = data?.genes?.hits?.edges?.find((e) =>
+    (e.node.consequences || [])?.hits?.edges?.some((e) => e.node?.picked),
+  )?.node?.symbol;
 
   return (
     <EntityPageWrapper
@@ -78,35 +88,44 @@ export default function VariantEntity() {
           text={data?.hgvsg}
           icon={<LineStyleIcon className={styles.titleIcon} />}
           loading={loading}
-          tag={<Tag className={styles.variantTag}>Germline</Tag>}
+          tag={
+            <>
+              <Tag>{data?.assembly_version}</Tag>
+              <Tag className={styles.variantTag}>
+                {intl.get('screen.variants.summary.germline')}
+              </Tag>
+            </>
+          }
         />
 
-        <EntitySummary
+        <EntityVariantSummary
           id={SectionId.SUMMARY}
-          title={intl.get('screen.variants.summary.summary')}
-          header={<SummaryHeader variant={data} />}
-          data={getSummaryItems(data)}
           loading={loading}
+          data={getSummaryItems(data)}
+          noDataLabel={intl.get('no.data.available')}
         />
 
-        <EntityGeneConsequences
+        <EntityNestedTable
+          columns={getColumn(geneSymbolOfPicked)}
+          data={hydrateResults(data?.genes?.hits?.edges || []).filter(
+            (gene) => gene.symbol !== NO_GENE,
+          )}
+          expandedRowRender={expandedRowRender}
           id={SectionId.CONSEQUENCE}
-          dictionary={getEntityExpandableTableMultiple()}
           loading={loading}
           title={intl.get('screen.variants.consequences.consequence')}
-          header={intl.get('screen.variants.consequences.geneConsequence')}
-          columns={getConsequencesProColumn()}
-          genes={data?.genes.hits.edges}
+          header={intl.get('screen.variants.consequences.transcripts')}
+          noDataLabel={intl.get('no.data.available')}
         />
 
         <EntityTable
-          id={SectionId.FREQUENCIES}
-          columns={getFrequenciesItems()}
+          id={SectionId.FREQUENCY}
+          columns={getFrequencyItems()}
           data={variantStudies}
           title={intl.get('screen.variants.frequencies.frequency')}
           header={intl.get('screen.variants.frequencies.includeStudies')}
           loading={loading}
-          summaryColumns={getFrequenciesTableSummaryColumns(data, variantStudies)}
+          summaryColumns={getFrequencyTableSummaryColumns(data, variantStudies)}
         />
 
         <EntityPublicCohortTable
@@ -128,7 +147,6 @@ export default function VariantEntity() {
               {intl.get('screen.variants.pathogenicity.clinVar')}
               {data?.clinvar?.clinvar_id && (
                 <ExternalLink
-                  hasIcon
                   href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${data?.clinvar.clinvar_id}`}
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -142,9 +160,10 @@ export default function VariantEntity() {
         />
 
         <EntityTable
-          id=""
+          id={SectionId.CONDITION}
           loading={loading}
-          header={intl.get('screen.variants.pathogenicity.genePhenotype')}
+          title={intl.get('screen.variants.conditions.title')}
+          header={intl.get('screen.variants.conditions.tableTitle')}
           data={makeGenesOrderedRow(data?.genes)}
           columns={getGenePhenotypeColumns()}
         />
