@@ -303,7 +303,7 @@ export const getSummaryItems = (variant?: IVariantEntity) => {
               <>
                 <Text className={style.predictionLabel}>
                   {intl.get(
-                    `filters.options.consequences.predictions.sift_pred.${pickedConsequence.node.predictions.sift_pred}`,
+                    `screen.variants.summary.details.predictions.sift_pred.${pickedConsequence.node.predictions.sift_pred}`,
                   )}
                 </Text>
                 ({pickedConsequence.node.predictions.sift_score})
@@ -317,9 +317,8 @@ export const getSummaryItems = (variant?: IVariantEntity) => {
             value: pickedConsequence.node.predictions?.fathmm_pred ? (
               <>
                 <Text className={style.predictionLabel}>
-                  {' '}
                   {intl.get(
-                    `filters.options.consequences.predictions.fathmm_pred.${pickedConsequence.node.predictions.fathmm_pred}`,
+                    `screen.variants.summary.details.predictions.fathmm_pred.${pickedConsequence.node.predictions.fathmm_pred}`,
                   )}
                 </Text>
                 ({pickedConsequence.node.predictions.fathmm_score})
@@ -346,7 +345,7 @@ export const getSummaryItems = (variant?: IVariantEntity) => {
               <>
                 <Text className={style.predictionLabel}>
                   {intl.get(
-                    `filters.options.consequences.predictions.lrt_pred.${pickedConsequence.node.predictions.lrt_pred}`,
+                    `screen.variants.summary.details.predictions.lrt_pred.${pickedConsequence.node.predictions.lrt_pred}`,
                   )}
                 </Text>
                 ({pickedConsequence.node.predictions.lrt_score})
@@ -366,7 +365,7 @@ export const getSummaryItems = (variant?: IVariantEntity) => {
                 <Text className={style.predictionLabel}>
                   {intl.get(
                     // eslint-disable-next-line max-len
-                    `filters.options.consequences.predictions.polyphen2_hvar_pred.${pickedConsequence.node.predictions.polyphen2_hvar_pred}`,
+                    `screen.variants.summary.details.predictions.polyphen2_hvar_pred.${pickedConsequence.node.predictions.polyphen2_hvar_pred}`,
                   )}{' '}
                 </Text>
                 ({pickedConsequence.node.predictions.polyphen2_hvar_score})
