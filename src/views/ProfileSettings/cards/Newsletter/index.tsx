@@ -56,7 +56,7 @@ const NewsletterCard = () => {
         }),
       );
     } else {
-      unsubscribeNewsletter({});
+      dispatch(unsubscribeNewsletter({}));
     }
   };
 
