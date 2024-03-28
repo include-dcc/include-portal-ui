@@ -47,7 +47,10 @@ const NewsletterCard = () => {
   const handleSumbit = (values: any) => {
     const { newsletter_subscription_status, newsletter_email } = values;
 
-    if (newsletter_subscription_status === SubscriptionStatus.SUBSCRIBED && newsletter_email) {
+    if (
+      newsletter_subscription_status === SubscriptionStatus.SUBSCRIBED &&
+      newsletter_email !== ''
+    ) {
       dispatch(
         subscribeNewsletter({
           data: {
@@ -63,7 +66,7 @@ const NewsletterCard = () => {
   useEffect(() => {
     initialValues.current = {
       [FORM_FIELDS.NEWSLETTER_SUBSCRIPTION]:
-        userInfo?.newsletter_subscription_status === 'subscribed' ?? false,
+        userInfo?.newsletter_subscription_status === SubscriptionStatus.SUBSCRIBED ?? false,
       [FORM_FIELDS.NEWSLETTER_EMAIL]: userInfo?.newsletter_email ?? '',
     };
     form.setFieldsValue(initialValues.current);
