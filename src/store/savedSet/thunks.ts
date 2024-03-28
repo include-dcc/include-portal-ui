@@ -14,7 +14,7 @@ import {
   TUserSavedSetUpdate,
 } from 'services/api/savedSet/models';
 import { globalActions } from 'store/global';
-import { handleThunkApiReponse } from 'store/utils';
+import { handleThunkApiResponse } from 'store/utils';
 
 import { getSetFieldId } from '.';
 
@@ -23,7 +23,7 @@ const fetchSavedSet = createAsyncThunk<IUserSetOutput[], void | string, { reject
   async (tag, thunkAPI) => {
     const { data, error } = await SavedSetApi.fetchAll();
 
-    return handleThunkApiReponse({
+    return handleThunkApiResponse({
       error,
       data: data || [],
       reject: thunkAPI.rejectWithValue,
@@ -39,7 +39,7 @@ const createSavedSet = createAsyncThunk<
   const { data, error } = await SavedSetApi.create(set);
   set.onCompleteCb();
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     data: data!,
     reject: thunkAPI.rejectWithValue,
@@ -71,7 +71,7 @@ const updateSavedSet = createAsyncThunk<
   const { data, error } = await SavedSetApi.update(id, setInfo);
   set.onCompleteCb();
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     data: data!,
     reject: thunkAPI.rejectWithValue,
@@ -103,7 +103,7 @@ const deleteSavedSet = createAsyncThunk<string, string, { rejectValue: string }>
   async (id, thunkAPI) => {
     const { data, error } = await SavedSetApi.destroy(id);
 
-    return handleThunkApiReponse({
+    return handleThunkApiResponse({
       error,
       data: data!,
       reject: thunkAPI.rejectWithValue,
@@ -144,7 +144,7 @@ const fetchSharedBiospecimenRequest = createAsyncThunk<
     });
   }
 
-  return handleThunkApiReponse({
+  return handleThunkApiResponse({
     error,
     data: data,
     reject: thunkAPI.rejectWithValue,

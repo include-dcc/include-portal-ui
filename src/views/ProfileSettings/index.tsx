@@ -6,6 +6,7 @@ import { useUser } from 'store/user';
 
 import DeleteCard from './cards/DeleteCard';
 import IdentificationCard from './cards/Identification';
+import NewsletterCard from './cards/Newsletter';
 import ResearchAndUsagesCard from './cards/ResearchAndUsage';
 import RoleAndAffiliationCard from './cards/RoleAndAffiliation';
 
@@ -32,6 +33,7 @@ const ProfileSettings = () => {
           <IdentificationCard />
           <RoleAndAffiliationCard />
           <ResearchAndUsagesCard />
+          <NewsletterCard />
           <DeleteCard />
         </Space>
       </Space>

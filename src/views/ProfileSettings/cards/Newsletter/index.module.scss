@@ -1,0 +1,15 @@
+@import "src/style/themes/include/colors";
+
+.iconSuffix {
+  color: $gray-6;
+}
+
+.allFieldRequiredNotice {
+  margin-bottom: 24px;
+  display: block;
+}
+
+.noMargin {
+  margin-bottom: 0;
+}
+

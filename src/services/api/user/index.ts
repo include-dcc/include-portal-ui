@@ -4,9 +4,10 @@ import { roleOptions, usageOptions } from 'views/Community/contants';
 
 import { sendRequest } from 'services/api';
 
-import { TProfileImagePresignedOutput, TUser, TUserUpdate } from './models';
+import { TNewsletterSubscribe, TProfileImagePresignedOutput, TUser, TUserUpdate } from './models';
 
 export const USER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user`;
+export const NEWSLETTER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/newsletter`;
 
 export const headers = (contentType: string = 'application/json') => ({
   'Content-Type': contentType,
@@ -56,6 +57,28 @@ const update = (body: TUserUpdate) =>
     data: body,
   });
 
+const refreshNewsletter = () =>
+  sendRequest<TUser>({
+    method: 'PUT',
+    url: `${NEWSLETTER_API_URL}/refresh`,
+    headers: headers(),
+  });
+
+const subscribeNewsletter = (body: TNewsletterSubscribe) =>
+  sendRequest<TUser>({
+    method: 'PUT',
+    url: `${NEWSLETTER_API_URL}/subscribe`,
+    headers: headers(),
+    data: body,
+  });
+
+const unsubscribeNewsletter = () =>
+  sendRequest<TUser>({
+    method: 'PUT',
+    url: `${NEWSLETTER_API_URL}/unsubscribe`,
+    headers: headers(),
+  });
+
 const deleteUser = () =>
   sendRequest<void>({
     method: 'DELETE',
@@ -90,4 +113,7 @@ export const UserApi = {
   update,
   deleteUser,
   uploadImageToS3,
+  subscribeNewsletter,
+  unsubscribeNewsletter,
+  refreshNewsletter,
 };
