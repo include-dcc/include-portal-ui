@@ -47,10 +47,7 @@ const NewsletterCard = () => {
   const handleSumbit = (values: any) => {
     const { newsletter_subscription_status, newsletter_email } = values;
 
-    if (
-      newsletter_subscription_status === SubscriptionStatus.SUBSCRIBED &&
-      newsletter_email !== ''
-    ) {
+    if (newsletter_subscription_status && newsletter_email !== '') {
       dispatch(
         subscribeNewsletter({
           data: {
