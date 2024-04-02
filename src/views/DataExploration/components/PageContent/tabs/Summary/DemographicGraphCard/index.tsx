@@ -94,7 +94,6 @@ const DemographicsGraphCard = () => {
           <Col sm={12} md={12} lg={8}>
             <PieChart
               data={sexData}
-              onClick={(datum) => addToQuery('sex', datum.id as string)}
               colors={colors}
               legends={[
                 {
@@ -112,7 +111,6 @@ const DemographicsGraphCard = () => {
           <Col sm={12} md={12} lg={8}>
             <PieChart
               data={ethnicityData}
-              onClick={(datum) => addToQuery('ethnicity', datum.id as string)}
               colors={colors}
               legends={[
                 {
@@ -131,7 +129,6 @@ const DemographicsGraphCard = () => {
             <PieChart
               data={raceData}
               colors={colors}
-              onClick={(datum) => addToQuery('race', datum.id as string)}
               legends={[
                 {
                   anchor: 'bottom',

@@ -1071,6 +1071,10 @@ const en = {
               legendAxisLeft: 'Data Types',
               legendAxisBottom: '# of participants',
             },
+            sampleTypeGraph: {
+              legendAxisLeft: 'Sample Types',
+              legendAxisBottom: '# of participants',
+            },
           },
           download: {
             fileNameTemplate: 'include-%name-%type-%date%extension',
@@ -1091,6 +1095,7 @@ const en = {
             dataCategoryTitle: 'Participants by Data Category',
             dataTypeTitle: 'Participants by Data Type',
             studiesTitle: 'Participants by Study',
+            sampleTypeTitle: 'Participants by Sample Type',
           },
           sampleType: {
             cardTitle: 'Sample Type',

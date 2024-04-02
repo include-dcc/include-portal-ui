@@ -74,7 +74,6 @@ const DataTypeGraphCard = () => {
             legendPosition: 'middle',
             legendOffset: 35,
           }}
-          onClick={(datum: any) => addToQuery('data_type', datum.indexValue as string)}
           margin={{
             bottom: 45,
             left: 140,
