@@ -7,7 +7,7 @@ import ResizableGridCard from '@ferlab/ui/core/layout/ResizableGridLayout/Resiza
 import { aggregationToChartData } from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
 import { INDEXES } from 'graphql/constants';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
-import { DATA_CATEGORY_QUERY } from 'graphql/summary/queries';
+import { SAMPLE_TYPE_QUERY } from 'graphql/summary/queries';
 import { isEmpty } from 'lodash';
 import { ARRANGER_API_PROJECT_URL } from 'provider/ApolloProvider';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
@@ -23,23 +23,24 @@ const addToQuery = (field: string, key: string) =>
     queryBuilderId: DATA_EXPLORATION_QB_ID,
     field,
     value: [key.toLowerCase() === 'no data' ? ArrangerValues.missing : key],
-    index: INDEXES.FILE,
+    index: INDEXES.BIOSPECIMEN,
   });
 
-const DataCategoryGraphCard = () => {
+const SampleTypeGraphCard = () => {
   const { sqon } = useParticipantResolvedSqon(DATA_EXPLORATION_QB_ID);
   const { loading, result } = useApi<any>({
     config: {
       url: ARRANGER_API_PROJECT_URL,
       method: 'POST',
       data: {
-        query: DATA_CATEGORY_QUERY,
+        query: SAMPLE_TYPE_QUERY,
         variables: { sqon },
       },
     },
   });
-  const dataCategoryResults = aggregationToChartData(
-    result?.data?.participant?.aggregations?.files__data_category.buckets,
+
+  const sampleTypeResults = aggregationToChartData(
+    result?.data?.participant?.aggregations?.files__biospecimens__sample_type.buckets,
     result?.data?.participant?.hits?.total,
   );
 
@@ -51,16 +52,16 @@ const DataCategoryGraphCard = () => {
       loading={loading}
       loadingType="spinner"
       dictionary={getResizableGridDictionary()}
-      headerTitle={intl.get('screen.dataExploration.tabs.summary.availableData.dataCategoryTitle')}
+      headerTitle={intl.get('screen.dataExploration.tabs.summary.availableData.sampleTypeTitle')}
       tsvSettings={{
-        data: [dataCategoryResults],
+        data: [sampleTypeResults],
       }}
       modalContent={
         <BarChart
-          data={dataCategoryResults}
+          data={sampleTypeResults}
           axisLeft={{
             legend: intl.get(
-              'screen.dataExploration.tabs.summary.graphs.dataCategory.legendAxisLeft',
+              'screen.dataExploration.tabs.summary.graphs.sampleTypeGraph.legendAxisLeft',
             ),
             legendPosition: 'middle',
             legendOffset: -110,
@@ -69,7 +70,7 @@ const DataCategoryGraphCard = () => {
           tooltipLabel={(node: any) => node.data.id}
           axisBottom={{
             legend: intl.get(
-              'screen.dataExploration.tabs.summary.graphs.dataCategory.legendAxisBottom',
+              'screen.dataExploration.tabs.summary.graphs.sampleTypeGraph.legendAxisBottom',
             ),
             legendPosition: 'middle',
             legendOffset: 35,
@@ -89,14 +90,14 @@ const DataCategoryGraphCard = () => {
       }}
       content={
         <>
-          {isEmpty(dataCategoryResults) ? (
+          {isEmpty(sampleTypeResults) ? (
             <Empty imageType="grid" size="large" />
           ) : (
             <BarChart
-              data={dataCategoryResults}
+              data={sampleTypeResults}
               axisLeft={{
                 legend: intl.get(
-                  'screen.dataExploration.tabs.summary.graphs.dataCategory.legendAxisLeft',
+                  'screen.dataExploration.tabs.summary.graphs.sampleTypeGraph.legendAxisLeft',
                 ),
                 legendPosition: 'middle',
                 legendOffset: -110,
@@ -105,12 +106,12 @@ const DataCategoryGraphCard = () => {
               tooltipLabel={(node: any) => node.data.id}
               axisBottom={{
                 legend: intl.get(
-                  'screen.dataExploration.tabs.summary.graphs.dataCategory.legendAxisBottom',
+                  'screen.dataExploration.tabs.summary.graphs.sampleTypeGraph.legendAxisBottom',
                 ),
                 legendPosition: 'middle',
                 legendOffset: 35,
               }}
-              onClick={(datum: any) => addToQuery('data_category', datum.indexValue as string)}
+              onClick={(datum: any) => addToQuery('sample_type', datum.indexValue as string)}
               layout="horizontal"
               margin={{
                 bottom: 45,
@@ -126,4 +127,4 @@ const DataCategoryGraphCard = () => {
   );
 };
 
-export default DataCategoryGraphCard;
+export default SampleTypeGraphCard;

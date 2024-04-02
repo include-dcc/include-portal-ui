@@ -8,6 +8,7 @@ import {
 import DataCategoryGraphCard from '../DataCategoryGraphCard';
 import DataTypeGraphCard from '../DataTypeGraphCard';
 import DemographicsGraphCard from '../DemographicGraphCard';
+import SampleTypeGraphCard from '../SampleType';
 import StudiesGraphCard from '../StudiesGraphCard';
 import SunburstGraphCard from '../SunburstGraphCard';
 
@@ -128,13 +129,13 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       minH: 2,
       minW: 2,
       h: 3,
-      w: 3,
+      w: 2,
       x: 0,
       y: 6,
     },
     lg: {
       h: 3,
-      w: 3,
+      w: 2,
       x: 0,
       y: 6,
     },
@@ -171,14 +172,14 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       minH: 2,
       minW: 2,
       h: 3,
-      w: 8,
-      x: 3,
+      w: 7,
+      x: 2,
       y: 6,
     },
     lg: {
       h: 3,
-      w: 8,
-      x: 3,
+      w: 7,
+      x: 2,
       y: 6,
     },
     md: {
@@ -189,7 +190,7 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
     },
     sm: {
       h: 3,
-      w: 5,
+      w: 7,
       x: 3,
       y: 6,
     },
@@ -197,13 +198,56 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       h: 3,
       w: 6,
       x: 0,
-      y: 10,
+      y: 17,
     },
     xxs: {
       h: 3,
       w: 6,
       x: 0,
-      y: 10,
+      y: 17,
+    },
+  },
+  {
+    title: intl.get('screen.dataExploration.tabs.summary.availableData.sampleTypeTitle'),
+    id: 'sample_type',
+    component: <SampleTypeGraphCard />,
+    base: {
+      minH: 2,
+      minW: 2,
+      h: 3,
+      w: 7,
+      x: 9,
+      y: 6,
+    },
+    lg: {
+      h: 3,
+      w: 7,
+      x: 9,
+      y: 6,
+    },
+    md: {
+      h: 3,
+      w: 7,
+      x: 0,
+      y: 9,
+    },
+    sm: {
+      h: 3,
+      w: 7,
+      x: 0,
+      y: 9,
+    },
+    xs: {
+      h: 3,
+      w: 6,
+      x: 0,
+      y: 20,
+    },
+    xxs: {
+      h: 3,
+      w: 6,
+      x: 0,
+      y: 20,
     },
   },
 ];
