@@ -117,6 +117,7 @@ const en = {
       genericError: 'An error occured',
     },
     proTable: {
+      result: 'Result',
       results: 'Results',
       noResults: 'No Results',
       of: 'of',
@@ -492,6 +493,7 @@ const en = {
     },
     community: {
       title: 'INCLUDE Community',
+      resultMember: 'Member',
       resultsMember: 'Members',
       noResults: 'No members',
       search: {
@@ -1207,6 +1209,10 @@ const en = {
     },
     studies: {
       title: 'Studies',
+      searchLabel: {
+        title: 'Search by study code, study name, dbGaP',
+        placeholder: 'HTP, The Human Trisome Project, phs001138',
+      },
     },
   },
   facets: {
