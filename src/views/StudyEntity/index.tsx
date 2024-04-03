@@ -270,14 +270,16 @@ const StudyEntity = () => {
           dictionary={{
             phenotype: {
               headerTitle: intl.get('entities.study.statistic.phenotype'),
-              legendAxisLeft: intl.get('entities.study.statistic.phenotype'),
+              legendAxisLeft: intl.get(
+                'screen.dataExploration.tabs.summary.observed_phenotype.legendAxisLeft',
+              ),
               legendAxisBottom: intl.get(
                 'screen.dataExploration.tabs.summary.observed_phenotype.legendAxisBottom',
               ),
             },
             mondo: {
               headerTitle: intl.get('entities.study.statistic.mondo'),
-              legendAxisLeft: intl.get('entities.study.statistic.mondo'),
+              legendAxisLeft: intl.get('screen.dataExploration.tabs.summary.mondo.legendAxisLeft'),
               legendAxisBottom: intl.get(
                 'screen.dataExploration.tabs.summary.mondo.legendAxisBottom',
               ),
