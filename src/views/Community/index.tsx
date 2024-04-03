@@ -71,6 +71,7 @@ const CommunityPage = () => {
           total={count}
           dictionary={{
             itemCount: {
+              result: intl.get('screen.community.resultMember'),
               results: intl.get('screen.community.resultsMember'),
               noResults: intl.get('screen.community.noResults'),
               clear: '',
