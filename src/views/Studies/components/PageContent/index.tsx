@@ -40,17 +40,15 @@ type OwnProps = {
 
 const PAGE_SIZE = 50;
 
-const searchFilterFields = ['study_code', 'study_name', 'external_id'];
-
 const generateSearchFilter = (search: string) =>
   generateQuery({
     operator: BooleanOperators.or,
-    newFilters: searchFilterFields.map((key) =>
+    newFilters: [
       generateValueFilter({
-        field: key,
+        field: 'search_text',
         value: [`${search}*`],
       }),
-    ),
+    ],
   });
 
 const generateMultipleQuery = (searchValue: string, activeQuery: ISyntheticSqon) => {
