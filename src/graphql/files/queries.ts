@@ -32,6 +32,7 @@ export const SEARCH_FILES_QUERY = gql`
               study_id
               study_code
               study_name
+              program
             }
             sequencing_experiment {
               hits {
@@ -108,6 +109,7 @@ export const SEARCH_FILES_QUERY = gql`
                             external_parent_sample_id
                             external_collection_sample_id
                             external_container_id
+                            sample_id
                             sample_type
                             external_sample_id
                             collection_sample_type

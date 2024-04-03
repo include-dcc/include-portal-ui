@@ -29,8 +29,8 @@ const extractParticipantMetaData = (participants: any[]) => {
 
   return {
     case_id: joinUniquely(participants.map((x) => x.participant_id)),
-    external_participant_ids: joinUniquely(participants.map((x) => x.external_id)),
-    down_syndrom_status: joinUniquely(participants.map((x) => x.down_syndrome_status)),
+    external_participant_id: joinUniquely(participants.map((x) => x.external_id)),
+    down_syndrome_status: joinUniquely(participants.map((x) => x.down_syndrome_status)),
     ethnicity: joinUniquely(participants.map((x) => x.ethnicity)),
     gender: joinUniquely(participants.map((x) => x.sex)),
     race: joinUniquely(participants.map((x) => x.race)),
@@ -65,9 +65,7 @@ const extractBioSpecimenMetaData = (biospecimens: any[]) => ({
   ),
   sample_availability: joinUniquely(biospecimens.map((x) => x.status)),
   external_parent_sample_id: joinUniquely(biospecimens.map((x) => x.external_parent_sample_id)),
-  external_collection_sample_id: joinUniquely(
-    biospecimens.map((x) => x.external_collection_sample_id),
-  ),
+  external_collection_id: joinUniquely(biospecimens.map((x) => x.external_collection_sample_id)),
   external_container_id: joinUniquely(biospecimens.map((x) => x.external_container_id)),
 });
 
@@ -79,7 +77,6 @@ const extractStudyMetaData = (study: IFileStudyEntity) => ({
   investigation: study.study_code,
   study_name: study.study_name,
   study_program: study.program,
-  study_domain: study.domain,
 });
 
 export const extractMetadata = (file: IFileEntity) => {
