@@ -1064,7 +1064,7 @@ const en = {
           title: 'Summary',
           graphs: {
             dataCategory: {
-              legendAxisLeft: 'Data Category',
+              legendAxisLeft: 'Data Categories',
               legendAxisBottom: '# of participants',
             },
             dataTypeGraph: {
@@ -1108,6 +1108,7 @@ const en = {
           },
           observed_phenotype: {
             cardTitle: 'Observed Phenotypes (HPO)',
+            legendAxisLeft: 'Phenotypes (HPO)',
             legendAxisBottom: '# of participants',
             phenotypeTree: {
               nbParticipant: '{count} participants (including descendant terms on this path)',
@@ -1118,6 +1119,7 @@ const en = {
           },
           mondo: {
             cardTitle: ' Diagnosis (MONDO)',
+            legendAxisLeft: 'Diagnoses (MONDO)',
             legendAxisBottom: '# of participants',
             phenotypeTree: {
               nbParticipant: '{count} participants (including descendant terms on this path)',
