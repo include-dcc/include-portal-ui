@@ -38,7 +38,6 @@ const hasDataCategory = (dataCategory: string[], category: DataCategory) =>
 const filterInfo: FilterInfo = {
   defaultOpenFacets: [
     'program',
-    'domain',
     'data_category',
     'experimental_strategy',
     'part_lifespan_stage',
@@ -51,7 +50,6 @@ const filterInfo: FilterInfo = {
     {
       facets: [
         'program',
-        'domain',
         'data_category',
         'experimental_strategy',
         'part_lifespan_stage',
@@ -222,7 +220,6 @@ const columns: ProColumnType<any>[] = [
 
 const Studies = () => {
   const studiesMappingResults = useGetExtendedMappings(INDEXES.STUDY);
-
   return (
     <div className={styles.studiesPage}>
       <SideBarFacet

@@ -168,7 +168,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
               },
             }}
             size="small"
-            dataSource={data.map((i) => ({ ...i, key: i.id }))}
+            dataSource={data.map((i) => ({ ...i, key: i.study_code }))}
             dictionary={getProTableDictionary()}
           />
         }
