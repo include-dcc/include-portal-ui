@@ -1207,6 +1207,10 @@ const en = {
     },
     studies: {
       title: 'Studies',
+      searchLabel: {
+        title: 'Search by study code, study name, dbGaP',
+        placeholder: 'HTP, The Human Trisome Project, phs001138',
+      },
     },
   },
   facets: {

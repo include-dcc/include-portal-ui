@@ -19,8 +19,7 @@ import StudyPopoverRedirect from '../DataExploration/components/StudyPopoverRedi
 
 import PageContent from './components/PageContent';
 import SideBarFacet from './components/SideBarFacet';
-import StudySearch from './components/StudySearch';
-import { SCROLL_WRAPPER_ID, STUDIES_REPO_QB_ID } from './utils/constants';
+import { SCROLL_WRAPPER_ID } from './utils/constants';
 
 import styles from './index.module.scss';
 
@@ -37,7 +36,6 @@ const hasDataCategory = (dataCategory: string[], category: DataCategory) =>
   dataCategory?.includes(category) ? <CheckOutlined /> : TABLE_EMPTY_PLACE_HOLDER;
 
 const filterInfo: FilterInfo = {
-  customSearches: [<StudySearch key={1} queryBuilderId={STUDIES_REPO_QB_ID} />],
   defaultOpenFacets: [
     'program',
     'domain',
@@ -233,7 +231,7 @@ const Studies = () => {
         filterWithFooter={false}
       />
       <ScrollContent id={SCROLL_WRAPPER_ID} className={styles.scrollContent}>
-        <PageContent defaultColumns={columns} extendedMappingResults={studiesMappingResults} />
+        <PageContent defaultColumns={columns} />
       </ScrollContent>
     </div>
   );
