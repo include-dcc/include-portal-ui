@@ -125,6 +125,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
           className={styles.search}
           onChange={searchPrescription}
           placeholder={intl.get('screen.studies.searchLabel.placeholder')}
+          size="large"
           value={searchValue}
         />
       </div>

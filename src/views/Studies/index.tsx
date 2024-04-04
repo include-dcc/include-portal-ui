@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
@@ -62,10 +63,10 @@ const filterInfo: FilterInfo = {
   ],
 };
 
-const columns: ProColumnType<any>[] = [
+const getColumns = (): ProColumnType<any>[] => [
   {
     key: 'study_id',
-    title: 'Study Code',
+    title: intl.get('entities.study.code'),
     sorter: { multiple: 1 },
     render: (record: IStudyEntity) =>
       record.website ? (
@@ -76,7 +77,7 @@ const columns: ProColumnType<any>[] = [
   },
   {
     key: 'study_name',
-    title: 'Name',
+    title: intl.get('entities.study.name'),
     width: 500,
     sorter: { multiple: 1 },
     render: (record: IStudyEntity) => (
@@ -89,13 +90,13 @@ const columns: ProColumnType<any>[] = [
   },
   {
     key: 'program',
-    title: 'Program',
+    title: intl.get('entities.study.program'),
     dataIndex: 'program',
     render: (program: string) => program || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'external_id',
-    title: 'dbGaP',
+    title: intl.get('entities.study.dbgap'),
     sorter: { multiple: 1 },
     dataIndex: 'external_id',
     render: (external_id: string) =>
@@ -111,7 +112,7 @@ const columns: ProColumnType<any>[] = [
   },
   {
     key: 'participant_count',
-    title: 'Participants',
+    title: intl.get('entities.participant.participants'),
     sorter: { multiple: 1 },
     render: (record: IStudyEntity) => {
       const participantCount = record?.participant_count || 0;
@@ -144,7 +145,7 @@ const columns: ProColumnType<any>[] = [
   },
   {
     key: 'family_count',
-    title: 'Families',
+    title: intl.get('entities.participant.families'),
     dataIndex: 'family_count',
     sorter: { multiple: 1 },
     render: (family_count: number) =>
@@ -152,7 +153,7 @@ const columns: ProColumnType<any>[] = [
   },
   {
     key: 'biospecimen_count',
-    title: 'Biospecimens',
+    title: intl.get('entities.biospecimen.biospecimen'),
     sorter: { multiple: 1 },
     render: (record: IStudyEntity) => {
       const biospecimenCount = record?.biospecimen_count || 0;
@@ -185,33 +186,38 @@ const columns: ProColumnType<any>[] = [
   },
   {
     key: 'genomic',
-    title: DataCategory.GENOMIC,
+    title: intl.get('entities.study.dataCategory.genomic'),
+    tooltip: intl.get('entities.study.dataCategory.genomicTooltip'),
     align: 'center',
     render: (record: IStudyEntity) => hasDataCategory(record.data_category, DataCategory.GENOMIC),
   },
   {
     key: 'transcriptomic',
-    title: DataCategory.TRANSCRIPTOMIC,
+    title: intl.get('entities.study.dataCategory.transcriptomic'),
+    tooltip: intl.get('entities.study.dataCategory.transcriptomicTooltip'),
     align: 'center',
     render: (record: IStudyEntity) =>
       hasDataCategory(record.data_category, DataCategory.TRANSCRIPTOMIC),
   },
   {
     key: 'proteomic',
-    title: DataCategory.PROTEOMIC,
+    title: intl.get('entities.study.dataCategory.proteomic'),
+    tooltip: intl.get('entities.study.dataCategory.proteomicTooltip'),
     align: 'center',
     render: (record: IStudyEntity) => hasDataCategory(record.data_category, DataCategory.PROTEOMIC),
   },
   {
     key: 'immune_map',
-    title: 'Immune Map',
+    title: intl.get('entities.study.dataCategory.immuneMap'),
+    tooltip: intl.get('entities.study.dataCategory.immuneMapTooltip'),
     align: 'center',
     render: (record: IStudyEntity) =>
       hasDataCategory(record.data_category, DataCategory.IMMUNE_MAP),
   },
   {
     key: 'metabolic',
-    title: DataCategory.METABOLOMIC,
+    title: intl.get('entities.study.dataCategory.metabolomic'),
+    tooltip: intl.get('entities.study.dataCategory.metabolomicTooltip'),
     align: 'center',
     render: (record: IStudyEntity) =>
       hasDataCategory(record.data_category, DataCategory.METABOLOMIC),
@@ -228,7 +234,7 @@ const Studies = () => {
         filterWithFooter={false}
       />
       <ScrollContent id={SCROLL_WRAPPER_ID} className={styles.scrollContent}>
-        <PageContent defaultColumns={columns} />
+        <PageContent defaultColumns={getColumns()} />
       </ScrollContent>
     </div>
   );
