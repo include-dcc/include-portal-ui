@@ -5,10 +5,13 @@ import ProLabel from '@ferlab/ui/core/components/ProLabel';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { tieBreaker } from '@ferlab/ui/core/components/ProTable/utils';
-import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import useQueryBuilderState, {
+  defaultQueryBuilderState,
+  setQueryBuilderState,
+} from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { generateQuery, generateValueFilter, isEmptySqon } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Input, Space, Typography } from 'antd';
@@ -67,7 +70,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
     ...DEFAULT_QUERY_CONFIG,
     sort: DEFAULT_STUDY_QUERY_SORT,
   });
-  const resolvedSqon = resolveSyntheticSqonWithReferences(
+  const resolvedSqon: ISyntheticSqon = resolveSyntheticSqonWithReferences(
     queryList,
     searchValue.length === 0 ? activeQuery : generateMultipleQuery(searchValue, activeQuery),
   );
@@ -96,11 +99,17 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
   }, [JSON.stringify(activeQuery)]);
 
   const searchPrescription = (value: any) => {
-    if (value.target.value) {
+    if (value?.target?.value) {
       setSearchValue(value.target.value);
     } else {
       setSearchValue('');
     }
+  };
+
+  const clearFilter = () => {
+    searchPrescription(undefined);
+    const defaultQBState = defaultQueryBuilderState(STUDIES_REPO_QB_ID);
+    setQueryBuilderState(STUDIES_REPO_QB_ID, defaultQBState);
   };
 
   return (
@@ -112,10 +121,11 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
       <div className={styles.patientContentHeader}>
         <ProLabel className={styles.search} title={intl.get('screen.studies.searchLabel.title')} />
         <Input
+          allowClear
           className={styles.search}
           onChange={searchPrescription}
           placeholder={intl.get('screen.studies.searchLabel.placeholder')}
-          allowClear
+          value={searchValue}
         />
       </div>
 
@@ -166,6 +176,8 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
                   }),
                 );
               },
+              hasFilter: !isEmptySqon(resolvedSqon),
+              clearFilter,
             }}
             size="small"
             dataSource={data.map((i) => ({ ...i, key: i.study_code }))}
