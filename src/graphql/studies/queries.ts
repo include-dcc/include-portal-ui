@@ -91,6 +91,7 @@ export const GET_STUDY = gql`
             date_collection_start_year
             description
             domain
+            domains
             expected_data_categories
             expected_number_participants
             experimental_strategies {
@@ -105,6 +106,7 @@ export const GET_STUDY = gql`
               }
             }
             external_id
+            external_ids
             file_count
             institutions
             investigator_names

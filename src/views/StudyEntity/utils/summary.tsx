@@ -24,15 +24,17 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
   },
   {
     label: intl.get('entities.study.dbGaP'),
-    value: study?.external_id ? (
-      <ExternalLink
-        href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${study.external_id}`}
-      >
-        {study.external_id}
-      </ExternalLink>
-    ) : (
-      TABLE_EMPTY_PLACE_HOLDER
-    ),
+    value: study?.external_ids?.length
+      ? study.external_ids.map((id) => (
+          <ExternalLink
+            className={styles.dbgapLink}
+            href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${id}`}
+            key={id}
+          >
+            {id}
+          </ExternalLink>
+        ))
+      : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.study.participant_life_span'),
@@ -50,7 +52,7 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
   },
   {
     label: intl.get('entities.study.domain'),
-    value: study?.domain || TABLE_EMPTY_PLACE_HOLDER,
+    value: study?.domains?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.study.data_source'),
