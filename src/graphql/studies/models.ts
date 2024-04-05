@@ -61,10 +61,12 @@ export interface IStudyEntity {
   date_collection_start_year?: string;
   description?: string;
   domain?: string;
+  domains?: string[];
   expected_data_categories?: string[];
   expected_number_participants?: number;
   experimental_strategies?: ArrangerResultsTree<IExperimentalStrategy>;
   external_id: string;
+  external_ids?: string[];
   family_count?: number;
   file_count?: number;
   institutions?: string[];
