@@ -11,13 +11,22 @@ export const GET_STUDIES = gql`
             study_id
             study_code
             study_name
-            biorepo_email
-            biorepo_url
+            biobank_contact
+            biobank_request_link
             biospecimen_count
-            contact_email
-            contact_name
+            contacts {
+              hits {
+                total
+                edges {
+                  node {
+                    email
+                    name
+                  }
+                }
+              }
+            }
             controlled_access
-            part_lifespan_stage
+            part_lifespan_stages
             data_category
             data_source
             date_collection_start_year
@@ -26,12 +35,12 @@ export const GET_STUDIES = gql`
             domain
             external_id
             family_count
-            institution
-            investigator_name
+            institutions
+            investigator_names
             program
-            publication
+            publications
             participant_count
-            study_design
+            study_designs
             selection_criteria
             website
           }
@@ -52,29 +61,60 @@ export const GET_STUDY = gql`
             study_id
             study_code
             study_name
-            biorepo_email
-            biorepo_url
+            biobank_contact
+            biobank_request_link
             biospecimen_count
-            contact_email
-            contact_name
+            contacts {
+              hits {
+                total
+                edges {
+                  node {
+                    email
+                    name
+                  }
+                }
+              }
+            }
             controlled_access
+            data_types {
+              hits {
+                total
+                edges {
+                  node {
+                    data_type
+                    file_count
+                  }
+                }
+              }
+            }
             date_collection_end_year
             date_collection_start_year
             description
             domain
             expected_data_categories
             expected_number_participants
+            experimental_strategies {
+              hits {
+                total
+                edges {
+                  node {
+                    experimental_strategy
+                    file_count
+                  }
+                }
+              }
+            }
             external_id
             file_count
-            institution
-            investigator_name
-            part_lifespan_stage
+            institutions
+            investigator_names
+            part_lifespan_stages
             participant_count
             program
-            publication
+            publications
             selection_criteria
             study_code
-            study_design
+            study_designs
             study_name
             website
             data_category
@@ -89,13 +129,13 @@ export const GET_STUDY = gql`
                     date_collection_start_year
                     date_collection_end_year
                     data_category
-                    data_type
+                    data_types
                     expected_data_categories
                     experimental_strategy
                     experimental_platform
-                    publication
-                    access_limitation
-                    access_requirement
+                    publications
+                    access_limitations
+                    access_requirements
                     repository
                     repository_url
                     participant_count

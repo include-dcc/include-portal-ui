@@ -12,7 +12,9 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
   },
   {
     label: intl.get('entities.study.dataset.data_type'),
-    value: dataset.data_type ? <Tag>{dataset.data_type}</Tag> : TABLE_EMPTY_PLACE_HOLDER,
+    value: dataset.data_types?.length
+      ? dataset.data_types.map((dataType, index) => <Tag key={index}>{dataType}</Tag>)
+      : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.study.dataset.experimental_strategy'),
@@ -24,14 +26,14 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
   },
   {
     label: intl.get('entities.study.dataset.experimental_platform'),
-    value: dataset.experimental_platform,
+    value: dataset.experimental_platform || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.study.dataset.publication'),
-    value: dataset.publication?.length ? (
+    value: dataset.publications?.length ? (
       <>
-        {dataset.publication.map((pub: string) => (
-          <div>{pub}</div>
+        {dataset.publications.map((pub: string, index) => (
+          <div key={index}>{pub}</div>
         ))}
       </>
     ) : (

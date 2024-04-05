@@ -6,23 +6,23 @@ export interface IStudyResultTree {
 
 export interface IStudyDataset {
   id: string;
+  access_limitations?: string[];
+  access_requirements?: string[];
+  biospecimen_count?: number;
+  data_category?: string;
+  data_types?: string[];
   dataset_id?: string;
   dataset_name?: string;
-  date_collection_start_year?: string;
   date_collection_end_year?: string;
-  data_category?: string;
-  data_type?: string;
+  date_collection_start_year?: string;
   expected_data_categories?: string[];
-  experimental_strategy?: string;
   experimental_platform?: string;
-  publication?: string[];
-  access_limitation?: string[];
-  access_requirement?: string[];
+  experimental_strategy?: string;
+  file_count?: number;
+  participant_count?: number;
+  publications?: string[];
   repository?: string;
   repository_url?: string;
-  participant_count?: number;
-  biospecimen_count?: number;
-  file_count?: number;
 }
 
 export interface IDataType {
@@ -37,36 +37,43 @@ export interface IExperimentalStrategy {
   file_count: number;
 }
 
+export interface IContact {
+  id: string;
+  email?: string;
+  name?: string;
+}
+
 export interface IStudyEntity {
   id: string;
   study_id: string;
   study_code: string;
   study_name: string;
-  biorepo_email?: string;
-  biorepo_url?: string;
+  biobank_contact?: string;
+  biobank_request_link?: string;
   biospecimen_count: number;
-  contact_email?: string;
-  contact_name?: string;
+  contacts?: ArrangerResultsTree<IContact>;
   controlled_access?: string[];
-  part_lifespan_stage?: string[];
   data_category: string[];
   data_source?: string[];
   data_types?: ArrangerResultsTree<IDataType>;
   dataset?: ArrangerResultsTree<IStudyDataset>;
-  date_collection_start_year?: string;
   date_collection_end_year?: string;
+  date_collection_start_year?: string;
   description?: string;
   domain?: string;
+  expected_data_categories?: string[];
+  expected_number_participants?: number;
   experimental_strategies?: ArrangerResultsTree<IExperimentalStrategy>;
   external_id: string;
   family_count?: number;
   file_count?: number;
-  institution?: string;
-  investigator_name?: string;
-  program: string;
-  publication?: string[];
+  institutions?: string[];
+  investigator_names?: string[];
+  part_lifespan_stages?: string[];
   participant_count: number;
-  study_design?: string[];
+  program: string;
+  publications?: string[];
   selection_criteria?: string;
+  study_designs?: string[];
   website: string;
 }

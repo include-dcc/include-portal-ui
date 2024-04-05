@@ -36,8 +36,12 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
   },
   {
     label: intl.get('entities.study.participant_life_span'),
-    value: study?.part_lifespan_stage
-      ? study?.part_lifespan_stage.map((lifespan) => <Tag color="cyan">{lifespan}</Tag>)
+    value: study?.part_lifespan_stages
+      ? study?.part_lifespan_stages.map((lifespan, index) => (
+          <Tag color="cyan" key={index}>
+            {lifespan}
+          </Tag>
+        ))
       : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
@@ -66,7 +70,7 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
   },
   {
     label: intl.get('entities.study.study_design'),
-    value: study?.study_design ? study.study_design.join(', ') : TABLE_EMPTY_PLACE_HOLDER,
+    value: study?.study_designs?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.study.study_website'),
@@ -78,10 +82,10 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
   },
   {
     label: intl.get('entities.study.publication'),
-    value: study?.publication ? (
+    value: study?.publications ? (
       <ExpandableCell
         nOfElementsWhenCollapsed={3}
-        dataSource={study.publication}
+        dataSource={study.publications}
         renderItem={(sourceText) => (
           <ExternalLink
             className={styles.externalLink}
@@ -97,24 +101,24 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
   },
   {
     label: intl.get('entities.study.principal_investigator'),
-    value: study?.investigator_name || TABLE_EMPTY_PLACE_HOLDER,
+    value: study?.investigator_names?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.study.institution'),
-    value: study?.institution || TABLE_EMPTY_PLACE_HOLDER,
+    value: study?.institutions?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.study.virtual_biorepository_email'),
-    value: study?.biorepo_email ? (
-      <ExternalLink href={`mailto:${study.biorepo_email}`}>{study.biorepo_email}</ExternalLink>
+    value: study?.biobank_contact ? (
+      <ExternalLink href={`mailto:${study.biobank_contact}`}>{study.biobank_contact}</ExternalLink>
     ) : (
       TABLE_EMPTY_PLACE_HOLDER
     ),
   },
   {
     label: intl.get('entities.study.virtual_biorepository_url'),
-    value: study?.biorepo_url ? (
-      <ExternalLink href={study.biorepo_url}>{study.biorepo_url}</ExternalLink>
+    value: study?.biobank_request_link ? (
+      <ExternalLink href={study.biobank_request_link}>{study.biobank_request_link}</ExternalLink>
     ) : (
       TABLE_EMPTY_PLACE_HOLDER
     ),
