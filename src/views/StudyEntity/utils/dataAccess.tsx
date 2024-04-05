@@ -13,18 +13,18 @@ const { Text } = Typography;
 const getFlatDataset = (dataset?: IArrangerResultsTree<IStudyDataset>) => {
   if (!dataset?.hits?.edges?.length) return undefined;
 
-  const accessLimitation: string[] = [];
-  const accessRequirement: string[] = [];
+  const accessLimitations: string[] = [];
+  const accessRequirements: string[] = [];
   dataset.hits.edges.forEach((edge) => {
-    if (edge.node.access_limitation && edge.node.access_limitation.length > 0)
-      accessLimitation.push(...edge.node.access_limitation);
-    if (edge.node.access_requirement && edge.node.access_requirement.length > 0)
-      accessRequirement.push(...edge.node.access_requirement);
+    if (edge.node.access_limitations && edge.node.access_limitations.length > 0)
+      accessLimitations.push(...edge.node.access_limitations);
+    if (edge.node.access_requirements && edge.node.access_requirements.length > 0)
+      accessRequirements.push(...edge.node.access_requirements);
   });
 
   return {
-    accessLimitation: new Set(accessLimitation),
-    accessRequirement: new Set(accessRequirement),
+    accessLimitations: new Set(accessLimitations),
+    accessRequirements: new Set(accessRequirements),
   };
 };
 
@@ -54,28 +54,26 @@ const getDataAccessDescriptions = (study?: IStudyEntity): IEntityDescriptionsIte
   return [
     {
       label: intl.get('entities.study.access_limitation'),
-      value: flatDataset?.accessLimitation.size
-        ? renderAccess(flatDataset?.accessLimitation)
+      value: flatDataset?.accessLimitations.size
+        ? renderAccess(flatDataset?.accessLimitations)
         : TABLE_EMPTY_PLACE_HOLDER,
     },
     {
       label: intl.get('entities.study.access_requirement'),
-      value: flatDataset?.accessRequirement.size
-        ? renderAccess(flatDataset.accessRequirement)
+      value: flatDataset?.accessRequirements.size
+        ? renderAccess(flatDataset.accessRequirements)
         : TABLE_EMPTY_PLACE_HOLDER,
     },
     {
       label: intl.get('entities.study.study_contact'),
-      value:
-        study?.contact_name || study?.institution || study?.contact_email ? (
-          <>
-            {study.contact_name && <Text>{study.contact_name}; </Text>}
-            {study.institution && <Text>{study.institution}; </Text>}
-            {study.contact_email && <Text>{study.contact_email}</Text>}
-          </>
-        ) : (
-          TABLE_EMPTY_PLACE_HOLDER
-        ),
+      value: study?.contacts?.hits?.edges?.length
+        ? study?.contacts?.hits?.edges.map((contact, index) => (
+            <div key={index}>
+              {contact.node.name && <Text>{contact.node.name}; </Text>}
+              {contact.node.email && <Text>{contact.node.email}</Text>}
+            </div>
+          ))
+        : TABLE_EMPTY_PLACE_HOLDER,
     },
   ];
 };

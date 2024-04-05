@@ -40,11 +40,10 @@ const filterInfo: FilterInfo = {
   defaultOpenFacets: [
     'program',
     'data_category',
-    'experimental_strategy',
-    'part_lifespan_stage',
+    'part_lifespan_stages',
     'family_data',
     'data_source',
-    'study_design',
+    'study_designs',
     'controlled_access',
   ],
   groups: [
@@ -52,11 +51,10 @@ const filterInfo: FilterInfo = {
       facets: [
         'program',
         'data_category',
-        'experimental_strategy',
-        'part_lifespan_stage',
+        'part_lifespan_stages',
         'family_data',
         'data_source',
-        'study_design',
+        'study_designs',
         'controlled_access',
       ],
     },
