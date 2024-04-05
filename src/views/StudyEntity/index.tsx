@@ -334,6 +334,7 @@ const StudyEntity = () => {
               data: treeNodeToChartData(phenotypes),
               filter: {
                 total: 10,
+                excludeZeroValue: true,
                 unique: true,
               },
             },
@@ -343,6 +344,7 @@ const StudyEntity = () => {
               filter: {
                 total: 10,
                 unique: true,
+                excludeZeroValue: true,
                 excludes: [
                   'complete trisomy 21 (MONDO:0700030)',
                   'Down syndrome (MONDO:0008608)',
@@ -350,6 +352,7 @@ const StudyEntity = () => {
                   'mosaic trisomy 21 (MONDO:0700127)',
                   'partial segmental duplication (MONDO:0700130)',
                   'translocation Down syndrome (MONDO:0700128)',
+                  'trisomy 21 (MONDO:0700126)',
                 ],
               },
             },
