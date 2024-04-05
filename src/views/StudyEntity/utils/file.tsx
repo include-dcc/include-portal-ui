@@ -4,6 +4,7 @@ import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import { Progress } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IDataType, IExperimentalStrategy, IStudyEntity } from 'graphql/studies/models';
@@ -123,66 +124,15 @@ const getExperimentalStrategyColumns = (
 const getFileTable = (study?: IStudyEntity) => {
   const total = study?.file_count || 0;
 
-  // TODO replace hardcoded arrays when back mock or real data will be received
-  const data_types = [
-    {
-      file_count: 1200,
-      data_type: 'Gene Fusions',
-    },
-    {
-      file_count: 477,
-      data_type: 'Protein abundance (absolute protein concentration)',
-    },
-    {
-      file_count: 433,
-      data_type: 'Aligned Reads',
-    },
-    {
-      file_count: 433,
-      data_type: 'gVCF',
-    },
-    {
-      file_count: 418,
-      data_type: 'Preprocessed metabolite relative abundance',
-    },
-    {
-      file_count: 7,
-      data_type: 'Other',
-    },
-    {
-      file_count: 7,
-      data_type: 'Variant Calls',
-    },
-  ];
-
-  const experimental_strategies = [
-    {
-      file_count: 3200,
-      experimental_strategy: 'RNA-Seq',
-    },
-    {
-      file_count: 880,
-      experimental_strategy: 'Whole Genome Sequencing',
-    },
-    {
-      file_count: 447,
-      experimental_strategy: 'Multiplex Immunoassay',
-    },
-    {
-      file_count: 418,
-      experimental_strategy: 'LCMS Metabolomics',
-    },
-  ];
-
   return [
     {
       columns: study ? getDataTypeColumns(total, study.study_code) : [],
-      data: data_types,
+      data: hydrateResults(study?.data_types?.hits?.edges || []),
       subTitle: intl.get('entities.study.numberByDataTypes'),
     },
     {
       columns: study ? getExperimentalStrategyColumns(total, study.study_code) : [],
-      data: experimental_strategies,
+      data: hydrateResults(study?.experimental_strategies?.hits?.edges || []),
       subTitle: intl.get('entities.study.numberByExperimentalStrategy'),
     },
   ];
