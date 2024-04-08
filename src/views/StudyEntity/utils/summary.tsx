@@ -98,7 +98,7 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
       <ExternalLink href={study.website}>{study.website}</ExternalLink>
     ) : (
       TABLE_EMPTY_PLACE_HOLDER
-    ), //.ant-descriptions-bordered .ant-descriptions-item-label
+    ),
   },
   {
     label: (
