@@ -3,10 +3,12 @@ import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
-import { Tag } from 'antd';
+import { Space, Tag, Tooltip, Typography } from 'antd';
 import { IStudyEntity } from 'graphql/studies/models';
 
 import styles from '../index.module.scss';
+
+const { Text } = Typography;
 
 // eslint-disable-next-line complexity
 const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[] => [
@@ -16,7 +18,22 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
   },
   {
     label: intl.get('entities.study.study_name'),
-    value: study?.study_name || TABLE_EMPTY_PLACE_HOLDER,
+    value: study?.study_name ? (
+      <Space size={8}>
+        <Text>{study.study_name}</Text>
+        {study.is_harmonized ? (
+          <Tooltip title={intl.get('entities.study.harmonizedTooltip')}>
+            <Tag color="green">{intl.get('entities.study.harmonized')}</Tag>
+          </Tooltip>
+        ) : (
+          <Tooltip title={intl.get('entities.study.unharmonizedTooltip')}>
+            <Tag>{intl.get('entities.study.unharmonized')}</Tag>
+          </Tooltip>
+        )}
+      </Space>
+    ) : (
+      TABLE_EMPTY_PLACE_HOLDER
+    ),
   },
   {
     label: intl.get('entities.study.program'),
