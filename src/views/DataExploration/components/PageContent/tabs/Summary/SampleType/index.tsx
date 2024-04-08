@@ -16,6 +16,8 @@ import useApi from 'hooks/useApi';
 import { truncateString } from 'utils/string';
 import { getResizableGridDictionary } from 'utils/translation';
 
+import { UID } from '../utils/grid';
+
 const addToQuery = (field: string, key: string) =>
   updateActiveQueryField({
     queryBuilderId: DATA_EXPLORATION_QB_ID,
