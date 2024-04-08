@@ -1,4 +1,5 @@
 import intl from 'react-intl-universal';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
@@ -100,7 +101,14 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
     ),
   },
   {
-    label: intl.get('entities.study.publication'),
+    label: (
+      <Space size={8}>
+        <Text>{intl.get('entities.study.publication')}</Text>
+        <Tooltip title={intl.get('entities.study.publicationTooltip')}>
+          <InfoCircleOutlined />
+        </Tooltip>
+      </Space>
+    ),
     value: study?.publications ? (
       <ExpandableCell
         nOfElementsWhenCollapsed={3}

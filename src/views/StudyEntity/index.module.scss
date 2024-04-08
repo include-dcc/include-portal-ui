@@ -2,14 +2,15 @@
   display: block;
 }
 
-.datasetTitle {
-  margin-bottom: 16px !important;
-}
-
+.datasetTitle,
 .datasetContainer {
-  margin-bottom: 16px;
+  margin-bottom: 16px !important;
 }
 
 .dbgapLink {
   margin-right: 8px;
+}
+
+.datasetInfo {
+  margin-left: 8px;
 }
