@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router';
-import { ReadOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, ReadOutlined } from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
@@ -431,6 +431,9 @@ const StudyEntity = () => {
           <>
             <Title level={4} className={style.datasetTitle}>
               {intl.get('entities.study.dataset.title')}
+              <Tooltip title={intl.get('entities.study.dataset.infoTootlip')}>
+                <InfoCircleOutlined className={style.datasetInfo} />
+              </Tooltip>
             </Title>
             {study?.dataset?.hits.edges.map(({ node: dataset }, index: number) => (
               <EntityDataset
