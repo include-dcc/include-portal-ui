@@ -65,13 +65,11 @@ const getColumns = (): ProColumnType<any>[] => [
   {
     key: 'study_id',
     title: intl.get('entities.study.code'),
+    dataIndex: 'study_code',
     sorter: { multiple: 1 },
-    render: (record: IStudyEntity) =>
-      record.website ? (
-        <ExternalLink href={record.website}>{record.study_code}</ExternalLink>
-      ) : (
-        record.study_code
-      ),
+    render: (study_code: string) => (
+      <Link to={`${STATIC_ROUTES.STUDIES}/${study_code}`}>{study_code}</Link>
+    ),
   },
   {
     key: 'study_name',
@@ -83,7 +81,7 @@ const getColumns = (): ProColumnType<any>[] => [
         studyId={record?.study_id}
         studyName={record?.study_name}
         text={record?.study_name}
-      ></StudyPopoverRedirect>
+      />
     ),
   },
   {
