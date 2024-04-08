@@ -16,8 +16,6 @@ import useApi from 'hooks/useApi';
 import { truncateString } from 'utils/string';
 import { getResizableGridDictionary } from 'utils/translation';
 
-import { DATA_CATEGORY_GRAPH_CARD_ID, UID } from '../utils/grid';
-
 const addToQuery = (field: string, key: string) =>
   updateActiveQueryField({
     queryBuilderId: DATA_EXPLORATION_QB_ID,
@@ -47,7 +45,7 @@ const SampleTypeGraphCard = () => {
   return (
     <ResizableGridCard
       gridUID={UID}
-      id={DATA_CATEGORY_GRAPH_CARD_ID}
+      id="sample_type"
       theme="shade"
       loading={loading}
       loadingType="spinner"
