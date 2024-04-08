@@ -109,7 +109,7 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
         </Tooltip>
       </Space>
     ),
-    value: study?.publications ? (
+    value: study?.publications?.length ? (
       <ExpandableCell
         nOfElementsWhenCollapsed={3}
         dataSource={study.publications}
