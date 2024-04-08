@@ -16,7 +16,7 @@ import EntityPage, {
   EntityTableMultiple,
   EntityTitle,
 } from '@ferlab/ui/core/pages/EntityPage';
-import { Space, Typography } from 'antd';
+import { Space, Tag, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
@@ -44,6 +44,8 @@ import getSummaryDescriptions from './utils/summary';
 import SummaryHeader from './SummaryHeader';
 
 import style from './index.module.scss';
+
+const { Text, Title } = Typography;
 
 const queryId = 'include-study-repo-key';
 
@@ -427,9 +429,9 @@ const StudyEntity = () => {
 
         {hasDataset && (
           <>
-            <Typography.Title level={4} className={style.datasetTitle}>
+            <Title level={4} className={style.datasetTitle}>
               {intl.get('entities.study.dataset.title')}
-            </Typography.Title>
+            </Title>
             {study?.dataset?.hits.edges.map(({ node: dataset }, index: number) => (
               <EntityDataset
                 containerClassName={index != datasetLength - 1 ? style.datasetContainer : ''}
@@ -439,7 +441,24 @@ const StudyEntity = () => {
                   files: intl.get('entities.file.files'),
                 }}
                 file_count={dataset?.file_count || 0}
-                header={dataset?.dataset_name || ''}
+                header={
+                  dataset?.dataset_name ? (
+                    <Space size={8}>
+                      <Text>{dataset.dataset_name}</Text>
+                      {dataset.is_harmonized ? (
+                        <Tooltip title={intl.get('entities.study.harmonizedTooltip')}>
+                          <Tag color="green">{intl.get('entities.study.harmonized')}</Tag>
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title={intl.get('entities.study.unharmonizedTooltip')}>
+                          <Tag>{intl.get('entities.study.unharmonized')}</Tag>
+                        </Tooltip>
+                      )}
+                    </Space>
+                  ) : (
+                    ''
+                  )
+                }
                 id={SectionId.DATASET}
                 key={dataset?.id}
                 loading={loading}

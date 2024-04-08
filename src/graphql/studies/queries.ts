@@ -110,6 +110,7 @@ export const GET_STUDY = gql`
             file_count
             institutions
             investigator_names
+            is_harmonized
             part_lifespan_stages
             participant_count
             program
@@ -126,23 +127,24 @@ export const GET_STUDY = gql`
                 total
                 edges {
                   node {
+                    access_limitations
+                    access_requirements
+                    biospecimen_count
+                    data_category
+                    data_types
                     dataset_id
                     dataset_name
                     date_collection_start_year
                     date_collection_end_year
-                    data_category
-                    data_types
                     expected_data_categories
-                    experimental_strategy
                     experimental_platform
+                    experimental_strategy
+                    file_count
+                    is_harmonized
+                    participant_count
                     publications
-                    access_limitations
-                    access_requirements
                     repository
                     repository_url
-                    participant_count
-                    biospecimen_count
-                    file_count
                   }
                 }
               }

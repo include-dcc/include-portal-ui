@@ -1578,6 +1578,9 @@ const en = {
       domain: 'Research Domain',
       file: 'File',
       files: 'Files',
+      harmonized: 'Harmonized',
+      harmonizedTooltip:
+        'Harmonized data refers to the collection of raw data provided by a study that has been normalized to the INCLUDE data model so that a valid comparison can be made across these studies.',
       institution: 'Institution',
       name: 'Name',
       numberByDataTypes: 'File counts by Data Type',
@@ -1601,6 +1604,9 @@ const en = {
         title: 'Statistic',
       },
       title: 'Data',
+      unharmonized: 'Unharmonized',
+      unharmonizedTooltip:
+        'Unharmonized data refers to raw data from a study that has not been standardized to the INCLUDE data model, limiting direct comparison with other studies.',
       virtual_biorepository_email: 'Virtual Biorepository Email',
       virtual_biorepository_url: 'Virtual Biorepository URL',
     },

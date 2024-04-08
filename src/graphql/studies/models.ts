@@ -19,6 +19,7 @@ export interface IStudyDataset {
   experimental_platform?: string;
   experimental_strategy?: string;
   file_count?: number;
+  is_harmonized?: boolean;
   participant_count?: number;
   publications?: string[];
   repository?: string;
@@ -71,6 +72,7 @@ export interface IStudyEntity {
   file_count?: number;
   institutions?: string[];
   investigator_names?: string[];
+  is_harmonized?: boolean;
   part_lifespan_stages?: string[];
   participant_count: number;
   program: string;
