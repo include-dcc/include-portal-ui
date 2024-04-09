@@ -124,15 +124,23 @@ const getExperimentalStrategyColumns = (
 const getFileTable = (study?: IStudyEntity) => {
   const total = study?.file_count || 0;
 
+  const dataTypes = hydrateResults(study?.data_types?.hits?.edges || []).filter(
+    (dateType) => dateType.file_count > 0,
+  );
+
+  const experimentStrategies = hydrateResults(
+    study?.experimental_strategies?.hits?.edges || [],
+  ).filter((dateType) => dateType.file_count > 0);
+
   return [
     {
       columns: study ? getDataTypeColumns(total, study.study_code) : [],
-      data: hydrateResults(study?.data_types?.hits?.edges || []),
+      data: dataTypes,
       subTitle: intl.get('entities.study.numberByDataTypes'),
     },
     {
       columns: study ? getExperimentalStrategyColumns(total, study.study_code) : [],
-      data: hydrateResults(study?.experimental_strategies?.hits?.edges || []),
+      data: experimentStrategies,
       subTitle: intl.get('entities.study.numberByExperimentalStrategy'),
     },
   ];
