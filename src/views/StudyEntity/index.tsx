@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useNavigate, useParams } from 'react-router';
-import { InfoCircleOutlined, ReadOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
@@ -14,7 +14,7 @@ import EntityPage, {
   EntityDescriptions,
   EntityStatistics,
   EntityTableMultiple,
-  EntityTitle,
+  EntityTitleLogo,
 } from '@ferlab/ui/core/pages/EntityPage';
 import { Button, Space, Tag, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
@@ -44,6 +44,7 @@ import getDataAccessDescriptions from './utils/dataAccess';
 import getDatasetDescription from './utils/datasets';
 import getFileTables from './utils/file';
 import getSummaryDescriptions from './utils/summary';
+import { getLogoByStudyCode } from './utils/title';
 import SummaryHeader from './SummaryHeader';
 
 import style from './index.module.scss';
@@ -238,10 +239,7 @@ const StudyEntity = () => {
       emptyText={intl.get('no.data.available')}
     >
       <>
-        <EntityTitle
-          text={study?.study_name}
-          icon={<ReadOutlined />}
-          loading={loading}
+        <EntityTitleLogo
           extra={
             <Space>
               {study && (
@@ -263,6 +261,9 @@ const StudyEntity = () => {
               )}
             </Space>
           }
+          loading={loading}
+          logo={getLogoByStudyCode(study?.study_code)}
+          title={study?.study_name}
         />
 
         <EntityDescriptions
