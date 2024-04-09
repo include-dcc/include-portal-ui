@@ -1,7 +1,9 @@
 import intl from 'react-intl-universal';
+import { useNavigate } from 'react-router';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { EntityTableMultiple, EntityTableRedirectLink } from '@ferlab/ui/core/pages/EntityPage';
+import { EntityTableMultiple } from '@ferlab/ui/core/pages/EntityPage';
+import { Button } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IFileEntity } from 'graphql/files/models';
 import { useDataFileAgg } from 'graphql/participants/actions';
@@ -24,6 +26,7 @@ interface IFilesTableProps {
 }
 
 const FileTable = ({ participant, loading: participantLoading }: IFilesTableProps) => {
+  const navigate = useNavigate();
   const participantId = participant?.participant_id || '';
 
   const files: IFileEntity[] = participant?.files?.hits.edges.map(({ node }) => node) || [];
@@ -54,10 +57,9 @@ const FileTable = ({ participant, loading: participantLoading }: IFilesTableProp
         loading={participantLoading || dataFileLoading}
         title={intl.get('entities.file.file')}
         titleExtra={[
-          <EntityTableRedirectLink
-            key="1"
-            to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
-            onClick={() =>
+          <Button
+            size="small"
+            onClick={() => {
               addQuery({
                 queryBuilderId: DATA_EXPLORATION_QB_ID,
                 query: generateQuery({
@@ -70,12 +72,13 @@ const FileTable = ({ participant, loading: participantLoading }: IFilesTableProp
                   ],
                 }),
                 setAsActive: true,
-              })
-            }
-            icon={<ExternalLinkIcon width={14} />}
+              });
+              navigate(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
+            }}
           >
-            {intl.get('global.viewInDataExploration')}
-          </EntityTableRedirectLink>,
+            {intl.get('global.viewInExploration')}
+            <ExternalLinkIcon />
+          </Button>,
         ]}
         header={intl.get('entities.file.file')}
         tables={[
