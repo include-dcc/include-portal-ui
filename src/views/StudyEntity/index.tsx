@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { InfoCircleOutlined, ReadOutlined } from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
@@ -16,7 +16,7 @@ import EntityPage, {
   EntityTableMultiple,
   EntityTitle,
 } from '@ferlab/ui/core/pages/EntityPage';
-import { Space, Tag, Tooltip, Typography } from 'antd';
+import { Button, Space, Tag, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
@@ -25,6 +25,7 @@ import { useStudy } from 'graphql/studies/actions';
 import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
 import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
 
+import ExternalLinkIcon from '../../components/Icons/ExternalLinkIcon';
 import {
   DATA_CATEGORY_QUERY,
   DATATYPE_QUERY,
@@ -34,6 +35,8 @@ import {
 } from '../../graphql/summary/queries';
 import useApi from '../../hooks/useApi';
 import { ARRANGER_API_PROJECT_URL } from '../../provider/ApolloProvider';
+import { STATIC_ROUTES } from '../../utils/routes';
+import { DATA_EXPLORATION_QB_ID } from '../DataExploration/utils/constant';
 import { getFlattenTree, TreeNode } from '../DataExploration/utils/OntologyTree';
 import { PhenotypeStore } from '../DataExploration/utils/PhenotypeStore';
 
@@ -58,6 +61,7 @@ enum SectionId {
 }
 
 const StudyEntity = () => {
+  const navigate = useNavigate();
   const { study_code } = useParams<{ study_code: string }>();
   const { sqon: participantSqon } = useParticipantResolvedSqon(queryId);
   const { sqon: fileSqon } = useFileResolvedSqon(queryId);
@@ -241,13 +245,20 @@ const StudyEntity = () => {
           extra={
             <Space>
               {study && (
-                <DownloadClinicalDataDropdown sqon={participantSqon} key="actionDropdown" />
+                <DownloadClinicalDataDropdown
+                  sqon={participantSqon}
+                  key="actionDropdown"
+                  disabled={!study?.is_harmonized}
+                  disabledTooltip={intl.get('entities.study.unharmonizedWarningTooltip')}
+                />
               )}
               {study && (
                 <DownloadFileManifestModal
                   key="download-file-manifest"
                   sqon={fileSqon}
                   type="primary"
+                  isDisabled={!study?.is_harmonized}
+                  disabledTooltip={intl.get('entities.study.unharmonizedWarningTooltip')}
                 />
               )}
             </Space>
@@ -269,6 +280,39 @@ const StudyEntity = () => {
           title={intl.get('entities.study.statistic.title')}
           loading={loading}
           header={intl.get('entities.study.statistic.header')}
+          titleExtra={[
+            <Tooltip
+              title={
+                !study?.is_harmonized
+                  ? intl.get('entities.study.unharmonizedWarningTooltip')
+                  : undefined
+              }
+            >
+              <Button
+                disabled={!study?.is_harmonized}
+                size="small"
+                onClick={() => {
+                  addQuery({
+                    queryBuilderId: DATA_EXPLORATION_QB_ID,
+                    query: generateQuery({
+                      newFilters: [
+                        generateValueFilter({
+                          field: 'study.study_code',
+                          value: study ? [study.study_code] : [],
+                          index: INDEXES.STUDY,
+                        }),
+                      ],
+                    }),
+                    setAsActive: true,
+                  });
+                  navigate(STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS);
+                }}
+              >
+                {intl.get('global.viewInExploration')}
+                <ExternalLinkIcon />
+              </Button>
+            </Tooltip>,
+          ]}
           dictionary={{
             phenotype: {
               headerTitle: intl.get('entities.study.statistic.phenotype'),
@@ -477,6 +521,39 @@ const StudyEntity = () => {
           loading={loading}
           tables={getFileTables(study)}
           title={intl.get('entities.study.file')}
+          titleExtra={[
+            <Tooltip
+              title={
+                !study?.is_harmonized
+                  ? intl.get('entities.study.unharmonizedWarningTooltip')
+                  : undefined
+              }
+            >
+              <Button
+                disabled={!study?.is_harmonized}
+                size="small"
+                onClick={() => {
+                  addQuery({
+                    queryBuilderId: DATA_EXPLORATION_QB_ID,
+                    query: generateQuery({
+                      newFilters: [
+                        generateValueFilter({
+                          field: 'study.study_code',
+                          value: study ? [study.study_code] : [],
+                          index: INDEXES.STUDY,
+                        }),
+                      ],
+                    }),
+                    setAsActive: true,
+                  });
+                  navigate(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
+                }}
+              >
+                {intl.get('global.viewInExploration')}
+                <ExternalLinkIcon />
+              </Button>
+            </Tooltip>,
+          ]}
           total={study?.file_count}
         />
       </>
