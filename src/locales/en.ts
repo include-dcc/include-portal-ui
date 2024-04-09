@@ -1613,7 +1613,7 @@ const en = {
       unharmonizedTooltip:
         'Unharmonized data refers to raw data from a study that has not been standardized to the INCLUDE data model, limiting direct comparison with other studies.',
       unharmonizedWarningTooltip:
-        'The data from this study has not been harmonized to the INCLUDE data model',
+        'The data from this study has not been harmonized to the INCLUDE data model.',
       virtual_biorepository_email: 'Virtual Biorepository Email',
       virtual_biorepository_url: 'Virtual Biorepository URL',
     },
