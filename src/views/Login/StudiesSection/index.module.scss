@@ -1,0 +1,15 @@
+.container {
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 40px 24px;
+    gap: 40px;
+  }
+}

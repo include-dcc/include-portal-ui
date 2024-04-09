@@ -581,15 +581,76 @@ const en = {
     },
     loginPage: {
       title: 'INCLUDE Data Hub',
-      datarelease: {
-        title: 'Available Data',
-      },
-      message:
-        'Uncover <span style="color:#7dd3fc;">new insights</span> into the biology of Down Syndrome and co-occurring conditions.',
-      accessLargeScale:
-        'Access large-scale data resources and explore custom built cohort datasets based on participant, biospecimen, clinical and omics data.',
+      subtitle:
+        'Uncover new insights into the biology of Down Syndrome and co-occurring conditions.',
+      resume:
+        'Access large-scale integrated data resources and analyze custom built cohort datasets based on participants, biospecimen, clinical, and genomic data.',
       login: 'Login',
       signup: 'Sign up',
+      studies: {
+        title: 'Studies',
+        summary:
+          'Explore a curated collection of harmonized studies, ranging from participant-reported programs, INCLUDE-funded cohorts, institutional initiatives, and dedicated consortia focused on Down Syndrome research.',
+        cartagene: {
+          subtitle: 'CARTaGENE',
+          description:
+            '<p>CARTaGENE is a public research platform of the CHU Sainte-Justine created to accelerate health research. CARTaGENE consists of both biological samples and health data from 43,000 Quebec residents aged between 40 to 69 years.</p><p>The dataset currently available in the CQDG contains whole genome sequencing (WGS) data for 2,179 individuals.</p>',
+        },
+        dee: {
+          title: 'DEE',
+          subtitle: 'Investigating the genetic causes of epileptogenic encephalopathies',
+          description:
+            '<p>Whole Genome Sequencing (WGS) study in children with epileptogenic encephalopathies.</p><p>The dataset currently available in the CQDG contains whole genome sequencing data for 588 individuals belonging to 196 families.</p>',
+        },
+        bacq: {
+          title: 'BACQ',
+          subtitle: 'Quebec congenital malformation biobank',
+          description:
+            '<p>Biobank of well-characterized affected cases as well as their parents allowing molecular genetic studies to be carried out to identify the genes associated with these malformations.</p><p>The dataset currently available in the CQDG contains whole exome sequencing (WXS) data for 386 individuals belonging to 124 families.</p>',
+        },
+        pragmatiq: {
+          title: 'PRAGMatIQ',
+          subtitle: 'Applying rapid pediatric genomics in Quebec',
+          description:
+            '<p>The objective of the project is to offer rapid clinical Whole Genome Sequencing (WGS) to all critically ill newborns and infants who could benefit from this test in Quebec.</p><p>Data for 257 individuals has been submitted to the CQDG. The dataset currently available in the CQDG contains whole genome sequencing data for 110 individuals belonging to 38 families.</p>',
+        },
+        neurodev: {
+          title: 'NeuroDev',
+          subtitle: 'Neurodevelopmental disorders',
+          description:
+            '<p>The main objective of this project is to constitute a bank of samples and data from children and adults with global developmental delay, epilepsy and/or malformations and members of their family to supply various research projects which aim to identify the genes involved in these conditions.</p><p>Data for 382 individuals has been submitted to the CQDG. The dataset currently available in the CQDG contains whole genome sequencing data for 67 individuals belonging to 22 families.</p>',
+        },
+      },
+      cards: {
+        stats: {
+          title: 'Data Set',
+          genomes: 'Genomes',
+          transcriptomes: 'Transcriptomes',
+        },
+        variants: {
+          title: 'Germline Variants',
+          description:
+            'The INCLUDE Variant Explorer enables users to search across millions of annotated germline variants directly from a performant and scalable variant database using INCLUDE participants with known co-occurring conditions.',
+          explore: 'Explore variant data',
+        },
+        cavatica: {
+          description:
+            'The portal integrates with CAVATICA, a data analysis and sharing platform designed to accelerate discovery in a scalable, cloud-based compute environment where data, results, and workflows are shared among the world’s research community. Researchers and bioinformaticians can create or use existing workflows, to analyze INCLUDE datasets.',
+          learnMore: 'Learn more',
+        },
+      },
+      documentation: {
+        title: 'INCLUDE documentation center',
+        description:
+          'For information on accessing, submitting and uploading data, visit our Documentation Center.',
+        button: 'Documentation',
+      },
+      participation: {
+        title: 'Participate in the INCLUDE Project',
+        description:
+          'Visit the NIH INCLUDE project page to learn more about the initiative, funding opportunities, or other resources.',
+        button: 'Learn more',
+      },
     },
     dashboard: {
       hello: 'Hello',
@@ -1539,6 +1600,7 @@ const en = {
       trisomy: 'T21: "Trisomy 21"',
     },
     study: {
+      studies: 'Studies',
       access_limitation: 'Access Limitation',
       access_requirement: 'Access Requirement',
       affectedStudies: {

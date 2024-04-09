@@ -21,9 +21,7 @@ import Login from 'views/Login';
 
 import { LANG } from 'common/constants';
 import { FENCE_NAMES } from 'common/fenceTypes';
-import MainSideImage from 'components/assets/mainSideImage.jpg';
 import ErrorBoundary from 'components/ErrorBoundary';
-import SideImageLayout from 'components/Layout/SideImage';
 import Spinner from 'components/uiKit/Spinner';
 import NotificationContextHolder from 'components/utils/NotificationContextHolder';
 import { initGa } from 'services/analytics';
@@ -80,14 +78,7 @@ const App = () => {
                     path={STATIC_ROUTES.CAVATICA_FENCE_REDIRECT}
                     element={<FenceRedirect fence={PASSPORT.cavatica} />}
                   />
-                  <Route
-                    path={STATIC_ROUTES.LOGIN}
-                    element={
-                      <SideImageLayout sideImgSrc={MainSideImage}>
-                        <Login />
-                      </SideImageLayout>
-                    }
-                  />
+                  <Route path={STATIC_ROUTES.LOGIN} element={<Login />} />
                   <Route path={DYNAMIC_ROUTES.ERROR} element={<ErrorPage />} />
                   <Route
                     path={STATIC_ROUTES.DASHBOARD}
