@@ -8,9 +8,14 @@
   gap: 12px;
 }
 
-.link {
-  display: flex;
+.tooltip {
   width: 100%;
+  height: 66px;
+}
+
+.item {
+  width: 100%;
+  height: 100%;
   align-items: baseline;
   justify-content: center;
 
@@ -21,8 +26,4 @@
   &:hover {
     background: $gray-1;
   }
-}
-
-.icon {
-  color: $gray-8;
 }

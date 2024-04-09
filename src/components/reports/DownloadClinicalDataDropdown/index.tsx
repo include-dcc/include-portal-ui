@@ -13,18 +13,32 @@ interface OwnProps {
   participantIds?: string[];
   sqon?: ISqonGroupFilter;
   type?: 'default' | 'primary';
+  disabled?: boolean;
+  disabledTooltip?: string;
 }
 
 const DownloadClinicalDataDropdown = ({
   participantIds = [],
   sqon,
   type = 'default',
+  disabled = false,
+  disabledTooltip,
 }: OwnProps) => {
   const dispatch = useDispatch();
-
   const getCurrentSqon = (): any => sqon || generateSelectionSqon('participant_id', participantIds);
 
-  const disabledDropdown = sqon ? false : participantIds.length === 0;
+  let tooltipText = undefined;
+  let disabledDropdown = false;
+
+  if (disabled) {
+    disabledDropdown = true;
+    tooltipText = disabledTooltip;
+  } else if (sqon) {
+    disabledDropdown = false;
+  } else if (participantIds.length === 0) {
+    disabledDropdown = true;
+    tooltipText = intl.get('screen.dataExploration.itemSelectionTooltip');
+  }
 
   const menu = {
     onClick: (e: MenuInfo) =>
@@ -49,9 +63,7 @@ const DownloadClinicalDataDropdown = ({
   };
 
   return (
-    <Tooltip
-      title={disabledDropdown ? intl.get('screen.dataExploration.itemSelectionTooltip') : undefined}
-    >
+    <Tooltip title={tooltipText}>
       <div>
         <Dropdown
           key="actionDropdown"

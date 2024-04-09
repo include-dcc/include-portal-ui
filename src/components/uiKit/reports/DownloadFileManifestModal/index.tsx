@@ -18,6 +18,7 @@ interface IDownloadFileManifestProps {
   sqon: ISyntheticSqon;
   type?: 'default' | 'primary';
   isDisabled?: boolean;
+  disabledTooltip?: string;
   hasTooManyFiles?: boolean;
 }
 
@@ -25,18 +26,25 @@ const DownloadFileManifestModal = ({
   sqon,
   type = 'default',
   isDisabled,
+  disabledTooltip,
   hasTooManyFiles,
 }: IDownloadFileManifestProps) => {
   const dispatch = useDispatch();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFamilyChecked, setIsFamilyChecked] = useState(false);
+  let tooltipText = undefined;
+  if (isDisabled) {
+    if (disabledTooltip) {
+      tooltipText = disabledTooltip;
+    } else {
+      tooltipText = intl.get('screen.dataExploration.itemSelectionTooltip');
+    }
+  }
 
   return (
     <>
-      <Tooltip
-        title={isDisabled ? intl.get('screen.dataExploration.itemSelectionTooltip') : undefined}
-      >
+      <Tooltip title={tooltipText}>
         <Button
           icon={<DownloadOutlined />}
           onClick={() => setIsModalVisible(true)}
