@@ -102,10 +102,10 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
   },
   {
     label: (
-      <Space size={8}>
+      <Space size={4}>
         <Text>{intl.get('entities.study.publication')}</Text>
         <Tooltip title={intl.get('entities.study.publicationTooltip')}>
-          <InfoCircleOutlined />
+          <InfoCircleOutlined className={styles.publicationIcon} />
         </Tooltip>
       </Space>
     ),

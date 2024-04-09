@@ -1,3 +1,5 @@
+@import 'src/style/themes/include/colors';
+
 .externalLink {
   display: block;
 }
@@ -12,5 +14,10 @@
 }
 
 .datasetInfo {
+  color: $gray-7;
   margin-left: 8px;
+}
+
+.publicationIcon {
+  color: $gray-7;
 }
