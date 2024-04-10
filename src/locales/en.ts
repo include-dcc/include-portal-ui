@@ -603,6 +603,10 @@ const en = {
       cards: {
         error: {
           title: 'Connection error',
+          disconnect: {
+            start: 'We are currently unable to connect to this service. Please refresh the page or',
+            end: 'your account and try again. If the problem persists, please',
+          },
           subtitle:
             'We are currently unable to connect to this service. Please refresh the page and try again. If the problem persists, please',
           contactSupport: 'contact support',
