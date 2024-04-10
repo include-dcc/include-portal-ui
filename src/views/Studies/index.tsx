@@ -217,7 +217,40 @@ const getColumns = (): ProColumnType<any>[] => [
           {numberWithCommas(biospecimenCount)}
         </Link>
       ) : (
-        biospecimenCount
+        biospecimenCount || TABLE_EMPTY_PLACE_HOLDER
+      );
+    },
+  },
+  {
+    key: 'file_count',
+    title: intl.get('entities.file.files'),
+    sorter: { multiple: 1 },
+    render: (record: IStudyEntity) => {
+      const fileCount = record?.file_count || 0;
+
+      return fileCount ? (
+        <Link
+          to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
+          onClick={() =>
+            addQuery({
+              queryBuilderId: DATA_EXPLORATION_QB_ID,
+              query: generateQuery({
+                newFilters: [
+                  generateValueFilter({
+                    field: 'study.study_code',
+                    value: [record.study_code],
+                    index: INDEXES.PARTICIPANT,
+                  }),
+                ],
+              }),
+              setAsActive: true,
+            })
+          }
+        >
+          {numberWithCommas(fileCount)}
+        </Link>
+      ) : (
+        fileCount || TABLE_EMPTY_PLACE_HOLDER
       );
     },
   },

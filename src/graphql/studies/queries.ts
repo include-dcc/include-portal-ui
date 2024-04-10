@@ -37,6 +37,7 @@ export const GET_STUDIES = gql`
             domain
             external_id
             family_count
+            file_count
             institutions
             investigator_names
             is_harmonized
