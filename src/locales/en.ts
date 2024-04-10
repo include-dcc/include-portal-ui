@@ -1595,7 +1595,7 @@ const en = {
       harmonized: 'Harmonized',
       harmonizedAbrv: 'H',
       harmonizedTooltip:
-        'Harmonized indicates that a subset of raw data provided by a study that has been normalized to the INCLUDE data model so that a valid comparison can be made across these studies.',
+        'Harmonized data indicates that a subset of raw data provided by a study has been normalized to the INCLUDE data model so that a valid comparison can be made across these studies.',
       institution: 'Institution',
       name: 'Name',
       numberByDataTypes: 'File counts by Data Type',
