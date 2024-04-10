@@ -2,7 +2,7 @@
 
 .topBanner {
   background-color: $gray-8;
-  background-image: url("../../../components/assets/include-page-header-family.jpg");
+  background-image: url("../../../components/assets/landing-page/page-header.jpg");
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,18 @@
   padding: 80px 24px;
 }
 
+.wrapper {
+  width: 100%;
+}
+
+.contentCard {
+  height: 270px !important;
+}
+
 .contentContainer {
+  display: flex;
+  align-items: center;
+  gap: 80px;
   max-width: 1200px;
   width: 100%;
 }
@@ -61,7 +72,9 @@
 @media (min-width: 800px) and (max-width: 1024px) {
   .topBanner {
     padding: 40px 40px;
-
+  }
+  .contentContainer {
+    gap: 40px;
   }
   .content {
     max-width: 720px;
@@ -73,6 +86,12 @@
     padding: 40px 40px;
 
   }
+  .contentContainer {
+    flex-direction: column;
+    gap: 24px;
+    max-height: fit-content;
+  }
+
   .content {
     max-width: 520px;
   }

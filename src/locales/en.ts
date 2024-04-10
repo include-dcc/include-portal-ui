@@ -591,34 +591,60 @@ const en = {
         title: 'Studies',
         summary:
           'Explore a curated collection of harmonized studies, ranging from participant-reported programs, INCLUDE-funded cohorts, institutional initiatives, and dedicated consortia focused on Down Syndrome research.',
-        cartagene: {
-          subtitle: 'CARTaGENE',
+        htp: {
+          name: 'The Human Trisome Project',
           description:
-            '<p>CARTaGENE is a public research platform of the CHU Sainte-Justine created to accelerate health research. CARTaGENE consists of both biological samples and health data from 43,000 Quebec residents aged between 40 to 69 years.</p><p>The dataset currently available in the CQDG contains whole genome sequencing (WGS) data for 2,179 individuals.</p>',
+            '<p>The Human Trisome Project (HTP) is a large and comprehensive natural history study of Down syndrome involving collection of deep clinical data, multimodal phenotyping, a multi-dimensional biobank, generation of pan-omics datasets, and rapid release of data. The HTP has enabled many discoveries about the pathophysiology of Down syndrome, leading to new clinical trials testing therapies to improve diverse health outcomes in this population.</p>',
         },
-        dee: {
-          title: 'DEE',
-          subtitle: 'Investigating the genetic causes of epileptogenic encephalopathies',
+        dsc: {
+          name: 'DS-Connect: The Down Syndrome Registry',
           description:
-            '<p>Whole Genome Sequencing (WGS) study in children with epileptogenic encephalopathies.</p><p>The dataset currently available in the CQDG contains whole genome sequencing data for 588 individuals belonging to 196 families.</p>',
+            '<p>DS-Connect is an online survey tool designed to collect demographic data and basic health information from individuals with DS. The purposes of DS-Connect: The Down Syndrome Registry are to better understand the health of people with Down syndrome and to inform eligible participants who, based on their health history, may be a match for research studies or new clinical trials.</p>',
         },
-        bacq: {
-          title: 'BACQ',
-          subtitle: 'Quebec congenital malformation biobank',
+        ds360hd: {
+          name: 'INCLUDE: (Sherman) Genomic Analysis of Congenital Heart Defects and Acute Lymphoblastic Leukemia in Children with Down Syndrome',
           description:
-            '<p>Biobank of well-characterized affected cases as well as their parents allowing molecular genetic studies to be carried out to identify the genes associated with these malformations.</p><p>The dataset currently available in the CQDG contains whole exome sequencing (WXS) data for 386 individuals belonging to 124 families.</p>',
+            '<p>Down syndrome is one of the strongest risk factors for acute myeloid leukemia in children, which is preceded by a transient leukemia driven by somatic mutations in the GATA1 gene. This study was funded by the Kids First and INCLUDE programs to generate whole-genome sequencing data from a long-standing and well-phenotyped collection of newborn blood samples from 436 individuals with DS from the Oxford Down Syndrome Cohort Study, to advance our understanding of biological factors associated with transient leukemia in DS.</p>',
         },
-        pragmatiq: {
-          title: 'PRAGMatIQ',
-          subtitle: 'Applying rapid pediatric genomics in Quebec',
+        x01hakonarson: {
+          name: 'Genetic underpinnings of the multifactorial phenotype of Trisomy 21 patients unveiled by multi-omics approaches',
           description:
-            '<p>The objective of the project is to offer rapid clinical Whole Genome Sequencing (WGS) to all critically ill newborns and infants who could benefit from this test in Quebec.</p><p>Data for 257 individuals has been submitted to the CQDG. The dataset currently available in the CQDG contains whole genome sequencing data for 110 individuals belonging to 38 families.</p>',
+            "<p>To better understand the pathophysiology of Down syndrome (DS), this proposal will generate and analyze sequence data on 777 pediatric DS patients from the Children's Hospital of Philadelphia (CHOP), as well as 321 mothers and 148 fathers. We anticipate that the information derived from this deeply phenotyped cohort will allow for improved understanding of the pathophysiology and molecular mechanisms underlying DS-associated comorbidities, which may inform on new practices for treatment or innovative future therapies.</p>",
         },
-        neurodev: {
-          title: 'NeuroDev',
-          subtitle: 'Neurodevelopmental disorders',
+        dspcgc: {
+          name: 'INCLUDE: (PCGC) Genomic Analysis of Congenital Heart Defects and Acute Lymphoblastic Leukemia in Children with Down Syndrome',
           description:
-            '<p>The main objective of this project is to constitute a bank of samples and data from children and adults with global developmental delay, epilepsy and/or malformations and members of their family to supply various research projects which aim to identify the genes involved in these conditions.</p><p>Data for 382 individuals has been submitted to the CQDG. The dataset currently available in the CQDG contains whole genome sequencing data for 67 individuals belonging to 22 families.</p>',
+            '<p>Since a key aspect of Kids First is to help uncover connections between structural birth defects and childhood cancers, the program will partner with INCLUDE and TOPMed to advance our understanding the biological factors that may lead to both heart disease and leukemia in individuals with DS.</p>',
+        },
+        bridsr: {
+          name: 'Benaroya Research Institute Down Syndrome Registry',
+          description:
+            '<p>The Down syndrome registry at Benaroya Research Institute (BRI) builds on institutional expertise to collect and analyze longitudinal biological samples and concomitant clinical metadata across the lifespan of people with Down syndrome. The goal is to help advance therapeutic approaches to predict, prevent and cure co-occurring conditions of Down syndrome.</p>',
+        },
+        abcds: {
+          name: 'Alzheimer Biomarker Consortium - Down Syndrome',
+          description:
+            "<p>The goal of the Alzheimer Biomarker Consortium-Down Syndrome (ABC-DS) is to study a group of adults with Down syndrome over their lives to single out early biomarkers of the onset of Alzheimer's disease.</p>",
+        },
+        dscogall: {
+          name: 'INCLUDE: (Lupo) Genomic Analysis of Congenital Heart Defects and Acute Lymphoblastic Leukemia in Children with Down Syndrome',
+          description:
+            '<p>Down syndrome is one of the strongest risk factors for acute myeloid leukemia in children, which is preceded by a transient leukemia driven by somatic mutations in the GATA1 gene. This study was funded by the Kids First and INCLUDE programs to generate whole-genome sequencing data from a long-standing and well-phenotyped collection of newborn blood samples from 436 individuals with DS from the Oxford Down Syndrome Cohort Study, to advance our understanding of biological factors associated with transient leukemia in DS.</p>',
+        },
+        x01desmith: {
+          name: 'The epidemiology of transient leukemia in newborns with Down syndrome',
+          description:
+            '<p>Children with Down syndrome (DS) have an extremely high risk of developing acute myeloid leukemia, and this is preceded by a transient myeloid leukemia that presents in up to 30% of newborns with DS and can lead to early death. In this study, we will investigate the role of germline genetic risk factors in modifying the risk of transient myeloid leukemia in DS. </p>',
+        },
+        dssleep: {
+          name: 'Dimensional, Sleep, and Genomic Analyses of Down Syndrome to Elucidate Phenotypic Variability',
+          description:
+            '<p>The present work falls under an administrative supplement to study Down syndrome (DS) within the existing grant, "Dimensional Analysis of Developmental Brain Disorders using an Online, Genome First Approach" (R01-MH107431). The study aims to build validated, quantitative measures of psychopathology for DS.</p>',
+        },
+        dsnexus: {
+          name: 'Nexus Translational Biobank',
+          description:
+            '<p>The Nexus is a patient registry, clinical database, and biological sample bank focused on developmental disorders. Its major goal is to advance research by (i) linking human cognitive, behavioral, neurological and other clinical phenotypes to biological samples, including DNA, plasma, and lymphoblastoid cell lines, and (ii) facilitating access to appropriate patient cohorts for research purposes. The Nexus is unique among biorepositories in that it combines extensive clinical data and biosamples, and emphasizes the inclusion of quantitative cognitive and behavioral data.</p>',
         },
       },
       cards: {

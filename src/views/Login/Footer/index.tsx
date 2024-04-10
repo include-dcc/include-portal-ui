@@ -1,10 +1,10 @@
 import React from 'react';
 
-import ChopLogo from 'components/assets/footer/chop-logo.svg';
-import ChuSjLogo from 'components/assets/footer/chusj-logo.svg';
-import LindaLogo from 'components/assets/footer/linda-logo.svg';
-import VanderbiltLogo from 'components/assets/footer/vanderbilt-logo.svg';
-import VelseraLogo from 'components/assets/footer/verlsera-logo.png';
+import ChopLogo from '../../../components/assets/landing-page/footer/chop-logo.svg';
+import ChuSjLogo from '../../../components/assets/landing-page/footer/chusj-logo.svg';
+import LindaLogo from '../../../components/assets/landing-page/footer/linda-logo.svg';
+import VanderbiltLogo from '../../../components/assets/landing-page/footer/vanderbilt-logo.svg';
+import VelseraLogo from '../../../components/assets/landing-page/footer/verlsera-logo.png';
 
 import styles from './index.module.scss';
 
