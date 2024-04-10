@@ -61,6 +61,7 @@ enum SectionId {
   DATASET = 'dataset',
 }
 
+// eslint-disable-next-line complexity
 const StudyEntity = () => {
   const navigate = useNavigate();
   const { study_code } = useParams<{ study_code: string }>();
@@ -216,6 +217,7 @@ const StudyEntity = () => {
   const hasDataset = study?.dataset?.hits?.edges && study.dataset.hits.edges.length > 0;
   const hasDataAccess =
     hasDataset || (study?.contacts?.hits?.edges && study?.contacts?.hits?.edges.length > 0);
+  const hasFiles = (study?.file_count ?? 0) > 0;
 
   const defaultLinks = [
     { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
@@ -238,7 +240,9 @@ const StudyEntity = () => {
     datasetLength = study?.dataset?.hits.edges.length || 0;
   }
 
-  defaultLinks.push({ href: `#${SectionId.DATA_FILE}`, title: intl.get('entities.study.file') });
+  if (hasFiles) {
+    defaultLinks.push({ href: `#${SectionId.DATA_FILE}`, title: intl.get('entities.study.file') });
+  }
 
   return (
     <EntityPage
@@ -526,47 +530,49 @@ const StudyEntity = () => {
           </>
         )}
 
-        <EntityTableMultiple
-          header={intl.get('entities.study.files')}
-          id={SectionId.DATA_FILE}
-          loading={loading}
-          tables={getFileTables(study)}
-          title={intl.get('entities.study.file')}
-          titleExtra={[
-            <Tooltip
-              title={
-                !study?.is_harmonized
-                  ? intl.get('entities.study.unharmonizedWarningTooltip')
-                  : undefined
-              }
-            >
-              <Button
-                disabled={!study?.is_harmonized}
-                size="small"
-                onClick={() => {
-                  addQuery({
-                    queryBuilderId: DATA_EXPLORATION_QB_ID,
-                    query: generateQuery({
-                      newFilters: [
-                        generateValueFilter({
-                          field: 'study.study_code',
-                          value: study ? [study.study_code] : [],
-                          index: INDEXES.STUDY,
-                        }),
-                      ],
-                    }),
-                    setAsActive: true,
-                  });
-                  navigate(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
-                }}
+        {hasFiles && (
+          <EntityTableMultiple
+            header={intl.get('entities.study.files')}
+            id={SectionId.DATA_FILE}
+            loading={loading}
+            tables={getFileTables(study)}
+            title={intl.get('entities.study.file')}
+            titleExtra={[
+              <Tooltip
+                title={
+                  !study?.is_harmonized
+                    ? intl.get('entities.study.unharmonizedWarningTooltip')
+                    : undefined
+                }
               >
-                {intl.get('global.viewInExploration')}
-                <ExternalLinkIcon />
-              </Button>
-            </Tooltip>,
-          ]}
-          total={study?.file_count}
-        />
+                <Button
+                  disabled={!study?.is_harmonized}
+                  size="small"
+                  onClick={() => {
+                    addQuery({
+                      queryBuilderId: DATA_EXPLORATION_QB_ID,
+                      query: generateQuery({
+                        newFilters: [
+                          generateValueFilter({
+                            field: 'study.study_code',
+                            value: study ? [study.study_code] : [],
+                            index: INDEXES.STUDY,
+                          }),
+                        ],
+                      }),
+                      setAsActive: true,
+                    });
+                    navigate(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
+                  }}
+                >
+                  {intl.get('global.viewInExploration')}
+                  <ExternalLinkIcon />
+                </Button>
+              </Tooltip>,
+            ]}
+            total={study?.file_count}
+          />
+        )}
       </>
     </EntityPage>
   );
