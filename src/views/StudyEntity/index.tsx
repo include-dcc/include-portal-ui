@@ -214,17 +214,27 @@ const StudyEntity = () => {
   });
 
   const hasDataset = study?.dataset?.hits?.edges && study.dataset.hits.edges.length > 0;
+  const hasDataAccess =
+    hasDataset || (study?.contacts?.hits?.edges && study?.contacts?.hits?.edges.length > 0);
 
   const defaultLinks = [
     { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
     { href: `#${SectionId.STATISTIC}`, title: intl.get('entities.study.statistic.title') },
   ];
+
+  if (hasDataAccess) {
+    defaultLinks.push({
+      href: `#${SectionId.DATA_ACCESS}`,
+      title: intl.get('entities.study.data_access'),
+    });
+  }
+
   let datasetLength = 0;
   if (hasDataset) {
-    defaultLinks.push(
-      { href: `#${SectionId.DATA_ACCESS}`, title: intl.get('entities.study.data_access') },
-      { href: `#${SectionId.DATASET}`, title: intl.get('entities.study.dataset.title') },
-    );
+    defaultLinks.push({
+      href: `#${SectionId.DATASET}`,
+      title: intl.get('entities.study.dataset.title'),
+    });
     datasetLength = study?.dataset?.hits.edges.length || 0;
   }
 
@@ -461,7 +471,7 @@ const StudyEntity = () => {
           }}
         />
 
-        {hasDataset && (
+        {hasDataAccess && (
           <EntityDescriptions
             descriptions={getDataAccessDescriptions(study)}
             header={intl.get('entities.study.data_access')}
