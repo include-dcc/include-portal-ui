@@ -257,6 +257,9 @@ export const getFacetsDictionary = () => ({
     zygosity: 'Zygosity',
     transmission: 'Transmission',
   },
+  domains: 'Domain',
+  study_designs: 'Design',
+  part_lifespan_stages: 'Participant Lifespan Stage',
   start: 'Position',
   acl: 'ACL',
   sequencing_experiment: {

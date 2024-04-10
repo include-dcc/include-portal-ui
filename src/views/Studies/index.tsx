@@ -1,11 +1,13 @@
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
-import { CheckOutlined } from '@ant-design/icons';
+import { AuditOutlined, CheckOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
+import { Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IStudyEntity } from 'graphql/studies/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
@@ -39,22 +41,26 @@ const hasDataCategory = (dataCategory: string[], category: DataCategory) =>
 const filterInfo: FilterInfo = {
   defaultOpenFacets: [
     'program',
+    'domains',
     'data_category',
     'part_lifespan_stages',
     'family_data',
     'data_source',
     'study_designs',
+    'is_harmonized',
     'controlled_access',
   ],
   groups: [
     {
       facets: [
         'program',
+        'domains',
         'data_category',
         'part_lifespan_stages',
         'family_data',
         'data_source',
         'study_designs',
+        'is_harmonized',
         'controlled_access',
       ],
     },
@@ -62,6 +68,28 @@ const filterInfo: FilterInfo = {
 };
 
 const getColumns = (): ProColumnType<any>[] => [
+  {
+    key: 'is_harmonized',
+    iconTitle: <AuditOutlined />,
+    title: intl.get('entities.study.harmonized'),
+    popoverProps: {
+      title: <b>{intl.get('screen.studies.harmonizedPopover.title')}</b>,
+      overlayStyle: { maxWidth: '400px' },
+      content: intl.get('screen.studies.harmonizedPopover.content'),
+    },
+    dataIndex: 'is_harmonized',
+    align: 'center',
+    render: (is_harmonized: boolean) =>
+      is_harmonized ? (
+        <Tooltip title={intl.get('entities.study.harmonized')}>
+          <Tag color="green">{intl.get('entities.study.harmonizedAbrv')}</Tag>
+        </Tooltip>
+      ) : (
+        <Tooltip title={intl.get('entities.study.unharmonized')}>
+          <Tag>{intl.get('entities.study.unharmonizedAbrv')}</Tag>
+        </Tooltip>
+      ),
+  },
   {
     key: 'study_id',
     title: intl.get('entities.study.code'),
@@ -89,6 +117,13 @@ const getColumns = (): ProColumnType<any>[] => [
     title: intl.get('entities.study.program'),
     dataIndex: 'program',
     render: (program: string) => program || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
+    key: 'domains',
+    title: intl.get('entities.study.domains'),
+    dataIndex: 'domains',
+    render: (domains: string[]) => domains?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
+    width: 300,
   },
   {
     key: 'external_id',
@@ -217,6 +252,83 @@ const getColumns = (): ProColumnType<any>[] => [
     align: 'center',
     render: (record: IStudyEntity) =>
       hasDataCategory(record.data_category, DataCategory.METABOLOMIC),
+  },
+  {
+    key: 'description',
+    title: intl.get('entities.study.description'),
+    dataIndex: 'description',
+    defaultHidden: true,
+    render: (description: string) => description || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
+    key: 'part_lifespan_stages',
+    title: intl.get('entities.study.participant_life_span'),
+    dataIndex: 'part_lifespan_stages',
+    defaultHidden: true,
+    render: (part_lifespan_stages: string[]) => (
+      <ExpandableCell
+        nOfElementsWhenCollapsed={2}
+        dataSource={part_lifespan_stages}
+        renderItem={(sourceText) => <div>{sourceText}</div>}
+      />
+    ),
+  },
+  {
+    key: 'data_source',
+    title: intl.get('entities.study.data_source_table'),
+    dataIndex: 'data_source',
+    defaultHidden: true,
+    render: (data_source: string[]) => (
+      <ExpandableCell
+        nOfElementsWhenCollapsed={2}
+        dataSource={data_source}
+        renderItem={(sourceText) => <div>{sourceText}</div>}
+      />
+    ),
+  },
+  {
+    key: 'study_designs',
+    title: intl.get('entities.study.study_designs_table'),
+    dataIndex: 'study_designs',
+    defaultHidden: true,
+    render: (study_designs: string[]) => (
+      <ExpandableCell
+        nOfElementsWhenCollapsed={2}
+        dataSource={study_designs}
+        renderItem={(sourceText) => <div>{sourceText}</div>}
+      />
+    ),
+  },
+  {
+    key: 'investigator_names',
+    title: intl.get('entities.study.principal_investigator'),
+    dataIndex: 'investigator_names',
+    defaultHidden: true,
+    render: (investigator_names: string[]) => (
+      <ExpandableCell
+        nOfElementsWhenCollapsed={2}
+        dataSource={investigator_names}
+        renderItem={(sourceText) => <div>{sourceText}</div>}
+      />
+    ),
+  },
+  {
+    key: 'date_collection_start_year',
+    title: intl.get('screen.studies.start'),
+    tooltip: intl.get('entities.study.date_collection_start_year'),
+    dataIndex: 'date_collection_start_year',
+    defaultHidden: true,
+    render: (date_collection_start_year: string) =>
+      date_collection_start_year || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
+    key: 'date_collection_end_year',
+    title: intl.get('screen.studies.end'),
+    tooltip: intl.get('entities.study.date_collection_end_year'),
+    dataIndex: 'date_collection_end_year',
+    defaultHidden: true,
+    render: (date_collection_end_year: string) =>
+      date_collection_end_year || TABLE_EMPTY_PLACE_HOLDER,
   },
 ];
 

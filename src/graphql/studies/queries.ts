@@ -26,6 +26,8 @@ export const GET_STUDIES = gql`
               }
             }
             controlled_access
+            description
+            domains
             part_lifespan_stages
             data_category
             data_source
@@ -37,6 +39,7 @@ export const GET_STUDIES = gql`
             family_count
             institutions
             investigator_names
+            is_harmonized
             program
             publications
             participant_count

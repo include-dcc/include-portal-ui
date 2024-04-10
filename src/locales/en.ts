@@ -1212,11 +1212,18 @@ const en = {
       },
     },
     studies: {
-      title: 'Studies',
+      end: 'End',
+      harmonizedPopover: {
+        title: 'Harmonized Data',
+        content:
+          'Study data aligned with INCLUDE Data Hub clinical standards for facilitating integration and cross-study comparison.',
+      },
       searchLabel: {
         title: 'Search by study code, study name, dbGaP',
         placeholder: 'HTP, The Human Trisome Project, phs001138',
       },
+      start: 'Start',
+      title: 'Studies',
     },
   },
   facets: {
@@ -1573,22 +1580,27 @@ const en = {
         transcriptomicTooltip: 'Transcriptomic',
       },
       data_source: 'Clinical Data Source Type',
+      data_source_table: 'Data Source',
       date_collection_end: 'Date Collection End (Year)',
+      date_collection_end_year: 'Year of collection end',
       date_collection_start: 'Date Collection Start (Year)',
+      date_collection_start_year: 'Year of collection start',
       dbGaP: 'dbGaP Accession Number',
       dbgap: 'dbGaP',
       description: 'Description',
       domain: 'Research Domain',
+      domains: 'Domain',
       file: 'File',
       files: 'Files',
       harmonized: 'Harmonized',
+      harmonizedAbrv: 'H',
       harmonizedTooltip:
         'Harmonized data refers to the collection of raw data provided by a study that has been normalized to the INCLUDE data model so that a valid comparison can be made across these studies.',
       institution: 'Institution',
       name: 'Name',
       numberByDataTypes: 'File counts by Data Type',
       numberByExperimentalStrategy: 'File counts by Experimental Strategy',
-      participant_life_span: 'Participant Life Span',
+      participant_life_span: 'Participant Lifespan',
       population: 'Population',
       principal_investigator: 'Principal Investigator',
       program: 'Program',
@@ -1600,6 +1612,7 @@ const en = {
       study_code: 'Study Code',
       study_contact: 'Study Contact',
       study_design: 'Study Design',
+      study_designs_table: 'Design',
       study_name: 'Study Name',
       study_website: 'Study Website',
       statistic: {
@@ -1610,6 +1623,7 @@ const en = {
       },
       title: 'Data',
       unharmonized: 'Unharmonized',
+      unharmonizedAbrv: 'U',
       unharmonizedTooltip:
         'Unharmonized data refers to raw data from a study that has not been standardized to the INCLUDE data model, limiting direct comparison with other studies.',
       unharmonizedWarningTooltip:
