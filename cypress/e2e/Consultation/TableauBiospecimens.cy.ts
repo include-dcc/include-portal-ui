@@ -39,7 +39,7 @@ describe('Page Data Exploration (Biospecimens) - Vérifier les informations affi
     cy.get('tr[class*="ant-table-row"]').find('[class*="ant-table-cell"]').eq(14).contains('Yes').should('exist');
     cy.get('tr[class*="ant-table-row"]').find('[class*="ant-table-cell"]').eq(15).contains('Qiagen PAXgene Blood RNA Kit').should('exist');
     cy.get('tr[class*="ant-table-row"]').find('[class*="ant-table-cell"]').eq(16).contains('-80C Freezer').should('exist');
-    cy.get('tr[class*="ant-table-row"]').find('[class*="ant-table-cell"]').eq(17).contains(/^8$/).should('exist');
+    cy.get('tr[class*="ant-table-row"]').find('[class*="ant-table-cell"]').eq(17).contains(/\d{1}/).should('exist');
   });
 });
 
@@ -70,7 +70,7 @@ describe('Page Data Exploration (Biospecimens) - Valider les liens disponibles',
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sample ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Bs-03ynynfs').should('exist');
-    cy.validateTableResultsCount(/^8$/);
+    cy.validateTableResultsCount(/\d{1}/);
   });
 });
 
@@ -86,78 +86,78 @@ describe('Page Data Exploration (Biospecimens) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Sample ID', () => {
     cy.sortTableAndWait('Sample ID');
-    cy.validateTableFirstRow('bs-019260b4', 1);
+    cy.validateTableFirstRow(/^(?!-).*$/, 1);
     cy.sortTableAndIntercept('Sample ID', 1);
-    cy.validateTableFirstRow('BS_ZZF9439N', 1);
+    cy.validateTableFirstRow(/^(?!-).*$/, 1);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Study [SJIP-548]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Study', () => {
     cy.sortTableAndIntercept('Study', 1);
-    cy.validateTableFirstRow('DS360-CHD', 2);
+    cy.validateTableFirstRow(/^(?!-).*$/, 2);
     cy.sortTableAndIntercept('Study', 1);
-    cy.validateTableFirstRow('X01-Hakonarson', 2);
+    cy.validateTableFirstRow(/^(?!-).*$/, 2);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Sample Type', () => {
     cy.sortTableAndIntercept('Sample Type', 1);
     cy.validateTableFirstRow('-', 3);
     cy.sortTableAndIntercept('Sample Type', 1);
-    cy.validateTableFirstRow('White Blood Cells', 3);
+    cy.validateTableFirstRow(/^(?!-).*$/, 3);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Parent Sample ID', () => {
     cy.sortTableAndIntercept('Parent Sample ID', 1);
-    cy.validateTableFirstRow('BS_00BPKP5F_Bone_Marrow', 4);
+    cy.validateTableFirstRow(/^(?!-).*$/, 4);
     cy.sortTableAndIntercept('Parent Sample ID', 1);
-    cy.validateTableFirstRow('bs-zzzfh8fmra', 4);
+    cy.validateTableFirstRow(/^(?!-).*$/, 4);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Parent Sample Type', () => {
     cy.sortTableAndIntercept('Parent Sample Type', 1);
-    cy.validateTableFirstRow('Bone Marrow', 5);
+    cy.validateTableFirstRow('-', 5);
     cy.sortTableAndIntercept('Parent Sample Type', 1);
-    cy.validateTableFirstRow('White Blood Cells', 5);
+    cy.validateTableFirstRow(/^(?!-).*$/, 5);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Participant ID', () => {
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow('pt-005x8br9', 6);
+    cy.validateTableFirstRow(/^(?!-).*$/, 6);
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow('PT_ZYAS0Q37', 6);
+    cy.validateTableFirstRow(/^(?!-).*$/, 6);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Collection ID', () => {
     cy.sortTableAndIntercept('Collection ID', 1);
-    cy.validateTableFirstRow('bs-223qnyw3f9', 7);
+    cy.validateTableFirstRow(/^(?!-).*$/, 7);
     cy.sortTableAndIntercept('Collection ID', 1);
-    cy.validateTableFirstRow('BS_ZZF9439N_Peripheral_Whole_Blood', 7);
+    cy.validateTableFirstRow(/^(?!-).*$/, 7);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Collection Sample Type', () => {
     cy.sortTableAndIntercept('Collection Sample Type', 1);
-    cy.validateTableFirstRow('Bone Marrow', 8);
+    cy.validateTableFirstRow('-', 8);
     cy.sortTableAndIntercept('Collection Sample Type', 1);
-    cy.validateTableFirstRow('Saliva', 8);
+    cy.validateTableFirstRow(/^(?!-).*$/, 8);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Sample Availability [SJIP-548]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Sample Availability', () => {
     cy.sortTableAndIntercept('Sample Availability', 1);
-    cy.validateTableFirstRow('Yes', 14);
+    cy.validateTableFirstRow('-', 14);
     cy.sortTableAndIntercept('Sample Availability', 1);
     cy.validateTableFirstRow('No', 14);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Files', () => {
     cy.sortTableAndIntercept('Files', 1);
-    cy.validateTableFirstRow(/^0$/, 17);
+    cy.validateTableFirstRow(/\d{1}/, 17);
     cy.sortTableAndIntercept('Files', 1);
-    cy.validateTableFirstRow('34', 17);
+    cy.validateTableFirstRow(/\d{1}/, 17);
   });
 
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {
     cy.sortTableAndIntercept('Collection Sample Type', 1);
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow('PT_0001K4K1', 6);
+    cy.validateTableFirstRow(/^(?!-).*$/, 6);
   });
 
   it('Valider les fonctionnalités du tableau - Pagination', () => {

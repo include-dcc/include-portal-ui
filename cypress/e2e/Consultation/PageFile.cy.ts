@@ -46,7 +46,7 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(1).contains('Name').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(1).contains('1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(2).contains('Study').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(2).contains('Crnic Institute Human Trisome Project (HTP)').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(2).contains('The Human Trisome Project (HTP)').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(3).contains('Format').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains(/^vcf$/).should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(4).contains('Size').should('exist');
@@ -76,7 +76,7 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
   it('Panneau Participants-Samples', () => {
     cy.resetColumns('participant-sample');
     cy.get('[id="participant-sample"]').find('[class="ant-collapse-header"]').contains('(7)').should('exist');
-    cy.get('[id="participant-sample"]').find('[class="ant-collapse-header"]').contains('View in data exploration').should('exist');
+    cy.get('[id="participant-sample"]').find('[class="ant-collapse-header"]').contains('View in exploration').should('exist');
     cy.get('[id="participant-sample"]').find('[class="ant-collapse-header"]').find('svg[class="anticon"]').should('exist');
     cy.get('[id="participant-sample"]').find('thead').find('th[class="ant-table-cell"]').eq(0).contains('Participant ID').should('exist');
     cy.get('[id="participant-sample"]').find('thead').find('th[class="ant-table-cell"]').eq(1).contains('Study').should('exist');
@@ -102,7 +102,7 @@ describe('Page d\'un fichier - Valider les liens disponibles', () => {
   });
 
   it('Lien DataExploration du panneau Participants-Samples', () => {
-    cy.get('[id="participant-sample"] a[class*="EntityTableRedirectLink"]').click({force: true}); // data-cy="Participants_RedirectLink"
+    cy.get('[id="participant-sample"] [class="ant-collapse-header"] button').click({force: true}); // data-cy="Participants_RedirectLink"
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');

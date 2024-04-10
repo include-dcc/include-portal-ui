@@ -40,8 +40,8 @@ describe('Page des variants - Consultation du tableau', () => {
   });
  
   it('Valider l\'icône de sauvegarde des requêtes personnalisées', () => {
-    cy.get('[class*="QueryBar_selected"]').find('[class*="anticon-save"]').should('not.exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="anticon-copy"]').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="anticon-save"]').should('not.exist');
+    cy.get('[class*="QueryBar_selected"] [class*="anticon-copy"]').should('exist');
   });
  
   it('Valider les liens disponibles Lien Variant', () => {
@@ -75,21 +75,21 @@ describe('Page des variants - Consultation du tableau', () => {
   });
  
   it('Valider les liens disponibles Lien Part.', () => {
-    cy.get('[id="query-builder-header-tools"]').find('[data-icon="plus"]').click({force: true});
+    cy.get('[id="query-builder-header-tools"] [data-icon="plus"]').click({force: true});
     cy.sortTableAndIntercept('Part.', 1);
     cy.sortTableAndIntercept('Part.', 1);
     cy.get('tr[data-row-key]').eq(0).find('td').eq(11).find('a[href]').click({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('PT').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Participant ID').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('PT').should('exist');
   });
  
   it('Valider les liens disponibles Lien Studies', () => {
     cy.get('tr[data-row-key]').eq(0).find('td').eq(12).find('a[href]').click({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('DS360-CHD').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('DS-COG-ALL').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Study Code').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('DS360-CHD').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('DS-COG-ALL').should('exist');
   });
 });
 

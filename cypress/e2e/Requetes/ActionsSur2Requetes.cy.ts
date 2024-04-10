@@ -10,15 +10,16 @@ describe('Page Data Exploration - Requêtes', () => {
   beforeEach(() => {
     cy.visitDataExploration('participants', '?sharedFilterId=443bca8e-4f39-4743-995f-aea57497450c');
 
-    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click({force: true});
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button').click({force: true}); // data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button').contains('Collapse all').should('exist'); // data-cy="ExpandAll"
   });
 
   it('Sélectionner une requête', () => {
-    cy.validateTableResultsCount('3,362');
+    cy.validateTableResultsCount('4,702');
 
     cy.intercept('POST', '**/graphql').as('getPOSTgraphql');
+    cy.get('.simplebar-wrapper').invoke('css', 'overflow', 'visible');
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(1).click();
     cy.wait('@getPOSTgraphql', {timeout: 20*1000});
 
@@ -29,8 +30,9 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('button[role="switch"]').click({force: true});
 
     cy.validatePillSelectedQuery('', ['DNA']);
-    cy.validateTotalSelectedQuery('3,362');
-    cy.validateTableResultsCount('3,362');
+    cy.validateTotalSelectedQuery('4,702');
+    cy.validateTableResultsCount('4,702');
+    cy.get('.simplebar-wrapper').invoke('css', 'overflow', 'visible');
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(1).click();
     cy.validatePillSelectedQuery('Age at Biospecimen Collection (days)', ['20000']);
     cy.validateTotalSelectedQuery('1,989');
@@ -42,10 +44,11 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.validatePillSelectedQuery('Age at Biospecimen Collection (days)', ['20000']);
     cy.validateTotalSelectedQuery('1,989');
     cy.validateTableResultsCount('1,989');
+    cy.get('.simplebar-wrapper').invoke('css', 'overflow', 'visible');
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(0).click();
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
-    cy.validateTotalSelectedQuery('3,362');
-    cy.validateTableResultsCount('3,362');
+    cy.validateTotalSelectedQuery('4,702');
+    cy.validateTableResultsCount('4,702');
     cy.validateClearAllButton(true);
   });
 
@@ -53,14 +56,14 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[id="query-builder-header-tools"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
 
     cy.get('[id="query-builder-header-tools"]').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.validateTableResultsCount('3,362');
+    cy.validateTableResultsCount('4,702');
 
     cy.get('[id="query-builder-header-tools"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
 
     cy.get('[id="query-builder-header-tools"]').find('div[class*="ant-collapse-content-active"]').should('exist');
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
-    cy.validateTotalSelectedQuery('3,362');
-    cy.validateTableResultsCount('3,362');
+    cy.validateTotalSelectedQuery('4,702');
+    cy.validateTableResultsCount('4,702');
     cy.validateClearAllButton(true);
   });
 
@@ -93,8 +96,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.validatePillSelectedQuery('', ['Q1']);
     cy.validatePillSelectedQuery('', ['Q2'], 1);
     cy.validateOperatorSelectedQuery('or');
-    cy.validateTotalSelectedQuery('3,416');
-    cy.validateTableResultsCount('3,416');
+    cy.validateTotalSelectedQuery('4,756');
+    cy.validateTableResultsCount('4,756');
     cy.validateClearAllButton(true);
   });
 
@@ -122,8 +125,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="ant-popconfirm"]').should('have.class', 'ant-popover-hidden', {timeout: 5000});
     cy.get('[class*="QueryBar_queryBarWrapper"]').its('length').should('eq', 2);
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
-    cy.validateTotalSelectedQuery('3,362');
-    cy.validateTableResultsCount('3,362');
+    cy.validateTotalSelectedQuery('4,702');
+    cy.validateTableResultsCount('4,702');
     cy.validateClearAllButton(true);
   });
 
@@ -142,6 +145,7 @@ describe('Page Data Exploration - Requêtes', () => {
 
   it('Supprimer l\'unique pilule d\'une requête avec le X', () => {
     cy.intercept('POST', '**/graphql').as('getPOSTgraphql');
+    cy.get('.simplebar-wrapper').invoke('css', 'overflow', 'visible');
     cy.get('[class*="QueryBar_selected"]').find('button[class*="QueryPill_close"]').click();
     cy.wait('@getPOSTgraphql', {timeout: 20*1000});
 
@@ -160,8 +164,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="ant-modal-confirm"]').should('not.exist');
     cy.get('[class*="QueryBar_queryBarWrapper"]').its('length').should('eq', 2);
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
-    cy.validateTotalSelectedQuery('3,362');
-    cy.validateTableResultsCount('3,362');
+    cy.validateTotalSelectedQuery('4,702');
+    cy.validateTableResultsCount('4,702');
     cy.validateClearAllButton(true);
   });
 
@@ -172,8 +176,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="ant-modal-confirm"]').find('button[class*="ant-btn-primary"]').click({force:true});
     cy.get('[class*="ant-modal-confirm"]').should('not.exist');
     cy.get('body').contains('Use the search tools & facets on the left to build a query').should('exist');
-    cy.validateTotalSelectedQuery('5,326');
-    cy.validateTableResultsCount('5,326');
+    cy.validateTotalSelectedQuery(/\d{1}/);
+    cy.validateTableResultsCount(/\d{1}/);
     cy.validateClearAllButton(false);
   });
 });

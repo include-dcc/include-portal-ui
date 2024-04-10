@@ -12,7 +12,7 @@ describe('Navigation', () => {
     cy.get('[class*="Dashboard_greeting"]').should('exist'); // data-cy="Title_Dashboard"
 
     cy.get('button[class*="HeaderLink_headerBtn"]').eq(1).click(); // data-cy="HeaderLink_Studies"
-    cy.get('[class*="Studies_title"]').should('exist'); // data-cy="Title_Studies"
+    cy.get('[class*="PageContent_title"]').contains('Studies').should('exist'); // data-cy="Title_Studies"
 
     cy.get('button[class*="HeaderLink_headerBtn"]').eq(2).click(); // data-cy="HeaderLink_Data Exploration"
     cy.get('[class*="DataExploration_title"]').should('exist'); // data-cy="Title_DataExploration"
@@ -30,20 +30,52 @@ describe('Navigation', () => {
 
   it('Lien externe de la header - Website', () => {
     cy.visitDashboard();
-    cy.get('[class*="Header_mainHeader"] [href]').eq(5) // data-cy="HeaderLink_Website"
-    .should('have.attr', 'href', 'https://includedcc.org');
+    cy.window().then((win) => {
+      cy.stub(win, 'open').as('windowOpen');
+    });
+
+    cy.get('[class*="Header_resources_"]').click({force: true}); // data-cy="Menu_Website"
+    cy.get('[data-menu-id*="website"]').find('[href]').click({force: true}); // data-cy="MenuLink_Website"
+    cy.get("@windowOpen").should('be.calledWith', 'https://includedcc.org/');
   });
 
-  it('Lien externe de la header - Documentation', () => {
+  it('Lien externe de la header - Help', () => {
     cy.visitDashboard();
-    cy.get('[class*="Header_mainHeader"] [href]').eq(6) // data-cy="HeaderLink_Documentation"
-      .should('have.attr', 'href', 'https://help.includedcc.org');
+    cy.window().then((win) => {
+      cy.stub(win, 'open').as('windowOpen');
+    });
+
+    cy.get('[class*="Header_resources_"]').click({force: true}); // data-cy="Menu_Help"
+    cy.get('[data-menu-id*="help"]').find('[href]').click({force: true}); // data-cy="MenuLink_Help"
+    cy.get("@windowOpen").should('be.calledWith', 'https://help.includedcc.org/docs/quick-start-guide');
+  });
+
+  it('Lien externe de la header - Forum', () => {
+    cy.visitDashboard();
+    cy.window().then((win) => {
+      cy.stub(win, 'open').as('windowOpen');
+    });
+
+    cy.get('[class*="Header_resources_"]').click({force: true}); // data-cy="Menu_Forum"
+    cy.get('[data-menu-id*="forum"]').find('[href]').click({force: true}); // data-cy="MenuLink_Forum"
+    cy.get("@windowOpen").should('be.calledWith', 'https://help.includedcc.org/discuss');
+  });
+
+  it('Lien externe de la header - Contact', () => {
+    cy.visitDashboard();
+    cy.window().then((win) => {
+      cy.stub(win, 'open').as('windowOpen');
+    });
+
+    cy.get('[class*="Header_resources_"]').click({force: true}); // data-cy="Menu_Contact"
+    cy.get('[data-menu-id*="contact"]').find('[href]').click({force: true}); // data-cy="MenuLink_Contact"
+    cy.get("@windowOpen").should('be.calledWith', 'https://app.smartsheet.com/b/form/514745159a004c2e987fff0aa16ceaac');
   });
 
   it('Redirections de la page Dashboard', () => {
     cy.visitDashboard();
     cy.get('[class*="LinkBox_dataExploBox"]').eq(0).click({force: true}); // data-cy="GridCard_Studies"
-    cy.get('[class*="Studies_title"]').should('exist'); // data-cy="Title_Studies"
+    cy.get('[class*="PageContent_title"]').contains('Studies').should('exist'); // data-cy="Title_Studies"
 
     cy.visitDashboard();
     cy.get('[class*="LinkBox_dataExploBox"]').eq(1).click({force: true}); // data-cy="GridCard_Participants"
@@ -142,7 +174,7 @@ describe('Navigation', () => {
     cy.visitDataExploration();
 
     // Facettes
-    cy.get('[data-cy="SidebarMenuItem_Participant"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Participant"]').click({force: true});
 
     cy.get('button[class*="UploadIdsButton"]').click({force: true});
     cy.get('[class="ant-modal-header"]').contains('Participant').should('exist');
@@ -156,13 +188,13 @@ describe('Navigation', () => {
     cy.get('[class*="ant-modal-header"]').contains('Diagnosis (MONDO) Browser').should('exist'); // data-cy="TreeFacet_Modal_mondoTree"
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
-    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click({force: true});
 
     cy.get('button[class*="UploadIdsButton"]').click({force: true});
     cy.get('[class="ant-modal-header"]').contains('Sample').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
-    cy.get('[data-cy="SidebarMenuItem_Data File"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Data File"]').click({force: true});
 
     cy.get('button[class*="UploadIdsButton"]').click({force: true});
     cy.get('[class="ant-modal-header"]').contains('File').should('exist');
@@ -173,6 +205,13 @@ describe('Navigation', () => {
     cy.contains('Save this filter').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
+    // Manage my filters
+    cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').click({force: true});
+    cy.get('[data-menu-id*="manage-my-filters"]').click({force: true});
+    cy.contains('Manage filters').should('exist', {timeout: 20*1000});
+    cy.contains('Close').should('exist', {timeout: 20*1000});
+    cy.get('button[class="ant-modal-close"]').invoke('click');
+
     // Onglet Data Files
     cy.visitDataExploration('datafiles');
     cy.get('[class*="ant-table-row"]').eq(0).find('input[type="checkbox"]').check({force: true});
@@ -180,7 +219,7 @@ describe('Navigation', () => {
  
   it('Modals de la page des variants', () => {
     cy.visitVariantsPage();
-    cy.get('[data-cy="SidebarMenuItem_Gene"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Gene"]').click({force: true});
 
     cy.get('button[class*="UploadIdsButton"]').click({force: true});
     cy.get('[class="ant-modal-header"]').contains('gene').should('exist');
@@ -192,10 +231,10 @@ describe('Navigation', () => {
   });
  
   it('Modals de la page d\'un fichier', () => {
-    cy.visitFileEntity('GF_016DGJE7');
+    cy.visitFileEntity('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz');
 
     cy.get('[data-icon="cloud-upload"]').click({force: true});
-    cy.contains(/(You are not connected to Cavatica|Analyze in Cavatica)/).should('exist');
+    cy.contains(/(Connect to Cavatica|Analyze in Cavatica)/).should('exist');
     cy.get('button[class*="ant-btn-default"]').invoke('click');
   });
  

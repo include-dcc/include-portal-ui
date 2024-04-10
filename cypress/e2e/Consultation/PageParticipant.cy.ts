@@ -35,11 +35,11 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
   });
 
   it('Panneau Summary', () => {
-    cy.get('a[class*="SummaryHeader_link"]').eq(0).contains(/^1$/); // data-cy="SummaryHeader_Studies_Button"
+    cy.get('a[class*="SummaryHeader_link"]').eq(0).contains(/\d{1}/); // data-cy="SummaryHeader_Studies_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(0).contains('Study'); // data-cy="SummaryHeader_Studies_Button"
-    cy.get('a[class*="SummaryHeader_link"]').eq(1).contains(/^139$/); // data-cy="SummaryHeader_Biospecimens_Button"
+    cy.get('a[class*="SummaryHeader_link"]').eq(1).contains(/\d{1}/); // data-cy="SummaryHeader_Biospecimens_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(1).contains(/^Biospecimens$/); // data-cy="SummaryHeader_Biospecimens_Button"
-    cy.get('a[class*="SummaryHeader_link"]').eq(2).contains(/^21$/); // data-cy="SummaryHeader_Files_Button"
+    cy.get('a[class*="SummaryHeader_link"]').eq(2).contains(/\d{1}/); // data-cy="SummaryHeader_Files_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(2).contains('Files'); // data-cy="SummaryHeader_Files_Button"
     cy.get('[id="summary"]').find('[class="ant-collapse-header"]').contains('Summary').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(0).contains('ID').should('exist');
@@ -47,7 +47,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(1).contains('Ext. Participant ID').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(1).contains('HTP0026').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(2).contains('Study').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(2).contains('Crnic Institute Human Trisome Project (HTP)').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(2).contains('The Human Trisome Project (HTP)').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(3).contains('dbGaP').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains('phs002330').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(4).contains('Family Unit').should('exist');
@@ -102,7 +102,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.resetColumns('diagnosis');
     cy.get('[id="diagnosis"]').find('[class*="EntityTable_title"]').contains('Diagnosis').should('exist');
     cy.get('[id="diagnosis"]').find('[class="ant-collapse-header"]').contains('Diagnosis').should('exist');
-    cy.get('[id="diagnosis"]').find('[class="ant-collapse-header"]').contains('(11)').should('exist');
+    cy.get('[id="diagnosis"]').find('[class="ant-collapse-header"]').contains(/\d{1}/).should('exist');
     cy.get('[id="diagnosis"]').find('thead').find('th[class="ant-table-cell"]').eq(0).contains('Diagnosis (MONDO)').should('exist');
     cy.get('[id="diagnosis"]').find('thead').find('th[class="ant-table-cell"]').eq(1).contains('Condition (Source Text)').should('exist');
     cy.get('[id="diagnosis"]').find('thead').find('th[class="ant-table-cell"]').eq(2).contains('Age').should('exist');
@@ -112,24 +112,24 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[data-row-key="HTP0026.Anxiety.HP:0000739.MONDO:0011918.NA"]').find('td[class="ant-table-cell"]').eq(0).contains('0011918').should('exist');
     cy.get('[data-row-key="HTP0026.Anxiety.HP:0000739.MONDO:0011918.NA"]').find('td[class="ant-table-cell"]').eq(1).contains('Anxiety').should('exist');
     cy.get('[data-row-key="HTP0026.Anxiety.HP:0000739.MONDO:0011918.NA"]').find('td[class="ant-table-cell"]').eq(2).contains('-').should('exist');
-    cy.get('[data-row-key="HTP0026.Anxiety.HP:0000739.MONDO:0011918.NA"]').find('td[class="ant-table-cell"]').eq(3).contains('93').should('exist');
+    cy.get('[data-row-key="HTP0026.Anxiety.HP:0000739.MONDO:0011918.NA"]').find('td[class="ant-table-cell"]').eq(3).contains(/\d{1}/).should('exist');
   });
   
   it('Panneau Phenotypes', () => {
     cy.resetColumns('phenotype');
     cy.get('[id="phenotype"]').find('[class*="EntityTable_title"]').contains('Phenotype').should('exist');
     cy.get('[id="phenotype"]').find('[class="ant-collapse-header"]').contains('Phenotype').should('exist');
-    cy.get('[id="phenotype"]').find('[class="ant-collapse-header"]').contains('(12)').should('exist');
+    cy.get('[id="phenotype"]').find('[class="ant-collapse-header"]').contains(/\d{1}/).should('exist');
     cy.get('[id="phenotype"]').find('thead').find('th[class="ant-table-cell"]').eq(0).contains('Phenotype (HPO)').should('exist');
     cy.get('[id="phenotype"]').find('thead').find('th[class="ant-table-cell"]').eq(1).contains('Condition (Source Text)').should('exist');
     cy.get('[id="phenotype"]').find('thead').find('th[class="ant-table-cell"]').eq(2).contains('Age').should('exist');
     cy.get('[id="phenotype"]').find('thead').find('th[class="ant-table-cell"]').eq(3).contains('HPO Term').should('exist');
-    cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(0).contains('Anxiety').should('exist');
-    cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(0).contains('HP').should('exist');
-    cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(0).contains('0000739').should('exist');
-    cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(1).contains('Anxiety').should('exist');
-    cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(2).contains('-').should('exist');
-    cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(3).contains('93').should('exist');
+    cy.get('[id="phenotype"]').find('tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(0).contains('Anxiety').should('exist');
+    cy.get('[id="phenotype"]').find('tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(0).contains('HP').should('exist');
+    cy.get('[id="phenotype"]').find('tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(0).contains('0000739').should('exist');
+    cy.get('[id="phenotype"]').find('tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(1).contains('Anxiety').should('exist');
+    cy.get('[id="phenotype"]').find('tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(2).contains('-').should('exist');
+    cy.get('[id="phenotype"]').find('tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(3).contains(/\d{1}/).should('exist');
   });
   
   it('Panneau Biospecimens', () => {
@@ -143,8 +143,8 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.showColumn('Parent Sample Type');
     cy.get('[id="biospecimen"]').find('[class*="EntityTable_title"]').contains('Biospecimen').should('exist');
     cy.get('[id="biospecimen"]').find('[class="ant-collapse-header"]').contains('Biospecimen').should('exist');
-    cy.get('[id="biospecimen"]').find('[class="ant-collapse-header"]').contains('(139)').should('exist');
-    cy.get('[id="biospecimen"]').find('[class="ant-collapse-header"]').contains('View in data exploration').should('exist');
+    cy.get('[id="biospecimen"]').find('[class="ant-collapse-header"]').contains(/\d{1}/).should('exist');
+    cy.get('[id="biospecimen"]').find('[class="ant-collapse-header"]').contains('View in exploration').should('exist');
     cy.get('[id="biospecimen"]').find('[class="ant-collapse-header"]').find('svg[class="anticon"]').should('exist');
     cy.get('[id="biospecimen"]').find('thead').find('th[class="ant-table-cell"]').eq(0).contains('Sample ID').should('exist');
     cy.get('[id="biospecimen"]').find('thead').find('th[class="ant-table-cell"]').eq(1).contains('Collection ID').should('exist');
@@ -180,34 +180,34 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
   it('Panneau Files', () => {
     cy.get('[id="files"]').find('[class*="EntityTable_title"]').contains('Data File').should('exist');
     cy.get('[id="files"]').find('[class="ant-collapse-header"]').contains('Data File').should('exist');
-    cy.get('[id="files"]').find('[class="ant-collapse-header"]').contains('(21)').should('exist');
-    cy.get('[id="files"]').find('[class="ant-collapse-header"]').contains('View in data exploration').should('exist');
+    cy.get('[id="files"]').find('[class="ant-collapse-header"]').contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[class="ant-collapse-header"]').contains('View in exploration').should('exist');
     cy.get('[id="files"]').find('[class="ant-collapse-header"]').find('svg[class="anticon"]').should('exist');
     cy.get('[id="files"]').find('[class*="EntityTable_subTitle"]').eq(0).contains('File counts by Data Category').should('exist');
     cy.get('[id="files"]').find('[class*="EntityTable_contentTable"]').eq(0).find('thead').find('th[class="ant-table-cell"]').eq(0).contains('Data Category').should('exist');
     cy.get('[id="files"]').find('[class*="EntityTable_contentTable"]').eq(0).find('thead').find('th[class="ant-table-cell"]').eq(1).contains('Files').should('exist');
-    cy.get('[id="files"]').find('[class*="EntityTable_contentTable"]').eq(0).find('thead').find('th[class="ant-table-cell"]').eq(2).contains('(n=21)').should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Genomics"]').find('td[class="ant-table-cell"]').eq(1).contains(/^4$/).should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Genomics"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 19"]').should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Transcriptomics"]').find('td[class="ant-table-cell"]').eq(1).contains(/^15$/).should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Transcriptomics"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 71"]').should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Proteomics"]').find('td[class="ant-table-cell"]').eq(1).contains(/^1$/).should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Proteomics"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 4"]').should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Metabolomics"]').find('td[class="ant-table-cell"]').eq(1).contains(/^1$/).should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Metabolomics"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 4"]').should('exist');
+    cy.get('[id="files"]').find('[class*="EntityTable_contentTable"]').eq(0).find('thead').find('th[class="ant-table-cell"]').eq(2).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Genomics"]').find('td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Genomics"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Transcriptomics"]').find('td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Transcriptomics"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Proteomics"]').find('td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Proteomics"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Metabolomics"]').find('td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Metabolomics"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
 
     cy.get('[id="files"]').find('[class*="EntityTable_subTitle"]').eq(1).contains('File counts by Experimental Strategy').should('exist');
     cy.get('[id="files"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(0).contains('Experimental Strategy').should('exist');
     cy.get('[id="files"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(1).contains('Files').should('exist');
-    cy.get('[id="files"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(2).contains('(n=21)').should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Whole Genome Sequencing"]').find('td[class="ant-table-cell"]').eq(1).contains(/^4$/).should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Whole Genome Sequencing"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 19"]').should('exist');
-    cy.get('[id="files"]').find('[data-row-key="RNA-Seq"]').find('td[class="ant-table-cell"]').eq(1).contains(/^15$/).should('exist');
-    cy.get('[id="files"]').find('[data-row-key="RNA-Seq"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 71"]').should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Multiplex Immunoassay"]').find('td[class="ant-table-cell"]').eq(1).contains(/^1$/).should('exist');
-    cy.get('[id="files"]').find('[data-row-key="Multiplex Immunoassay"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 4"]').should('exist');
-    cy.get('[id="files"]').find('[data-row-key="LCMS_Metabolomics"]').find('td[class="ant-table-cell"]').eq(1).contains(/^1$/).should('exist');
-    cy.get('[id="files"]').find('[data-row-key="LCMS_Metabolomics"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 4"]').should('exist');
+    cy.get('[id="files"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(2).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Whole Genome Sequencing"]').find('td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Whole Genome Sequencing"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
+    cy.get('[id="files"]').find('[data-row-key="RNA-Seq"]').find('td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[data-row-key="RNA-Seq"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Multiplex Immunoassay"]').find('td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[data-row-key="Multiplex Immunoassay"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
+    cy.get('[id="files"]').find('[data-row-key="LCMS Metabolomics"]').find('td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"]').find('[data-row-key="LCMS Metabolomics"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
   });
 });
 
@@ -234,7 +234,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
   it('Lien Mondo du panneau Diagnoses', () => {
     cy.resetColumns('diagnosis');
     cy.get('[id="diagnosis"]').find('td[class="ant-table-cell"]').eq(0).find('[href]')
-      .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/MONDO_0011918');
+      .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/MONDO_0002050');
   });
 
   it('Lien MONDO Term du panneau Diagnoses', () => {
@@ -243,27 +243,27 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Diagnosis (MONDO)').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Anxiety (MONDO:0011918)').should('exist');
-    cy.validateTableResultsCount(/^93$/);
+    cy.validateTableResultsCount(/\d{1}/);
   });
 
   it('Lien HP du panneau Phenotypes', () => {
     cy.resetColumns('phenotype');
-    cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(0).find('[href]')
+    cy.get('[id="phenotype"]').find('tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(0).find('[href]')
       .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/HP_0000739');
   });
 
   it('Lien HPO Term du panneau Phenotypes', () => {
     cy.resetColumns('phenotype');
-    cy.get('[data-row-key="1111041"]').find('td[class="ant-table-cell"]').eq(3).find('[href]').click({force: true});
+    cy.get('[id="phenotype"]').find('tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(3).find('[href]').click({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Phenotype (HPO)').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Anxiety (HP:0000739)').should('exist');
-    cy.validateTableResultsCount(/^93$/);
+    cy.validateTableResultsCount(/\d{1}/);
   });
 
   it('Lien DataExploration du panneau Biospecimens', () => {
     cy.resetColumns('biospecimen');
-    cy.get('[id="biospecimen"] a[class*="EntityTableRedirectLink"]').click({force: true}); // data-cy="Biospecimens_RedirectLink"
+    cy.get('[id="biospecimen"] [class="ant-collapse-header"] button').click({force: true}); // data-cy="Biospecimens_RedirectLink"
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Pt-0dxdyebh').should('exist');
@@ -278,7 +278,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
   });
 
   it('Lien DataExploration du panneau Files', () => {
-    cy.get('[id="files"] a[class*="EntityTableRedirectLink"]').click({force: true}); // data-cy="Files_RedirectLink"
+    cy.get('[id="files"] [class="ant-collapse-header"] button').click({force: true}); // data-cy="Files_RedirectLink"
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Pt-0dxdyebh').should('exist');

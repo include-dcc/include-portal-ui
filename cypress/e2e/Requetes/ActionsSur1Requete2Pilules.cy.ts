@@ -10,7 +10,7 @@ describe('Page Data Exploration - Requêtes', () => {
   beforeEach(() => {
     cy.visitDataExploration('participants', '?sharedFilterId=11165f81-edb0-4b99-9b71-690ba67aa812');
 
-    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click({force: true});
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button').click({force: true}); // data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button').contains('Collapse all').should('exist'); // data-cy="ExpandAll"
   });
@@ -25,8 +25,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
     cy.validatePillSelectedQuery('Age at Biospecimen Collection (days)', ['20000'], 1);
     cy.validateOperatorSelectedQuery('or');
-    cy.validateTotalSelectedQuery('3,416');
-    cy.validateTableResultsCount('3,416');
+    cy.validateTotalSelectedQuery('4,756');
+    cy.validateTableResultsCount('4,756');
     cy.validateClearAllButton(false);
 
     cy.intercept('POST', '**/graphql').as('getPOSTgraphql2');
@@ -45,6 +45,7 @@ describe('Page Data Exploration - Requêtes', () => {
 
   it('Supprimer une des pilules d\'une requête avec le X', () => {
     cy.intercept('POST', '**/graphql').as('getPOSTgraphql');
+    cy.get('.simplebar-wrapper').invoke('css', 'overflow', 'visible');
     cy.get('[class*="QueryBar_selected"]').find('button[class*="QueryPill_close"]').eq(0).click();
     for (let i = 0; i < 16; i++) {
       cy.wait('@getPOSTgraphql', {timeout: 20*1000});
