@@ -8,6 +8,7 @@ import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import { Tag, Tooltip } from 'antd';
+import Text from 'antd/lib/typography/Text';
 import { INDEXES } from 'graphql/constants';
 import { IStudyEntity } from 'graphql/studies/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
@@ -297,7 +298,14 @@ const getColumns = (): ProColumnType<any>[] => [
     title: intl.get('entities.study.description'),
     dataIndex: 'description',
     defaultHidden: true,
-    render: (description: string) => description || TABLE_EMPTY_PLACE_HOLDER,
+    render: (description: string) =>
+      description ? (
+        <Text style={{ width: '200px' }} ellipsis={{ tooltip: description }}>
+          {description}
+        </Text>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'part_lifespan_stages',
