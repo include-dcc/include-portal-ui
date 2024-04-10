@@ -1,9 +1,12 @@
 import intl from 'react-intl-universal';
 import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
+import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Tag } from 'antd';
 import { IStudyDataset } from 'graphql/studies/models';
+
+import styles from '../index.module.scss';
 
 const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[] => [
   {
@@ -31,11 +34,18 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
   {
     label: intl.get('entities.study.dataset.publication'),
     value: dataset.publications?.length ? (
-      <>
-        {dataset.publications.map((pub: string, index) => (
-          <div key={index}>{pub}</div>
-        ))}
-      </>
+      <ExpandableCell
+        nOfElementsWhenCollapsed={2}
+        dataSource={dataset.publications}
+        renderItem={(sourceText) => (
+          <ExternalLink
+            className={styles.externalLink}
+            href={`https://pubmed.ncbi.nlm.nih.gov/${sourceText.replace('PMID: ', '')}`}
+          >
+            {sourceText}
+          </ExternalLink>
+        )}
+      />
     ) : (
       TABLE_EMPTY_PLACE_HOLDER
     ),
