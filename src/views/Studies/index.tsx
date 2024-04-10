@@ -122,7 +122,13 @@ const getColumns = (): ProColumnType<any>[] => [
     key: 'domains',
     title: intl.get('entities.study.domains'),
     dataIndex: 'domains',
-    render: (domains: string[]) => domains?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
+    render: (domains: string[]) => (
+      <ExpandableCell
+        nOfElementsWhenCollapsed={2}
+        dataSource={domains}
+        renderItem={(sourceText) => <div>{sourceText}</div>}
+      />
+    ),
     width: 300,
   },
   {
