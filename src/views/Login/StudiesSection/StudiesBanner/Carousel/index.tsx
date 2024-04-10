@@ -4,13 +4,13 @@ import FamilyIcon from '@ferlab/ui/core/components/Icons/Futuro/FamilyIcon';
 import { numberFormat } from '@ferlab/ui/core/utils/numberUtils';
 import { Carousel as AntCarousel } from 'antd';
 
+import DsnexusLogo from 'components/assets/studies/light/study-logo-DS-NEXUS.png';
+import DssleepLogo from 'components/assets/studies/light/study-logo-DS-Sleep.png';
+import HtpLogo from 'components/assets/studies/light/study-logo-HTP.png';
 import AbcdsLogo from 'components/assets/studies/study-logo-ABC-DS.png';
 import BriLogo from 'components/assets/studies/study-logo-BRI.png';
 import DefaultLogo from 'components/assets/studies/study-logo-default.svg';
-import DsnexusLogo from 'components/assets/studies/study-logo-DS-NEXUS.png';
-import DssleepLogo from 'components/assets/studies/study-logo-DS-Sleep.png';
 import DsconnectLogo from 'components/assets/studies/study-logo-DSC.png';
-import HtpLogo from 'components/assets/studies/study-logo-HTP.png';
 import KfLogo from 'components/assets/studies/study-logo-KF.svg';
 
 import TextIcon from '../../../TextIcon';

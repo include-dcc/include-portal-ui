@@ -1,13 +1,13 @@
 import React from 'react';
 import StudySpotIcon from '@ferlab/ui/core/components/Icons/FuturoSpot/StudySpotIcon';
 
-import ABC_DS_logo from '../../../components/assets/studies/study-logo-ABC-DS.png';
-import BRI_DSR_logo from '../../../components/assets/studies/study-logo-BRI.png';
-import DS_NEXUS_logo from '../../../components/assets/studies/study-logo-DS-NEXUS.png';
-import DS_Sleep_logo from '../../../components/assets/studies/study-logo-DS-Sleep.png';
-import DSC_logo from '../../../components/assets/studies/study-logo-DSC.png';
-import HTP_logo from '../../../components/assets/studies/study-logo-HTP.png';
-import KF_logo from '../../../components/assets/studies/study-logo-KF.svg';
+import DS_NEXUS_logo from 'components/assets/studies/dark/study-logo-DS-NEXUS.png';
+import DS_Sleep_logo from 'components/assets/studies/dark/study-logo-DS-Sleep.png';
+import HTP_logo from 'components/assets/studies/dark/study-logo-HTP.png';
+import ABC_DS_logo from 'components/assets/studies/study-logo-ABC-DS.png';
+import BRI_DSR_logo from 'components/assets/studies/study-logo-BRI.png';
+import DSC_logo from 'components/assets/studies/study-logo-DSC.png';
+import KF_logo from 'components/assets/studies/study-logo-KF.svg';
 
 import style from '../index.module.scss';
 
