@@ -79,6 +79,7 @@ const TopBanner = () => {
       title={<Title level={4}>{intl.get('screen.loginPage.mondoTitle')}</Title>}
       content={
         <BarChart
+          labelTextColor="white"
           colors={{ scheme: 'paired' }}
           defs={undefined}
           axisBottom={{
