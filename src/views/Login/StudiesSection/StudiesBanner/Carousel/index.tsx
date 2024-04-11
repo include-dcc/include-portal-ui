@@ -44,9 +44,7 @@ const Carousel = () => {
     <AntCarousel className={styles.carousel} autoplaySpeed={5000} dots={{ className: styles.dots }}>
       {studies.map((study) => (
         <div className={styles.contentStyle} key={study.code}>
-          <div className={styles.title}>
-            {study.logo && <img src={study.logo} alt="Study Logo" className={styles.logo} />}
-          </div>
+          <img src={study.logo} alt="Study Logo" className={styles.logo} />
           <div className={styles.subTitle}>
             {intl.get(`screen.loginPage.studies.${study.formattedCode}.name`)}
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import intl from 'react-intl-universal';
 import BarChart from '@ferlab/ui/core/components/Charts/Bar';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { BarDatum } from '@nivo/bar';
@@ -75,7 +76,7 @@ const TopBanner = () => {
       wrapperClassName={styles.wrapper}
       contentClassName={styles.contentCard}
       theme="shade"
-      title={<Title level={4}>Top 10 Co-occurring Conditions (MONDO)</Title>}
+      title={<Title level={4}>{intl.get('screen.loginPage.mondoTitle')}</Title>}
       content={
         <BarChart
           colors={{ scheme: 'paired' }}

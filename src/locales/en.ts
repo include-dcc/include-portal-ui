@@ -587,6 +587,7 @@ const en = {
         'Access large-scale integrated data resources and analyze custom built cohort datasets based on participants, biospecimen, clinical, and genomic data.',
       login: 'Login',
       signup: 'Sign up',
+      mondoTitle: 'Top 10 Co-occurring Conditions (MONDO)',
       studies: {
         title: 'Studies',
         summary:

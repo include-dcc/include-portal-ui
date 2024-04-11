@@ -23,7 +23,7 @@ const SideImageLayout = ({
   <div className={style.sideImagePageContainer}>
     {logoSrc && (
       <a href={EnvVariables.configFor('INCLUDE_WEB_ROOT')}>
-        <img className={style.logoImage} src={logoSrc} alt="Include Logo Logo" />
+        <img className={style.logoImage} src={logoSrc} alt="Include Logo" />
       </a>
     )}
     <Row className={style.contentWrapper}>

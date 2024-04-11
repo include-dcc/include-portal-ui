@@ -12,12 +12,9 @@
   text-align: justify;
 }
 
-.title {
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 32px;
-  color: $gray-9;
-  margin-bottom: 24px
+.logo {
+  height: 60px;
+  margin-bottom: 24px;
 }
 
 .subTitle {
@@ -40,10 +37,6 @@
 
 .dots {
   bottom: 32px !important;
-}
-
-.logo {
-  height: 60px;
 }
 
 @media (max-width: 1024px) {
