@@ -13,7 +13,7 @@ const Cavatica = () => (
     <div className={styles.description}>
       {intl.get('screen.loginPage.cards.cavatica.description')}
     </div>
-    <div>
+    <div className={styles.buttonContainer}>
       <Button
         type="primary"
         size="large"
@@ -22,6 +22,10 @@ const Cavatica = () => (
         className={styles.learnMoreButton}
       >
         {intl.get('screen.loginPage.cards.cavatica.learnMore')}
+        <ExternalLinkIcon />
+      </Button>
+      <Button ghost size="large" href="https://cavatica.sbgenomics.com/" target="_blank">
+        {intl.get('screen.loginPage.login')}
         <ExternalLinkIcon />
       </Button>
     </div>
