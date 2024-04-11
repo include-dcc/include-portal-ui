@@ -25,6 +25,11 @@ export type Suggestion = {
   ensembl_gene_id?: string;
 };
 
+export interface IStudiesParticipants {
+  participant_count: number;
+  study_code: string;
+}
+
 export interface IStatistics {
   families: number;
   fileSize: string;
@@ -35,6 +40,7 @@ export interface IStatistics {
   variants: number;
   genomes: number;
   transcriptomes: number;
+  studiesParticipants: Record<string, number>;
 }
 
 export interface ArrangerSingleColumnState {

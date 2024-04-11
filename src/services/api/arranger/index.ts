@@ -12,6 +12,7 @@ import {
   ArrangerColumnStateResults,
   ArrangerPhenotypes,
   IStatistics,
+  IStudiesParticipants,
   ISuggestionPayload,
   Suggestion,
   SuggestionType,
@@ -28,6 +29,13 @@ const fetchStatistics = () =>
   sendRequest<IStatistics>({
     method: 'GET',
     url: `${ARRANGER_API_URL}/statistics`,
+    headers: headers(),
+  });
+
+const fetchStudiesParticipants = () =>
+  sendRequest<IStudiesParticipants[]>({
+    method: 'GET',
+    url: `${ARRANGER_API_URL}/statistics/studies`,
     headers: headers(),
   });
 
@@ -67,6 +75,7 @@ const searchSuggestions = (type: SuggestionType, value: string) =>
 
 export const ArrangerApi = {
   fetchStatistics,
+  fetchStudiesParticipants,
   graphqlRequest,
   download,
   fetchPhenotypes,

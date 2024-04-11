@@ -24,8 +24,9 @@ const Stats = () => {
     participants = 0,
     samples = 0,
     fileSize = '',
-    genomes = 29243,
-    transcriptomes = 24364,
+    // Needs a small fix in Arranger
+    // genomes = 0,
+    transcriptomes = 0,
   } = stats || {};
 
   return (
@@ -62,7 +63,7 @@ const Stats = () => {
           <TextIcon
             color="dark"
             IconComponent={GeneIcon}
-            title={numberFormat(genomes)}
+            title={numberFormat(14400)}
             subTitle={intl.get('screen.loginPage.cards.stats.genomes')}
           />
           <TextIcon

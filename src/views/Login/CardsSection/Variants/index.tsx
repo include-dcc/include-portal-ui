@@ -16,7 +16,7 @@ import styles from './index.module.scss';
 const Variants = () => {
   const { keycloak } = useKeycloak();
   const { stats } = useGlobals();
-  const { variants = 32359129 } = stats || {};
+  const { variants = 0 } = stats || {};
   const handleSignin = async () => {
     const url = keycloak.createLoginUrl({
       redirectUri: `${window.location.origin}/${STATIC_ROUTES.VARIANTS}`,

@@ -13,46 +13,56 @@ import DefaultLogo from 'components/assets/studies/study-logo-default.svg';
 import DsconnectLogo from 'components/assets/studies/study-logo-DSC.png';
 import KfLogo from 'components/assets/studies/study-logo-KF.svg';
 
+import { useGlobals } from '../../../../../store/global';
 import TextIcon from '../../../TextIcon';
 
 import styles from './index.module.scss';
 
 const studies = [
-  { code: 'htp', logo: HtpLogo, participantsCount: 1062 },
-  { code: 'dsc', logo: DsconnectLogo, participantsCount: 3634 },
-  { code: 'ds360hd', logo: KfLogo, participantsCount: 1327 },
-  { code: 'x01hakonarson', logo: DefaultLogo, participantsCount: 1152 },
-  { code: 'dspcgc', logo: KfLogo, participantsCount: 369 },
-  { code: 'bridsr', logo: BriLogo, participantsCount: 167 },
-  { code: 'abcds', logo: AbcdsLogo, participantsCount: 417 },
-  { code: 'dscogall', logo: KfLogo, participantsCount: 530 },
-  { code: 'x01desmith', logo: DefaultLogo, participantsCount: 1152 },
-  { code: 'dssleep', logo: DssleepLogo, participantsCount: 79 },
-  { code: 'dsnexus', logo: DsnexusLogo, participantsCount: 41 },
+  { code: 'HTP', formattedCode: 'htp', logo: HtpLogo },
+  { code: 'DSC', formattedCode: 'dsc', logo: DsconnectLogo },
+  { code: 'DS360-CHD', formattedCode: 'ds360hd', logo: KfLogo },
+  {
+    code: 'X01-Hakonarson',
+    formattedCode: 'x01hakonarson',
+    logo: DefaultLogo,
+  },
+  { code: 'DS-PCGC', formattedCode: 'dspcgc', logo: KfLogo },
+  { code: 'BRI-DSR', formattedCode: 'bridsr', logo: BriLogo },
+  { code: 'ABC-DS', formattedCode: 'abcds', logo: AbcdsLogo },
+  { code: 'DS-COG-ALL', formattedCode: 'dscogall', logo: KfLogo },
+  { code: 'X01-deSmith', formattedCode: 'x01desmith', logo: DefaultLogo },
+  { code: 'DS-Sleep', formattedCode: 'dssleep', logo: DssleepLogo },
+  { code: 'DS-Nexus', formattedCode: 'dsnexus', logo: DsnexusLogo },
 ];
 
-const Carousel = () => (
-  <AntCarousel className={styles.carousel} autoplaySpeed={5000} dots={{ className: styles.dots }}>
-    {studies.map((study) => (
-      <div className={styles.contentStyle} key={study.code}>
-        <div className={styles.title}>
-          {study.logo && <img src={study.logo} alt="Study Logo" className={styles.logo} />}
+const Carousel = () => {
+  const { stats } = useGlobals();
+  const { studiesParticipants = {} } = stats || {};
+
+  return (
+    <AntCarousel className={styles.carousel} autoplaySpeed={5000} dots={{ className: styles.dots }}>
+      {studies.map((study) => (
+        <div className={styles.contentStyle} key={study.code}>
+          <div className={styles.title}>
+            {study.logo && <img src={study.logo} alt="Study Logo" className={styles.logo} />}
+          </div>
+          <div className={styles.subTitle}>
+            {intl.get(`screen.loginPage.studies.${study.formattedCode}.name`)}
+          </div>
+          <div className={styles.description}>
+            {intl.getHTML(`screen.loginPage.studies.${study.formattedCode}.description`)}
+          </div>
+          <TextIcon
+            IconComponent={FamilyIcon}
+            title={numberFormat(studiesParticipants[study.code])}
+            subTitle={intl.get('entities.participant.participants')}
+            color="dark"
+          />
         </div>
-        <div className={styles.subTitle}>
-          {intl.get(`screen.loginPage.studies.${study.code}.name`)}
-        </div>
-        <div className={styles.description}>
-          {intl.getHTML(`screen.loginPage.studies.${study.code}.description`)}
-        </div>
-        <TextIcon
-          IconComponent={FamilyIcon}
-          title={numberFormat(study.participantsCount)}
-          subTitle={intl.get('entities.participant.participants')}
-          color="dark"
-        />
-      </div>
-    ))}
-  </AntCarousel>
-);
+      ))}
+    </AntCarousel>
+  );
+};
 
 export default Carousel;
