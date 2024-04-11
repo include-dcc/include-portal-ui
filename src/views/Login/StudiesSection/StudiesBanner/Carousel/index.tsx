@@ -1,6 +1,6 @@
 import React from 'react';
 import intl from 'react-intl-universal';
-import FamilyIcon from '@ferlab/ui/core/components/Icons/Futuro/FamilyIcon';
+import ParticipantIcon from '@ferlab/ui/core/components/Icons/Futuro/ParticipantIcon';
 import { numberFormat } from '@ferlab/ui/core/utils/numberUtils';
 import { Carousel as AntCarousel } from 'antd';
 
@@ -57,7 +57,7 @@ const Carousel = () => {
             {intl.getHTML(`screen.loginPage.studies.${study.formattedCode}.description`)}
           </div>
           <TextIcon
-            IconComponent={FamilyIcon}
+            IconComponent={ParticipantIcon}
             title={numberFormat(studiesParticipants[study.code])}
             subTitle={intl.get('entities.participant.participants')}
             color="dark"
