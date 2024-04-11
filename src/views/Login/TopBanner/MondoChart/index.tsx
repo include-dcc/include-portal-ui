@@ -76,14 +76,17 @@ const TopBanner = () => {
       wrapperClassName={styles.wrapper}
       contentClassName={styles.contentCard}
       theme="shade"
-      title={<Title level={4}>{intl.get('screen.loginPage.mondoTitle')}</Title>}
+      title={<Title level={4}>{intl.get('screen.loginPage.mondoChart.title')}</Title>}
       content={
         <BarChart
           labelTextColor="white"
           colors={{ scheme: 'paired' }}
           defs={undefined}
           axisBottom={{
-            tickValues: [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000],
+            tickValues: [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000],
+            legend: intl.get('screen.loginPage.mondoChart.bottomAxis'),
+            legendOffset: 35,
+            legendPosition: 'middle',
           }}
           axisLeft={{
             format: (label: string) =>
@@ -91,14 +94,18 @@ const TopBanner = () => {
                 .replace(/\(MONDO:\d+\)/g, '')
                 .split('-')
                 .pop(),
+            legend: intl.get('screen.loginPage.mondoChart.leftAxis'),
+            legendOffset: -145,
+            legendPosition: 'middle',
           }}
           padding={0.5}
           data={applyFilter(data, 'label')}
           layout="horizontal"
           margin={{
-            bottom: 24,
-            left: 130,
+            bottom: 45,
+            left: 150,
             right: 12,
+            top: 12,
           }}
           tooltipLabel={(node: any) => node.data.label}
         />

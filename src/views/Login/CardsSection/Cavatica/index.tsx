@@ -18,6 +18,7 @@ const Cavatica = () => (
         type="primary"
         size="large"
         href="https://www.cavatica.org/"
+        target="_blank"
         className={styles.learnMoreButton}
       >
         {intl.get('screen.loginPage.cards.cavatica.learnMore')}

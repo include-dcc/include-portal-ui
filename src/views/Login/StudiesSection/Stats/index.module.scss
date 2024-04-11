@@ -1,4 +1,4 @@
-@import '../../../../style/themes/include/colors';
+@import 'style/themes/include/colors';
 
 .wrapper {
   height: fit-content;
@@ -6,6 +6,10 @@
   justify-self: center;
   align-self: center;
   max-width: 1200px;
+}
+
+.card {
+  background-color: $gray-1 !important;
 }
 
 .cardContent {

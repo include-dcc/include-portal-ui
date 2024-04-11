@@ -33,7 +33,7 @@ const studies = [
   { code: 'DS-COG-ALL', formattedCode: 'dscogall', logo: KfLogo },
   { code: 'X01-deSmith', formattedCode: 'x01desmith', logo: DefaultLogo },
   { code: 'DS-Sleep', formattedCode: 'dssleep', logo: DssleepLogo },
-  { code: 'DS-Nexus', formattedCode: 'dsnexus', logo: DsnexusLogo },
+  { code: 'DS-NEXUS', formattedCode: 'dsnexus', logo: DsnexusLogo },
 ];
 
 const Carousel = () => {

@@ -582,12 +582,16 @@ const en = {
     loginPage: {
       title: 'INCLUDE Data Hub',
       subtitle:
-        'Uncover new insights into the biology of Down Syndrome and co-occurring conditions.',
+        'Uncover <span style="color: #7dd3fc;">new insights</span> into the biology of Down Syndrome and co-occurring conditions.',
       resume:
         'Access large-scale integrated data resources and analyze custom built cohort datasets based on participants, biospecimen, clinical, and genomic data.',
       login: 'Login',
       signup: 'Sign up',
-      mondoTitle: 'Top 10 Co-occurring Conditions (MONDO)',
+      mondoChart: {
+        title: 'Most Frequent Co-occurring Conditions (MONDO)',
+        bottomAxis: '# of participants',
+        leftAxis: 'MONDO diagnosis term',
+      },
       studies: {
         title: 'Studies',
         summary:
@@ -650,24 +654,24 @@ const en = {
       },
       cards: {
         stats: {
-          title: 'Data Set',
+          title: 'Data Release',
           genomes: 'Genomes',
           transcriptomes: 'Transcriptomes',
         },
         variants: {
           title: 'Germline Variants',
           description:
-            'The INCLUDE Variant Explorer enables users to search across millions of annotated germline variants directly from a performant and scalable variant database using INCLUDE participants with known co-occurring conditions.',
+            'Our variant explorer offers advanced searching capabilities. With just a few clicks, you can explore millions of annotated germline variants from genomes INCLUDE Data Hub participants.',
           explore: 'Explore variant data',
         },
         cavatica: {
           description:
-            'The portal integrates with CAVATICA, a data analysis and sharing platform designed to accelerate discovery in a scalable, cloud-based compute environment where data, results, and workflows are shared among the world’s research community. Researchers and bioinformaticians can create or use existing workflows, to analyze INCLUDE datasets.',
+            'The portal integrates with Cavatica, a data analysis and sharing platform designed to accelerate discovery in a scalable, cloud-based compute environment where data, results, and workflows are shared among the world’s research community. Researchers and bioinformaticians can create or use existing workflows, to analyze INCLUDE datasets.',
           learnMore: 'Learn more',
         },
       },
       documentation: {
-        title: 'INCLUDE documentation center',
+        title: 'INCLUDE Documentation Center',
         description:
           'For information on accessing, submitting and uploading data, visit our Documentation Center.',
         button: 'Documentation',

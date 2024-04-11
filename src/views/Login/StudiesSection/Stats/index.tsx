@@ -31,6 +31,7 @@ const Stats = () => {
   return (
     <GridCard
       wrapperClassName={styles.wrapper}
+      className={styles.card}
       theme="shade"
       title={<Title level={4}>{intl.get('screen.loginPage.cards.stats.title')}</Title>}
       content={
