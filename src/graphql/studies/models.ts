@@ -61,7 +61,6 @@ export interface IStudyEntity {
   date_collection_end_year?: string;
   date_collection_start_year?: string;
   description?: string;
-  domain?: string;
   domains?: string[];
   expected_data_categories?: string[];
   expected_number_participants?: number;
