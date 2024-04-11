@@ -34,7 +34,6 @@ export const GET_STUDIES = gql`
             date_collection_start_year
             date_collection_end_year
             description
-            domain
             external_id
             family_count
             file_count
@@ -94,7 +93,6 @@ export const GET_STUDY = gql`
             date_collection_end_year
             date_collection_start_year
             description
-            domain
             domains
             expected_data_categories
             expected_number_participants
