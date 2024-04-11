@@ -41,7 +41,12 @@ const Carousel = () => {
   const { studiesParticipants = {} } = stats || {};
 
   return (
-    <AntCarousel className={styles.carousel} autoplaySpeed={5000} dots={{ className: styles.dots }}>
+    <AntCarousel
+      className={styles.carousel}
+      autoplay
+      autoplaySpeed={5000}
+      dots={{ className: styles.dots }}
+    >
       {studies.map((study) => (
         <div className={styles.contentStyle} key={study.code}>
           <img src={study.logo} alt="Study Logo" className={styles.logo} />
