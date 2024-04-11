@@ -581,15 +581,103 @@ const en = {
     },
     loginPage: {
       title: 'INCLUDE Data Hub',
-      datarelease: {
-        title: 'Available Data',
-      },
-      message:
-        'Uncover <span style="color:#7dd3fc;">new insights</span> into the biology of Down Syndrome and co-occurring conditions.',
-      accessLargeScale:
-        'Access large-scale data resources and explore custom built cohort datasets based on participant, biospecimen, clinical and omics data.',
+      subtitle:
+        'Uncover new insights into the biology of Down Syndrome and co-occurring conditions.',
+      resume:
+        'Access large-scale integrated data resources and analyze custom built cohort datasets based on participants, biospecimen, clinical, and genomic data.',
       login: 'Login',
       signup: 'Sign up',
+      mondoTitle: 'Top 10 Co-occurring Conditions (MONDO)',
+      studies: {
+        title: 'Studies',
+        summary:
+          'Explore a curated collection of harmonized studies, ranging from participant-reported programs, INCLUDE-funded cohorts, institutional initiatives, and dedicated consortia focused on Down Syndrome research.',
+        htp: {
+          name: 'The Human Trisome Project',
+          description:
+            '<p>The Human Trisome Project (HTP) is a large and comprehensive natural history study of Down syndrome involving collection of deep clinical data, multimodal phenotyping, a multi-dimensional biobank, generation of pan-omics datasets, and rapid release of data. The HTP has enabled many discoveries about the pathophysiology of Down syndrome, leading to new clinical trials testing therapies to improve diverse health outcomes in this population.</p>',
+        },
+        dsc: {
+          name: 'DS-Connect: The Down Syndrome Registry',
+          description:
+            '<p>DS-Connect is an online survey tool designed to collect demographic data and basic health information from individuals with DS. The purposes of DS-Connect: The Down Syndrome Registry are to better understand the health of people with Down syndrome and to inform eligible participants who, based on their health history, may be a match for research studies or new clinical trials.</p>',
+        },
+        ds360hd: {
+          name: 'INCLUDE: (Sherman) Genomic Analysis of Congenital Heart Defects and Acute Lymphoblastic Leukemia in Children with Down Syndrome',
+          description:
+            '<p>Down syndrome is one of the strongest risk factors for acute myeloid leukemia in children, which is preceded by a transient leukemia driven by somatic mutations in the GATA1 gene. This study was funded by the Kids First and INCLUDE programs to generate whole-genome sequencing data from a long-standing and well-phenotyped collection of newborn blood samples from 436 individuals with DS from the Oxford Down Syndrome Cohort Study, to advance our understanding of biological factors associated with transient leukemia in DS.</p>',
+        },
+        x01hakonarson: {
+          name: 'Genetic underpinnings of the multifactorial phenotype of Trisomy 21 patients unveiled by multi-omics approaches',
+          description:
+            "<p>To better understand the pathophysiology of Down syndrome (DS), this proposal will generate and analyze sequence data on 777 pediatric DS patients from the Children's Hospital of Philadelphia (CHOP), as well as 321 mothers and 148 fathers. We anticipate that the information derived from this deeply phenotyped cohort will allow for improved understanding of the pathophysiology and molecular mechanisms underlying DS-associated comorbidities, which may inform on new practices for treatment or innovative future therapies.</p>",
+        },
+        dspcgc: {
+          name: 'INCLUDE: (PCGC) Genomic Analysis of Congenital Heart Defects and Acute Lymphoblastic Leukemia in Children with Down Syndrome',
+          description:
+            '<p>Since a key aspect of Kids First is to help uncover connections between structural birth defects and childhood cancers, the program will partner with INCLUDE and TOPMed to advance our understanding the biological factors that may lead to both heart disease and leukemia in individuals with DS.</p>',
+        },
+        bridsr: {
+          name: 'Benaroya Research Institute Down Syndrome Registry',
+          description:
+            '<p>The Down syndrome registry at Benaroya Research Institute (BRI) builds on institutional expertise to collect and analyze longitudinal biological samples and concomitant clinical metadata across the lifespan of people with Down syndrome. The goal is to help advance therapeutic approaches to predict, prevent and cure co-occurring conditions of Down syndrome.</p>',
+        },
+        abcds: {
+          name: 'Alzheimer Biomarker Consortium - Down Syndrome',
+          description:
+            "<p>The goal of the Alzheimer Biomarker Consortium-Down Syndrome (ABC-DS) is to study a group of adults with Down syndrome over their lives to single out early biomarkers of the onset of Alzheimer's disease.</p>",
+        },
+        dscogall: {
+          name: 'INCLUDE: (Lupo) Genomic Analysis of Congenital Heart Defects and Acute Lymphoblastic Leukemia in Children with Down Syndrome',
+          description:
+            '<p>Down syndrome is one of the strongest risk factors for acute myeloid leukemia in children, which is preceded by a transient leukemia driven by somatic mutations in the GATA1 gene. This study was funded by the Kids First and INCLUDE programs to generate whole-genome sequencing data from a long-standing and well-phenotyped collection of newborn blood samples from 436 individuals with DS from the Oxford Down Syndrome Cohort Study, to advance our understanding of biological factors associated with transient leukemia in DS.</p>',
+        },
+        x01desmith: {
+          name: 'The epidemiology of transient leukemia in newborns with Down syndrome',
+          description:
+            '<p>Children with Down syndrome (DS) have an extremely high risk of developing acute myeloid leukemia, and this is preceded by a transient myeloid leukemia that presents in up to 30% of newborns with DS and can lead to early death. In this study, we will investigate the role of germline genetic risk factors in modifying the risk of transient myeloid leukemia in DS. </p>',
+        },
+        dssleep: {
+          name: 'Dimensional, Sleep, and Genomic Analyses of Down Syndrome to Elucidate Phenotypic Variability',
+          description:
+            '<p>The present work falls under an administrative supplement to study Down syndrome (DS) within the existing grant, "Dimensional Analysis of Developmental Brain Disorders using an Online, Genome First Approach" (R01-MH107431). The study aims to build validated, quantitative measures of psychopathology for DS.</p>',
+        },
+        dsnexus: {
+          name: 'Nexus Translational Biobank',
+          description:
+            '<p>The Nexus is a patient registry, clinical database, and biological sample bank focused on developmental disorders. Its major goal is to advance research by (i) linking human cognitive, behavioral, neurological and other clinical phenotypes to biological samples, including DNA, plasma, and lymphoblastoid cell lines, and (ii) facilitating access to appropriate patient cohorts for research purposes. The Nexus is unique among biorepositories in that it combines extensive clinical data and biosamples, and emphasizes the inclusion of quantitative cognitive and behavioral data.</p>',
+        },
+      },
+      cards: {
+        stats: {
+          title: 'Data Set',
+          genomes: 'Genomes',
+          transcriptomes: 'Transcriptomes',
+        },
+        variants: {
+          title: 'Germline Variants',
+          description:
+            'The INCLUDE Variant Explorer enables users to search across millions of annotated germline variants directly from a performant and scalable variant database using INCLUDE participants with known co-occurring conditions.',
+          explore: 'Explore variant data',
+        },
+        cavatica: {
+          description:
+            'The portal integrates with CAVATICA, a data analysis and sharing platform designed to accelerate discovery in a scalable, cloud-based compute environment where data, results, and workflows are shared among the world’s research community. Researchers and bioinformaticians can create or use existing workflows, to analyze INCLUDE datasets.',
+          learnMore: 'Learn more',
+        },
+      },
+      documentation: {
+        title: 'INCLUDE documentation center',
+        description:
+          'For information on accessing, submitting and uploading data, visit our Documentation Center.',
+        button: 'Documentation',
+      },
+      participation: {
+        title: 'Participate in the INCLUDE Project',
+        description:
+          'Visit the NIH INCLUDE project page to learn more about the initiative, funding opportunities, or other resources.',
+        button: 'Learn more',
+      },
     },
     dashboard: {
       hello: 'Hello',
@@ -1550,6 +1638,7 @@ const en = {
       trisomy: 'T21: "Trisomy 21"',
     },
     study: {
+      studies: 'Studies',
       access_limitation: 'Access Limitation',
       access_requirement: 'Access Requirement',
       affectedStudies: {

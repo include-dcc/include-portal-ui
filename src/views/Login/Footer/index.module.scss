@@ -1,0 +1,40 @@
+@import 'style/themes/include/colors';
+
+.footerContainer {
+  padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 40px;
+  justify-items: center;
+  align-items: center;
+}
+
+.image {
+  max-height: 60px;
+}
+
+@media (max-width: 1024px) {
+  .footerContainer {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr auto;
+  }
+
+  .footerContainer > :last-child {
+    grid-column: 2 / span 2;
+  }
+}
+
+@media (max-width: 800px) {
+  .footerContainer {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr auto;
+  }
+
+  .image {
+    grid-column: span 2;
+  }
+
+  .footerContainer > :nth-last-child(-n + 2) {
+    grid-column: span 3;
+  }
+}
