@@ -19,7 +19,14 @@ const { Title } = Typography;
 
 const Stats = () => {
   const { stats } = useGlobals();
-  const { studies = 0, participants = 0, samples = 0, fileSize = '' } = stats || {};
+  const {
+    studies = 0,
+    participants = 0,
+    samples = 0,
+    fileSize = '',
+    genomes = 29243,
+    transcriptomes = 24364,
+  } = stats || {};
 
   return (
     <GridCard
@@ -55,13 +62,13 @@ const Stats = () => {
           <TextIcon
             color="dark"
             IconComponent={GeneIcon}
-            title={numberFormat(0)}
+            title={numberFormat(genomes)}
             subTitle={intl.get('screen.loginPage.cards.stats.genomes')}
           />
           <TextIcon
             color="dark"
             IconComponent={ExomesIcon}
-            title={numberFormat(0)}
+            title={numberFormat(transcriptomes)}
             subTitle={intl.get('screen.loginPage.cards.stats.transcriptomes')}
           />
         </div>

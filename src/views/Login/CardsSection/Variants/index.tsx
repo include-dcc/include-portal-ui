@@ -8,12 +8,15 @@ import { Button } from 'antd';
 
 import { STATIC_ROUTES } from 'utils/routes';
 
+import { useGlobals } from '../../../../store/global';
 import TextIcon from '../../TextIcon';
 
 import styles from './index.module.scss';
 
 const Variants = () => {
   const { keycloak } = useKeycloak();
+  const { stats } = useGlobals();
+  const { variants = 32359129 } = stats || {};
   const handleSignin = async () => {
     const url = keycloak.createLoginUrl({
       redirectUri: `${window.location.origin}/${STATIC_ROUTES.VARIANTS}`,
@@ -26,7 +29,7 @@ const Variants = () => {
     <div className={styles.container}>
       <TextIcon
         IconComponent={GeneIcon}
-        title={numberFormat(0)}
+        title={numberFormat(variants)}
         subTitle={intl.get('screen.loginPage.cards.variants.title')}
         size="large"
       />
