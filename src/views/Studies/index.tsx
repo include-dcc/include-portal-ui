@@ -300,7 +300,11 @@ const getColumns = (): ProColumnType<any>[] => [
     defaultHidden: true,
     render: (description: string) =>
       description ? (
-        <Text style={{ width: '200px' }} ellipsis={{ tooltip: description }}>
+        <Text
+          style={{ width: '200px' }}
+          ellipsis={{ tooltip: description }}
+          className={styles.descriptionCell}
+        >
           {description}
         </Text>
       ) : (
