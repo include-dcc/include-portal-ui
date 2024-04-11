@@ -7,7 +7,7 @@ import TextIcon from '../../../TextIcon';
 
 import styles from './index.module.scss';
 
-type BannerItemProps = {
+type TBannerItemProps = {
   IconComponent: ComponentType<IIconProps>;
   title: string;
   description: string;
@@ -20,7 +20,7 @@ const BannerItem = ({
   description,
   buttonText,
   buttonUrl,
-}: BannerItemProps) => (
+}: TBannerItemProps) => (
   <div className={styles.container}>
     <TextIcon IconComponent={IconComponent} title={title} size="medium" color="dark" />
     <div className={styles.text}>{description}</div>
