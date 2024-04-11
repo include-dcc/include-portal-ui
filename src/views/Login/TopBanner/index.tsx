@@ -35,7 +35,7 @@ const TopBanner = () => {
             <IncludeIconLogin />
             {intl.get('screen.loginPage.title')}
           </div>
-          <div className={styles.subtitle}>{intl.get('screen.loginPage.subtitle')}</div>
+          <div className={styles.subtitle}>{intl.getHTML('screen.loginPage.subtitle')}</div>
           <div className={styles.description}>{intl.get('screen.loginPage.resume')}</div>
           <Space size={8}>
             <Button type="primary" size="large" data-cy="Login" onClick={handleSignin}>

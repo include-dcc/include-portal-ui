@@ -1,10 +1,11 @@
-@import '../../../../../style/themes/include/colors';
+@import 'style/themes/include/colors';
 
 .carousel {
   max-width: 840px;
   height: 100%;
   width: 100%;
   background-color: $gray-1;
+  border: 1px solid $gray-4;
 }
 
 .contentStyle {

@@ -25,7 +25,7 @@ const BannerItem = ({
     <TextIcon IconComponent={IconComponent} title={title} size="medium" color="dark" />
     <div className={styles.text}>{description}</div>
     <div>
-      <Button type="primary" size="large" href={buttonUrl}>
+      <Button type="primary" size="large" href={buttonUrl} target="_blank">
         {buttonText}
         <ExternalLinkIcon height="14" width="14" />
       </Button>

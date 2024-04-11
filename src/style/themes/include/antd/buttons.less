@@ -8,8 +8,8 @@
 
 @btn-disable-border: @gray-5;
 
-@btn-default-ghost-color: @gray-6;
-@btn-default-ghost-border: @gray-6;
+@btn-default-ghost-color: @gray-1;
+@btn-default-ghost-border: @gray-1;
 
 @btn-text-hover-bg: @gray-2;
 
@@ -56,6 +56,24 @@
     &:focus-visible {
       border-color: @gray-8;
       box-shadow: 0 0 0 2px @gray-1, 0 0 0 4px @gray-8;
+    }
+
+    &.@{btn-prefix-cls}-background-ghost:not(:disabled) {
+      &:hover {
+        border-color: @blue-3;
+        color: @blue-3;
+      }
+
+      &:active {
+        border-color: @blue-3;
+        color: @blue-3;
+      }
+
+      &:focus-visible {
+        border-color: @gray-1;
+        color: @gray-1;
+        border-width: 2px;
+      }
     }
 
     &.@{btn-prefix-cls}-dangerous:not(:disabled) {
