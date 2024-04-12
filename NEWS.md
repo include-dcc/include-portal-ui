@@ -8,6 +8,22 @@
 ### Technical / Other changes
 -->
 
+## 2024-04-12 include-portal-ui 1.11.0
+## Features:
+[SJIP-708](https://d3b.atlassian.net/browse/SJIP-708) Feature: [Study Entity] Implement Study Entity pages
+[SJIP-709](https://d3b.atlassian.net/browse/SJIP-735) Feature: [Variant Entity] Implement new version of the Variant Entity page focused on the most deleterious consequence
+[SJIP-725](https://d3b.atlassian.net/browse/SJIP-725) Feature: [Registration] Add subscription to newsletter in the Registration process
+[SJIP-727](https://d3b.atlassian.net/browse/SJIP-727) Feature: [Header] Create Resources header dropdown
+[SJIP-746](https://d3b.atlassian.net/browse/SJIP-746) Feature: [Landing] Implement new landing page
+[SJIP-748](https://d3b.atlassian.net/browse/SJIP-748) Feature: [Profile] Add newsletter sign up section to Profile page
+[SJIP-749](https://d3b.atlassian.net/browse/SJIP-749) Feature: [Data Exploration] Add a Sample Type horizontal bar chart
+[SJIP-753](https://d3b.atlassian.net/browse/SJIP-753) Feature: [Studies page] Implement new search bar, new facets, and column headers to Studies page
+## Technical/ Other changes:
+[SJIP-754](https://d3b.atlassian.net/browse/SJIP-754) Refactor: [Entity] Adjust Section titles to be singular and table titles to be plural
+[SJIP-763](https://d3b.atlassian.net/browse/SJIP-763) Fix: [UI] Adjustment to boutons of type=hyperlink
+[SJIP-780](https://d3b.atlassian.net/browse/SJIP-780) Fix: [Data exploration] Unauthorized file despite being connected to Fence and Cavatica
+[SJIP-783](https://d3b.atlassian.net/browse/SJIP-783) Refactor: [Dashboard] Add disconnect bouton CAVATICA connection error
+
 ## 2024-03-21 include-portal-ui 1.10.0
 ### Features:
 - [SJIP-221](https://d3b.atlassian.net/browse/SJIP-221) Feature: [Data Exploration] Added Studies Pie chart to Summary View
