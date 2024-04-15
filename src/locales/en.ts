@@ -1729,6 +1729,7 @@ const en = {
       virtual_biorepository_url: 'Virtual Biorepository URL',
     },
     variant: {
+      no_gene: 'No Gene',
       participant: '{count, plural, =0 {Participant} =1 {Participant} other {Participants}}',
       type: {
         abrv: {
