@@ -18,7 +18,7 @@
   font-size: 20px;
   line-height: 28px;
   padding-right: 8px;
-  color: $gray-8;
+  color: $gray-8 !important;
 }
 
 .noGene {
@@ -104,6 +104,7 @@
 
 .pickedIcon {
   padding-left: 8px;
+  color: $canonical-icon-color;
 }
 
 .functionalScores {
@@ -128,5 +129,11 @@
     table > tbody > tr > td {
       background-color: $gray-1;
     }
+  }
+}
+
+.contentWrapper {
+  :global(.ant-table-tbody > tr:nth-child(even):not(.ant-table-row-selected) td) {
+    background-color: $gray-1;
   }
 }
