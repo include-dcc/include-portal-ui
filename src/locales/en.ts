@@ -661,7 +661,7 @@ const en = {
         variants: {
           title: 'Germline Variants',
           description:
-            'Our variant explorer offers advanced searching capabilities. With just a few clicks, you can explore millions of annotated germline variants from genomes INCLUDE Data Hub participants.',
+            'Our variant explorer offers advanced searching capabilities. With just a few clicks, you can explore millions of annotated germline variants from genomes of INCLUDE Data Hub participants.',
           explore: 'Explore variant data',
         },
         cavatica: {
