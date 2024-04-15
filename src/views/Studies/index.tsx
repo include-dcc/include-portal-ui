@@ -123,13 +123,18 @@ const getColumns = (): ProColumnType<any>[] => [
     key: 'domains',
     title: intl.get('entities.study.domains'),
     dataIndex: 'domains',
-    render: (domains: string[]) => (
-      <ExpandableCell
-        nOfElementsWhenCollapsed={2}
-        dataSource={domains}
-        renderItem={(sourceText) => <div>{sourceText}</div>}
-      />
-    ),
+    render: (domains: string[]) => {
+      if (!domains || domains.length === 0) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return (
+        <ExpandableCell
+          nOfElementsWhenCollapsed={2}
+          dataSource={domains}
+          renderItem={(sourceText) => <div>{sourceText}</div>}
+        />
+      );
+    },
     width: 300,
   },
   {
@@ -177,7 +182,7 @@ const getColumns = (): ProColumnType<any>[] => [
           {numberWithCommas(participantCount)}
         </Link>
       ) : (
-        participantCount
+        participantCount || TABLE_EMPTY_PLACE_HOLDER
       );
     },
   },
@@ -316,52 +321,72 @@ const getColumns = (): ProColumnType<any>[] => [
     title: intl.get('entities.study.participant_life_span'),
     dataIndex: 'part_lifespan_stages',
     defaultHidden: true,
-    render: (part_lifespan_stages: string[]) => (
-      <ExpandableCell
-        nOfElementsWhenCollapsed={2}
-        dataSource={part_lifespan_stages}
-        renderItem={(sourceText) => <div>{sourceText}</div>}
-      />
-    ),
+    render: (part_lifespan_stages: string[]) => {
+      if (!part_lifespan_stages || part_lifespan_stages.length === 0) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return (
+        <ExpandableCell
+          nOfElementsWhenCollapsed={2}
+          dataSource={part_lifespan_stages}
+          renderItem={(sourceText) => <div>{sourceText}</div>}
+        />
+      );
+    },
   },
   {
     key: 'data_source',
     title: intl.get('entities.study.data_source_table'),
     dataIndex: 'data_source',
     defaultHidden: true,
-    render: (data_source: string[]) => (
-      <ExpandableCell
-        nOfElementsWhenCollapsed={2}
-        dataSource={data_source}
-        renderItem={(sourceText) => <div>{sourceText}</div>}
-      />
-    ),
+    render: (data_source: string[]) => {
+      if (!data_source || data_source.length === 0) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return (
+        <ExpandableCell
+          nOfElementsWhenCollapsed={2}
+          dataSource={data_source}
+          renderItem={(sourceText) => <div>{sourceText}</div>}
+        />
+      );
+    },
   },
   {
     key: 'study_designs',
     title: intl.get('entities.study.study_designs_table'),
     dataIndex: 'study_designs',
     defaultHidden: true,
-    render: (study_designs: string[]) => (
-      <ExpandableCell
-        nOfElementsWhenCollapsed={2}
-        dataSource={study_designs}
-        renderItem={(sourceText) => <div>{sourceText}</div>}
-      />
-    ),
+    render: (study_designs: string[]) => {
+      if (!study_designs || study_designs.length === 0) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return (
+        <ExpandableCell
+          nOfElementsWhenCollapsed={2}
+          dataSource={study_designs}
+          renderItem={(sourceText) => <div>{sourceText}</div>}
+        />
+      );
+    },
   },
   {
     key: 'investigator_names',
     title: intl.get('entities.study.principal_investigator'),
     dataIndex: 'investigator_names',
     defaultHidden: true,
-    render: (investigator_names: string[]) => (
-      <ExpandableCell
-        nOfElementsWhenCollapsed={2}
-        dataSource={investigator_names}
-        renderItem={(sourceText) => <div>{sourceText}</div>}
-      />
-    ),
+    render: (investigator_names: string[]) => {
+      if (!investigator_names || investigator_names.length === 0) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return (
+        <ExpandableCell
+          nOfElementsWhenCollapsed={2}
+          dataSource={investigator_names}
+          renderItem={(sourceText) => <div>{sourceText}</div>}
+        />
+      );
+    },
   },
   {
     key: 'date_collection_start_year',
