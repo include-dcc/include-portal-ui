@@ -93,6 +93,7 @@ const SunburstGraph = ({ field, previewMode = false, width = 335, height = 335 }
         imageType="grid"
         size="large"
         description={intl.get(`screen.dataExploration.tabs.summary.${field}.empty`)}
+        noPadding
       />
     );
   }
