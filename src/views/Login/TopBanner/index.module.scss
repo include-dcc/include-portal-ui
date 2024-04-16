@@ -75,8 +75,9 @@
 
 @media (max-width: 800px) {
   .topBanner {
+    background-position: center;
+    background-size: auto 100%;
     padding: 40px 40px;
-
   }
   .contentContainer {
     flex-direction: column;

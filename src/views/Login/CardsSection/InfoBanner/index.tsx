@@ -2,8 +2,7 @@ import React from 'react';
 import intl from 'react-intl-universal';
 import CloudArchitectureIcon from '@ferlab/ui/core/components/Icons/FuturoSpot/CloudArchitectureSpotIcon';
 import InformationIcon from '@ferlab/ui/core/components/Icons/FuturoSpot/InformationSpotIcon';
-
-import BannerItem from './BannerItem';
+import BannerItem from '@ferlab/ui/core/pages/LandingPage/BannerItem';
 
 import styles from './index.module.scss';
 

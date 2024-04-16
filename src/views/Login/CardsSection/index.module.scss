@@ -17,6 +17,12 @@
   grid-row-gap: 48px;
 }
 
+.logo {
+  max-width: 375px;
+  width: 100%;
+  max-height: 80px;
+}
+
 @media (min-width: 800px) and (max-width: 1024px) {
   .cardsContainer {
     padding: 40px 24px;
