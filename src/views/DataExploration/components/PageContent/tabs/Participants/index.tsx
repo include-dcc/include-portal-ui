@@ -76,7 +76,7 @@ const getDefaultColumns = (): ProColumnType[] => [
     ),
   },
   {
-    key: 'study',
+    key: 'study.study_code',
     title: intl.get('entities.study.study'),
     dataIndex: 'study',
     sorter: {

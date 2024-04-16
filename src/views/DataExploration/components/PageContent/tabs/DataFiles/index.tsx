@@ -129,7 +129,7 @@ const getDefaultColumns = (
   },
   {
     dataIndex: 'study',
-    key: 'study',
+    key: 'study.study_code',
     title: intl.get('entities.study.study'),
     sorter: { multiple: 1 },
     render: (study: IStudyEntity) =>
