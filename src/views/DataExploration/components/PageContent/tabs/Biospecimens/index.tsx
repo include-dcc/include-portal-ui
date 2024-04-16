@@ -16,7 +16,7 @@ import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { Tooltip } from 'antd';
 import { useBiospecimen } from 'graphql/biospecimens/actions';
-import { IBiospecimenEntity } from 'graphql/biospecimens/models';
+import { IBiospecimenEntity, Status } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { IStudyEntity } from 'graphql/studies/models';
@@ -65,7 +65,7 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     render: (sample_id: string) => sample_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    key: 'study',
+    key: 'study.study_code',
     dataIndex: 'study',
     title: intl.get('entities.study.study'),
     sorter: { multiple: 1 },
@@ -189,7 +189,12 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
     title: intl.get('entities.biospecimen.sample_availabilty'),
     dataIndex: 'status',
     sorter: { multiple: 1 },
-    render: (status: string) => (status?.toLowerCase() === 'available' ? 'Yes' : 'No'),
+    render: (status: string) => {
+      if (!status) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+      return status === Status.AVAILABLE ? intl.get('global.yes') : intl.get('global.no');
+    },
   },
   {
     key: 'laboratory_procedure',
