@@ -28,7 +28,10 @@ const Cards = () => {
       <div className={styles.cardsGrid}>
         <VariantCard
           variantsCount={variants}
-          handleClick={handleSignin}
+          buttonProps={{
+            type: 'primary',
+            onClick: handleSignin,
+          }}
           dictionary={{
             title: intl.get('screen.loginPage.cards.variants.title'),
             description: intl.get('screen.loginPage.cards.variants.description'),

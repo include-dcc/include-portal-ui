@@ -11,17 +11,31 @@ const InfoBanner = () => (
     <div className={styles.content}>
       <BannerItem
         IconComponent={InformationIcon}
-        title={intl.get('screen.loginPage.documentation.title')}
-        description={intl.get('screen.loginPage.documentation.description')}
-        buttonText={intl.get('screen.loginPage.documentation.button')}
-        buttonUrl="https://help.includedcc.org/docs/quick-start-guide"
+        color="dark"
+        dictionary={{
+          description: intl.get('screen.loginPage.documentation.description'),
+          button: intl.get('screen.loginPage.documentation.button'),
+          title: intl.get('screen.loginPage.documentation.title'),
+        }}
+        buttonProps={{
+          type: 'primary',
+          href: 'https://help.includedcc.org/docs/quick-start-guide',
+          target: '_blank',
+        }}
       />
       <BannerItem
         IconComponent={CloudArchitectureIcon}
-        title={intl.get('screen.loginPage.participation.title')}
-        description={intl.get('screen.loginPage.participation.description')}
-        buttonText={intl.get('screen.loginPage.participation.button')}
-        buttonUrl="https://www.nih.gov/include-project"
+        color="dark"
+        dictionary={{
+          description: intl.get('screen.loginPage.participation.description'),
+          button: intl.get('screen.loginPage.participation.button'),
+          title: intl.get('screen.loginPage.participation.title'),
+        }}
+        buttonProps={{
+          type: 'primary',
+          href: 'https://www.nih.gov/include-project',
+          target: '_blank',
+        }}
       />
     </div>
   </div>
