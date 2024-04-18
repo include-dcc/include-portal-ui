@@ -56,6 +56,7 @@
   white-space: wrap;
   text-decoration: underline;
   color: inherit;
+
   &:hover {
     text-decoration: none;
   }
@@ -133,7 +134,7 @@
 }
 
 .contentWrapper {
-  :global(.ant-table-tbody > tr:nth-child(even):not(.ant-table-row-selected) td) {
+  :global(.ant-table-tbody > tr:nth-child(even):not(.ant-table-row-selected):not(:hover) td) {
     background-color: $gray-1;
   }
 }
