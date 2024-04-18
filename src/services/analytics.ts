@@ -1,4 +1,5 @@
 import ReactGA from 'react-ga4';
+import { CavaticaAnalyticsAction } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import EnvironmentVariables from 'helpers/EnvVariables';
 import { capitalize } from 'lodash';
 import { FilterActionType } from 'views/DataExploration/components/PageContent';
@@ -70,11 +71,24 @@ export const trackRequestBiospecimen = (action: string) => {
   }
 };
 
-export const trackCavaticaAction = (page: string) => {
+export const trackCavaticaAction = (page: string, action: string) => {
+  let message = '';
+  switch (action) {
+    case CavaticaAnalyticsAction.ANALYSE:
+      message = 'Analyse';
+      break;
+    case CavaticaAnalyticsAction.PROJECT_CREATED:
+      message = 'Project Created';
+      break;
+    default:
+      message = 'Unknown Action';
+      break;
+  }
+
   if (isGaActive) {
     ReactGA.event({
       category: 'Cavatica',
-      action: `Analyze -- ${capitalize(page)}`,
+      action: `${message} -- ${capitalize(page)}`,
     });
   }
 };
