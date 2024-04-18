@@ -54,7 +54,7 @@ const StudiesGraphCard = () => {
       gridUID={UID}
       id={STUDIES_GRAPH_CARD_ID}
       dictionary={getResizableGridDictionary()}
-      downloadSettings={{ png: true, svg: false, tsv: true }}
+      downloadSettings={{ png: true, svg: true, tsv: true }}
       contentClassName={styles.graphContentWrapper}
       theme="shade"
       loading={loading}
