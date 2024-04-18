@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import CavaticaAnalyse from '@ferlab/ui/core/components/Widgets/Cavatica/CavaticaAnalyse';
 import {
   CAVATICA_ANALYSE_STATUS,
+  CavaticaAnalyticsAction,
   PASSPORT_AUTHENTIFICATION_STATUS,
 } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
@@ -94,7 +95,7 @@ const CavaticaAnalyzeButton: React.FC<OwnProps> = ({
         dispatch(passportActions.setCavaticaBulkImportDataStatus(CAVATICA_ANALYSE_STATUS.unknow));
       }}
       handleImportBulkData={(value) => {
-        trackCavaticaAction(index);
+        trackCavaticaAction(index, CavaticaAnalyticsAction.ANALYSE);
         dispatch(startBulkImportJob(value));
       }}
       createProjectModalProps={{
@@ -113,6 +114,9 @@ const CavaticaAnalyzeButton: React.FC<OwnProps> = ({
           dispatch(
             createCavaticaProjet({
               body: values,
+              callback: () => {
+                trackCavaticaAction(index, CavaticaAnalyticsAction.PROJECT_CREATED);
+              },
             }),
           );
         },

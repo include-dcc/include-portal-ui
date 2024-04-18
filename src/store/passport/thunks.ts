@@ -188,15 +188,18 @@ export const createCavaticaProjet = createAsyncThunk<
   },
   {
     body: ICavaticaCreateProjectBody;
+    callback?: () => void;
   },
   { rejectValue: string; state: RootState }
 >('passport/cavatica/create/project', async (args, thunkAPI) => {
   const { data, error } = await CavaticaApi.createProject(args.body);
-
   return handleThunkApiResponse({
     error,
     reject: thunkAPI.rejectWithValue,
     onSuccess: () => {
+      if (args.callback) {
+        args.callback();
+      }
       thunkAPI.dispatch(
         globalActions.displayNotification({
           type: 'success',

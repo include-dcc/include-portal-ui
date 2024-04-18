@@ -1,6 +1,7 @@
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import CavaticaWidget from '@ferlab/ui/core/components/Widgets/Cavatica';
+import { CavaticaAnalyticsAction } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import EnvironmentVariables from 'helpers/EnvVariables';
 
 import { ICavaticaCreateProjectBody } from 'services/api/cavatica/models';
@@ -15,6 +16,7 @@ import {
 } from 'store/passport/thunks';
 import { SUPPORT_EMAIL } from 'store/report/thunks';
 
+import { trackCavaticaAction } from '../../../../../services/analytics';
 import { DashboardCardProps } from '..';
 
 const USER_BASE_URL = EnvironmentVariables.configFor('CAVATICA_USER_BASE_URL');
@@ -42,6 +44,9 @@ const Cavatica = ({ id, className = '' }: DashboardCardProps) => {
           dispatch(
             createCavaticaProjet({
               body: values,
+              callback: () => {
+                trackCavaticaAction('Dashboard', CavaticaAnalyticsAction.PROJECT_CREATED);
+              },
             }),
           );
         },
