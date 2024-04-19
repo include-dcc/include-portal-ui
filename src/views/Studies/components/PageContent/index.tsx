@@ -58,7 +58,7 @@ const generateMultipleQuery = (searchValue: string, activeQuery: ISyntheticSqon)
   const searchQuery = generateSearchFilter(searchValue);
   const newQuery: any = activeQuery;
   newQuery.content = [cloneDeep(searchQuery), cloneDeep(activeQuery)];
-  return activeQuery;
+  return newQuery;
 };
 
 const PageContent = ({ defaultColumns = [] }: OwnProps) => {
@@ -91,12 +91,11 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
   });
 
   useEffect(() => {
-    setQueryConfig({
-      ...queryConfig,
+    setQueryConfig((prevQueryConfig) => ({
+      ...prevQueryConfig,
       pageIndex: DEFAULT_PAGE_INDEX,
-    });
-    // eslint-disable-next-line
-  }, [JSON.stringify(activeQuery)]);
+    }));
+  }, [queryConfig.pageIndex]);
 
   const searchPrescription = (value: any) => {
     if (value?.target?.value) {
