@@ -3,6 +3,7 @@ import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQuery
 import { SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { Modal } from 'antd';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { SavedSetApi } from 'services/api/savedSet';
@@ -15,6 +16,8 @@ import {
 } from 'services/api/savedSet/models';
 import { globalActions } from 'store/global';
 import { handleThunkApiResponse } from 'store/utils';
+
+import { SUPPORT_EMAIL } from '../report/thunks';
 
 import { getSetFieldId } from '.';
 
@@ -146,6 +149,14 @@ const fetchSharedBiospecimenRequest = createAsyncThunk<
 
   return handleThunkApiResponse({
     error,
+    onError: () =>
+      Modal.error({
+        content: intl.getHTML('global.errors.query.notFound.content', {
+          href: `mailto:${SUPPORT_EMAIL}`,
+        }),
+        okText: 'Close',
+        title: intl.get('global.errors.query.notFound.title'),
+      }),
     data: data,
     reject: thunkAPI.rejectWithValue,
   });
