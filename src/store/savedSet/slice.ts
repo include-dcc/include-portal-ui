@@ -57,9 +57,8 @@ const savedSetSlice = createSlice({
       sharedBiospecimenRequest: action.payload,
       isLoading: false,
     }));
-    builder.addCase(fetchSharedBiospecimenRequest.rejected, (state, action) => ({
+    builder.addCase(fetchSharedBiospecimenRequest.rejected, (state) => ({
       ...state,
-      fetchingError: action.payload,
       isLoading: false,
     }));
     // Create
