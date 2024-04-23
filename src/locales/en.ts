@@ -118,6 +118,7 @@ const en = {
           title: 'Query not found',
           content:
             'We were unable to load your query. Please try again or <a href="{href}" style="text-decoration: underline;" target="_blank">contact support</a>.',
+          okText: 'Close',
         },
       },
     },
