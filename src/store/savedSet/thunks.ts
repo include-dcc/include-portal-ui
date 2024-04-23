@@ -154,7 +154,7 @@ const fetchSharedBiospecimenRequest = createAsyncThunk<
         content: intl.getHTML('global.errors.query.notFound.content', {
           href: `mailto:${SUPPORT_EMAIL}`,
         }),
-        okText: 'Close',
+        okText: intl.get('global.errors.query.notFound.okText'),
         title: intl.get('global.errors.query.notFound.title'),
       }),
     data: data,
