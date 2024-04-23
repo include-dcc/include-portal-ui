@@ -1185,6 +1185,16 @@ const en = {
               legendAxisLeft: 'Sample Types',
               legendAxisBottom: '# of participants',
             },
+            mostFrequentDiagnoses: {
+              cardTitle: 'Most Frequent Diagnoses (MONDO)',
+              legendAxisLeft: 'Diagnoses (MONDO)',
+              legendAxisBottom: '# of participants',
+            },
+            mostFrequentPhenotypes: {
+              cardTitle: 'Most Frequent Phenotypes (HPO)',
+              legendAxisLeft: 'Phenotypes (HPO)',
+              legendAxisBottom: '# of participants',
+            },
           },
           download: {
             fileNameTemplate: 'include-%name-%type-%date%extension',
@@ -1206,6 +1216,8 @@ const en = {
             dataTypeTitle: 'Participants by Data Type',
             studiesTitle: 'Participants by Study',
             sampleTypeTitle: 'Participants by Sample Type',
+            mostFrequentPhenotypes: 'Most Frequent Phenotypes (HPO) ',
+            mostFrequentDiagnoses: 'Most Frequent Diagnoses (MONDO)',
           },
           sampleType: {
             cardTitle: 'Sample Type',

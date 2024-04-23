@@ -8,6 +8,8 @@ import {
 import DataCategoryGraphCard from '../DataCategoryGraphCard';
 import DataTypeGraphCard from '../DataTypeGraphCard';
 import DemographicsGraphCard from '../DemographicGraphCard';
+import MostFrequentDiagnosisGraphCard from '../MostFrequentDiagnosisGraphCard';
+import MostFrequentPhenotypesGraphCard from '../MostFrequentPhenotypesGraphCard';
 import SampleTypeGraphCard from '../SampleType';
 import StudiesGraphCard from '../StudiesGraphCard';
 import SunburstGraphCard from '../SunburstGraphCard';
@@ -15,6 +17,8 @@ import SunburstGraphCard from '../SunburstGraphCard';
 export const UID = 'summary';
 export const OBSERVED_PHENOTYPE_ID = 'observed_phenotype';
 export const MONDO_ID = 'mondo';
+export const MOST_FREQUENT_DIAGNOSES_ID = 'most_frequent_disagnoses';
+export const MOST_FREQUENT_PHENOTYPES_ID = 'most_frequent_phenotypes';
 export const DEMOGRAPHICS_GRAPH_CARD_ID = 'demographics-graph-card';
 export const AGE_AT_DIAGNOSIS_GRAPH_CARD_ID = 'age-at-diagnosis-graph-card';
 export const DATA_CATEGORY_GRAPH_CARD_ID = 'data-category-graph-card';
@@ -35,6 +39,90 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
     ...mondoDefaultGridConfig,
   },
   {
+    title: intl.get('screen.dataExploration.tabs.summary.mostFrequentPhenotypes.cardTitle'),
+    id: MOST_FREQUENT_PHENOTYPES_ID,
+    component: <MostFrequentPhenotypesGraphCard />,
+    base: {
+      h: 4,
+      isResizable: false,
+      w: 8,
+      x: 0,
+      y: 4,
+    },
+    lg: {
+      h: 4,
+      w: 8,
+      x: 0,
+      y: 4,
+    },
+    md: {
+      h: 4,
+      w: 6,
+      x: 0,
+      y: 4,
+    },
+    sm: {
+      h: 4,
+      w: 5,
+      x: 0,
+      y: 4,
+    },
+    xs: {
+      h: 6,
+      w: 6,
+      x: 0,
+      y: 12,
+    },
+    xxs: {
+      h: 6,
+      w: 4,
+      x: 0,
+      y: 12,
+    },
+  },
+  {
+    title: intl.get('screen.dataExploration.tabs.summary.mostFrequentDiagnoses.cardTitle'),
+    id: MOST_FREQUENT_DIAGNOSES_ID,
+    component: <MostFrequentDiagnosisGraphCard />,
+    base: {
+      h: 4,
+      isResizable: false,
+      w: 8,
+      x: 8,
+      y: 4,
+    },
+    lg: {
+      h: 4,
+      w: 8,
+      x: 8,
+      y: 4,
+    },
+    md: {
+      h: 4,
+      w: 6,
+      x: 6,
+      y: 4,
+    },
+    sm: {
+      h: 4,
+      w: 5,
+      x: 5,
+      y: 4,
+    },
+    xs: {
+      h: 6,
+      w: 6,
+      x: 0,
+      y: 12,
+    },
+    xxs: {
+      h: 6,
+      w: 4,
+      x: 0,
+      y: 12,
+    },
+  },
+  {
     title: intl.get('screen.dataExploration.tabs.summary.demographic.cardTitle'),
     id: DEMOGRAPHICS_GRAPH_CARD_ID,
     component: <DemographicsGraphCard />,
@@ -44,38 +132,38 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       minW: 4,
       w: 8,
       x: 0,
-      y: 4,
+      y: 8,
       isDraggable: false,
     },
     lg: {
       h: 2,
       w: 8,
       x: 0,
-      y: 4,
+      y: 8,
     },
     md: {
       h: 2,
       w: 6,
       x: 0,
-      y: 4,
+      y: 8,
     },
     sm: {
       h: 2,
       w: 5,
       x: 0,
-      y: 4,
+      y: 8,
     },
     xs: {
       h: 2,
       w: 6,
       x: 0,
-      y: 8,
+      y: 24,
     },
     xxs: {
       h: 2,
       w: 4,
       x: 0,
-      y: 8,
+      y: 24,
     },
   },
   {
@@ -88,37 +176,37 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       minW: 4,
       w: 8,
       x: 8,
-      y: 4,
+      y: 8,
     },
     lg: {
       h: 2,
       w: 8,
       x: 8,
-      y: 4,
+      y: 8,
     },
     md: {
       h: 2,
       w: 6,
       x: 6,
-      y: 4,
+      y: 8,
     },
     sm: {
       h: 2,
       w: 5,
       x: 5,
-      y: 4,
+      y: 8,
     },
     xs: {
       h: 2,
       w: 6,
       x: 0,
-      y: 12,
+      y: 26,
     },
     xxs: {
       h: 2,
       w: 4,
       x: 0,
-      y: 12,
+      y: 26,
     },
   },
   {
@@ -131,37 +219,37 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       h: 3,
       w: 2,
       x: 0,
-      y: 6,
+      y: 10,
     },
     lg: {
       h: 3,
       w: 2,
       x: 0,
-      y: 6,
+      y: 10,
     },
     md: {
       h: 3,
       w: 3,
       x: 0,
-      y: 6,
+      y: 10,
     },
     sm: {
       h: 3,
       w: 3,
       x: 0,
-      y: 6,
+      y: 10,
     },
     xs: {
       h: 3,
       w: 6,
       x: 0,
-      y: 14,
+      y: 28,
     },
     xxs: {
       h: 3,
       w: 4,
       x: 0,
-      y: 14,
+      y: 28,
     },
   },
   {
@@ -174,37 +262,37 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       h: 3,
       w: 7,
       x: 2,
-      y: 6,
+      y: 10,
     },
     lg: {
       h: 3,
       w: 7,
       x: 2,
-      y: 6,
+      y: 10,
     },
     md: {
       h: 3,
       w: 6,
       x: 3,
-      y: 6,
+      y: 10,
     },
     sm: {
       h: 3,
       w: 7,
       x: 3,
-      y: 6,
+      y: 10,
     },
     xs: {
       h: 3,
       w: 6,
       x: 0,
-      y: 17,
+      y: 31,
     },
     xxs: {
       h: 3,
       w: 6,
       x: 0,
-      y: 17,
+      y: 31,
     },
   },
   {
@@ -217,37 +305,37 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       h: 3,
       w: 7,
       x: 9,
-      y: 6,
+      y: 13,
     },
     lg: {
       h: 3,
       w: 7,
       x: 9,
-      y: 6,
+      y: 13,
     },
     md: {
       h: 3,
       w: 7,
       x: 0,
-      y: 9,
+      y: 13,
     },
     sm: {
       h: 3,
       w: 7,
       x: 0,
-      y: 9,
+      y: 13,
     },
     xs: {
       h: 3,
       w: 6,
       x: 0,
-      y: 20,
+      y: 34,
     },
     xxs: {
       h: 3,
       w: 6,
       x: 0,
-      y: 20,
+      y: 34,
     },
   },
 ];
