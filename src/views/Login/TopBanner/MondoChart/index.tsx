@@ -5,7 +5,7 @@ import { titleCase } from '@ferlab/ui/core/utils/stringUtils';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Typography } from 'antd';
 
-import { useGlobals } from '../../../../store/global';
+import { useGlobals } from 'store/global';
 
 import styles from './index.module.scss';
 
