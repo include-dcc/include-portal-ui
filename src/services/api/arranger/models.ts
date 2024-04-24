@@ -30,6 +30,11 @@ export interface IStudiesParticipants {
   study_code: string;
 }
 
+export interface IDiagnosis {
+  mondo_id: string;
+  count: number;
+}
+
 export interface IStatistics {
   families: number;
   fileSize: string;
@@ -41,6 +46,7 @@ export interface IStatistics {
   genomes: number;
   transcriptomes: number;
   studiesParticipants: Record<string, number>;
+  diagnosis: IDiagnosis[];
 }
 
 export interface ArrangerSingleColumnState {
