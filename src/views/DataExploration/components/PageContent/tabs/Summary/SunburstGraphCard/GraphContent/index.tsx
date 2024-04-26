@@ -19,6 +19,7 @@ import {
 
 import { getCommonColors } from 'common/charts';
 
+import { trackSummarySunburstAction } from '../../../../../../../../services/analytics';
 import SunburstD3 from '../utils/sunburst-d3';
 
 import styles from './index.module.scss';
@@ -85,6 +86,7 @@ const SunburstGraph = ({ field, previewMode = false, width = 335, height = 335 }
     const phenoReversed = (node.key.match(RegexExtractPhenotype) || []).reverse();
     setCurrentNode(node);
     setTreeData(generateNavTreeFormKey(phenoReversed));
+    trackSummarySunburstAction(field, 'query added by clicking on sunburst chart', node.title);
   };
 
   if (!isLoading && (!treeData || treeData?.length === 0)) {
