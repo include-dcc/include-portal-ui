@@ -7,6 +7,8 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { TreeNode } from 'views/DataExploration/utils/OntologyTree';
 import { RegexExtractPhenotype } from 'views/DataExploration/utils/PhenotypeStore';
 
+import { trackSummarySunburstAction } from '../../../../../../../../services/analytics';
+
 import styles from './index.module.scss';
 
 interface OwnProps {
@@ -61,6 +63,12 @@ const TreePanel = ({
           index: INDEXES.PARTICIPANT,
           merge_strategy: MERGE_VALUES_STRATEGIES.APPEND_VALUES,
         });
+
+        trackSummarySunburstAction(
+          field,
+          'query added by clicking on add term to active query button',
+          currentNode?.title,
+        );
       }}
     >
       {intl.get(`screen.dataExploration.tabs.summary.${field}.phenotypeTree.addTermToQuery`)}

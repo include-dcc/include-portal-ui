@@ -79,6 +79,19 @@ export const trackCavaticaAction = (page: string) => {
   }
 };
 
+export const trackSummarySunburstAction = (
+  type: string,
+  action: string,
+  node: string = 'undefined',
+) => {
+  if (isGaActive) {
+    ReactGA.event({
+      category: 'Summary',
+      action: `Sunburst -- ${capitalize(action)} - ${capitalize(type)}.${node}`,
+    });
+  }
+};
+
 export const trackSetActions = (action: string, setType: SetType) => {
   let message = '';
   switch (action) {
