@@ -36,17 +36,20 @@ export interface IDiagnosis {
 }
 
 export interface IStatistics {
-  families: number;
-  fileSize: string;
-  files: number;
-  participants: number;
-  samples: number;
-  studies: number;
-  variants: number;
-  genomes: number;
-  transcriptomes: number;
-  studiesParticipants: Record<string, number>;
   diagnosis: IDiagnosis[];
+  downSyndromeStatus: Record<string, number>;
+  families: number;
+  files: number;
+  fileSize: string;
+  genomes: number;
+  participants: number;
+  race: Record<string, number>;
+  samples: number;
+  sex: Record<string, number>;
+  studies: number;
+  studiesParticipants: Record<string, number>;
+  transcriptomes: number;
+  variants: number;
 }
 
 export interface ArrangerSingleColumnState {

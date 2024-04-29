@@ -1,7 +1,6 @@
 @import 'style/themes/include/colors';
 
 .wrapper {
-  // height: fit-content;
   width: 100%;
   height: 100%;
   justify-self: center;
@@ -19,4 +18,15 @@
   align-items: center;
   column-gap: 24px;
   row-gap: 16px;
+  min-height: 150px;
+  height: 100%;
+}
+
+.graphRowWrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.pieChartWrapper {
+  height: 90%;
 }

@@ -12,6 +12,21 @@
   margin-bottom: 24px;
 }
 
+.graphStatsContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.graphStatsGrid {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-column-gap: 40px;
+  grid-row-gap: 48px;
+}
+
 @media (max-width: 1024px) {
   .container {
     padding: 40px 24px;

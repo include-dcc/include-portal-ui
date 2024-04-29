@@ -690,6 +690,12 @@ const en = {
           'Visit the NIH INCLUDE project page to learn more about the initiative, funding opportunities, or other resources.',
         button: 'Learn more',
       },
+      demographic: {
+        cardTitle: 'Demographics',
+        downSyndromeStatusTitle: 'T21 Status',
+        raceTitle: 'Race',
+        sexTitle: 'Sex',
+      },
     },
     dashboard: {
       hello: 'Hello',
