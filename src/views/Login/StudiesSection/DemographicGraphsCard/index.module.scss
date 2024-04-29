@@ -30,3 +30,13 @@
 .pieChartWrapper {
   height: 90%;
 }
+
+@media (max-width: 800px) {
+  .graphRowWrapper {
+    flex-direction: column;
+  }
+
+  .colGraph {
+    height: 100%;
+  }
+}

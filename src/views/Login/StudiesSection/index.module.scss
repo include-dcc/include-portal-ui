@@ -33,3 +33,9 @@
     gap: 40px;
   }
 }
+
+@media (max-width: 800px) {
+  .graphStatsGrid {
+    grid-template-columns: 1fr;
+  }
+}
