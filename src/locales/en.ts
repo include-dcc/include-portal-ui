@@ -1163,6 +1163,9 @@ const en = {
           'Max. {selectedLimit} items at a time. The first 10,000 will be processed.',
         saveSet: 'Save {type} set',
       },
+      allOf: 'All of',
+      anyOf: 'Any of',
+      noneOf: 'None of',
       hpoTree: {
         modal: {
           title: 'Observed Phenotype (HPO) Browser',
@@ -1174,6 +1177,8 @@ const en = {
           exact: 'Participants with this exact term',
           all: 'Participants including descendant terms',
         },
+        selectedCount:
+          '{count, plural, =0 {# unique phenotype} =1 {# unique phenotype} other {# unique phenotypes}}',
       },
       mondoTree: {
         modal: {
@@ -1186,6 +1191,8 @@ const en = {
           exact: 'Participants with this exact term',
           all: 'Participants including descendant terms',
         },
+        selectedCount:
+          '{count, plural, =0 {# unique diagnosis} =1 {# unique diagnosis} other {# unique diagnoses}}',
       },
       tabs: {
         summary: {
