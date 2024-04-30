@@ -12,6 +12,7 @@ import KfLogo from 'components/assets/studies/study-logo-KF.svg';
 
 import { useGlobals } from '../../../store/global';
 
+import DemographicGraphsCard from './DemographicGraphsCard';
 import Stats from './Stats';
 
 import styles from './index.module.scss';
@@ -57,7 +58,12 @@ const StudiesSection = () => {
           summary: intl.get('screen.loginPage.studies.summary'),
         }}
       />
-      <Stats />
+      <div className={styles.graphStatsContainer}>
+        <div className={styles.graphStatsGrid}>
+          <DemographicGraphsCard />
+          <Stats />
+        </div>
+      </div>
     </div>
   );
 };

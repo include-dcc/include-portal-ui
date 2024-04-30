@@ -18,4 +18,25 @@
   align-items: center;
   column-gap: 24px;
   row-gap: 16px;
+  min-height: 150px;
+  height: 100%;
+}
+
+.graphRowWrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.pieChartWrapper {
+  height: 90%;
+}
+
+@media (max-width: 800px) {
+  .graphRowWrapper {
+    flex-direction: column;
+  }
+
+  .colGraph {
+    height: 100%;
+  }
 }
