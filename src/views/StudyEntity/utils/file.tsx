@@ -5,6 +5,7 @@ import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
+import { numberFormat } from '@ferlab/ui/core/utils/numberUtils';
 import { Progress } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IDataType, IExperimentalStrategy, IStudyEntity } from 'graphql/studies/models';
@@ -48,7 +49,7 @@ const getDataTypeColumns = (files_nb: number, study_code: string): ProColumnType
             })
           }
         >
-          {dataType.file_count}
+          {numberFormat(dataType.file_count)}
         </Link>
       ) || TABLE_EMPTY_PLACE_HOLDER,
     width: '100px',
@@ -56,7 +57,7 @@ const getDataTypeColumns = (files_nb: number, study_code: string): ProColumnType
   {
     key: 'proportion_of_files',
     dataIndex: 'file_count',
-    title: intl.get('entities.file.n=2', { count: files_nb }),
+    title: intl.get('entities.file.n=2', { count: numberFormat(files_nb) }),
     tooltip: intl.get('entities.file.nTooltipFile'),
     render: (file_count: number) => (
       <Progress percent={(file_count / (files_nb || 1)) * 100} showInfo={false} />
@@ -104,7 +105,7 @@ const getExperimentalStrategyColumns = (
             })
           }
         >
-          {experimentalStrategy.file_count}
+          {numberFormat(experimentalStrategy.file_count)}
         </Link>
       ) || TABLE_EMPTY_PLACE_HOLDER,
     width: '100px',
@@ -112,7 +113,7 @@ const getExperimentalStrategyColumns = (
   {
     key: 'proportion_of_files',
     dataIndex: 'file_count',
-    title: intl.get('entities.file.n=2', { count: files_nb }),
+    title: intl.get('entities.file.n=2', { count: numberFormat(files_nb) }),
     tooltip: intl.get('entities.file.nTooltipFile'),
     render: (file_count: number) => (
       <Progress percent={(file_count / (files_nb || 1)) * 100} showInfo={false} />
