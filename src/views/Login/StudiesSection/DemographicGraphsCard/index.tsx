@@ -49,7 +49,7 @@ const DemographicGraphsCard = () => {
       content={
         <div className={styles.cardContent}>
           <Row gutter={[12, 24]} className={styles.graphRowWrapper}>
-            <Col sm={12} md={12} lg={8} className={styles.colGraph}>
+            <Col xs={24} sm={20} md={12} lg={8} className={styles.colGraph}>
               {isEmpty(downSyndromeStatusData) ? (
                 <Empty imageType="grid" />
               ) : (
@@ -62,7 +62,7 @@ const DemographicGraphsCard = () => {
                 />
               )}
             </Col>
-            <Col sm={12} md={12} lg={8} className={styles.colGraph}>
+            <Col xs={24} sm={20} md={12} lg={8} className={styles.colGraph}>
               {isEmpty(sexData) ? (
                 <Empty imageType="grid" />
               ) : (
@@ -75,7 +75,7 @@ const DemographicGraphsCard = () => {
                 />
               )}
             </Col>
-            <Col sm={12} md={12} lg={8} className={styles.colGraph}>
+            <Col xs={24} sm={20} md={12} lg={8} className={styles.colGraph}>
               {isEmpty(raceData) ? (
                 <Empty imageType="grid" />
               ) : (
