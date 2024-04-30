@@ -329,6 +329,10 @@ const StudyEntity = () => {
             </Tooltip>,
           ]}
           dictionary={{
+            download: {
+              fileNameTemplate: '%name-%extra-%type-%date',
+              fileNameAdditionalInfo: study?.study_code,
+            },
             phenotype: {
               headerTitle: intl.get('entities.study.statistic.phenotype'),
               legendAxisLeft: intl.get(
