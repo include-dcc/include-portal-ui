@@ -18,6 +18,7 @@ const TopBanner = () => {
   const massagedDiagnosis = diagnosis
     .map((d) => ({
       id: titleCase(d.mondo_id),
+      label: titleCase(d.mondo_id),
       value: d.count,
     }))
     .reverse();
