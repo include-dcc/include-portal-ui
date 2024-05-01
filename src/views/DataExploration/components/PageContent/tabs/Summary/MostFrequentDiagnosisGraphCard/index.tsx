@@ -36,7 +36,7 @@ const excludes = [
   'trisomy 21 (MONDO:0700126)',
 ];
 
-const filterMondoData = (data: any[], key = 'id') => {
+const filterMondoData = (data: any[], key = 'label') => {
   let result = data as any[];
 
   // Exclude zero value
@@ -94,7 +94,9 @@ const MostFrequentDiagnosisGraphCard = () => {
         'screen.dataExploration.tabs.summary.availableData.mostFrequentDiagnoses',
       )}
       tsvSettings={{
+        contentMap: ['label', 'value'],
         data: [mondo],
+        headers: ['Value', 'Count'],
       }}
       modalContent={
         <BarChart

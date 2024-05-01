@@ -39,7 +39,7 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
     ...mondoDefaultGridConfig,
   },
   {
-    title: intl.get('screen.dataExploration.tabs.summary.mostFrequentPhenotypes.cardTitle'),
+    title: intl.get('screen.dataExploration.tabs.summary.availableData.mostFrequentPhenotypes'),
     id: MOST_FREQUENT_PHENOTYPES_ID,
     component: <MostFrequentPhenotypesGraphCard />,
     base: {
@@ -81,7 +81,7 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
     },
   },
   {
-    title: intl.get('screen.dataExploration.tabs.summary.mostFrequentDiagnoses.cardTitle'),
+    title: intl.get('screen.dataExploration.tabs.summary.availableData.mostFrequentDiagnoses'),
     id: MOST_FREQUENT_DIAGNOSES_ID,
     component: <MostFrequentDiagnosisGraphCard />,
     base: {

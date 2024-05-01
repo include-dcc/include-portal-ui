@@ -1222,7 +1222,7 @@ const en = {
             dataTypeTitle: 'Participants by Data Type',
             studiesTitle: 'Participants by Study',
             sampleTypeTitle: 'Participants by Sample Type',
-            mostFrequentPhenotypes: 'Most Frequent Phenotypes (HPO) ',
+            mostFrequentPhenotypes: 'Most Frequent Phenotypes (HPO)',
             mostFrequentDiagnoses: 'Most Frequent Diagnoses (MONDO)',
           },
           sampleType: {
