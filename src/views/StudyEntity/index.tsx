@@ -330,7 +330,7 @@ const StudyEntity = () => {
           ]}
           dictionary={{
             download: {
-              fileNameTemplate: '%name-%extra-%type-%date',
+              fileNameTemplate: 'include-%name-%extra-%type-%date',
               fileNameAdditionalInfo: study?.study_code,
             },
             phenotype: {
