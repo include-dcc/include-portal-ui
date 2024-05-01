@@ -26,7 +26,7 @@ const addToQuery = (field: string, key: string) =>
     index: INDEXES.PARTICIPANT,
   });
 
-const filterPhenotypesData = (data: any[], key = 'id') => {
+const filterPhenotypesData = (data: any[], key = 'label') => {
   let result = data as any[];
 
   // Exclude zero value
@@ -81,7 +81,9 @@ const MostFrequentPhenotypesGraphCard = () => {
         'screen.dataExploration.tabs.summary.availableData.mostFrequentPhenotypes',
       )}
       tsvSettings={{
+        contentMap: ['label', 'value'],
         data: [phenotypes],
+        headers: ['Value', 'Count'],
       }}
       modalContent={
         <BarChart
