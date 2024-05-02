@@ -40,6 +40,12 @@ const DemographicGraphsCard = () => {
   const raceData = getChartData(race);
   const sexData = getChartData(sex);
 
+  // To change tooltip
+  downSyndromeStatusData.forEach((el) => {
+    if (el.label === 'T21') el.id = 'Trisomy 21';
+    if (el.label === 'D21') el.id = 'Disomy 21, euploid';
+  });
+
   return (
     <GridCard
       wrapperClassName={styles.wrapper}
