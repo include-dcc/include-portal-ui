@@ -778,6 +778,11 @@ const en = {
               'A saved filter is a virtual query created by applying one or more filters to a data set. They can be saved and revisited for later use. You can create and manage saved filters from the query builder at the top of the <a href="{dataExploHref}" style="text-decoration: underline;">Data Exploration</a> and <a href="{variantsHref}" style="text-decoration: underline;">Variants Exploration</a> pages.',
             title: 'Managing Saved Filters',
           },
+          errorCard: {
+            failedToFetch: 'Failed to Fetch Saved Filters',
+            message:
+              'Please refresh and try again or <a href="{href}" style="color:inherit;text-decoration: underline;">contact our support</a>.',
+          },
         },
         savedSets: {
           title: 'Saved Sets',
@@ -793,6 +798,11 @@ const en = {
           biospecimensTab: 'Biospecimens ({count})',
           filesTab: 'Files ({count})',
           variantsTab: 'Variants ({count})',
+          errorCard: {
+            failedToFetch: 'Failed to fetch Saved Sets',
+            message:
+              'Please refresh and try again or <a href="{href}" style="color:inherit;text-decoration: underline;">contact our support</a>.',
+          },
         },
         biospecimenRequest: {
           title: 'Biospecimen Requests',
