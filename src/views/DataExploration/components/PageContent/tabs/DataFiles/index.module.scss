@@ -1,17 +1,21 @@
-@import "src/style/themes/include/colors";
+@import 'src/style/themes/include/colors';
 
 .dataFilesTabWrapper {
-    display: flex;
+  display: flex;
 
-    :global(.ant-pagination) {
-        margin-bottom: 0;
-    }
+  :global(.ant-pagination) {
+    margin-bottom: 0;
+  }
 
-    .unauthorizedLock {
-        color: $gray-6
-    }
+  .unauthorizedLock {
+    color: $gray-6;
+  }
 
-    .authorizedLock {
-        color: $green-7
-    }
+  .authorizedLock {
+    color: $green-7;
+  }
+
+  .authorizedUndetermined {
+    color: $orange-7;
+  }
 }
