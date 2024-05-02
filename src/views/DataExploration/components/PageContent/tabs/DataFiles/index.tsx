@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { LockOutlined, SafetyOutlined, UnlockFilled } from '@ant-design/icons';
+import { LockOutlined, SafetyOutlined, UnlockFilled, WarningOutlined } from '@ant-design/icons';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
@@ -16,7 +16,7 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
-import { Tag, Tooltip } from 'antd';
+import { Popover, Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useDataFiles } from 'graphql/files/actions';
 import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
@@ -70,6 +70,29 @@ const getDefaultColumns = (
     iconTitle: <LockOutlined />,
     align: 'center',
     render: (record: IFileEntity) => {
+      if (
+        record.controlled_access.toLowerCase() === FileAccessType.CONTROLLED.toLowerCase() &&
+        record.access_urls.startsWith('drs://cavatica-ga4gh-api.sbgenomics.com/')
+      ) {
+        return (
+          <Popover
+            placement="top"
+            overlayStyle={{ maxWidth: '420px' }}
+            title={intl.get(
+              'screen.dataExploration.tabs.datafiles.undeterminedAuthorization.popoverTitle',
+            )}
+            content={intl.getHTML(
+              'screen.dataExploration.tabs.datafiles.undeterminedAuthorization.popoverContent',
+              {
+                href: 'https://help.includedcc.org/docs/applying-for-access',
+              },
+            )}
+          >
+            <WarningOutlined className={styles.authorizedUndetermined} />
+          </Popover>
+        );
+      }
+
       const hasAccess = userHasAccessToFile(
         record,
         fenceAcls,
