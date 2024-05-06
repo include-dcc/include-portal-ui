@@ -325,7 +325,7 @@ const en = {
           newQueryBuilder: 'New filter',
           save: 'Save filter',
           saveChanges: 'Save changes',
-          saveDisabled: 'Add new query to save',
+          saveDisabled: 'Add a query to save',
           delete: 'Delete filter',
           duplicateQueryBuilder: 'Duplicate filter',
           share: 'Share (Copy url)',
