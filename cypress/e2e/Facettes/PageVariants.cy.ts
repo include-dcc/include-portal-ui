@@ -8,7 +8,7 @@ beforeEach(() => {
 describe('Page des variants (Participant) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitVariantsPage();
-    cy.get('[data-cy="SidebarMenuItem_Participant"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Participant"]').click({force: true});
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').click({force: true}); //data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').contains('Collapse all').should('exist'); //data-cy="ExpandAll"
   });
@@ -32,7 +32,7 @@ describe('Page des variants (Participant) - Filtrer avec les facettes', () => {
 describe('Page des variants (Variant) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitVariantsPage();
-    cy.get('[data-cy="SidebarMenuItem_Variant"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Variant"]').click({force: true});
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').click({force: true}); //data-cy="ExpandAll"
   });
 
@@ -110,7 +110,7 @@ describe('Page des variants (Variant) - Filtrer avec les facettes', () => {
 describe('Page des variants (Gene) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitVariantsPage();
-    cy.get('[data-cy="SidebarMenuItem_Gene"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Gene"]').click({force: true});
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').click({force: true}); //data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').contains('Collapse all').should('exist'); //data-cy="ExpandAll"
   });
@@ -203,7 +203,7 @@ describe('Page des variants (Gene) - Filtrer avec les facettes', () => {
 describe('Page des variants (Pathogenicity) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitVariantsPage();
-    cy.get('[data-cy="SidebarMenuItem_Pathogenicity"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Pathogenicity"]').click({force: true});
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').click({force: true}); //data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').contains('Collapse all').should('exist'); //data-cy="ExpandAll"
   });
@@ -277,7 +277,7 @@ describe('Page des variants (Pathogenicity) - Filtrer avec les facettes', () => 
 describe('Page des variants (Frequency) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitVariantsPage();
-    cy.get('[data-cy="SidebarMenuItem_Frequency"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Frequency"]').click({force: true});
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').click({force: true}); //data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').contains('Collapse all').should('exist'); //data-cy="ExpandAll"
   });

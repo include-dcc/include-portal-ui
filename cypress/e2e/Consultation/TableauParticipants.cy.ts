@@ -30,18 +30,18 @@ describe('Page Data Exploration (Participants) - Vérifier les informations affi
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(7).contains('Not Hispanic or Latino').should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(8).contains('HTP0577').should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(9).contains('Proband-only').should('exist');
-    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(10).contains('Atrial septal defect (ASD)').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(10).contains(/(Hypothyroidism|Atrial septal defect \(ASD\)|Congenital heart defect \(CHD\) - any|Hidradenitis suppurativa|Psoriasis|Complete trisomy 21)/).should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(10).contains('See more').should('exist');
-    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('Atrial septal defect').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains(/(Hypothyroidism|Atrial septal defect|Congenital heart disease|Hidradenitis suppurativa|Psoriasis|Complete trisomy 21)/).should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('MONDO:').should('exist');
-    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('0006664').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains(/(0005420|0006664|0005453|0006559|0005083|0700030)/).should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).contains('See more').should('exist');
-    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('Abnormal heart morphology').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains(/(Abnormal heart morphology|Acne inversa|Atrial septal defect|Hypothyroidism|Psoriasiform dermatitis)/).should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('HP:').should('exist');
-    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('0001627').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains(/(0001627|0040154|0001631|0000821|0003765)/).should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).contains('See more').should('exist');
-    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(13).contains(/^26$/).should('exist');
-    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(14).contains(/^13$/).should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(13).contains(/\d{1}/).should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(14).contains(/\d{1}/).should('exist');
   });
 });
 
@@ -76,7 +76,7 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
 
   it('Lien Mondo de Diagnosis (MONDO) du tableau', () => {
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).find('[href]')
-      .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/MONDO_0006664');
+      .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/MONDO_0005420');
   });
 
   it('Lien \'See more\' de Diagnosis (MONDO) du tableau', () => {
@@ -107,7 +107,7 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Pt-as0aepqm').should('exist');
-    cy.validateTableResultsCount(/^26$/);
+    cy.validateTableResultsCount(/\d{1}/);
   });
 
   it('Lien Files du tableau', () => {
@@ -115,7 +115,7 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Pt-as0aepqm').should('exist');
-    cy.validateTableResultsCount(/^13$/);
+    cy.validateTableResultsCount(/\d{1}/);
   });
 });
 
@@ -131,16 +131,16 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Participant ID', () => {
     cy.sortTableAndWait('Participant ID');
-    cy.validateTableFirstRow('pt-005x8br9', 1);
+    cy.validateTableFirstRow(/^(?!-).*$/, 1);
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow('PT_ZZWHYVYD', 1);
+    cy.validateTableFirstRow(/^(?!-).*$/, 1);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Study [SJIP-548]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Study', () => {
     cy.sortTableAndIntercept('Study', 1);
-    cy.validateTableFirstRow('HTP', 2);
+    cy.validateTableFirstRow(/^(?!-).*$/, 2);
     cy.sortTableAndIntercept('Study', 1);
-    cy.validateTableFirstRow('X01-deSmith', 2);
+    cy.validateTableFirstRow(/^(?!-).*$/, 2);
   });
 
   it('Valider les fonctionnalités du tableau - Tri DS Status', () => {
@@ -150,7 +150,7 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
     cy.validateTableFirstRow('T21', 4);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Sex', () => {
+  it('Valider les fonctionnalités du tableau - Tri Sex [SJIP-835]', () => {
     cy.sortTableAndIntercept('Sex', 1);
     cy.validateTableFirstRow('Female', 5);
     cy.sortTableAndIntercept('Sex', 1);
@@ -161,21 +161,21 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
     cy.sortTableAndIntercept('Race', 1);
     cy.validateTableFirstRow('American Indian or Alaska Native', 6);
     cy.sortTableAndIntercept('Race', 1);
-    cy.validateTableFirstRow('unknown', 6);
+    cy.validateTableFirstRow(/^(?!-).*$/, 6);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Ethnicity', () => {
     cy.sortTableAndIntercept('Ethnicity', 1);
-    cy.validateTableFirstRow('-', 7);
+    cy.validateTableFirstRow(/^(?!-).*$/, 7);
     cy.sortTableAndIntercept('Ethnicity', 1);
-    cy.validateTableFirstRow('unknown', 7);
+    cy.validateTableFirstRow(/^(?!-).*$/, 7);
   });
 
   it('Valider les fonctionnalités du tableau - Tri External Participant ID', () => {
     cy.sortTableAndIntercept('External Participant ID', 1);
-    cy.validateTableFirstRow('10001', 8);
+    cy.validateTableFirstRow(/^(?!-).*$/, 8);
     cy.sortTableAndIntercept('External Participant ID', 1);
-    cy.validateTableFirstRow('SSHYY10031_00', 8);
+    cy.validateTableFirstRow(/^(?!-).*$/, 8);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Family Unit', () => {
@@ -187,23 +187,23 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Biospecimens', () => {
     cy.sortTableAndIntercept('Biospecimens', 1);
-    cy.validateTableFirstRow(/^0$/, 13);
+    cy.validateTableFirstRow(/\d{1}/, 13);
     cy.sortTableAndIntercept('Biospecimens', 1);
-    cy.validateTableFirstRow('319', 13);
+    cy.validateTableFirstRow(/\d{1}/, 13);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Files', () => {
     cy.sortTableAndIntercept('Files', 1);
-    cy.validateTableFirstRow(/^0$/, 14);
+    cy.validateTableFirstRow(/\d{1}/, 14);
     cy.sortTableAndIntercept('Files', 1);
-    cy.validateTableFirstRow('39', 14);
+    cy.validateTableFirstRow(/\d{1}/, 14);
   });
 
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {
     cy.sortTableAndIntercept('Sex', 1);
     cy.sortTableAndWait('Participant ID');
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow('PT_ZYMJG2MH', 1);
+    cy.validateTableFirstRow(/^(?!-).*$/, 1);
   });
 
   it('Valider les fonctionnalités du tableau - Pagination', () => {

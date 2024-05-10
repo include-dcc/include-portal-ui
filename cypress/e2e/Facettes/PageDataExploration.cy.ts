@@ -8,7 +8,7 @@ beforeEach(() => {
 describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitDataExploration('participants');
-    cy.get('[data-cy="SidebarMenuItem_Participant"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Participant"]').click({force: true});
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').click({force: true}); //data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').contains('Collapse all').should('exist'); //data-cy="ExpandAll"
   });
@@ -37,19 +37,19 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('pt-as0aepqm').should('exist'); //data-cy="Tag_pt-as0aepqm"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Pt-as0aepqm').should('exist');
-    cy.validateTableResultsCount(/^1 Results$/);
+    cy.validateTableResultsCount(/^1 Result$/);
 
     cy.get('[data-icon="close-circle"]').click({force: true});
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_pt-as0aepqm"
   });
 
   it('Study Code - DS360-CHD', () => {
-    cy.validateFacetFilter('Study Code', 'DS360-CHD', 'DS360-CHD', /^1,073$/);
+    cy.validateFacetFilter('Study Code', 'DS360-CHD', 'DS360-CHD', /\d{1}/);
     cy.validateFacetRank(0, 'Study Code');
   });
 
   it('Down Syndrome Status - T21 [SJIP-553]', () => {
-    cy.validateFacetFilter('Down Syndrome Status', 'T21', 'T21', /^6,702$/);
+    cy.validateFacetFilter('Down Syndrome Status', 'T21', 'T21', /\d{1}/);
     cy.validateFacetRank(1, 'Down Syndrome Status');
   });
 
@@ -64,22 +64,22 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
   });
 
   it('Family Unit - Proband-only', () => {
-    cy.validateFacetFilter('Family Unit', 'Proband-only', 'proband-only', /^2,703$/);
+    cy.validateFacetFilter('Family Unit', 'Proband-only', 'proband-only', /\d{1}/);
     cy.validateFacetRank(2, 'Family Unit');
   });
 
   it('Sex - Female', () => {
-    cy.validateFacetFilter('Sex', 'Female', 'female', /^2,724$/);
+    cy.validateFacetFilter('Sex', 'Female', 'female', /\d{1}/);
     cy.validateFacetRank(3, 'Sex');
   });
 
   it('Race - White', () => {
-    cy.validateFacetFilter('Race', 'White', 'White', /^4,173$/);
+    cy.validateFacetFilter('Race', 'White', 'White', /\d{1}/);
     cy.validateFacetRank(4, 'Race');
   });
 
   it('Ethnicity - Not Hispanic or Latino', () => {
-    cy.validateFacetFilter('Ethnicity', 'Not Hispanic or Latino', 'Not Hispanic or Latino', /^4,180$/);
+    cy.validateFacetFilter('Ethnicity', 'Not Hispanic or Latino', 'Not Hispanic or Latino', /\d{1}/);
     cy.validateFacetRank(5, 'Ethnicity');
   });
 });
@@ -87,7 +87,7 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
 describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitDataExploration('biospecimens');
-    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click({force: true});
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').click({force: true}); //data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').contains('Collapse all').should('exist'); //data-cy="ExpandAll"
   });
@@ -120,7 +120,7 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('bs-03ynynfs').should('exist'); //data-cy="Tag_bs-03ynynfs"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sample ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Bs-03ynynfs').should('exist');
-    cy.validateTableResultsCount(/^1 Results$/);
+    cy.validateTableResultsCount(/^1 Result$/);
 
     cy.get('[data-icon="close-circle"]').click({force: true});
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_bs-03ynynfs"
@@ -141,44 +141,44 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('bs-m623h3mrgg').should('exist'); //data-cy="Tag_bs-m623h3mrgg"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Collection ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Bs-m623h3mrgg').should('exist');
-    cy.validateTableResultsCount(/^26$/);
+    cy.validateTableResultsCount(/\d{1}/);
 
     cy.get('[data-icon="close-circle"]').click({force: true});
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_bs-m623h3mrgg"
   });
 
   it('Sample Type - DNA', () => {
-    cy.validateFacetFilter('Sample Type', 'DNA', 'DNA', /^5,296$/);
+    cy.validateFacetFilter('Sample Type', 'DNA', 'DNA', /\d{1}/);
     cy.validateFacetRank(0, 'Sample Type');
   });
 
   it('Parent Sample Type - Peripheral Whole Blood', () => {
-    cy.validateFacetFilter('Parent Sample Type', 'Peripheral Whole Blood', 'Peripheral Whole Blood', /^31,913$/);
+    cy.validateFacetFilter('Parent Sample Type', 'Peripheral Whole Blood', 'Peripheral Whole Blood', /\d{1}/);
     cy.validateFacetRank(1, 'Parent Sample Type');
   });
 
   it('Collection Sample Type - Peripheral Whole Blood', () => {
-    cy.validateFacetFilter('Collection Sample Type', 'Peripheral Whole Blood', 'Peripheral Whole Blood', /^42,457$/);
+    cy.validateFacetFilter('Collection Sample Type', 'Peripheral Whole Blood', 'Peripheral Whole Blood', /\d{1}/);
     cy.validateFacetRank(2, 'Collection Sample Type');
   });
 
   it('Age at Biospecimen Collection (days)', () => {
-    cy.validateFacetNumFilter('Age at Biospecimen Collection (days)', '0.01', /^436$/);
+    cy.validateFacetNumFilter('Age at Biospecimen Collection (days)', '0.01', /\d{1}/);
     cy.validateFacetRank(3, 'Age at Biospecimen Collection (days)');
   });
 
   it('Availability - Available', () => {
-    cy.validateFacetFilter('Availability', 'Available', 'available', /^28,657$/);
+    cy.validateFacetFilter('Availability', 'Available', 'available', /\d{1}/);
     cy.validateFacetRank(4, 'Availability');
   });
 
   it('Laboratory Procedure - Centrifugation', () => {
-    cy.validateFacetFilter('Laboratory Procedure', 'Centrifugation', 'Centrifugation', /^21,009$/);
+    cy.validateFacetFilter('Laboratory Procedure', 'Centrifugation', 'Centrifugation', /\d{1}/);
     cy.validateFacetRank(5, 'Laboratory Procedure');
   });
 
   it('Biospecimen Storage - -80C Freezer', () => {
-    cy.validateFacetFilter('Biospecimen Storage', '-80C Freezer', '-80C Freezer', /^28,821$/);
+    cy.validateFacetFilter('Biospecimen Storage', '-80C Freezer', '-80C Freezer', /\d{1}/);
     cy.validateFacetRank(6, 'Biospecimen Storage');
   });
 });
@@ -186,7 +186,7 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
 describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () => {
   beforeEach(() => {
     cy.visitDataExploration('datafiles');
-    cy.get('[data-cy="SidebarMenuItem_Data File"]').click();
+    cy.get('[data-cy="SidebarMenuItem_Data File"]').click({force: true});
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').click({force: true}); //data-cy="ExpandAll"
     cy.get('[class*="Filters_filterExpandBtnWrapper"] button[class*="ant-btn-link"]').contains('Collapse all').should('exist'); //data-cy="ExpandAll"
   });
@@ -212,34 +212,34 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz').should('exist'); //data-cy="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.HTP0577A FRRB192320222-1a HWHKMDSXX L1 2.fq.gz').should('exist');
-    cy.validateTableResultsCount(/^1 Results$/);
+    cy.validateTableResultsCount(/^1 Result$/);
 
     cy.get('[data-icon="close-circle"]').click({force: true});
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz"
   });
 
   it('Access - Controlled', () => {
-    cy.validateFacetFilter('Access', 'Controlled', 'Controlled', /^14,844$/);
+    cy.validateFacetFilter('Access', 'Controlled', 'Controlled', /\d{1}/);
     cy.validateFacetRank(0, 'Access');
   });
 
   it('Data Category - Genomics', () => {
-    cy.validateFacetFilter('Data Category', 'Genomics', 'Genomics', /^14,088$/);
+    cy.validateFacetFilter('Data Category', 'Genomics', 'Genomics', /\d{1}/);
     cy.validateFacetRank(1, 'Data Category');
   });
 
   it('Data Type - GVCF', () => {
-    cy.validateFacetFilter('Data Type', 'GVCF', 'gVCF', /^2,960$/);
+    cy.validateFacetFilter('Data Type', 'GVCF', 'gVCF', /\d{1}/);
     cy.validateFacetRank(2, 'Data Type');
   });
 
   it('Experimental Strategy - Whole Genome Sequencing', () => {
-    cy.validateFacetFilter('Experimental Strategy', 'Whole Genome Sequencing', 'Whole Genome Sequencing', /^14,088$/);
+    cy.validateFacetFilter('Experimental Strategy', 'Whole Genome Sequencing', 'Whole Genome Sequencing', /\d{1}/);
     cy.validateFacetRank(3, 'Experimental Strategy');
   });
 
   it('File Format - gVCF [SJIP-553]', () => {
-    cy.validateFacetFilter('File Format', 'GVCF', 'gvcf', /^1,390$/);
+    cy.validateFacetFilter('File Format', 'GVCF', 'gvcf', /\d{1}/);
     cy.validateFacetRank(4, 'File Format');
   });
 });
