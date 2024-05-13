@@ -35,7 +35,7 @@ const TopBanner = () => {
           colors={{ scheme: 'paired' }}
           defs={undefined}
           axisBottom={{
-            tickValues: [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000],
+            tickValues: 10,
             legend: intl.get('screen.loginPage.mondoChart.bottomAxis'),
             legendOffset: 35,
             legendPosition: 'middle',

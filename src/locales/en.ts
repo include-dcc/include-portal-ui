@@ -600,7 +600,7 @@ const en = {
       mondoChart: {
         title: 'Most Frequent Co-occurring Conditions (MONDO)',
         bottomAxis: '# of participants',
-        leftAxis: 'MONDO diagnosis term',
+        leftAxis: 'Diagnoses (MONDO)',
       },
       studies: {
         title: 'Studies',
