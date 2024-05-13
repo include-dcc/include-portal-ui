@@ -133,7 +133,6 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       w: 8,
       x: 0,
       y: 8,
-      isDraggable: false,
     },
     lg: {
       h: 2,
