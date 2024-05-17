@@ -19,7 +19,7 @@ describe('Page Landing - Vérifier les informations affichées', () => {
 
   it('Section Charts 1', () => {
     cy.get('[class*="MondoChart_wrapper"] h4').contains('Most Frequent Co-occurring Conditions (MONDO)').should('exist');
-    cy.get('[class*="MondoChart_contentCard"] text[style*="dominant-baseline"]').contains('MONDO diagnosis term').should('exist');
+    cy.get('[class*="MondoChart_contentCard"] text[style*="dominant-baseline"]').contains('Diagnoses (MONDO)').should('exist');
     cy.get('[class*="MondoChart_contentCard"] text[style*="dominant-baseline"]').contains('# of participants').should('exist');
     cy.get('[class*="MondoChart_contentCard"] text[dominant-baseline="central"]').contains('Speech Disorder').should('exist');
     cy.get('[class*="MondoChart_contentCard"] text[dominant-baseline="central"]').contains(/\d{1}/).should('exist');

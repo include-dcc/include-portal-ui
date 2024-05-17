@@ -131,79 +131,79 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Participant ID', () => {
     cy.sortTableAndWait('Participant ID');
-    cy.validateTableFirstRow(/^(?!-).*$/, 1);
+    cy.validateTableFirstRow(/^(?!-).*$/, 1, true);
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 1);
+    cy.validateTableFirstRow(/^(?!-).*$/, 1, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Study', () => {
     cy.sortTableAndIntercept('Study', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 2);
+    cy.validateTableFirstRow(/^(?!-).*$/, 2, true);
     cy.sortTableAndIntercept('Study', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 2);
+    cy.validateTableFirstRow(/^(?!-).*$/, 2, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri DS Status', () => {
     cy.sortTableAndIntercept('DS Status', 1);
-    cy.validateTableFirstRow('D21', 4);
+    cy.validateTableFirstRow('D21', 4, true);
     cy.sortTableAndIntercept('DS Status', 1);
-    cy.validateTableFirstRow('T21', 4);
+    cy.validateTableFirstRow('T21', 4, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Sex [SJIP-835]', () => {
     cy.sortTableAndIntercept('Sex', 1);
-    cy.validateTableFirstRow('Female', 5);
+    cy.validateTableFirstRow('Female', 5, true);
     cy.sortTableAndIntercept('Sex', 1);
-    cy.validateTableFirstRow('Unknown', 5);
+    cy.validateTableFirstRow('Unknown', 5, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Race', () => {
+  it('Valider les fonctionnalités du tableau - Tri Race [SJIP-835]', () => {
     cy.sortTableAndIntercept('Race', 1);
-    cy.validateTableFirstRow('American Indian or Alaska Native', 6);
+    cy.validateTableFirstRow('American Indian or Alaska Native', 6, true);
     cy.sortTableAndIntercept('Race', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 6);
+    cy.validateTableFirstRow(/^(?!-).*$/, 6, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Ethnicity', () => {
+  it('Valider les fonctionnalités du tableau - Tri Ethnicity [SJIP-835]', () => {
     cy.sortTableAndIntercept('Ethnicity', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 7);
+    cy.validateTableFirstRow(/^(?!-).*$/, 7, true);
     cy.sortTableAndIntercept('Ethnicity', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 7);
+    cy.validateTableFirstRow(/^(?!-).*$/, 7, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri External Participant ID', () => {
     cy.sortTableAndIntercept('External Participant ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 8);
+    cy.validateTableFirstRow(/^(?!-).*$/, 8, true);
     cy.sortTableAndIntercept('External Participant ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 8);
+    cy.validateTableFirstRow(/^(?!-).*$/, 8, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Family Unit', () => {
     cy.sortTableAndIntercept('Family Unit', 1);
-    cy.validateTableFirstRow('-', 9);
+    cy.validateTableFirstRow('-', 9, true);
     cy.sortTableAndIntercept('Family Unit', 1);
-    cy.validateTableFirstRow('Trio+', 9);
+    cy.validateTableFirstRow('Trio+', 9, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Biospecimens', () => {
+  it('Valider les fonctionnalités du tableau - Tri Biospecimens [SJIP-835]', () => {
     cy.sortTableAndIntercept('Biospecimens', 1);
-    cy.validateTableFirstRow(/\d{1}/, 13);
+    cy.validateTableFirstRow(/\d{1}/, 13, true);
     cy.sortTableAndIntercept('Biospecimens', 1);
-    cy.validateTableFirstRow(/\d{1}/, 13);
+    cy.validateTableFirstRow(/\d{1}/, 13, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Files', () => {
+  it('Valider les fonctionnalités du tableau - Tri Files [SJIP-835]', () => {
     cy.sortTableAndIntercept('Files', 1);
-    cy.validateTableFirstRow(/\d{1}/, 14);
+    cy.validateTableFirstRow(/\d{1}/, 14, true);
     cy.sortTableAndIntercept('Files', 1);
-    cy.validateTableFirstRow(/\d{1}/, 14);
+    cy.validateTableFirstRow(/\d{1}/, 14, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri multiple', () => {
+  it('Valider les fonctionnalités du tableau - Tri multiple [SJIP-835]', () => {
     cy.sortTableAndIntercept('Sex', 1);
     cy.sortTableAndWait('Participant ID');
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 1);
+    cy.validateTableFirstRow(/^(?!-).*$/, 1, true);
   });
 
   it('Valider les fonctionnalités du tableau - Pagination', () => {

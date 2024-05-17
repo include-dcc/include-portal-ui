@@ -86,78 +86,78 @@ describe('Page Data Exploration (Biospecimens) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Sample ID', () => {
     cy.sortTableAndWait('Sample ID');
-    cy.validateTableFirstRow(/^(?!-).*$/, 1);
+    cy.validateTableFirstRow(/^(?!-).*$/, 1, true);
     cy.sortTableAndIntercept('Sample ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 1);
+    cy.validateTableFirstRow(/^(?!-).*$/, 1, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Study', () => {
     cy.sortTableAndIntercept('Study', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 2);
+    cy.validateTableFirstRow(/^(?!-).*$/, 2, true);
     cy.sortTableAndIntercept('Study', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 2);
+    cy.validateTableFirstRow(/^(?!-).*$/, 2, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Sample Type', () => {
     cy.sortTableAndIntercept('Sample Type', 1);
-    cy.validateTableFirstRow('-', 3);
+    cy.validateTableFirstRow('-', 3, true);
     cy.sortTableAndIntercept('Sample Type', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 3);
+    cy.validateTableFirstRow(/^(?!-).*$/, 3, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Parent Sample ID', () => {
     cy.sortTableAndIntercept('Parent Sample ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 4);
+    cy.validateTableFirstRow(/^(?!-).*$/, 4, true);
     cy.sortTableAndIntercept('Parent Sample ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 4);
+    cy.validateTableFirstRow(/^(?!-).*$/, 4, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Parent Sample Type', () => {
     cy.sortTableAndIntercept('Parent Sample Type', 1);
-    cy.validateTableFirstRow('-', 5);
+    cy.validateTableFirstRow('-', 5, true);
     cy.sortTableAndIntercept('Parent Sample Type', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 5);
+    cy.validateTableFirstRow(/^(?!-).*$/, 5, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Participant ID', () => {
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 6);
+    cy.validateTableFirstRow(/^(?!-).*$/, 6, true);
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 6);
+    cy.validateTableFirstRow(/^(?!-).*$/, 6, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Collection ID', () => {
     cy.sortTableAndIntercept('Collection ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 7);
+    cy.validateTableFirstRow(/^(?!-).*$/, 7, true);
     cy.sortTableAndIntercept('Collection ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 7);
+    cy.validateTableFirstRow(/^(?!-).*$/, 7, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Collection Sample Type', () => {
     cy.sortTableAndIntercept('Collection Sample Type', 1);
-    cy.validateTableFirstRow('-', 8);
+    cy.validateTableFirstRow('-', 8, true);
     cy.sortTableAndIntercept('Collection Sample Type', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 8);
+    cy.validateTableFirstRow(/^(?!-).*$/, 8, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Sample Availability', () => {
     cy.sortTableAndIntercept('Sample Availability', 1);
-    cy.validateTableFirstRow('-', 14);
+    cy.validateTableFirstRow('-', 14, true);
     cy.sortTableAndIntercept('Sample Availability', 1);
-    cy.validateTableFirstRow('No', 14);
+    cy.validateTableFirstRow('No', 14, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Files', () => {
     cy.sortTableAndIntercept('Files', 1);
-    cy.validateTableFirstRow(/\d{1}/, 17);
+    cy.validateTableFirstRow(/\d{1}/, 17, true);
     cy.sortTableAndIntercept('Files', 1);
-    cy.validateTableFirstRow(/\d{1}/, 17);
+    cy.validateTableFirstRow(/\d{1}/, 17, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {
     cy.sortTableAndIntercept('Collection Sample Type', 1);
     cy.sortTableAndIntercept('Participant ID', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 6);
+    cy.validateTableFirstRow(/^(?!-).*$/, 6, true);
   });
 
   it('Valider les fonctionnalités du tableau - Pagination', () => {
