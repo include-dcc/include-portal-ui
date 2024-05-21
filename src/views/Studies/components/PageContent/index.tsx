@@ -49,7 +49,7 @@ const generateSearchFilter = (search: string) =>
     newFilters: [
       generateValueFilter({
         field: 'search_text',
-        value: [`${search}*`],
+        value: [`*${search}*`],
       }),
     ],
   });
