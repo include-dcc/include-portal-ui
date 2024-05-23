@@ -399,7 +399,7 @@ Cypress.Commands.add('visitFileEntity', (fileId: string) => {
 });
 
 Cypress.Commands.add('visitParticipantEntity', (participantId: string, nbCalls?: number) => {
-  const numNbCalls = nbCalls !== undefined ? nbCalls : 40;
+  const numNbCalls = nbCalls !== undefined ? nbCalls : 12;
   cy.visitAndIntercept(`/participants/${participantId}`,
                        'POST',
                        '**/graphql',

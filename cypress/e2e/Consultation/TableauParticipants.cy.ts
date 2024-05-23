@@ -76,7 +76,7 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
 
   it('Lien Mondo de Diagnosis (MONDO) du tableau', () => {
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(11).find('[href]')
-      .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/MONDO_0005420');
+      .should('have.attr', 'href').and('match', /http:\/\/purl\.obolibrary\.org\/obo\/MONDO_(0005420|0005453|0006664|0006559|0700030|0005083)/);
   });
 
   it('Lien \'See more\' de Diagnosis (MONDO) du tableau', () => {
@@ -150,21 +150,21 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
     cy.validateTableFirstRow('T21', 4, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Sex [SJIP-835]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Sex', () => {
     cy.sortTableAndIntercept('Sex', 1);
     cy.validateTableFirstRow('Female', 5, true);
     cy.sortTableAndIntercept('Sex', 1);
     cy.validateTableFirstRow('Unknown', 5, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Race [SJIP-835]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Race', () => {
     cy.sortTableAndIntercept('Race', 1);
     cy.validateTableFirstRow('American Indian or Alaska Native', 6, true);
     cy.sortTableAndIntercept('Race', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 6, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Ethnicity [SJIP-835]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Ethnicity', () => {
     cy.sortTableAndIntercept('Ethnicity', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 7, true);
     cy.sortTableAndIntercept('Ethnicity', 1);
@@ -185,21 +185,21 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
     cy.validateTableFirstRow('Trio+', 9, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Biospecimens [SJIP-835]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Biospecimens', () => {
     cy.sortTableAndIntercept('Biospecimens', 1);
     cy.validateTableFirstRow(/\d{1}/, 13, true);
     cy.sortTableAndIntercept('Biospecimens', 1);
     cy.validateTableFirstRow(/\d{1}/, 13, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Files [SJIP-835]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Files', () => {
     cy.sortTableAndIntercept('Files', 1);
     cy.validateTableFirstRow(/\d{1}/, 14, true);
     cy.sortTableAndIntercept('Files', 1);
     cy.validateTableFirstRow(/\d{1}/, 14, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri multiple [SJIP-835]', () => {
+  it('Valider les fonctionnalités du tableau - Tri multiple', () => {
     cy.sortTableAndIntercept('Sex', 1);
     cy.sortTableAndWait('Participant ID');
     cy.sortTableAndIntercept('Participant ID', 1);

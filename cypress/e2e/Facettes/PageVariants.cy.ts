@@ -47,21 +47,110 @@ describe('Page des variants (Variant) - Filtrer avec les facettes', () => {
     cy.get('section[class*="Filters"] [aria-expanded="true"]').should('not.exist');
   });
   
-  it('Search by variant - 1-108192590-T-C [SJIP-705]', () => {
+  it('Search by variant locus - 1-108192590-T-C [SJIP-705]', () => {
     cy.get('[class*="SearchLabel_title"]').contains('Search by variant').should('exist'); //data-cy="SearchLabel_Title"
 
     cy.get('[class*="SearchLabel_tooltipIcon"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true}); //data-cy="SearchLabel_InfoCircleOutlined"
     cy.get('div[class="ant-tooltip-inner"]').contains('Enter Variant Locus, Gene Symbol, Gene Alias, Gene AA Change, dbSNP ID, ClinVar ID, Ensembl ID, refseq ID').should('exist');
 
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', '1-108192590-T-C', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
-    cy.wait(1000);
-    cy.get('[class*="ant-select-dropdown"]').contains('1-108192590-T-C').should('exist'); //data-cy="Search_Dropdown"
-    cy.get('[class*="ant-select-dropdown"]').find('div[class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', '1-108192590-t-c', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-108192590-T-C').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-108192590-T-C').should('exist'); //data-cy="Tag_1-108192590-T-C"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Variant ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('1-108192590-T-C').should('exist');
-    cy.validateTableResultsCount(/^1 Results$/);
+    cy.validateTableResultsCount(/^1 Result$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
+  });
+
+  it('Search by gene symbol - PRDX1 [SJIP-705]', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'prdx1', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Variant ID').should('exist');
+    cy.validateTableResultsCount(/^1 Result$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
+  });
+
+  it('Search by gene alias - NKEFA [SJIP-844]', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'nkefa', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Variant ID').should('exist');
+    cy.validateTableResultsCount(/^1 Result$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
+  });
+
+  it('Search by gene AA change - p.Tyr11Cys [SJIP-845]', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'p.tyr11cys', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-108192590-T-C').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-108192590-T-C').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Variant ID').should('exist');
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('1-108192590-T-C').should('exist');
+    cy.validateTableResultsCount(/^1 Result$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
+  });
+
+  it('Search by dbSNP ID - rs79735952 [SJIP-845]', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'RS79735952', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-108192590-T-C').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-108192590-T-C').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Variant ID').should('exist');
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('1-108192590-T-C').should('exist');
+    cy.validateTableResultsCount(/^1 Result$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
+  });
+
+  it('Search by ClinVar ID - 1267873 [SJIP-845]', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', '1267873', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-108192590-T-C').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-108192590-T-C').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Variant ID').should('exist');
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('1-108192590-T-C').should('exist');
+    cy.validateTableResultsCount(/^1 Result$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
+  });
+  
+  it('Search by Ensembl ID - ENST00000370041', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'enst00000370041', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Variant ID').should('exist');
+    cy.validateTableResultsCount(/^1 Result$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
+  });
+
+  it('Search by refseq ID - NM_013386', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'nm_013386', 'POST', '* /grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Variant ID').should('exist');
+    cy.validateTableResultsCount(/^1 Result$/);
 
     cy.get('[data-icon="close-circle"]').click({force: true});
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
@@ -125,24 +214,51 @@ describe('Page des variants (Gene) - Filtrer avec les facettes', () => {
     cy.get('section[class*="Filters"] [aria-expanded="true"]').should('not.exist');
   });
   
-  it('Search by gene - SLC25A24 [SJIP-707]', () => {
+  it('Search by gene symbol - PRDX1 [SJIP-707]', () => {
     cy.get('[class*="SearchLabel_title"]').contains('Search by gene').should('exist'); //data-cy="SearchLabel_Title"
 
     cy.get('[class*="SearchLabel_tooltipIcon"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true}); //data-cy="SearchLabel_InfoCircleOutlined"
-    cy.get('div[class="ant-tooltip-inner"]').contains('Enter a Gene Symbol, Gene Alias ​​or Ensemble ID').should('exist');
+    cy.get('div[class="ant-tooltip-inner"]').contains('Enter a Gene Symbol, Gene Alias or Ensemble ID').should('exist');
 
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'SLC25A24', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
-    cy.wait(1000);
-    cy.get('[class*="ant-select-dropdown"]').contains('SLC25A24').should('exist'); //data-cy="Search_Dropdown"
-    cy.get('[class*="ant-select-dropdown"]').find('div[class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'prdx1', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('PRDX1').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
-    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('SLC25A24').should('exist'); //data-cy="Tag_SLC25A24"
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('PRDX1').should('exist'); //data-cy="Tag_PRDX1"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Genes Symbol').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('SLC25A24').should('exist');
-    cy.validateTableResultsCount(/^1 Results$/);
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('PRDX1').should('exist');
+    cy.validateTableResultsCount(/^61$/);
 
     cy.get('[data-icon="close-circle"]').click({force: true});
-    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_SLC25A24"
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_PRDX1"
+  });
+  
+  it('Search by gene alias - NKEFA', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'nkefa', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('PRDX1').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('PRDX1').should('exist'); //data-cy="Tag_PRDX1"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Genes Symbol').should('exist');
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('PRDX1').should('exist');
+    cy.validateTableResultsCount(/^61$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_PRDX1"
+  });
+  
+  it('Search by Ensembl ID - ENSG00000117450', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'ensg00000117450', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('PRDX1').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('PRDX1').should('exist'); //data-cy="Tag_PRDX1"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Genes Symbol').should('exist');
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('PRDX1').should('exist');
+    cy.validateTableResultsCount(/^61$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_PRDX1"
   });
 
   it('Gene Type - Protein Coding', () => {

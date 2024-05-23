@@ -29,10 +29,23 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.get('[class*="SearchLabel_tooltipIcon"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true}); //data-cy="SearchLabel_InfoCircleOutlined"
     cy.get('div[class="ant-tooltip-inner"]').contains('Search by Participant ID or External Participant ID').should('exist');
 
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'pt-as0aepqm', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
-    cy.wait(1000);
-    cy.get('[class*="ant-select-dropdown"]').contains('pt-as0aepqm').should('exist'); //data-cy="Search_Dropdown"
-    cy.get('[class*="ant-select-dropdown"]').find('div[class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'PT-AS0AEPQM', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('pt-as0aepqm').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('pt-as0aepqm').should('exist'); //data-cy="Tag_pt-as0aepqm"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Pt-as0aepqm').should('exist');
+    cy.validateTableResultsCount(/^1 Result$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_pt-as0aepqm"
+  });
+
+  it('Search by external Participant ID - HTP0577', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'htp0577', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('pt-as0aepqm').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('pt-as0aepqm').should('exist'); //data-cy="Tag_pt-as0aepqm"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Participant ID').should('exist');
@@ -109,13 +122,12 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.get('div[class="ant-tooltip-inner"]').contains('Search by Sample ID or External Sample ID').should('exist');
 
     cy.intercept('POST', '*/grapgql').as('getRouteMatcher');
-    cy.get('[class*="SearchAutocomplete_search"]').eq(0).find('input').type('bs-03ynynfs', {force: true}); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="SearchAutocomplete_search"]').eq(0).find('input').type('BS-03YNYNFS', {force: true}); //data-cy="SearchAutocomplete_Select"
     cy.wait('@getRouteMatcher', {timeout: 60*1000});
     cy.wait('@getRouteMatcher', {timeout: 60*1000});
     cy.wait('@getRouteMatcher', {timeout: 60*1000});
-    cy.wait(1000);
-    cy.get('[class*="ant-select-dropdown"]').contains('bs-03ynynfs').should('exist'); //data-cy="Search_Dropdown"
-    cy.get('[class*="ant-select-dropdown"]').find('div[class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('bs-03ynynfs').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('bs-03ynynfs').should('exist'); //data-cy="Tag_bs-03ynynfs"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sample ID').should('exist');
@@ -126,17 +138,33 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_bs-03ynynfs"
   });
 
+  it('Search by external Sample ID - HTP0577A_PAXgeneWholeBloodRNA', () => {
+    cy.intercept('POST', '*/grapgql').as('getRouteMatcher');
+    cy.get('[class*="SearchAutocomplete_search"]').eq(0).find('input').type('htp0577a_paxgenewholebloodrna', {force: true}); //data-cy="SearchAutocomplete_Select"
+    cy.wait('@getRouteMatcher', {timeout: 60*1000});
+    cy.wait('@getRouteMatcher', {timeout: 60*1000});
+    cy.wait('@getRouteMatcher', {timeout: 60*1000});
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('bs-03ynynfs').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('exist'); //data-cy="Tag_bs-03ynynfs"
+    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Sample ID').should('exist');
+    cy.validateTableResultsCount(/^1 Result$/);
+
+    cy.get('[data-icon="close-circle"]').click({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_bs-03ynynfs"
+  });
+
   it('Search by Collection ID - bs-m623h3mrgg', () => {
     cy.get('[class*="SearchLabel_title"]').contains('Search by Collection ID').should('exist'); //data-cy="SearchLabel_Title"
 
     cy.intercept('POST', '*/grapgql').as('getRouteMatcher');
-    cy.get('[class*="SearchAutocomplete_search"]').eq(1).find('input').type('bs-m623h3mrgg', {force: true}); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="SearchAutocomplete_search"]').eq(1).find('input').type('BS-M623H3MRGG', {force: true}); //data-cy="SearchAutocomplete_Select"
     cy.wait('@getRouteMatcher', {timeout: 60*1000});
     cy.wait('@getRouteMatcher', {timeout: 60*1000});
     cy.wait('@getRouteMatcher', {timeout: 60*1000});
-    cy.wait(1000);
-    cy.get('[class*="ant-select-dropdown"]').contains('bs-m623h3mrgg').should('exist'); //data-cy="Search_Dropdown"
-    cy.get('[class*="ant-select-dropdown"]').find('div[class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('bs-m623h3mrgg').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('bs-m623h3mrgg').should('exist'); //data-cy="Tag_bs-m623h3mrgg"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Collection ID').should('exist');
@@ -204,10 +232,9 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
   it('Search by File ID - HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz', () => {
     cy.get('[class*="SearchLabel_title"]').contains('Search by File ID').should('exist'); //data-cy="SearchLabel_Title"
 
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
-    cy.wait(1000);
-    cy.get('[class*="ant-select-dropdown"]').contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz').should('exist'); //data-cy="Search_Dropdown"
-    cy.get('[class*="ant-select-dropdown"]').find('div[class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'htp.htp0577a_frrb192320222-1a_HWHKMDSXX_L1_2.fq.gz', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz').should('exist'); //data-cy="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
