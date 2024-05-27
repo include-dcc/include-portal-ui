@@ -71,7 +71,7 @@ export const SEARCH_FILES_QUERY = gql`
                         total
                         edges {
                           node {
-                            mondo_id_diagnosis
+                            mondo_display_term
                             source_text
                             age_at_event_days
                           }

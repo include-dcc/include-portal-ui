@@ -9,7 +9,7 @@ export interface IParticipantResultTree {
 export interface IParticipantDiagnosis {
   id: string;
   diagnosis_id: string;
-  mondo_id_diagnosis: string;
+  mondo_display_term: string;
   source_text: string;
   age_at_event_days: number;
 }

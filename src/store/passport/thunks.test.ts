@@ -84,7 +84,7 @@ describe(`${extractMetadata.name}()`, () => {
                     edges: [
                       {
                         node: {
-                          mondo_id_diagnosis: 'neuroblastoma (MONDO:0005072)',
+                          mondo_display_term: 'neuroblastoma (MONDO:0005072)',
                           source_text: 'Neuroblastoma',
                           age_at_event_days: 174,
                           id: 'id1234',
