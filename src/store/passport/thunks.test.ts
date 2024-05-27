@@ -271,7 +271,7 @@ describe(`${extractMetadata.name}()`, () => {
       // Removed temporarily due to bug
       // case_id: 'PT_EDKKJV31',
       external_participant_id: 'GMKF-30-PARXDW03',
-      // Removed temporarily due to bug
+      //  Removed temporarily due to bug
       // ethnicity: 'Not Hispanic or Latino',
       // gender: 'female',
       // race: 'White',
