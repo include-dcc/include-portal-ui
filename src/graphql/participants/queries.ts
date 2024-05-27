@@ -59,7 +59,7 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
               hits {
                 edges {
                   node {
-                    mondo_id_diagnosis
+                    mondo_display_term
                     source_text
                   }
                 }
@@ -104,7 +104,7 @@ export const GET_PARTICIPANT_ENTITY = gql`
               hits {
                 edges {
                   node {
-                    mondo_id_diagnosis
+                    mondo_display_term
                     source_text
                     age_at_event_days
                     diagnosis_id

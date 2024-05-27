@@ -37,7 +37,7 @@ const extractParticipantMetaData = (participants: any[]) => {
     age_at_participant_diagnosis: joinUniquely(diagnosis.map((d) => d.age_at_event_days)),
     age_at_vital_status: joinUniquely(outcomes.map((o) => o.age_at_event_days.value)),
     age_at_phenotype_assignment: joinUniquely(phenotype.map((p) => p.age_at_event_days)),
-    diagnosis_mondo: joinUniquely(diagnosis.map((d) => d.mondo_id_diagnosis)),
+    diagnosis_mondo: joinUniquely(diagnosis.map((d) => d.mondo_display_term)),
     condition_source_text: joinUniquely(diagnosis.map((d) => d.source_text)),
     family_id: joinUniquely(participants.map((x) => x.families_id)),
     family_unit: joinUniquely(participants.map((x) => x.family_type)),

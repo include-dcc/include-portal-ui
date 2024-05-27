@@ -650,7 +650,7 @@ const fr = {
       name: 'Diagnosis (MONDO)',
     },
     diagnosis: {
-      mondo_id_diagnosis: 'Diagnosis (MONDO)',
+      mondo_display_term: 'Diagnosis (MONDO)',
     },
     phenotype: {
       hpo_phenotype_observed: 'Phenotype (HPO)',

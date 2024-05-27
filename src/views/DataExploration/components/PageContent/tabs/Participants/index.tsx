@@ -199,12 +199,12 @@ const getDefaultColumns = (): ProColumnType[] => [
     },
   },
   {
-    key: 'diagnosis.mondo_id_diagnosis',
+    key: 'diagnosis.mondo_display_term',
     title: intl.get('entities.participant.mondo_diagnosis'),
     dataIndex: 'diagnosis',
     className: styles.diagnosisCell,
     render: (mondo: ArrangerResultsTree<IParticipantDiagnosis>) => {
-      const mondoNames = mondo?.hits?.edges.map((m) => m.node.mondo_id_diagnosis);
+      const mondoNames = mondo?.hits?.edges.map((m) => m.node.mondo_display_term);
 
       if (!mondoNames || mondoNames.length === 0) {
         return TABLE_EMPTY_PLACE_HOLDER;
