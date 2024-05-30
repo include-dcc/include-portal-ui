@@ -30,11 +30,9 @@ import FileSetSearch from './components/FileSetSearch';
 import ParticipantSearch from './components/ParticipantSearch';
 import ParticipantSetSearch from './components/ParticipantSetSearch';
 import TreeFacet from './components/TreeFacet';
-import TreeFacetModal from './components/TreeFacet/TreeFacetModal';
 import BiospecimenUploadIds from './components/UploadIds/BiospecimenUploadIds';
 import FileUploadIds from './components/UploadIds/FileUploadIds';
 import ParticipantUploadIds from './components/UploadIds/ParticipantUploadIds';
-import { formatHpoTitleAndCode, formatMondoTitleAndCode } from './utils/helper';
 
 import styles from './index.module.scss';
 
@@ -58,17 +56,11 @@ export const filterGroups: {
         facets: [
           'study__study_code',
           'down_syndrome_status',
+          <TreeFacet key="mondo" type={RemoteComponentList.MondoTree} field={'mondo'} />,
           <TreeFacet
-            key="mondo"
-            type={RemoteComponentList.MondoTree}
-            field={'mondo'}
-            titleFormatter={formatMondoTitleAndCode}
-          />,
-          <TreeFacet
-            key="observed_phenotype"
+            key="observed_phenotype2"
             type={RemoteComponentList.HPOTree}
             field={'observed_phenotype'}
-            titleFormatter={formatHpoTitleAndCode}
           />,
           'family_type',
           'sex',
@@ -186,16 +178,6 @@ const DataExploration = () => {
 
   return (
     <div className={styles.dataExplorationLayout}>
-      <TreeFacetModal
-        type={RemoteComponentList.MondoTree}
-        field={'mondo'}
-        titleFormatter={formatMondoTitleAndCode}
-      />
-      <TreeFacetModal
-        type={RemoteComponentList.HPOTree}
-        field={'observed_phenotype'}
-        titleFormatter={formatHpoTitleAndCode}
-      />
       <SidebarMenu
         className={styles.sideMenu}
         menuItems={menuItems} /* defaultSelectedKey={tab} */
