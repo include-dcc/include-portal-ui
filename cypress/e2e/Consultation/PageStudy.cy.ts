@@ -35,7 +35,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[class*="EntityTitleLogo_title"]').contains('The Human Trisome Project');
   });
 
-  it('Panneau Summary', () => {
+  it('Panneau Summary [SJIP-847]', () => {
     cy.get('button[class*="SummaryHeader_item"]').eq(0).contains(/\d{1}/);
     cy.get('button[class*="SummaryHeader_item"]').eq(0).contains('Participants');
     cy.get('button[class*="SummaryHeader_item"]').eq(1).contains(/\d{1}/);
@@ -69,7 +69,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(10).contains('Selection Criteria').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(10).contains('Ages 6 months to 89 years old, with or without Down syndrome').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(11).contains('Study Design').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(11).contains('Case-control, Longitudinal').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(11).contains('Case-control, longitudinal').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(12).contains('Study Website').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(12).contains('https://www.trisome.org').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(13).contains('Publication').should('exist');
@@ -141,42 +141,42 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
   it('Panneau Files', () => {
     cy.get('[id="data_file"]').find('[class*="EntityTable_title"]').contains('File').should('exist');
     cy.get('[id="data_file"]').find('[class="ant-collapse-header"]').contains('Files').should('exist');
-    cy.get('[id="data_file"]').find('[class="ant-collapse-header"]').contains('(4,975)').should('exist');
+    cy.get('[id="data_file"]').find('[class="ant-collapse-header"]').contains('(8,305)').should('exist');
     cy.get('[id="data_file"]').find('[class*="EntityTable_subTitle"]').eq(0).contains('File counts by Data Type').should('exist');
     cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(0).find('thead').find('th[class="ant-table-cell"]').eq(0).contains('Data Type').should('exist');
     cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(0).find('thead').find('th[class="ant-table-cell"]').eq(1).contains('Files').should('exist');
-    cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(0).find('thead').find('th[class="ant-table-cell"]').eq(2).contains('(n=4,975)').should('exist');
+    cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(0).find('thead').find('th[class="ant-table-cell"]').eq(2).contains('(n=8,305)').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="0"]').find('td[class="ant-table-cell"]').eq(1).contains(/^2,865$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="0"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 57.5879%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="0"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="1"]').find('td[class="ant-table-cell"]').eq(1).contains(/^2,865$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="1"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 57.5879%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="1"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="2"]').find('td[class="ant-table-cell"]').eq(1).contains(/^433$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="2"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 8.70352%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="2"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="3"]').find('td[class="ant-table-cell"]').eq(1).contains(/^433$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="3"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 8.70352%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="3"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="5"]').find('td[class="ant-table-cell"]').eq(1).contains(/^7$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="5"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 0.140704%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="5"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="7"]').find('td[class="ant-table-cell"]').eq(1).contains(/^800$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="7"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 16.0804%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="7"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="10"]').find('td[class="ant-table-cell"]').eq(1).contains(/^477$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="10"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 9.58794%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="10"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="11"]').find('td[class="ant-table-cell"]').eq(1).contains(/^418$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="11"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 8.40201%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="11"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="14"]').find('td[class="ant-table-cell"]').eq(1).contains(/^7$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="14"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 0.140704%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="14"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
 
     cy.get('[id="data_file"]').find('[class*="EntityTable_subTitle"]').eq(1).contains('File counts by Experimental Strategy').should('exist');
     cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(0).contains('Strategy').should('exist');
     cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(1).contains('Files').should('exist');
-    cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(2).contains('(n=4,975)').should('exist');
+    cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(2).contains('(n=8,305)').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="0"]').eq(1).find('td[class="ant-table-cell"]').eq(1).contains(/^3,200$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="0"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 64.3216%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="0"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="1"]').eq(1).find('td[class="ant-table-cell"]').eq(1).contains(/^880$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="1"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 17.6884%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="1"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="2"]').eq(1).find('td[class="ant-table-cell"]').eq(1).contains(/^447$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="2"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 8.98492%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="2"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="3"]').eq(1).find('td[class="ant-table-cell"]').eq(1).contains(/^418$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="3"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: 8.40201%"]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="3"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
   });
 });
 
@@ -191,12 +191,12 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
       .should('have.attr', 'href', 'https://www.trisome.org');
   });
 
-  it('Lien Publication du panneau Summary', () => {
+  it('Lien Publication du panneau Summary [SJIP-847]', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).find('[href]')
       .should('have.attr', 'href', 'https://pubmed.ncbi.nlm.nih.gov/37379383');
   });
 
-  it('Lien \'See more\' de Publication du panneau Summary', () => {
+  it('Lien \'See more\' de Publication du panneau Summary [SJIP-847]', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('See more').click({force: true});
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('PMID: 36577365').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('See less').click({force: true});

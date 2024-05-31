@@ -40,7 +40,7 @@ describe('Page des études - Vérifier les informations affichées', () => {
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(17).contains('Investigator Assessment').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(17).contains('Medical Record').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(18).contains('Case-control').should('exist');
-    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(18).contains('Longitudinal').should('exist');
+    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(18).contains('longitudinal').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(19).contains('Joaquin M. Espinosa').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(20).contains('2016').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(21).contains('-').should('exist');

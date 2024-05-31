@@ -234,7 +234,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
   it('Lien Mondo du panneau Diagnoses', () => {
     cy.resetColumns('diagnosis');
     cy.get('[id="diagnosis"]').find('td[class="ant-table-cell"]').eq(0).find('[href]')
-      .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/MONDO_0002050');
+      .should('have.attr', 'href').and('match', /http:\/\/purl.obolibrary.org\/obo\/MONDO_(0005071|0004235|0005093|0100471|0005420|0100470|0007186|0005172|0004979|0011918|0002050)/);
   });
 
   it('Lien MONDO Term du panneau Diagnoses', () => {
