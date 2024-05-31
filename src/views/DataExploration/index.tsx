@@ -30,6 +30,7 @@ import FileSetSearch from './components/FileSetSearch';
 import ParticipantSearch from './components/ParticipantSearch';
 import ParticipantSetSearch from './components/ParticipantSetSearch';
 import TreeFacet from './components/TreeFacet';
+import TreeFacetModal from './components/TreeFacet/TreeFacetModal';
 import BiospecimenUploadIds from './components/UploadIds/BiospecimenUploadIds';
 import FileUploadIds from './components/UploadIds/FileUploadIds';
 import ParticipantUploadIds from './components/UploadIds/ParticipantUploadIds';
@@ -58,7 +59,7 @@ export const filterGroups: {
           'down_syndrome_status',
           <TreeFacet key="mondo" type={RemoteComponentList.MondoTree} field={'mondo'} />,
           <TreeFacet
-            key="observed_phenotype2"
+            key="observed_phenotype"
             type={RemoteComponentList.HPOTree}
             field={'observed_phenotype'}
           />,
@@ -178,6 +179,18 @@ const DataExploration = () => {
 
   return (
     <div className={styles.dataExplorationLayout}>
+      <TreeFacetModal
+        key="observed_phenotype"
+        type={RemoteComponentList.HPOTree}
+        field={'observed_phenotype'}
+      />
+
+      <TreeFacetModal
+        key="observed_phenotype"
+        type={RemoteComponentList.MondoTree}
+        field={'mondo'}
+      />
+
       <SidebarMenu
         className={styles.sideMenu}
         menuItems={menuItems} /* defaultSelectedKey={tab} */
