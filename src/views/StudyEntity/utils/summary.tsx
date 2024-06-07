@@ -73,8 +73,8 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
     value: study?.domains?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.study.data_source'),
-    value: study?.data_source?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
+    label: intl.get('entities.study.data_sources'),
+    value: study?.data_sources?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.study.date_collection_start'),

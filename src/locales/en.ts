@@ -1726,7 +1726,7 @@ const en = {
         transcriptomic: 'Trans.',
         transcriptomicTooltip: 'Transcriptomic',
       },
-      data_source: 'Clinical Data Source Type',
+      data_sources: 'Clinical Data Source Type',
       data_source_table: 'Data Source',
       date_collection_end: 'Date Collection End (Year)',
       date_collection_end_year: 'Year of collection end',

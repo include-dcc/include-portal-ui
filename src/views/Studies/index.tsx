@@ -46,7 +46,7 @@ const filterInfo: FilterInfo = {
     'data_category',
     'part_lifespan_stages',
     'family_data',
-    'data_source',
+    'data_sources',
     'study_designs',
     'is_harmonized',
     'controlled_access',
@@ -59,7 +59,7 @@ const filterInfo: FilterInfo = {
         'data_category',
         'part_lifespan_stages',
         'family_data',
-        'data_source',
+        'data_sources',
         'study_designs',
         'is_harmonized',
         'controlled_access',
@@ -335,18 +335,18 @@ const getColumns = (): ProColumnType<any>[] => [
     },
   },
   {
-    key: 'data_source',
+    key: 'data_sources',
     title: intl.get('entities.study.data_source_table'),
-    dataIndex: 'data_source',
+    dataIndex: 'data_sourcse',
     defaultHidden: true,
-    render: (data_source: string[]) => {
-      if (!data_source || data_source.length === 0) {
+    render: (data_sources: string[]) => {
+      if (!data_sources || data_sources.length === 0) {
         return TABLE_EMPTY_PLACE_HOLDER;
       }
       return (
         <ExpandableCell
           nOfElementsWhenCollapsed={2}
-          dataSource={data_source}
+          dataSource={data_sources}
           renderItem={(sourceText) => <div>{sourceText}</div>}
         />
       );
