@@ -55,7 +55,7 @@ export interface IStudyEntity {
   contacts?: ArrangerResultsTree<IContact>;
   controlled_access?: string[];
   data_category: string[];
-  data_source?: string[];
+  data_sources?: string[];
   data_types?: ArrangerResultsTree<IDataType>;
   dataset?: ArrangerResultsTree<IStudyDataset>;
   date_collection_end_year?: string;

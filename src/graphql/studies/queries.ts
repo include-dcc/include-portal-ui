@@ -30,7 +30,7 @@ export const GET_STUDIES = gql`
             domains
             part_lifespan_stages
             data_category
-            data_source
+            data_sources
             date_collection_start_year
             date_collection_end_year
             description
@@ -123,7 +123,7 @@ export const GET_STUDY = gql`
             study_name
             website
             data_category
-            data_source
+            data_sources
             dataset {
               hits {
                 total
