@@ -81,9 +81,9 @@ describe('Page des études - Valider les liens disponibles', () => {
 
   it('Lien \'See more\' de Data Source du tableau', () => {
     cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See more').click({force: true});
-    cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).contains('Patient or Caregiver Report').should('exist');
+    cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).contains('Participant or Caregiver Report').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See less').click({force: true});
-    cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).contains('Patient or Caregiver Report').should('not.exist');
+    cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).contains('Participant or Caregiver Report').should('not.exist');
   });
 });
 

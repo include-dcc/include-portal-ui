@@ -20,8 +20,8 @@ describe('Page des études - Filtrer avec les facettes', () => {
     cy.get('section[class*="Filters"] [aria-expanded="true"]').should('not.exist');
   });
 
-  it('Program - INCLUDE/KF', () => {
-    cy.validateFacetFilter('Program', 'INCLUDE/KF', 'INCLUDE/KF', /\d{1} Result/, false);
+  it('Program - INCLUDE', () => {
+    cy.validateFacetFilter('Program', 'INCLUDE', 'INCLUDE', /\d{1} Result/, false);
     cy.validateFacetRank(0, 'Program');
   });
 
