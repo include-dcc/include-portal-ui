@@ -337,7 +337,7 @@ const getColumns = (): ProColumnType<any>[] => [
   {
     key: 'data_sources',
     title: intl.get('entities.study.data_source_table'),
-    dataIndex: 'data_sourcse',
+    dataIndex: 'data_sources',
     defaultHidden: true,
     render: (data_sources: string[]) => {
       if (!data_sources || data_sources.length === 0) {
