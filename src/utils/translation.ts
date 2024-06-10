@@ -270,6 +270,7 @@ export const getFacetsDictionary = () => ({
   transmissions: 'Transmission',
   controlled_access: 'Access',
   is_harmonized: 'Harmonized Data',
+  data_sources: 'Data Source',
   is_proband: 'Proband',
   variant_class: 'Variant Type',
   diagnosis: {
