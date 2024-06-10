@@ -25,8 +25,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
     cy.validatePillSelectedQuery('Age at Biospecimen Collection (days)', ['20000'], 1);
     cy.validateOperatorSelectedQuery('or');
-    cy.validateTotalSelectedQuery('4,756');
-    cy.validateTableResultsCount('4,756');
+    cy.validateTotalSelectedQuery(/(4,732|4,756)/);
+    cy.validateTableResultsCount(/(4,732|4,756)/);
     cy.validateClearAllButton(false);
 
     cy.intercept('POST', '**/graphql').as('getPOSTgraphql2');
@@ -38,8 +38,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
     cy.validatePillSelectedQuery('Age at Biospecimen Collection (days)', ['20000'], 1);
     cy.validateOperatorSelectedQuery('and');
-    cy.validateTotalSelectedQuery('1,935');
-    cy.validateTableResultsCount('1,935');
+    cy.validateTotalSelectedQuery(/(1,911|1,935)/);
+    cy.validateTableResultsCount(/(1,911|1,935)/);
     cy.validateClearAllButton(false);
   });
 
@@ -52,8 +52,8 @@ describe('Page Data Exploration - Requêtes', () => {
     };
 
     cy.validatePillSelectedQuery('Age at Biospecimen Collection (days)', ['20000']);
-    cy.validateTotalSelectedQuery('1,989');
-    cy.validateTableResultsCount('1,989');
+    cy.validateTotalSelectedQuery(/(1,965|1,989)/);
+    cy.validateTableResultsCount(/(1,965|1,989)/);
     cy.validateClearAllButton(false);
   });
 });

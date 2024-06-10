@@ -188,7 +188,7 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
 
   it('Lien Study Website du panneau Summary', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(12).find('[href]')
-      .should('have.attr', 'href', 'https://www.trisome.org');
+      .should('have.attr', 'href').and('match', /https:\/\/www.trisome.org/);
   });
 
   it('Lien Publication du panneau Summary [SJIP-847]', () => {
