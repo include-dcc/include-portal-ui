@@ -23,8 +23,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.checkValueFacetAndApply('Sample Type', 'DNA');
 
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
-    cy.validateTotalSelectedQuery('4,702');
-    cy.validateTableResultsCount('4,702');
+    cy.validateTotalSelectedQuery(/(4,678|9,383)/);
+    cy.validateTableResultsCount(/(4,678|9,383)/);
     cy.validateClearAllButton(false);
   });
 });

@@ -193,9 +193,9 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
   });
 
   it('Valider les fonctionnalités du tableau - Tri Files', () => {
-    cy.sortTableAndIntercept('Files', 1);
+    cy.sortTableAndWait('Files');
     cy.validateTableFirstRow(/\d{1}/, 14, true);
-    cy.sortTableAndIntercept('Files', 1);
+    cy.sortTableAndWait('Files');
     cy.validateTableFirstRow(/\d{1}/, 14, true);
   });
 
