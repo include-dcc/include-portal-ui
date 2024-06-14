@@ -446,8 +446,16 @@ Cypress.Commands.add('visitParticipantEntity', (participantId: string, nbCalls?:
 });
 
 Cypress.Commands.add('visitProfileSettingsPage', () => {
-  cy.visit('/profile/settings');
-  cy.get('[class*="ProfileSettings_profileSettingsHeader"]', {timeout: 60 * 1000}); //data-cy="Title_ProfileSettings"
+cy.visitAndIntercept('/profile/settings',
+                     'GET',
+                     '**.includedcc.org',
+                     1);
+});
+
+Cypress.Commands.add('visitProfileViewPage', () => {
+  cy.visit('/member/822b5b29-9e2f-4d3a-9a66-0c23d34007f8');
+  cy.get('[class*="UserAvatar_userAvatarRound"]').should('exist'); // data-cy="AvatarHeader"
+  cy.wait(1000);
 });
 
 Cypress.Commands.add('visitStudyEntity', (studyId: string, nbCalls: number) => {
