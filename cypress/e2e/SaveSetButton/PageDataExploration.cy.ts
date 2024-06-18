@@ -8,10 +8,10 @@ describe('Page Data Exploration (Participants) - Bouton Save set', () => {
     cy.deleteSetIfExists('participants', 'Cypress_New_P');
     cy.deleteSetIfExists('participants', 'Cypress_P');
     cy.visitDataExploration('participants');
-    cy.clickAndIntercept('[data-cy="SidebarMenuItem_Participant"]', 'POST', '**/phenotypes', 2);
+    cy.get('[data-cy="SidebarMenuItem_Participant"]').click({force: true});
     cy.createSetIfNotExists('Cypress_P', 0);
     cy.visitDataExploration('participants');
-    cy.clickAndIntercept('[data-cy="SidebarMenuItem_Participant"]', 'POST', '**/phenotypes', 2);
+    cy.get('[data-cy="SidebarMenuItem_Participant"]').click({force: true});
   });
 
   it('Vérifier les informations affichées - Titre de la dropdown', () => {

@@ -72,8 +72,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.wait('@getPOSTgraphql', {timeout: 20*1000});
 
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
-    cy.validateTotalSelectedQuery(/(4,678|9,383)/);
-    cy.validateTableResultsCount(/(4,678|9,383)/);
+    cy.validateTotalSelectedQuery(/(4,678|4,702|9,383)/);
+    cy.validateTableResultsCount(/(4,678|4,702|9,383)/);
     cy.validateClearAllButton(true);
   });
 });

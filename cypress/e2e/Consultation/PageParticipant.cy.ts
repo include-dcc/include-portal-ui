@@ -271,7 +271,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
 
   it('Lien Collection ID du panneau Biospecimens', () => {
     cy.resetColumns('biospecimen');
-    cy.get('[id="biospecimen"]').find('td[class="ant-table-cell"]').eq(1).find('[href]').click({force: true});
+    cy.get('[id="biospecimen"] [data-row-key="bs-e3g4mq8bcx"] [href]').click({force: true});
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Collection ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('Bs-aezhntnkak').should('exist');
