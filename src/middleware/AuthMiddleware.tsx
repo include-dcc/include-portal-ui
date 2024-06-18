@@ -25,22 +25,18 @@ const AuthMiddleware = ({ children }: Props) => {
   const params = useQueryParams();
 
   useEffect(() => {
-    const sharedFilterId = params.get(SHARED_FILTER_ID_QUERY_PARAM_KEY);
-    const biospecimenRequestId = params.get(SHARED_BIOSPECIMEN_REQUEST_ID_QUERY_PARAM_KEY);
-    if (sharedFilterId) {
-      dispatch(fetchSharedSavedFilter(sharedFilterId));
-    }
-    if (biospecimenRequestId) {
-      dispatch(fetchSharedBiospecimenRequest(biospecimenRequestId));
-    }
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
     if (keycloak.authenticated) {
       dispatch(fetchUser());
       dispatch(fetchSavedFilters());
       dispatch(fetchSavedSet());
+      const sharedFilterId = params.get(SHARED_FILTER_ID_QUERY_PARAM_KEY);
+      const biospecimenRequestId = params.get(SHARED_BIOSPECIMEN_REQUEST_ID_QUERY_PARAM_KEY);
+      if (sharedFilterId) {
+        dispatch(fetchSharedSavedFilter(sharedFilterId));
+      }
+      if (biospecimenRequestId) {
+        dispatch(fetchSharedBiospecimenRequest(biospecimenRequestId));
+      }
     } else {
       dispatch(userActions.setIsUserLoading(false));
     }
