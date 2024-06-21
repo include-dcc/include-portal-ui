@@ -5,6 +5,7 @@ import { IOntologyTreeData } from '@ferlab/ui/core/components/OntologyTreeFilter
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { TermOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
+import { removeFieldFromSqon } from '@ferlab/ui/core/data/sqon/utils';
 
 import { RemoteComponentList } from 'store/remote/types';
 
@@ -28,6 +29,7 @@ const TreeFacetModal = ({ type, field }: Props) => {
   const { sqon } = useParticipantResolvedSqon(DATA_EXPLORATION_QB_ID);
   const { visible } = useRemote(type);
 
+  // send empty sqon to always get all phenotypes/diagnoses
   const { loading, result } = useApi<any>({
     config: {
       url: `${ARRANGER_API_URL}/phenotypes`,
@@ -36,7 +38,7 @@ const TreeFacetModal = ({ type, field }: Props) => {
         type: field,
         project: 'include',
         aggregations_filter_themselves: false,
-        sqon,
+        sqon: removeFieldFromSqon(`${field}.name`, sqon),
       },
     },
   });
