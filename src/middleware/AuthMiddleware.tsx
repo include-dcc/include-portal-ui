@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+// eslint-disable-next-line max-len
+import { SHARED_BIOSPECIMEN_REQUEST_ID_QUERY_PARAM_KEY } from '@ferlab/ui/core/components/BiospecimenRequest/requestBiospecimen.utils';
 import { useKeycloak } from '@react-keycloak/web';
 
 import { SHARED_FILTER_ID_QUERY_PARAM_KEY } from 'common/constants';
-import { SHARED_BIOSPECIMEN_REQUEST_ID_QUERY_PARAM_KEY } from 'components/Biospecimens/Request/requestBiospecimen.utils';
 import Spinner from 'components/uiKit/Spinner';
 import useQueryParams from 'hooks/useQueryParams';
 import { useSavedFilter } from 'store/savedFilter';

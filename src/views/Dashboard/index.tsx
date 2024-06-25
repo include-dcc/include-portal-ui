@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
+import { BIOSPECIMEN_REQUEST_KEY } from '@ferlab/ui/core/components/BiospecimenRequest/requestBiospecimen.utils';
 import SortableGrid from '@ferlab/ui/core/layout/SortableGrid';
 import { Space, Typography } from 'antd';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
 import { AlterTypes } from 'common/types';
-import { BIOSPECIMEN_REQUEST_KEY } from 'components/Biospecimens/Request/requestBiospecimen.utils';
 import NotificationBanner from 'components/featureToggle/NotificationBanner';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
