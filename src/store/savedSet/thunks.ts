@@ -1,6 +1,11 @@
 import intl from 'react-intl-universal';
-import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import { SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
+import {
+  addQuery,
+  getQueryBuilderState,
+  setQueryBuilderState,
+  updateActiveQueryField,
+} from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { IValueFilter, SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Modal } from 'antd';
@@ -131,20 +136,42 @@ const fetchSharedBiospecimenRequest = createAsyncThunk<
 
   if (data) {
     const setValue = `${SET_ID_PREFIX}${data.id}`;
-    addQuery({
-      queryBuilderId: DATA_EXPLORATION_QB_ID,
-      query: generateQuery({
-        newFilters: [
-          generateValueFilter({
-            field: getSetFieldId(SetType.BIOSPECIMEN_REQUEST),
-            value: [setValue],
-            index: SetType.BIOSPECIMEN,
-            overrideValuesName: data.alias,
-          }),
-        ],
-      }),
-      setAsActive: true,
+    const queryState = getQueryBuilderState(DATA_EXPLORATION_QB_ID);
+
+    const result = queryState?.state?.find((query) => {
+      if (query.content.length === 0) return false;
+      const sqon = query.content[0] as IValueFilter;
+      return sqon.content.value[0] === setValue;
     });
+
+    if (result) {
+      setQueryBuilderState(DATA_EXPLORATION_QB_ID, {
+        active: result.id,
+        state: queryState?.state,
+      });
+
+      updateActiveQueryField({
+        queryBuilderId: DATA_EXPLORATION_QB_ID,
+        field: getSetFieldId(SetType.BIOSPECIMEN_REQUEST),
+        overrideValuesName: data.alias,
+        value: [setValue],
+      });
+    } else {
+      addQuery({
+        queryBuilderId: DATA_EXPLORATION_QB_ID,
+        query: generateQuery({
+          newFilters: [
+            generateValueFilter({
+              field: getSetFieldId(SetType.BIOSPECIMEN_REQUEST),
+              value: [setValue],
+              index: SetType.BIOSPECIMEN,
+              overrideValuesName: data.alias,
+            }),
+          ],
+        }),
+        setAsActive: true,
+      });
+    }
   }
 
   return handleThunkApiResponse({
