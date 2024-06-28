@@ -35,7 +35,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[class*="EntityTitleLogo_title"]').contains('The Human Trisome Project');
   });
 
-  it('Panneau Summary [SJIP-847]', () => {
+  it('Panneau Summary', () => {
     cy.get('button[class*="SummaryHeader_item"]').eq(0).contains(/\d{1}/);
     cy.get('button[class*="SummaryHeader_item"]').eq(0).contains('Participants');
     cy.get('button[class*="SummaryHeader_item"]').eq(1).contains(/\d{1}/);
@@ -73,9 +73,9 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(12).contains('Study Website').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(12).contains('https://www.trisome.org').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(13).contains('Publication').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('PMID: 37379383').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('PMID: 37360690').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('PMID: 37277650').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('https://pubmed.ncbi.nlm.nih.gov/37379383/').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('https://pubmed.ncbi.nlm.nih.gov/37360690').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('https://pubmed.ncbi.nlm.nih.gov/37277650').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('See more').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(14).contains('Principal Investigator').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(14).contains('Joaquin M. Espinosa').should('exist');
@@ -191,16 +191,16 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
       .should('have.attr', 'href').and('match', /https:\/\/www.trisome.org/);
   });
 
-  it('Lien Publication du panneau Summary [SJIP-847]', () => {
+  it('Lien Publication du panneau Summary', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).find('[href]')
-      .should('have.attr', 'href', 'https://pubmed.ncbi.nlm.nih.gov/37379383');
+      .should('have.attr', 'href', 'https://pubmed.ncbi.nlm.nih.gov/37379383/');
   });
 
-  it('Lien \'See more\' de Publication du panneau Summary [SJIP-847]', () => {
+  it('Lien \'See more\' de Publication du panneau Summary', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('See more').click({force: true});
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('PMID: 36577365').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('https://pubmed.ncbi.nlm.nih.gov/36577365').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('See less').click({force: true});
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('PMID: 36577365').should('not.exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('https://pubmed.ncbi.nlm.nih.gov/36577365').should('not.exist');
   });
 
   it('Lien Virtual Biorepository Email du panneau Summary', () => {
