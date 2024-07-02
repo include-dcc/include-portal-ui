@@ -525,7 +525,7 @@ const en = {
       },
     },
     profileSettings: {
-      title: 'Profile settings',
+      title: 'Profile Settings',
       viewProfile: 'View profile',
       cards: {
         deleteAccount: {
