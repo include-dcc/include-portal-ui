@@ -7,7 +7,7 @@ beforeEach(() => {
 });
 
 describe('Page Profile Settings - Vérifier les informations affichées', () => {
-  it('Titre [SJIP-884]', () => {
+  it('Titre', () => {
     cy.get('[class*="Settings_profileSettingsHeader"]').contains('Profile Settings');
   });
 
