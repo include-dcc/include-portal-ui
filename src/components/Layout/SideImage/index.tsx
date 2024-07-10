@@ -3,7 +3,7 @@ import { Row } from 'antd';
 import cx from 'classnames';
 import EnvVariables from 'helpers/EnvVariables';
 
-import style from 'components/Layout/SideImage/index.module.scss';
+import style from 'components/Layout/SideImage/index.module.css';
 
 interface OwnProps {
   logoSrc?: string;

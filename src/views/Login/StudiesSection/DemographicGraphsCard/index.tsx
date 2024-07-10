@@ -9,7 +9,7 @@ import { isEmpty } from 'lodash';
 import { getCommonColors } from 'common/charts';
 import { useGlobals } from 'store/global';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 const colors = getCommonColors();
 const { Title } = Typography;

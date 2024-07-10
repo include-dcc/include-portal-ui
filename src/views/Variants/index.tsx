@@ -19,7 +19,7 @@ import { SuggestionType } from 'services/api/arranger/models';
 import PageContent from './components/PageContent';
 import { SCROLL_WRAPPER_ID } from './utils/constants';
 
-import styles from 'views/Variants/index.module.scss';
+import styles from 'views/Variants/index.module.css';
 
 enum FilterTypes {
   Participant,

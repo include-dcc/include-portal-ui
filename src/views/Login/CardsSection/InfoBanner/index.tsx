@@ -4,7 +4,7 @@ import CloudArchitectureIcon from '@ferlab/ui/core/components/Icons/FuturoSpot/C
 import InformationIcon from '@ferlab/ui/core/components/Icons/FuturoSpot/InformationSpotIcon';
 import BannerItem from '@ferlab/ui/core/pages/LandingPage/BannerItem';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 const InfoBanner = () => (
   <div className={styles.bottomBanner}>

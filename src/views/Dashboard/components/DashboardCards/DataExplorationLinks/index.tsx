@@ -16,7 +16,7 @@ import { STATIC_ROUTES } from 'utils/routes';
 
 import LinkBox from './LinkBox';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 const formatStorage = (storage: string) => {
   if (!storage) return;

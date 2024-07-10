@@ -1,0 +1,9 @@
+.biospecimenTabWrapper {
+  display: flex;
+}
+.biospecimenTabWrapper :global(.ant-pagination) {
+  margin-bottom: 0;
+}
+.biospecimenTabWrapper .sampleIdCell {
+  white-space: nowrap;
+}

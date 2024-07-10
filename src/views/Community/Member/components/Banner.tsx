@@ -1,10 +1,11 @@
-import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
+import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+
 import { STATIC_ROUTES } from 'utils/routes';
 
-import styles from '../index.module.scss';
+import styles from '../index.module.css';
 
 interface OwnProps {
   isOwnUser: boolean;

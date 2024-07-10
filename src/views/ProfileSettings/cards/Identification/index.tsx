@@ -16,7 +16,7 @@ import BaseForm from '../BaseForm';
 
 import ProfileImageUpload from './ProfileImageUpload';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 enum FORM_FIELDS {
   FIRST_NAME = 'first_name',

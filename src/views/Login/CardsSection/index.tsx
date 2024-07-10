@@ -10,7 +10,7 @@ import { STATIC_ROUTES } from '../../../utils/routes';
 
 import BottomBanner from './InfoBanner';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 const Cards = () => {
   const { keycloak } = useKeycloak();

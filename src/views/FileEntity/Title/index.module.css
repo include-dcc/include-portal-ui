@@ -1,0 +1,23 @@
+.locked {
+  color: var(--gray-6);
+}
+
+.unlocked {
+  color: var(--green-7);
+}
+
+.link {
+  text-decoration: underline;
+}
+.link:hover {
+  text-decoration: none;
+}
+
+.popOverContent {
+  max-width: 420px;
+}
+
+.contentLink {
+  padding-left: 4px;
+  display: inline;
+}

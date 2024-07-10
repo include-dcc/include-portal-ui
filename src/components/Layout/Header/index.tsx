@@ -22,7 +22,7 @@ import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import IncludeIcon from 'components/Icons/IncludeIcon';
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import HeaderLink from 'components/Layout/Header/HeaderLink';
-import style from 'components/Layout/Header/index.module.scss';
+import style from 'components/Layout/Header/index.module.css';
 import UserAvatar from 'components/UserAvatar';
 import { trackLogout, trackVisitResources } from 'services/analytics';
 import { useUser } from 'store/user';

@@ -9,7 +9,7 @@ import BRI_DSR_logo from 'components/assets/studies/study-logo-BRI.png';
 import DSC_logo from 'components/assets/studies/study-logo-DSC.png';
 import KF_logo from 'components/assets/studies/study-logo-KF.svg';
 
-import style from '../index.module.scss';
+import style from '../index.module.css';
 
 export const getLogoByStudyCode = (studyCode?: string): React.ReactNode => {
   switch (studyCode) {

@@ -17,8 +17,8 @@ import { SubscriptionStatus } from 'store/user/types';
 import BaseCard from '../BaseCard';
 import BaseForm from '../BaseForm';
 
-import formStyles from '../form.module.scss';
-import cardStyles from './index.module.scss';
+import formStyles from '../form.module.css';
+import cardStyles from './index.module.css';
 
 enum FORM_FIELDS {
   NEWSLETTER_SUBSCRIPTION = 'newsletter_subscription_status',

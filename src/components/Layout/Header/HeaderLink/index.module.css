@@ -1,0 +1,11 @@
+.headerLink .headerBtn {
+  border: none;
+  color: var(--gray-8);
+  padding: 4px 8px;
+  margin: 0 5px;
+}
+.headerLink .headerBtn:hover, .headerLink .headerBtn:focus, .headerLink .headerBtn.active {
+  background-color: var(--gray-4);
+  border: none;
+  color: var(--gray-8);
+}

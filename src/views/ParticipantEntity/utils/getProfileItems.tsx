@@ -4,7 +4,7 @@ import { Tag, Tooltip } from 'antd';
 import { IParticipantEntity, Sex } from 'graphql/participants/models';
 import { capitalize } from 'lodash';
 
-import styles from '../styles/styles.module.scss';
+import styles from '../styles/styles.module.css';
 
 const getProfileItems = (participant?: IParticipantEntity): IEntityDescriptionsItem[] => [
   {

@@ -1,0 +1,11 @@
+.savedSetListItem .countDisplay {
+  padding-right: 5px;
+}
+.savedSetListItem .countDisplay .count {
+  font-weight: 500;
+}
+
+.title > span::after {
+  content: "";
+  display: block;
+}

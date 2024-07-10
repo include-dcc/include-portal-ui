@@ -13,7 +13,7 @@ import CardsSection from './CardsSection';
 import StudiesSection from './StudiesSection';
 import TopBanner from './TopBanner';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 const footerLogos = [LindaLogo, ChopLogo, VanderbiltLogo, ChuSjLogo, VelseraLogo];
 

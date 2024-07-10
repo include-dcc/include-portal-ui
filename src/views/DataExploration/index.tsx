@@ -35,7 +35,7 @@ import BiospecimenUploadIds from './components/UploadIds/BiospecimenUploadIds';
 import FileUploadIds from './components/UploadIds/FileUploadIds';
 import ParticipantUploadIds from './components/UploadIds/ParticipantUploadIds';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 enum FilterTypes {
   Participant,

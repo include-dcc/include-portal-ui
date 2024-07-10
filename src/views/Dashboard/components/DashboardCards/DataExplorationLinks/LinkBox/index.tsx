@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Space } from 'antd';
+import { ArrowRightOutlined } from '@ant-design/icons';
 import MultiLabel, {
   MultiLabelIconPositionEnum,
 } from '@ferlab/ui/core/components/labels/MultiLabel';
-import { ArrowRightOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 interface OwnProps {
   multiLabelClassName?: string;

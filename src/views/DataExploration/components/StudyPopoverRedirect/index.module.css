@@ -1,0 +1,9 @@
+.studyName {
+  text-decoration-style: dotted;
+  text-decoration-line: underline;
+}
+
+.popoverText {
+  text-decoration-line: underline;
+  color: inherit;
+}

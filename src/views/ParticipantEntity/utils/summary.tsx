@@ -5,7 +5,7 @@ import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Tag, Tooltip } from 'antd';
 import { IParticipantEntity } from 'graphql/participants/models';
 
-import styles from '../styles/styles.module.scss';
+import styles from '../styles/styles.module.css';
 
 export const getSummaryItems = (participant?: IParticipantEntity): IEntityDescriptionsItem[] => [
   {

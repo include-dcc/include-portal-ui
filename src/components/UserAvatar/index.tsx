@@ -4,7 +4,7 @@ import { uniqueId } from 'lodash';
 
 import { DEFAULT_GRAVATAR_PLACEHOLDER } from 'common/constants';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 const profileImageBaseUrl = EnvironmentVariables.configFor('PROFILE_IMAGE_BASE_URL');
 
