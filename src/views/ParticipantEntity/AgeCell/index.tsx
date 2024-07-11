@@ -3,7 +3,7 @@ import intl from 'react-intl-universal';
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { readableDistanceByDays } from 'utils/dates';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 interface OwnProps {
   ageInDays?: number;

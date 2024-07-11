@@ -1,7 +1,7 @@
 import intl from 'react-intl-universal';
 import { Popover, Tooltip } from 'antd';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 type Props = {
   text: string;

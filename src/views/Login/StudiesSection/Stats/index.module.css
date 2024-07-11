@@ -1,0 +1,19 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  justify-self: center;
+  align-self: center;
+  max-width: 1200px;
+}
+
+.card {
+  background-color: var(--gray-1) !important;
+}
+
+.cardContent {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  align-items: center;
+  column-gap: 24px;
+  row-gap: 16px;
+}

@@ -10,7 +10,7 @@ import { Col, Row, Spin } from 'antd';
 import cx from 'classnames';
 
 import BiospecimenIcon from 'components/Icons/BiospecimenIcon';
-import styles from 'components/uiKit/DataRelease/index.module.scss';
+import styles from 'components/uiKit/DataRelease/index.module.css';
 import { useGlobals } from 'store/global';
 import { fetchStats } from 'store/global/thunks';
 

@@ -7,7 +7,7 @@ import { roleOptions, usageOptions } from 'views/Community/contants';
 
 import Sorter from '../Sorter';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 interface OwnProps {
   onMatchFilterChange: (value: string) => void;

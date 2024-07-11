@@ -47,7 +47,7 @@ import getSummaryDescriptions from './utils/summary';
 import { getLogoByStudyCode } from './utils/title';
 import SummaryHeader from './SummaryHeader';
 
-import style from './index.module.scss';
+import style from './index.module.css';
 
 const { Text, Title } = Typography;
 

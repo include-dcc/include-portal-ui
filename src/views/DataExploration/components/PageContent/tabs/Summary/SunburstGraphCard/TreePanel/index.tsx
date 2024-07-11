@@ -9,7 +9,7 @@ import { RegexExtractPhenotype } from 'views/DataExploration/utils/PhenotypeStor
 
 import { trackSummarySunburstAction } from '../../../../../../../../services/analytics';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 interface OwnProps {
   currentNode: TreeNode;

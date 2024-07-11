@@ -61,7 +61,7 @@ import { STATIC_ROUTES } from 'utils/routes';
 import { numberWithCommas } from 'utils/string';
 import { getQueryBuilderDictionary } from 'utils/translation';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 export const MAX_TITLE_LENGTH = 200;
 

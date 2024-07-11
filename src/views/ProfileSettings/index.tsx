@@ -10,7 +10,7 @@ import NewsletterCard from './cards/Newsletter';
 import ResearchAndUsagesCard from './cards/ResearchAndUsage';
 import RoleAndAffiliationCard from './cards/RoleAndAffiliation';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 const { Title } = Typography;
 

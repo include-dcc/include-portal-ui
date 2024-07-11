@@ -7,7 +7,7 @@ import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Space, Tag, Tooltip, Typography } from 'antd';
 import { IStudyEntity } from 'graphql/studies/models';
 
-import styles from '../index.module.scss';
+import styles from '../index.module.css';
 
 const { Text } = Typography;
 

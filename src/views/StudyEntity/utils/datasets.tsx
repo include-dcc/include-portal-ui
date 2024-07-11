@@ -6,7 +6,7 @@ import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Tag } from 'antd';
 import { IStudyDataset } from 'graphql/studies/models';
 
-import styles from '../index.module.scss';
+import styles from '../index.module.css';
 
 const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[] => {
   const items: IEntityDescriptionsItem[] = [];

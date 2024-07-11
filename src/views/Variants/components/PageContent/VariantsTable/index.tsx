@@ -50,7 +50,7 @@ import { getProTableDictionary } from 'utils/translation';
 
 import { GnomadCircle, renderClinvar, renderOmim } from './utils';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 interface OwnProps {
   pageIndex: number;

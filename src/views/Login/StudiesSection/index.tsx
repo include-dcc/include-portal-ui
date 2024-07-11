@@ -15,7 +15,7 @@ import { useGlobals } from '../../../store/global';
 import DemographicGraphsCard from './DemographicGraphsCard';
 import Stats from './Stats';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 const studies = [
   { code: 'HTP', formattedCode: 'htp', logo: HtpLogo },

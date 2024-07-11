@@ -8,7 +8,7 @@ import IncludeIconLogin from 'components/Icons/IncludeIconLogin';
 import useQueryParams from 'hooks/useQueryParams';
 import { STATIC_ROUTES } from 'utils/routes';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 const LoginForm = () => {
   const { keycloak } = useKeycloak();

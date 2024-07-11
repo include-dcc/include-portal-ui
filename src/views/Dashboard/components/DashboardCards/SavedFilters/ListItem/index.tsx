@@ -15,7 +15,7 @@ import { deleteSavedFilter } from 'store/savedFilter/thunks';
 
 import EditModal from '../EditModal';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 interface OwnProps {
   id: any;
