@@ -18,7 +18,7 @@ describe('Page des études - Vérifier les informations affichées', () => {
     cy.get('[class*="PageContent_title"]').contains('Studies'); // data-cy="Title_Studies"
   });
 
-  it('Tableau', () => {
+  it('Tableau [SJIP-916]', () => {
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(0).find('[class*="ant-tag-green"]').contains('H').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(1).contains('HTP').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(2).contains('The Human Trisome Project').should('exist');
@@ -53,7 +53,7 @@ describe('Page des études - Valider les liens disponibles', () => {
     cy.get('[class*="EntityTitle"]').contains('The Human Trisome Project').should('exist');
   });
 
-  it('Lien dbGap du tableau', () => {
+  it('Lien dbGap du tableau [SJIP-916]', () => {
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(5).find('[href]')
       .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
   });
