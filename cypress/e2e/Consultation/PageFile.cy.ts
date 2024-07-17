@@ -34,7 +34,7 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
     cy.get('[class*="EntityTitle"]').contains('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz');
   });
 
-  it('Panneau Summary', () => {
+  it('Panneau Summary [SJIP-916]', () => {
     cy.get('a[class*="SummaryHeader_link"]').eq(0).contains(/^1$/); // data-cy="SummaryHeader_Studies_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(0).contains('Study'); // data-cy="SummaryHeader_Studies_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(1).contains(/^3$/); // data-cy="SummaryHeader_Participants_Button"
@@ -57,7 +57,7 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(6).contains('-').should('exist');
   });
 
-  it('Panneau Data Access', () => {
+  it('Panneau Data Access [SJIP-916]', () => {
     cy.get('[id="data-access"]').find('[class="ant-descriptions-item-label"]').eq(0).contains('Access').should('exist');
     cy.get('[id="data-access"]').find('[class="ant-descriptions-item-content"]').eq(0).contains('Controlled').should('exist');
     cy.get('[id="data-access"]').find('[class="ant-descriptions-item-label"]').eq(1).contains('dbGaP Accession Number').should('exist');
@@ -73,7 +73,7 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
     cy.get('[id="data-type"]').find('[class="ant-descriptions-item-content"]').eq(2).contains('Whole Genome Sequencing').should('exist');
   });
 
-  it('Panneau Participants-Samples', () => {
+  it('Panneau Participants-Samples [SJIP-916]', () => {
     cy.resetColumns('participant-sample');
     cy.get('[id="participant-sample"]').find('[class="ant-collapse-header"]').contains('(7)').should('exist');
     cy.get('[id="participant-sample"]').find('[class="ant-collapse-header"]').contains('View in exploration').should('exist');
@@ -96,7 +96,7 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
 });
 
 describe('Page d\'un fichier - Valider les liens disponibles', () => {
-  it('Lien dbGap du panneau Data Access', () => {
+  it('Lien dbGap du panneau Data Access [SJIP-916]', () => {
     cy.get('[id="data-access"]').find('[class="ant-descriptions-item-content"]').eq(1).find('[href]')
       .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
   });

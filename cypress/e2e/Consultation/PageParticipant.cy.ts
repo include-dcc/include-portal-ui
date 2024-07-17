@@ -34,7 +34,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[class*="EntityTitle"]').contains('pt-0dxdyebh');
   });
 
-  it('Panneau Summary', () => {
+  it('Panneau Summary [SJIP-916]', () => {
     cy.get('a[class*="SummaryHeader_link"]').eq(0).contains(/\d{1}/); // data-cy="SummaryHeader_Studies_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(0).contains('Study'); // data-cy="SummaryHeader_Studies_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(1).contains(/\d{1}/); // data-cy="SummaryHeader_Biospecimens_Button"
@@ -212,7 +212,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
 });
 
 describe('Page d\'un participant - Valider les liens disponibles', () => {
-  it('Lien dbGaP du panneau Summary', () => {
+  it('Lien dbGaP du panneau Summary [SJIP-916]', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).find('[href]')
       .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
   });

@@ -27,7 +27,7 @@ describe('Page des études - Rechercher des études', () => {
     cy.validateTableResultsCount(/\d{1} Results/);
   });
 
-  it('Par dbGaP', () => {
+  it('Par dbGaP [SJIP-916]', () => {
     cy.typeAndIntercept('[class*="PageContent_search"]', 'S002330', 'POST', '**/graphql', 7);
     cy.waitWhileSpin(60*1000);
     cy.validateTableResultsCount(/4 Results/);
