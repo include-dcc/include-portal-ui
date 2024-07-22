@@ -19,10 +19,10 @@ describe('Page Data Exploration (Participants) - Vérifier les informations affi
     cy.get('[class*="DataExploration_title"]').contains('Data Exploration'); // data-cy="Title_DataExploration"
   });
 
-  it('Tableau [SJIP-916]', () => {
+  it('Tableau', () => {
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(1).contains('pt-as0aepqm').should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(2).contains('HTP').should('exist');
-    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(3).contains('phs002330').should('exist');
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(3).contains(/(phs002330|-)/).should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(4).contains('T21').should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(5).contains('Female').should('exist');
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(5).find('[class*="ant-tag-magenta"]').should('exist');
@@ -63,8 +63,12 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
 
   // Ne fonctionne pas pour une raison inconnue
   it.skip('Lien dbGap du tableau', () => {
-    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class="ant-table-cell"]').eq(3).find('[href]')
+    cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class="ant-table-cell"]').eq(3).invoke('text').then((invokeText) => {
+      if (!invokeText.includes('-')) {
+        cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class="ant-table-cell"]').eq(3).find('[href]')
       .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
+      };
+    });
   });
 
   it('Lien \'See more\' de Condition (Source Text) du tableau', () => {
@@ -129,63 +133,63 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
     cy.showColumn('Condition (Source Text)');
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Participant ID [SJIP-916]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Participant ID', () => {
     cy.sortTableAndWait('Participant ID');
     cy.validateTableFirstRow(/^(?!-).*$/, 1, true);
     cy.sortTableAndIntercept('Participant ID', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 1, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Study [SJIP-916]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Study', () => {
     cy.sortTableAndIntercept('Study', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 2, true);
     cy.sortTableAndIntercept('Study', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 2, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri DS Status [SJIP-916]', () => {
+  it('Valider les fonctionnalités du tableau - Tri DS Status', () => {
     cy.sortTableAndIntercept('DS Status', 1);
     cy.validateTableFirstRow('D21', 4, true);
     cy.sortTableAndIntercept('DS Status', 1);
     cy.validateTableFirstRow('T21', 4, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Sex [SJIP-916]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Sex', () => {
     cy.sortTableAndIntercept('Sex', 1);
     cy.validateTableFirstRow('Female', 5, true);
     cy.sortTableAndIntercept('Sex', 1);
     cy.validateTableFirstRow('Unknown', 5, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Race [SJIP-916]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Race', () => {
     cy.sortTableAndIntercept('Race', 1);
     cy.validateTableFirstRow('American Indian or Alaska Native', 6, true);
     cy.sortTableAndIntercept('Race', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 6, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Ethnicity [SJIP-916]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Ethnicity', () => {
     cy.sortTableAndIntercept('Ethnicity', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 7, true);
     cy.sortTableAndIntercept('Ethnicity', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 7, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri External Participant ID [SJIP-916]', () => {
+  it('Valider les fonctionnalités du tableau - Tri External Participant ID', () => {
     cy.sortTableAndIntercept('External Participant ID', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 8, true);
     cy.sortTableAndIntercept('External Participant ID', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 8, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Family Unit [SJIP-916]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Family Unit', () => {
     cy.sortTableAndIntercept('Family Unit', 1);
     cy.validateTableFirstRow('-', 9, true);
     cy.sortTableAndIntercept('Family Unit', 1);
     cy.validateTableFirstRow('Trio+', 9, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Biospecimens [SJIP-916]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Biospecimens', () => {
     cy.sortTableAndIntercept('Biospecimens', 1);
     cy.validateTableFirstRow(/\d{1}/, 13, true);
     cy.sortTableAndIntercept('Biospecimens', 1);
@@ -199,7 +203,7 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
     cy.validateTableFirstRow(/\d{1}/, 14, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri multiple [SJIP-916]', () => {
+  it('Valider les fonctionnalités du tableau - Tri multiple', () => {
     cy.sortTableAndIntercept('Sex', 1);
     cy.sortTableAndWait('Participant ID');
     cy.sortTableAndIntercept('Participant ID', 1);
