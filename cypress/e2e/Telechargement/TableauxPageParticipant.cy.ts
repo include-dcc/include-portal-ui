@@ -24,7 +24,7 @@ describe('Page d\'un participant - Exporter le tableau Family en TSV', () => {
     cy.validateFileHeaders('ExportTableauFamilyPageParticipant.json');
   });
 
-  it('Valider le contenu du fichier [SJIP-916]', () => {
+  it('Valider le contenu du fichier', () => {
     cy.validateFileContent('ExportTableauFamilyPageParticipant.json');
   });
 });

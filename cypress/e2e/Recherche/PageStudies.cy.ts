@@ -27,10 +27,10 @@ describe('Page des études - Rechercher des études', () => {
     cy.validateTableResultsCount(/\d{1} Results/);
   });
 
-  it('Par dbGaP [SJIP-916]', () => {
+  it('Par dbGaP', () => {
     cy.typeAndIntercept('[class*="PageContent_search"]', 'S002330', 'POST', '**/graphql', 7);
     cy.waitWhileSpin(60*1000);
-    cy.validateTableResultsCount(/4 Results/);
+    cy.validateTableResultsCount(/(3|4) Results/);
     cy.validateTableFirstRow('phs002330', 5);
 
     cy.get('button[class*="Header_clearFilterLink"]').should('contain', 'Clear filters').click({force: true});

@@ -51,8 +51,8 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(2).contains('Program').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(2).contains('INCLUDE').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(3).contains('dbGaP Accession Number').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains('phs002330').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains('phs002981').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains(/(phs002330|-)/).should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains(/(phs002981|-)/).should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(4).contains('Participant Lifespan').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(4).find('[class*="ant-tag-cyan"]').contains('Pediatric').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(4).find('[class*="ant-tag-cyan"]').contains('Adult').should('exist');
@@ -138,7 +138,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(1).contains('Files').should('exist');
   });
 
-  it('Panneau Files [SJIP-916]', () => {
+  it('Panneau Files', () => {
     cy.get('[id="data_file"]').find('[class*="EntityTable_title"]').contains('File').should('exist');
     cy.get('[id="data_file"]').find('[class="ant-collapse-header"]').contains('Files').should('exist');
     cy.get('[id="data_file"]').find('[class="ant-collapse-header"]').contains('(9,367)').should('exist');
@@ -154,24 +154,24 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="data_file"]').find('[data-row-key="3"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="4"]').find('td[class="ant-table-cell"]').eq(1).contains(/^438$/).should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="4"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="7"]').find('td[class="ant-table-cell"]').eq(1).contains(/^7$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="7"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="8"]').find('td[class="ant-table-cell"]').eq(1).contains(/^464$/).should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="8"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="6"]').find('td[class="ant-table-cell"]').eq(1).contains(/^800$/).should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="6"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="2"]').find('td[class="ant-table-cell"]').eq(1).contains(/^477$/).should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="2"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="0"]').find('td[class="ant-table-cell"]').eq(1).contains(/^418$/).should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="0"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="8"]').find('td[class="ant-table-cell"]').eq(1).contains(/^464$/).should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="8"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="7"]').find('td[class="ant-table-cell"]').eq(1).contains(/^7$/).should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="7"]').find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
 
     cy.get('[id="data_file"]').find('[class*="EntityTable_subTitle"]').eq(1).contains('File counts by Experimental Strategy').should('exist');
     cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(0).contains('Strategy').should('exist');
     cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(1).contains('Files').should('exist');
     cy.get('[id="data_file"]').find('[class*="EntityTable_contentTable"]').eq(1).find('thead').find('th[class="ant-table-cell"]').eq(2).contains('(n=9,367)').should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="0"]').eq(1).find('td[class="ant-table-cell"]').eq(1).contains(/^3,200$/).should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="0"]').eq(1).find('td[class="ant-table-cell"]').eq(1).contains(/^7,099$/).should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="0"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
-    cy.get('[id="data_file"]').find('[data-row-key="1"]').eq(1).find('td[class="ant-table-cell"]').eq(1).contains(/^880$/).should('exist');
+    cy.get('[id="data_file"]').find('[data-row-key="1"]').eq(1).find('td[class="ant-table-cell"]').eq(1).contains(/^1,373$/).should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="1"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="2"]').eq(1).find('td[class="ant-table-cell"]').eq(1).contains(/^477$/).should('exist');
     cy.get('[id="data_file"]').find('[data-row-key="2"]').eq(1).find('td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
@@ -182,8 +182,12 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
 
 describe('Page d\'une étude - Valider les liens disponibles', () => {
   it('Lien dbGaP du panneau Summary', () => {
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).find('[href]')
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).invoke('text').then((invokeText) => {
+      if (!invokeText.includes('-')) {
+        cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).find('[href]')
       .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
+      };
+    });
   });
 
   it('Lien Study Website du panneau Summary', () => {

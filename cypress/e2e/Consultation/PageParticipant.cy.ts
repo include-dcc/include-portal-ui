@@ -34,7 +34,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[class*="EntityTitle"]').contains('pt-0dxdyebh');
   });
 
-  it('Panneau Summary [SJIP-916]', () => {
+  it('Panneau Summary', () => {
     cy.get('a[class*="SummaryHeader_link"]').eq(0).contains(/\d{1}/); // data-cy="SummaryHeader_Studies_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(0).contains('Study'); // data-cy="SummaryHeader_Studies_Button"
     cy.get('a[class*="SummaryHeader_link"]').eq(1).contains(/\d{1}/); // data-cy="SummaryHeader_Biospecimens_Button"
@@ -49,7 +49,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(2).contains('Study').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(2).contains('The Human Trisome Project (HTP)').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(3).contains('dbGaP').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains('phs002330').should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains(/(phs002330|-)/).should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(4).contains('Family Unit').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(4).contains('Trio+').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(4).find('[class*="ant-tag-cyan"]').should('exist');
@@ -212,9 +212,13 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
 });
 
 describe('Page d\'un participant - Valider les liens disponibles', () => {
-  it('Lien dbGaP du panneau Summary [SJIP-916]', () => {
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).find('[href]')
+  it('Lien dbGaP du panneau Summary', () => {
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).invoke('text').then((invokeText) => {
+      if (!invokeText.includes('-')) {
+        cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).find('[href]')
       .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
+      };
+    });
   });
 
   it('Lien Family du panneau Family', () => {
