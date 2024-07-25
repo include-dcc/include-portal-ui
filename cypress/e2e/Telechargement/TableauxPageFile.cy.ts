@@ -1,5 +1,5 @@
 /// <reference types="cypress"/>
-import { getDateTime } from '../../support/utils';
+import { getDateTime, oneMinute } from '../../support/utils';
 
 const { strDate } = getDateTime();
 
@@ -12,8 +12,8 @@ describe('Page d\'un fichier - Exporter le tableau Participants-Samples en TSV',
   beforeEach(() => {
     cy.visitFileEntity('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz');
     cy.resetColumns('participant-sample');
-    cy.get('div[id="content"] svg[data-icon="download"]').eq(1).click({force:true});
-    cy.wait(1000);
+    cy.get('div[id="content"] svg[data-icon="download"]').eq(1).clickAndWait({force:true});
+    cy.waitUntilFile(oneMinute);
   });
   
   it('Valider le nom du fichier', () => {
