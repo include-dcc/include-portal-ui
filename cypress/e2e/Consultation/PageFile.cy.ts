@@ -8,21 +8,21 @@ beforeEach(() => {
 
 describe('Page d\'un fichier - Valider les redirections', () => {
   it('Studies', () => {
-    cy.get('a[class*="SummaryHeader_link"]').eq(0).click({force: true}); // data-cy="SummaryHeader_Studies_Button"
+    cy.get('a[class*="SummaryHeader_link"]').eq(0).clickAndWait({force: true}); // data-cy="SummaryHeader_Studies_Button"
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP').should('exist');
   });
   
   it('Participant', () => {
-    cy.get('a[class*="SummaryHeader_link"]').eq(1).click({force: true}); // data-cy="SummaryHeader_Participants_Button"
+    cy.get('a[class*="SummaryHeader_link"]').eq(1).clickAndWait({force: true}); // data-cy="SummaryHeader_Participants_Button"
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
   });
   
   it('Sample', () => {
-    cy.get('a[class*="SummaryHeader_link"]').eq(2).click({force: true}); // data-cy="SummaryHeader_Samples_Button"
+    cy.get('a[class*="SummaryHeader_link"]').eq(2).clickAndWait({force: true}); // data-cy="SummaryHeader_Samples_Button"
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
@@ -61,7 +61,7 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
     cy.get('[id="data-access"]').find('[class="ant-descriptions-item-label"]').eq(0).contains('Access').should('exist');
     cy.get('[id="data-access"]').find('[class="ant-descriptions-item-content"]').eq(0).contains('Controlled').should('exist');
     cy.get('[id="data-access"]').find('[class="ant-descriptions-item-label"]').eq(1).contains('dbGaP Accession Number').should('exist');
-    cy.get('[id="data-access"]').find('[class="ant-descriptions-item-content"]').eq(1).contains(/(phs002330|-)/).should('exist');
+    cy.get('[id="data-access"]').find('[class="ant-descriptions-item-content"]').eq(1).contains(/(phs002330|phs002981|-)/).should('exist');
   });
 
   it('Panneau Data Type', () => {
@@ -100,13 +100,13 @@ describe('Page d\'un fichier - Valider les liens disponibles', () => {
     cy.get('[id="data-access"]').find('[class="ant-descriptions-item-content"]').eq(1).invoke('text').then((invokeText) => {
       if (!invokeText.includes('-')) {
         cy.get('[id="data-access"]').find('[class="ant-descriptions-item-content"]').eq(1).find('[href]')
-      .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
+        .should('have.attr', 'href').and('match', /https:\/\/www\.ncbi\.nlm\.nih\.gov\/projects\/gap\/cgi-bin\/study\.cgi\?study_id\=(phs002330|phs002981)/);
       };
     });
   });
 
   it('Lien DataExploration du panneau Participants-Samples', () => {
-    cy.get('[id="participant-sample"] [class="ant-collapse-header"] button').click({force: true}); // data-cy="Participants_RedirectLink"
+    cy.get('[id="participant-sample"] [class="ant-collapse-header"] button').clickAndWait({force: true}); // data-cy="Participants_RedirectLink"
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
@@ -114,7 +114,7 @@ describe('Page d\'un fichier - Valider les liens disponibles', () => {
 
   it('Lien Participant ID du panneau Participants-Samples', () => {
     cy.resetColumns('participant-sample');
-    cy.get('[data-row-key="pt-0dxdyebh"]').find('td[class="ant-table-cell"]').eq(0).find('[href]').click({force: true});
+    cy.get('[data-row-key="pt-0dxdyebh"]').find('td[class="ant-table-cell"]').eq(0).find('[href]').clickAndWait({force: true});
     cy.get('[id="participant-entity-page"]').should('exist');
     cy.get('[class*="EntityTitle"]').contains('pt-0dxdyebh');
   });
@@ -123,33 +123,33 @@ describe('Page d\'un fichier - Valider les liens disponibles', () => {
 describe('Page d\'un fichier - Valider les panneaux masquables', () => {
   it('Panneau Summary', () => {
     cy.get('[id="summary"]').find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('[id="summary"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="summary"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="summary"]').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('[id="summary"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="summary"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="summary"]').find('div[class*="ant-collapse-content-active"]').should('exist');
   });
 
   it('Panneau Data Access', () => {
     cy.get('[id="data-access"]').find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('[id="data-access"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="data-access"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="data-access"]').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('[id="data-access"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="data-access"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="data-access"]').find('div[class*="ant-collapse-content-active"]').should('exist');
   });
 
   it('Panneau Data Type', () => {
     cy.get('[id="data-type"]').find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('[id="data-type"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="data-type"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="data-type"]').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('[id="data-type"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="data-type"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="data-type"]').find('div[class*="ant-collapse-content-active"]').should('exist');
   });
 
   it('Panneau Participants-Samples', () => {
     cy.get('[id="participant-sample"]').find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('[id="participant-sample"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="participant-sample"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="participant-sample"]').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('[id="participant-sample"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="participant-sample"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="participant-sample"]').find('div[class*="ant-collapse-content-active"]').should('exist');
   });
 });

@@ -45,7 +45,7 @@ describe('Page des variants - Consultation du tableau', () => {
   });
  
   it('Valider les liens disponibles Lien Variant', () => {
-    cy.get('tr[data-row-key]').eq(0).contains('chr1:g.108192590T>C').click({force: true});
+    cy.get('tr[data-row-key]').eq(0).contains('chr1:g.108192590T>C').clickAndWait({force: true});
     cy.get('[class*="EntityTitle"]').contains('chr1:g.108192590T>C');
   });
  
@@ -60,7 +60,7 @@ describe('Page des variants - Consultation du tableau', () => {
   });
  
   it('Valider les liens disponibles Lien Gene Plus', () => {
-    cy.get('tr[data-row-key]').eq(0).find('td').eq(4).find('[data-icon="plus"]').click({force: true});
+    cy.get('tr[data-row-key]').eq(0).find('td').eq(4).find('[data-icon="plus"]').clickAndWait({force: true});
     cy.validatePillSelectedQuery('Genes Symbol', ['SLC25A24']);
   });
  
@@ -75,17 +75,17 @@ describe('Page des variants - Consultation du tableau', () => {
   });
  
   it('Valider les liens disponibles Lien Part.', () => {
-    cy.get('[id="query-builder-header-tools"] [data-icon="plus"]').click({force: true});
+    cy.get('[id="query-builder-header-tools"] [data-icon="plus"]').clickAndWait({force: true});
     cy.sortTableAndIntercept('Part.', 1);
     cy.sortTableAndIntercept('Part.', 1);
-    cy.get('tr[data-row-key]').eq(0).find('td').eq(11).find('a[href]').click({force: true});
+    cy.get('tr[data-row-key]').eq(0).find('td').eq(11).find('a[href]').clickAndWait({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Participant ID').should('exist');
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('PT').should('exist');
   });
  
   it('Valider les liens disponibles Lien Studies', () => {
-    cy.get('tr[data-row-key]').eq(0).find('td').eq(12).find('a[href]').click({force: true});
+    cy.get('tr[data-row-key]').eq(0).find('td').eq(12).find('a[href]').clickAndWait({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('DS360-CHD').should('exist');
@@ -103,8 +103,6 @@ describe('Page des variants - Consultation du tableau', () => {
   });
   
   it('Valider les fonctionnalités du tableau - Tri Variant', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Variant', 1);
     cy.validateTableFirstRow('-', 1, true);
     cy.sortTableAndIntercept('Variant', 1);
@@ -112,8 +110,6 @@ describe('Page des variants - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri Type', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Type', 1);
     cy.validateTableFirstRow('-', 2, true);
     cy.sortTableAndIntercept('Type', 1);
@@ -121,8 +117,6 @@ describe('Page des variants - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri gnomAD', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept(/^gnomAD$/, 1);
     cy.validateTableFirstRow('-', 9, true);
     cy.sortTableAndIntercept(/^gnomAD$/, 1);
@@ -130,8 +124,6 @@ describe('Page des variants - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri gnomAD ALT', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('gnomAD ALT', 1);
     cy.validateTableFirstRow('-', 10, true);
     cy.sortTableAndIntercept('gnomAD ALT', 1);
@@ -139,8 +131,6 @@ describe('Page des variants - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri Part.', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Part.', 1);
     cy.validateTableFirstRow(/^1/, 11, true);
     cy.sortTableAndIntercept('Part.', 1);
@@ -148,8 +138,6 @@ describe('Page des variants - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri ALT', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept(/^ALT$/, 1);
     cy.validateTableFirstRow(/^1$/, 15, true);
     cy.sortTableAndIntercept(/^ALT$/, 1);
@@ -157,8 +145,6 @@ describe('Page des variants - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri Homo.', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Homo.', 1);
     cy.validateTableFirstRow(/^0$/, 16, true);
     cy.sortTableAndIntercept('Homo.', 1);
@@ -166,8 +152,6 @@ describe('Page des variants - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Type', 1);
     cy.sortTableAndIntercept('Type', 1);
     cy.sortTableAndIntercept('Variant', 1);
@@ -176,32 +160,32 @@ describe('Page des variants - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Pagination', () => {
-    cy.get('body').find('span[class*="ant-select-selection-item"]').click({force: true});
-    cy.get('body').find('div[class*="ant-select-item-option-content"]').contains('20').click({force: true});
+    cy.get('body').find('span[class*="ant-select-selection-item"]').clickAndWait({force: true});
+    cy.get('body').find('div[class*="ant-select-item-option-content"]').contains('20').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^1$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^20$/).should('exist');
     cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('be.disabled');
     cy.get('body').find('button[type="button"]').contains('First').parent('button').should('be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('Next').click({force: true});
+    cy.get('body').find('button[type="button"]').contains('Next').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^21$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^40$/).should('exist');
     cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
     cy.get('body').find('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('Next').click({force: true});
+    cy.get('body').find('button[type="button"]').contains('Next').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^41$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^60$/).should('exist');
     cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
     cy.get('body').find('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('Prev.').click({force: true});
+    cy.get('body').find('button[type="button"]').contains('Prev.').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^21$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^40$/).should('exist');
     cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
     cy.get('body').find('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('First').click({force: true});
+    cy.get('body').find('button[type="button"]').contains('First').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^1$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^20$/).should('exist');
     cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('be.disabled');

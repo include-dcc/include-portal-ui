@@ -24,7 +24,7 @@ describe('Page des études - Vérifier les informations affichées', () => {
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(2).contains('The Human Trisome Project').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(3).contains('INCLUDE').should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(4).contains('All Co-occurring Conditions').should('exist');
-    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(5).contains(/(phs002330|-)/).should('exist');
+    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(5).contains(/(phs002330|phs002981|-)/).should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(6).contains(/\d{1}/).should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(7).contains(/\d{1}/).should('exist');
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(8).contains(/\d{1}/).should('exist');
@@ -49,7 +49,7 @@ describe('Page des études - Vérifier les informations affichées', () => {
 
 describe('Page des études - Valider les liens disponibles', () => {
   it('Lien Code du tableau', () => {
-    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(1).find('[href]').click({force: true});
+    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(1).find('[href]').clickAndWait({force: true});
     cy.get('[class*="EntityTitle"]').contains('The Human Trisome Project').should('exist');
   });
 
@@ -57,36 +57,36 @@ describe('Page des études - Valider les liens disponibles', () => {
     cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(5).invoke('text').then((invokeText) => {
       if (!invokeText.includes('-')) {
         cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(5).find('[href]')
-      .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
+        .should('have.attr', 'href').and('match', /https:\/\/www\.ncbi\.nlm\.nih\.gov\/projects\/gap\/cgi-bin\/study\.cgi\?study_id\=(phs002330|phs002981)/);
       };
     });
   });
 
   it('Lien Participants du tableau', () => {
-    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(6).find('[href]').click({force: true});
+    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(6).find('[href]').clickAndWait({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP').should('exist');
   });
 
   it('Lien Biospecimens du tableau', () => {
-    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(8).find('[href]').click({force: true});
+    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(8).find('[href]').clickAndWait({force: true});
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP').should('exist');
   });
 
   it('Lien Files du tableau', () => {
-    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(9).find('[href]').click({force: true});
+    cy.get('tr[data-row-key="HTP"]').find('[class="ant-table-cell"]').eq(9).find('[href]').clickAndWait({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP').should('exist');
   });
 
   it('Lien \'See more\' de Data Source du tableau', () => {
-    cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See more').click({force: true});
+    cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See more').clickAndWait({force: true});
     cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).contains('Participant or Caregiver Report').should('exist');
-    cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See less').click({force: true});
+    cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See less').clickAndWait({force: true});
     cy.get('tr[data-row-key="HTP"]').find('[class*="ant-table-cell"]').eq(17).contains('Participant or Caregiver Report').should('not.exist');
   });
 });
@@ -94,8 +94,6 @@ describe('Page des études - Valider les liens disponibles', () => {
 
 describe('Page des études - Consultation du tableau', () => {
   it('Valider les fonctionnalités du tableau - Tri Code', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndWait('Code');
     cy.validateTableFirstRow('ABC-DS', 1);
     cy.sortTableAndIntercept('Code', 1);
@@ -103,8 +101,6 @@ describe('Page des études - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri Name', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Name', 1);
     cy.validateTableFirstRow('Alzheimer Biomarker Consortium - Down Syndrome', 2);
     cy.sortTableAndIntercept('Name', 1);
@@ -112,8 +108,6 @@ describe('Page des études - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri dbGaP', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('dbGaP', 1);
     cy.validateTableFirstRow('-', 5);
     cy.sortTableAndIntercept('dbGaP', 1);
@@ -121,8 +115,6 @@ describe('Page des études - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri Participants', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Participants', 1);
     cy.validateTableFirstRow(/\d{1}/, 6);
     cy.sortTableAndIntercept('Participants', 1);
@@ -130,8 +122,6 @@ describe('Page des études - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri Families', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Families', 1);
     cy.validateTableFirstRow('-', 7);
     cy.sortTableAndIntercept('Families', 1);
@@ -139,8 +129,6 @@ describe('Page des études - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri Biospecimens', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Biospecimen', 1);
     cy.validateTableFirstRow('-', 8);
     cy.sortTableAndIntercept('Biospecimen', 1);
@@ -148,8 +136,6 @@ describe('Page des études - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri Files', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Files', 1);
     cy.validateTableFirstRow('-', 9);
     cy.sortTableAndIntercept('Files', 1);
@@ -157,8 +143,6 @@ describe('Page des études - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {
-    cy.waitWhileSpin(2000);
-
     cy.sortTableAndIntercept('Families', 1);
     cy.sortTableAndIntercept('Biospecimen', 1);
     cy.sortTableAndIntercept('Biospecimen', 1);

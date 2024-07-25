@@ -116,7 +116,7 @@ describe('Page Dashboard - Widget Authorized Studies (connecté)', () => {
       }
     });
 
-    cy.get('@authStudiesCard').find('[href="/data-exploration/datafiles"]').eq(0).click({force: true});
+    cy.get('@authStudiesCard').find('[href="/data-exploration/datafiles"]').eq(0).clickAndWait({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist');
     cy.validatePillSelectedQuery('Study Code', ['Study Cypress']);
     cy.validatePillSelectedQuery('Acl', ['Phs012345.cy','Open Access'], 1);

@@ -1,6 +1,7 @@
 /// <reference types="cypress"/>
 import '@testing-library/cypress/add-commands';
 import createUUID from './createUUID';
+import { oneMinute } from '../support/utils';
 
 export interface Replacement {
   placeholder: string;
@@ -9,13 +10,13 @@ export interface Replacement {
 
 Cypress.Commands.add('checkValueFacetAndApply', (facetTitle: string, value: string) => {
   cy.get(`[aria-expanded="true"] [data-cy="FilterContainer_${facetTitle}"]`).should('exist');
-  cy.wait(1000);
+  cy.waitWhileSpin(oneMinute);
   cy.get(`[data-cy="FilterContainer_${facetTitle}"]`).parentsUntil('.FilterContainer_filterContainer__8Dsbs')
     .find('button').then(($button) => {
     if ($button.hasClass('ant-btn-link')) {
       cy.get(`[data-cy="FilterContainer_${facetTitle}"]`).parentsUntil('.FilterContainer_filterContainer__8Dsbs')
-        .find('button[class*="CheckboxFilter_filtersTypesFooter"]').click({force: true});
-      cy.wait(1000);
+        .find('button[class*="CheckboxFilter_filtersTypesFooter"]').clickAndWait({force: true});
+        cy.waitWhileSpin(oneMinute);
     };
   });
  
@@ -25,23 +26,23 @@ Cypress.Commands.add('checkValueFacetAndApply', (facetTitle: string, value: stri
 
 Cypress.Commands.add('checkValueFacet', (facetTitle: string, value: string) => {
   cy.get(`[aria-expanded="true"] [data-cy="FilterContainer_${facetTitle}"]`).should('exist');
-  cy.waitWhileSpin(1000);
+  cy.waitWhileSpin(oneMinute);
   cy.get(`[data-cy="FilterContainer_${facetTitle}"]`).parentsUntil('.FilterContainer_filterContainer__8Dsbs')
     .find('button').then(($button) => {
     if ($button.hasClass('ant-btn-link')) {
       cy.get(`[data-cy="FilterContainer_${facetTitle}"]`).parentsUntil('.FilterContainer_filterContainer__8Dsbs')
-        .find('button[class*="CheckboxFilter_filtersTypesFooter"]').click({force: true});
-        cy.waitWhileSpin(1000);
+        .find('button[class*="CheckboxFilter_filtersTypesFooter"]').clickAndWait({force: true});
+        cy.waitWhileSpin(oneMinute);
       };
   });
 
   cy.intercept('POST', '**/graphql').as('getPOSTgraphql');
   cy.get(`[data-cy="Checkbox_${facetTitle}_${value}"]`).check({force: true});
   for (let i = 0; i < 15; i++) {
-    cy.wait('@getPOSTgraphql', {timeout: 20*1000});
+    cy.wait('@getPOSTgraphql', {timeout: oneMinute});
   };
 
-  cy.wait(1000);
+  cy.waitWhileSpin(oneMinute);
 });
 
 Cypress.Commands.add('clickAndIntercept', (selector: string, methodHTTP: string, routeMatcher: string, nbCalls: number, eq?: number) => {
@@ -51,20 +52,25 @@ Cypress.Commands.add('clickAndIntercept', (selector: string, methodHTTP: string,
 
   cy.intercept(methodHTTP, routeMatcher).as('getRouteMatcher');
 
-  cy.get(selector).eq(eq).click({force: true});
+  cy.get(selector).eq(eq).clickAndWait({force: true});
 
   for (let i = 0; i < nbCalls; i++) {
-    cy.wait('@getRouteMatcher', {timeout: 20*1000});
+    cy.wait('@getRouteMatcher', {timeout: oneMinute});
   };
 
-  cy.wait(1000);
+  cy.waitWhileSpin(oneMinute);
+});
+
+Cypress.Commands.add('clickAndWait', { prevSubject: 'element' }, (subject, options) => {
+  cy.wrap(subject).click(options);
+  cy.waitWhileSpin(oneMinute);
 });
 
 Cypress.Commands.add('closePopup', () => {
   cy.get('body')
     .find('button').then(($button) => {
       if ($button.hasClass('close')) {
-          cy.get('body').find('button[class="close"]').click({force: true});
+          cy.get('body').find('button[class="close"]').clickAndWait({force: true});
       };
   });
 });
@@ -84,7 +90,7 @@ Cypress.Commands.add('createBioReqIfNotExists', (bioreqName: string, itemPositio
 });
 
 Cypress.Commands.add('createFilterIfNotExists', (filterName: string) => {
-  cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').click({force: true});
+  cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').clickAndWait({force: true});
   cy.get('[class*="ant-dropdown-menu-root"]').invoke('text').then((invokeText) => {
     if (!invokeText.includes(filterName)) {
       cy.saveFilterAs(filterName);
@@ -112,7 +118,7 @@ Cypress.Commands.add('deleteBioReqIfExists', (bioreqName: string) => {
     if (invokeText.includes(bioreqName)) {
       cy.get('[class*="ListItemWithActions_fuiListItemWithActions"]').each(($el: JQuery<HTMLElement>) => {
         if ($el.text().includes(bioreqName)) {
-          cy.wrap($el).find('svg[data-icon="delete"]').click({force:true});
+          cy.wrap($el).find('svg[data-icon="delete"]').clickAndWait({force:true});
           cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-dangerous"]', 'DELETE', '**/sets/**', 1);
         };
       });
@@ -128,17 +134,17 @@ Cypress.Commands.add('deleteBioReqIfExists', (bioreqName: string) => {
 });
 
 Cypress.Commands.add('deleteFilter', (filterName: string) => {
-  cy.get('[class*="ant-dropdown-menu-title-content"]').contains(filterName).click({force: true});
+  cy.get('[class*="ant-dropdown-menu-title-content"]').contains(filterName).clickAndWait({force: true});
   cy.get('[id="query-builder-header-tools"] [class*="Header_togglerTitle"]').contains(filterName).should('exist');
-  cy.get('[id="query-builder-header-tools"] [class*="anticon-delete"]').click({force: true});
+  cy.get('[id="query-builder-header-tools"] [class*="anticon-delete"]').clickAndWait({force: true});
   cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-dangerous"]', 'POST', '**/graphql', 1);
 
-  cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').click({force: true});
+  cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').clickAndWait({force: true});
   cy.get('[class*="ant-dropdown-menu-root"]').contains(filterName).should('not.exist');
 });
 
 Cypress.Commands.add('deleteFilterIfExists', (filterName: string) => {
-  cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').click({force: true});
+  cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').clickAndWait({force: true});
   cy.get('[class*="ant-dropdown-menu-root"]').invoke('text').then((invokeText) => {
     if (invokeText.includes(filterName)) {
       cy.deleteFilter(filterName);
@@ -148,8 +154,8 @@ Cypress.Commands.add('deleteFilterIfExists', (filterName: string) => {
 
 Cypress.Commands.add('deleteSet', (dataNodeKey: string, setName: string) => {
   cy.visitDashboard();
-  cy.get(`[class*="SavedSets_setTabs"] [data-node-key="${dataNodeKey}"]`).click({force: true});
-  cy.get('[class*="SavedSets_setTabs"] [class*="ant-tabs-tabpane-active"]').contains(setName).parentsUntil('[class*="ListItem_savedSetListItem"]').parent().find('[class*="anticon-delete"]').click({force: true});
+  cy.get(`[class*="SavedSets_setTabs"] [data-node-key="${dataNodeKey}"]`).clickAndWait({force: true});
+  cy.get('[class*="SavedSets_setTabs"] [class*="ant-tabs-tabpane-active"]').contains(setName).parentsUntil('[class*="ListItem_savedSetListItem"]').parent().find('[class*="anticon-delete"]').clickAndWait({force: true});
   cy.clickAndIntercept('[class="ant-modal-confirm-body-wrapper"] button[class*="ant-btn-dangerous"]', 'DELETE', '**/sets/**', 1);
 
   cy.get('[class*="SavedSets_setTabs"] [class*="ant-tabs-tabpane-active"]').contains(setName).should('not.exist');
@@ -157,7 +163,7 @@ Cypress.Commands.add('deleteSet', (dataNodeKey: string, setName: string) => {
 
 Cypress.Commands.add('deleteSetIfExists', (dataNodeKey: string, setName: string) => {
   cy.visitDashboard();
-  cy.get(`[class*="SavedSets_setTabs"] [data-node-key="${dataNodeKey}"]`).click({force: true}); // data-cy="Tab_Biospecimens"
+  cy.get(`[class*="SavedSets_setTabs"] [data-node-key="${dataNodeKey}"]`).clickAndWait({force: true}); // data-cy="Tab_Biospecimens"
   cy.get('[class*="SavedSets_setTabs"] [class*="ant-tabs-tabpane-active"]').invoke('text').then((invokeText) => {
     if (invokeText.includes(setName)) {
       cy.deleteSet(dataNodeKey, setName);
@@ -203,24 +209,23 @@ Cypress.Commands.add('login', () => {
       });
     });
 
-    cy.wait(2000);
+    cy.waitWhileSpin(oneMinute);
     cy.visit('/dashboard');
  });
 });
 
 Cypress.Commands.add('logout', () => {
-    cy.visit('/');
-    cy.wait(5*1000);
+  cy.visit('/');
+  cy.waitWhileSpin(oneMinute);
 
-    cy.get('div').then(($div) => {
-        if ($div.hasClass('App')) {
-            cy.get('[data-icon="down"]').eq(1).click({force: true});
-            cy.get('[data-menu-id*="logout"]').click({force: true});
-        };
-    });
+  cy.get('div').then(($div) => {
+      if ($div.hasClass('App')) {
+          cy.get('[data-icon="down"]').eq(1).clickAndWait({force: true});
+          cy.get('[data-menu-id*="logout"]').clickAndWait({force: true});
+      };
+  });
 
-//  cy.exec('npm cache clear --force');
-  cy.wait(1000);
+  cy.waitWhileSpin(oneMinute);
 });
 
 Cypress.Commands.add('removeFilesFromFolder', (folder: string) => {
@@ -237,23 +242,23 @@ Cypress.Commands.add('resetColumns', (table_id?: string) => {
     cySettings = cy.get(`[id="${table_id}"]`).find('svg[data-icon="setting"]');
   }
 
-  cySettings.click({force: true});
-  cy.get('button[class*="ProTablePopoverColumnResetBtn"]').click({force: true});
+  cySettings.clickAndWait({force: true});
+  cy.get('button[class*="ProTablePopoverColumnResetBtn"]').clickAndWait({force: true});
   cy.get('button[class*="ProTablePopoverColumnResetBtn"]').should('be.disabled', {timeout: 20*1000});
-  cySettings.click({force: true});
-  cy.get('[class*="Header_logo"]').click({force: true});
+  cySettings.clickAndWait({force: true});
+  cy.get('[class*="Header_logo"]').clickAndWait({force: true});
 });
 
 Cypress.Commands.add('saveBioReqAs', (bioreqName: string, itemPosition: number) => {
   cy.visitDataExploration('biospecimens');
-  cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').click({force: true});
+  cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').clickAndWait({force: true});
   cy.get('div[role="tabpanel"] [class*="ant-table-row"], [class="ant-table-body"] [class*="ant-table-row"]').eq(itemPosition).find('[type="checkbox"]').check({force: true});
   cy.get('button').each(($el: JQuery<HTMLElement>) => {
     if ($el.text().includes('Request biospecimen')) {
       cy.wrap($el).as('button');
     };
   });
-  cy.get('@button').click({force: true});
+  cy.get('@button').clickAndWait({force: true});
   cy.get('[class*="requestBiospecimen_modalWrapper"] input').clear();
   cy.get('[class*="requestBiospecimen_modalWrapper"] input').type(bioreqName);
   cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-primary"]', 'POST', '** /biospecimen-request', 1);
@@ -262,7 +267,7 @@ Cypress.Commands.add('saveBioReqAs', (bioreqName: string, itemPosition: number) 
 });
 
 Cypress.Commands.add('saveFilterAs', (filterName: string) => {
-  cy.get('button[class*="Header_iconBtnAction"]').click({force: true});
+  cy.get('button[class*="Header_iconBtnAction"]').clickAndWait({force: true});
   cy.get('[class="ant-modal-content"] input').clear().type(filterName);
   cy.get(`[class="ant-modal-content"] input[value="`+filterName+`"]`).should('exist');
   cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-primary"]', 'POST', '**/saved-filters', 1);
@@ -272,8 +277,8 @@ Cypress.Commands.add('saveFilterAs', (filterName: string) => {
 
 Cypress.Commands.add('saveSetAs', (setName: string, itemPosition: number) => {
   cy.get('div[role="tabpanel"] [class*="ant-table-row"], [class="ant-table-body"] [class*="ant-table-row"]').eq(itemPosition).find('[type="checkbox"]').check({force: true});
-  cy.get('[id*="-set-dropdown-container"] button').click({force: true});
-  cy.get('[data-menu-id*="-create"]').click({force: true});
+  cy.get('[id*="-set-dropdown-container"] button').clickAndWait({force: true});
+  cy.get('[data-menu-id*="-create"]').clickAndWait({force: true});
   cy.get('form[id="save-set"] input').clear();
   cy.get('form[id="save-set"] input').type(setName);
   cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-primary"]', 'POST', '**/sets', 1);
@@ -287,26 +292,25 @@ Cypress.Commands.add('showColumn', (column: string|RegExp) => {
   cy.get('div[class="ant-popover-inner"]')
     .find('div[class="ant-space-item"]').contains(column)
     .find('[type="checkbox"]').check({force: true});
-  cy.wait('@getPOSTuser', {timeout: 20*1000});
-  cy.get('[class*="Header_logo"]').click({force: true});
-  cy.wait(1000);
+  cy.wait('@getPOSTuser', {timeout: oneMinute});
+  cy.get('[class*="Header_logo"]').clickAndWait({force: true});
+  cy.waitWhileSpin(oneMinute);
 });
 
 Cypress.Commands.add('sortTableAndIntercept', (column: string|RegExp, nbCalls: number) => {
   cy.intercept('POST', '**/graphql').as('getPOSTgraphql');
 
-  cy.get('thead[class="ant-table-thead"]').contains(column).click({force: true});
+  cy.get('thead[class="ant-table-thead"]').contains(column).clickAndWait({force: true});
 
   for (let i = 0; i < nbCalls; i++) {
-    cy.wait('@getPOSTgraphql', {timeout: 60*1000});
+    cy.wait('@getPOSTgraphql', {timeout: oneMinute});
   };
 
-  cy.waitWhileSpin(3000);
-  cy.wait(1000);
+  cy.waitWhileSpin(oneMinute);
 });
 
 Cypress.Commands.add('sortTableAndWait', (column: string) => {
-  cy.get('thead[class="ant-table-thead"]').contains(column).click({force: true});
+  cy.get('thead[class="ant-table-thead"]').contains(column).clickAndWait({force: true});
   cy.wait(1000);
 });
 
@@ -316,10 +320,10 @@ Cypress.Commands.add('typeAndIntercept', (selector: string, text: string, method
   cy.get(selector).find('input').type(text, {force: true});
 
   for (let i = 0; i < nbCalls; i++) {
-    cy.wait('@getRouteMatcher', {timeout: 60*1000});
+    cy.wait('@getRouteMatcher', {timeout: oneMinute});
   };
 
-  cy.wait(1000);
+  cy.waitWhileSpin(oneMinute);
 });
 
 Cypress.Commands.add('validateClearAllButton', (shouldExist: boolean) => {
@@ -342,7 +346,7 @@ Cypress.Commands.add('validateFacetFilter', (facetTitle: string, valueFront: str
 Cypress.Commands.add('validateFacetNumFilter', (facetTitle: string, value: string, expectedCount: string|RegExp) => {
   cy.wait(2000);
   cy.get(`[data-cy="InputNumber_Max_${facetTitle}"]`).type(value, {force: true});
-  cy.get(`[data-cy="Button_Apply_${facetTitle}"]`).click({force: true});
+  cy.get(`[data-cy="Button_Apply_${facetTitle}"]`).clickAndWait({force: true});
 
   cy.validatePillSelectedQuery(facetTitle, [value]);
   cy.get('body').contains(expectedCount).should('exist');
@@ -395,8 +399,8 @@ Cypress.Commands.add('validateFileName', (namePattern: string) => {
 });
 
 Cypress.Commands.add('validateFilterInManager', (filterName: string, expect: string) => {
-  cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').click({force: true});
-  cy.get('[data-menu-id*="manage-my-filters"]').click({force: true});
+  cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').clickAndWait({force: true});
+  cy.get('[data-menu-id*="manage-my-filters"]').clickAndWait({force: true});
   cy.get('[class="ant-modal-content"]').contains(filterName).should(expect);
   cy.get('button[class="ant-modal-close"]').invoke('click');
 });
@@ -426,12 +430,12 @@ Cypress.Commands.add('validatePillSelectedQuery', (facetTitle: string|RegExp, va
 });
 
 Cypress.Commands.add('validateSelectedFilterInDropdown', (filterName: string) => {
-  cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').click({force: true});
+  cy.get('button[class*="QueryBuilderHeaderTools_queryBuilderHeaderDdb"]').clickAndWait({force: true});
   cy.get('[class*="ant-dropdown-menu-item-selected"]').contains(filterName).should('exist');
 });
 
 Cypress.Commands.add('validateTableFirstRow', (expectedValue: string|RegExp, eq: number, hasCheckbox: boolean = false) => {
-  cy.get('.ant-spin-container').should('not.have.class', 'ant-spin-blur', {timeout: 5*1000});
+  cy.wait(1000);
   cy.get('tr[class*="ant-table-row"]').eq(0)
   .then(($firstRow) => {
     cy.wrap($firstRow).find('td').eq(eq).contains(expectedValue).should('exist');
@@ -456,22 +460,25 @@ Cypress.Commands.add('visitAndIntercept', (url: string, methodHTTP: string, rout
   cy.intercept(methodHTTP, routeMatcher).as('getRouteMatcher');
 
   cy.visit(url);
+  cy.waitWhileSpin(oneMinute);
 
   for (let i = 0; i < nbCalls; i++) {
-    cy.wait('@getRouteMatcher', {timeout: 60*1000});
+    cy.wait('@getRouteMatcher');
   };
-
   cy.wait(1000);
 });
 
 Cypress.Commands.add('visitCommunityPage', () => {
   cy.visit('/community');
-  cy.get('[class*="Community_title"]', {timeout: 60 * 1000}); // data-cy="Title_Community"
+  cy.waitWhileSpin(oneMinute);
+  cy.get('[class*="Community_title"]'); // data-cy="Title_Community"
 });
 
 Cypress.Commands.add('visitDashboard', () => {
   cy.visit('/dashboard');
-  cy.get('[class*="Dashboard_greeting"]', {timeout: 60 * 1000}); // data-cy="Title_Dashboard"
+  cy.waitWhileSpin(oneMinute);
+  cy.get('[class*="Dashboard_greeting"]'); // data-cy="Title_Dashboard"
+  cy.waitWhileSpin(oneMinute);
 });
 
 Cypress.Commands.add('visitDataExploration', (tab?: string, sharedFilterOption?: string) => {
@@ -512,7 +519,7 @@ cy.visitAndIntercept('/profile/settings',
 Cypress.Commands.add('visitProfileViewPage', () => {
   cy.visit('/member/822b5b29-9e2f-4d3a-9a66-0c23d34007f8');
   cy.get('[class*="UserAvatar_userAvatarRound"]').should('exist'); // data-cy="AvatarHeader"
-  cy.wait(1000);
+  cy.waitWhileSpin(oneMinute);
 });
 
 Cypress.Commands.add('visitStudyEntity', (studyId: string, nbCalls: number) => {
@@ -529,8 +536,7 @@ Cypress.Commands.add('visitStudiesPage', () => {
                        1);
   cy.get('[class*="Header_ProTableHeader"]').find('button').then(($button) => {
     if ($button.hasClass('Header_clearFilterLink')) {
-      cy.get(`button[class*="Header_clearFilterLink"]`).click({force: true});
-        cy.waitWhileSpin(1000);
+      cy.get(`button[class*="Header_clearFilterLink"]`).clickAndWait({force: true});
       };
     });
   cy.resetColumns();
@@ -552,12 +558,44 @@ Cypress.Commands.add('visitVariantsPage', (sharedFilterOption?: string) => {
   cy.resetColumns();
 });
 
-Cypress.Commands.add('waitWhileSpin', (ms: number) => {
-  cy.get('body').should(($body) => {
-    if ($body.hasClass('ant-spin-container')) {
-      cy.get('.ant-spin-container').should('not.have.class', 'ant-spin-blur', {timeout: ms});
+Cypress.Commands.add('waitUntilFile', (ms: number) => {
+  const start = new Date().getTime();
+
+  function checkFile(): any {
+    const now = new Date().getTime();
+    if (now - start > ms) {
+      throw new Error(`Timed out after ${ms}ms waiting for file`);
     }
-  });
+
+    return cy.task('fileExists', `${Cypress.config('downloadsFolder')}`).then((exists) => {
+      if (exists) {
+        return true;
+      } else {
+        return cy.wait(500).then(checkFile);
+      }
+    });
+  }
+
+  return checkFile();
+});
+
+Cypress.Commands.add('waitWhileSpin', (ms: number) => {
+  const start = new Date().getTime();
+
+  function checkForSpinners():any {
+    const now = new Date().getTime();
+    if (now - start > ms) {
+      throw new Error(`Timed out after ${ms}ms waiting for spinners to disappear`);
+    };
+
+    return cy.get('body').then(($body) => {
+      if ($body.find('.ant-spin-blur').length > 0) {
+        return cy.wait(500).then(checkForSpinners);
+      };
+    });
+  };
+
+  return checkForSpinners();
 });
 
 Cypress.Commands.overwrite('log', (subject, message) => cy.task('log', message));
