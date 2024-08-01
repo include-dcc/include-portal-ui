@@ -8,21 +8,79 @@
 ### Technical / Other changes
 -->
 
+## 2024-08-06 include-portal-ui 1.12.0
+
+### Features:
+
+- [SJIP-807](https://d3b.atlassian.net/browse/SJIP-807) Feature: [Landing] Add Demographic Charts
+- [SJIP-768](https://d3b.atlassian.net/browse/SJIP-768) Feature: [Landing] Add Co-occurring Charts
+- [SJIP-808](https://d3b.atlassian.net/browse/SJIP-808) Feature: [Studies] Search by study description
+- [SJIP-805](https://d3b.atlassian.net/browse/SJIP-805) Feature: [Summary View] Add Most Frequent Diagnoses/Phenotype graphs
+- [SJIP-803](https://d3b.atlassian.net/browse/SJIP-803) Feature: [Study Entity] Add Download data, svg, png functionality to Statistic charts
+
+### Technical/ Other changes:
+
+- [SJIP-829](https://d3b.atlassian.net/browse/SJIP-829) Fix: [Data exploration & Entity] Adjust authorization icon and flow for controlled files governed by the Cavatica DRS
+- [SJIP-838](https://d3b.atlassian.net/browse/SJIP-838) Fix: [Landing] Improve distribution of Y-axis and X-axis label
+- [SJIP-908](https://d3b.atlassian.net/browse/SJIP-908) Task: [ETL] Remove Harmonize Tag & field in Studies page
+- [SJIP-907](https://d3b.atlassian.net/browse/SJIP-907) Task: [ETL] Ingest Family Role from INCLUDE FHIR
+- [SJIP-916](https://d3b.atlassian.net/browse/SJIP-916) Fix: [Data] Many regressions
+- [SJIP-920](https://d3b.atlassian.net/browse/SJIP-920) Update: [Authentication] Upgrade Keycloak Server to 23
+- [SJIP-902](https://d3b.atlassian.net/browse/SJIP-902) Fix: [Summary View] Adjust the parameter to not auto-adjust the width of the Bar charts
+- [SJIP-897](https://d3b.atlassian.net/browse/SJIP-897) Refactor: [Biospecimen Request] Use ferlab ui component
+- [SJIP-890](https://d3b.atlassian.net/browse/SJIP-890) Fix: [Share] Manage share link if you are not login
+- [SJIP-886](https://d3b.atlassian.net/browse/SJIP-886) Fix: [Studies page] Study_centric, dynamise data_types vs using Mock
+- [SJIP-884](https://d3b.atlassian.net/browse/SJIP-884) Fix: [Profile] Typo in title
+- [SJIP-879](https://d3b.atlassian.net/browse/SJIP-879) Fix: [Biospecimen Request] Share should not update the request
+- [SJIP-865](https://d3b.atlassian.net/browse/SJIP-865) Fix: [Data] Fixes to do after new data load
+- [SJIP-854](https://d3b.atlassian.net/browse/SJIP-854) Fix: [Cavatica] Remove metadata sent via Analyze in Cavatica/Bulk import api
+- [SJIP-850](https://d3b.atlassian.net/browse/SJIP-850) Fix: [Cavatica] Remove metadata sent to cavatica 
+- [SJIP-848](https://d3b.atlassian.net/browse/SJIP-848) Fix: [Data Exploration] MONDO are not displayed
+- [SJIP-833](https://d3b.atlassian.net/browse/SJIP-833) Fix: [Summary View] Demographics chart cannot be moved
+- [SJIP-831](https://d3b.atlassian.net/browse/SJIP-831) Fix: [Summary View] Charts can't be resized
+- [SJIP-826](https://d3b.atlassian.net/browse/SJIP-826) Task: [Google Analytics] Add analytics on Sunburst
+- [SJIP-806](https://d3b.atlassian.net/browse/SJIP-806) Task: [Google Analytics] Add tag to GA4 for Cavatica
+- [SJIP-824](https://d3b.atlassian.net/browse/SJIP-824) Fix: [Dashboard] Typo in widgets error message
+- [SJIP-822](https://d3b.atlassian.net/browse/SJIP-822) Refactor: [Phenotypes] Move ontology tree in ferlab ui
+- [SJIP-819](https://d3b.atlassian.net/browse/SJIP-819) Fix: [Data Exploration & Variants] Wrong icon state after duplicate saved query
+- [SJIP-818](https://d3b.atlassian.net/browse/SJIP-818) Fix: [Summary View] SVG are corrupted when opening them in Google Chrome
+- [SJIP-816](https://d3b.atlassian.net/browse/SJIP-816) Fix: [Variant Entity] Adjust table ligne hover
+- [SJIP-815](https://d3b.atlassian.net/browse/SJIP-815) Fix: [Summary View] Download SVG is missing for Studies graph
+- [SJIP-814](https://d3b.atlassian.net/browse/SJIP-814) Fix: [Dashboard] Error in widgets on specific usages
+- [SJIP-813](https://d3b.atlassian.net/browse/SJIP-813) Fix: [Landing] Add an "of" in the Variant tile description
+- [SJIP-812](https://d3b.atlassian.net/browse/SJIP-812) Task: [Data] Add Demographic chart data to public route
+- [SJIP-809](https://d3b.atlassian.net/browse/SJIP-809) Fix: [Variants] Update NO GENE variant display
+- [SJIP-802](https://d3b.atlassian.net/browse/SJIP-802) Fix: [Summary View] No data message doesn't scale with the resize
+- [SJIP-800](https://d3b.atlassian.net/browse/SJIP-800) Fix: [Studies] Add thousands separator
+- [SJIP-794](https://d3b.atlassian.net/browse/SJIP-794) Fix: [Studies] Show "-" if no value
+- [SJIP-792](https://d3b.atlassian.net/browse/SJIP-792) Fix: [Studies] Can't custom columns with Search by...
+- [SJIP-777](https://d3b.atlassian.net/browse/SJIP-777) Fix: [Variant Entity] Align Functional Scores
+- [SJIP-760](https://d3b.atlassian.net/browse/SJIP-760) Task: [ETL] Add new fields in Study entities
+- [SJIP-759](https://d3b.atlassian.net/browse/SJIP-759) Fix: [Variant Entity] Adjust colors
+- [SJIP-758](https://d3b.atlassian.net/browse/SJIP-758) Fix: [Cavatica] Add a loader when copying files to Cavatica
+- [SJIP-540](https://d3b.atlassian.net/browse/SJIP-540) Fix: [Data Exploration] Incorrect number of items and string matches in ontology tree
+- [SJIP-408](https://d3b.atlassian.net/browse/SJIP-408) Fix: [HPO & MONDO tree] Deselection of a lineage
+- [SJIP-406](https://d3b.atlassian.net/browse/SJIP-406) Fix: [HPO & MONDO tree] Update the child selection state
+
 ## 2024-04-12 include-portal-ui 1.11.0
+
 ## Features:
-[SJIP-708](https://d3b.atlassian.net/browse/SJIP-708) Feature: [Study Entity] Implement Study Entity pages
-[SJIP-709](https://d3b.atlassian.net/browse/SJIP-735) Feature: [Variant Entity] Implement new version of the Variant Entity page focused on the most deleterious consequence
-[SJIP-725](https://d3b.atlassian.net/browse/SJIP-725) Feature: [Registration] Add subscription to newsletter in the Registration process
-[SJIP-727](https://d3b.atlassian.net/browse/SJIP-727) Feature: [Header] Create Resources header dropdown
-[SJIP-746](https://d3b.atlassian.net/browse/SJIP-746) Feature: [Landing] Implement new landing page
-[SJIP-748](https://d3b.atlassian.net/browse/SJIP-748) Feature: [Profile] Add newsletter sign up section to Profile page
-[SJIP-749](https://d3b.atlassian.net/browse/SJIP-749) Feature: [Data Exploration] Add a Sample Type horizontal bar chart
-[SJIP-753](https://d3b.atlassian.net/browse/SJIP-753) Feature: [Studies page] Implement new search bar, new facets, and column headers to Studies page
+
+- [SJIP-708](https://d3b.atlassian.net/browse/SJIP-708) Feature: [Study Entity] Implement Study Entity pages
+- [SJIP-709](https://d3b.atlassian.net/browse/SJIP-735) Feature: [Variant Entity] Implement new version of the Variant Entity page focused on the most deleterious consequence
+- [SJIP-725](https://d3b.atlassian.net/browse/SJIP-725) Feature: [Registration] Add subscription to newsletter in the Registration process
+- [SJIP-727](https://d3b.atlassian.net/browse/SJIP-727) Feature: [Header] Create Resources header dropdown
+- [SJIP-746](https://d3b.atlassian.net/browse/SJIP-746) Feature: [Landing] Implement new landing page
+- [SJIP-748](https://d3b.atlassian.net/browse/SJIP-748) Feature: [Profile] Add newsletter sign up section to Profile page
+- [SJIP-749](https://d3b.atlassian.net/browse/SJIP-749) Feature: [Data Exploration] Add a Sample Type horizontal bar chart
+- [SJIP-753](https://d3b.atlassian.net/browse/SJIP-753) Feature: [Studies page] Implement new search bar, new facets, and column headers to Studies page
+
 ## Technical/ Other changes:
-[SJIP-754](https://d3b.atlassian.net/browse/SJIP-754) Refactor: [Entity] Adjust Section titles to be singular and table titles to be plural
-[SJIP-763](https://d3b.atlassian.net/browse/SJIP-763) Fix: [UI] Adjustment to boutons of type=hyperlink
-[SJIP-780](https://d3b.atlassian.net/browse/SJIP-780) Fix: [Data exploration] Unauthorized file despite being connected to Fence and Cavatica
-[SJIP-783](https://d3b.atlassian.net/browse/SJIP-783) Refactor: [Dashboard] Add disconnect bouton CAVATICA connection error
+
+- [SJIP-754](https://d3b.atlassian.net/browse/SJIP-754) Refactor: [Entity] Adjust Section titles to be singular and table titles to be plural
+- [SJIP-763](https://d3b.atlassian.net/browse/SJIP-763) Fix: [UI] Adjustment to boutons of type=hyperlink
+- [SJIP-780](https://d3b.atlassian.net/browse/SJIP-780) Fix: [Data exploration] Unauthorized file despite being connected to Fence and Cavatica
+- [SJIP-783](https://d3b.atlassian.net/browse/SJIP-783) Refactor: [Dashboard] Add disconnect bouton CAVATICA connection error
 
 ## 2024-03-21 include-portal-ui 1.10.0
 ### Features:
