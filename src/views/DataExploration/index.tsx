@@ -184,13 +184,7 @@ const DataExploration = () => {
         type={RemoteComponentList.HPOTree}
         field={'observed_phenotype'}
       />
-
-      <TreeFacetModal
-        key="observed_phenotype"
-        type={RemoteComponentList.MondoTree}
-        field={'mondo'}
-      />
-
+      <TreeFacetModal key="mondo_tree" type={RemoteComponentList.MondoTree} field={'mondo'} />
       <SidebarMenu
         className={styles.sideMenu}
         menuItems={menuItems} /* defaultSelectedKey={tab} */
