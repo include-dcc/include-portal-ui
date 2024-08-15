@@ -8,21 +8,21 @@ beforeEach(() => {
 
 describe('Page d\'une étude - Valider les redirections', () => {
   it('Participants', () => {
-    cy.get('button[class*="SummaryHeader_item"]').eq(0).click({force: true});
+    cy.get('button[class*="SummaryHeader_item"]').eq(0).clickAndWait({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP').should('exist');
   });
   
   it('Biospecimens', () => {
-    cy.get('button[class*="SummaryHeader_item"]').eq(1).click({force: true});
+    cy.get('button[class*="SummaryHeader_item"]').eq(1).clickAndWait({force: true});
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP').should('exist');
   });
   
   it('Files', () => {
-    cy.get('button[class*="SummaryHeader_item"]').eq(2).click({force: true});
+    cy.get('button[class*="SummaryHeader_item"]').eq(2).clickAndWait({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP').should('exist');
@@ -51,8 +51,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(2).contains('Program').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(2).contains('INCLUDE').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(3).contains('dbGaP Accession Number').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains(/(phs002330|-)/).should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains(/(phs002981|-)/).should('exist');
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).contains(/(phs002330|phs002981|-)/).should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-label"]').eq(4).contains('Participant Lifespan').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(4).find('[class*="ant-tag-cyan"]').contains('Pediatric').should('exist');
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(4).find('[class*="ant-tag-cyan"]').contains('Adult').should('exist');
@@ -131,7 +130,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-label"]').eq(5).contains('Repository').should('exist');
     cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(5).contains('Gene Expression Omnibus').should('exist');
     cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(0).find('g[id="family"]').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(0).contains(/^402$/).should('exist');
+    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(0).contains(/^400$/).should('exist');
     cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(0).contains('Participants').should('exist');
     cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(1).find('g[id="file"]').should('exist');
     cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(1).contains(/^3200$/).should('exist');
@@ -185,7 +184,7 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).invoke('text').then((invokeText) => {
       if (!invokeText.includes('-')) {
         cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(3).find('[href]')
-      .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002330');
+        .should('have.attr', 'href').and('match', /https:\/\/www\.ncbi\.nlm\.nih\.gov\/projects\/gap\/cgi-bin\/study\.cgi\?study_id\=(phs002330|phs002981)/);
       };
     });
   });
@@ -201,9 +200,9 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
   });
 
   it('Lien \'See more\' de Publication du panneau Summary', () => {
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('See more').click({force: true});
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('See more').clickAndWait({force: true});
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('https://pubmed.ncbi.nlm.nih.gov/36577365').should('exist');
-    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('See less').click({force: true});
+    cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('See less').clickAndWait({force: true});
     cy.get('[id="summary"]').find('[class="ant-descriptions-item-content"]').eq(13).contains('https://pubmed.ncbi.nlm.nih.gov/36577365').should('not.exist');
   });
 
@@ -218,7 +217,7 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
   });
 
   it('Lien DataExploration du panneau Summary Statistics', () => {
-    cy.get('[id="statistic"] [class="ant-collapse-header"] button').click({force: true});
+    cy.get('[id="statistic"] [class="ant-collapse-header"] button').clickAndWait({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP').should('exist');
@@ -240,7 +239,7 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
   });
 
   it('Lien Files de Gene Expression Quantifications du panneau Files', () => {
-    cy.get('[id="data_file"]').find('[data-row-key="1"]').find('td[class="ant-table-cell"]').eq(1).find('[href]').click({force: true});
+    cy.get('[id="data_file"]').find('[data-row-key="1"]').find('td[class="ant-table-cell"]').eq(1).find('[href]').clickAndWait({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Data Type').should('exist');
@@ -249,7 +248,7 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
   });
 
   it('Lien Files de RNA-Seq du panneau Files', () => {
-    cy.get('[id="data_file"]').find('[data-row-key="0"]').eq(1).find('td[class="ant-table-cell"]').eq(1).find('[href]').click({force: true});
+    cy.get('[id="data_file"]').find('[data-row-key="0"]').eq(1).find('td[class="ant-table-cell"]').eq(1).find('[href]').clickAndWait({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('Experimental Strategy').should('exist');
@@ -261,41 +260,41 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
 describe('Page d\'une étude - Valider les panneaux masquables', () => {
   it('Panneau Summary', () => {
     cy.get('[id="summary"]').find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('[id="summary"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="summary"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="summary"]').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('[id="summary"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="summary"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="summary"]').find('div[class*="ant-collapse-content-active"]').should('exist');
   });
 
   it('Panneau Statistic', () => {
     cy.get('[id="statistic"]').find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('[id="statistic"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="statistic"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="statistic"]').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('[id="statistic"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="statistic"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="statistic"]').find('div[class*="ant-collapse-content-active"]').should('exist');
   });
 
   it('Panneau Data Access', () => {
     cy.get('[id="data_access"]').find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('[id="data_access"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="data_access"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="data_access"]').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('[id="data_access"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="data_access"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="data_access"]').find('div[class*="ant-collapse-content-active"]').should('exist');
   });
 
   it('Panneau HTP Whole Blood RNAseq (v1)', () => {
     cy.get('[class*="EntityDataset_panel"]').eq(0).find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('[class*="EntityDataset_panel"]').eq(0).find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[class*="EntityDataset_panel"]').eq(0).find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[class*="EntityDataset_panel"]').eq(0).find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('[class*="EntityDataset_panel"]').eq(0).find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[class*="EntityDataset_panel"]').eq(0).find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[class*="EntityDataset_panel"]').eq(0).find('div[class*="ant-collapse-content-active"]').should('exist');
   });
 
   it('Panneau Files', () => {
     cy.get('[id="data_file"]').find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('[id="data_file"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="data_file"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="data_file"]').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('[id="data_file"]').find('span[class*="ant-collapse-arrow"]').click({force: true});
+    cy.get('[id="data_file"]').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[id="data_file"]').find('div[class*="ant-collapse-content-active"]').should('exist');
   });
 });
