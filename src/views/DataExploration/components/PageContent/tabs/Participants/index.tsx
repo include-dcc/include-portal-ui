@@ -23,6 +23,7 @@ import { useParticipants } from 'graphql/participants/actions';
 import {
   FamilyType,
   IParticipantDiagnosis,
+  IParticipantEntity,
   IParticipantObservedPhenotype,
   ITableParticipantEntity,
   Sex,
@@ -180,10 +181,11 @@ const getDefaultColumns = (): ProColumnType[] => [
   {
     key: 'diagnosis.source_text',
     title: intl.get('entities.participant.source_text'),
-    dataIndex: 'diagnosis',
     defaultHidden: true,
-    render: (mondo: ArrangerResultsTree<IParticipantDiagnosis>) => {
-      const sourceTexts = mondo?.hits?.edges.map((m) => m.node.source_text);
+    render: (participant: IParticipantEntity) => {
+      const mondoSourceTexts = participant.diagnosis?.hits?.edges.map((m) => m.node.source_text);
+      const hpoSourceTexts = participant.phenotype?.hits?.edges.map((m) => m.node.source_text);
+      const sourceTexts = [...mondoSourceTexts, ...hpoSourceTexts];
 
       if (!sourceTexts || sourceTexts.length === 0) {
         return TABLE_EMPTY_PLACE_HOLDER;
