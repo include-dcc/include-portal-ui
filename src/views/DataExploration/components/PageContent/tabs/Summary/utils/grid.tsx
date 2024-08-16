@@ -44,10 +44,11 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
     component: <MostFrequentPhenotypesGraphCard />,
     base: {
       h: 4,
-      isResizable: false,
       w: 8,
       x: 0,
       y: 4,
+      minH: 3,
+      minW: 3,
     },
     lg: {
       h: 4,
@@ -86,10 +87,11 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
     component: <MostFrequentDiagnosisGraphCard />,
     base: {
       h: 4,
-      isResizable: false,
       w: 8,
       x: 8,
       y: 4,
+      minH: 3,
+      minW: 3,
     },
     lg: {
       h: 4,
