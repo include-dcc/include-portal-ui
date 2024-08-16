@@ -76,6 +76,20 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
                 }
               }
             }
+
+            phenotype {
+              hits {
+                edges {
+                  node {
+                    age_at_event_days
+                    fhir_id
+                    hpo_phenotype_observed
+                    observed
+                    source_text
+                  }
+                }
+              }
+            }
           }
         }
       }
