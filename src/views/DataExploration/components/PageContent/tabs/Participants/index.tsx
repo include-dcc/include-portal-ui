@@ -183,8 +183,12 @@ const getDefaultColumns = (): ProColumnType[] => [
     title: intl.get('entities.participant.source_text'),
     defaultHidden: true,
     render: (participant: IParticipantEntity) => {
-      const mondoSourceTexts = participant.diagnosis?.hits?.edges.map((m) => m.node.source_text);
-      const hpoSourceTexts = participant.phenotype?.hits?.edges.map((m) => m.node.source_text);
+      const mondoSourceTexts = (participant.diagnosis?.hits?.edges ?? []).map(
+        (m) => m.node.source_text,
+      );
+      const hpoSourceTexts = (participant.phenotype?.hits?.edges ?? []).map(
+        (m) => m.node.source_text,
+      );
       const sourceTexts = [...mondoSourceTexts, ...hpoSourceTexts];
 
       if (!sourceTexts || sourceTexts.length === 0) {
