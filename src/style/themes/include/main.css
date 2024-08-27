@@ -48,6 +48,7 @@
   --sidebar-quick-filter-input-box-shadow-focus: 0 0 0 2px var(--gray-8), 0 0 0 3px var(--gray-1);
   --sidebar-quick-filter-input-placeholder-color: var(--gray-6);
   --sidebar-quick-filter-input-text-color: var(--gray-8);
+  --sidebar-quick-filter-facet-name-btn: var(--gray-9);
   --sidebar-content-panel-padding: 16px;
   --sidebar-content-panel-width: 320px;
   --sidebar-content-panel-close-icon-color: var(--gray-8);
