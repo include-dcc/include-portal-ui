@@ -281,6 +281,9 @@ export const getFacetsDictionary = () => ({
     source_text: 'Diagnosis (Source Text)',
     source_text_tumor_location: 'Tumor Location (Source Text)',
   },
+  mondo: {
+    name: 'Diagnosis (MONDO)',
+  },
   outcomes: {
     vital_status: 'Vital Status',
     age_at_event_days: {
@@ -291,6 +294,9 @@ export const getFacetsDictionary = () => ({
     age_at_event_days: 'Age at Observed Phenotype',
     hpo_phenotype_observed: 'Observed Phenotype (HPO)',
     hpo_phenotype_not_observed: 'Not Observed Phenotype (HPO)',
+  },
+  observed_phenotype: {
+    name: 'Phenotype (HPO)',
   },
   clinvar: {
     clin_sig: 'ClinVar',
