@@ -94,8 +94,9 @@ describe('Page Data Exploration (Participants) - Valider les liens disponibles',
     cy.get('tr[data-row-key="pt-as0aepqm"]').find('[class*="ant-table-cell"]').eq(12).find('[href]')
       .should(($element) => {
         const hrefValue = $element.attr('href');
+        const strHrefValue : string = hrefValue !== undefined ? hrefValue : "";
         const regex = /http:\/\/purl\.obolibrary\.org\/obo\/HP_00/;
-        expect(hrefValue).to.match(regex);
+        assert.match(strHrefValue, regex);
       });
   });
   
