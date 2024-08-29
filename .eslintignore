@@ -7,3 +7,4 @@ bin
 .env*
 public/
 commitlint.config.js
+cypress
