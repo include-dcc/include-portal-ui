@@ -1,5 +1,4 @@
 /// <reference types="cypress"/>
-import '@testing-library/cypress/add-commands';
 import createUUID from './createUUID';
 import { oneMinute } from '../support/utils';
 
@@ -371,7 +370,7 @@ Cypress.Commands.add('validateFileContent', (fixture: string, replacements?: Rep
           arrReplacements.forEach((replacement) => {
             valueWithData = valueWithData.replace(replacement.placeholder, replacement.value);
           });
-          expect(fileWithData).to.include(valueWithData);
+          assert.include(fileWithData, valueWithData);
         });
       });
     });
@@ -384,7 +383,7 @@ Cypress.Commands.add('validateFileHeaders', (fixture: string) => {
       const filename = result.stdout.trim();
       cy.readFile(`${filename}`).then((file) => {
         expectedData.headers.forEach((header: any) => {
-          expect(file).to.include(header);
+          assert.include(file, header);
         });
       });
     });
