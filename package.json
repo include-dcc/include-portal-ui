@@ -63,7 +63,7 @@
     "@apollo/client": "^3.5.10",
     "@dnd-kit/core": "^4.0.3",
     "@dnd-kit/sortable": "^5.1.0",
-    "@ferlab/ui": "^10.7.3",
+    "@ferlab/ui": "^10.7.4",
     "@loadable/component": "^5.15.2",
     "@nivo/bar": "^0.84.0",
     "@nivo/pie": "^0.84.0",
@@ -119,10 +119,10 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@babel/plugin-transform-private-property-in-object": "^7.24.7",
     "@commitlint/cli": "^16.3.0",
     "@commitlint/config-conventional": "^16.2.4",
     "@ferlab/eslint-config": "^1.0.1",
+    "@testing-library/cypress": "^8.0.3",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/react": "^18.2.42",
