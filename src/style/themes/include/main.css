@@ -30,6 +30,7 @@
   --query-combiner-button-hover-color: var(--gray-8);
   --query-combiner-button-focus-color: var(--gray-8);
   --checkbox-filter-actions-separator-links: var(--blue-8);
+  --checkbox-filter-types-mc-footer: var(--blue-8);
   --filter-actions-border-color: var(--gray-4);
   --sidebar-menu-width: 180px;
   --sidebar-menu-collapsed-width: 50px;
