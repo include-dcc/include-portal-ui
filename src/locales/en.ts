@@ -99,6 +99,10 @@ const en = {
       checkbox: {
         placeholder: 'Search...',
       },
+      quickfilter: {
+        placeholder: 'Search...',
+        emptyMessage: 'Min. 3 characters',
+      },
     },
     forms: {
       errors: {

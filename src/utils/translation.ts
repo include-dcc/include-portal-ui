@@ -100,6 +100,10 @@ export const getFiltersDictionary = (): FiltersDict => ({
   messages: {
     errorNoData: intl.get('global.filters.messages.empty'),
   },
+  quickFilter: {
+    emptyMessage: intl.get('global.filters.quickfilter.emptyMessage'),
+    placeholder: intl.get('global.filters.quickfilter.placeholder'),
+  },
 });
 
 export const getQueryBuilderDictionary = (
