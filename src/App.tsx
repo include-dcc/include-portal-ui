@@ -9,12 +9,13 @@ import { useKeycloak } from '@react-keycloak/web';
 import { ConfigProvider } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import frFR from 'antd/lib/locale/fr_FR';
-import { getEnvVarByKey } from 'helpers/EnvVariables';
+import { getEnvVarByKey, getFTEnvVarByKey } from 'helpers/EnvVariables';
 import AuthMiddleware from 'middleware/AuthMiddleware';
 import ProtectedRoute from 'ProtectedRoute';
 import ApolloProvider from 'provider/ApolloProvider';
 import ContextProvider from 'provider/ContextProvider';
 import { GraphqlBackend } from 'provider/types';
+import Analytics from 'views/Analytics';
 import ErrorPage from 'views/Error';
 import FenceRedirect from 'views/FenceRedirect';
 import Login from 'views/Login';
@@ -27,6 +28,8 @@ import NotificationContextHolder from 'components/utils/NotificationContextHolde
 import { initGa } from 'services/analytics';
 import { useLang } from 'store/global';
 import { DYNAMIC_ROUTES, STATIC_ROUTES } from 'utils/routes';
+
+import Transcriptomic from './views/Analytics/Transcriptomic';
 
 const loadableProps = { fallback: <Spinner size="large" /> };
 const Dashboard = loadable(() => import('views/Dashboard'), loadableProps);
@@ -47,6 +50,8 @@ const App = () => {
   const lang = useLang();
   const { keycloak, initialized } = useKeycloak();
   const keycloakIsReady = keycloak && initialized;
+
+  console.log("getFTEnvVarByKey('ANALYTICS')", getFTEnvVarByKey('ANALYTICS')); //TODO: to remove
 
   setLocale(lang);
 
@@ -168,6 +173,28 @@ const App = () => {
                       </ProtectedRoute>
                     }
                   />
+
+                  {getFTEnvVarByKey('ANALYTICS') === 'true' && (
+                    <Route
+                      path={STATIC_ROUTES.ANALYTICS}
+                      element={
+                        <ProtectedRoute>
+                          <Analytics />
+                        </ProtectedRoute>
+                      }
+                    />
+                  )}
+
+                  {getFTEnvVarByKey('ANALYTICS_TRANSCRIPTOMIC') === 'true' && (
+                    <Route
+                      path={STATIC_ROUTES.ANALYTICS_TRANSCRIPTOMIC}
+                      element={
+                        <ProtectedRoute>
+                          <Transcriptomic />
+                        </ProtectedRoute>
+                      }
+                    />
+                  )}
                   <Route path="*" element={<Navigate to={STATIC_ROUTES.DASHBOARD} />} />
                 </Routes>
                 <NotificationContextHolder />

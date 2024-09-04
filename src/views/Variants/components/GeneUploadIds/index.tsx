@@ -1,9 +1,7 @@
 import intl from 'react-intl-universal';
-import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import UploadIds from '@ferlab/ui/core/components/UploadIds';
 import { MatchTableItem } from '@ferlab/ui/core/components/UploadIds/types';
 import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
-import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
@@ -17,10 +15,10 @@ import { ArrangerApi } from 'services/api/arranger';
 import styles from './index.module.css';
 
 interface OwnProps {
-  queryBuilderId: string;
+  handleUpload: (uniqueMatches: MatchTableItem[]) => void;
 }
 
-const GenesUploadIds = ({ queryBuilderId }: OwnProps) => (
+const GenesUploadIds = ({ handleUpload }: OwnProps) => (
   <UploadIds
     dictionary={{
       modalTitle: intl.get('upload.gene.ids.modal.title'),
@@ -124,14 +122,7 @@ const GenesUploadIds = ({ queryBuilderId }: OwnProps) => (
           index === currentMatch.findIndex((m) => m.mappedTo === match.mappedTo),
       );
 
-      return updateActiveQueryField({
-        queryBuilderId,
-        field: 'genes.symbol',
-        value: uniqueMatches.map((match) => match.mappedTo),
-        index: INDEXES.VARIANTS,
-        merge_strategy: MERGE_VALUES_STRATEGIES.APPEND_VALUES,
-        isUploadedList: true,
-      });
+      return handleUpload(uniqueMatches);
     }}
   />
 );

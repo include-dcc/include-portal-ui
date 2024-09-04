@@ -1,6 +1,9 @@
 import intl from 'react-intl-universal';
 import { UserOutlined } from '@ant-design/icons';
+import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
+import { MatchTableItem } from '@ferlab/ui/core/components/UploadIds/types';
+import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import { INDEXES } from 'graphql/constants';
 import GenesUploadIds from 'views/Variants/components/GeneUploadIds';
@@ -80,7 +83,19 @@ const filterGroups: {
         type={SuggestionType.GENES}
         queryBuilderId={VARIANT_REPO_QB_ID}
       />,
-      <GenesUploadIds key="genes_upload_ids" queryBuilderId={VARIANT_REPO_QB_ID} />,
+      <GenesUploadIds
+        key="genes_upload_ids"
+        handleUpload={(uniqueMatches: MatchTableItem[]) => {
+          updateActiveQueryField({
+            queryBuilderId: VARIANT_REPO_QB_ID,
+            field: 'genes.symbol',
+            value: uniqueMatches.map((match) => match.mappedTo),
+            index: INDEXES.VARIANTS,
+            merge_strategy: MERGE_VALUES_STRATEGIES.APPEND_VALUES,
+            isUploadedList: true,
+          });
+        }}
+      />,
     ],
     groups: [
       {
