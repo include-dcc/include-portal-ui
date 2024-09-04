@@ -27,6 +27,7 @@ const en = {
     other: 'Other',
     delete: 'Delete',
     cancel: 'Cancel',
+    analyse: 'Analysis',
     save: 'Save',
     pleaseDescribe: 'Please describe',
     connect: 'Connect',
@@ -1374,6 +1375,26 @@ const en = {
       },
       start: 'Start',
       title: 'Studies',
+    },
+    analytics: {
+      title: 'Analytics',
+      subtitle: 'Quickly visualize and interpret INCLUDE Data with our user-friendly tools',
+      widget: {
+        demo: 'Demo',
+        launch: 'Launch',
+      },
+      transcriptomic: {
+        title: 'Differential Gene Expression',
+        subtitle:
+          'Explore the impact of trisomy 21 on gene expression between people with and without Down syndrome. Generated via RNA sequencing PAXgene Whole Blood RNA.',
+        scatterPlot: {
+          title: 'Effect of Karyotype on all Genes',
+        },
+        dataset: {
+          label: 'Dataset',
+          about: 'About this dataset',
+        },
+      },
     },
   },
   facets: {

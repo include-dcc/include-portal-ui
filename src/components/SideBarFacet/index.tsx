@@ -10,7 +10,7 @@ import { INDEXES } from 'graphql/constants';
 import FilterList from 'components/uiKit/FilterList';
 import { FilterInfo } from 'components/uiKit/FilterList/types';
 
-import { STUDIES_REPO_QB_ID } from '../../utils/constants';
+import { STUDIES_REPO_QB_ID } from '../../views/Studies/utils/constants';
 
 import styles from './index.module.css';
 
