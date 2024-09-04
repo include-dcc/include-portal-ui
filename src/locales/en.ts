@@ -27,6 +27,7 @@ const en = {
     other: 'Other',
     delete: 'Delete',
     cancel: 'Cancel',
+    analyse: 'Analysis',
     save: 'Save',
     pleaseDescribe: 'Please describe',
     connect: 'Connect',
@@ -1374,6 +1375,17 @@ const en = {
       },
       start: 'Start',
       title: 'Studies',
+    },
+    analytics: {
+      title: 'Analytics',
+      subtitle: 'Quickly visualize and interpret INCLUDE Data with our user-friendly tools',
+      widget: {
+        demo: 'Demo',
+        launch: 'Launch',
+      },
+      transcriptomic: {
+        title: 'Transcriptomic',
+      },
     },
   },
   facets: {

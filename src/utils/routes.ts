@@ -21,6 +21,9 @@ export enum STATIC_ROUTES {
 
   GEN3_FENCE_REDIRECT = '/gen3_redirect',
   CAVATICA_FENCE_REDIRECT = '/cavatica_redirect',
+
+  ANALYTICS = '/analytics',
+  ANALYTICS_TRANSCRIPTOMIC = '/analytics/transcriptomic',
 }
 
 export enum DYNAMIC_ROUTES {
