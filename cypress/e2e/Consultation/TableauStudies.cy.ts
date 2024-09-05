@@ -93,6 +93,10 @@ describe('Page des études - Valider les liens disponibles', () => {
 
 
 describe('Page des études - Consultation du tableau', () => {
+  beforeEach(() => {
+    cy.clickAndIntercept('input[type="radio"][value="true"]', 'POST', '**/graphql', 15, 1);
+  });
+
   it('Valider les fonctionnalités du tableau - Tri Code', () => {
     cy.sortTableAndWait('Code');
     cy.validateTableFirstRow('ABC-DS', 1);
