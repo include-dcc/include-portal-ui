@@ -1,6 +1,7 @@
 import { GlobalInitialState } from 'store/global';
 import { UserInitialState } from 'store/user';
 
+import { AnalyticsInitialState } from './analytics';
 import { FencesInitialState } from './fences';
 import { PassportInitialState } from './passport';
 import { RemoteInitialState } from './remote';
@@ -17,4 +18,5 @@ export type RootState = {
   fences: FencesInitialState;
   remote: RemoteInitialState;
   passport: PassportInitialState;
+  analytics: AnalyticsInitialState;
 };
