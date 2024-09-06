@@ -1,3 +1,5 @@
+import { Reducer } from '@reduxjs/toolkit';
+
 import { GlobalInitialState } from 'store/global';
 import { UserInitialState } from 'store/user';
 

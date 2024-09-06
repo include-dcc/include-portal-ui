@@ -20,6 +20,7 @@ import { RootState } from 'store/types';
 import UserReducer from 'store/user';
 
 const devMode = EnvVariables.configFor('ENV') === 'development';
+const reduxLog = EnvVariables.configFor('REDUX_LOG') === 'development';
 
 const persistConfig = {
   key: 'root',
@@ -47,7 +48,7 @@ const store = configureStore({
     const defaultMid = getDefaultMiddleware({
       serializableCheck: false,
     });
-    return devMode ? defaultMid.concat(logger) : defaultMid;
+    return devMode && reduxLog ? defaultMid.concat(logger) : defaultMid;
   },
 });
 
