@@ -1,6 +1,7 @@
 import {
   ITranscriptomicsFacets,
   ITranscriptomicsSampleGeneExp,
+  TTranscriptomicsDiffGeneExp,
 } from '../../services/api/transcriptomics/models';
 
 export type initialState = {
@@ -10,9 +11,14 @@ export type initialState = {
       data?: ITranscriptomicsFacets;
       error?: boolean;
     };
+    diffGeneExp: {
+      loading: boolean;
+      data?: TTranscriptomicsDiffGeneExp[];
+      error?: boolean;
+    };
     sampleGeneExp: {
       loading: boolean;
-      data?: ITranscriptomicsSampleGeneExp;
+      data?: ITranscriptomicsSampleGeneExp[];
       error?: boolean;
     };
   };

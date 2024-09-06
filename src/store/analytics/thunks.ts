@@ -5,6 +5,7 @@ import { TranscriptomicsApi } from 'services/api/transcriptomics';
 import {
   ITranscriptomicsFacets,
   ITranscriptomicsSampleGeneExp,
+  TTranscriptomicsDiffGeneExp,
 } from 'services/api/transcriptomics/models';
 
 import { RootState } from '../types';
@@ -38,10 +39,39 @@ export const fetchTranscriptomicsFacets = createAsyncThunk<
   },
 );
 
+export const fetchTranscriptomicsDiffGeneExp = createAsyncThunk<
+  {
+    diffGeneExp?: TTranscriptomicsDiffGeneExp[];
+  },
+  void,
+  { rejectValue: string; state: RootState }
+>(
+  'transcriptomics/diffGeneExp/fetch',
+  async (_, thunkAPI) => {
+    const { data, error } = await TranscriptomicsApi.fetchDiffGeneExp();
+
+    console.log('data', data); //TODO: to remove
+
+    return handleThunkApiResponse({
+      error,
+      data: {
+        diffGeneExp: data,
+      },
+      reject: thunkAPI.rejectWithValue,
+    });
+  },
+  {
+    condition: (_, { getState }) => {
+      const { analytics } = getState();
+      return isEmpty(analytics.transcriptomics.sampleGeneExp.data);
+    },
+  },
+);
+
 // @TODO: could be a get
 export const fetchTranscriptomicsSampleGeneExp = createAsyncThunk<
   {
-    sampleGeneExp?: ITranscriptomicsSampleGeneExp;
+    sampleGeneExp?: ITranscriptomicsSampleGeneExp[];
   },
   void,
   { rejectValue: string; state: RootState }

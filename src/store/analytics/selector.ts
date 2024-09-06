@@ -5,3 +5,6 @@ export const transcriptomicsFacetsSelector = (state: RootState) =>
 
 export const transcriptomicsSampleGeneExpSelector = (state: RootState) =>
   state.analytics.transcriptomics.sampleGeneExp;
+
+export const transcriptomicsDiffGeneExpSelector = (state: RootState) =>
+  state.analytics.transcriptomics.diffGeneExp;

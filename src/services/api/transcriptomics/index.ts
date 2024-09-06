@@ -2,7 +2,11 @@ import EnvironmentVariables from 'helpers/EnvVariables';
 
 import { sendRequest } from 'services/api';
 
-import { ITranscriptomicsFacets, ITranscriptomicsSampleGeneExp } from './models';
+import {
+  ITranscriptomicsFacets,
+  ITranscriptomicsSampleGeneExp,
+  TTranscriptomicsDiffGeneExp,
+} from './models';
 
 const ARRANGER_API = `${EnvironmentVariables.configFor('ARRANGER_API')}`;
 
@@ -17,8 +21,15 @@ const fetchFacets = () =>
     headers: headers(),
   });
 
+const fetchDiffGeneExp = () =>
+  sendRequest<TTranscriptomicsDiffGeneExp[]>({
+    method: 'POST',
+    url: `${ARRANGER_API}/transcriptomics/diffGeneExp`,
+    headers: headers(),
+  });
+
 const fetchSampleGeneExp = () =>
-  sendRequest<ITranscriptomicsSampleGeneExp>({
+  sendRequest<ITranscriptomicsSampleGeneExp[]>({
     method: 'POST',
     url: `${ARRANGER_API}/transcriptomics/sampleGeneExp`,
     headers: headers(),
@@ -27,4 +38,5 @@ const fetchSampleGeneExp = () =>
 export const TranscriptomicsApi = {
   fetchFacets,
   fetchSampleGeneExp,
+  fetchDiffGeneExp,
 };
