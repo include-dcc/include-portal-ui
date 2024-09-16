@@ -8,6 +8,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createFilter from 'redux-persist-transform-filter';
 
+import AnalyticsReducer from 'store/analytics';
 import FencesReducer from 'store/fences';
 import GlobalReducer from 'store/global';
 import PassportReducer from 'store/passport';
@@ -36,6 +37,7 @@ const rootReducer = combineReducers<RootState>({
   savedFilter: SavedFilterReducer,
   savedSet: SavedSetReducer,
   remote: RemoteReducer,
+  analytics: AnalyticsReducer,
 });
 
 const store = configureStore({

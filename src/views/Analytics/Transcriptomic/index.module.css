@@ -1,0 +1,87 @@
+.transcriptomicPage {
+  display: flex;
+  height: calc(100vh - var(--main-header-height));
+}
+
+.transcriptomicPage .sideMenu li[role=menuitem] {
+  color: white;
+}
+.transcriptomicPage .sideMenu li[role=menuitem] span[class$=-title-content] {
+  margin-left: 0 !important;
+}
+
+.scrollContent {
+  width: 100%;
+  padding: var(--default-page-content-padding);
+}
+
+.pageContent {
+  width: 100%;
+}
+
+.title {
+  margin-bottom: 8px !important;
+}
+
+.subtitle {
+  color: var(--gray-7);
+}
+
+.sideMenu {
+  background-color: transparent;
+}
+
+.gridCard {
+  padding: 0 !important;
+}
+
+.gridCard .gridCardContent {
+  padding: 0 !important;
+}
+
+.content {
+  display: flex;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.scatterPlotContainer {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.vDivider {
+  border-right: 1px solid var(--gray-4);
+  width: 1px;
+  height: 800px;
+}
+
+.header .vDivider {
+  height: 48px;
+}
+
+.hDivider {
+  margin: 0;
+}
+
+.swarmPlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}

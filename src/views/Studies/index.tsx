@@ -17,12 +17,12 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { STATIC_ROUTES } from 'utils/routes';
 import { numberWithCommas } from 'utils/string';
 
+import SideBarFacet from '../../components/SideBarFacet';
 import { FilterInfo } from '../../components/uiKit/FilterList/types';
 import useGetExtendedMappings from '../../hooks/graphql/useGetExtendedMappings';
 import StudyPopoverRedirect from '../DataExploration/components/StudyPopoverRedirect';
 
 import PageContent from './components/PageContent';
-import SideBarFacet from './components/SideBarFacet';
 import { SCROLL_WRAPPER_ID } from './utils/constants';
 
 import styles from './index.module.css';

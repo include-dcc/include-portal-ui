@@ -21,6 +21,7 @@ import { INDEXES } from 'graphql/constants';
 import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { useStudy } from 'graphql/studies/actions';
+import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
 import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
 import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
@@ -498,39 +499,60 @@ const StudyEntity = () => {
                 <InfoCircleOutlined className={style.datasetInfo} />
               </Tooltip>
             </Title>
-            {study?.dataset?.hits.edges.map(({ node: dataset }, index: number) => (
-              <EntityDataset
-                containerClassName={index != datasetLength - 1 ? style.datasetContainer : ''}
-                descriptions={getDatasetDescription(dataset)}
-                dictionnary={{
-                  participants: intl.get('entities.participant.participants'),
-                  files: intl.get('entities.file.files'),
-                }}
-                file_count={dataset?.file_count || 0}
-                header={
-                  dataset?.dataset_name ? (
-                    <Space size={8}>
-                      <Text>{dataset.dataset_name}</Text>
-                      {dataset.is_harmonized ? (
-                        <Tooltip title={intl.get('entities.study.harmonizedTooltip')}>
-                          <Tag color="green">{intl.get('entities.study.harmonized')}</Tag>
-                        </Tooltip>
-                      ) : (
-                        <Tooltip title={intl.get('entities.study.unharmonizedTooltip')}>
-                          <Tag>{intl.get('entities.study.unharmonized')}</Tag>
-                        </Tooltip>
-                      )}
-                    </Space>
-                  ) : (
-                    ''
-                  )
-                }
-                id={SectionId.DATASET}
-                key={dataset?.id}
-                loading={loading}
-                participant_count={dataset?.participant_count || 0}
-              />
-            ))}
+            {study?.dataset?.hits.edges.map(({ node: dataset }, index: number) => {
+              const titleExtra = [];
+              if (
+                dataset.data_category === 'Transcriptomics' &&
+                getFTEnvVarByKey('ANALYTICS_TRANSCRIPTOMIC') === 'true'
+              ) {
+                titleExtra.push(
+                  <Button
+                    size="small"
+                    onClick={() => {
+                      navigate(STATIC_ROUTES.ANALYTICS_TRANSCRIPTOMIC);
+                    }}
+                  >
+                    {intl.get('global.analyse')}
+                    <ExternalLinkIcon />
+                  </Button>,
+                );
+              }
+
+              return (
+                <EntityDataset
+                  containerClassName={index != datasetLength - 1 ? style.datasetContainer : ''}
+                  descriptions={getDatasetDescription(dataset)}
+                  dictionnary={{
+                    participants: intl.get('entities.participant.participants'),
+                    files: intl.get('entities.file.files'),
+                  }}
+                  file_count={dataset?.file_count || 0}
+                  titleExtra={titleExtra}
+                  header={
+                    dataset?.dataset_name ? (
+                      <Space size={8}>
+                        <Text>{dataset.dataset_name}</Text>
+                        {dataset.is_harmonized ? (
+                          <Tooltip title={intl.get('entities.study.harmonizedTooltip')}>
+                            <Tag color="green">{intl.get('entities.study.harmonized')}</Tag>
+                          </Tooltip>
+                        ) : (
+                          <Tooltip title={intl.get('entities.study.unharmonizedTooltip')}>
+                            <Tag>{intl.get('entities.study.unharmonized')}</Tag>
+                          </Tooltip>
+                        )}
+                      </Space>
+                    ) : (
+                      ''
+                    )
+                  }
+                  id={SectionId.DATASET}
+                  key={dataset?.id}
+                  loading={loading}
+                  participant_count={dataset?.participant_count || 0}
+                />
+              );
+            })}
           </>
         )}
 
