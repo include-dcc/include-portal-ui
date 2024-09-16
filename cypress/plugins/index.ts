@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 /// <reference types="cypress"/>
-import xlsx from 'node-xlsx';
 import fs, { rmdir } from 'fs';
 import path from 'path';
+import XLSX from 'xlsx';
 
 require('dotenv').config();
 
@@ -22,13 +22,13 @@ module.exports = (on: Cypress.PluginEvents, config: Cypress.ConfigOptions) => {
       });
     },
     async extractTextFromXLSX(filePath) {
-      const workSheetsFromFile = xlsx.parse(filePath);
+      const workbook = XLSX.readFile(filePath);
       let text = '';
 
-      workSheetsFromFile.forEach(sheet => {
-        sheet.data.forEach(row => {
-          text += row.join(',') + '\n';
-        });
+      workbook.SheetNames.forEach(sheetName => {
+        const sheet = workbook.Sheets[sheetName];
+        const sheetText = XLSX.utils.sheet_to_csv(sheet);
+        text += sheetText;
       });
 
       return text;
