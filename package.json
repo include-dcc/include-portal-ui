@@ -101,7 +101,6 @@
     "keycloak-js": "^22.0.5",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
-    "node-xlsx": "^0.24.0",
     "rc-menu": "^9.6.0",
     "rc-tree-select": "^5.4.0",
     "react": "^18.3.1",
@@ -151,6 +150,7 @@
     "prettier": "^2.0.5",
     "prettier-eslint": "^10.1.1",
     "ts-jest": "^29.2.4",
-    "web-vitals": "^2.1.2"
+    "web-vitals": "^2.1.2",
+    "xlsx": "^0.20.2"
   }
 }
