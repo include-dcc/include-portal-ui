@@ -1390,6 +1390,9 @@ const en = {
         scatterPlot: {
           title: 'Effect of Karyotype on all Genes',
         },
+        swarmPlot: {
+          title: 'Effect of Karyotype on',
+        },
         dataset: {
           label: 'Dataset',
           about: 'About this dataset',

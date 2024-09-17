@@ -19,7 +19,7 @@ type TTranscriptomicsScatterPlotCanvas = {
   setSelectedNodes: (nodes: TNode[]) => void;
 };
 
-export const TranscriptomicsScatterPlotCanvas = ({
+const TranscriptomicsScatterPlotCanvas = ({
   loading,
   data,
   selectedNodes,
@@ -28,8 +28,6 @@ export const TranscriptomicsScatterPlotCanvas = ({
   <ScatterPlotCanvasChart
     loading={loading}
     title={<Title level={4}>{intl.get('screen.analytics.transcriptomic.scatterPlot.title')}</Title>}
-    enableGridX={false}
-    enableGridY={false}
     controls={{
       zoom: {
         max: 10.0,
@@ -57,8 +55,10 @@ export const TranscriptomicsScatterPlotCanvas = ({
         MarkerCanvasLayer({
           ctx,
           markedNode: selectedNodes[0],
+          text: selectedNodes[0]?.data?.gene_symbol ?? '',
           highlightColor: '#1c3863',
-          sizeMultiplier: 1.5,
+          sizeMultiplier: 1.1,
+          font: '600 14px Serif',
         });
       },
     ]}
@@ -67,28 +67,37 @@ export const TranscriptomicsScatterPlotCanvas = ({
       setSelectedNodes([node as TNode]);
     }}
     colors={['#6697ea', '#bebebe', '#b02428']}
+    axisLeft={{
+      tickSize: 5,
+      tickPadding: 5,
+      tickRotation: 0,
+      legend: '-log10(Pvalue)',
+      legendPosition: 'middle',
+      legendOffset: -48,
+    }}
+    axisBottom={{
+      tickSize: 5,
+      tickPadding: 5,
+      tickRotation: 0,
+      legend: 'logFC',
+      legendPosition: 'middle',
+      legendOffset: 48,
+    }}
+    margin={{ bottom: 64, left: 64, right: 128, top: 48 }}
     legends={[
       {
-        anchor: 'bottom',
-        direction: 'row',
-        effects: [
-          {
-            on: 'hover',
-            style: {
-              itemOpacity: 1,
-            },
-          },
-        ],
-        itemDirection: 'left-to-right',
+        anchor: 'right',
+        direction: 'column',
         itemHeight: 12,
         itemsSpacing: 8,
         itemWidth: 100,
         justify: false,
+        translateX: 120,
+        translateY: 0,
         symbolShape: 'circle',
-        symbolSize: 12,
-        translateX: 0,
-        translateY: 64,
       },
     ]}
   />
 );
+
+export default TranscriptomicsScatterPlotCanvas;

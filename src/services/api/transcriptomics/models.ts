@@ -19,7 +19,7 @@ export type TTranscriptomicsDiffGeneExp = ScatterPlotRawSerie<TTranscriptomicsDa
 
 export interface ITranscriptomicsSampleGeneExp {
   data: TTranscriptomicsSwarmPlotData[];
-  gene_symbol: string;
+  ensembl_gene_id: string;
   nControl: number;
   nT21: number;
 }
