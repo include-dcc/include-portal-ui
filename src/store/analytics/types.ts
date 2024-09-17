@@ -18,7 +18,7 @@ export type initialState = {
     };
     sampleGeneExp: {
       loading: boolean;
-      data?: ITranscriptomicsSampleGeneExp[];
+      data?: ITranscriptomicsSampleGeneExp;
       error?: boolean;
     };
   };

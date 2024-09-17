@@ -69,27 +69,18 @@ export const fetchTranscriptomicsDiffGeneExp = createAsyncThunk<
 // @TODO: could be a get
 export const fetchTranscriptomicsSampleGeneExp = createAsyncThunk<
   {
-    sampleGeneExp?: ITranscriptomicsSampleGeneExp[];
+    sampleGeneExp?: ITranscriptomicsSampleGeneExp;
   },
-  void,
+  { id: string },
   { rejectValue: string; state: RootState }
->(
-  'transcriptomics/sampleGeneExp/fetch',
-  async (_, thunkAPI) => {
-    const { data, error } = await TranscriptomicsApi.fetchSampleGeneExp();
+>('transcriptomics/sampleGeneExp/fetch', async (args, thunkAPI) => {
+  const { data, error } = await TranscriptomicsApi.fetchSampleGeneExp(args.id);
 
-    return handleThunkApiResponse({
-      error,
-      data: {
-        sampleGeneExp: data,
-      },
-      reject: thunkAPI.rejectWithValue,
-    });
-  },
-  {
-    condition: (_, { getState }) => {
-      const { analytics } = getState();
-      return isEmpty(analytics.transcriptomics.sampleGeneExp.data);
+  return handleThunkApiResponse({
+    error,
+    data: {
+      sampleGeneExp: data,
     },
-  },
-);
+    reject: thunkAPI.rejectWithValue,
+  });
+});

@@ -36,12 +36,12 @@ export const useTranscriptomicsDiffGeneExp = () => {
   return diffGeneExp;
 };
 
-export const useTranscriptomicsSampleGeneExp = () => {
+export const useTranscriptomicsSampleGeneExp = (id: string) => {
   const dispatch = useDispatch();
   const sampleGeneExp = useSelector(transcriptomicsSampleGeneExpSelector);
 
   useEffect(() => {
-    dispatch(fetchTranscriptomicsSampleGeneExp());
-  }, []);
+    dispatch(fetchTranscriptomicsSampleGeneExp({ id }));
+  }, [id]);
   return sampleGeneExp;
 };

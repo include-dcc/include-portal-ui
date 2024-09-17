@@ -7,9 +7,10 @@ import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Divider, Space, Typography } from 'antd';
 import TranscriptomicDataset from 'views/Analytics/Transcriptomic/Dataset';
-import { TranscriptomicsScatterPlotCanvas } from 'views/Analytics/Transcriptomic/ScatterPlotCanvas';
+import TranscriptomicsScatterPlotCanvas from 'views/Analytics/Transcriptomic/ScatterPlotCanvas';
 import TranscriptomicSearchByGene from 'views/Analytics/Transcriptomic/SearchByGene';
 import TranscriptomicSearchBySample from 'views/Analytics/Transcriptomic/SearchBySample';
+import TranscriptomicsSwarmPlot from 'views/Analytics/Transcriptomic/SwarmPlot';
 import { SCROLL_WRAPPER_ID } from 'views/DataExploration/utils/constant';
 
 import { TTranscriptomicsDatum } from 'services/api/transcriptomics/models';
@@ -65,7 +66,7 @@ export const Transcriptomic = () => {
                 </div>
                 <Divider className={styles.hDivider} />
                 <div className={styles.content}>
-                  <div className={styles.scatterPlotContainer}>
+                  <div className={styles.chartContainer}>
                     <TranscriptomicsScatterPlotCanvas
                       selectedNodes={selectedNodes}
                       setSelectedNodes={setSelectedNodes}
@@ -74,8 +75,12 @@ export const Transcriptomic = () => {
                     />
                   </div>
                   <div className={styles.vDivider} />
-                  <div className={styles.swarmPlot}>
-                    <Empty />
+                  <div className={styles.chartContainer}>
+                    {selectedNodes.length != 1 ? (
+                      <Empty />
+                    ) : (
+                      <TranscriptomicsSwarmPlot diffGeneExp={selectedNodes[0]} />
+                    )}
                   </div>
                 </div>
               </div>

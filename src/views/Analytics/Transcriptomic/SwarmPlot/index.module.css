@@ -1,0 +1,24 @@
+.geneSymbol {
+  margin-left: 4px;
+  color: var(--gray-7);
+}
+
+.medianBoxT21 {
+  stroke: var(--gray-6);
+  stroke-width: 1;
+  fill: var(--gray-4);
+}
+
+.medianBoxControl {
+  stroke: var(--blue-7);
+  fill: var(--blue-3);
+}
+
+.limitLineT21 {
+  stroke: var(--gray-6);
+  stroke-width: 2;
+}
+
+.limitLineControl {
+  stroke: var(--blue-7);
+}

@@ -57,7 +57,7 @@
   flex: 1;
 }
 
-.scatterPlotContainer {
+.chartContainer {
   padding: 24px;
   display: flex;
   align-items: center;
