@@ -28,11 +28,14 @@ const fetchDiffGeneExp = () =>
     headers: headers(),
   });
 
-const fetchSampleGeneExp = () =>
-  sendRequest<ITranscriptomicsSampleGeneExp[]>({
+const fetchSampleGeneExp = (id: string) =>
+  sendRequest<ITranscriptomicsSampleGeneExp>({
     method: 'POST',
     url: `${ARRANGER_API}/transcriptomics/sampleGeneExp`,
     headers: headers(),
+    data: {
+      ensembl_gene_id: id,
+    },
   });
 
 export const TranscriptomicsApi = {
