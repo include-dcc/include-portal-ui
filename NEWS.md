@@ -7,12 +7,17 @@
 
 ### Technical / Other changes
 -->
-## 2024-09-18 include-portal-ui 1.12.1
+## 2024-09-18 include-portal-ui 1.12.2
 
 ### Features:
 
 - [SJIP-828](https://d3b.atlassian.net/browse/SJIP-828) Feature: [Data Exploration] Make Most Frequent Diagnoses/Phenotypes adjustable in size like the other graphs
 - [SJIP-952](https://d3b.atlassian.net/browse/SJIP-952) Feature: [Data Exploration] Implement the QuickFilter based on INCLUDE data fields
+
+## 2024-08-08 include-portal-ui 1.12.1
+
+### Technical/ Other changes:
+- [SJIP-932](https://d3b.atlassian.net/browse/SJIP-932) Fix: [Cavatica] Cannot push to Cavatica controlled files for X01-Hakonarson & X01-deSmith
 
 ## 2024-08-06 include-portal-ui 1.12.0
 
