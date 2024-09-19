@@ -1,0 +1,21 @@
+.tooltipContent {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.tooltipText {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.tooltipLabel {
+  color: var(--gray-7);
+  margin-right: 4px;
+}
+
+.tooltipValue {
+  color: var(--gray-8);
+}

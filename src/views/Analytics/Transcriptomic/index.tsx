@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import intl from 'react-intl-universal';
 import { useSelector } from 'react-redux';
-import { ScatterPlotNodeData } from '@ferlab/ui/core/components/Charts/ScatterPlot/type';
 import Empty from '@ferlab/ui/core/components/Empty';
 import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
@@ -14,7 +13,6 @@ import TranscriptomicSearchBySample from 'views/Analytics/Transcriptomic/SearchB
 import TranscriptomicsSwarmPlot from 'views/Analytics/Transcriptomic/SwarmPlot';
 import { SCROLL_WRAPPER_ID } from 'views/DataExploration/utils/constant';
 
-import { TTranscriptomicsDatum } from 'services/api/transcriptomics/models';
 import { useTranscriptomicsDiffGeneExp } from 'store/analytics';
 
 import { transcriptomicsSampleGeneExpSelector } from '../../../store/analytics/selector';
@@ -22,8 +20,6 @@ import { transcriptomicsSampleGeneExpSelector } from '../../../store/analytics/s
 import styles from './index.module.css';
 
 const { Title } = Typography;
-
-export type TNode = ScatterPlotNodeData<TTranscriptomicsDatum>;
 
 // TODO: will be used for the dynamic layer system
 
@@ -38,7 +34,6 @@ export const Transcriptomic = () => {
   // const facets = useTranscriptomicsFacets();
   const diffGeneExp = useTranscriptomicsDiffGeneExp();
   const sampleGeneExp = useSelector(transcriptomicsSampleGeneExpSelector);
-  const [selectedNodes, setSelectedNodes] = useState<TNode[]>([]);
   const [selectedGeneIds, setSelectedGeneIds] = useState<string[]>([]);
   const [selectedSampleIds, setSelectedSampleIds] = useState<string[]>([]);
 
@@ -83,18 +78,22 @@ export const Transcriptomic = () => {
                 <div className={styles.content}>
                   <div className={styles.chartContainer}>
                     <TranscriptomicsScatterPlotCanvas
-                      selectedNodes={selectedNodes}
-                      setSelectedNodes={setSelectedNodes}
+                      selectedNodesId={selectedGeneIds}
+                      setSelectedNodesId={setSelectedGeneIds}
                       data={diffGeneExp.data}
                       loading={diffGeneExp.loading}
                     />
                   </div>
                   <div className={styles.vDivider} />
                   <div className={styles.chartContainer}>
-                    {selectedNodes.length !== 1 ? (
+                    {selectedGeneIds.length !== 1 ? (
                       <Empty />
                     ) : (
-                      <TranscriptomicsSwarmPlot diffGeneExp={selectedNodes[0]} />
+                      <TranscriptomicsSwarmPlot
+                        diffGeneExpId={selectedGeneIds[0]}
+                        sampleIds={selectedSampleIds}
+                        setSampleIds={setSelectedSampleIds}
+                      />
                     )}
                   </div>
                 </div>
