@@ -35,6 +35,7 @@ export const Transcriptomic = () => {
   // const facets = useTranscriptomicsFacets();
   const diffGeneExp = useTranscriptomicsDiffGeneExp();
   const [selectedNodes, setSelectedNodes] = useState<TNode[]>([]);
+  const [selectedGeneIds, setSelectedGeneIds] = useState<string[]>([]);
 
   // TODO: add activeLayer={activeLayer} to ScatterPlotCanvasChart, will be used for selectboxlayer
   // const [activeLayer, setActiveLayer] = useState<Layers>(Layers.interactive);
@@ -57,7 +58,11 @@ export const Transcriptomic = () => {
               <div>
                 <div className={styles.header}>
                   <div className={styles.container}>
-                    <TranscriptomicSearchByGene />
+                    <TranscriptomicSearchByGene
+                      options={diffGeneExp.data}
+                      onSelectOptions={setSelectedGeneIds}
+                      selectedOptionsIds={selectedGeneIds}
+                    />
                   </div>
                   <div className={styles.vDivider} />
                   <div className={styles.container}>
