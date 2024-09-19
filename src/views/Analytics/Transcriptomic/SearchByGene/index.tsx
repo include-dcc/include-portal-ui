@@ -10,16 +10,18 @@ import {
 
 import styles from './index.module.css';
 
-type Props = {
+type OwnProps = {
   options?: TTranscriptomicsDiffGeneExp[];
   selectedOptionsIds: string[];
   onSelectOptions: (selectedIds: string[]) => void;
 };
 
+type Option = { label: string; value: string; id: string };
+
 const parseOptions = (options?: TTranscriptomicsDiffGeneExp[]): TTranscriptomicsDatum[] =>
   options?.flatMap((option) => option.data) || [];
 
-const TranscriptomicSearchByGene = ({ options, selectedOptionsIds, onSelectOptions }: Props) => {
+const TranscriptomicSearchByGene = ({ options, selectedOptionsIds, onSelectOptions }: OwnProps) => {
   const [parsedOptions, setParsedOptions] = useState<TTranscriptomicsDatum[]>([]);
   const [filteredOptions, setFilteredOptions] = useState<TTranscriptomicsDatum[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
@@ -48,7 +50,7 @@ const TranscriptomicSearchByGene = ({ options, selectedOptionsIds, onSelectOptio
     setFilteredOptions(filtered);
   };
 
-  const handleSelect = (value: string, option: any) => {
+  const handleSelect = (_value: string, option: Option) => {
     const selectedOption = parsedOptions.find((opt) => opt.ensembl_gene_id === option.id);
     if (selectedOption) {
       setInputValue(selectedOption.gene_symbol);
