@@ -4,10 +4,7 @@ import Empty from '@ferlab/ui/core/components/Empty/index';
 import { AutoComplete, Input } from 'antd';
 
 import SearchLabel from 'components/uiKit/search/SearchLabel';
-import {
-  ITranscriptomicsSampleGeneExp,
-  TTranscriptomicsSwarmPlotData,
-} from 'services/api/transcriptomics/models';
+import { ITranscriptomicsSampleGeneExp } from 'services/api/transcriptomics/models';
 
 import styles from './index.module.css';
 
@@ -26,43 +23,21 @@ const TranscriptomicSearchBySample = ({
   onSelectOptions,
   disabled = false,
 }: OwnProps) => {
-  const [parsedOptions, setParsedOptions] = useState<TTranscriptomicsSwarmPlotData[]>([]);
-  const [filteredOptions, setFilteredOptions] = useState<TTranscriptomicsSwarmPlotData[]>([]);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [parsedOptions, setParsedOptions] = useState(() => options?.data || []);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
-    const data = options?.data || [];
-    setParsedOptions(data);
-    setFilteredOptions(data);
-
-    const selectedOption = data.find((option) => option.sample_id === selectedOptionsIds[0]);
-    if (selectedOption) {
-      setInputValue(selectedOption.sample_id);
-    } else {
-      setInputValue('');
-    }
+    setParsedOptions(options?.data || []);
+    const selectedOption = options?.data?.find((opt) => opt.sample_id === selectedOptionsIds[0]);
+    setInputValue(selectedOption ? selectedOption.sample_id : '');
   }, [options, selectedOptionsIds]);
 
-  const filterOptions = (value: string) => {
-    const filtered = value
-      ? parsedOptions.filter((option) =>
-          option.sample_id.toLowerCase().includes(value.toLowerCase()),
-        )
-      : parsedOptions;
-    setFilteredOptions(filtered);
-  };
+  const filterOptions = (value: string) =>
+    parsedOptions.filter((opt) => opt.sample_id.toLowerCase().includes(value.toLowerCase()));
 
-  const handleSelect = (_value: string, option: Option) => {
-    const selectedOption = parsedOptions.find((opt) => opt.sample_id === option.id);
-    if (selectedOption) {
-      setInputValue(selectedOption.sample_id);
-    }
-    onSelectOptions([option.id]);
-  };
-
-  const handleChange = (value: string) => {
-    setInputValue(value);
-    filterOptions(value);
+  const handleSelect = (_: string, { id }: Option) => {
+    setInputValue(id);
+    onSelectOptions([id]);
   };
 
   return (
@@ -82,16 +57,16 @@ const TranscriptomicSearchBySample = ({
             />
           }
           disabled={disabled}
-          onSearch={filterOptions}
+          onSearch={(value) => setParsedOptions(filterOptions(value))}
           onSelect={handleSelect}
           placeholder={intl.get('global.search.samples.placeholder')}
           className={styles.select}
           value={inputValue}
-          onChange={handleChange}
-          options={filteredOptions.map((option) => ({
-            label: option.sample_id,
-            value: option.sample_id,
-            id: option.sample_id,
+          onChange={setInputValue}
+          options={parsedOptions.map((opt) => ({
+            label: opt.sample_id,
+            value: opt.sample_id,
+            id: opt.sample_id,
           }))}
         >
           <Input />
