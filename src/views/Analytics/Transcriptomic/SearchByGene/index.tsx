@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { AutoComplete, Input } from 'antd';
 
-import SearchLabel from '../../../../components/uiKit/search/SearchLabel';
+import SearchLabel from 'components/uiKit/search/SearchLabel';
 import {
   TTranscriptomicsDatum,
   TTranscriptomicsDiffGeneExp,
-} from '../../../../services/api/transcriptomics/models';
+} from 'services/api/transcriptomics/models';
 
 import styles from './index.module.css';
 
