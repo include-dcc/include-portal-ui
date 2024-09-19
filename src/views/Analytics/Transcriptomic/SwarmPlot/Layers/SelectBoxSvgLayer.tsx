@@ -101,7 +101,8 @@ const SelectBoxSvgLayer = memo(
         );
 
         // highlight node
-        setSelectBoxNodes(newSelectedNodes);
+        // TODO: to update when select box is enabled, now works with isSelected property
+        setSelectBoxNodes(newSelectedNodes.map((n) => ({ ...n, isSelected: true })));
       },
       [origin, transform],
     );

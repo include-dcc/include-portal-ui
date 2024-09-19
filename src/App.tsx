@@ -51,8 +51,6 @@ const App = () => {
   const { keycloak, initialized } = useKeycloak();
   const keycloakIsReady = keycloak && initialized;
 
-  console.log("getFTEnvVarByKey('ANALYTICS')", getFTEnvVarByKey('ANALYTICS')); //TODO: to remove
-
   setLocale(lang);
 
   if (getEnvVarByKey('MAINTENANCE_MODE') === 'true') {
