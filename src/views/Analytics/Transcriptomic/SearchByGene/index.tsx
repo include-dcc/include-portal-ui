@@ -63,7 +63,7 @@ const TranscriptomicSearchByGene = ({ options, selectedOptionsIds, onSelectOptio
 
   return (
     <div className={styles.transcriptomicSearchByGene}>
-      <div style={{ width: '100%' }}>
+      <div className={styles.searchContainer}>
         <SearchLabel
           title={intl.get('global.search.genes.title')}
           tooltipText={intl.get('global.search.genes.tooltip')}
