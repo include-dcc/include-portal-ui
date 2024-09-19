@@ -19,6 +19,8 @@ type TranscriptomicSearchProps<T> = {
   optionValueKey: keyof T;
 };
 
+type Option = { label: string; value: string; id: string };
+
 const TranscriptomicSearch = <T,>({
   options,
   selectedOptionsIds,
@@ -43,9 +45,9 @@ const TranscriptomicSearch = <T,>({
   const filterOptions = (value: string) =>
     options.filter((opt) => `${opt[optionLabelKey]}`.toLowerCase().includes(value.toLowerCase()));
 
-  const handleSelect = (_: string, { id }: { id: string }) => {
-    setInputValue(id);
-    onSelectOptions([id]);
+  const handleSelect = (_value: string, option: Option) => {
+    setInputValue(option.id);
+    onSelectOptions([option.id]);
   };
 
   return (
