@@ -37,7 +37,13 @@ const en = {
         emptyText: 'No gene found',
         placeholder: 'e.g. BRAF, ENSG00000157764',
         title: 'Search by gene',
-        tooltip: 'Enter a Gene Symbol, Gene Alias ​​or Ensemble ID',
+        tooltip: 'Enter a Gene Symbol, Gene Alias or Ensemble ID',
+      },
+      samples: {
+        emptyText: 'No sample found',
+        placeholder: 'e.g. bs-z8p7wjm7',
+        title: 'Search by sample ID',
+        tooltip: 'Enter a sample ID',
       },
       variants: {
         emptyText: 'No variant found',

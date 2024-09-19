@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
+import Empty from '@ferlab/ui/core/components/Empty/index';
 import { AutoComplete, Input } from 'antd';
 
 import SearchLabel from 'components/uiKit/search/SearchLabel';
@@ -72,6 +73,13 @@ const TranscriptomicSearchByGene = ({ options, selectedOptionsIds, onSelectOptio
         />
         <AutoComplete
           allowClear
+          notFoundContent={
+            <Empty
+              size="mini"
+              showImage={false}
+              description={intl.get('global.search.genes.emptyText')}
+            />
+          }
           onSearch={filterOptions}
           onSelect={handleSelect}
           placeholder={intl.get('global.search.genes.placeholder')}
