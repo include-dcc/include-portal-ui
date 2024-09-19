@@ -1,10 +1,15 @@
 .transcriptomicSearchBySample {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+}
+
+.searchContainer {
+    width: 100%;
 }
 
 .select {
-  width: 100%;
+    width: 100%;
 }
+
