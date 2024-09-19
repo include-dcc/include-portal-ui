@@ -23,45 +23,22 @@ const parseOptions = (options?: TTranscriptomicsDiffGeneExp[]): TTranscriptomics
   options?.flatMap((option) => option.data) || [];
 
 const TranscriptomicSearchByGene = ({ options, selectedOptionsIds, onSelectOptions }: OwnProps) => {
-  const [parsedOptions, setParsedOptions] = useState<TTranscriptomicsDatum[]>([]);
-  const [filteredOptions, setFilteredOptions] = useState<TTranscriptomicsDatum[]>([]);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [parsedOptions, setParsedOptions] = useState(() => parseOptions(options));
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     const parsed = parseOptions(options);
     setParsedOptions(parsed);
-    setFilteredOptions(parsed);
-
-    const selectedOption = parsed.find(
-      (option) => option.ensembl_gene_id === selectedOptionsIds[0],
-    );
-    if (selectedOption) {
-      setInputValue(selectedOption.gene_symbol);
-    } else {
-      setInputValue('');
-    }
+    const selectedOption = parsed.find((opt) => opt.ensembl_gene_id === selectedOptionsIds[0]);
+    setInputValue(selectedOption ? selectedOption.gene_symbol : '');
   }, [options, selectedOptionsIds]);
 
-  const filterOptions = (value: string) => {
-    const filtered = value
-      ? parsedOptions.filter((option) =>
-          option.gene_symbol.toLowerCase().includes(value.toLowerCase()),
-        )
-      : parsedOptions;
-    setFilteredOptions(filtered);
-  };
+  const filterOptions = (value: string) =>
+    parsedOptions.filter((opt) => opt.gene_symbol.toLowerCase().includes(value.toLowerCase()));
 
-  const handleSelect = (_value: string, option: Option) => {
-    const selectedOption = parsedOptions.find((opt) => opt.ensembl_gene_id === option.id);
-    if (selectedOption) {
-      setInputValue(selectedOption.gene_symbol);
-    }
-    onSelectOptions([option.id]);
-  };
-
-  const handleChange = (value: string) => {
-    setInputValue(value);
-    filterOptions(value);
+  const handleSelect = (_: string, { id }: Option) => {
+    setInputValue(id);
+    onSelectOptions([id]);
   };
 
   return (
@@ -80,16 +57,16 @@ const TranscriptomicSearchByGene = ({ options, selectedOptionsIds, onSelectOptio
               description={intl.get('global.search.genes.emptyText')}
             />
           }
-          onSearch={filterOptions}
+          onSearch={(value) => setParsedOptions(filterOptions(value))}
           onSelect={handleSelect}
           placeholder={intl.get('global.search.genes.placeholder')}
           className={styles.select}
           value={inputValue}
-          onChange={handleChange}
-          options={filteredOptions.map((option) => ({
-            label: option.gene_symbol,
-            value: option.gene_symbol,
-            id: option.ensembl_gene_id,
+          onChange={setInputValue}
+          options={parsedOptions.map((opt) => ({
+            label: opt.gene_symbol,
+            value: opt.gene_symbol,
+            id: opt.ensembl_gene_id,
           }))}
         >
           <Input />
