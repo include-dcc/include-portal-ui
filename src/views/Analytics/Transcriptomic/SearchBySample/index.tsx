@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import intl from 'react-intl-universal';
-import Empty from '@ferlab/ui/core/components/Empty/index';
-import { AutoComplete, Input } from 'antd';
 
-import SearchLabel from 'components/uiKit/search/SearchLabel';
-import { ITranscriptomicsSampleGeneExp } from 'services/api/transcriptomics/models';
+import {
+  ITranscriptomicsSampleGeneExp,
+  TTranscriptomicsSwarmPlotData,
+} from 'services/api/transcriptomics/models';
 
-import styles from './index.module.css';
+import TranscriptomicSearch from '../TranscriptomicSearch';
 
 type OwnProps = {
   options?: ITranscriptomicsSampleGeneExp;
@@ -15,64 +15,27 @@ type OwnProps = {
   disabled?: boolean;
 };
 
-type Option = { label: string; value: string; id: string };
-
 const TranscriptomicSearchBySample = ({
   options,
   selectedOptionsIds,
   onSelectOptions,
   disabled = false,
 }: OwnProps) => {
-  const [parsedOptions, setParsedOptions] = useState(() => options?.data || []);
-  const [inputValue, setInputValue] = useState('');
-
-  useEffect(() => {
-    setParsedOptions(options?.data || []);
-    const selectedOption = options?.data?.find((opt) => opt.sample_id === selectedOptionsIds[0]);
-    setInputValue(selectedOption ? selectedOption.sample_id : '');
-  }, [options, selectedOptionsIds]);
-
-  const filterOptions = (value: string) =>
-    parsedOptions.filter((opt) => opt.sample_id.toLowerCase().includes(value.toLowerCase()));
-
-  const handleSelect = (_: string, { id }: Option) => {
-    setInputValue(id);
-    onSelectOptions([id]);
-  };
+  const parsedOptions = options?.data || [];
 
   return (
-    <div className={styles.transcriptomicSearchBySample}>
-      <div className={styles.searchContainer}>
-        <SearchLabel
-          title={intl.get('global.search.samples.title')}
-          tooltipText={intl.get('global.search.samples.tooltip')}
-        />
-        <AutoComplete
-          allowClear
-          notFoundContent={
-            <Empty
-              size="mini"
-              showImage={false}
-              description={intl.get('global.search.samples.emptyText')}
-            />
-          }
-          disabled={disabled}
-          onSearch={(value) => setParsedOptions(filterOptions(value))}
-          onSelect={handleSelect}
-          placeholder={intl.get('global.search.samples.placeholder')}
-          className={styles.select}
-          value={inputValue}
-          onChange={setInputValue}
-          options={parsedOptions.map((opt) => ({
-            label: opt.sample_id,
-            value: opt.sample_id,
-            id: opt.sample_id,
-          }))}
-        >
-          <Input />
-        </AutoComplete>
-      </div>
-    </div>
+    <TranscriptomicSearch<TTranscriptomicsSwarmPlotData>
+      options={parsedOptions}
+      selectedOptionsIds={selectedOptionsIds}
+      onSelectOptions={onSelectOptions}
+      disabled={disabled}
+      title={intl.get('global.search.samples.title')}
+      tooltip={intl.get('global.search.samples.tooltip')}
+      placeholder={intl.get('global.search.samples.placeholder')}
+      emptyText={intl.get('global.search.samples.emptyText')}
+      optionLabelKey="sample_id"
+      optionValueKey="sample_id"
+    />
   );
 };
 
