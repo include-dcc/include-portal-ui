@@ -1,23 +1,42 @@
-import { FilterOutlined } from '@ant-design/icons';
-import { Button, Select } from 'antd';
-import GenesUploadIds from 'views/Variants/components/GeneUploadIds';
+import React from 'react';
+import intl from 'react-intl-universal';
 
-import styles from './index.module.css';
+import {
+  ITranscriptomicsSampleGeneExp,
+  TTranscriptomicsSwarmPlotData,
+} from 'services/api/transcriptomics/models';
 
-const TranscriptomicSearchBySample = () => (
-  <div className={styles.transcriptomicSearchBySample}>
-    <Select className={styles.select} value="search_by_gene">
-      <Select.Option className={styles.select} value="search_by_gene">
-        TODO
-      </Select.Option>
-    </Select>
-    <GenesUploadIds
-      handleUpload={(uniqueMatches) => {
-        // TODO: handle upload
-      }}
+import TranscriptomicSearch from '../TranscriptomicSearch';
+
+type OwnProps = {
+  options?: ITranscriptomicsSampleGeneExp;
+  selectedOptionsIds: string[];
+  onSelectOptions: (selectedIds: string[]) => void;
+  disabled?: boolean;
+};
+
+const TranscriptomicSearchBySample = ({
+  options,
+  selectedOptionsIds,
+  onSelectOptions,
+  disabled = false,
+}: OwnProps) => {
+  const parsedOptions = options?.data || [];
+
+  return (
+    <TranscriptomicSearch<TTranscriptomicsSwarmPlotData>
+      options={parsedOptions}
+      selectedOptionsIds={selectedOptionsIds}
+      onSelectOptions={onSelectOptions}
+      disabled={disabled}
+      title={intl.get('global.search.samples.title')}
+      tooltip={intl.get('global.search.samples.tooltip')}
+      placeholder={intl.get('global.search.samples.placeholder')}
+      emptyText={intl.get('global.search.samples.emptyText')}
+      optionLabelKey="sample_id"
+      optionValueKey="sample_id"
     />
-    <Button icon={<FilterOutlined />} />
-  </div>
-);
+  );
+};
 
 export default TranscriptomicSearchBySample;

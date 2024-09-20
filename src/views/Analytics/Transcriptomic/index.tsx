@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import intl from 'react-intl-universal';
+import { useSelector } from 'react-redux';
 import { ScatterPlotNodeData } from '@ferlab/ui/core/components/Charts/ScatterPlot/type';
 import Empty from '@ferlab/ui/core/components/Empty';
 import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
@@ -15,6 +16,8 @@ import { SCROLL_WRAPPER_ID } from 'views/DataExploration/utils/constant';
 
 import { TTranscriptomicsDatum } from 'services/api/transcriptomics/models';
 import { useTranscriptomicsDiffGeneExp } from 'store/analytics';
+
+import { transcriptomicsSampleGeneExpSelector } from '../../../store/analytics/selector';
 
 import styles from './index.module.css';
 
@@ -34,7 +37,10 @@ const menuItems: ISidebarMenuItem[] = [];
 export const Transcriptomic = () => {
   // const facets = useTranscriptomicsFacets();
   const diffGeneExp = useTranscriptomicsDiffGeneExp();
+  const sampleGeneExp = useSelector(transcriptomicsSampleGeneExpSelector);
   const [selectedNodes, setSelectedNodes] = useState<TNode[]>([]);
+  const [selectedGeneIds, setSelectedGeneIds] = useState<string[]>([]);
+  const [selectedSampleIds, setSelectedSampleIds] = useState<string[]>([]);
 
   // TODO: add activeLayer={activeLayer} to ScatterPlotCanvasChart, will be used for selectboxlayer
   // const [activeLayer, setActiveLayer] = useState<Layers>(Layers.interactive);
@@ -57,11 +63,20 @@ export const Transcriptomic = () => {
               <div>
                 <div className={styles.header}>
                   <div className={styles.container}>
-                    <TranscriptomicSearchByGene />
+                    <TranscriptomicSearchByGene
+                      options={diffGeneExp.data}
+                      onSelectOptions={setSelectedGeneIds}
+                      selectedOptionsIds={selectedGeneIds}
+                    />
                   </div>
                   <div className={styles.vDivider} />
                   <div className={styles.container}>
-                    <TranscriptomicSearchBySample />
+                    <TranscriptomicSearchBySample
+                      options={sampleGeneExp.data}
+                      onSelectOptions={setSelectedSampleIds}
+                      selectedOptionsIds={selectedSampleIds}
+                      disabled={selectedGeneIds.length !== 1}
+                    />
                   </div>
                 </div>
                 <Divider className={styles.hDivider} />
@@ -76,7 +91,7 @@ export const Transcriptomic = () => {
                   </div>
                   <div className={styles.vDivider} />
                   <div className={styles.chartContainer}>
-                    {selectedNodes.length != 1 ? (
+                    {selectedNodes.length !== 1 ? (
                       <Empty />
                     ) : (
                       <TranscriptomicsSwarmPlot diffGeneExp={selectedNodes[0]} />
