@@ -1,33 +1,63 @@
-import { useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import intl from 'react-intl-universal';
+import { useSelector } from 'react-redux';
+import BasicDescription from '@ferlab/ui/core/components/BasicDescription';
 import SwarmPlotChart from '@ferlab/ui/core/components/Charts/SwarmPlot';
 import SwarmPlotLimitLineSvgLayer from '@ferlab/ui/core/components/Charts/SwarmPlot/Layers/LimitLineSvgLayer';
 import SwarmPlotMedianBoxSvgLayer from '@ferlab/ui/core/components/Charts/SwarmPlot/Layers/MedianBoxSvgLayer';
 import { ComputedDatum, SwarmRawDatum } from '@ferlab/ui/core/components/Charts/SwarmPlot/type';
 import { Typography } from 'antd';
-import { TNode } from 'views/Analytics/Transcriptomic';
 
+import { TTranscriptomicsDiffGeneExp } from 'services/api/transcriptomics/models';
 import { useTranscriptomicsSampleGeneExp } from 'store/analytics';
+import { transcriptomicsDiffGeneExpSelector } from 'store/analytics/selector';
 
 import styles from './index.module.css';
 
 const { Title } = Typography;
+const CIRCLE_RADIUS = 9;
 
 export type TTranscriptomicsSwarmPlot = {
-  diffGeneExp: TNode;
+  diffGeneExpId: string;
+  sampleIds: string[];
+  setSampleIds: (sampleIds: string[]) => void;
 };
 
 export type TranscriptomicsSwarmRawDatum = SwarmRawDatum & {
   group: string;
   sample_id: string;
+  isSelected: boolean;
 };
 
-const TranscriptomicsSwarmPlot = ({ diffGeneExp }: TTranscriptomicsSwarmPlot) => {
-  const sampleGeneExp = useTranscriptomicsSampleGeneExp(diffGeneExp.id);
-  const [selectedNode, setSelectedNode] = useState<ComputedDatum<TranscriptomicsSwarmRawDatum>>();
+const getGeneSymbol = (diffGenes: TTranscriptomicsDiffGeneExp[], id: string) => {
+  let result = '';
+  diffGenes.forEach((diffGene) => {
+    diffGene.data.forEach((gene) => {
+      if (gene.ensembl_gene_id == id) {
+        result = gene.gene_symbol;
+        return;
+      }
+    });
+  });
+
+  return result;
+};
+
+const TranscriptomicsSwarmPlot = ({
+  diffGeneExpId,
+  setSampleIds,
+  sampleIds,
+}: TTranscriptomicsSwarmPlot) => {
+  const diffGeneExp = useSelector(transcriptomicsDiffGeneExpSelector);
+  const sampleGeneExp = useTranscriptomicsSampleGeneExp(diffGeneExpId);
   const t21GroupName = `T21 (${sampleGeneExp.data?.nT21})`;
   const controlGroupName = `Control (${sampleGeneExp.data?.nControl})`;
   const groups = [t21GroupName, controlGroupName];
+
+  const geneSymbol = useMemo(
+    () => getGeneSymbol(diffGeneExp.data ?? [], diffGeneExpId),
+    [diffGeneExp.data, diffGeneExpId],
+  );
 
   const t21Group: TranscriptomicsSwarmRawDatum[] = [];
   const controlGroup: TranscriptomicsSwarmRawDatum[] = [];
@@ -40,6 +70,7 @@ const TranscriptomicsSwarmPlot = ({ diffGeneExp }: TTranscriptomicsSwarmPlot) =>
         ...node,
         id: node.sample_id,
         group: t21GroupName,
+        isSelected: node.sample_id == sampleIds[0],
       });
       return;
     }
@@ -47,24 +78,29 @@ const TranscriptomicsSwarmPlot = ({ diffGeneExp }: TTranscriptomicsSwarmPlot) =>
       ...node,
       id: node.sample_id,
       group: controlGroupName,
+      isSelected: node.sample_id == sampleIds[0],
     });
   });
+
+  useEffect(() => {
+    setSampleIds([]);
+  }, [diffGeneExpId, setSampleIds]);
 
   return (
     <SwarmPlotChart
       title={
         <Title level={4}>
           {intl.get('screen.analytics.transcriptomic.swarmPlot.title')}
-          <span className={styles.geneSymbol}>{diffGeneExp.data.gene_symbol}</span>
+          <span className={styles.geneSymbol}>{geneSymbol}</span>
         </Title>
       }
-      selectedNode={selectedNode}
       loading={sampleGeneExp.loading}
       data={[...t21Group, ...controlGroup]}
       groups={groups}
       spacing={4}
       enableGridY={true}
-      colors={['#92a7c3', '#0284c7']}
+      enableGridX={false}
+      colors={['#0284c7', '#92a7c3']}
       colorBy={'group'}
       layers={[
         'grid',
@@ -106,22 +142,44 @@ const TranscriptomicsSwarmPlot = ({ diffGeneExp }: TTranscriptomicsSwarmPlot) =>
         'mesh',
       ]}
       value={'y'}
-      size={9}
+      size={CIRCLE_RADIUS}
       margin={{ bottom: 64, left: 48, right: 0, top: 48 }}
       onClick={(node: ComputedDatum<SwarmRawDatum>) => {
-        setSelectedNode(node as ComputedDatum<TranscriptomicsSwarmRawDatum>);
+        const sample = node as ComputedDatum<TranscriptomicsSwarmRawDatum>;
+        if (sample.data.sample_id === sampleIds[0]) {
+          setSampleIds([]);
+          return;
+        }
+        setSampleIds([sample.data.sample_id]);
       }}
       axisTop={null}
+      tooltip={(props) => {
+        const tooltipValue = props as ComputedDatum<TranscriptomicsSwarmRawDatum>;
+        return (
+          <div>
+            <BasicDescription
+              label={intl.get('screen.analytics.transcriptomic.swarmPlot.sample_id')}
+              text={tooltipValue.data.sample_id}
+            />
+            <BasicDescription
+              label={intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm')}
+              text={`${tooltipValue.data.y}`}
+            />
+          </div>
+        );
+      }}
       annotations={[
         {
           type: 'circle',
           match: {
-            index: selectedNode?.index ?? -1,
+            data: {
+              sample_id: sampleIds[0] ?? -1,
+            },
           },
           noteX: 30,
           noteY: -30,
           offset: 4,
-          note: `${selectedNode?.data?.sample_id ?? -1}`,
+          note: `${sampleIds[0] ?? -1}`,
         },
       ]}
       controls={{

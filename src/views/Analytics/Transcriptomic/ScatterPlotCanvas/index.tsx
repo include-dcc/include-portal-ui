@@ -1,29 +1,36 @@
 import intl from 'react-intl-universal';
 import { CameraOutlined } from '@ant-design/icons';
+import BasicDescription from '@ferlab/ui/core/components/BasicDescription';
 import ScatterPlotCanvasChart from '@ferlab/ui/core/components/Charts/ScatterPlot/Canvas';
 import MarkerCanvasLayer from '@ferlab/ui/core/components/Charts/ScatterPlot/Canvas/Layers/MarkerCanvasLayer';
+import {
+  ScatterPlotDatum,
+  ScatterPlotNodeData,
+  ScatterPlotTooltipProps,
+} from '@ferlab/ui/core/components/Charts/ScatterPlot/type';
 import { Button, Typography } from 'antd';
-import { TNode } from 'views/Analytics/Transcriptomic';
 
 import {
   TTranscriptomicsDatum,
   TTranscriptomicsDiffGeneExp,
 } from 'services/api/transcriptomics/models';
 
+import styles from './index.module.css';
+
 const { Title } = Typography;
 
 type TTranscriptomicsScatterPlotCanvas = {
   loading: boolean;
   data?: TTranscriptomicsDiffGeneExp[];
-  selectedNodes: TNode[];
-  setSelectedNodes: (nodes: TNode[]) => void;
+  selectedNodesId: string[];
+  setSelectedNodesId: (ids: string[]) => void;
 };
 
 const TranscriptomicsScatterPlotCanvas = ({
   loading,
   data,
-  selectedNodes,
-  setSelectedNodes,
+  selectedNodesId = [],
+  setSelectedNodesId,
 }: TTranscriptomicsScatterPlotCanvas) => (
   <ScatterPlotCanvasChart
     loading={loading}
@@ -51,20 +58,36 @@ const TranscriptomicsScatterPlotCanvas = ({
       'mesh',
       'legends',
       'annotations',
-      (ctx) => {
+      (ctx, props) => {
         MarkerCanvasLayer({
+          props,
           ctx,
-          markedNode: selectedNodes[0],
-          text: selectedNodes[0]?.data?.gene_symbol ?? '',
+          selectedNodeId: selectedNodesId[0],
+          text:
+            (
+              (props.nodes ?? []).find(
+                (n) =>
+                  (n as ScatterPlotNodeData<TTranscriptomicsDatum>).data.ensembl_gene_id ===
+                  selectedNodesId[0],
+              ) as ScatterPlotNodeData<TTranscriptomicsDatum>
+            )?.data?.gene_symbol ?? '',
           highlightColor: '#1c3863',
-          sizeMultiplier: 1.1,
+          radius: 12,
           font: '600 14px Serif',
         });
       },
     ]}
     nodeId={(d) => `${(d.data as TTranscriptomicsDatum).ensembl_gene_id}`}
     onClick={(node) => {
-      setSelectedNodes([node as TNode]);
+      const existingNodeIndex = selectedNodesId.find((id) => id === node.id);
+      if (existingNodeIndex) {
+        setSelectedNodesId(selectedNodesId.filter((id) => id !== node.id));
+        return;
+      }
+
+      setSelectedNodesId([
+        (node as ScatterPlotNodeData<TTranscriptomicsDatum>).data.ensembl_gene_id,
+      ]);
     }}
     colors={['#6697ea', '#bebebe', '#b02428']}
     axisLeft={{
@@ -97,6 +120,29 @@ const TranscriptomicsScatterPlotCanvas = ({
         symbolShape: 'circle',
       },
     ]}
+    tooltip={(value: ScatterPlotTooltipProps<ScatterPlotDatum>): React.ReactNode => {
+      const tooltipValue = value as ScatterPlotTooltipProps<TTranscriptomicsDatum>;
+      return (
+        <div className={styles.tooltipContent}>
+          <BasicDescription
+            label={intl.get('screen.analytics.transcriptomic.scatterPlot.gene_symbol')}
+            text={tooltipValue.node.data.gene_symbol}
+          />
+          <BasicDescription
+            label={intl.get('screen.analytics.transcriptomic.scatterPlot.ensembl_gene_id')}
+            text={tooltipValue.node.data.ensembl_gene_id}
+          />
+          <BasicDescription
+            label={intl.get('screen.analytics.transcriptomic.scatterPlot.fold_change')}
+            text={`${tooltipValue.node.xValue}`}
+          />
+          <BasicDescription
+            label={intl.get('screen.analytics.transcriptomic.scatterPlot.qvalue')}
+            text={`${tooltipValue.node.yValue}`}
+          />
+        </div>
+      );
+    }}
   />
 );
 

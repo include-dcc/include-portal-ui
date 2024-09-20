@@ -56,6 +56,7 @@ const TranscriptomicSearch = <T,>({
         <SearchLabel title={title} tooltipText={tooltip} />
         <AutoComplete
           allowClear
+          onClear={() => onSelectOptions([])}
           notFoundContent={<Empty size="mini" showImage={false} description={emptyText} />}
           disabled={disabled}
           onSearch={(value) => setParsedOptions(filterOptions(value))}
