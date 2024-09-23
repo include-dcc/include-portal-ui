@@ -53,7 +53,6 @@ const TranscriptomicsSwarmPlot = ({
   const t21GroupName = `T21 (${sampleGeneExp.data?.nT21})`;
   const controlGroupName = `Control (${sampleGeneExp.data?.nControl})`;
   const groups = [t21GroupName, controlGroupName];
-
   const geneSymbol = useMemo(
     () => getGeneSymbol(diffGeneExp.data ?? [], diffGeneExpId),
     [diffGeneExp.data, diffGeneExpId],
@@ -68,7 +67,7 @@ const TranscriptomicsSwarmPlot = ({
     if (node.x == 1) {
       t21Group.push({
         ...node,
-        id: node.sample_id,
+        id: `t21-${node.sample_id}${Math.random()}`,
         group: t21GroupName,
         isSelected: node.sample_id == sampleIds[0],
       });
@@ -76,11 +75,13 @@ const TranscriptomicsSwarmPlot = ({
     }
     controlGroup.push({
       ...node,
-      id: node.sample_id,
+      id: `control-${node.sample_id}${Math.random()}`,
       group: controlGroupName,
       isSelected: node.sample_id == sampleIds[0],
     });
   });
+
+  const groupedData = [...t21Group, ...controlGroup];
 
   useEffect(() => {
     setSampleIds([]);
@@ -95,7 +96,7 @@ const TranscriptomicsSwarmPlot = ({
         </Title>
       }
       loading={sampleGeneExp.loading}
-      data={[...t21Group, ...controlGroup]}
+      data={groupedData}
       groups={groups}
       spacing={4}
       enableGridY={true}
@@ -108,7 +109,7 @@ const TranscriptomicsSwarmPlot = ({
         ({ nodes }) => (
           <SwarmPlotLimitLineSvgLayer
             nodes={nodes}
-            active={data.length > 0}
+            active={data.length > 0 && data.length === nodes.length}
             groups={groups}
             theme={{
               [groups[0]]: {
@@ -123,7 +124,7 @@ const TranscriptomicsSwarmPlot = ({
         ({ nodes }) => (
           <SwarmPlotMedianBoxSvgLayer
             nodes={nodes}
-            active={data.length > 0}
+            active={data.length > 0 && data.length === nodes.length}
             groups={groups}
             theme={{
               [groups[0]]: {
@@ -163,10 +164,18 @@ const TranscriptomicsSwarmPlot = ({
             />
             <BasicDescription
               label={intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm')}
-              text={`${tooltipValue.data.y}`}
+              text={`${tooltipValue.data.y.toFixed(2)}`}
             />
           </div>
         );
+      }}
+      axisLeft={{
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legend: 'FPKM',
+        legendPosition: 'middle',
+        legendOffset: -32,
       }}
       annotations={[
         {
@@ -182,12 +191,6 @@ const TranscriptomicsSwarmPlot = ({
           note: `${sampleIds[0] ?? -1}`,
         },
       ]}
-      controls={{
-        zoom: {
-          step: 1.0,
-          max: 4.0,
-        },
-      }}
     />
   );
 };

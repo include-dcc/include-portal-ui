@@ -13,6 +13,8 @@ export type TTranscriptomicsDatum = ScatterPlotDatum & {
   gene_symbol: string;
   chromosome: string;
   ensembl_gene_id: string;
+  fold_change: number;
+  padj: number;
 };
 
 export type TTranscriptomicsDiffGeneExp = ScatterPlotRawSerie<TTranscriptomicsDatum>;

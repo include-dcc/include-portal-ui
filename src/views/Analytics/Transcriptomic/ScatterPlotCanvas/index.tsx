@@ -37,8 +37,8 @@ const TranscriptomicsScatterPlotCanvas = ({
     title={<Title level={4}>{intl.get('screen.analytics.transcriptomic.scatterPlot.title')}</Title>}
     controls={{
       zoom: {
-        max: 10.0,
-        step: 1.0,
+        max: 30.0,
+        step: 10.0,
       },
     }}
     extraControls={[
@@ -89,7 +89,7 @@ const TranscriptomicsScatterPlotCanvas = ({
         (node as ScatterPlotNodeData<TTranscriptomicsDatum>).data.ensembl_gene_id,
       ]);
     }}
-    colors={['#6697ea', '#bebebe', '#b02428']}
+    colors={['#bebebe', '#b02428', '#6697ea']}
     axisLeft={{
       tickSize: 5,
       tickPadding: 5,
@@ -134,11 +134,11 @@ const TranscriptomicsScatterPlotCanvas = ({
           />
           <BasicDescription
             label={intl.get('screen.analytics.transcriptomic.scatterPlot.fold_change')}
-            text={`${tooltipValue.node.xValue}`}
+            text={`${tooltipValue.node.data.fold_change}`}
           />
           <BasicDescription
             label={intl.get('screen.analytics.transcriptomic.scatterPlot.qvalue')}
-            text={`${tooltipValue.node.yValue}`}
+            text={`${tooltipValue.node.data.padj}`}
           />
         </div>
       );
