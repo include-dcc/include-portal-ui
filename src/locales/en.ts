@@ -1403,7 +1403,7 @@ const en = {
         swarmPlot: {
           title: 'Effect of Karyotype on',
           sample_id: 'Sample ID:',
-          fpkm: 'FPKM',
+          fpkm: 'FPKM:',
         },
         dataset: {
           label: 'Dataset',
