@@ -5,16 +5,13 @@ import styles from './index.module.css';
 
 const TranscriptomicDataset = () => (
   <div className={styles.transcriptomicDataset}>
-    <span>{intl.get('screen.analytics.transcriptomic.dataset.label')}</span>
+    <span className={styles.datasetLabel}>
+      {intl.get('screen.analytics.transcriptomic.dataset.label')}
+    </span>
     <Select value="dataset_whole_blood">
       <Select.Option value="dataset_whole_blood">TODO</Select.Option>
     </Select>
-    <Button
-      type="link"
-      onClick={() => {
-        console.log('about onClick');
-      }}
-    >
+    <Button type="link" onClick={() => {}}>
       {intl.get('screen.analytics.transcriptomic.dataset.about')}
     </Button>
   </div>

@@ -34,7 +34,11 @@ const TranscriptomicsScatterPlotCanvas = ({
 }: TTranscriptomicsScatterPlotCanvas) => (
   <ScatterPlotCanvasChart
     loading={loading}
-    title={<Title level={4}>{intl.get('screen.analytics.transcriptomic.scatterPlot.title')}</Title>}
+    title={
+      <Title className={styles.title} level={4}>
+        {intl.get('screen.analytics.transcriptomic.scatterPlot.title')}
+      </Title>
+    }
     controls={{
       zoom: {
         max: 30.0,
@@ -50,7 +54,10 @@ const TranscriptomicsScatterPlotCanvas = ({
         }}
       />,
     ]}
-    data={data ?? []}
+    data={(data ?? []).map((d) => ({
+      ...d,
+      id: intl.get(`screen.analytics.transcriptomic.scatterPlot.${d.id}`),
+    }))}
     layers={[
       'grid',
       'axes',
@@ -94,7 +101,7 @@ const TranscriptomicsScatterPlotCanvas = ({
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: '-log10(Pvalue)',
+      legend: '-log10(q-value)',
       legendPosition: 'middle',
       legendOffset: -48,
     }}
@@ -102,20 +109,20 @@ const TranscriptomicsScatterPlotCanvas = ({
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'logFC',
+      legend: 'log2(Fold change)',
       legendPosition: 'middle',
       legendOffset: 48,
     }}
-    margin={{ bottom: 64, left: 64, right: 128, top: 48 }}
+    margin={{ bottom: 64, left: 64, right: 158, top: 40 }}
     legends={[
       {
         anchor: 'right',
         direction: 'column',
         itemHeight: 12,
         itemsSpacing: 8,
-        itemWidth: 100,
+        itemWidth: 128,
         justify: false,
-        translateX: 120,
+        translateX: 140,
         translateY: 0,
         symbolShape: 'circle',
       },
