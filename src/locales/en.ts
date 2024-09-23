@@ -1399,6 +1399,9 @@ const en = {
           ensembl_gene_id: 'Ensembl ID:',
           fold_change: 'Fold change:',
           qvalue: 'q-value:',
+          not_significant: 'Not significant',
+          up_regulated: 'Up-regulated (q ≤ 0.1)',
+          down_regulated: 'Down-regulated (q ≤ 0.1)',
         },
         swarmPlot: {
           title: 'Effect of Karyotype on',
