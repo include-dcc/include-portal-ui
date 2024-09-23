@@ -90,7 +90,7 @@ const TranscriptomicsSwarmPlot = ({
   return (
     <SwarmPlotChart
       title={
-        <Title level={4}>
+        <Title level={4} className={styles.title}>
           {intl.get('screen.analytics.transcriptomic.swarmPlot.title')}
           <span className={styles.geneSymbol}>{geneSymbol}</span>
         </Title>
@@ -144,7 +144,7 @@ const TranscriptomicsSwarmPlot = ({
       ]}
       value={'y'}
       size={CIRCLE_RADIUS}
-      margin={{ bottom: 64, left: 48, right: 0, top: 48 }}
+      margin={{ bottom: 32, left: 48, right: 0, top: 0 }}
       onClick={(node: ComputedDatum<SwarmRawDatum>) => {
         const sample = node as ComputedDatum<TranscriptomicsSwarmRawDatum>;
         if (sample.data.sample_id === sampleIds[0]) {
