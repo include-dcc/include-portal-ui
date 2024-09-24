@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import intl from 'react-intl-universal';
-import { Button, Select } from 'antd';
+import { Button, Select, Typography } from 'antd';
+
+const { Paragraph, Title } = Typography;
+
+import BasicDescription from '@ferlab/ui/core/components/BasicDescription';
 
 import AboutModal from './AboutModal';
 
@@ -19,7 +23,9 @@ const TranscriptomicDataset = () => {
 
   return (
     <div className={styles.transcriptomicDataset}>
-      <span className={styles.datasetLabel}>{intl.get('screen.analytics.transcriptomic.dataset.label')}</span>
+      <span className={styles.datasetLabel}>
+        {intl.get('screen.analytics.transcriptomic.dataset.label')}
+      </span>
       <Select value="dataset_whole_blood" className={styles.datasetSelect}>
         <Select.Option value="dataset_whole_blood">
           {intl.get('screen.analytics.transcriptomic.dataset.datasetValue')}
@@ -32,9 +38,25 @@ const TranscriptomicDataset = () => {
       <AboutModal
         open={isModalOpen}
         onClose={handleCloseModal}
-        content={intl.get('screen.analytics.transcriptomic.dataset.aboutContent')}
         title={intl.get('screen.analytics.transcriptomic.dataset.datasetValue')}
-      />
+      >
+        <Paragraph className={styles.description}>
+          {intl.get('screen.analytics.transcriptomic.about.description')}
+        </Paragraph>
+        <Title className={styles.contentTitle} level={5}>
+          {intl.get('screen.analytics.transcriptomic.about.subtitle')}
+        </Title>
+        {/* TODO: should be dynamic in a near futur */}
+        <BasicDescription label={'Tissue Type:'} text={'Whole blood'} bordered />
+        <BasicDescription label={'Sample Type:'} text={'PAXGeneWholeBloodRNA'} bordered />
+        <BasicDescription label={'Experimental Strategy:'} text={'Bulk RNAseq'} bordered />
+        <BasicDescription label={'Selection:'} text={'polyA+'} bordered />
+        <BasicDescription label={'Depletion:'} text={'globin'} bordered />
+        <BasicDescription label={'Library Type:'} text={'Strand-specific paired-end'} bordered />
+        <BasicDescription label={'Platform:'} text={'Illumina Novaseq'} bordered />
+        <BasicDescription label={'Genome Reference:'} text={'GRCh38'} bordered />
+        <BasicDescription label={'Annotation:'} text={'Gencode v33'} bordered />
+      </AboutModal>
     </div>
   );
 };

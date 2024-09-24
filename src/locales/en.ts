@@ -1417,6 +1417,13 @@ const en = {
             tooltip: 'Enter a sample ID',
           },
         },
+        about: {
+          title: 'About this dataset',
+          description:
+            'Explore the impact of trisomy 21 on gene expression between people with and without Down syndrome. Generated via RNA sequencing PAXgene Whole Blood RNA.',
+          subtitle: 'Experimental Metadata',
+          close: 'Close',
+        },
         swarmPlot: {
           title: 'Effect of Karyotype on',
           sample_id: 'Sample ID:',
