@@ -22,6 +22,9 @@ const TranscriptomicSearchBySample = ({
 }: OwnProps) => {
   const parsedOptions = options?.data || [];
 
+  const sampleFilterFunction = (options: TTranscriptomicsSwarmPlotData[], input: string) =>
+    options.filter((opt) => opt.sample_id.toLowerCase().includes(input.toLowerCase()));
+
   return (
     <TranscriptomicSearch<TTranscriptomicsSwarmPlotData>
       options={parsedOptions}
@@ -34,6 +37,7 @@ const TranscriptomicSearchBySample = ({
       emptyText={intl.get('global.search.samples.emptyText')}
       optionLabelKey="sample_id"
       optionValueKey="sample_id"
+      filterFunction={sampleFilterFunction}
     />
   );
 };

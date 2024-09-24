@@ -16,6 +16,13 @@ type OwnProps = {
 const TranscriptomicSearchByGene = ({ options, selectedOptionsIds, onSelectOptions }: OwnProps) => {
   const parsedOptions: TTranscriptomicsDatum[] = options?.flatMap((option) => option.data) || [];
 
+  const geneFilterFunction = (options: TTranscriptomicsDatum[], input: string) =>
+    options.filter(
+      (opt) =>
+        opt.gene_symbol.toLowerCase().includes(input.toLowerCase()) ||
+        opt.ensembl_gene_id.toLowerCase().includes(input.toLowerCase()),
+    );
+
   return (
     <TranscriptomicSearch<TTranscriptomicsDatum>
       options={parsedOptions}
@@ -27,8 +34,8 @@ const TranscriptomicSearchByGene = ({ options, selectedOptionsIds, onSelectOptio
       emptyText={intl.get('global.search.genes.emptyText')}
       optionLabelKey="gene_symbol"
       optionValueKey="ensembl_gene_id"
+      filterFunction={geneFilterFunction}
     />
   );
 };
-
 export default TranscriptomicSearchByGene;

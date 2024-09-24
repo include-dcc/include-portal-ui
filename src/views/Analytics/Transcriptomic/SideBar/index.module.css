@@ -1,0 +1,40 @@
+.sideBarFacet {
+  padding-top: 10px;
+  overflow-y: hidden;
+  height: 100%;
+  min-width: var(--sidebar-content-panel-width);
+  width: var(--sidebar-content-panel-width);
+  transition: width 0.2s, min-width 0.2s;
+  border-right: 1px solid var(--gray-5);
+}
+
+.sideBarFacet.collapsed {
+  min-width: var(--sidebar-menu-collapsed-width);
+  width: var(--sidebar-menu-collapsed-width);
+}
+
+.collapseIcon {
+  font-size: var(--sidebar-menu-item-icon-size);
+  color: var(--gray-7);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.content {
+  padding: var(--sidebar-content-panel-padding);
+  padding-top: 16px;
+}
+
+.button {
+  width: 21px;
+  color: var(--gray-7);
+}
+
+.button:hover {
+  background-color: transparent;
+}
+
+.menuItem {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}

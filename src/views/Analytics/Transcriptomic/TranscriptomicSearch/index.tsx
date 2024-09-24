@@ -17,6 +17,7 @@ type TranscriptomicSearchProps<T> = {
   emptyText: string;
   optionLabelKey: keyof T;
   optionValueKey: keyof T;
+  filterFunction: (options: T[], input: string) => T[];
 };
 
 type Option = { label: string; value: string; id: string };
@@ -32,6 +33,7 @@ const TranscriptomicSearch = <T,>({
   emptyText,
   optionLabelKey,
   optionValueKey,
+  filterFunction,
 }: TranscriptomicSearchProps<T>) => {
   const [parsedOptions, setParsedOptions] = useState<T[]>(options);
   const [inputValue, setInputValue] = useState<string>('');
@@ -42,12 +44,13 @@ const TranscriptomicSearch = <T,>({
     setInputValue(selectedOption ? `${selectedOption[optionLabelKey]}` : '');
   }, [options, selectedOptionsIds, optionLabelKey, optionValueKey]);
 
-  const filterOptions = (value: string) =>
-    options.filter((opt) => `${opt[optionLabelKey]}`.toLowerCase().includes(value.toLowerCase()));
-
   const handleSelect = (_value: string, option: Option) => {
     setInputValue(option.id);
     onSelectOptions([option.id]);
+  };
+
+  const handleSearch = (value: string) => {
+    setParsedOptions(filterFunction(options, value));
   };
 
   return (
@@ -59,7 +62,7 @@ const TranscriptomicSearch = <T,>({
           onClear={() => onSelectOptions([])}
           notFoundContent={<Empty size="mini" showImage={false} description={emptyText} />}
           disabled={disabled}
-          onSearch={(value) => setParsedOptions(filterOptions(value))}
+          onSearch={handleSearch}
           onSelect={handleSelect}
           placeholder={placeholder}
           className={styles.select}
