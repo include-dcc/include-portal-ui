@@ -2,6 +2,15 @@
   display: flex;
   gap: 8px;
   align-items: center;
+  width: 40%;
+}
+
+.datasetSelect {
+  flex-grow: 1;
+}
+
+.aboutButton {
+  padding: 0;
 }
 
 .datasetLabel {
