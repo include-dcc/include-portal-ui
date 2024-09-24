@@ -1403,6 +1403,20 @@ const en = {
           up_regulated: 'Up-regulated (q ≤ 0.1)',
           down_regulated: 'Down-regulated (q ≤ 0.1)',
         },
+        filter: {
+          genes: {
+            emptyText: 'No gene found',
+            placeholder: 'e.g. BRAF, ENSG00000157764',
+            title: 'Search by gene',
+            tooltip: 'Enter a Gene Symbol or Ensembl ID',
+          },
+          samples: {
+            emptyText: 'No sample found',
+            placeholder: 'e.g. bs-z8p7wjm7',
+            title: 'Search by sample ID',
+            tooltip: 'Enter a sample ID',
+          },
+        },
         swarmPlot: {
           title: 'Effect of Karyotype on',
           sample_id: 'Sample ID:',
