@@ -26,6 +26,16 @@ type TTranscriptomicsScatterPlotCanvas = {
   setSelectedNodesId: (ids: string[]) => void;
 };
 
+const formatPadj = (value: number): string => {
+  const valueString = value.toString();
+  const exponentIndex = valueString.indexOf('e');
+  if (exponentIndex != -1) {
+    const splitString = valueString.split('e-');
+    return `${splitString[0]}e-${splitString[1].substring(0, 2)}`;
+  }
+  return value.toFixed(3);
+};
+
 const TranscriptomicsScatterPlotCanvas = ({
   loading,
   data,
@@ -101,7 +111,7 @@ const TranscriptomicsScatterPlotCanvas = ({
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: '-log10(q-value)',
+      legend: '-log10 (q-value)',
       legendPosition: 'middle',
       legendOffset: -48,
     }}
@@ -109,7 +119,7 @@ const TranscriptomicsScatterPlotCanvas = ({
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'log2(Fold change)',
+      legend: 'log2 (Fold change)',
       legendPosition: 'middle',
       legendOffset: 48,
     }}
@@ -141,11 +151,11 @@ const TranscriptomicsScatterPlotCanvas = ({
           />
           <BasicDescription
             label={intl.get('screen.analytics.transcriptomic.scatterPlot.fold_change')}
-            text={`${tooltipValue.node.data.fold_change}`}
+            text={`${tooltipValue.node.data.fold_change.toFixed(2)}`}
           />
           <BasicDescription
             label={intl.get('screen.analytics.transcriptomic.scatterPlot.qvalue')}
-            text={`${tooltipValue.node.data.padj}`}
+            text={`${formatPadj(tooltipValue.node.data.padj)}`}
           />
         </div>
       );
