@@ -1,25 +1,30 @@
 import React from 'react';
-import { Button, Modal } from 'antd';
+import intl from 'react-intl-universal';
+import { Button, Modal, Typography } from 'antd';
+
+import styles from './index.module.css';
+
+const { Title } = Typography;
 
 interface AboutModalProps {
   open: boolean;
   onClose: () => void;
-  content: React.ReactNode;
+  children: React.ReactNode;
   title: string;
 }
 
-const AboutModal: React.FC<AboutModalProps> = ({ open, onClose, content, title }) => (
+const AboutModal: React.FC<AboutModalProps> = ({ open, onClose, children, title }) => (
   <Modal
-    title={title}
+    title={<Title className={styles.title}>{title}</Title>}
     open={open}
     onCancel={onClose}
     footer={
       <Button type="primary" onClick={onClose}>
-        Close
+        {intl.get('screen.analytics.transcriptomic.about.close')}
       </Button>
     }
   >
-    {content}
+    {children}
   </Modal>
 );
 
