@@ -123,7 +123,7 @@ const TranscriptomicsScatterPlotCanvas = ({
       legendPosition: 'middle',
       legendOffset: 48,
     }}
-    margin={{ bottom: 64, left: 64, right: 158, top: 40 }}
+    margin={{ bottom: 64, left: 64, right: 158, top: 12 }}
     legends={[
       {
         anchor: 'right',

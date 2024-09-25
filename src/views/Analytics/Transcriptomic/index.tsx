@@ -1,26 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import intl from 'react-intl-universal';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
 import Empty from '@ferlab/ui/core/components/Empty';
-import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Button, Divider, Select, Space, Typography } from 'antd';
+import { Divider, Select, Space, Typography } from 'antd';
 import TranscriptomicDataset from 'views/Analytics/Transcriptomic/Dataset';
+import TranscriptomicFooter from 'views/Analytics/Transcriptomic/Footer';
 import TranscriptomicsScatterPlotCanvas from 'views/Analytics/Transcriptomic/ScatterPlotCanvas';
 import TranscriptomicSearchByGene from 'views/Analytics/Transcriptomic/SearchByGene';
 import TranscriptomicSearchBySample from 'views/Analytics/Transcriptomic/SearchBySample';
 import TranscriptomicsSwarmPlot from 'views/Analytics/Transcriptomic/SwarmPlot';
-import { DATA_EXPLORATION_QB_ID, SCROLL_WRAPPER_ID } from 'views/DataExploration/utils/constant';
+import { SCROLL_WRAPPER_ID } from 'views/DataExploration/utils/constant';
 
 import { useTranscriptomicsDiffGeneExp } from 'store/analytics';
 
-import ExternalLinkIcon from '../../../components/Icons/ExternalLinkIcon';
-import { INDEXES } from '../../../graphql/constants';
 import { transcriptomicsSampleGeneExpSelector } from '../../../store/analytics/selector';
-import { STATIC_ROUTES } from '../../../utils/routes';
 
 import SideBar, { TTranscriptomicSideBarItem } from './SideBar';
 
@@ -61,32 +56,10 @@ const menuItems: () => TTranscriptomicSideBarItem[] = () => [
 ];
 
 export const Transcriptomic = () => {
-  // const facets = useTranscriptomicsFacets();
-  const navigate = useNavigate();
   const diffGeneExp = useTranscriptomicsDiffGeneExp();
   const sampleGeneExp = useSelector(transcriptomicsSampleGeneExpSelector);
   const [selectedGeneIds, setSelectedGeneIds] = useState<string[]>([]);
   const [selectedSampleIds, setSelectedSampleIds] = useState<string[]>([]);
-
-  const viewInExploration = () => {
-    addQuery({
-      queryBuilderId: DATA_EXPLORATION_QB_ID,
-      query: generateQuery({
-        newFilters: [
-          generateValueFilter({
-            field: 'sample_id',
-            value: sampleGeneExp.data?.data ? sampleGeneExp.data?.data.map((x) => x.sample_id) : [],
-            index: INDEXES.BIOSPECIMEN,
-          }),
-        ],
-      }),
-      setAsActive: true,
-    });
-    navigate(STATIC_ROUTES.DATA_EXPLORATION_BIOSPECIMENS);
-  };
-
-  // TODO: add activeLayer={activeLayer} to ScatterPlotCanvasChart, will be used for selectboxlayer
-  // const [activeLayer, setActiveLayer] = useState<Layers>(Layers.interactive);
 
   return (
     <div className={styles.transcriptomicPage}>
@@ -102,6 +75,12 @@ export const Transcriptomic = () => {
           <GridCard
             className={styles.gridCard}
             contentClassName={styles.gridCardContent}
+            footer={
+              <TranscriptomicFooter
+                selectedGeneIds={selectedGeneIds}
+                sampleGeneExpData={sampleGeneExp.data?.data}
+              />
+            }
             content={
               <div>
                 <div className={styles.header}>
@@ -137,19 +116,11 @@ export const Transcriptomic = () => {
                     {selectedGeneIds.length !== 1 ? (
                       <Empty />
                     ) : (
-                      <>
-                        <TranscriptomicsSwarmPlot
-                          diffGeneExpId={selectedGeneIds[0]}
-                          sampleIds={selectedSampleIds}
-                          setSampleIds={setSelectedSampleIds}
-                        />
-                        <div className={styles.explorationButtonContainer}>
-                          <Button onClick={viewInExploration}>
-                            {intl.get('global.viewInExploration')}
-                            <ExternalLinkIcon />
-                          </Button>
-                        </div>
-                      </>
+                      <TranscriptomicsSwarmPlot
+                        diffGeneExpId={selectedGeneIds[0]}
+                        sampleIds={selectedSampleIds}
+                        setSampleIds={setSelectedSampleIds}
+                      />
                     )}
                   </div>
                 </div>
