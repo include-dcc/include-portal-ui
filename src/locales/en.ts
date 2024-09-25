@@ -1417,6 +1417,9 @@ const en = {
             tooltip: 'Enter a sample ID',
           },
         },
+        footer: {
+          download: 'Download data',
+        },
         about: {
           title: 'About this dataset',
           description:
