@@ -23,13 +23,6 @@ import styles from './index.module.css';
 
 const { Title } = Typography;
 
-// TODO: will be used for the dynamic layer system
-
-// enum Layers {
-//   interactive,
-//   select,
-// }
-
 const menuItems: () => TTranscriptomicSideBarItem[] = () => [
   {
     key: '1',
