@@ -3,8 +3,7 @@ import intl from 'react-intl-universal';
 import { useSelector } from 'react-redux';
 import BasicDescription from '@ferlab/ui/core/components/BasicDescription';
 import SwarmPlotChart from '@ferlab/ui/core/components/Charts/SwarmPlot';
-import SwarmPlotLimitLineSvgLayer from '@ferlab/ui/core/components/Charts/SwarmPlot/Layers/LimitLineSvgLayer';
-import SwarmPlotMedianBoxSvgLayer from '@ferlab/ui/core/components/Charts/SwarmPlot/Layers/MedianBoxSvgLayer';
+import SwarmPlotBoxPlotSvgLayer from '@ferlab/ui/core/components/Charts/SwarmPlot/Layers/MedianBoxSvgLayer';
 import { ComputedDatum, SwarmRawDatum } from '@ferlab/ui/core/components/Charts/SwarmPlot/type';
 import { Typography } from 'antd';
 
@@ -98,7 +97,7 @@ const TranscriptomicsSwarmPlot = ({
       loading={sampleGeneExp.loading}
       data={groupedData}
       groups={groups}
-      spacing={4}
+      spacing={8}
       enableGridY={true}
       enableGridX={false}
       colors={['#0284c7', '#92a7c3']}
@@ -107,33 +106,20 @@ const TranscriptomicsSwarmPlot = ({
         'grid',
         'axes',
         ({ nodes }) => (
-          <SwarmPlotLimitLineSvgLayer
-            nodes={nodes}
-            active={data.length > 0 && data.length === nodes.length}
-            groups={groups}
-            theme={{
-              [groups[0]]: {
-                line: styles.limitLineT21,
-              },
-              [groups[1]]: {
-                line: styles.limitLineControl,
-              },
-            }}
-          />
-        ),
-        ({ nodes }) => (
-          <SwarmPlotMedianBoxSvgLayer
+          <SwarmPlotBoxPlotSvgLayer
             nodes={nodes}
             active={data.length > 0 && data.length === nodes.length}
             groups={groups}
             theme={{
               [groups[0]]: {
                 rect: styles.medianBoxT21,
-                line: styles.medianBoxT21,
+                median: styles.medianBoxT21,
+                limit: styles.limitLineT21,
               },
               [groups[1]]: {
                 rect: styles.medianBoxControl,
-                line: styles.medianBoxControl,
+                median: styles.medianBoxControl,
+                limit: styles.limitLineControl,
               },
             }}
           />
