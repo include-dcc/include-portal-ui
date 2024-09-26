@@ -107,7 +107,11 @@ export const Transcriptomic = () => {
                   <div className={styles.vDivider} />
                   <div className={styles.chartContainer}>
                     {selectedGeneIds.length !== 1 ? (
-                      <Empty />
+                      <Empty
+                        size="large"
+                        imageType="grid"
+                        description={intl.get('screen.analytics.transcriptomic.empty')}
+                      />
                     ) : (
                       <TranscriptomicsSwarmPlot
                         diffGeneExpId={selectedGeneIds[0]}
