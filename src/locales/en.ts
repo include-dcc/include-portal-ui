@@ -1391,6 +1391,7 @@ const en = {
       },
       transcriptomic: {
         title: 'Differential Gene Expression',
+        empty: 'Select a gene to compare effects',
         subtitle:
           'Explore the impact of trisomy 21 on gene expression between people with and without Down syndrome. Generated via RNA sequencing PAXgene Whole Blood RNA.',
         scatterPlot: {
