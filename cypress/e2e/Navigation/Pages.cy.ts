@@ -25,7 +25,7 @@ describe('Navigation', () => {
     cy.get('[class*="Community_title"]').should('exist'); // data-cy="Title_Community"
 
     cy.get('[class*="Header_userName"]').clickAndWait({force: true}); // data-cy="UserName"
-    cy.get('[data-menu-id*="profile_settings"]').find('[href]').clickAndWait({force: true});
+    cy.get('[data-menu-id*="profile_settings"] [href]').clickAndWait({force: true});
     cy.get('[class*="ProfileSettings_profileSettingsHeader"]').should('exist'); // data-cy="Title_ProfileSettings"
   });
 
@@ -36,7 +36,7 @@ describe('Navigation', () => {
     });
 
     cy.get('[class*="Header_resources_"]').clickAndWait({force: true}); // data-cy="Menu_Website"
-    cy.get('[data-menu-id*="website"]').find('[href]').clickAndWait({force: true}); // data-cy="MenuLink_Website"
+    cy.get('[data-menu-id*="website"] [href]').clickAndWait({force: true}); // data-cy="MenuLink_Website"
     cy.get("@windowOpen").should('be.calledWith', 'https://includedcc.org/');
   });
 
@@ -47,7 +47,7 @@ describe('Navigation', () => {
     });
 
     cy.get('[class*="Header_resources_"]').clickAndWait({force: true}); // data-cy="Menu_Help"
-    cy.get('[data-menu-id*="help"]').find('[href]').clickAndWait({force: true}); // data-cy="MenuLink_Help"
+    cy.get('[data-menu-id*="help"] [href]').clickAndWait({force: true}); // data-cy="MenuLink_Help"
     cy.get("@windowOpen").should('be.calledWith', 'https://help.includedcc.org/docs/quick-start-guide');
   });
 
@@ -58,7 +58,7 @@ describe('Navigation', () => {
     });
 
     cy.get('[class*="Header_resources_"]').clickAndWait({force: true}); // data-cy="Menu_Forum"
-    cy.get('[data-menu-id*="forum"]').find('[href]').clickAndWait({force: true}); // data-cy="MenuLink_Forum"
+    cy.get('[data-menu-id*="forum"] [href]').clickAndWait({force: true}); // data-cy="MenuLink_Forum"
     cy.get("@windowOpen").should('be.calledWith', 'https://help.includedcc.org/discuss');
   });
 
@@ -69,7 +69,7 @@ describe('Navigation', () => {
     });
 
     cy.get('[class*="Header_resources_"]').clickAndWait({force: true}); // data-cy="Menu_Contact"
-    cy.get('[data-menu-id*="contact"]').find('[href]').clickAndWait({force: true}); // data-cy="MenuLink_Contact"
+    cy.get('[data-menu-id*="contact"] [href]').clickAndWait({force: true}); // data-cy="MenuLink_Contact"
     cy.get("@windowOpen").should('be.calledWith', 'https://app.smartsheet.com/b/form/514745159a004c2e987fff0aa16ceaac');
   });
 
@@ -93,22 +93,22 @@ describe('Navigation', () => {
 
   it('Modals de la page Dashboard [SJIP-347]', () => {
     cy.visitDashboard();
-    cy.get('[class*="ListItem_savedSetListItem"]').find('svg[data-icon="edit"]').eq(0).clickAndWait({force: true}); // data-cy="SavedSets"
+    cy.get('[class*="ListItem_savedSetListItem"] svg[data-icon="edit"]').eq(0).clickAndWait({force: true}); // data-cy="SavedSets"
     cy.contains('Edit set').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
     cy.visitDashboard();
-    cy.get('[class*="ListItem_savedSetListItem"]').find('svg[data-icon="delete"]').eq(0).clickAndWait({force: true}); // data-cy="SavedSets"
+    cy.get('[class*="ListItem_savedSetListItem"] svg[data-icon="delete"]').eq(0).clickAndWait({force: true}); // data-cy="SavedSets"
     cy.contains('Permanently delete this set?').should('exist');
     cy.get('button[type="button"]').contains('Cancel').clickAndWait({force: true});
 
     cy.visitDashboard();
-    cy.get('[class*="ListItemWithActions"]').find('svg[data-icon="edit"]').eq(0).clickAndWait({force: true}); // data-cy="SavedFilters"
+    cy.get('[class*="ListItemWithActions"] svg[data-icon="edit"]').eq(0).clickAndWait({force: true}); // data-cy="SavedFilters"
     cy.contains('Edit filter').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
     cy.visitDashboard();
-    cy.get('[class*="ListItemWithActions"]').find('svg[data-icon="delete"]').eq(0).clickAndWait({force: true}); // data-cy="SavedFilters"
+    cy.get('[class*="ListItemWithActions"] svg[data-icon="delete"]').eq(0).clickAndWait({force: true}); // data-cy="SavedFilters"
     cy.contains('Permanently delete this filter?').should('exist');
     cy.get('button[type="button"]').contains('Cancel').clickAndWait({force: true});
   });
@@ -200,11 +200,11 @@ describe('Navigation', () => {
  
   it('Liens de la page Profile', () => {
     cy.visitProfileViewPage();
-    cy.get('[class*="Member_bannerActions"]').find('[href]').eq(1).clickAndWait({force: true}); // data-cy="EditProfileButton"
+    cy.get('[class*="Member_bannerActions"] [href]').eq(1).clickAndWait({force: true}); // data-cy="EditProfileButton"
     cy.get('[class*="ProfileSettings_profileSettingsHeader"]').should('exist'); // data-cy="Title_ProfileSettings"
 
     cy.get('[class*="ProfileSettings_profileSettingsHeader"] button').clickAndWait({force: true}); // data-cy="ViewProfileButton"
-    cy.get('[class*="Member_bannerActions"]').find('[href]').eq(0).clickAndWait({force: true}); // data-cy="CommunityButton"
+    cy.get('[class*="Member_bannerActions"] [href]').eq(0).clickAndWait({force: true}); // data-cy="CommunityButton"
     cy.get('[class*="Community_title"]').should('exist'); // data-cy="Title_Community"
   });
  

@@ -66,10 +66,9 @@ Cypress.Commands.add('clickAndWait', { prevSubject: 'element' }, (subject, optio
 });
 
 Cypress.Commands.add('closePopup', () => {
-  cy.get('body')
-    .find('button').then(($button) => {
+  cy.get('button').then(($button) => {
       if ($button.hasClass('close')) {
-          cy.get('body').find('button[class="close"]').clickAndWait({force: true});
+          cy.get('button[class="close"]').clickAndWait({force: true});
       };
   });
 });
@@ -412,7 +411,7 @@ Cypress.Commands.add('validateIconStates', (iconName: string, isDisable: boolean
 });
 
 Cypress.Commands.add('validateOperatorSelectedQuery', (expectedOperator: string) => {
-  cy.get('[class*="QueryBar_selected"]').find('[class*="Combiner_operator"]').contains(expectedOperator).should('exist');
+  cy.get('[class*="QueryBar_selected"] [class*="Combiner_operator"]').contains(expectedOperator).should('exist');
 });
 
 Cypress.Commands.add('validatePillSelectedQuery', (facetTitle: string|RegExp, values: (string|RegExp)[], eq: number = 0) => {
@@ -420,11 +419,11 @@ Cypress.Commands.add('validatePillSelectedQuery', (facetTitle: string|RegExp, va
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').should('not.exist');
   }
   else {
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').eq(eq).contains(facetTitle).should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').eq(eq).contains(facetTitle).should('exist');
   }
 
   for (let i = 0; i < values.length; i++) {
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_queryValuesContainer"]').eq(eq).contains(values[i]).should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_queryValuesContainer"]').eq(eq).contains(values[i]).should('exist');
     }
 });
 
@@ -452,7 +451,7 @@ Cypress.Commands.add('validateTableResultsCount', (expectedCount: string|RegExp,
 });
 
 Cypress.Commands.add('validateTotalSelectedQuery', (expectedCount: string|RegExp) => {
-  cy.get('[class*="QueryBar_selected"]').find('[class*="QueryBar_total"]').contains(expectedCount).should('exist');
+  cy.get('[class*="QueryBar_selected"] [class*="QueryBar_total"]').contains(expectedCount).should('exist');
 });
 
 Cypress.Commands.add('validateXlsxFileContent', (fixture: string, replacements?: Replacement[]) => {
@@ -555,7 +554,7 @@ Cypress.Commands.add('visitStudiesPage', () => {
                        'POST',
                        '**/graphql',
                        1);
-  cy.get('[class*="Header_ProTableHeader"]').find('button').then(($button) => {
+  cy.get('[class*="Header_ProTableHeader"] button').then(($button) => {
     if ($button.hasClass('Header_clearFilterLink')) {
       cy.get(`button[class*="Header_clearFilterLink"]`).clickAndWait({force: true});
       };
