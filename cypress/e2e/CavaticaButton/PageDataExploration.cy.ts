@@ -8,7 +8,7 @@ beforeEach(() => {
 describe('Page Dashboard - Bouton Analyze in Cavatica (déconnecté)', () => {
   beforeEach(() => {
     cy.visitDataExploration('datafiles', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
-    cy.get('tr[data-row-key="HTP.ce770763-b904-4c66-8b08-c54dd4e7c7b5.rsem.isoforms.results.gz"]').find('[type="checkbox"]').check({force: true});
+    cy.get('tr[data-row-key="HTP.ce770763-b904-4c66-8b08-c54dd4e7c7b5.rsem.isoforms.results.gz"] [type="checkbox"]').check({force: true});
     cy.get('button[aria-label="Analyze in Cavatica"]').clickAndWait({force: true});
   });
 
@@ -51,7 +51,7 @@ describe('Page Dashboard - Bouton Analyze in Cavatica (connecté)', () => {
     cy.visitDataExploration('datafiles', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
     cy.wait('@cavaticaAuthenticated');
     cy.wait('@cavaticaProjects');
-    cy.get('tr[data-row-key="HTP.ce770763-b904-4c66-8b08-c54dd4e7c7b5.rsem.isoforms.results.gz"]').find('[type="checkbox"]').check({force: true});
+    cy.get('tr[data-row-key="HTP.ce770763-b904-4c66-8b08-c54dd4e7c7b5.rsem.isoforms.results.gz"] [type="checkbox"]').check({force: true});
     cy.get('button[aria-label="Analyze in Cavatica"]').clickAndWait({force: true});
   });
 

@@ -160,36 +160,36 @@ describe('Page des variants - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Pagination', () => {
-    cy.get('body').find('span[class*="ant-select-selection-item"]').clickAndWait({force: true});
-    cy.get('body').find('div[class*="ant-select-item-option-content"]').contains('20').clickAndWait({force: true});
+    cy.get('span[class*="ant-select-selection-item"]').clickAndWait({force: true});
+    cy.get('div[class*="ant-select-item-option-content"]').contains('20').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^1$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^20$/).should('exist');
-    cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('be.disabled');
-    cy.get('body').find('button[type="button"]').contains('First').parent('button').should('be.disabled');
+    cy.get('button[type="button"]').contains('Prev.').parent('button').should('be.disabled');
+    cy.get('button[type="button"]').contains('First').parent('button').should('be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('Next').clickAndWait({force: true});
+    cy.get('button[type="button"]').contains('Next').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^21$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^40$/).should('exist');
-    cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
-    cy.get('body').find('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('Next').clickAndWait({force: true});
+    cy.get('button[type="button"]').contains('Next').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^41$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^60$/).should('exist');
-    cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
-    cy.get('body').find('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('Prev.').clickAndWait({force: true});
+    cy.get('button[type="button"]').contains('Prev.').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^21$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^40$/).should('exist');
-    cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
-    cy.get('body').find('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('First').clickAndWait({force: true});
+    cy.get('button[type="button"]').contains('First').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^1$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^20$/).should('exist');
-    cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('be.disabled');
-    cy.get('body').find('button[type="button"]').contains('First').parent('button').should('be.disabled');
+    cy.get('button[type="button"]').contains('Prev.').parent('button').should('be.disabled');
+    cy.get('button[type="button"]').contains('First').parent('button').should('be.disabled');
   });
 });
   

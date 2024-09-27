@@ -17,20 +17,20 @@ describe('Page Data Exploration (Data Files) - Vérifier les informations affich
   });
 
   it('Tableau', () => {
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(1).find('svg[data-icon="lock"]').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(2).contains('C').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(2).find('[class*="ant-tag-geekblue"]').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(3).contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(4).contains('HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(5).contains('HTP').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(6).contains('Transcriptomics').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(7).contains('Unaligned Reads').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(8).contains('RNA-Seq').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(9).contains('drs://data.kidsfirstdrc.org/1cd34bd9-d780-47f4-907e-0f04be67ef68').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(10).contains('fastq').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(11).contains('3.13 GB').should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(12).contains(/\d{1}/).should('exist');
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(13).contains(/\d{1}/).should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(1).find('svg[data-icon="lock"]').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(2).contains('C').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(2).find('[class*="ant-tag-geekblue"]').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(3).contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(4).contains('HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(5).contains('HTP').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(6).contains('Transcriptomics').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(7).contains('Unaligned Reads').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(8).contains('RNA-Seq').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(9).contains('drs://data.kidsfirstdrc.org/1cd34bd9-d780-47f4-907e-0f04be67ef68').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(10).contains('fastq').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(11).contains('3.13 GB').should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(12).contains(/\d{1}/).should('exist');
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(13).contains(/\d{1}/).should('exist');
   });
 });
 
@@ -42,24 +42,24 @@ describe('Page Data Exploration (Data Files) - Valider les liens disponibles', (
   });
 
   it('Lien File ID du tableau', () => {
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(3).find('[href]').clickAndWait({force: true});
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(3).find('[href]').clickAndWait({force: true});
     cy.get('[id="file-entity-page"]').should('exist');
     cy.get('[class*="EntityTitle"]').contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz');
   });
 
   it('Lien Participants du tableau', () => {
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(12).find('[href]').clickAndWait({force: true});
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(12).find('[href]').clickAndWait({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.HTP0577A FRRB192320222-1a HWHKMDSXX L1 1.fq.gz').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('File ID').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('HTP.HTP0577A FRRB192320222-1a HWHKMDSXX L1 1.fq.gz').should('exist');
     cy.validateTableResultsCount(/\d{1}/);
   });
 
   it('Lien Biospecimens du tableau', () => {
-    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"]').find('[class*="ant-table-cell"]').eq(13).find('[href]').clickAndWait({force: true});
+    cy.get('tr[data-row-key="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"] [class*="ant-table-cell"]').eq(13).find('[href]').clickAndWait({force: true});
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryPill_field"]').contains('File ID').should('exist');
-    cy.get('[class*="QueryBar_selected"]').find('[class*="QueryValues_value"]').contains('HTP.HTP0577A FRRB192320222-1a HWHKMDSXX L1 1.fq.gz').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('File ID').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('HTP.HTP0577A FRRB192320222-1a HWHKMDSXX L1 1.fq.gz').should('exist');
     cy.validateTableResultsCount(/\d{1}/);
   });
 });
@@ -155,36 +155,36 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
   });
 
   it('Valider les fonctionnalités du tableau - Pagination', () => {
-    cy.get('body').find('span[class*="ant-select-selection-item"]').clickAndWait({force: true});
-    cy.get('body').find('div[class*="ant-select-item-option-content"]').contains('20').clickAndWait({force: true});
+    cy.get('span[class*="ant-select-selection-item"]').clickAndWait({force: true});
+    cy.get('div[class*="ant-select-item-option-content"]').contains('20').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^1$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^20$/).should('exist');
-    cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('be.disabled');
-    cy.get('body').find('button[type="button"]').contains('First').parent('button').should('be.disabled');
+    cy.get('button[type="button"]').contains('Prev.').parent('button').should('be.disabled');
+    cy.get('button[type="button"]').contains('First').parent('button').should('be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('Next').clickAndWait({force: true});
+    cy.get('button[type="button"]').contains('Next').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^21$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^40$/).should('exist');
-    cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
-    cy.get('body').find('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('Next').clickAndWait({force: true});
+    cy.get('button[type="button"]').contains('Next').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^41$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^60$/).should('exist');
-    cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
-    cy.get('body').find('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('Prev.').clickAndWait({force: true});
+    cy.get('button[type="button"]').contains('Prev.').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^21$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^40$/).should('exist');
-    cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
-    cy.get('body').find('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('Prev.').parent('button').should('not.be.disabled');
+    cy.get('button[type="button"]').contains('First').parent('button').should('not.be.disabled');
 
-    cy.get('body').find('button[type="button"]').contains('First').clickAndWait({force: true});
+    cy.get('button[type="button"]').contains('First').clickAndWait({force: true});
     cy.get('div[class*="ProTableHeader"]').contains(/^1$/).should('exist');
     cy.get('div[class*="ProTableHeader"]').contains(/^20$/).should('exist');
-    cy.get('body').find('button[type="button"]').contains('Prev.').parent('button').should('be.disabled');
-    cy.get('body').find('button[type="button"]').contains('First').parent('button').should('be.disabled');
+    cy.get('button[type="button"]').contains('Prev.').parent('button').should('be.disabled');
+    cy.get('button[type="button"]').contains('First').parent('button').should('be.disabled');
   });
 });
   
