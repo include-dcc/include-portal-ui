@@ -19,7 +19,7 @@ const CIRCLE_RADIUS = 9;
 export type TTranscriptomicsSwarmPlot = {
   diffGeneExpId: string;
   sampleIds: string[];
-  setSampleIds: (sampleIds: string[]) => void;
+  setSampleIdsCb: (sampleIds: string[]) => void;
 };
 
 export type TranscriptomicsSwarmRawDatum = SwarmRawDatum & {
@@ -44,7 +44,7 @@ const getGeneSymbol = (diffGenes: TTranscriptomicsDiffGeneExp[], id: string) => 
 
 const TranscriptomicsSwarmPlot = ({
   diffGeneExpId,
-  setSampleIds,
+  setSampleIdsCb,
   sampleIds,
 }: TTranscriptomicsSwarmPlot) => {
   const diffGeneExp = useSelector(transcriptomicsDiffGeneExpSelector);
@@ -83,8 +83,8 @@ const TranscriptomicsSwarmPlot = ({
   const groupedData = [...t21Group, ...controlGroup];
 
   useEffect(() => {
-    setSampleIds([]);
-  }, [diffGeneExpId, setSampleIds]);
+    setSampleIdsCb([]);
+  }, [diffGeneExpId, setSampleIdsCb]);
 
   return (
     <SwarmPlotChart
@@ -134,10 +134,10 @@ const TranscriptomicsSwarmPlot = ({
       onClick={(node: ComputedDatum<SwarmRawDatum>) => {
         const sample = node as ComputedDatum<TranscriptomicsSwarmRawDatum>;
         if (sample.data.sample_id === sampleIds[0]) {
-          setSampleIds([]);
+          setSampleIdsCb([]);
           return;
         }
-        setSampleIds([sample.data.sample_id]);
+        setSampleIdsCb([sample.data.sample_id]);
       }}
       axisTop={null}
       tooltip={(props) => {
