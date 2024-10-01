@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import intl from 'react-intl-universal';
 import { useSelector } from 'react-redux';
 import Empty from '@ferlab/ui/core/components/Empty';
@@ -7,17 +7,17 @@ import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Divider, Select, Space, Typography } from 'antd';
 import TranscriptomicDataset from 'views/Analytics/Transcriptomic/Dataset';
 import TranscriptomicFooter from 'views/Analytics/Transcriptomic/Footer';
-import TranscriptomicsScatterPlotCanvas from 'views/Analytics/Transcriptomic/ScatterPlotCanvas';
 import TranscriptomicSearchByGene from 'views/Analytics/Transcriptomic/SearchByGene';
 import TranscriptomicSearchBySample from 'views/Analytics/Transcriptomic/SearchBySample';
-import TranscriptomicsSwarmPlot from 'views/Analytics/Transcriptomic/SwarmPlot';
 import { SCROLL_WRAPPER_ID } from 'views/DataExploration/utils/constant';
 
 import { useTranscriptomicsDiffGeneExp } from 'store/analytics';
 
 import { transcriptomicsSampleGeneExpSelector } from '../../../store/analytics/selector';
 
+import ScatterPlotly from './ScatterPlotly';
 import SideBar, { TTranscriptomicSideBarItem } from './SideBar';
+import SwarmPlotly from './SwarmPlotly';
 
 import styles from './index.module.css';
 
@@ -97,11 +97,10 @@ export const Transcriptomic = () => {
                 <Divider className={styles.hDivider} />
                 <div className={styles.content}>
                   <div className={styles.chartContainer}>
-                    <TranscriptomicsScatterPlotCanvas
-                      selectedNodesId={selectedGeneIds}
-                      setSelectedNodesId={setSelectedGeneIds}
-                      data={diffGeneExp.data}
+                    <ScatterPlotly //TODO ref: TranscriptomicsScatterPlot
                       loading={diffGeneExp.loading}
+                      data={diffGeneExp.data ?? []}
+                      selectGeneIdsCb={setSelectedGeneIds}
                     />
                   </div>
                   <div className={styles.vDivider} />
@@ -113,10 +112,10 @@ export const Transcriptomic = () => {
                         description={intl.get('screen.analytics.transcriptomic.empty')}
                       />
                     ) : (
-                      <TranscriptomicsSwarmPlot
+                      <SwarmPlotly //TODO ref: TranscriptomicsSwarmPlot
                         diffGeneExpId={selectedGeneIds[0]}
                         sampleIds={selectedSampleIds}
-                        setSampleIds={setSelectedSampleIds}
+                        setSampleIdsCb={setSelectedSampleIds}
                       />
                     )}
                   </div>
