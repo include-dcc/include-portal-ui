@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import intl from 'react-intl-universal';
 import Plot from 'react-plotly.js';
 import ChartSkeleton from '@ferlab/ui/core/components/Charts/Skeleton/index';
+import { Annotations, PlotMouseEvent, ScatterData } from 'plotly.js';
 
-import { TTranscriptomicsDiffGeneExp } from 'services/api/transcriptomics/models';
+import { TTranscriptomicsDiffGeneExp } from '../../../../services/api/transcriptomics/models';
 
 type TTranscriptomicsScatterPlotCanvas = {
-  loading: boolean;
   data?: TTranscriptomicsDiffGeneExp[];
-  selectGeneIdsCb: (value: React.SetStateAction<string[]>) => void;
+  handleGeneSelection: (ensembl_ids: string[]) => void;
+  selectedGeneIds: string[];
+  loading: boolean;
 };
 
 const formatPadj = (value: number): string => {
@@ -22,24 +24,55 @@ const formatPadj = (value: number): string => {
 };
 
 const ScatterPlotly = ({
-  loading,
   data,
-  selectGeneIdsCb = () => [],
+  handleGeneSelection,
+  selectedGeneIds,
+  loading,
 }: TTranscriptomicsScatterPlotCanvas) => {
-  if (loading) {
-    return <ChartSkeleton />;
-  }
+  const [annotations, setAnnotations] = useState<Partial<Annotations>[]>([]);
+  const [plotKey, setPlotKey] = useState(0);
 
-  return (
-    <Plot
-      data={data!.map((group, index) => {
+  useEffect(() => {
+    if (data) {
+      const newAnnotations: Partial<Annotations>[] = data.flatMap((group) =>
+        group.data
+          .filter((gene) => selectedGeneIds.includes(gene.ensembl_gene_id))
+          .map(
+            (gene) =>
+              ({
+                x: gene.x,
+                y: gene.y,
+                arrowhead: 6,
+                ax: 30,
+                ay: -50,
+                bgcolor: 'rgba(255, 255, 255, 0.9)',
+                font: { size: 12 },
+                bordercolor: 'black',
+                borderwidth: 2,
+                borderpad: 4,
+                text: gene.gene_symbol,
+              } as Partial<Annotations>),
+          ),
+      );
+      setAnnotations(newAnnotations);
+    }
+
+    setPlotKey((prevKey) => prevKey + 1);
+  }, [selectedGeneIds, data]);
+
+  const memoizedData = useMemo<ScatterData[]>(
+    () =>
+      data?.map((group, index) => {
         const markerColours = ['#bebebe', '#b02428', '#6697ea'];
         return {
           x: group.data.map((e) => e.x) || [],
           y: group.data.map((e) => e.y) || [],
-          type: 'scatter',
+          type: 'scattergl',
           mode: 'markers',
-          marker: { color: markerColours[index] },
+          marker: {
+            color: markerColours[index],
+            size: group.data.map((e) => Math.max(8, Math.abs(e.fold_change))),
+          },
           name: intl.get(`screen.analytics.transcriptomic.scatterPlot.${group.id}`),
           text: group.data.map((e) =>
             [
@@ -57,28 +90,61 @@ const ScatterPlotly = ({
               )}`,
             ].join(''),
           ),
-          customdata: group.data.map((e) => e.ensembl_gene_id),
-        };
-      })}
+          customdata: group.data.map((e) => [e.ensembl_gene_id, e.gene_symbol]),
+        } as ScatterData;
+      }) || [],
+    [data],
+  );
+
+  if (loading) {
+    return <ChartSkeleton />;
+  }
+
+  const handleClick = (data: Readonly<PlotMouseEvent>) => {
+    const selectedGenes = data.points.map((p) => (p.customdata as unknown as string[])[0]);
+
+    handleGeneSelection(selectedGenes);
+  };
+
+  return (
+    <Plot
+      key={plotKey}
+      data={memoizedData}
+      useResizeHandler
       layout={{
-        xaxis: { title: 'log2 (Fold change)' },
-        yaxis: { title: '-log10 (q-value)' },
+        annotations,
+        autosize: true,
+        height: 700,
         title: {
           text: intl.get('screen.analytics.transcriptomic.scatterPlot.title'),
           x: 0.05,
-          font: {
-            size: 16,
-            weight: 600,
-          },
+          font: { size: 16, weight: 600 },
         },
-        width: 680,
-        height: 700,
+        margin: { l: 40, r: 10, t: 60, b: 40 },
+        legend: {
+          borderwidth: 1,
+          yanchor: 'top',
+          y: 0.99,
+          xanchor: 'right',
+          x: 0.99,
+        },
+        xaxis: {
+          title: 'log2 (Fold change)',
+          titlefont: { size: 14 },
+          tickfont: { size: 12 },
+        },
+        yaxis: {
+          title: '-log10 (q-value)',
+          titlefont: { size: 14 },
+          tickfont: { size: 12 },
+        },
       }}
-      onClick={(data) => selectGeneIdsCb(data.points.map((p) => p.customdata) as string[])}
+      onClick={handleClick}
       config={{
         modeBarButtonsToRemove: ['toImage', 'resetGeo', 'lasso2d', 'sendDataToCloud'],
         displaylogo: false,
       }}
+      // onSelected={(event) => console.log(event.points)}
     />
   );
 };
