@@ -1375,6 +1375,25 @@ const en = {
         content:
           'Study data aligned with INCLUDE Data Hub clinical standards for facilitating integration and cross-study comparison.',
       },
+      ndaGuids: {
+        button: 'NDA GUIDs for Down syndrome research',
+        modal: {
+          title: 'NDA GUIDs for Down syndrome research',
+          close: 'Close',
+          firstText:
+            'The INCLUDE DCC and the NIH have implemented <a target="_blank" href="https://nda.nih.gov/nda/using-the-nda-guid" style="text-decoration: underline;">NIMH Data Archive Global Unique Identifiers</a> (NDA GUIDs) in the INCLUDE Data Hub. NDA GUIDs allows approved researchers to link together data on a single participant, without revealing personally identifiable information,  even if the data were collected through different INCLUDE studies.',
+          secondText:
+            'The dbGaP <a target="_blank" href="https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs003678.v1.p1" style="text-decoration: underline;">INCLUDE Data Hub: NDA GUIDs for Down Syndrome Research</a>  study enables researchers to access an <b>INCLUDE GUID Mapping File</b> that includes all available NDA GUIDs and their associations to study-specific Participant IDs across studies in the INCLUDE Data Hub.',
+          thirdText:
+            'Only studies that provide NDA GUIDs to the INCLUDE DCC are included in the INCLUDE GUID Mapping File. INCLUDE studies with participant GUIDs are identified with the <b>G</b> tag on the <a target="_blank" href="https://portal.includedcc.org/studies" style="text-decoration: underline;">Study Repository</a>.',
+          steps: 'There are two steps to access the GUID Mapping File:',
+          step1: {
+            title: 'Step 1:',
+            message: 'Submit a Data Access Request to this dbGaP study.',
+            buttonLabel: 'Request access to GUID mapping file',
+          },
+        },
+      },
       searchLabel: {
         title: 'Search by study code, study name, dbGaP',
         placeholder: 'HTP, The Human Trisome Project, phs001138',

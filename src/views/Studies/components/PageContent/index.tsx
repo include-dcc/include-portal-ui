@@ -14,9 +14,10 @@ import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, isEmptySqon } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Input, Space, Typography } from 'antd';
+import { Button, Input, Space, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useStudies } from 'graphql/studies/actions';
+import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 import { cloneDeep } from 'lodash';
 
 import { fetchTsvReport } from 'store/report/thunks';
@@ -32,6 +33,8 @@ import {
   DEFAULT_STUDY_QUERY_SORT,
   STUDIES_REPO_QB_ID,
 } from '../../utils/constants';
+
+import NdaGuidsModal from './NdaGuidsModal';
 
 import styles from './index.module.css';
 
@@ -69,6 +72,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
   const [searchValue, setSearchValue] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { queryList, activeQuery } = useQueryBuilderState(STUDIES_REPO_QB_ID);
   const [queryConfig, setQueryConfig] = useState({
     ...DEFAULT_QUERY_CONFIG,
@@ -101,6 +105,14 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
     }));
   }, [queryConfig.pageIndex]);
 
+  const displayNDAGuids = getFTEnvVarByKey('NDA_GUIDS');
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const searchPrescription = (value: any) => {
     if (value?.target?.value) {
       setSearchValue(value.target.value);
@@ -122,15 +134,21 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
       </Title>
 
       <div className={styles.patientContentHeader}>
-        <ProLabel className={styles.search} title={intl.get('screen.studies.searchLabel.title')} />
-        <Input
-          allowClear
-          className={styles.search}
-          onChange={searchPrescription}
-          placeholder={intl.get('screen.studies.searchLabel.placeholder')}
-          size="large"
-          value={searchValue}
-        />
+        <ProLabel className={styles.label} title={intl.get('screen.studies.searchLabel.title')} />
+        <div className={styles.inputContainer}>
+          <Input
+            allowClear
+            onChange={searchPrescription}
+            placeholder={intl.get('screen.studies.searchLabel.placeholder')}
+            size="large"
+            value={searchValue}
+          />
+          {displayNDAGuids === 'true' && (
+            <Button className={styles.button} type="primary" onClick={handleOpenModal}>
+              {intl.get('screen.studies.ndaGuids.button')}
+            </Button>
+          )}
+        </div>
       </div>
 
       <GridCard
@@ -189,6 +207,10 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
           />
         }
       />
+
+      {isModalOpen && displayNDAGuids === 'true' && (
+        <NdaGuidsModal open={isModalOpen} onClose={handleCloseModal} />
+      )}
     </Space>
   );
 };
