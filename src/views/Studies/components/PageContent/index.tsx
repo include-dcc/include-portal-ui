@@ -14,7 +14,7 @@ import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, isEmptySqon } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Button, Input, Space, Typography } from 'antd';
+import { Button, Input, Space, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useStudies } from 'graphql/studies/actions';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
@@ -144,9 +144,11 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
             value={searchValue}
           />
           {displayNDAGuids === 'true' && (
-            <Button className={styles.guidButton} type="primary" onClick={handleOpenModal}>
-              {intl.get('screen.studies.ndaGuids.button')}
-            </Button>
+            <Tooltip title={intl.get('screen.studies.ndaGuids.buttonTooltip')}>
+              <Button className={styles.guidButton} type="primary" onClick={handleOpenModal}>
+                {intl.get('screen.studies.ndaGuids.button')}
+              </Button>
+            </Tooltip>
           )}
         </div>
       </div>

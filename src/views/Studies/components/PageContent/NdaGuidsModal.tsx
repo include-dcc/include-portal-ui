@@ -1,7 +1,11 @@
 import React from 'react';
 import intl from 'react-intl-universal';
+import { Link } from 'react-router-dom';
+import { CheckCircleOutlined } from '@ant-design/icons';
 import { Alert, Button, Modal, Space } from 'antd';
 import Paragraph from 'antd/lib/typography/Paragraph';
+
+import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from './index.module.css';
 
@@ -24,11 +28,18 @@ const NdaGuidsModal: React.FC<NdaGuidsModalProps> = ({ open, onClose }) => (
       <div>
         <Paragraph>{intl.getHTML('screen.studies.ndaGuids.modal.firstText')}</Paragraph>
         <Paragraph>{intl.getHTML('screen.studies.ndaGuids.modal.secondText')}</Paragraph>
-        <Paragraph>{intl.getHTML('screen.studies.ndaGuids.modal.thirdText')}</Paragraph>
+        <Paragraph>
+          {intl.getHTML('screen.studies.ndaGuids.modal.thirdTextStart')}
+          <Link to={STATIC_ROUTES.STUDIES} className={styles.studiesLink} target="_blank">
+            {intl.get('screen.studies.ndaGuids.modal.thirdTextLink')}
+          </Link>
+          .
+        </Paragraph>
         <span>{intl.get('screen.studies.ndaGuids.modal.steps')}</span>
       </div>
       <Alert
         showIcon
+        icon={<CheckCircleOutlined />}
         type="info"
         className={styles.step1}
         message={intl.get('screen.studies.ndaGuids.modal.step1.title')}
