@@ -144,7 +144,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
             value={searchValue}
           />
           {displayNDAGuids === 'true' && (
-            <Button className={styles.button} type="primary" onClick={handleOpenModal}>
+            <Button className={styles.guidButton} type="primary" onClick={handleOpenModal}>
               {intl.get('screen.studies.ndaGuids.button')}
             </Button>
           )}
