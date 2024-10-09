@@ -1,12 +1,36 @@
 .pageContent {
   width: 100%;
 }
-.pageContent .tableWrapper {
-  width: 100%;
+.pageContent {
+  .tableWrapper {
+    width: 100%;
+  }
+  .title {
+    margin: 0;
+  }
+  .label {
+    margin-bottom: 8px;
+  }
+  .inputContainer {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .button {
+    height: auto;
+  }
 }
-.pageContent .title {
-  margin: 0;
-}
-.pageContent .search {
-  margin-bottom: 8px;
+
+.modal {
+  width: 900px !important;
+
+  .step1 *[class$='-alert-message'] {
+    font-weight: 600;
+  }
+  .step1 .description {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 }
