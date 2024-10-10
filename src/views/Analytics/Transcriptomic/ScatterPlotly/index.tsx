@@ -137,7 +137,7 @@ const ScatterPlotly = ({
     const axis: any = {};
     setLayout((prevLayout: any) => {
       if (eventData['xaxis.range[0]'] || eventData['yaxis.range[0]']) {
-        if (prevLayout.annotations) {
+        if (prevLayout.annotations.length > 0) {
           const variationx = (eventData['xaxis.range[1]'] - eventData['xaxis.range[0]']) / 2;
           const xRange1 = prevLayout.annotations[0].x - variationx;
           const xRange2 = prevLayout.annotations[0].x + variationx;
