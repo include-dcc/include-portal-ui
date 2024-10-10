@@ -1392,7 +1392,7 @@ const en = {
           steps: 'There are two steps to access the GUID Mapping File:',
           step1: {
             title: 'Step 1:',
-            message: 'Submit a Data Access Request to this dbGaP study.',
+            message: 'Submit a data access request to this dbGaP study.',
             buttonLabel: 'Request access to GUID mapping file',
           },
         },
