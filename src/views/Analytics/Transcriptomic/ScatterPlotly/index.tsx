@@ -22,7 +22,7 @@ const formatPadj = (value: number): string => {
     const splitString = valueString.split('e-');
     return `${splitString[0]}e-${splitString[1].substring(0, 2)}`;
   }
-  return value.toFixed(3);
+  return value?.toFixed(3);
 };
 
 const ScatterPlotly = ({
@@ -33,6 +33,7 @@ const ScatterPlotly = ({
 }: TTranscriptomicsScatterPlotCanvas) => {
   const [annotations, setAnnotations] = useState<Partial<Annotations>[]>([]);
   const [plotKey, setPlotKey] = useState(0);
+  const [isSelectionZoom, setIsSelectionZoom] = useState(false);
   const [layout, setLayout] = useState<any>({
     autosize: true,
     title: {
@@ -147,35 +148,39 @@ const ScatterPlotly = ({
   };
 
   const handleRelayout = (eventData: any) => {
-    const axis: any = {};
     setLayout((prevLayout: any) => {
-      if (eventData['xaxis.range[0]'] || eventData['yaxis.range[0]']) {
+      if (!isSelectionZoom && (eventData['xaxis.range[0]'] || eventData['yaxis.range[0]'])) {
         if (prevLayout.annotations.length > 0) {
+          const firstAnnotation = prevLayout.annotations[0];
           const variationx = (eventData['xaxis.range[1]'] - eventData['xaxis.range[0]']) / 2;
-          const xRange1 = prevLayout.annotations[0].x - variationx;
-          const xRange2 = prevLayout.annotations[0].x + variationx;
-
           const variationy = (eventData['yaxis.range[1]'] - eventData['yaxis.range[0]']) / 2;
-          const yRange1 = prevLayout.annotations[0].y - variationy;
-          const yRange2 = prevLayout.annotations[0].y + variationy;
-
-          axis.xaxis = { ...layout.xaxis, range: [xRange1, xRange2] };
-          axis.yaxis = { ...layout.yaxis, range: [yRange1, yRange2] };
+          setIsSelectionZoom(false);
 
           return {
             ...prevLayout,
-            xaxis: axis.xaxis,
-            yaxis: axis.yaxis,
+            xaxis: {
+              ...layout.xaxis,
+              range: [firstAnnotation.x - variationx, firstAnnotation.x + variationx],
+            },
+            yaxis: {
+              ...layout.yaxis,
+              range: [firstAnnotation.y - variationy, firstAnnotation.y + variationy],
+            },
             annotations,
           };
         }
       }
 
+      setIsSelectionZoom(false);
       return {
         ...prevLayout,
         annotations, // Update annotations
       };
     });
+  };
+
+  const handleRelayouting = () => {
+    setIsSelectionZoom(true);
   };
 
   return (
@@ -200,6 +205,8 @@ const ScatterPlotly = ({
       onRelayout={(event) => {
         handleRelayout(event);
       }}
+      // @ts-ignore
+      onRelayouting={handleRelayouting}
     />
   );
 };
