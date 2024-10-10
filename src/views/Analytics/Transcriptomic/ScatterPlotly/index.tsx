@@ -31,6 +31,33 @@ const ScatterPlotly = ({
 }: TTranscriptomicsScatterPlotCanvas) => {
   const [annotations, setAnnotations] = useState<Partial<Annotations>[]>([]);
   const [plotKey, setPlotKey] = useState(0);
+  const [layout, setLayout] = useState<any>({
+    autosize: true,
+    height: 700,
+    title: {
+      text: intl.get('screen.analytics.transcriptomic.scatterPlot.title'),
+      x: 0.05,
+      font: { size: 16, weight: 600 },
+    },
+    margin: { l: 40, r: 10, t: 60, b: 40 },
+    legend: {
+      borderwidth: 1,
+      yanchor: 'top',
+      y: 0.99,
+      xanchor: 'right',
+      x: 0.99,
+    },
+    xaxis: {
+      title: 'log2 (Fold change)',
+      titlefont: { size: 14 },
+      tickfont: { size: 12 },
+    },
+    yaxis: {
+      title: '-log10 (q-value)',
+      titlefont: { size: 14 },
+      tickfont: { size: 12 },
+    },
+  });
 
   useEffect(() => {
     if (data) {
@@ -106,45 +133,55 @@ const ScatterPlotly = ({
     handleGeneSelection(selectedGenes);
   };
 
+  const handleRelayout = (eventData: any) => {
+    const axis: any = {};
+    setLayout((prevLayout: any) => {
+      if (eventData['xaxis.range[0]'] || eventData['yaxis.range[0]']) {
+        if (prevLayout.annotations) {
+          const variationx = (eventData['xaxis.range[1]'] - eventData['xaxis.range[0]']) / 2;
+          const xRange1 = prevLayout.annotations[0].x - variationx;
+          const xRange2 = prevLayout.annotations[0].x + variationx;
+
+          const variationy = (eventData['yaxis.range[1]'] - eventData['yaxis.range[0]']) / 2;
+          const yRange1 = prevLayout.annotations[0].y - variationy;
+          const yRange2 = prevLayout.annotations[0].y + variationy;
+
+          axis.xaxis = { ...layout.xaxis, range: [xRange1, xRange2] };
+          axis.yaxis = { ...layout.yaxis, range: [yRange1, yRange2] };
+
+          return {
+            ...prevLayout,
+            height: 700, // get somehow undefined
+            xaxis: axis.xaxis,
+            yaxis: axis.yaxis,
+            annotations,
+          };
+        }
+      }
+
+      return {
+        ...prevLayout,
+        height: 700, // get somehow undefined
+        annotations, // Update annotations
+      };
+    });
+  };
+
   return (
     <Plot
       key={plotKey}
       data={memoizedData}
       useResizeHandler
-      layout={{
-        annotations,
-        autosize: true,
-        height: 700,
-        title: {
-          text: intl.get('screen.analytics.transcriptomic.scatterPlot.title'),
-          x: 0.05,
-          font: { size: 16, weight: 600 },
-        },
-        margin: { l: 40, r: 10, t: 60, b: 40 },
-        legend: {
-          borderwidth: 1,
-          yanchor: 'top',
-          y: 0.99,
-          xanchor: 'right',
-          x: 0.99,
-        },
-        xaxis: {
-          title: 'log2 (Fold change)',
-          titlefont: { size: 14 },
-          tickfont: { size: 12 },
-        },
-        yaxis: {
-          title: '-log10 (q-value)',
-          titlefont: { size: 14 },
-          tickfont: { size: 12 },
-        },
-      }}
+      layout={layout}
       onClick={handleClick}
       config={{
         modeBarButtonsToRemove: ['toImage', 'resetGeo', 'lasso2d', 'sendDataToCloud'],
         displaylogo: false,
       }}
-      // onSelected={(event) => console.log(event.points)}
+      // @ts-ignore
+      onRelayout={(event) => {
+        handleRelayout(event);
+      }}
     />
   );
 };
