@@ -37,7 +37,6 @@ const NdaGuidsModal: React.FC<NdaGuidsModalProps> = ({
         content: intl.get('screen.dataExploration.tabs.datafiles.cavatica.authWarning.description'),
         icon: <ExclamationCircleOutlined />,
         okText: intl.get('screen.dataExploration.tabs.datafiles.cavatica.authWarning.connect'),
-        // onCancel: onResetModal,
         onOk: () => {
           dispatch(connectCavaticaPassport());
         },

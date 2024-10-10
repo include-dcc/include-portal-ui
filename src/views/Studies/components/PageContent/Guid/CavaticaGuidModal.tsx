@@ -12,13 +12,23 @@ import { LegacyDataNode } from 'rc-tree-select/lib/TreeSelect';
 import styles from './index.module.css';
 
 export interface ICavaticaAnalyseModal extends ModalFuncProps {
-  handleCreateProjectClick?: () => void;
+  handleCreateProjectClick: () => void;
   handleFilesAndFolders: (parentId: string, isProject: boolean) => any;
   handleSubmit: (value: ICavaticaTreeNode) => void;
   onClose: () => void;
   open: boolean;
   projects: ICavaticaProjects;
 }
+
+interface INewProjectButtonProps {
+  onClick: () => void;
+}
+
+const NewProjectButton = ({ onClick }: INewProjectButtonProps) => (
+  <Button icon={<PlusOutlined />} onClick={onClick} size="small">
+    {intl.get('screen.studies.ndaGuids.cavaticaModal.selectFooterButton')}
+  </Button>
+);
 
 const CavaticaGuidModal = ({
   handleCreateProjectClick,
@@ -31,12 +41,6 @@ const CavaticaGuidModal = ({
   const [selectedTreeNode, setSelectedTreeNode] = useState<ICavaticaTreeNode | undefined>();
   const [localProjectTree, setLocalProjectTree] = useState<ICavaticaTreeNode[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const NewProjectButton = () => (
-    <Button icon={<PlusOutlined />} onClick={handleCreateProjectClick} size="small">
-      {intl.get('screen.studies.ndaGuids.cavaticaModal.selectFooterButton')}
-    </Button>
-  );
 
   const onLoadData = async (node: LegacyDataNode) => {
     const { data } = await handleFilesAndFolders(node.id, node.type === CAVATICA_TYPE.PROJECT);
@@ -98,7 +102,7 @@ const CavaticaGuidModal = ({
                 <>
                   <Divider className={styles.cavaticaTreeDropdownDivider} />
                   <div className={styles.cavaticaTreeDropdownFooter}>
-                    <NewProjectButton />
+                    <NewProjectButton onClick={handleCreateProjectClick} />
                   </div>
                 </>
               )}
@@ -111,7 +115,7 @@ const CavaticaGuidModal = ({
               <Typography.Text type="secondary">
                 {intl.get('screen.studies.ndaGuids.cavaticaModal.createProjectToPushFileTo')}
               </Typography.Text>
-              <NewProjectButton />
+              <NewProjectButton onClick={handleCreateProjectClick} />
             </Space>
           }
           onClear={() => {
