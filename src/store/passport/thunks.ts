@@ -356,3 +356,46 @@ export const startBulkImportJob = createAsyncThunk<
       ),
   });
 });
+
+export const startImportJob = createAsyncThunk<
+  any,
+  { drsItems: ICavaticaDRSImportItem[]; node: ICavaticaTreeNode },
+  { rejectValue: string; state: RootState }
+>('passport/cavatica/bulk/import', async ({ drsItems, node }, thunkAPI) => {
+  //https://docs.cavatica.org/reference/start-a-bulk-drs-import-job
+  const MAX_NUMBER_OF_ITEMS_PER_API_CALL = 100;
+  const chunks: ICavaticaDRSImportItem[][] = chunkIt(drsItems, MAX_NUMBER_OF_ITEMS_PER_API_CALL);
+
+  const responses = await Promise.all(
+    chunks.map((items: ICavaticaDRSImportItem[]) => CavaticaApi.startBulkDrsImportJob({ items })),
+  );
+
+  const error = responses.find((resp) => !!resp.error);
+  return handleThunkApiResponse({
+    error: error?.error,
+    data: true,
+    reject: thunkAPI.rejectWithValue,
+    onError: () =>
+      thunkAPI.dispatch(
+        globalActions.displayNotification({
+          type: 'error',
+          message: intl.get('api.cavatica.error.title'),
+          description: intl.get('api.cavatica.error.bulk.import'),
+        }),
+      ),
+    onSuccess: () =>
+      thunkAPI.dispatch(
+        globalActions.displayNotification({
+          type: 'success',
+          message: intl.get('api.cavatica.success.title'),
+          description: intl.get('api.cavatica.success.description', {
+            destination: node.title,
+            userBaseUrl: `${USER_BASE_URL}${
+              node.type === CAVATICA_TYPE.PROJECT ? node.id : node.project!
+            }`,
+          }),
+          duration: 5,
+        }),
+      ),
+  });
+});
