@@ -6,6 +6,8 @@ import { Annotations, PlotMouseEvent, ScatterData } from 'plotly.js';
 
 import { TTranscriptomicsDiffGeneExp } from '../../../../services/api/transcriptomics/models';
 
+import styles from './index.module.css';
+
 type TTranscriptomicsScatterPlotCanvas = {
   data?: TTranscriptomicsDiffGeneExp[];
   handleGeneSelection: (ensembl_ids: string[]) => void;
@@ -33,7 +35,6 @@ const ScatterPlotly = ({
   const [plotKey, setPlotKey] = useState(0);
   const [layout, setLayout] = useState<any>({
     autosize: true,
-    height: 700,
     title: {
       text: intl.get('screen.analytics.transcriptomic.scatterPlot.title'),
       x: 0.05,
@@ -56,6 +57,7 @@ const ScatterPlotly = ({
       title: '-log10 (q-value)',
       titlefont: { size: 14 },
       tickfont: { size: 12 },
+      automargin: true,
     },
   });
 
@@ -98,10 +100,17 @@ const ScatterPlotly = ({
           mode: 'markers',
           marker: {
             color: markerColours[index],
-            size: group.data.map((e) => Math.max(8, Math.abs(e.fold_change))),
+            size: 7,
+            line: {
+              color: 'white',
+              width: 0.8,
+            },
           },
           name: intl.get(`screen.analytics.transcriptomic.scatterPlot.${group.id}`),
-          text: group.data.map((e) =>
+          hoverlabel: {
+            namelength: 0,
+          },
+          hovertemplate: group.data.map((e) =>
             [
               `${intl.get('screen.analytics.transcriptomic.scatterPlot.gene_symbol')} ${
                 e.gene_symbol
@@ -128,9 +137,13 @@ const ScatterPlotly = ({
   }
 
   const handleClick = (data: Readonly<PlotMouseEvent>) => {
-    const selectedGenes = data.points.map((p) => (p.customdata as unknown as string[])[0]);
+    const clickedGene = (data.points[0].customdata as unknown as string[])[0];
 
-    handleGeneSelection(selectedGenes);
+    if (selectedGeneIds.includes(clickedGene)) {
+      handleGeneSelection([]);
+    } else {
+      handleGeneSelection([clickedGene]);
+    }
   };
 
   const handleRelayout = (eventData: any) => {
@@ -151,7 +164,6 @@ const ScatterPlotly = ({
 
           return {
             ...prevLayout,
-            height: 700, // get somehow undefined
             xaxis: axis.xaxis,
             yaxis: axis.yaxis,
             annotations,
@@ -161,7 +173,6 @@ const ScatterPlotly = ({
 
       return {
         ...prevLayout,
-        height: 700, // get somehow undefined
         annotations, // Update annotations
       };
     });
@@ -171,14 +182,21 @@ const ScatterPlotly = ({
     <Plot
       key={plotKey}
       data={memoizedData}
+      className={styles.scatterPlot}
       useResizeHandler
       layout={layout}
       onClick={handleClick}
       config={{
-        modeBarButtonsToRemove: ['toImage', 'resetGeo', 'lasso2d', 'sendDataToCloud'],
+        modeBarButtonsToRemove: [
+          'toImage',
+          'resetGeo',
+          'lasso2d',
+          'sendDataToCloud',
+          'pan2d',
+          'select2d',
+        ],
         displaylogo: false,
       }}
-      // @ts-ignore
       onRelayout={(event) => {
         handleRelayout(event);
       }}
