@@ -18,21 +18,3 @@
 .pageContent .guidButton {
   height: auto;
 }
-
-.modal {
-  width: 900px !important;
-
-  .step1 *[class$='-alert-message'] {
-    font-weight: 600;
-  }
-  .step1 .description {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .studiesLink {
-    text-decoration: underline;
-  }
-}

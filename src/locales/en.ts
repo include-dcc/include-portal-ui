@@ -1395,6 +1395,21 @@ const en = {
             message: 'Submit a data access request to this dbGaP study.',
             buttonLabel: 'Request access to GUID mapping file',
           },
+          step2: {
+            title: 'Step 2:',
+            message:
+              'Once permissions have been granted, return to this modal and copy the GUID mapping file into your Cavatica project. If you do you have dbGaP approval, you will not be able to access the file in Cavatica. Learn more about <a target="_blank" href="https://help.includedcc.org/docs/connecting-platforms-1#connecting-to-cavatica" style="text-decoration: underline;">connecting to Cavatica</a>.',
+            buttonLabel: 'Copy GUID Mapping File',
+          },
+        },
+        cavaticaModal: {
+          title: 'Cavatica - INCLUDE GUID mapping file',
+          okText: 'Copy file',
+          message:
+            'Copy the INCLUDE GUID mapping file into your Cavatica project. Once it is in your project, you can download the file or include it into your workflows.',
+          selectFooterButton: 'New project',
+          selectPlaceholder: 'Select a project',
+          createProjectToPushFileTo: 'Create a project to push your files to.',
         },
       },
       searchLabel: {

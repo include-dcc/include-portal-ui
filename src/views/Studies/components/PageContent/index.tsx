@@ -9,6 +9,9 @@ import useQueryBuilderState, {
   defaultQueryBuilderState,
   setQueryBuilderState,
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { ICavaticaTreeNode } from '@ferlab/ui/core/components/Widgets/Cavatica/CavaticaAnalyzeModal';
+import CavaticaCreateProjectModal from '@ferlab/ui/core/components/Widgets/Cavatica/CavaticaCreateProjectModal';
+import { CavaticaAnalyticsAction } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import { FilterOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, isEmptySqon } from '@ferlab/ui/core/data/sqon/utils';
@@ -20,6 +23,17 @@ import { useStudies } from 'graphql/studies/actions';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 import { cloneDeep } from 'lodash';
 
+import { trackCavaticaAction } from 'services/analytics';
+import { CavaticaApi } from 'services/api/cavatica';
+import { ICavaticaCreateProjectBody } from 'services/api/cavatica/models';
+import { useCavaticaPassport } from 'store/passport';
+import { passportActions } from 'store/passport/slice';
+import {
+  createCavaticaProjet,
+  fetchCavaticaBillingGroups,
+  fetchCavaticaProjects,
+  startImportJob,
+} from 'store/passport/thunks';
 import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
@@ -34,7 +48,9 @@ import {
   STUDIES_REPO_QB_ID,
 } from '../../utils/constants';
 
-import NdaGuidsModal from './NdaGuidsModal';
+import CavaticaGuidModal from './Guid/CavaticaGuidModal';
+import NdaGuidsModal from './Guid/NdaGuidsModal';
+import { cavaticaCreateProjectDictionary, getGuidDrsItem } from './Guid/utils';
 
 import styles from './index.module.css';
 
@@ -72,7 +88,10 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
   const [searchValue, setSearchValue] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const cavatica = useCavaticaPassport();
+  const [isGuidModalOpen, setIsGuidModalOpen] = useState(false);
+  const [isCavaticaModalOpen, setIsCavaticaModalOpen] = useState(false);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const { queryList, activeQuery } = useQueryBuilderState(STUDIES_REPO_QB_ID);
   const [queryConfig, setQueryConfig] = useState({
     ...DEFAULT_QUERY_CONFIG,
@@ -106,11 +125,23 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
   }, [queryConfig.pageIndex]);
 
   const displayNDAGuids = getFTEnvVarByKey('NDA_GUIDS');
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  const handleOpenGuidModal = () => {
+    setIsGuidModalOpen(true);
   };
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseGuidModal = () => {
+    setIsGuidModalOpen(false);
+  };
+  const handleOpenCavaticaModal = () => {
+    setIsCavaticaModalOpen(true);
+  };
+  const handleCloseCavaticaModal = () => {
+    setIsCavaticaModalOpen(false);
+  };
+  const handleOpenProjectModal = () => {
+    setIsProjectModalOpen(true);
+  };
+  const handleCloseProjectModal = () => {
+    setIsProjectModalOpen(false);
   };
 
   const searchPrescription = (value: any) => {
@@ -145,7 +176,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
           />
           {displayNDAGuids === 'true' && (
             <Tooltip title={intl.get('screen.studies.ndaGuids.buttonTooltip')}>
-              <Button className={styles.guidButton} type="primary" onClick={handleOpenModal}>
+              <Button className={styles.guidButton} type="primary" onClick={handleOpenGuidModal}>
                 {intl.get('screen.studies.ndaGuids.button')}
               </Button>
             </Tooltip>
@@ -210,8 +241,65 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
         }
       />
 
-      {isModalOpen && displayNDAGuids === 'true' && (
-        <NdaGuidsModal open={isModalOpen} onClose={handleCloseModal} />
+      {isGuidModalOpen && displayNDAGuids === 'true' && (
+        <NdaGuidsModal
+          open={isGuidModalOpen}
+          onClose={handleCloseGuidModal}
+          handleOpenCavaticaModal={handleOpenCavaticaModal}
+          {...cavatica}
+        />
+      )}
+      {isCavaticaModalOpen && displayNDAGuids === 'true' && (
+        <CavaticaGuidModal
+          open={isCavaticaModalOpen}
+          onClose={handleCloseCavaticaModal}
+          handleSubmit={(value: ICavaticaTreeNode) => {
+            dispatch(startImportJob({ drsItems: [getGuidDrsItem(value)], node: value }));
+            handleCloseCavaticaModal();
+          }}
+          handleFilesAndFolders={CavaticaApi.listFilesAndFolders}
+          handleCreateProjectClick={() => {
+            handleOpenProjectModal();
+            handleCloseCavaticaModal();
+          }}
+          {...cavatica}
+        />
+      )}
+
+      {isProjectModalOpen && displayNDAGuids === 'true' && (
+        <CavaticaCreateProjectModal
+          dictionary={cavaticaCreateProjectDictionary}
+          handleCloseModal={() => {
+            handleCloseProjectModal();
+            handleOpenCavaticaModal();
+          }}
+          onCancel={() => {
+            handleCloseProjectModal();
+            handleOpenCavaticaModal();
+          }}
+          open={isProjectModalOpen}
+          cavatica={cavatica}
+          handleErrorModalReset={() => {
+            dispatch(passportActions.resetCavaticaBillingsGroupError());
+            dispatch(passportActions.resetCavaticaProjectsError());
+          }}
+          fetchBillingGroups={() => {
+            dispatch(fetchCavaticaBillingGroups());
+          }}
+          fetchProjects={() => {
+            dispatch(fetchCavaticaProjects());
+          }}
+          handleSubmit={(values: ICavaticaCreateProjectBody) => {
+            dispatch(
+              createCavaticaProjet({
+                body: values,
+                callback: () => {
+                  trackCavaticaAction(INDEXES.FILE, CavaticaAnalyticsAction.PROJECT_CREATED);
+                },
+              }),
+            );
+          }}
+        />
       )}
     </Space>
   );

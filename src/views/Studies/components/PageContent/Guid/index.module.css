@@ -1,0 +1,39 @@
+.cavaticaModalWrapper .treeSelectorWrapper,
+.cavaticaModalWrapper .treeSelector {
+  width: 100%;
+}
+
+.cavaticaTreeDropdown {
+  padding: 0;
+}
+.cavaticaTreeDropdown .treeSelectEmpty {
+  width: 100%;
+  padding: 4px 8px;
+}
+.cavaticaTreeDropdown .cavaticaTreeDropdownMenu {
+  padding: 8px 4px;
+}
+.cavaticaTreeDropdown .cavaticaTreeDropdownFooter {
+  padding: 12px;
+}
+.cavaticaTreeDropdown .cavaticaTreeDropdownDivider {
+  margin: 0;
+}
+
+.guidModal {
+  width: 900px !important;
+
+  .step *[class$='-alert-message'] {
+    font-weight: 600;
+  }
+  .step .description {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .studiesLink {
+    text-decoration: underline;
+  }
+}
