@@ -62,6 +62,8 @@ enum SectionId {
   DATASET = 'dataset',
 }
 
+const hasData = (data: unknown[]) => data && data.length > 0;
+
 // eslint-disable-next-line complexity
 const StudyEntity = () => {
   const navigate = useNavigate();
@@ -222,8 +224,54 @@ const StudyEntity = () => {
 
   const defaultLinks = [
     { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
-    { href: `#${SectionId.STATISTIC}`, title: intl.get('entities.study.statistic.title') },
   ];
+
+  const hasStatistics =
+    !loading &&
+    (hasData(treeNodeToChartData(phenotypes)) ||
+      hasData(treeNodeToChartData(mondo)) ||
+      hasData(
+        aggregationToChartData(demographic?.result?.data?.participant?.aggregations?.race?.buckets),
+      ) ||
+      hasData(
+        aggregationToChartData(demographic?.result?.data?.participant?.aggregations?.sex?.buckets),
+      ) ||
+      hasData(
+        aggregationToChartData(
+          demographic?.result?.data?.participant?.aggregations?.ethnicity?.buckets,
+        ),
+      ) ||
+      hasData(
+        aggregationToChartData(
+          dataCategory?.result?.data?.participant?.aggregations?.files__data_category?.buckets,
+        ),
+      ) ||
+      hasData(
+        aggregationToChartData(
+          dataType?.result?.data?.participant?.aggregations?.files__data_type?.buckets,
+        ),
+      ) ||
+      hasData(
+        aggregationToChartData(
+          downSyndromeStatus?.result?.data?.participant?.aggregations?.down_syndrome_status
+            ?.buckets,
+        ),
+      ) ||
+      hasData(
+        aggregationToChartData(
+          samples?.result?.data?.biospecimen?.aggregations?.sample_type?.buckets,
+        ),
+      ) ||
+      hasData(
+        aggregationToChartData(samples?.result?.data?.biospecimen?.aggregations?.status?.buckets),
+      ));
+
+  if (hasStatistics) {
+    defaultLinks.push({
+      href: `#${SectionId.STATISTIC}`,
+      title: intl.get('entities.study.statistic.title'),
+    });
+  }
 
   if (hasDataAccess) {
     defaultLinks.push({
@@ -291,194 +339,199 @@ const StudyEntity = () => {
           subheader={<SummaryHeader study={study} />}
         />
 
-        <EntityStatistics
-          id={SectionId.STATISTIC}
-          title={intl.get('entities.study.statistic.title')}
-          loading={loading}
-          header={intl.get('entities.study.statistic.header')}
-          titleExtra={[
-            <Tooltip
-              title={
-                !study?.is_harmonized
-                  ? intl.get('entities.study.unharmonizedWarningTooltip')
-                  : undefined
-              }
-            >
-              <Button
-                disabled={!study?.is_harmonized}
-                size="small"
-                onClick={() => {
-                  addQuery({
-                    queryBuilderId: DATA_EXPLORATION_QB_ID,
-                    query: generateQuery({
-                      newFilters: [
-                        generateValueFilter({
-                          field: 'study.study_code',
-                          value: study ? [study.study_code] : [],
-                          index: INDEXES.STUDY,
-                        }),
-                      ],
-                    }),
-                    setAsActive: true,
-                  });
-                  navigate(STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS);
-                }}
+        {hasStatistics && (
+          <EntityStatistics
+            id={SectionId.STATISTIC}
+            title={intl.get('entities.study.statistic.title')}
+            loading={loading}
+            header={intl.get('entities.study.statistic.header')}
+            titleExtra={[
+              <Tooltip
+                title={
+                  !study?.is_harmonized
+                    ? intl.get('entities.study.unharmonizedWarningTooltip')
+                    : undefined
+                }
               >
-                {intl.get('global.viewInExploration')}
-                <ExternalLinkIcon />
-              </Button>
-            </Tooltip>,
-          ]}
-          dictionary={{
-            download: {
-              fileNameTemplate: 'include-%name-%extra-%type-%date',
-              fileNameAdditionalInfo: study?.study_code,
-            },
-            phenotype: {
-              headerTitle: intl.get('entities.study.statistic.phenotype'),
-              legendAxisLeft: intl.get(
-                'screen.dataExploration.tabs.summary.observed_phenotype.legendAxisLeft',
-              ),
-              legendAxisBottom: intl.get(
-                'screen.dataExploration.tabs.summary.observed_phenotype.legendAxisBottom',
-              ),
-            },
-            mondo: {
-              headerTitle: intl.get('entities.study.statistic.mondo'),
-              legendAxisLeft: intl.get('screen.dataExploration.tabs.summary.mondo.legendAxisLeft'),
-              legendAxisBottom: intl.get(
-                'screen.dataExploration.tabs.summary.mondo.legendAxisBottom',
-              ),
-            },
-            demography: {
-              headerTitle: intl.get('screen.dataExploration.tabs.summary.demographic.cardTitle'),
-              sexTitle: intl.get('screen.dataExploration.tabs.summary.demographic.sexTitle'),
-              ethnicityTitle: intl.get(
-                'screen.dataExploration.tabs.summary.demographic.ethnicityTitle',
-              ),
-              raceTitle: intl.get('screen.dataExploration.tabs.summary.demographic.raceTitle'),
-            },
-            downSyndromeStatus: {
-              headerTitle: intl.get(
-                'screen.dataExploration.tabs.summary.downSyndromeStatus.cardTitle',
-              ),
-            },
-            sampleType: {
-              headerTitle: intl.get('screen.dataExploration.tabs.summary.sampleType.cardTitle'),
-            },
-            sampleAvailability: {
-              headerTitle: intl.get(
-                'screen.dataExploration.tabs.summary.sampleAvailability.cardTitle',
-              ),
-            },
-            dataCategory: {
-              headerTitle: intl.get(
-                'screen.dataExploration.tabs.summary.availableData.dataCategoryTitle',
-              ),
-              legendAxisLeft: intl.get(
-                'screen.dataExploration.tabs.summary.graphs.dataCategory.legendAxisLeft',
-              ),
-              legendAxisBottom: intl.get(
-                'screen.dataExploration.tabs.summary.graphs.dataCategory.legendAxisBottom',
-              ),
-            },
-            dataType: {
-              headerTitle: intl.get(
-                'screen.dataExploration.tabs.summary.availableData.dataTypeTitle',
-              ),
-              legendAxisLeft: intl.get(
-                'screen.dataExploration.tabs.summary.graphs.dataTypeGraph.legendAxisLeft',
-              ),
-              legendAxisBottom: intl.get(
-                'screen.dataExploration.tabs.summary.graphs.dataTypeGraph.legendAxisBottom',
-              ),
-            },
-          }}
-          statistic={{
-            phenotype: {
-              loading: phenotypesLoading,
-              data: treeNodeToChartData(phenotypes),
-              filter: {
-                total: 10,
-                excludeZeroValue: true,
-                unique: true,
+                <Button
+                  disabled={!study?.is_harmonized}
+                  size="small"
+                  onClick={() => {
+                    addQuery({
+                      queryBuilderId: DATA_EXPLORATION_QB_ID,
+                      query: generateQuery({
+                        newFilters: [
+                          generateValueFilter({
+                            field: 'study.study_code',
+                            value: study ? [study.study_code] : [],
+                            index: INDEXES.STUDY,
+                          }),
+                        ],
+                      }),
+                      setAsActive: true,
+                    });
+                    navigate(STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS);
+                  }}
+                >
+                  {intl.get('global.viewInExploration')}
+                  <ExternalLinkIcon />
+                </Button>
+              </Tooltip>,
+            ]}
+            dictionary={{
+              download: {
+                fileNameTemplate: 'include-%name-%extra-%type-%date',
+                fileNameAdditionalInfo: study?.study_code,
               },
-            },
-            mondo: {
-              loading: mondoLoading,
-              data: treeNodeToChartData(mondo),
-              filter: {
-                total: 10,
-                unique: true,
-                excludeZeroValue: true,
-                excludes: [
-                  'complete trisomy 21 (MONDO:0700030)',
-                  'Down syndrome (MONDO:0008608)',
-                  'mosaic translocation Down syndrome (MONDO:0700129)',
-                  'mosaic trisomy 21 (MONDO:0700127)',
-                  'partial segmental duplication (MONDO:0700130)',
-                  'translocation Down syndrome (MONDO:0700128)',
-                  'trisomy 21 (MONDO:0700126)',
-                ],
+              phenotype: {
+                headerTitle: intl.get('entities.study.statistic.phenotype'),
+                legendAxisLeft: intl.get(
+                  'screen.dataExploration.tabs.summary.observed_phenotype.legendAxisLeft',
+                ),
+                legendAxisBottom: intl.get(
+                  'screen.dataExploration.tabs.summary.observed_phenotype.legendAxisBottom',
+                ),
               },
-            },
-            demography: {
-              loading: demographic.loading,
-              race: aggregationToChartData(
-                demographic.result?.data?.participant?.aggregations?.race?.buckets,
-                demographic.result?.data?.participant?.hits?.total,
-              ),
-              sex: aggregationToChartData(
-                demographic.result?.data?.participant?.aggregations?.sex?.buckets,
-                demographic.result?.data?.participant?.hits?.total,
-              ),
-              ethnicity: aggregationToChartData(
-                demographic.result?.data?.participant?.aggregations?.ethnicity?.buckets,
-                demographic.result?.data?.participant?.hits?.total,
-              ),
-            },
-            dataCategory: {
-              loading: dataCategory.loading,
-              data: aggregationToChartData(
-                dataCategory.result?.data?.participant?.aggregations?.files__data_category.buckets,
-              ),
-              filter: {
-                total: 10,
+              mondo: {
+                headerTitle: intl.get('entities.study.statistic.mondo'),
+                legendAxisLeft: intl.get(
+                  'screen.dataExploration.tabs.summary.mondo.legendAxisLeft',
+                ),
+                legendAxisBottom: intl.get(
+                  'screen.dataExploration.tabs.summary.mondo.legendAxisBottom',
+                ),
               },
-            },
-            dataType: {
-              loading: dataType.loading,
-              data: aggregationToChartData(
-                dataType.result?.data?.participant?.aggregations?.files__data_type.buckets,
-              ),
-              filter: {
-                total: 10,
+              demography: {
+                headerTitle: intl.get('screen.dataExploration.tabs.summary.demographic.cardTitle'),
+                sexTitle: intl.get('screen.dataExploration.tabs.summary.demographic.sexTitle'),
+                ethnicityTitle: intl.get(
+                  'screen.dataExploration.tabs.summary.demographic.ethnicityTitle',
+                ),
+                raceTitle: intl.get('screen.dataExploration.tabs.summary.demographic.raceTitle'),
               },
-            },
-            downSyndromeStatus: {
-              loading: downSyndromeStatus.loading,
-              data: aggregationToChartData(
-                downSyndromeStatus.result?.data?.participant?.aggregations?.down_syndrome_status
-                  ?.buckets,
-                downSyndromeStatus.result?.data?.participant?.hits?.total,
-              ),
-            },
-            sampleType: {
-              loading: samples.loading,
-              data: aggregationToChartData(
-                samples.result?.data?.biospecimen?.aggregations?.sample_type?.buckets,
-                samples.result?.data?.participant?.hits?.total,
-              ),
-            },
-            sampleAvailability: {
-              loading: samples.loading,
-              data: aggregationToChartData(
-                samples.result?.data?.biospecimen?.aggregations?.status?.buckets,
-                samples.result?.data?.participant?.hits?.total,
-              ),
-            },
-          }}
-        />
+              downSyndromeStatus: {
+                headerTitle: intl.get(
+                  'screen.dataExploration.tabs.summary.downSyndromeStatus.cardTitle',
+                ),
+              },
+              sampleType: {
+                headerTitle: intl.get('screen.dataExploration.tabs.summary.sampleType.cardTitle'),
+              },
+              sampleAvailability: {
+                headerTitle: intl.get(
+                  'screen.dataExploration.tabs.summary.sampleAvailability.cardTitle',
+                ),
+              },
+              dataCategory: {
+                headerTitle: intl.get(
+                  'screen.dataExploration.tabs.summary.availableData.dataCategoryTitle',
+                ),
+                legendAxisLeft: intl.get(
+                  'screen.dataExploration.tabs.summary.graphs.dataCategory.legendAxisLeft',
+                ),
+                legendAxisBottom: intl.get(
+                  'screen.dataExploration.tabs.summary.graphs.dataCategory.legendAxisBottom',
+                ),
+              },
+              dataType: {
+                headerTitle: intl.get(
+                  'screen.dataExploration.tabs.summary.availableData.dataTypeTitle',
+                ),
+                legendAxisLeft: intl.get(
+                  'screen.dataExploration.tabs.summary.graphs.dataTypeGraph.legendAxisLeft',
+                ),
+                legendAxisBottom: intl.get(
+                  'screen.dataExploration.tabs.summary.graphs.dataTypeGraph.legendAxisBottom',
+                ),
+              },
+            }}
+            statistic={{
+              phenotype: {
+                loading: phenotypesLoading,
+                data: treeNodeToChartData(phenotypes),
+                filter: {
+                  total: 10,
+                  excludeZeroValue: true,
+                  unique: true,
+                },
+              },
+              mondo: {
+                loading: mondoLoading,
+                data: treeNodeToChartData(mondo),
+                filter: {
+                  total: 10,
+                  unique: true,
+                  excludeZeroValue: true,
+                  excludes: [
+                    'complete trisomy 21 (MONDO:0700030)',
+                    'Down syndrome (MONDO:0008608)',
+                    'mosaic translocation Down syndrome (MONDO:0700129)',
+                    'mosaic trisomy 21 (MONDO:0700127)',
+                    'partial segmental duplication (MONDO:0700130)',
+                    'translocation Down syndrome (MONDO:0700128)',
+                    'trisomy 21 (MONDO:0700126)',
+                  ],
+                },
+              },
+              demography: {
+                loading: demographic.loading,
+                race: aggregationToChartData(
+                  demographic.result?.data?.participant?.aggregations?.race?.buckets,
+                  demographic.result?.data?.participant?.hits?.total,
+                ),
+                sex: aggregationToChartData(
+                  demographic.result?.data?.participant?.aggregations?.sex?.buckets,
+                  demographic.result?.data?.participant?.hits?.total,
+                ),
+                ethnicity: aggregationToChartData(
+                  demographic.result?.data?.participant?.aggregations?.ethnicity?.buckets,
+                  demographic.result?.data?.participant?.hits?.total,
+                ),
+              },
+              dataCategory: {
+                loading: dataCategory.loading,
+                data: aggregationToChartData(
+                  dataCategory.result?.data?.participant?.aggregations?.files__data_category
+                    .buckets,
+                ),
+                filter: {
+                  total: 10,
+                },
+              },
+              dataType: {
+                loading: dataType.loading,
+                data: aggregationToChartData(
+                  dataType.result?.data?.participant?.aggregations?.files__data_type.buckets,
+                ),
+                filter: {
+                  total: 10,
+                },
+              },
+              downSyndromeStatus: {
+                loading: downSyndromeStatus.loading,
+                data: aggregationToChartData(
+                  downSyndromeStatus.result?.data?.participant?.aggregations?.down_syndrome_status
+                    ?.buckets,
+                  downSyndromeStatus.result?.data?.participant?.hits?.total,
+                ),
+              },
+              sampleType: {
+                loading: samples.loading,
+                data: aggregationToChartData(
+                  samples.result?.data?.biospecimen?.aggregations?.sample_type?.buckets,
+                  samples.result?.data?.participant?.hits?.total,
+                ),
+              },
+              sampleAvailability: {
+                loading: samples.loading,
+                data: aggregationToChartData(
+                  samples.result?.data?.biospecimen?.aggregations?.status?.buckets,
+                  samples.result?.data?.participant?.hits?.total,
+                ),
+              },
+            }}
+          />
+        )}
 
         {hasDataAccess && (
           <EntityDescriptions
