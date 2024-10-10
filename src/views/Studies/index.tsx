@@ -49,6 +49,7 @@ const filterInfo: FilterInfo = {
     'data_sources',
     'study_designs',
     'is_harmonized',
+    'guid',
     'controlled_access',
   ],
   groups: [
@@ -62,6 +63,7 @@ const filterInfo: FilterInfo = {
         'data_sources',
         'study_designs',
         'is_harmonized',
+        'guid',
         'controlled_access',
       ],
     },

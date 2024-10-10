@@ -69,6 +69,7 @@ export interface IStudyEntity {
   external_ids?: string[];
   family_count?: number;
   file_count?: number;
+  guid: string;
   institutions?: string[];
   investigator_names?: string[];
   is_harmonized?: boolean;

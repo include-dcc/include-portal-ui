@@ -201,6 +201,7 @@ describe(`${extractMetadata.name}()`, () => {
                   biospecimen_count: 0,
                   data_category: [],
                   website: '',
+                  guid: '',
                 },
               },
             },
