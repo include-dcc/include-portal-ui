@@ -1373,7 +1373,7 @@ const en = {
       harmonizedPopover: {
         title: 'Harmonized Data',
         content:
-          'Study data aligned with INCLUDE Data Hub clinical standards for facilitating integration and cross-study comparison.',
+          '<p>Study data harmonized with INCLUDE Data Hub clinical standards for facilitating integration and cross-study comparison.</p><p>Studies labeled with a <strong>G</strong> have provided NDA GUIDs to the INCLUDE DCC and are included in the INCLUDE GUID Mapping File.</p>',
       },
       ndaGuids: {
         button: 'NDA GUIDs for Down syndrome research',
@@ -1857,6 +1857,8 @@ const en = {
       domains: 'Domain',
       file: 'File',
       files: 'Files',
+      guidAbrv: 'G',
+      guidTooltip: 'NDA GUIDs',
       harmonized: 'Harmonized',
       harmonizedAbrv: 'H',
       harmonizedTooltip:
