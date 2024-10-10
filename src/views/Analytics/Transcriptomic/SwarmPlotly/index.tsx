@@ -5,6 +5,8 @@ import { Annotations, PlotData, PlotMouseEvent } from 'plotly.js';
 
 import { ITranscriptomicsSampleGeneExp } from '../../../../services/api/transcriptomics/models';
 
+import styles from './index.module.css';
+
 export type TTranscriptomicsSwarmPlot = {
   selectedGeneSymbol: string;
   selectedSampleIds: string[];
@@ -45,7 +47,14 @@ const SwarmPlotly = ({
     jitter: 1,
     pointpos: 0,
     type: 'box',
-    marker: { color },
+    marker: {
+      color,
+      size: 7,
+      line: {
+        color: 'white',
+        width: 0.5,
+      },
+    },
     text: group.map((e) =>
       [
         `${intl.get('screen.analytics.transcriptomic.swarmPlot.sample_id')} ${e.sample_id} <br>`,
@@ -78,17 +87,22 @@ const SwarmPlotly = ({
   }
 
   const handlePlotClick = (data: Readonly<PlotMouseEvent>) => {
-    const selectedSamples = data.points.map((p) => p.customdata) as string[];
-    handleSampleSelection(selectedSamples);
+    const clickedSample = (data.points.map((p) => p.customdata) as string[])[0];
+
+    if (selectedSampleIds.includes(clickedSample)) {
+      handleSampleSelection([]);
+    } else {
+      handleSampleSelection([clickedSample]);
+    }
   };
 
   return (
     <Plot
+      className={styles.swarmPlot}
       data={plotData}
       layout={{
         annotations,
         autosize: true,
-        height: 700,
         title: {
           text:
             intl.get('screen.analytics.transcriptomic.swarmPlot.title') + ' ' + selectedGeneSymbol,
@@ -116,7 +130,16 @@ const SwarmPlotly = ({
       }}
       useResizeHandler
       config={{
-        modeBarButtonsToRemove: ['toImage', 'resetGeo', 'lasso2d', 'sendDataToCloud'],
+        modeBarButtonsToRemove: [
+          'toImage',
+          'resetGeo',
+          'lasso2d',
+          'sendDataToCloud',
+          'zoomIn2d',
+          'zoomOut2d',
+          'pan2d',
+          'select2d',
+        ],
         displaylogo: false,
       }}
       onClick={handlePlotClick}
