@@ -111,23 +111,19 @@ const ScatterPlotly = ({
           hoverlabel: {
             namelength: 0,
           },
-          hovertemplate: group.data.map((e) =>
-            [
-              `${intl.get('screen.analytics.transcriptomic.scatterPlot.gene_symbol')} ${
-                e.gene_symbol
-              } <br>`,
-              `${intl.get('screen.analytics.transcriptomic.scatterPlot.ensembl_gene_id')} ${
-                e.ensembl_gene_id
-              } <br>`,
-              `${intl.get(
-                'screen.analytics.transcriptomic.scatterPlot.fold_change',
-              )} ${e.fold_change.toFixed(2)} <br>`,
-              `${intl.get('screen.analytics.transcriptomic.scatterPlot.qvalue')} ${formatPadj(
-                e.padj,
-              )}`,
-            ].join(''),
-          ),
+          hovertemplate:
+            `${intl.get(
+              'screen.analytics.transcriptomic.scatterPlot.gene_symbol',
+            )}: %{customdata[1]} <br>` +
+            `${intl.get(
+              'screen.analytics.transcriptomic.scatterPlot.ensembl_gene_id',
+            )}: %{customdata[0]} <br>` +
+            `${intl.get(
+              'screen.analytics.transcriptomic.scatterPlot.fold_change',
+            )}: %{y:.2f} <br>` +
+            `${intl.get('screen.analytics.transcriptomic.scatterPlot.qvalue')}: %{text}`,
           customdata: group.data.map((e) => [e.ensembl_gene_id, e.gene_symbol]),
+          text: group.data.map((e) => formatPadj(e.padj)),
         } as ScatterData;
       }) || [],
     [data],

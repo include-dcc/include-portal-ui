@@ -62,12 +62,9 @@ const SwarmPlotly = ({
     hoverlabel: {
       namelength: 0,
     },
-    text: group.map((e) =>
-      [
-        `${intl.get('screen.analytics.transcriptomic.swarmPlot.sample_id')} ${e.sample_id} <br>`,
-        `${intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm')} ${e.y.toFixed(2)}`,
-      ].join(''),
-    ),
+    hovertemplate:
+      `${intl.get('screen.analytics.transcriptomic.swarmPlot.sample_id')}: %{customdata} <br>` +
+      `${intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm')}: %{y:.2f}`,
     customdata: group.map((e) => e.sample_id),
   })) as PlotData[];
 
@@ -86,7 +83,7 @@ const SwarmPlotly = ({
         bordercolor: 'black',
         borderwidth: 1,
         text: `${sample.sample_id}: ${sample.y.toFixed(2)} ${intl.get(
-          'screen.analytics.transcriptomic.swarmPlot.yAxisTitle',
+          'screen.analytics.transcriptomic.swarmPlot.fpkm',
         )}`,
       };
     });
@@ -131,7 +128,7 @@ const SwarmPlotly = ({
           x: 0.99,
         },
         yaxis: {
-          title: intl.get('screen.analytics.transcriptomic.swarmPlot.yAxisTitle'),
+          title: intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm'),
         },
         xaxis: {
           tickvals: [1, 2],
