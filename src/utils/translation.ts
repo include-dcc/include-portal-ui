@@ -396,6 +396,7 @@ export const getFacetsDictionary = () => ({
     },
   },
   age_at_biospecimen_collection: 'Age at Biospecimen Collection (days)',
+  guid: 'GUID Type',
   tooltips: {
     genes: {
       consequences: {
