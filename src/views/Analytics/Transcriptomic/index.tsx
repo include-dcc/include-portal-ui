@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import intl from 'react-intl-universal';
-import { useSelector } from 'react-redux';
 import Empty from '@ferlab/ui/core/components/Empty';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
@@ -11,13 +10,13 @@ import TranscriptomicSearchByGene from 'views/Analytics/Transcriptomic/SearchByG
 import TranscriptomicSearchBySample from 'views/Analytics/Transcriptomic/SearchBySample';
 import { SCROLL_WRAPPER_ID } from 'views/DataExploration/utils/constant';
 
-import { useTranscriptomicsDiffGeneExp } from 'store/analytics';
+import { useTranscriptomicsDiffGeneExp, useTranscriptomicsSampleGeneExp } from 'store/analytics';
 
-import { transcriptomicsSampleGeneExpSelector } from '../../../store/analytics/selector';
+import { TTranscriptomicsDiffGeneExp } from '../../../services/api/transcriptomics/models';
 
-import ScatterPlotly from './ScatterPlotly';
+import ScatterPlot from './ScatterPlot';
 import SideBar, { TTranscriptomicSideBarItem } from './SideBar';
-import SwarmPlotly from './SwarmPlotly';
+import SwarmPlot from './SwarmPlot';
 
 import styles from './index.module.css';
 
@@ -48,11 +47,33 @@ const menuItems: () => TTranscriptomicSideBarItem[] = () => [
   },
 ];
 
+const getSelectedGeneSymbol = (diffGeneExp: TTranscriptomicsDiffGeneExp[], id: string) => {
+  for (const diffGene of diffGeneExp) {
+    const gene = diffGene.data.find((gene) => gene.ensembl_gene_id === id);
+    if (gene) return gene.gene_symbol;
+  }
+  return '';
+};
+
 export const Transcriptomic = () => {
   const diffGeneExp = useTranscriptomicsDiffGeneExp();
-  const sampleGeneExp = useSelector(transcriptomicsSampleGeneExpSelector);
   const [selectedGeneIds, setSelectedGeneIds] = useState<string[]>([]);
   const [selectedSampleIds, setSelectedSampleIds] = useState<string[]>([]);
+  const sampleGeneExp = useTranscriptomicsSampleGeneExp(selectedGeneIds[0]);
+
+  const selectedGeneSymbol = useMemo(
+    () => (diffGeneExp.data ? getSelectedGeneSymbol(diffGeneExp.data, selectedGeneIds[0]) : ''),
+    [diffGeneExp, selectedGeneIds],
+  );
+
+  const handleGeneSelection = (ensemble_ids: string[]) => {
+    setSelectedGeneIds(ensemble_ids);
+    setSelectedSampleIds([]);
+  };
+
+  const handleSampleSelection = (sample_ids: string[]) => {
+    setSelectedSampleIds(sample_ids);
+  };
 
   return (
     <div className={styles.transcriptomicPage}>
@@ -97,10 +118,11 @@ export const Transcriptomic = () => {
                 <Divider className={styles.hDivider} />
                 <div className={styles.content}>
                   <div className={styles.chartContainer}>
-                    <ScatterPlotly //TODO ref: TranscriptomicsScatterPlot
+                    <ScatterPlot
                       loading={diffGeneExp.loading}
-                      data={diffGeneExp.data ?? []}
-                      selectGeneIdsCb={setSelectedGeneIds}
+                      data={diffGeneExp.data}
+                      handleGeneSelection={handleGeneSelection}
+                      selectedGeneIds={selectedGeneIds}
                     />
                   </div>
                   <div className={styles.vDivider} />
@@ -112,10 +134,12 @@ export const Transcriptomic = () => {
                         description={intl.get('screen.analytics.transcriptomic.empty')}
                       />
                     ) : (
-                      <SwarmPlotly //TODO ref: TranscriptomicsSwarmPlot
-                        diffGeneExpId={selectedGeneIds[0]}
-                        sampleIds={selectedSampleIds}
-                        setSampleIdsCb={setSelectedSampleIds}
+                      <SwarmPlot
+                        selectedGeneSymbol={selectedGeneSymbol}
+                        selectedSampleIds={selectedSampleIds}
+                        handleSampleSelection={handleSampleSelection}
+                        loading={sampleGeneExp.loading}
+                        sampleGeneExp={sampleGeneExp.data}
                       />
                     )}
                   </div>

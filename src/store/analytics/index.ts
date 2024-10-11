@@ -22,7 +22,7 @@ export const useTranscriptomicsFacets = () => {
   const facets = useSelector(transcriptomicsFacetsSelector);
   useEffect(() => {
     dispatch(fetchTranscriptomicsFacets());
-  }, []);
+  }, [dispatch]);
   return facets;
 };
 
@@ -32,7 +32,7 @@ export const useTranscriptomicsDiffGeneExp = () => {
 
   useEffect(() => {
     dispatch(fetchTranscriptomicsDiffGeneExp());
-  }, []);
+  }, [dispatch]);
   return diffGeneExp;
 };
 
@@ -42,6 +42,6 @@ export const useTranscriptomicsSampleGeneExp = (id: string) => {
 
   useEffect(() => {
     dispatch(fetchTranscriptomicsSampleGeneExp({ id }));
-  }, [id]);
+  }, [dispatch, id]);
   return sampleGeneExp;
 };
