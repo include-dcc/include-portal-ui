@@ -64,7 +64,7 @@ const SwarmPlotly = ({
     },
     hovertemplate:
       `${intl.get('screen.analytics.transcriptomic.swarmPlot.sample_id')}: %{customdata} <br>` +
-      `${intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm')}: %{y}`,
+      `${intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm')}: %{y:.2f}`,
     customdata: group.map((e) => e.sample_id),
   })) as PlotData[];
 
