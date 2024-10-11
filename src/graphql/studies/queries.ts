@@ -65,9 +65,11 @@ export const GET_STUDY = gql`
             study_id
             study_code
             study_name
+            acknowledgement
             biobank_contact
             biobank_request_link
             biospecimen_count
+            citation_statement
             contacts {
               hits {
                 total
@@ -122,6 +124,7 @@ export const GET_STUDY = gql`
             selection_criteria
             study_code
             study_designs
+            study_meta_categories
             study_name
             website
             data_category

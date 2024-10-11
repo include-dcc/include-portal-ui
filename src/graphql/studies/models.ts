@@ -49,9 +49,11 @@ export interface IStudyEntity {
   study_id: string;
   study_code: string;
   study_name: string;
+  acknowledgement?: string;
   biobank_contact?: string;
   biobank_request_link?: string;
   biospecimen_count: number;
+  citation_statement?: string;
   contacts?: ArrangerResultsTree<IContact>;
   controlled_access?: string[];
   data_category: string[];
@@ -69,7 +71,7 @@ export interface IStudyEntity {
   external_ids?: string[];
   family_count?: number;
   file_count?: number;
-  guid: string;
+  guid?: string;
   institutions?: string[];
   investigator_names?: string[];
   is_harmonized?: boolean;
@@ -77,7 +79,8 @@ export interface IStudyEntity {
   participant_count: number;
   program: string;
   publications?: string[];
-  selection_criteria?: string;
+  selection_criteria?: string[];
   study_designs?: string[];
+  study_meta_categories?: string[];
   website: string;
 }
