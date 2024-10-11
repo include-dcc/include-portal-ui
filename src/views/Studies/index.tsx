@@ -7,7 +7,7 @@ import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQuery
 import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
-import { Tag, Tooltip } from 'antd';
+import { Space, Tag, Tooltip } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { INDEXES } from 'graphql/constants';
 import { IStudyEntity } from 'graphql/studies/models';
@@ -49,6 +49,7 @@ const filterInfo: FilterInfo = {
     'data_sources',
     'study_designs',
     'is_harmonized',
+    'guid',
     'controlled_access',
   ],
   groups: [
@@ -62,6 +63,7 @@ const filterInfo: FilterInfo = {
         'data_sources',
         'study_designs',
         'is_harmonized',
+        'guid',
         'controlled_access',
       ],
     },
@@ -76,12 +78,11 @@ const getColumns = (): ProColumnType<any>[] => [
     popoverProps: {
       title: <b>{intl.get('screen.studies.harmonizedPopover.title')}</b>,
       overlayStyle: { maxWidth: '400px' },
-      content: intl.get('screen.studies.harmonizedPopover.content'),
+      content: intl.getHTML('screen.studies.harmonizedPopover.content'),
     },
-    dataIndex: 'is_harmonized',
     align: 'center',
-    render: (is_harmonized: boolean) =>
-      is_harmonized ? (
+    render: (record: IStudyEntity) => {
+      const harmonizedTag = record.is_harmonized ? (
         <Tooltip title={intl.get('entities.study.harmonized')}>
           <Tag color="green">{intl.get('entities.study.harmonizedAbrv')}</Tag>
         </Tooltip>
@@ -89,7 +90,19 @@ const getColumns = (): ProColumnType<any>[] => [
         <Tooltip title={intl.get('entities.study.unharmonized')}>
           <Tag>{intl.get('entities.study.unharmonizedAbrv')}</Tag>
         </Tooltip>
-      ),
+      );
+      const guidTag = record.guid === 'NDAR' && (
+        <Tooltip title={intl.get('entities.study.guidTooltip')}>
+          <Tag color="volcano">{intl.get('entities.study.guidAbrv')}</Tag>
+        </Tooltip>
+      );
+      return (
+        <Space size={4}>
+          {harmonizedTag}
+          {guidTag}
+        </Space>
+      );
+    },
   },
   {
     key: 'study_id',
