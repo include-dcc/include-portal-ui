@@ -14,9 +14,9 @@ import { useTranscriptomicsDiffGeneExp, useTranscriptomicsSampleGeneExp } from '
 
 import { TTranscriptomicsDiffGeneExp } from '../../../services/api/transcriptomics/models';
 
-import ScatterPlotly from './ScatterPlotly';
+import ScatterPlot from './ScatterPlot';
 import SideBar, { TTranscriptomicSideBarItem } from './SideBar';
-import SwarmPlotly from './SwarmPlotly';
+import SwarmPlot from './SwarmPlot';
 
 import styles from './index.module.css';
 
@@ -118,7 +118,7 @@ export const Transcriptomic = () => {
                 <Divider className={styles.hDivider} />
                 <div className={styles.content}>
                   <div className={styles.chartContainer}>
-                    <ScatterPlotly
+                    <ScatterPlot
                       loading={diffGeneExp.loading}
                       data={diffGeneExp.data}
                       handleGeneSelection={handleGeneSelection}
@@ -134,7 +134,7 @@ export const Transcriptomic = () => {
                         description={intl.get('screen.analytics.transcriptomic.empty')}
                       />
                     ) : (
-                      <SwarmPlotly
+                      <SwarmPlot
                         selectedGeneSymbol={selectedGeneSymbol}
                         selectedSampleIds={selectedSampleIds}
                         handleSampleSelection={handleSampleSelection}

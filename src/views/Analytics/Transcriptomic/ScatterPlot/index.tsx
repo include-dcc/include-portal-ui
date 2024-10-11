@@ -50,12 +50,12 @@ const ScatterPlotly = ({
       x: 0.99,
     },
     xaxis: {
-      title: 'log2 (Fold change)',
+      title: intl.get('screen.analytics.transcriptomic.scatterPlot.xAxisTitle'),
       titlefont: { size: 14 },
       tickfont: { size: 12 },
     },
     yaxis: {
-      title: '-log10 (q-value)',
+      title: intl.get('screen.analytics.transcriptomic.scatterPlot.yAxisTitle'),
       titlefont: { size: 14 },
       tickfont: { size: 12 },
       automargin: true,
@@ -174,7 +174,7 @@ const ScatterPlotly = ({
       setIsSelectionZoom(false);
       return {
         ...prevLayout,
-        annotations, // Update annotations
+        annotations,
       };
     });
   };

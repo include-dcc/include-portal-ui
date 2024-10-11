@@ -1440,6 +1440,8 @@ const en = {
           not_significant: 'Not significant',
           up_regulated: 'Up-regulated (q ≤ 0.1)',
           down_regulated: 'Down-regulated (q ≤ 0.1)',
+          xAxisTitle: 'log2 (Fold change)',
+          yAxisTitle: '-log10 (q-value)',
         },
         filter: {
           genes: {
@@ -1469,6 +1471,8 @@ const en = {
           title: 'Effect of Karyotype on',
           sample_id: 'Sample ID:',
           fpkm: 'FPKM:',
+          t21: 'T21',
+          control: 'Control',
         },
         sidebar: {
           statisticalCorrection: 'Statistical Correction',
