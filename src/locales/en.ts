@@ -1818,6 +1818,8 @@ const en = {
           'Access to the full ABC-DS dataset, including clinical, cognitive, neuroimaging, and genetic data, must be requested from ABC-DS using this <a href="{href}" style="color:inherit;text-decoration-line:underline;" target="_blank" rel="noopener noreferrer">data request form</a>.',
         title: 'Study Access',
       },
+      acknowledgement: 'Acknowledgement',
+      citation_statement: 'Citation Statement',
       code: 'Code',
       count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
       dataset: {
@@ -1857,8 +1859,12 @@ const en = {
       domains: 'Domain',
       file: 'File',
       files: 'Files',
+      guid: 'GUID Type',
       guidAbrv: 'G',
       guidTooltip: 'NDA GUIDs',
+      guidEntityTooltip1:
+        'Studies providing NDA GUIDs to the INCLUDE DCC are included in the INCLUDE GUID mapping file. More information can be found in the ',
+      guidEntityTooltip2: 'Study Repository',
       harmonized: 'Harmonized',
       harmonizedAbrv: 'H',
       harmonizedTooltip:
@@ -1880,6 +1886,7 @@ const en = {
       study_contact: 'Study Contact',
       study_design: 'Study Design',
       study_designs_table: 'Design',
+      study_meta_categories: 'Data Category',
       study_name: 'Study Name',
       study_website: 'Study Website',
       statistic: {
