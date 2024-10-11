@@ -1440,6 +1440,8 @@ const en = {
           not_significant: 'Not significant',
           up_regulated: 'Up-regulated (q ≤ 0.1)',
           down_regulated: 'Down-regulated (q ≤ 0.1)',
+          xAxisTitle: 'log2 (Fold change)',
+          yAxisTitle: '-log10 (q-value)',
         },
         filter: {
           genes: {
@@ -1466,9 +1468,12 @@ const en = {
           close: 'Close',
         },
         swarmPlot: {
-          title: 'Effect of Karyotype on',
+          title: 'Effect of Karyotype on {symbol}',
           sample_id: 'Sample ID:',
           fpkm: 'FPKM:',
+          yAxisTitle: 'FPKM',
+          t21: 'T21 {nT21}',
+          control: 'Control {nControl}',
         },
         sidebar: {
           statisticalCorrection: 'Statistical Correction',

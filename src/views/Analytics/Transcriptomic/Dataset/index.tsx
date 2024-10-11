@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import intl from 'react-intl-universal';
-import { Button, Select, Typography } from 'antd';
-
-const { Paragraph, Title } = Typography;
-
 import BasicDescription from '@ferlab/ui/core/components/BasicDescription';
+import { Button, Select, Typography } from 'antd';
 
 import AboutModal from './AboutModal';
 
 import styles from './index.module.css';
+
+const { Paragraph, Title } = Typography;
 
 const TranscriptomicDataset = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,6 +55,13 @@ const TranscriptomicDataset = () => {
         <BasicDescription label={'Platform:'} text={'Illumina Novaseq'} bordered />
         <BasicDescription label={'Genome Reference:'} text={'GRCh38'} bordered />
         <BasicDescription label={'Annotation:'} text={'Gencode v33'} bordered />
+        <BasicDescription label={'Statistical Method:'} text={'DESeq2'} bordered />
+        <BasicDescription
+          label={'Multiple Hypothesis Correction:'}
+          text={'Benjamini-Hochberg (FDR)'}
+          bordered
+        />
+        <BasicDescription label={'Comparison:'} text={'DS_status | T21_vs_Control'} bordered />
       </AboutModal>
     </div>
   );
