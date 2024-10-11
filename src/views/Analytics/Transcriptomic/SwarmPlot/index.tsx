@@ -29,15 +29,17 @@ const SwarmPlotly = ({
       group: data.filter((e) => e.x === 1),
       xValue: 1,
       color: '#0284c7',
-      name: `${intl.get('screen.analytics.transcriptomic.swarmPlot.t21')} (${sampleGeneExp?.nT21})`,
+      name: intl.get('screen.analytics.transcriptomic.swarmPlot.t21', {
+        nT21: sampleGeneExp?.nT21,
+      }),
     },
     {
       group: data.filter((e) => e.x !== 1),
       xValue: 2,
       color: '#92a7c3',
-      name: `${intl.get('screen.analytics.transcriptomic.swarmPlot.control')} (${
-        sampleGeneExp?.nControl
-      })`,
+      name: intl.get('screen.analytics.transcriptomic.swarmPlot.control', {
+        nControl: sampleGeneExp?.nControl,
+      }),
     },
   ];
 
@@ -56,6 +58,9 @@ const SwarmPlotly = ({
         color: 'white',
         width: 0.5,
       },
+    },
+    hoverlabel: {
+      namelength: 0,
     },
     text: group.map((e) =>
       [
@@ -81,7 +86,7 @@ const SwarmPlotly = ({
         bordercolor: 'black',
         borderwidth: 1,
         text: `${sample.sample_id}: ${sample.y.toFixed(2)} ${intl.get(
-          'screen.analytics.transcriptomic.swarmPlot.fpkm',
+          'screen.analytics.transcriptomic.swarmPlot.yAxisTitle',
         )}`,
       };
     });
@@ -108,8 +113,9 @@ const SwarmPlotly = ({
         annotations,
         autosize: true,
         title: {
-          text:
-            intl.get('screen.analytics.transcriptomic.swarmPlot.title') + ' ' + selectedGeneSymbol,
+          text: intl.get('screen.analytics.transcriptomic.swarmPlot.title', {
+            symbol: selectedGeneSymbol,
+          }),
           x: 0.05,
           font: {
             size: 16,
@@ -125,15 +131,17 @@ const SwarmPlotly = ({
           x: 0.99,
         },
         yaxis: {
-          title: intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm'),
+          title: intl.get('screen.analytics.transcriptomic.swarmPlot.yAxisTitle'),
         },
         xaxis: {
           tickvals: [1, 2],
           ticktext: [
-            `${intl.get('screen.analytics.transcriptomic.swarmPlot.t21')} (${sampleGeneExp?.nT21})`,
-            `${intl.get('screen.analytics.transcriptomic.swarmPlot.control')} (${
-              sampleGeneExp?.nControl
-            })`,
+            intl.get('screen.analytics.transcriptomic.swarmPlot.t21', {
+              nT21: sampleGeneExp?.nT21,
+            }),
+            intl.get('screen.analytics.transcriptomic.swarmPlot.control', {
+              nControl: sampleGeneExp?.nControl,
+            }),
           ],
         },
       }}

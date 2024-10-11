@@ -1468,11 +1468,12 @@ const en = {
           close: 'Close',
         },
         swarmPlot: {
-          title: 'Effect of Karyotype on',
+          title: 'Effect of Karyotype on {symbol}',
           sample_id: 'Sample ID:',
           fpkm: 'FPKM:',
-          t21: 'T21',
-          control: 'Control',
+          yAxisTitle: 'FPKM',
+          t21: 'T21 {nT21}',
+          control: 'Control {nControl}',
         },
         sidebar: {
           statisticalCorrection: 'Statistical Correction',
