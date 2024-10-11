@@ -40,11 +40,11 @@ export const getGuidDrsItem = (value: ICavaticaTreeNode): ICavaticaDRSImportItem
   const type = value.type === CAVATICA_TYPE.PROJECT ? 'project' : 'parent';
   return {
     drs_uri: accessUrl,
-    name: 'include_guid_mapping_file',
+    name: 'include_guid_mapping_file_2024-08-30.csv',
     [type]: value.id,
     metadata: {
       dbgap_consent_code: 'phs002276.c1',
-      file_name: 'include_guid_mapping_file_2024-08-30.csv',
+      name: 'include_guid_mapping_file_2024-08-30.csv',
       file_format: 'csv',
       study_name: 'INCLUDE Data Hub: NDA GUIDs for Down Syndrome Research',
     },
