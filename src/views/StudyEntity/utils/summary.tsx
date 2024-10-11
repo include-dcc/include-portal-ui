@@ -1,4 +1,5 @@
 import intl from 'react-intl-universal';
+import { Link } from 'react-router-dom';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
@@ -6,6 +7,8 @@ import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Space, Tag, Tooltip, Typography } from 'antd';
 import { IStudyEntity } from 'graphql/studies/models';
+
+import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from '../index.module.css';
 
@@ -55,6 +58,31 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
       : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
+    label: intl.get('entities.study.guid'),
+    value:
+      study?.guid === 'NDAR' ? (
+        <Tooltip
+          title={
+            <>
+              {intl.get('entities.study.guidEntityTooltip1')}
+              <Link
+                to={STATIC_ROUTES.STUDIES}
+                style={{ textDecoration: 'underline' }}
+                target="_blank"
+              >
+                {intl.get('entities.study.guidEntityTooltip2')}
+              </Link>
+              .
+            </>
+          }
+        >
+          <Tag color="volcano">{study.guid}</Tag>
+        </Tooltip>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
+  },
+  {
     label: intl.get('entities.study.participant_life_span'),
     value: study?.part_lifespan_stages
       ? study?.part_lifespan_stages.map((lifespan, index) => (
@@ -77,6 +105,10 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
     value: study?.data_sources?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
+    label: intl.get('entities.study.study_meta_categories'),
+    value: study?.study_meta_categories?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
     label: intl.get('entities.study.date_collection_start'),
     value: study?.date_collection_start_year || TABLE_EMPTY_PLACE_HOLDER,
   },
@@ -86,7 +118,7 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
   },
   {
     label: intl.get('entities.study.selection_criteria'),
-    value: study?.selection_criteria || TABLE_EMPTY_PLACE_HOLDER,
+    value: study?.selection_criteria?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.study.study_design'),
@@ -146,6 +178,14 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
     ) : (
       TABLE_EMPTY_PLACE_HOLDER
     ),
+  },
+  {
+    label: intl.get('entities.study.citation_statement'),
+    value: study?.citation_statement || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
+    label: intl.get('entities.study.acknowledgement'),
+    value: study?.acknowledgement || TABLE_EMPTY_PLACE_HOLDER,
   },
 ];
 
