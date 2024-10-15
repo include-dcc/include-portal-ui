@@ -1442,7 +1442,7 @@ const en = {
           'Visualize the differences in gene expression between samples with trisomy 21 and those without.',
         tags: {
           transcriptomics: 'Transcriptomics',
-          gene: 'gene',
+          gene: 'Gene',
         },
         empty: 'Select a gene to compare effects',
         subtitle:
