@@ -7,6 +7,21 @@
 
 ### Technical / Other changes
 -->
+
+## 2024-10-15 include-portal-ui 1.13.0
+
+### Features:
+
+- [SJIP-867](https://d3b.atlassian.net/browse/SJIP-867) Feature: [Analytics] Implement the differential gene expression analytics 
+- [SJIP-981](https://d3b.atlassian.net/browse/SJIP-981) Feature: [Entity] Add Analysis button to study HTP's RNASeq dataset redirecting to the differential gene expression analytics
+- [SJIP-1013](https://d3b.atlassian.net/browse/SJIP-1013) Feature: [Studies] Add GUID button & modal to Studies page
+- [SJIP-1014](https://d3b.atlassian.net/browse/SJIP-1014) Feature: [Studies] Add an Analyze in Cavatica modal for the GUID mapping file
+- [SJIP-1021](https://d3b.atlassian.net/browse/SJIP-1021) Feature: [Studies & Entity] Add new metadata to the Study Entity page & Studies page
+
+### Technical/ Other changes:
+
+- [SJIP-989](https://d3b.atlassian.net/browse/SJIP-989) Refactor: [Study Entity] Hide the Statistics section if all plots are empty
+
 ## 2024-09-18 include-portal-ui 1.12.2
 
 ### Features:
