@@ -57,6 +57,12 @@ const NewsletterWidget = () => {
             initialValues={{ newsletter_email: '' }}
             layout="inline"
             onFinish={handleSumbit}
+            validateMessages={{
+              required: intl.get('global.forms.errors.requiredField'),
+              types: {
+                email: intl.get('global.forms.errors.enterValidEmail'),
+              },
+            }}
           >
             <FormItem
               name="newsletter_email"
