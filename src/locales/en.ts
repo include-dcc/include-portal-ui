@@ -480,6 +480,7 @@ const en = {
   layout: {
     main: {
       menu: {
+        analysis: 'Analysis',
         biospecimen: 'Biospecimen',
         community: 'Community',
         contact: 'Contact',
@@ -1420,14 +1421,29 @@ const en = {
       title: 'Studies',
     },
     analytics: {
-      title: 'Analytics',
-      subtitle: 'Quickly visualize and interpret INCLUDE Data with our user-friendly tools',
+      title: 'Data Analysis',
+      subtitle: 'Quickly visualize and interpret INCLUDE Data with our user-friendly tools.',
       widget: {
         demo: 'Demo',
         launch: 'Launch',
       },
+      newsletter: {
+        title: 'New Analysis Tools Coming Soon!',
+        description:
+          'Join our mailing list to receive updates and be among the first to try our upcoming tools.',
+        form: {
+          placeholder: 'email@example.com',
+          buttonLabel: 'Get updates',
+        },
+      },
       transcriptomic: {
-        title: 'Differential Gene Expression',
+        title: 'HTP Differential Gene Expression',
+        description:
+          'Visualize the differences in gene expression between samples with trisomy 21 and those without.',
+        tags: {
+          transcriptomics: 'Transcriptomics',
+          gene: 'gene',
+        },
         empty: 'Select a gene to compare effects',
         subtitle:
           'Explore the impact of trisomy 21 on gene expression between people with and without Down syndrome. Generated via RNA sequencing PAXgene Whole Blood RNA.',
