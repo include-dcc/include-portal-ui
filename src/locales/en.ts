@@ -954,7 +954,7 @@ const en = {
         },
         participant: {
           title: 'Part.',
-          tooltip: '# of affected participants and frequency across Kids First cohorts',
+          tooltip: '# of affected participants and frequency across INCLUDE cohorts',
         },
         revel: 'REVEL',
         studies: {
