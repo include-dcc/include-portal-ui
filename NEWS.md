@@ -8,6 +8,12 @@
 ### Technical / Other changes
 -->
 
+## 2024-10-15 include-portal-ui 1.14.0
+
+### Features:
+
+- [SJIP-990](https://d3b.atlassian.net/browse/SJIP-990) Feature: [Analytics] Build out the Analytics page
+
 ## 2024-10-15 include-portal-ui 1.13.0
 
 ### Features:
