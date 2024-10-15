@@ -1476,7 +1476,7 @@ const en = {
         },
         sidebar: {
           statisticalCorrection: 'Statistical Correction',
-          statisticalTest: 'Statistical Test',
+          statisticalTest: 'Statistical Method',
           deseq2: 'DESeq2',
           bhfdr: 'BH FDR',
         },
