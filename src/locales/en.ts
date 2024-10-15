@@ -1477,7 +1477,7 @@ const en = {
         sidebar: {
           statisticalCorrection: 'Statistical Correction',
           statisticalTest: 'Statistical Test',
-          linearProgression: 'Linear Regression Model',
+          deseq2: 'DESeq2',
           bhfdr: 'BH FDR',
         },
         dataset: {

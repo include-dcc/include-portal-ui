@@ -40,7 +40,7 @@ const menuItems: () => TTranscriptomicSideBarItem[] = () => [
     content: (
       <Select value="linear_regression_model" className={styles.sidebarSelect}>
         <Select.Option value="linear_regression_model">
-          {intl.get('screen.analytics.transcriptomic.sidebar.linearProgression')}
+          {intl.get('screen.analytics.transcriptomic.sidebar.deseq2')}
         </Select.Option>
       </Select>
     ),
