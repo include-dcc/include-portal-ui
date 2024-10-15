@@ -1,32 +1,24 @@
 import intl from 'react-intl-universal';
-import { useNavigate } from 'react-router';
-import AnalyticsPage from '@ferlab/ui/core/pages/AnalyticsPage';
+import { Typography } from 'antd';
 
-import { STATIC_ROUTES } from '../../utils/routes';
+import HtpWidget from './HtpWidget';
+import NewsletterWidget from './NewsletterWidget';
 
-const Analytics = () => {
-  const navigate = useNavigate();
+import styles from './index.module.css';
 
-  return (
-    <AnalyticsPage
-      dictionary={{
-        title: intl.get('screen.analytics.title'),
-        subtitle: intl.get('screen.analytics.subtitle'),
-        widget: {
-          demo: intl.get('screen.analytics.widget.demo'),
-          launch: intl.get('screen.analytics.widget.launch'),
-        },
-      }}
-      widgets={[
-        {
-          title: intl.get('screen.analytics.transcriptomic.title'),
-          handleLaunch: () => {
-            navigate(STATIC_ROUTES.ANALYTICS_TRANSCRIPTOMIC);
-          },
-        },
-      ]}
-    />
-  );
-};
+const { Title, Paragraph } = Typography;
+
+const Analytics = () => (
+  <div className={styles.analyticsWrapper}>
+    <Title className={styles.title} level={4}>
+      {intl.get('screen.analytics.title')}
+    </Title>
+    <Paragraph className={styles.subtitle}>{intl.get('screen.analytics.subtitle')}</Paragraph>
+    <div className={styles.widgetsWrapper}>
+      <HtpWidget />
+      <NewsletterWidget />
+    </div>
+  </div>
+);
 
 export default Analytics;

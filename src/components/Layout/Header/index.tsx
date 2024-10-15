@@ -2,6 +2,7 @@ import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import {
+  DotChartOutlined,
   DownOutlined,
   FileSearchOutlined,
   HomeOutlined,
@@ -46,6 +47,7 @@ const Header = () => {
 
   // TODO: to remove after indexaction
   const ft_variant = getFTEnvVarByKey('VARIANT');
+  const ft_analyticsPage = getFTEnvVarByKey('ANALYTICS_PAGE');
 
   return (
     <>
@@ -96,6 +98,15 @@ const Header = () => {
                 to={[STATIC_ROUTES.VARIANTS]}
                 icon={<LineStyleIcon />}
                 title={intl.get('layout.main.menu.variants')}
+              />
+            )}
+            {ft_analyticsPage === 'true' && (
+              <HeaderLink
+                key="analytics-data"
+                currentPathName={currentPathName}
+                to={[STATIC_ROUTES.ANALYTICS]}
+                icon={<DotChartOutlined />}
+                title={intl.get('layout.main.menu.analysis')}
               />
             )}
           </nav>
