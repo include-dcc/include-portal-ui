@@ -1,9 +1,5 @@
 import intl from 'react-intl-universal';
 import { IResizableGridLayoutConfig } from '@ferlab/ui/core/layout/ResizableGridLayout';
-import {
-  mondoDefaultGridConfig,
-  observedPhenotypeDefaultGridConfig,
-} from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
 
 import DataCategoryGraphCard from '../DataCategoryGraphCard';
 import DataTypeGraphCard from '../DataTypeGraphCard';
@@ -12,7 +8,6 @@ import MostFrequentDiagnosisGraphCard from '../MostFrequentDiagnosisGraphCard';
 import MostFrequentPhenotypesGraphCard from '../MostFrequentPhenotypesGraphCard';
 import SampleTypeGraphCard from '../SampleType';
 import StudiesGraphCard from '../StudiesGraphCard';
-import SunburstGraphCard from '../SunburstGraphCard';
 
 export const UID = 'summary';
 export const OBSERVED_PHENOTYPE_ID = 'observed_phenotype';
@@ -26,18 +21,6 @@ export const STUDIES_GRAPH_CARD_ID = 'studies-graph-card';
 export const DATA_TYPE_GRAPH_CARD_ID = 'data-type-graph-card';
 
 export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
-  {
-    title: intl.get('screen.dataExploration.tabs.summary.observed_phenotype.cardTitle'),
-    id: OBSERVED_PHENOTYPE_ID,
-    component: <SunburstGraphCard id={OBSERVED_PHENOTYPE_ID} field="observed_phenotype" />,
-    ...observedPhenotypeDefaultGridConfig,
-  },
-  {
-    title: intl.get('screen.dataExploration.tabs.summary.mondo.cardTitle'),
-    id: MONDO_ID,
-    component: <SunburstGraphCard id={MONDO_ID} field="mondo" />,
-    ...mondoDefaultGridConfig,
-  },
   {
     title: intl.get('screen.dataExploration.tabs.summary.availableData.mostFrequentPhenotypes'),
     id: MOST_FREQUENT_PHENOTYPES_ID,
