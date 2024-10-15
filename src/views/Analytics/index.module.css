@@ -3,6 +3,11 @@
   padding: 16px 24px 24px;
 }
 
+.analytics {
+  max-width: 1200px;
+  margin: auto;
+}
+
 .title {
   margin-bottom: 0 !important;
 }
