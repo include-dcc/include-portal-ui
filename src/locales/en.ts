@@ -1373,7 +1373,7 @@ const en = {
       harmonizedPopover: {
         title: 'Harmonized Data',
         content:
-          '<p>Study data harmonized with INCLUDE Data Hub clinical standards for facilitating integration and cross-study comparison.</p><p>Studies labeled with a <strong>G</strong> have provided NDA GUIDs to the INCLUDE DCC and are included in the INCLUDE GUID Mapping File.</p>',
+          "<p>Study data harmonized with INCLUDE Data Hub clinical standards for facilitating integration and cross-study comparison.</p><p>Studies labeled with a '<strong>G</strong>' are using NDAR GUIDs, some of which have been submitted to the INCLUDE DCC and included in the INCLUDE GUID mapping file.</p>",
       },
       ndaGuids: {
         button: 'NDA GUIDs for Down syndrome research',
@@ -1385,11 +1385,11 @@ const en = {
           firstText:
             'The INCLUDE DCC and the NIH have implemented <a target="_blank" href="https://nda.nih.gov/nda/using-the-nda-guid" style="text-decoration: underline;">NIMH Data Archive Global Unique Identifiers</a> (NDA GUIDs) in the INCLUDE Data Hub. NDA GUIDs allows approved researchers to link together data on a single participant, without revealing personally identifiable information, even if the data were collected through different INCLUDE studies.',
           secondText:
-            'The dbGaP <a target="_blank" href="https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs003678.v1.p1" style="text-decoration: underline;">INCLUDE Data Hub: NDA GUIDs for Down Syndrome Research</a> study enables researchers to access an <strong>INCLUDE GUID Mapping File</strong> that includes all available NDA GUIDs and their associations to study-specific Participant IDs across studies in the INCLUDE Data Hub.',
+            'The dbGaP <a target="_blank" href="https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs003678.v1.p1" style="text-decoration: underline;">INCLUDE Data Hub: NDA GUIDs for Down Syndrome Research</a> study enables researchers to access an <strong>INCLUDE GUID mapping file</strong> that includes all available NDA GUIDs and their associations to study-specific Participant IDs across studies in the INCLUDE Data Hub.',
           thirdTextStart:
-            'Only studies that provide NDA GUIDs to the INCLUDE DCC are included in the INCLUDE GUID Mapping File. INCLUDE studies with participant GUIDs are identified with the <strong>G</strong> tag on the ',
+            'Only studies that provide NDA GUIDs to the INCLUDE DCC are included in the INCLUDE GUID mapping file. INCLUDE studies with participant GUIDs are identified with the <strong>G</strong> tag on the ',
           thirdTextLink: 'Study Repository',
-          steps: 'There are two steps to access the GUID Mapping File:',
+          steps: 'There are two steps to access the GUID mapping file:',
           step1: {
             title: 'Step 1:',
             message: 'Submit a data access request to this dbGaP study.',
@@ -1399,7 +1399,7 @@ const en = {
             title: 'Step 2:',
             message:
               'Once permissions have been granted, return to this modal and copy the GUID mapping file into your Cavatica project. If you do you have dbGaP approval, you will not be able to access the file in Cavatica. Learn more about <a target="_blank" href="https://help.includedcc.org/docs/connecting-platforms-1#connecting-to-cavatica" style="text-decoration: underline;">connecting to Cavatica</a>.',
-            buttonLabel: 'Copy GUID Mapping File',
+            buttonLabel: 'Copy GUID mapping file',
           },
         },
         cavaticaModal: {
