@@ -25,22 +25,22 @@ const { Title } = Typography;
 const menuItems: () => TTranscriptomicSideBarItem[] = () => [
   {
     key: '1',
-    title: intl.get('screen.analytics.transcriptomic.sidebar.statisticalCorrection'),
+    title: intl.get('screen.analytics.transcriptomic.sidebar.statisticalTest'),
     content: (
-      <Select value="bh_fdr" className={styles.sidebarSelect}>
-        <Select.Option value="bh_fdr">
-          {intl.get('screen.analytics.transcriptomic.sidebar.bhfdr')}
+      <Select value="linear_regression_model" className={styles.sidebarSelect}>
+        <Select.Option value="linear_regression_model">
+          {intl.get('screen.analytics.transcriptomic.sidebar.deseq2')}
         </Select.Option>
       </Select>
     ),
   },
   {
     key: '2',
-    title: intl.get('screen.analytics.transcriptomic.sidebar.statisticalTest'),
+    title: intl.get('screen.analytics.transcriptomic.sidebar.statisticalCorrection'),
     content: (
-      <Select value="linear_regression_model" className={styles.sidebarSelect}>
-        <Select.Option value="linear_regression_model">
-          {intl.get('screen.analytics.transcriptomic.sidebar.deseq2')}
+      <Select value="bh_fdr" className={styles.sidebarSelect}>
+        <Select.Option value="bh_fdr">
+          {intl.get('screen.analytics.transcriptomic.sidebar.bhfdr')}
         </Select.Option>
       </Select>
     ),
