@@ -11,12 +11,10 @@ const { Title, Paragraph } = Typography;
 const Analytics = () => (
   <div className={styles.analyticsWrapper}>
     <div className={styles.analytics}>
-      <div>
-        <Title className={styles.title} level={4}>
-          {intl.get('screen.analytics.title')}
-        </Title>
-        <Paragraph className={styles.subtitle}>{intl.get('screen.analytics.subtitle')}</Paragraph>
-      </div>
+      <Title className={styles.title} level={4}>
+        {intl.get('screen.analytics.title')}
+      </Title>
+      <Paragraph className={styles.subtitle}>{intl.get('screen.analytics.subtitle')}</Paragraph>
       <div className={styles.widgetsWrapper}>
         <HtpWidget />
         <NewsletterWidget />
