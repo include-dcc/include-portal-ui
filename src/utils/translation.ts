@@ -279,10 +279,10 @@ export const getFacetsDictionary = () => ({
   variant_class: 'Variant Type',
   diagnosis: {
     affected_status: 'Clinical Status',
-    age_at_event_days: 'Age at Diagnosis',
+    age_at_event_days: 'Age at Diagnosis (days)',
     mondo_display_term: 'Diagnosis (MONDO)',
     ncit_id_diagnosis: 'Diagnosis (NCIT)',
-    source_text: 'Diagnosis (Source Text)',
+    source_text: 'Condition (Source Text)',
     source_text_tumor_location: 'Tumor Location (Source Text)',
   },
   mondo: {
@@ -291,16 +291,17 @@ export const getFacetsDictionary = () => ({
   outcomes: {
     vital_status: 'Vital Status',
     age_at_event_days: {
-      value: 'Age at Outcome',
+      value: 'Age at Vital Status (days)',
     },
   },
   phenotype: {
-    age_at_event_days: 'Age at Observed Phenotype',
+    age_at_event_days: 'Age at Observed Phenotype (days)',
     hpo_phenotype_observed: 'Observed Phenotype (HPO)',
     hpo_phenotype_not_observed: 'Not Observed Phenotype (HPO)',
   },
   observed_phenotype: {
     name: 'Phenotype (HPO)',
+    age_at_event_days: 'Age at Observed Phenotype (days)',
   },
   clinvar: {
     clin_sig: 'ClinVar',
