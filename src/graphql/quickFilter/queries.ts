@@ -23,12 +23,6 @@ export const GET_QUICK_FILTER_EXPLO = gql`
             doc_count
           }
         }
-        observed_phenotype__name {
-          buckets {
-            key
-            doc_count
-          }
-        }
         family_type {
           buckets {
             key
@@ -51,6 +45,32 @@ export const GET_QUICK_FILTER_EXPLO = gql`
           buckets {
             key
             doc_count
+          }
+        }
+        # Observed Phenotype
+        observed_phenotype__name {
+          buckets {
+            key
+            doc_count
+          }
+        }
+        # range
+        observed_phenotype__age_at_event_days {
+          stats {
+            count
+          }
+        }
+        # Outcomes
+        outcomes__vital_status {
+          buckets {
+            key
+            doc_count
+          }
+        }
+        # range
+        outcomes__age_at_event_days__value {
+          stats {
+            count
           }
         }
         # Biospecimen
@@ -97,6 +117,12 @@ export const GET_QUICK_FILTER_EXPLO = gql`
           }
         }
         # Data File
+        files__acl {
+          buckets {
+            key
+            doc_count
+          }
+        }
         files__controlled_access {
           buckets {
             key
@@ -125,6 +151,18 @@ export const GET_QUICK_FILTER_EXPLO = gql`
           buckets {
             key
             doc_count
+          }
+        }
+        # Diagnosis
+        diagnosis__source_text {
+          buckets {
+            key
+            doc_count
+          }
+        }
+        diagnosis__age_at_event_days {
+          stats {
+            count
           }
         }
       }
