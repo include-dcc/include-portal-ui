@@ -12,6 +12,7 @@ const filesFacets = {
   sequencing_experiment: {
     experiment_strategy: 'Experimental Strategy',
   },
+  acl: 'ACL',
 };
 
 const en = {
@@ -1543,13 +1544,13 @@ const en = {
       affected_status: 'Clinical Status',
       mondo_display_term: 'Diagnosis (MONDO)',
       ncit_id_diagnosis: 'Diagnosis (NCIT)',
-      age_at_event_days: 'Age at Diagnosis',
-      source_text: 'Diagnosis (Source Text)',
+      age_at_event_days: 'Age at Diagnosis (days)',
+      source_text: 'Condition (Source Text)',
       source_text_tumor_location: 'Tumor Location (Source Text)',
     },
     outcomes: {
       age_at_event_days: {
-        value: 'Age at Outcome',
+        value: 'Age at Outcome (days)',
       },
       vital_status: 'Vital Status',
     },
@@ -1568,6 +1569,7 @@ const en = {
     race: 'Race',
     observed_phenotype: {
       name: 'Phenotype (HPO)',
+      age_at_event_days: 'Age at Observed Phenotype (days)',
     },
     options: {
       D21: 'Disomy 21, euploid',
