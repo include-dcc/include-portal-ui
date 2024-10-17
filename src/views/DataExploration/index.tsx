@@ -110,10 +110,15 @@ export const filterGroups: {
             type={RemoteComponentList.HPOTree}
             field={'observed_phenotype'}
           />,
+          'diagnosis__source_text',
+          'diagnosis__age_at_event_days',
+          'outcomes__age_at_event_days__value',
+          'observed_phenotype__age_at_event_days',
           'family_type',
           'sex',
           'race',
           'ethnicity',
+          'outcomes__vital_status',
         ],
       },
     ],
@@ -154,6 +159,7 @@ export const filterGroups: {
           'data_type',
           'sequencing_experiment__experiment_strategy',
           'file_format',
+          'acl',
         ],
       },
     ],
