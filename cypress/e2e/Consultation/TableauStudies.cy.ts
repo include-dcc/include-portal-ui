@@ -83,7 +83,7 @@ describe('Page des études - Valider les liens disponibles', () => {
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('HTP').should('exist');
   });
 
-  it('Lien \'See more\' de Data Source du tableau', () => {
+  it('Lien \'See more\' de Data Source du tableau [SJIP-1038]', () => {
     cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See more').clickAndWait({force: true});
     cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).contains('Participant or Caregiver Report').should('exist');
     cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See less').clickAndWait({force: true});

@@ -9,6 +9,7 @@ beforeEach(() => {
 
   cy.login();
   cy.visitStudiesPage();
+  cy.typeAndIntercept('[class*="PageContent_inputContainer"]', 'HTP', 'POST', '**/graphql', 6);
   cy.showColumn('Description');
   cy.showColumn('Participant Lifespan');
   cy.showColumn('Data Source');
@@ -22,7 +23,7 @@ beforeEach(() => {
   cy.waitUntilFile(oneMinute);
 });
 
-describe('Page Studies - Exporter les participants en TSV', () => {
+describe('Page Studies - Exporter les études en TSV', () => {
   it('Valider le nom du fichier', () => {
     cy.validateFileName('include-study-table-'+`${strDate.slice(0, 4)}-${strDate.slice(4, 6)}-${strDate.slice(6, 8)}`+'.tsv');
   });
@@ -31,7 +32,7 @@ describe('Page Studies - Exporter les participants en TSV', () => {
     cy.validateFileHeaders('ExportTableauStudies.json');
   });
 
-  it('Valider le contenu du fichier', () => {
+  it('Valider le contenu du fichier [SJIP-1038]', () => {
     cy.validateFileContent('ExportTableauStudies.json');
   });
 });

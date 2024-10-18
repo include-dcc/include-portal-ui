@@ -77,24 +77,49 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     // TODO Filtrer
   });
 
+  it('Condition (Source Text) - Complete trisomy 21', () => {
+    cy.validateFacetFilter('Condition (Source Text)', 'Complete trisomy 21', 'Complete trisomy 21', /\d{1}/);
+    cy.validateFacetRank(2, 'Condition (Source Text)');
+  });
+
+  it('Age at Diagnosis (days)', () => {
+    cy.validateFacetNumFilter('Age at Diagnosis (days)', '10000', /\d{1}/);
+    cy.validateFacetRank(3, 'Age at Diagnosis (days)');
+  });
+
+  it('Age at Vital Status (days) [SJIP-1043]', () => {
+    cy.validateFacetNumFilter('Age at Vital Status (days)', '10000', /\d{1}/);
+    cy.validateFacetRank(4, 'Age at Vital Status (days)');
+  });
+
+  it('Age at Observed Phenotype (days)', () => {
+    cy.validateFacetNumFilter('Age at Observed Phenotype (days)', '10000', /\d{1}/);
+    cy.validateFacetRank(5, 'Age at Observed Phenotype (days)');
+  });
+
   it('Family Unit - Proband-only', () => {
     cy.validateFacetFilter('Family Unit', 'Proband-only', 'proband-only', /\d{1}/);
-    cy.validateFacetRank(2, 'Family Unit');
+    cy.validateFacetRank(6, 'Family Unit');
   });
 
   it('Sex - Female', () => {
     cy.validateFacetFilter('Sex', 'Female', 'female', /\d{1}/);
-    cy.validateFacetRank(3, 'Sex');
+    cy.validateFacetRank(7, 'Sex');
   });
 
   it('Race - White', () => {
     cy.validateFacetFilter('Race', 'White', 'White', /\d{1}/);
-    cy.validateFacetRank(4, 'Race');
+    cy.validateFacetRank(8, 'Race');
   });
 
   it('Ethnicity - Not Hispanic or Latino', () => {
     cy.validateFacetFilter('Ethnicity', 'Not Hispanic or Latino', 'Not Hispanic or Latino', /\d{1}/);
-    cy.validateFacetRank(5, 'Ethnicity');
+    cy.validateFacetRank(9, 'Ethnicity');
+  });
+
+  it('Vital Status - Alive', () => {
+    cy.validateFacetFilter('Vital Status', 'Alive', 'Alive', /\d{1}/);
+    cy.validateFacetRank(10, 'Vital Status');
   });
 });
 
@@ -272,5 +297,10 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
   it('File Format - gVCF [SJIP-553]', () => {
     cy.validateFacetFilter('File Format', 'GVCF', 'gvcf', /\d{1}/);
     cy.validateFacetRank(4, 'File Format');
+  });
+
+  it('ACL - GVCF', () => {
+    cy.validateFacetFilter('ACL', 'Open Access', 'open_access', /\d{1}/);
+    cy.validateFacetRank(5, 'ACL');
   });
 });
