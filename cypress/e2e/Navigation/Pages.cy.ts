@@ -21,7 +21,10 @@ describe('Navigation', () => {
     cy.get('button[class*="HeaderLink_headerBtn"]').eq(3).clickAndWait(); // data-cy="HeaderLink_Variants"
     cy.get('[class*="PageContent_pageHeaderTitle"]').contains('Variants Exploration').should('exist'); // data-cy="Title_Variants"
 
-    cy.get('button[class*="HeaderLink_headerBtn"]').eq(4).clickAndWait(); // data-cy="HeaderLink_Community"
+    cy.get('button[class*="HeaderLink_headerBtn"]').eq(4).clickAndWait();
+    cy.get('[class*="Analytics_title"]').contains('Data Analysis').should('exist');
+
+    cy.get('button[class*="HeaderLink_headerBtn"]').eq(5).clickAndWait(); // data-cy="HeaderLink_Community"
     cy.get('[class*="Community_title"]').should('exist'); // data-cy="Title_Community"
 
     cy.get('[class*="Header_userName"]').clickAndWait({force: true}); // data-cy="UserName"
