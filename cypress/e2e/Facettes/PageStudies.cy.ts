@@ -48,7 +48,7 @@ describe('Page des études - Filtrer avec les facettes', () => {
     cy.validateFacetRank(4, 'Family Data');
   });
 
-  it('Data Source - Medical Record', () => {
+  it('Data Source - Medical Record [SJIP-1038]', () => {
     cy.validateFacetFilter('Data Source', 'Medical Record', 'Medical Record', /\d{1} Result/, false);
     cy.validateFacetRank(5, 'Data Source');
   });
@@ -66,8 +66,13 @@ describe('Page des études - Filtrer avec les facettes', () => {
     cy.validateFacetRank(7, 'Harmonized Data');
   });
 
+  it('GUID Type - No GUID', () => {
+    cy.validateFacetFilter('GUID Type', 'No GUID', 'No GUID', /\d{1} Result/, false);
+    cy.validateFacetRank(8, 'GUID Type');
+  });
+
   it('Access - Registered', () => {
     cy.validateFacetFilter('Access', 'Registered', 'Registered', /\d{1} Result/, false);
-    cy.validateFacetRank(8, 'Access');
+    cy.validateFacetRank(9, 'Access');
   });
 });
