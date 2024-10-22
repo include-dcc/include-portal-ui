@@ -1550,7 +1550,7 @@ const en = {
     },
     outcomes: {
       age_at_event_days: {
-        value: 'Age at Outcome (days)',
+        value: 'Age at Vital Status (days)',
       },
       vital_status: 'Vital Status',
     },
