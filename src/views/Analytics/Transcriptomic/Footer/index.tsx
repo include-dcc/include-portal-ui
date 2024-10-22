@@ -7,17 +7,23 @@ import { INDEXES } from 'graphql/constants';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
-import { TTranscriptomicsSwarmPlotData } from 'services/api/transcriptomics/models';
+import {
+  TTranscriptomicsDatum,
+  TTranscriptomicsSwarmPlotData,
+} from 'services/api/transcriptomics/models';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from './index.module.css';
 
 type TTranscriptomicFooter = {
-  selectedGeneIds: string[];
+  selectedGenes: TTranscriptomicsDatum[];
   sampleGeneExpData?: TTranscriptomicsSwarmPlotData[];
 };
 
-const TranscriptomicFooter = ({ sampleGeneExpData, selectedGeneIds }: TTranscriptomicFooter) => {
+const TranscriptomicFooter = ({
+  sampleGeneExpData,
+  selectedGenes: selectedGeneIds,
+}: TTranscriptomicFooter) => {
   const navigate = useNavigate();
 
   const viewInExploration = () => {
