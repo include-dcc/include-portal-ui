@@ -3,22 +3,26 @@ import Plot from 'react-plotly.js';
 import ChartSkeleton from '@ferlab/ui/core/components/Charts/Skeleton';
 import { Annotations, PlotData, PlotMouseEvent } from 'plotly.js';
 
-import { ITranscriptomicsSampleGeneExp } from '../../../../services/api/transcriptomics/models';
+import {
+  ITranscriptomicsSampleGeneExp,
+  TTranscriptomicsDatum,
+  TTranscriptomicsSwarmPlotData,
+} from 'services/api/transcriptomics/models';
 
 import styles from './index.module.css';
 
 export type TTranscriptomicsSwarmPlot = {
-  selectedGeneSymbol: string;
-  selectedSampleIds: string[];
-  handleSampleSelection: (sampleIds: string[]) => void;
+  selectedGene: TTranscriptomicsDatum;
+  selectedSamples: TTranscriptomicsSwarmPlotData[];
+  handleSampleSelection: (samples: TTranscriptomicsSwarmPlotData[]) => void;
   sampleGeneExp?: ITranscriptomicsSampleGeneExp;
   loading: boolean;
 };
 
 const SwarmPlotly = ({
-  selectedGeneSymbol,
+  selectedGene: gene,
   handleSampleSelection,
-  selectedSampleIds,
+  selectedSamples,
   sampleGeneExp,
   loading,
 }: TTranscriptomicsSwarmPlot) => {
@@ -63,13 +67,15 @@ const SwarmPlotly = ({
       namelength: 0,
     },
     hovertemplate:
-      `${intl.get('screen.analytics.transcriptomic.swarmPlot.sample_id')}: %{customdata} <br>` +
+      `${intl.get(
+        'screen.analytics.transcriptomic.swarmPlot.sample_id',
+      )}: %{customdata.sample_id} <br>` +
       `${intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm')}: %{y:.2f}`,
-    customdata: group.map((e) => e.sample_id),
-  })) as PlotData[];
+    customdata: group.map((e) => e),
+  })) as unknown as PlotData[];
 
   const annotations: Partial<Annotations>[] = data
-    .filter((sample) => selectedSampleIds.includes(sample.sample_id))
+    .filter((sample) => selectedSamples.includes(sample))
     .map((sample) => {
       const xValue = sample.x === 1 ? 1 : 2;
       return {
@@ -93,13 +99,14 @@ const SwarmPlotly = ({
   }
 
   const handlePlotClick = (data: Readonly<PlotMouseEvent>) => {
-    const clickedSample = (data.points.map((p) => p.customdata) as string[])[0];
-
-    if (selectedSampleIds.includes(clickedSample)) {
+    const target = data.points.map(
+      (p) => p.customdata,
+    )[0] as unknown as TTranscriptomicsSwarmPlotData;
+    if (selectedSamples.includes(target)) {
       handleSampleSelection([]);
-    } else {
-      handleSampleSelection([clickedSample]);
+      return;
     }
+    handleSampleSelection([target]);
   };
 
   return (
@@ -111,7 +118,7 @@ const SwarmPlotly = ({
         autosize: true,
         title: {
           text: intl.get('screen.analytics.transcriptomic.swarmPlot.title', {
-            symbol: selectedGeneSymbol,
+            symbol: gene.gene_symbol,
           }),
           x: 0.05,
           font: {

@@ -1,17 +1,20 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import intl from 'react-intl-universal';
 import Plot from 'react-plotly.js';
 import ChartSkeleton from '@ferlab/ui/core/components/Charts/Skeleton/index';
 import { Annotations, PlotMouseEvent, ScatterData } from 'plotly.js';
 
-import { TTranscriptomicsDiffGeneExp } from '../../../../services/api/transcriptomics/models';
+import {
+  TTranscriptomicsDatum,
+  TTranscriptomicsDiffGeneExp,
+} from 'services/api/transcriptomics/models';
 
 import styles from './index.module.css';
 
 type TTranscriptomicsScatterPlotCanvas = {
   data?: TTranscriptomicsDiffGeneExp[];
-  handleGeneSelection: (ensembl_ids: string[]) => void;
-  selectedGeneIds: string[];
+  handleGenesSelection: (gene: TTranscriptomicsDatum[]) => void;
+  selectedGenes: TTranscriptomicsDatum[];
   loading: boolean;
 };
 
@@ -27,8 +30,8 @@ const formatPadj = (value: number): string => {
 
 const ScatterPlotly = ({
   data,
-  handleGeneSelection,
-  selectedGeneIds,
+  handleGenesSelection,
+  selectedGenes,
   loading,
 }: TTranscriptomicsScatterPlotCanvas) => {
   const [annotations, setAnnotations] = useState<Partial<Annotations>[]>([]);
@@ -61,35 +64,6 @@ const ScatterPlotly = ({
       automargin: true,
     },
   });
-
-  useEffect(() => {
-    if (data) {
-      const newAnnotations: Partial<Annotations>[] = data.flatMap((group) =>
-        group.data
-          .filter((gene) => selectedGeneIds.includes(gene.ensembl_gene_id))
-          .map(
-            (gene) =>
-              ({
-                x: gene.x,
-                y: gene.y,
-                arrowhead: 6,
-                ax: 30,
-                ay: -50,
-                bgcolor: 'rgba(255, 255, 255, 0.9)',
-                font: { size: 12 },
-                bordercolor: 'black',
-                borderwidth: 2,
-                borderpad: 4,
-                text: gene.gene_symbol,
-              } as Partial<Annotations>),
-          ),
-      );
-      setAnnotations(newAnnotations);
-    }
-
-    setPlotKey((prevKey) => prevKey + 1);
-  }, [selectedGeneIds, data]);
-
   const memoizedData = useMemo<ScatterData[]>(
     () =>
       data?.map((group, index) => {
@@ -114,33 +88,61 @@ const ScatterPlotly = ({
           hovertemplate:
             `${intl.get(
               'screen.analytics.transcriptomic.scatterPlot.gene_symbol',
-            )}: %{customdata[1]} <br>` +
+            )}: %{customdata.gene_symbol} <br>` +
             `${intl.get(
               'screen.analytics.transcriptomic.scatterPlot.ensembl_gene_id',
-            )}: %{customdata[0]} <br>` +
+            )}: %{customdata.ensembl_gene_id} <br>` +
             `${intl.get(
               'screen.analytics.transcriptomic.scatterPlot.fold_change',
             )}: %{y:.2f} <br>` +
             `${intl.get('screen.analytics.transcriptomic.scatterPlot.qvalue')}: %{text}`,
-          customdata: group.data.map((e) => [e.ensembl_gene_id, e.gene_symbol]),
+          customdata: group.data.map((e) => e),
           text: group.data.map((e) => formatPadj(e.padj)),
-        } as ScatterData;
+        } as unknown as ScatterData;
       }) || [],
     [data],
   );
+
+  useEffect(() => {
+    if (selectedGenes.length === 1) {
+      const newAnnotations: Partial<Annotations>[] = selectedGenes.map(
+        (gene) =>
+          ({
+            x: gene.x,
+            y: gene.y,
+            arrowhead: 6,
+            ax: 30,
+            ay: -50,
+            bgcolor: 'rgba(255, 255, 255, 0.9)',
+            font: { size: 12 },
+            bordercolor: 'black',
+            borderwidth: 2,
+            borderpad: 4,
+            text: gene.gene_symbol,
+          } as Partial<Annotations>),
+      );
+      setAnnotations(newAnnotations);
+      setPlotKey((prevKey) => prevKey + 1);
+      return;
+    } else {
+      setAnnotations([]);
+      setPlotKey(0);
+      return;
+    }
+  }, [selectedGenes]);
 
   if (loading) {
     return <ChartSkeleton />;
   }
 
   const handleClick = (data: Readonly<PlotMouseEvent>) => {
-    const clickedGene = (data.points[0].customdata as unknown as string[])[0];
-
-    if (selectedGeneIds.includes(clickedGene)) {
-      handleGeneSelection([]);
-    } else {
-      handleGeneSelection([clickedGene]);
+    const target = data.points[0].customdata as unknown as TTranscriptomicsDatum;
+    if (selectedGenes.includes(target)) {
+      handleGenesSelection([]);
+      return;
     }
+
+    handleGenesSelection([target]);
   };
 
   const handleRelayout = (eventData: any) => {
@@ -179,6 +181,16 @@ const ScatterPlotly = ({
     setIsSelectionZoom(true);
   };
 
+  const handleOnSelect = (event: Readonly<Plotly.PlotSelectionEvent>) => {
+    const genes: TTranscriptomicsDatum[] = [];
+    event.points.forEach((point) => {
+      if (point?.customdata) {
+        genes.push(point.customdata as unknown as TTranscriptomicsDatum);
+      }
+    });
+    handleGenesSelection(genes);
+  };
+
   return (
     <Plot
       key={plotKey}
@@ -188,19 +200,13 @@ const ScatterPlotly = ({
       layout={layout}
       onClick={handleClick}
       config={{
-        modeBarButtonsToRemove: [
-          'toImage',
-          'resetGeo',
-          'lasso2d',
-          'sendDataToCloud',
-          'pan2d',
-          'select2d',
-        ],
+        modeBarButtonsToRemove: ['toImage', 'resetGeo', 'sendDataToCloud', 'pan2d'],
         displaylogo: false,
       }}
       onRelayout={(event) => {
         handleRelayout(event);
       }}
+      onSelected={handleOnSelect}
       // @ts-ignore
       onRelayouting={handleRelayouting}
     />

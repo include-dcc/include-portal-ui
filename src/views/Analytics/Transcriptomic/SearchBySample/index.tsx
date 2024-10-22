@@ -9,26 +9,23 @@ import TranscriptomicSearch from '../TranscriptomicSearch';
 
 type OwnProps = {
   options?: ITranscriptomicsSampleGeneExp;
-  selectedOptionsIds: string[];
-  onSelectOptions: (selectedIds: string[]) => void;
+  selectedSamples: TTranscriptomicsSwarmPlotData[];
+  onSelectOptions: (samples: TTranscriptomicsSwarmPlotData[]) => void;
   disabled?: boolean;
 };
 
 const TranscriptomicSearchBySample = ({
   options,
-  selectedOptionsIds,
+  selectedSamples,
   onSelectOptions,
   disabled = false,
 }: OwnProps) => {
   const parsedOptions = options?.data || [];
 
-  const sampleFilterFunction = (options: TTranscriptomicsSwarmPlotData[], input: string) =>
-    options.filter((opt) => opt.sample_id.toLowerCase().includes(input.toLowerCase()));
-
   return (
     <TranscriptomicSearch<TTranscriptomicsSwarmPlotData>
       options={parsedOptions}
-      selectedOptionsIds={selectedOptionsIds}
+      selectedOptionsIds={selectedSamples.map((sample) => sample.sample_id)}
       onSelectOptions={onSelectOptions}
       disabled={disabled}
       title={intl.get('screen.analytics.transcriptomic.filter.samples.title')}
@@ -37,7 +34,6 @@ const TranscriptomicSearchBySample = ({
       emptyText={intl.get('screen.analytics.transcriptomic.filter.samples.emptyText')}
       optionLabelKey="sample_id"
       optionValueKey="sample_id"
-      filterFunction={sampleFilterFunction}
     />
   );
 };
