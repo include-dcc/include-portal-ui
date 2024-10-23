@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useState } from 'react';
 import intl from 'react-intl-universal';
 import Empty from '@ferlab/ui/core/components/Empty';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
@@ -6,13 +6,16 @@ import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Divider, Select, Space, Typography } from 'antd';
 import TranscriptomicDataset from 'views/Analytics/Transcriptomic/Dataset';
 import TranscriptomicFooter from 'views/Analytics/Transcriptomic/Footer';
+import Heatmaps from 'views/Analytics/Transcriptomic/Heatmaps';
 import TranscriptomicSearchByGene from 'views/Analytics/Transcriptomic/SearchByGene';
 import TranscriptomicSearchBySample from 'views/Analytics/Transcriptomic/SearchBySample';
 import { SCROLL_WRAPPER_ID } from 'views/DataExploration/utils/constant';
 
+import {
+  TTranscriptomicsDatum,
+  TTranscriptomicsSwarmPlotData,
+} from 'services/api/transcriptomics/models';
 import { useTranscriptomicsDiffGeneExp, useTranscriptomicsSampleGeneExp } from 'store/analytics';
-
-import { TTranscriptomicsDiffGeneExp } from '../../../services/api/transcriptomics/models';
 
 import ScatterPlot from './ScatterPlot';
 import SideBar, { TTranscriptomicSideBarItem } from './SideBar';
@@ -47,32 +50,19 @@ const menuItems: () => TTranscriptomicSideBarItem[] = () => [
   },
 ];
 
-const getSelectedGeneSymbol = (diffGeneExp: TTranscriptomicsDiffGeneExp[], id: string) => {
-  for (const diffGene of diffGeneExp) {
-    const gene = diffGene.data.find((gene) => gene.ensembl_gene_id === id);
-    if (gene) return gene.gene_symbol;
-  }
-  return '';
-};
-
 export const Transcriptomic = () => {
   const diffGeneExp = useTranscriptomicsDiffGeneExp();
-  const [selectedGeneIds, setSelectedGeneIds] = useState<string[]>([]);
-  const [selectedSampleIds, setSelectedSampleIds] = useState<string[]>([]);
-  const sampleGeneExp = useTranscriptomicsSampleGeneExp(selectedGeneIds[0]);
+  const [selectedGenes, setSelectedGenes] = useState<TTranscriptomicsDatum[]>([]);
+  const [selectedSamples, setSelectedSamples] = useState<TTranscriptomicsSwarmPlotData[]>([]);
+  const sampleGeneExp = useTranscriptomicsSampleGeneExp(selectedGenes[0]?.ensembl_gene_id ?? '');
 
-  const selectedGeneSymbol = useMemo(
-    () => (diffGeneExp.data ? getSelectedGeneSymbol(diffGeneExp.data, selectedGeneIds[0]) : ''),
-    [diffGeneExp, selectedGeneIds],
-  );
-
-  const handleGeneSelection = (ensemble_ids: string[]) => {
-    setSelectedGeneIds(ensemble_ids);
-    setSelectedSampleIds([]);
+  const handleSearchByGeneSelection = (genes: TTranscriptomicsDatum[]) => {
+    setSelectedGenes(genes);
+    setSelectedSamples([]);
   };
 
-  const handleSampleSelection = (sample_ids: string[]) => {
-    setSelectedSampleIds(sample_ids);
+  const handleSearchBySampleSelection = (samples: TTranscriptomicsSwarmPlotData[]) => {
+    setSelectedSamples(samples);
   };
 
   return (
@@ -91,7 +81,7 @@ export const Transcriptomic = () => {
             contentClassName={styles.gridCardContent}
             footer={
               <TranscriptomicFooter
-                selectedGeneIds={selectedGeneIds}
+                selectedGenes={selectedGenes}
                 sampleGeneExpData={sampleGeneExp.data?.data}
               />
             }
@@ -101,17 +91,17 @@ export const Transcriptomic = () => {
                   <div className={styles.container}>
                     <TranscriptomicSearchByGene
                       options={diffGeneExp.data}
-                      onSelectOptions={setSelectedGeneIds}
-                      selectedOptionsIds={selectedGeneIds}
+                      onSelectOptions={handleSearchByGeneSelection}
+                      selectedGenes={selectedGenes}
                     />
                   </div>
                   <div className={styles.vDivider} />
                   <div className={styles.container}>
                     <TranscriptomicSearchBySample
                       options={sampleGeneExp.data}
-                      onSelectOptions={setSelectedSampleIds}
-                      selectedOptionsIds={selectedSampleIds}
-                      disabled={selectedGeneIds.length !== 1}
+                      onSelectOptions={handleSearchBySampleSelection}
+                      selectedSamples={selectedSamples}
+                      disabled={selectedGenes.length !== 1}
                     />
                   </div>
                 </div>
@@ -121,27 +111,29 @@ export const Transcriptomic = () => {
                     <ScatterPlot
                       loading={diffGeneExp.loading}
                       data={diffGeneExp.data}
-                      handleGeneSelection={handleGeneSelection}
-                      selectedGeneIds={selectedGeneIds}
+                      handleGenesSelection={setSelectedGenes}
+                      selectedGenes={selectedGenes}
                     />
                   </div>
                   <div className={styles.vDivider} />
                   <div className={styles.chartContainer}>
-                    {selectedGeneIds.length !== 1 ? (
+                    {selectedGenes.length === 0 && (
                       <Empty
                         size="large"
                         imageType="grid"
                         description={intl.get('screen.analytics.transcriptomic.empty')}
                       />
-                    ) : (
+                    )}
+                    {selectedGenes.length === 1 && (
                       <SwarmPlot
-                        selectedGeneSymbol={selectedGeneSymbol}
-                        selectedSampleIds={selectedSampleIds}
-                        handleSampleSelection={handleSampleSelection}
+                        selectedGene={selectedGenes[0]}
+                        selectedSamples={selectedSamples}
+                        handleSampleSelection={handleSearchBySampleSelection}
                         loading={sampleGeneExp.loading}
                         sampleGeneExp={sampleGeneExp.data}
                       />
                     )}
+                    {selectedGenes.length > 1 && <Heatmaps selectedGenes={selectedGenes} />}
                   </div>
                 </div>
               </div>

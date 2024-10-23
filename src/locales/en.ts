@@ -1460,6 +1460,11 @@ const en = {
           xAxisTitle: 'log2 (Fold change)',
           yAxisTitle: '-log10 (q-value)',
         },
+        heatmap: {
+          title: 'Fold Change with T21',
+          fold_change: 'Fold Change',
+          gene_symbol: 'Gene',
+        },
         filter: {
           genes: {
             emptyText: 'No gene found',
