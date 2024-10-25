@@ -1,25 +1,28 @@
 import intl from 'react-intl-universal';
 import UploadIds from '@ferlab/ui/core/components/UploadIds';
-import { MatchTableItem } from '@ferlab/ui/core/components/UploadIds/types';
-import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
+import { MatchTableItem, TFetchMatchFunc } from '@ferlab/ui/core/components/UploadIds/types';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
-import { Descriptions } from 'antd';
-import { INDEXES } from 'graphql/constants';
-import { CHECK_GENE_MATCH_QUERY } from 'graphql/genes/queries';
-import { IGeneEntity } from 'graphql/variants/models';
-
-import { ArrangerApi } from 'services/api/arranger';
+import { ButtonProps, Descriptions } from 'antd';
 
 import styles from './index.module.css';
 
 interface OwnProps {
+  className?: string;
+  buttonProps?: ButtonProps;
   handleUpload: (uniqueMatches: MatchTableItem[]) => void;
+  identifiersText?: string;
+  fetchMatch: TFetchMatchFunc;
 }
 
-const GenesUploadIds = ({ handleUpload }: OwnProps) => (
+const GenesUploadIds = ({
+  className,
+  identifiersText,
+  buttonProps,
+  handleUpload,
+  fetchMatch,
+}: OwnProps) => (
   <UploadIds
+    className={className}
     dictionary={{
       modalTitle: intl.get('upload.gene.ids.modal.title'),
       submittedColTitle: intl.get('upload.gene.ids.modal.submittedColTitle'),
@@ -30,16 +33,16 @@ const GenesUploadIds = ({ handleUpload }: OwnProps) => (
       emptyTableDescription: intl.get('upload.gene.ids.modal.empty.table'),
       modalOkText: intl.get('upload.gene.ids.modal.upload.btn'),
       modalCancelText: intl.get('upload.gene.ids.modal.cancel.btn'),
-      collapseTitle: (matchCount, unMatchCount) =>
+      collapseTitle: (matchCount: number, unMatchCount: number) =>
         intl.get('upload.gene.ids.modal.collapseTitle', {
           matchCount: numberWithCommas(matchCount),
           unMatchCount: numberWithCommas(unMatchCount),
         }),
-      matchTabTitle: (matchCount) =>
+      matchTabTitle: (matchCount: number) =>
         intl.get('upload.gene.ids.modal.match', { count: numberWithCommas(matchCount) }),
-      unmatchTabTitle: (unmatchcount) =>
+      unmatchTabTitle: (unmatchcount: number) =>
         intl.get('upload.gene.ids.modal.unmatch', { count: numberWithCommas(unmatchcount) }),
-      tablesMessage: (submittedCount, mappedCount) =>
+      tablesMessage: (submittedCount: number, mappedCount: number) =>
         intl.get('upload.gene.ids.modal.table.message', {
           submittedCount: numberWithCommas(submittedCount),
           mappedCount: numberWithCommas(mappedCount),
@@ -57,7 +60,7 @@ const GenesUploadIds = ({ handleUpload }: OwnProps) => (
       content: (
         <Descriptions column={1}>
           <Descriptions.Item label={intl.get('components.uploadIds.modal.popover.identifiers')}>
-            {intl.get('upload.gene.ids.modal.identifiers')}
+            {identifiersText ? identifiersText : intl.get('upload.gene.ids.modal.identifiers')}
           </Descriptions.Item>
           <Descriptions.Item
             label={intl.get('components.uploadIds.modal.popover.separatedBy.title')}
@@ -73,49 +76,7 @@ const GenesUploadIds = ({ handleUpload }: OwnProps) => (
       ),
     }}
     placeHolder="ex. ENSG00000157764, TP53"
-    fetchMatch={async (ids: string[]) => {
-      const response = await ArrangerApi.graphqlRequest({
-        query: CHECK_GENE_MATCH_QUERY.loc?.source.body,
-        variables: {
-          first: 1000,
-          offset: 0,
-          sqon: generateQuery({
-            operator: BooleanOperators.or,
-            newFilters: [
-              {
-                ...generateValueFilter({
-                  field: 'search_text',
-                  value: ids,
-                  index: INDEXES.GENES,
-                }),
-              },
-            ],
-          }),
-        },
-      });
-
-      const genes: IGeneEntity[] = hydrateResults(response.data?.data?.genes?.hits?.edges || []);
-
-      return genes?.flatMap((gene) => {
-        const matchedIds: string[] = ids.filter((id: string) => {
-          const lowerCaseId = id.toLocaleLowerCase();
-          const lowerCaseAliases = (gene.alias || []).map((alias) => alias.toLocaleLowerCase());
-
-          return (
-            gene.symbol?.toLocaleLowerCase() === lowerCaseId ||
-            gene.ensembl_gene_id?.toLocaleLowerCase() === lowerCaseId ||
-            lowerCaseAliases.includes(lowerCaseId)
-          );
-        });
-
-        return matchedIds.map((id, index) => ({
-          key: `${gene.omim_gene_id}:${index}`,
-          submittedId: id,
-          mappedTo: gene.symbol,
-          matchTo: gene.ensembl_gene_id,
-        }));
-      });
-    }}
+    fetchMatch={fetchMatch}
     onUpload={(matches: MatchTableItem[]) => {
       const uniqueMatches = matches.filter(
         (match, index, currentMatch) =>
@@ -124,6 +85,7 @@ const GenesUploadIds = ({ handleUpload }: OwnProps) => (
 
       return handleUpload(uniqueMatches);
     }}
+    buttonProps={buttonProps}
   />
 );
 

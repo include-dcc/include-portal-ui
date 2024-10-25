@@ -3,10 +3,14 @@ import { UserOutlined } from '@ant-design/icons';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import { MatchTableItem } from '@ferlab/ui/core/components/UploadIds/types';
+import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import { INDEXES } from 'graphql/constants';
-import GenesUploadIds from 'views/Variants/components/GeneUploadIds';
+import { CHECK_GENE_MATCH_QUERY } from 'graphql/genes/queries';
+import { hydrateResults } from 'graphql/models';
+import { IGeneEntity } from 'graphql/variants/models';
 import VariantGeneSearch from 'views/Variants/components/VariantGeneSearch';
 import { VARIANT_REPO_QB_ID } from 'views/Variants/utils/constants';
 
@@ -16,7 +20,9 @@ import GeneIcon from 'components/Icons/GeneIcon';
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import FilterList from 'components/uiKit/FilterList';
 import { FilterInfo } from 'components/uiKit/FilterList/types';
+import GenesUploadIds from 'components/uiKit/Uploads/GeneUploadIds';
 import useGetExtendedMappings from 'hooks/graphql/useGetExtendedMappings';
+import { ArrangerApi } from 'services/api/arranger';
 import { SuggestionType } from 'services/api/arranger/models';
 
 import PageContent from './components/PageContent';
@@ -93,6 +99,51 @@ const filterGroups: {
             index: INDEXES.VARIANTS,
             merge_strategy: MERGE_VALUES_STRATEGIES.APPEND_VALUES,
             isUploadedList: true,
+          });
+        }}
+        fetchMatch={async (ids: string[]) => {
+          const response = await ArrangerApi.graphqlRequest({
+            query: CHECK_GENE_MATCH_QUERY.loc?.source.body,
+            variables: {
+              first: 1000,
+              offset: 0,
+              sqon: generateQuery({
+                operator: BooleanOperators.or,
+                newFilters: [
+                  {
+                    ...generateValueFilter({
+                      field: 'search_text',
+                      value: ids,
+                      index: INDEXES.GENES,
+                    }),
+                  },
+                ],
+              }),
+            },
+          });
+
+          const genes: IGeneEntity[] = hydrateResults(
+            response.data?.data?.genes?.hits?.edges || [],
+          );
+
+          return genes?.flatMap((gene) => {
+            const matchedIds: string[] = ids.filter((id: string) => {
+              const lowerCaseId = id.toLocaleLowerCase();
+              const lowerCaseAliases = (gene.alias || []).map((alias) => alias.toLocaleLowerCase());
+
+              return (
+                gene.symbol?.toLocaleLowerCase() === lowerCaseId ||
+                gene.ensembl_gene_id?.toLocaleLowerCase() === lowerCaseId ||
+                lowerCaseAliases.includes(lowerCaseId)
+              );
+            });
+
+            return matchedIds.map((id, index) => ({
+              key: `${gene.omim_gene_id}:${index}`,
+              submittedId: id,
+              mappedTo: gene.symbol,
+              matchTo: gene.ensembl_gene_id,
+            }));
           });
         }}
       />,
