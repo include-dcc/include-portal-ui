@@ -4,6 +4,7 @@ import Empty from '@ferlab/ui/core/components/Empty';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Divider, Select, Space, Typography } from 'antd';
+import cx from 'classnames';
 import TranscriptomicDataset from 'views/Analytics/Transcriptomic/Dataset';
 import TranscriptomicFooter from 'views/Analytics/Transcriptomic/Footer';
 import Heatmaps from 'views/Analytics/Transcriptomic/Heatmaps';
@@ -52,6 +53,7 @@ const menuItems: () => TTranscriptomicSideBarItem[] = () => [
 
 export const Transcriptomic = () => {
   const diffGeneExp = useTranscriptomicsDiffGeneExp();
+  const [isHeaderFilterToggled, setIsHeaderFilterToggled] = useState<boolean>(false);
   const [selectedGenes, setSelectedGenes] = useState<TTranscriptomicsDatum[]>([]);
   const [selectedSamples, setSelectedSamples] = useState<TTranscriptomicsSwarmPlotData[]>([]);
   const sampleGeneExp = useTranscriptomicsSampleGeneExp(selectedGenes[0]?.ensembl_gene_id ?? '');
@@ -93,15 +95,26 @@ export const Transcriptomic = () => {
                       options={diffGeneExp.data}
                       onSelectOptions={handleSearchByGeneSelection}
                       selectedGenes={selectedGenes}
+                      onToggle={(isToggled) => {
+                        setIsHeaderFilterToggled(isToggled);
+                      }}
                     />
                   </div>
-                  <div className={styles.vDivider} />
+                  <div
+                    className={cx(styles.vDivider, styles.containerDivider, {
+                      [styles.toggled]: isHeaderFilterToggled,
+                    })}
+                  />
                   <div className={styles.container}>
                     <TranscriptomicSearchBySample
+                      selectedGene={selectedGenes[0]}
                       options={sampleGeneExp.data}
                       onSelectOptions={handleSearchBySampleSelection}
                       selectedSamples={selectedSamples}
                       disabled={selectedGenes.length !== 1}
+                      onToggle={(isToggled) => {
+                        setIsHeaderFilterToggled(isToggled);
+                      }}
                     />
                   </div>
                 </div>

@@ -38,8 +38,17 @@ const fetchSampleGeneExp = (id: string) =>
     },
   });
 
+const checkSampleIdsAndGene = (data: { ensembl_gene_id?: string; sample_ids: string[] }) =>
+  sendRequest<ITranscriptomicsSampleGeneExp>({
+    method: 'POST',
+    url: `${ARRANGER_API}/transcriptomics/checkSampleIdsAndGene`,
+    headers: headers(),
+    data,
+  });
+
 export const TranscriptomicsApi = {
   fetchFacets,
   fetchSampleGeneExp,
   fetchDiffGeneExp,
+  checkSampleIdsAndGene,
 };

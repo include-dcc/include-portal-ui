@@ -439,6 +439,7 @@ const en = {
           participant: 'e.g. pt-005X8BR9, HTP0001',
           biospecimen: 'e.g. bs-022KAEZW, SSH3953290',
           file: 'e.g. GF_001CSF26, HTP.007855d5-e22e-405f-91f4-d54b4b8a9136.g.vcf.gz',
+          sample: 'e.g. bs-z8p7wjm7,bs-7jp8z6kq',
         },
         tableMessage:
           '{submittedCount} submitted identifiers mapped to {mappedCount} unique system identifiers',
@@ -1471,12 +1472,17 @@ const en = {
             placeholder: 'e.g. BRAF, ENSG00000157764',
             title: 'Search by gene',
             tooltip: 'Enter a Gene Symbol or Ensembl ID',
+            fdr: 'FDR Threshold',
+            identifiers: 'Gene Symbol, Ensembl ID',
           },
           samples: {
             emptyText: 'No sample found',
             placeholder: 'e.g. bs-z8p7wjm7',
             title: 'Search by sample ID',
             tooltip: 'Enter a sample ID',
+            fpkm: 'FPKM',
+            age_at_biospecimen: 'Age at biospec. collection',
+            sex: 'Sex',
           },
         },
         footer: {
@@ -1977,6 +1983,56 @@ const en = {
               },
               matchcol: {
                 title: 'Ensembl ID',
+              },
+              mappedcol: {
+                title: 'Symbol',
+              },
+            },
+          },
+          pill: {
+            title: 'Uploaded List',
+          },
+          upload: {
+            btn: 'Upload',
+            file: {
+              btn: 'Upload a file',
+            },
+          },
+          clear: {
+            btn: 'Clear',
+          },
+          cancel: {
+            btn: 'Cancel',
+          },
+          empty: {
+            table: 'No data',
+          },
+        },
+      },
+    },
+    sample: {
+      ids: {
+        modal: {
+          title: 'Upload a sample list',
+          submittedColTitle: 'Submitted sample identifiers',
+          uploadBtnText: 'Upload a sample list',
+          mappedTo: 'Mapped To',
+          collapseTitle: 'Summary Table  ({matchCount} matched, {unMatchCount} unmatched)',
+          identifiers: 'Sample ID',
+          input: {
+            label: 'Copy-paste a list of identifiers or upload a file',
+          },
+          match: 'Matched ({count})',
+          unmatch: 'Unmatched ({count})',
+          table: {
+            message:
+              '{submittedCount} submitted identifiers mapped to {mappedCount} unique system identifiers',
+            match: {
+              idcol: {
+                title: 'Sample ID',
+              },
+              matchcol: {
+                title: 'Sample ID',
               },
               mappedcol: {
                 title: 'Symbol',
