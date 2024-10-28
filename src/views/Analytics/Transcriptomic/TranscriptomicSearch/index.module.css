@@ -12,3 +12,14 @@
 .select {
     width: 100%;
 }
+
+.searchContainer .tag {
+  display: flex;
+  align-items: center;
+  background-color: var(--blue-8);
+  color: var(--gray-1);
+}
+
+.searchContainer .tag > * {
+  color: var(--gray-1);
+}

@@ -47,15 +47,18 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .container {
   padding: 16px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex: 1;
+}
+
+.containerDivider {
+  display: flex;
+  align-items: center;
+  align-self: center;
 }
 
 .chartContainer {
@@ -67,7 +70,6 @@
   flex: 1;
 }
 
-
 .vDivider {
   border-right: 1px solid var(--gray-4);
   width: 1px;
@@ -76,6 +78,10 @@
 
 .header .vDivider {
   height: 48px;
+}
+
+.toggled {
+  height: 120px !important;
 }
 
 .hDivider {

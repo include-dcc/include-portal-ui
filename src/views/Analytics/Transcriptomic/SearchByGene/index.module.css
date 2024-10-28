@@ -1,0 +1,55 @@
+.searchByGene {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.searchLabel {
+  margin-bottom: 0 !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 8px;
+}
+
+.selectContainer {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.uploadsContainer {
+  display: flex;
+}
+
+.select {
+  width: 100%;
+}
+
+.toggleFilterButton {
+  display: flex;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+}
+
+.filterContainer {
+  min-width: 100%;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  background-color: var(--blue-8);
+  color: var(--gray-1);
+}
+
+.tag > * {
+  color: var(--gray-1);
+}

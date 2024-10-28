@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import Empty from '@ferlab/ui/core/components/Empty/index';
-import { Select } from 'antd';
-
-import SearchLabel from 'components/uiKit/search/SearchLabel';
+import { Select, Tag } from 'antd';
 
 import styles from './index.module.css';
 
@@ -11,8 +9,6 @@ type TranscriptomicSearchProps<T> = {
   selectedOptionsIds: string[];
   onSelectOptions: (option: T[]) => void;
   disabled?: boolean;
-  title: string;
-  tooltip: string;
   placeholder: string;
   emptyText: string;
   optionLabelKey: keyof T;
@@ -24,8 +20,6 @@ const TranscriptomicSearch = <T,>({
   selectedOptionsIds,
   onSelectOptions,
   disabled = false,
-  title,
-  tooltip,
   placeholder,
   emptyText,
   optionLabelKey,
@@ -59,7 +53,6 @@ const TranscriptomicSearch = <T,>({
   return (
     <div className={styles.transcriptomicSearch}>
       <div className={styles.searchContainer}>
-        <SearchLabel title={title} tooltipText={tooltip} />
         <Select
           allowClear
           autoClearSearchValue
@@ -82,6 +75,11 @@ const TranscriptomicSearch = <T,>({
             (option?.value ?? '').toLowerCase().includes(input.toLowerCase()) ||
             (option?.id ?? '').toLowerCase().includes(input.toLowerCase())
           }
+          tagRender={({ onClose, label }) => (
+            <Tag className={styles.tag} closable onClose={onClose} style={{ marginRight: 3 }}>
+              {label}
+            </Tag>
+          )}
         />
       </div>
     </div>
