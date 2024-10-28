@@ -439,7 +439,7 @@ const en = {
           participant: 'e.g. pt-005X8BR9, HTP0001',
           biospecimen: 'e.g. bs-022KAEZW, SSH3953290',
           file: 'e.g. GF_001CSF26, HTP.007855d5-e22e-405f-91f4-d54b4b8a9136.g.vcf.gz',
-          sample: 'e.g. bs-z8p7wjm7,bs-7jp8z6kq',
+          sample: 'e.g. bs-022KAEZW',
         },
         tableMessage:
           '{submittedCount} submitted identifiers mapped to {mappedCount} unique system identifiers',
