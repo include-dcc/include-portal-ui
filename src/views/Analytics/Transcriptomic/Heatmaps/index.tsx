@@ -45,6 +45,9 @@ const Heatmaps = ({ selectedGenes }: TTranscriptomicHeatmaps) => {
           hovertemplate: `${intl.get(
             'screen.analytics.transcriptomic.heatmap.gene_symbol',
           )} %{y}<br>${intl.get('screen.analytics.transcriptomic.heatmap.fold_change')} %{z}`,
+          colorbar: {
+            title: 'log<sub>2</sub>(Fold Change)', // using intl.getHTML will make plotty crash
+          },
         },
       ]}
       layout={{
