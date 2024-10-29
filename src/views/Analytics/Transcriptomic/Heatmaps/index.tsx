@@ -1,5 +1,6 @@
 import intl from 'react-intl-universal';
 import Plot from 'react-plotly.js';
+import { formatPadj } from 'views/Analytics/Transcriptomic/utils';
 
 import { TTranscriptomicsDatum } from 'services/api/transcriptomics/models';
 
@@ -19,6 +20,7 @@ export type TTranscriptomicHeatmaps = {
  * z = data
  */
 const Heatmaps = ({ selectedGenes }: TTranscriptomicHeatmaps) => {
+  const padj: any = [];
   const label: string[] = [];
   const data: any = [];
   const sortedGenes = selectedGenes.sort((a, b) => {
@@ -28,7 +30,8 @@ const Heatmaps = ({ selectedGenes }: TTranscriptomicHeatmaps) => {
   });
   sortedGenes.map((gene) => {
     label.push(gene.gene_symbol);
-    data.push([gene?.fold_change]);
+    data.push([gene?.fold_change ?? 0]);
+    padj.push([formatPadj(gene.padj)]);
   });
 
   return (
@@ -44,12 +47,29 @@ const Heatmaps = ({ selectedGenes }: TTranscriptomicHeatmaps) => {
           },
           hovertemplate: `${intl.get(
             'screen.analytics.transcriptomic.heatmap.gene_symbol',
-          )} %{y}<br>${intl.get('screen.analytics.transcriptomic.heatmap.fold_change')} %{z}`,
+          )} %{y}<br>${intl.get('screen.analytics.transcriptomic.heatmap.fold_change')} %{z}
+          <br>${intl.get('screen.analytics.transcriptomic.heatmap.qvalue')} %{customdata}`,
           colorbar: {
             title: 'log<sub>2</sub>(Fold Change)', // using intl.getHTML will make plotty crash
           },
-        },
+          customdata: padj,
+        } as Partial<Plotly.PlotData> & { customdata: string[] },
       ]}
+      config={{
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+          'resetGeo',
+          'lasso2d',
+          'sendDataToCloud',
+          'zoom2d',
+          'autoScale2d',
+          'resetScale2d',
+          'zoomIn2d',
+          'zoomOut2d',
+          'pan2d',
+          'select2d',
+        ],
+      }}
       layout={{
         title: {
           text: intl.get('screen.analytics.transcriptomic.heatmap.title'),
