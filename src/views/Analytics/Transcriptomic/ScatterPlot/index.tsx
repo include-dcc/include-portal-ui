@@ -3,6 +3,7 @@ import intl from 'react-intl-universal';
 import Plot from 'react-plotly.js';
 import ChartSkeleton from '@ferlab/ui/core/components/Charts/Skeleton/index';
 import { Annotations, PlotMouseEvent, ScatterData } from 'plotly.js';
+import { formatPadj } from 'views/Analytics/Transcriptomic/utils';
 
 import {
   TTranscriptomicsDatum,
@@ -16,16 +17,6 @@ type TTranscriptomicsScatterPlotCanvas = {
   handleGenesSelection: (gene: TTranscriptomicsDatum[]) => void;
   selectedGenes: TTranscriptomicsDatum[];
   loading: boolean;
-};
-
-const formatPadj = (value: number): string => {
-  const valueString = value.toString();
-  const exponentIndex = valueString.indexOf('e');
-  if (exponentIndex != -1) {
-    const splitString = valueString.split('e-');
-    return `${splitString[0]}e-${splitString[1].substring(0, 2)}`;
-  }
-  return value?.toFixed(3);
 };
 
 const ScatterPlotly = ({
