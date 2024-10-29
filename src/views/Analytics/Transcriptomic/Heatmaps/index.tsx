@@ -54,7 +54,7 @@ const Heatmaps = ({ selectedGenes }: TTranscriptomicHeatmaps) => {
           y: 100.0,
           font: { size: 16, weight: 600 },
         },
-        margin: { l: 80, r: 10, t: 60, b: 40 },
+        margin: { l: 82, r: 10, t: 60, b: 40 },
         autosize: true,
         xaxis: {
           visible: false,
