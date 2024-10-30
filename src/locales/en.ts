@@ -1853,6 +1853,18 @@ const en = {
       code: 'Code',
       count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
       dataset: {
+        cavatica: {
+          button: 'Analyze in Cavatica',
+          modal: {
+            title: 'Cavatica - DS-Connect unharmonized files',
+            okText: 'Copy file',
+            message:
+              'Copy the DS-Connect’s unharmonized files into your Cavatica project. Once it is in your project, you can download the file or include it into your workflows.',
+            selectFooterButton: 'New project',
+            selectPlaceholder: 'Select a project',
+            createProjectToPushFileTo: 'Create a project to push your files to.',
+          },
+        },
         data_type: 'Data Type',
         dataset_id: 'Dataset ID',
         experimental_platform: 'Experimental Platform',

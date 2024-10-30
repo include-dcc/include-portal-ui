@@ -50,3 +50,44 @@ export const getGuidDrsItem = (value: ICavaticaTreeNode): ICavaticaDRSImportItem
     },
   };
 };
+
+export const getDSConnectDrsItems = (value: ICavaticaTreeNode): ICavaticaDRSImportItem[] => {
+  const demographicAccessUrl = EnvironmentVariables.configFor(
+    'CAVATICA_DSC_DEMOGRAPHIC_ACCESS_URL',
+  );
+  const ihqAccessUrl = EnvironmentVariables.configFor('CAVATICA_DSC_IHQ_ACCESS_URL');
+  const dictionaryAccessUrl = EnvironmentVariables.configFor('CAVATICA_DSC_DICTIONARY_ACCESS_URL');
+  const type = value.type === CAVATICA_TYPE.PROJECT ? 'project' : 'parent';
+  return [
+    {
+      drs_uri: demographicAccessUrl,
+      name: 'dsc_demographic_unharmonized_2024-02-26.csv',
+      [type]: value.id,
+      metadata: {
+        name: 'dsc_demographic_unharmonized_2024-02-26.csv',
+        study_name: 'DS-Connect: The Down Syndrome Registry',
+        file_format: 'csv',
+      },
+    },
+    {
+      drs_uri: ihqAccessUrl,
+      name: 'dsc_ihq_unharmonized_2024-02-26.csv',
+      [type]: value.id,
+      metadata: {
+        name: 'dsc_ihq_unharmonized_2024-02-26.csv',
+        study_name: 'DS-Connect: The Down Syndrome Registry',
+        file_format: 'csv',
+      },
+    },
+    {
+      drs_uri: dictionaryAccessUrl,
+      name: 'dsconnect_unharmonized_data_dictionary_20240424.xlsx',
+      [type]: value.id,
+      metadata: {
+        name: 'dsconnect_unharmonized_data_dictionary_20240424.xlsx',
+        study_name: 'DS-Connect: The Down Syndrome Registry',
+        file_format: 'csv',
+      },
+    },
+  ];
+};

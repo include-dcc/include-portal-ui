@@ -23,6 +23,7 @@ import { useStudies } from 'graphql/studies/actions';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 import { cloneDeep } from 'lodash';
 
+import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
 import { trackCavaticaAction } from 'services/analytics';
 import { CavaticaApi } from 'services/api/cavatica';
 import { ICavaticaCreateProjectBody } from 'services/api/cavatica/models';
@@ -48,7 +49,6 @@ import {
   STUDIES_REPO_QB_ID,
 } from '../../utils/constants';
 
-import CavaticaGuidModal from './Guid/CavaticaGuidModal';
 import NdaGuidsModal from './Guid/NdaGuidsModal';
 import { cavaticaCreateProjectDictionary, getGuidDrsItem } from './Guid/utils';
 
@@ -250,7 +250,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
         />
       )}
       {isCavaticaModalOpen && displayNDAGuids === 'true' && (
-        <CavaticaGuidModal
+        <AnalyzeModal
           open={isCavaticaModalOpen}
           onClose={handleCloseCavaticaModal}
           handleSubmit={(value: ICavaticaTreeNode) => {
@@ -261,6 +261,16 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
           handleCreateProjectClick={() => {
             handleOpenProjectModal();
             handleCloseCavaticaModal();
+          }}
+          dictionary={{
+            contentNotFound: intl.get(
+              'screen.studies.ndaGuids.cavaticaModal.createProjectToPushFileTo',
+            ),
+            contentText: intl.get('screen.studies.ndaGuids.cavaticaModal.message'),
+            newProjectButton: intl.get('screen.studies.ndaGuids.cavaticaModal.selectFooterButton'),
+            okText: intl.get('screen.studies.ndaGuids.cavaticaModal.okText'),
+            selectPlaceholder: intl.get('screen.studies.ndaGuids.cavaticaModal.selectPlaceholder'),
+            title: intl.get('screen.studies.ndaGuids.cavaticaModal.title'),
           }}
           {...cavatica}
         />
