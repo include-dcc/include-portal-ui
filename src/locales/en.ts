@@ -1857,7 +1857,7 @@ const en = {
           button: 'Analyze in Cavatica',
           modal: {
             title: 'Cavatica - DS-Connect unharmonized files',
-            okText: 'Copy file',
+            okText: 'Copy files',
             message:
               'Copy the DS-Connect’s unharmonized files into your Cavatica project. Once it is in your project, you can download the file or include it into your workflows.',
             selectFooterButton: 'New project',
