@@ -87,7 +87,7 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.validateFacetRank(3, 'Age at Diagnosis (days)');
   });
 
-  it('Age at Vital Status (days) [SJIP-1043]', () => {
+  it('Age at Vital Status (days)', () => {
     cy.validateFacetNumFilter('Age at Vital Status (days)', '10000', /\d{1}/);
     cy.validateFacetRank(4, 'Age at Vital Status (days)');
   });
@@ -299,7 +299,7 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.validateFacetRank(4, 'File Format');
   });
 
-  it('ACL - GVCF', () => {
+  it('ACL - Open Access', () => {
     cy.validateFacetFilter('ACL', 'Open Access', 'open_access', /\d{1}/);
     cy.validateFacetRank(5, 'ACL');
   });

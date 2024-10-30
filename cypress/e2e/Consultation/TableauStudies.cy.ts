@@ -18,7 +18,7 @@ describe('Page des études - Vérifier les informations affichées', () => {
     cy.get('[class*="PageContent_title"]').contains('Studies'); // data-cy="Title_Studies"
   });
 
-  it('Tableau', () => {
+  it('Tableau [SJIP-1038]', () => {
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(0).find('[class*="ant-tag-green"]').contains('H').should('exist');
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(1).contains('HTP').should('exist');
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(2).contains('The Human Trisome Project').should('exist');
@@ -104,7 +104,7 @@ describe('Page des études - Consultation du tableau', () => {
     cy.validateTableFirstRow('X01-deSmith', 1);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Name', () => {
+  it('Valider les fonctionnalités du tableau - Tri Name [SJIP-1054]', () => {
     cy.sortTableAndIntercept('Name', 1);
     cy.validateTableFirstRow('Alzheimer Biomarker Consortium - Down Syndrome', 2);
     cy.sortTableAndIntercept('Name', 1);
