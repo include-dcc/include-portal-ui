@@ -11,7 +11,17 @@ import { LegacyDataNode } from 'rc-tree-select/lib/TreeSelect';
 
 import styles from './index.module.css';
 
-export interface ICavaticaAnalyseModal extends ModalFuncProps {
+export type TDictionaryAnalyzeModal = {
+  contentNotFound: string;
+  contentText: string;
+  newProjectButton: string;
+  okText: string;
+  selectPlaceholder: string;
+  title: string;
+};
+
+export interface IAnalyzeModal extends ModalFuncProps {
+  dictionary: TDictionaryAnalyzeModal;
   handleCreateProjectClick: () => void;
   handleFilesAndFolders: (parentId: string, isProject: boolean) => any;
   handleSubmit: (value: ICavaticaTreeNode) => void;
@@ -21,23 +31,25 @@ export interface ICavaticaAnalyseModal extends ModalFuncProps {
 }
 
 interface INewProjectButtonProps {
+  label: string;
   onClick: () => void;
 }
 
-const NewProjectButton = ({ onClick }: INewProjectButtonProps) => (
+const NewProjectButton = ({ label, onClick }: INewProjectButtonProps) => (
   <Button icon={<PlusOutlined />} onClick={onClick} size="small">
-    {intl.get('screen.studies.ndaGuids.cavaticaModal.selectFooterButton')}
+    {label}
   </Button>
 );
 
-const CavaticaGuidModal = ({
+const AnalyzeModal = ({
+  dictionary,
   handleCreateProjectClick,
   handleFilesAndFolders,
   handleSubmit,
   onClose,
   open,
   projects,
-}: ICavaticaAnalyseModal): JSX.Element => {
+}: IAnalyzeModal): JSX.Element => {
   const [selectedTreeNode, setSelectedTreeNode] = useState<ICavaticaTreeNode | undefined>();
   const [localProjectTree, setLocalProjectTree] = useState<ICavaticaTreeNode[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -72,13 +84,12 @@ const CavaticaGuidModal = ({
 
   return (
     <Modal
-      title={intl.get('screen.studies.ndaGuids.cavaticaModal.title')}
-      className={styles.cavaticaAnalyseModal}
+      title={dictionary.title}
       destroyOnClose
       okButtonProps={{
         disabled: selectedTreeNode === undefined,
       }}
-      okText={intl.get('screen.studies.ndaGuids.cavaticaModal.okText')}
+      okText={dictionary.okText}
       onOk={() => {
         if (selectedTreeNode) {
           handleSubmit(selectedTreeNode);
@@ -89,9 +100,7 @@ const CavaticaGuidModal = ({
       wrapClassName={styles.cavaticaModalWrapper}
     >
       <Space className={styles.treeSelectorWrapper} direction="vertical" size={24}>
-        <Typography.Text>
-          {intl.get('screen.studies.ndaGuids.cavaticaModal.message')}
-        </Typography.Text>
+        <Typography.Text>{dictionary.contentText}</Typography.Text>
         <TreeSelect
           allowClear
           className={styles.treeSelector}
@@ -102,7 +111,10 @@ const CavaticaGuidModal = ({
                 <>
                   <Divider className={styles.cavaticaTreeDropdownDivider} />
                   <div className={styles.cavaticaTreeDropdownFooter}>
-                    <NewProjectButton onClick={handleCreateProjectClick} />
+                    <NewProjectButton
+                      label={dictionary.newProjectButton}
+                      onClick={handleCreateProjectClick}
+                    />
                   </div>
                 </>
               )}
@@ -115,7 +127,10 @@ const CavaticaGuidModal = ({
               <Typography.Text type="secondary">
                 {intl.get('screen.studies.ndaGuids.cavaticaModal.createProjectToPushFileTo')}
               </Typography.Text>
-              <NewProjectButton onClick={handleCreateProjectClick} />
+              <NewProjectButton
+                label={dictionary.newProjectButton}
+                onClick={handleCreateProjectClick}
+              />
             </Space>
           }
           onClear={() => {
@@ -126,7 +141,7 @@ const CavaticaGuidModal = ({
             setSelectedTreeNode(node);
           }}
           open={dropdownOpen}
-          placeholder={intl.get('screen.studies.ndaGuids.cavaticaModal.selectPlaceholder')}
+          placeholder={dictionary.selectPlaceholder}
           popupClassName={styles.cavaticaTreeDropdown}
           showAction={['focus']}
           showSearch
@@ -139,4 +154,4 @@ const CavaticaGuidModal = ({
   );
 };
 
-export default CavaticaGuidModal;
+export default AnalyzeModal;
