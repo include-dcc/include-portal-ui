@@ -80,6 +80,9 @@ import style from './index.module.css';
 
 const { Text, Title } = Typography;
 
+const DSC_DATASET_ID = 'DS-Connect-UNHAR';
+const DSC_STUDY_ID = 'DSC';
+
 const queryId = 'include-study-repo-key';
 
 enum SectionId {
@@ -606,7 +609,7 @@ const StudyEntity = () => {
             {study?.dataset?.hits.edges.map(({ node: dataset }, index: number) => {
               const titleExtra = [];
 
-              if (study.study_id === 'DSC' && dataset.dataset_id === 'DS-Connect-UNHAR') {
+              if (study.study_id === DSC_STUDY_ID && dataset.dataset_id === DSC_DATASET_ID) {
                 titleExtra.push(
                   <Button
                     icon={<CloudUploadOutlined />}
