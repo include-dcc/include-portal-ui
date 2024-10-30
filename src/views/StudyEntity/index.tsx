@@ -1,8 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import {
+  CloudUploadOutlined,
+  ExclamationCircleOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { ICavaticaTreeNode } from '@ferlab/ui/core/components/Widgets/Cavatica/CavaticaAnalyzeModal';
+import CavaticaCreateProjectModal from '@ferlab/ui/core/components/Widgets/Cavatica/CavaticaCreateProjectModal';
+import {
+  CavaticaAnalyticsAction,
+  PASSPORT_AUTHENTIFICATION_STATUS,
+} from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import {
@@ -16,15 +27,32 @@ import EntityPage, {
   EntityTableMultiple,
   EntityTitleLogo,
 } from '@ferlab/ui/core/pages/EntityPage';
-import { Button, Space, Tag, Tooltip, Typography } from 'antd';
+import { Button, Modal, Space, Tag, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { useStudy } from 'graphql/studies/actions';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
+import {
+  cavaticaCreateProjectDictionary,
+  getDSConnectDrsItems,
+} from 'views/Studies/components/PageContent/Guid/utils';
 
+import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
 import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
 import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
+import { trackCavaticaAction } from 'services/analytics';
+import { CavaticaApi } from 'services/api/cavatica';
+import { ICavaticaCreateProjectBody } from 'services/api/cavatica/models';
+import { useCavaticaPassport } from 'store/passport';
+import { passportActions } from 'store/passport/slice';
+import {
+  connectCavaticaPassport,
+  createCavaticaProjet,
+  fetchCavaticaBillingGroups,
+  fetchCavaticaProjects,
+  startImportJob,
+} from 'store/passport/thunks';
 
 import ExternalLinkIcon from '../../components/Icons/ExternalLinkIcon';
 import {
@@ -52,6 +80,9 @@ import style from './index.module.css';
 
 const { Text, Title } = Typography;
 
+const DSC_DATASET_ID = 'DS-Connect-UNHAR';
+const DSC_STUDY_ID = 'DSC';
+
 const queryId = 'include-study-repo-key';
 
 enum SectionId {
@@ -66,6 +97,8 @@ const hasData = (data: unknown[]) => data && data.length > 0;
 
 // eslint-disable-next-line complexity
 const StudyEntity = () => {
+  const cavatica = useCavaticaPassport();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { study_code } = useParams<{ study_code: string }>();
   const { sqon: participantSqon } = useParticipantResolvedSqon(queryId);
@@ -79,6 +112,8 @@ const StudyEntity = () => {
   const [mondo, setMondo] = useState<any>([]);
   const [phenotypesLoading, setPhenotypesLoading] = useState<boolean>(true);
   const [mondoLoading, setMondoLoading] = useState<boolean>(true);
+  const [isCavaticaModalOpen, setIsCavaticaModalOpen] = useState(false);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
   /** We initialize here a sqon by queryBuilderId to handle actions */
   useEffect(() => {
@@ -292,6 +327,25 @@ const StudyEntity = () => {
   if (hasFiles) {
     defaultLinks.push({ href: `#${SectionId.DATA_FILE}`, title: intl.get('entities.study.file') });
   }
+
+  const analyzeCavatica = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    if (cavatica.authentification.status !== PASSPORT_AUTHENTIFICATION_STATUS.connected) {
+      Modal.confirm({
+        cancelText: intl.get('screen.dataExploration.tabs.datafiles.cavatica.authWarning.cancel'),
+        content: intl.get('screen.dataExploration.tabs.datafiles.cavatica.authWarning.description'),
+        icon: <ExclamationCircleOutlined />,
+        okText: intl.get('screen.dataExploration.tabs.datafiles.cavatica.authWarning.connect'),
+        onOk: () => {
+          dispatch(connectCavaticaPassport());
+        },
+        title: intl.get('screen.dataExploration.tabs.datafiles.cavatica.authWarning.title'),
+        type: 'warn',
+      });
+    } else {
+      setIsCavaticaModalOpen(true);
+    }
+  };
 
   return (
     <EntityPage
@@ -554,6 +608,20 @@ const StudyEntity = () => {
             </Title>
             {study?.dataset?.hits.edges.map(({ node: dataset }, index: number) => {
               const titleExtra = [];
+
+              if (study.study_id === DSC_STUDY_ID && dataset.dataset_id === DSC_DATASET_ID) {
+                titleExtra.push(
+                  <Button
+                    icon={<CloudUploadOutlined />}
+                    onClick={(event) => analyzeCavatica(event)}
+                    size="small"
+                    type="primary"
+                  >
+                    {intl.get('entities.study.dataset.cavatica.button')}
+                  </Button>,
+                );
+              }
+
               if (
                 dataset.data_category === 'Transcriptomics' &&
                 getFTEnvVarByKey('ANALYTICS_TRANSCRIPTOMIC') === 'true'
@@ -650,6 +718,73 @@ const StudyEntity = () => {
               </Tooltip>,
             ]}
             total={study?.file_count}
+          />
+        )}
+
+        {isCavaticaModalOpen && (
+          <AnalyzeModal
+            open={isCavaticaModalOpen}
+            onClose={() => setIsCavaticaModalOpen(false)}
+            handleSubmit={(value: ICavaticaTreeNode) => {
+              dispatch(startImportJob({ drsItems: getDSConnectDrsItems(value), node: value }));
+              setIsCavaticaModalOpen(false);
+            }}
+            handleFilesAndFolders={CavaticaApi.listFilesAndFolders}
+            handleCreateProjectClick={() => {
+              setIsCavaticaModalOpen(false);
+              setIsProjectModalOpen(true);
+            }}
+            dictionary={{
+              contentNotFound: intl.get(
+                'entities.study.dataset.cavatica.modal.createProjectToPushFileTo',
+              ),
+              contentText: intl.get('entities.study.dataset.cavatica.modal.message'),
+              newProjectButton: intl.get(
+                'entities.study.dataset.cavatica.modal.selectFooterButton',
+              ),
+              okText: intl.get('entities.study.dataset.cavatica.modal.okText'),
+              selectPlaceholder: intl.get(
+                'entities.study.dataset.cavatica.modal.selectPlaceholder',
+              ),
+              title: intl.get('entities.study.dataset.cavatica.modal.title'),
+            }}
+            {...cavatica}
+          />
+        )}
+
+        {isProjectModalOpen && (
+          <CavaticaCreateProjectModal
+            dictionary={cavaticaCreateProjectDictionary}
+            handleCloseModal={() => {
+              setIsProjectModalOpen(false);
+              setIsCavaticaModalOpen(true);
+            }}
+            onCancel={() => {
+              setIsProjectModalOpen(false);
+              setIsCavaticaModalOpen(true);
+            }}
+            open={isProjectModalOpen}
+            cavatica={cavatica}
+            handleErrorModalReset={() => {
+              dispatch(passportActions.resetCavaticaBillingsGroupError());
+              dispatch(passportActions.resetCavaticaProjectsError());
+            }}
+            fetchBillingGroups={() => {
+              dispatch(fetchCavaticaBillingGroups());
+            }}
+            fetchProjects={() => {
+              dispatch(fetchCavaticaProjects());
+            }}
+            handleSubmit={(values: ICavaticaCreateProjectBody) => {
+              dispatch(
+                createCavaticaProjet({
+                  body: values,
+                  callback: () => {
+                    trackCavaticaAction(INDEXES.FILE, CavaticaAnalyticsAction.PROJECT_CREATED);
+                  },
+                }),
+              );
+            }}
           />
         )}
       </>
