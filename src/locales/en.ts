@@ -1480,7 +1480,7 @@ const en = {
           samples: {
             emptyText: 'No sample found',
             placeholder: 'e.g. bs-z8p7wjm7',
-            title: 'Search by sample ID',
+            title: 'Search by sample',
             tooltip: 'Enter a sample ID',
             fpkm: 'FPKM',
             age_at_biospecimen: 'Age at biospec. collection',
