@@ -154,17 +154,22 @@ const getColumns = (): ProColumnType<any>[] => [
     key: 'external_id',
     title: intl.get('entities.study.dbgap'),
     sorter: { multiple: 1 },
-    dataIndex: 'external_id',
-    render: (external_id: string) =>
-      external_id ? (
+    dataIndex: 'external_ids',
+    render: (external_ids: string[]) => {
+      if (external_ids.length === 0) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+
+      return external_ids.map((id) => (
         <ExternalLink
-          href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${external_id}`}
+          key={id}
+          className={styles.dbgapLink}
+          href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${id}`}
         >
-          {external_id}
+          {id}
         </ExternalLink>
-      ) : (
-        TABLE_EMPTY_PLACE_HOLDER
-      ),
+      ));
+    },
   },
   {
     key: 'participant_count',

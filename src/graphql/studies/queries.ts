@@ -35,6 +35,7 @@ export const GET_STUDIES = gql`
             date_collection_end_year
             description
             external_id
+            external_ids
             family_count
             file_count
             guid
