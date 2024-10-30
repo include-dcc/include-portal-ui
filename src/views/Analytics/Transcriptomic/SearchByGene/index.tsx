@@ -3,17 +3,11 @@ import intl from 'react-intl-universal';
 import { FilterOutlined } from '@ant-design/icons';
 import Empty from '@ferlab/ui/core/components/Empty/index';
 import { MatchTableItem } from '@ferlab/ui/core/components/UploadIds/types';
-import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
-import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { Button, Select, Tag } from 'antd';
-import { INDEXES } from 'graphql/constants';
-import { CHECK_GENE_MATCH_QUERY } from 'graphql/genes/queries';
-import { hydrateResults } from 'graphql/models';
-import { IGeneEntity } from 'graphql/variants/models';
 
 import SearchLabel from 'components/uiKit/search/SearchLabel';
 import GenesUploadIds from 'components/uiKit/Uploads/GeneUploadIds';
-import { ArrangerApi } from 'services/api/arranger';
+import { TranscriptomicsApi } from 'services/api/transcriptomics';
 import {
   TTranscriptomicsDatum,
   TTranscriptomicsDiffGeneExp,
@@ -60,7 +54,20 @@ const TranscriptomicSearchByGene = ({
         </div>
         <div className={styles.uploadsContainer}>
           <GenesUploadIds
-            identifiersText={intl.get('screen.analytics.transcriptomic.filter.genes.identifiers')}
+            dictionary={{
+              content: {
+                matchTable: {
+                  mappedToFieldColTitle: intl.get(
+                    'screen.analytics.transcriptomic.filter.genes.mappedCol',
+                  ),
+                },
+              },
+              popover: {
+                idenfitifersValue: intl.get(
+                  'screen.analytics.transcriptomic.filter.genes.identifiers',
+                ),
+              },
+            }}
             buttonProps={{ type: 'default' }}
             handleUpload={(uniqueMatches: MatchTableItem[]) => {
               const matches = uniqueMatches.flatMap((uniqueMatch) => [
@@ -74,47 +81,15 @@ const TranscriptomicSearchByGene = ({
               onSelectOptions(result);
             }}
             fetchMatch={async (ids: string[]) => {
-              const response = await ArrangerApi.graphqlRequest({
-                query: CHECK_GENE_MATCH_QUERY.loc?.source.body,
-                variables: {
-                  first: 1000,
-                  offset: 0,
-                  sqon: generateQuery({
-                    operator: BooleanOperators.or,
-                    newFilters: [
-                      {
-                        ...generateValueFilter({
-                          field: 'search_text',
-                          value: ids,
-                          index: INDEXES.GENES,
-                        }),
-                      },
-                    ],
-                  }),
-                },
-              });
-
-              const genes: IGeneEntity[] = hydrateResults(
-                response.data?.data?.genes?.hits?.edges || [],
-              );
-
-              return genes?.flatMap((gene) => {
-                const matchedIds: string[] = ids.filter((id: string) => {
-                  const lowerCaseId = id.toLocaleLowerCase();
-
-                  return (
-                    gene.symbol?.toLocaleLowerCase() === lowerCaseId ||
-                    gene.ensembl_gene_id?.toLocaleLowerCase() === lowerCaseId
-                  );
-                });
-
-                return matchedIds.map((id, index) => ({
-                  key: `${gene.omim_gene_id}:${index}`,
-                  submittedId: id,
-                  mappedTo: gene.symbol,
-                  matchTo: gene.ensembl_gene_id,
-                }));
-              });
+              const response = await TranscriptomicsApi.checkGenesExist(ids);
+              return (response.response.data ?? []).map((gene: TTranscriptomicsDatum) => ({
+                key: gene.gene_symbol,
+                submittedId: ids.filter(
+                  (id) => gene.ensembl_gene_id === id || gene.gene_symbol === id,
+                )[0],
+                mappedTo: gene.gene_symbol,
+                matchTo: gene.ensembl_gene_id,
+              }));
             }}
           />
         </div>

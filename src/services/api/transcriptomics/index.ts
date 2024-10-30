@@ -46,9 +46,20 @@ const checkSampleIdsAndGene = (data: { ensembl_gene_id?: string; sample_ids: str
     data,
   });
 
+const checkGenesExist = (genes: string[]) =>
+  sendRequest<ITranscriptomicsSampleGeneExp>({
+    method: 'POST',
+    url: `${ARRANGER_API}/transcriptomics/checkGenesExist`,
+    headers: headers(),
+    data: {
+      genes,
+    },
+  });
+
 export const TranscriptomicsApi = {
   fetchFacets,
   fetchSampleGeneExp,
   fetchDiffGeneExp,
   checkSampleIdsAndGene,
+  checkGenesExist,
 };
