@@ -18,7 +18,7 @@ describe('Page d\'un participant - Télécharger le sample data', () => {
     cy.validateFileName(`include_biospecimenData_${strDate.slice(0, 4)}${strDate.slice(4, 6)}${strDate.slice(6, 8)}T*.xlsx`);
   });
 
-  it('Valider le contenu du fichier [SJIP-976]', () => {
+  it('Valider le contenu du fichier', () => {
     cy.validateXlsxFileContent('DownloadSampleDataParticipant.json');
   });
 });

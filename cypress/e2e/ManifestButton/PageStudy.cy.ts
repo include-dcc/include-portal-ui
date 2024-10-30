@@ -11,7 +11,7 @@ beforeEach(() => {
   cy.visitStudyEntity('DS-NEXUS', 1);
 });
 
-describe('Page d\'une étude - Bouton Manifest', () => {
+describe('Page d\'une étude - Bouton Manifest', {retries: {runMode: 0}}, () => {
   beforeEach(() => {
     cy.get('[class*="EntityTitleLogo"] button[class*="ant-btn-primary"]').click({force: true});
   });
@@ -63,7 +63,7 @@ describe('Page d\'une étude - Bouton Manifest', () => {
   });
 });
 
-describe('Page d\'une étude - Télécharger le manifest', () => {
+describe('Page d\'une étude - Télécharger le manifest', {retries: {runMode: 0}}, () => {
   beforeEach(() => {
     cy.get('[class*="EntityTitleLogo"] button[class*="ant-btn-primary"]').click({force: true});
     cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/file-manifest', 1);
@@ -83,7 +83,7 @@ describe('Page d\'une étude - Télécharger le manifest', () => {
   });
 });
 
-describe('Page d\'une étude - Télécharger le manifest (checkbox)', () => {
+describe('Page d\'une étude - Télécharger le manifest (checkbox)', {retries: {runMode: 0}}, () => {
   beforeEach(() => {
     cy.get('[class*="EntityTitleLogo"] button[class*="ant-btn-primary"]').click({force: true});
     cy.get('[class="ant-modal-body"] input[type="checkbox"]').check({force: true});
