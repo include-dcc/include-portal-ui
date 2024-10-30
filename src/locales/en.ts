@@ -1475,6 +1475,7 @@ const en = {
             tooltip: 'Enter a Gene Symbol or Ensembl ID',
             fdr: 'FDR Threshold',
             identifiers: 'Gene Symbol, Ensembl ID',
+            mappedCol: 'Gene Symbol',
           },
           samples: {
             emptyText: 'No sample found',
@@ -1965,6 +1966,7 @@ const en = {
       ids: {
         modal: {
           title: 'Upload a gene list',
+          placeholder: 'ex. ENSG00000157764, TP53',
           submittedColTitle: 'Submitted gene identifiers',
           uploadBtnText: 'Upload a gene list',
           mappedTo: 'Mapped To',
@@ -2036,7 +2038,7 @@ const en = {
                 title: 'Sample ID',
               },
               mappedcol: {
-                title: 'Symbol',
+                title: 'Sample ID',
               },
             },
           },

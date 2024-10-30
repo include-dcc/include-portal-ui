@@ -44,9 +44,9 @@ const SampleUploadIds = ({ className, ensemblGeneId, buttonProps, handleUpload }
         }),
       inputLabel: intl.get('upload.sample.ids.modal.input.label'),
       matchTable: {
-        idColTitle: intl.get('upload.sample.ids.modal.match.table.idcol.title'),
-        matchToFieldColTitle: intl.get('upload.sample.ids.modal.match.table.matchcol.title'),
-        mappedToFieldColTitle: intl.get('upload.sample.ids.modal.match.table.mappedcol.title'),
+        idColTitle: intl.get('upload.sample.ids.modal.table.match.idcol.title'),
+        matchToFieldColTitle: intl.get('upload.sample.ids.modal.table.match.matchcol.title'),
+        mappedToFieldColTitle: intl.get('upload.sample.ids.modal.table.match.mappedcol.title'),
       },
     }}
     popoverProps={{
