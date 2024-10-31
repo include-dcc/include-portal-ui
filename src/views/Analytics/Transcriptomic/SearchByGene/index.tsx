@@ -93,7 +93,7 @@ const TranscriptomicSearchByGene = ({
             }}
           />
         </div>
-        <div className={styles.toggleFilterButton}>
+        <div className={styles.toggleFilterButton} style={{ display: 'none' }}>
           <Button
             icon={<FilterOutlined />}
             onClick={() => {
