@@ -154,12 +154,12 @@ const SampleUploadIds = ({
       fetchMatch={async (ids: string[]) => {
         const response = await TranscriptomicsApi.checkSampleIdsAndGene({
           ensembl_gene_id: ensemblGeneId,
-          sample_ids: ids,
+          sample_ids: ids.map((id) => id.toLocaleLowerCase()),
         });
 
         return (response?.response?.data ?? []).map((id: string) => ({
           key: id,
-          submittedId: id,
+          submittedId: ids.filter((uploadIds) => uploadIds.toLowerCase() === id.toLowerCase())[0],
           mappedTo: id,
           matchTo: id,
         }));
@@ -169,7 +169,6 @@ const SampleUploadIds = ({
           (match, index, currentMatch) =>
             index === currentMatch.findIndex((m) => m.mappedTo === match.mappedTo),
         );
-
         return handleUpload(uniqueMatches);
       }}
       buttonProps={buttonProps}
