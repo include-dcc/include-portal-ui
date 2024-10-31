@@ -50,7 +50,7 @@ interface OwnProps {
 }
 
 // eslint-disable-next-line complexity
-const getContentDefaultDictionary = (dictionary: TDictionary = {}) => ({
+const getDefaultDictionary = (dictionary: TDictionary = {}) => ({
   content: {
     modalTitle: dictionary?.content?.modalTitle ?? intl.get('upload.gene.ids.modal.title'),
     placeholder: dictionary?.content?.placeholder ?? intl.get('upload.gene.ids.modal.placeholder'),
@@ -122,7 +122,7 @@ const GenesUploadIds = ({
   dictionary,
   fetchMatch,
 }: OwnProps) => {
-  const uploadDictionary = getContentDefaultDictionary(dictionary);
+  const uploadDictionary = getDefaultDictionary(dictionary);
 
   return (
     <UploadIds
