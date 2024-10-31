@@ -56,6 +56,7 @@ const TranscriptomicSearchByGene = ({
           <GenesUploadIds
             dictionary={{
               content: {
+                placeholder: intl.get('screen.analytics.transcriptomic.filter.genes.placeholder'),
                 matchTable: {
                   mappedToFieldColTitle: intl.get(
                     'screen.analytics.transcriptomic.filter.genes.mappedCol',

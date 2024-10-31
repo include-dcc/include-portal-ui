@@ -65,6 +65,11 @@ const TranscriptomicSearchBySample = ({
               const result = parsedOptions.filter((option) => matches.includes(option.sample_id));
               onSelectOptions(result);
             }}
+            dictionary={{
+              content: {
+                placeholder: intl.get('screen.analytics.transcriptomic.filter.samples.placeholder'),
+              },
+            }}
           />
         </div>
         <div className={styles.filterContainer}>
