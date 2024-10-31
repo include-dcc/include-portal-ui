@@ -160,15 +160,22 @@ const getColumns = (): ProColumnType<any>[] => [
         return TABLE_EMPTY_PLACE_HOLDER;
       }
 
-      return external_ids.map((id) => (
-        <ExternalLink
-          key={id}
-          className={styles.dbgapLink}
-          href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${id}`}
-        >
-          {id}
-        </ExternalLink>
-      ));
+      return (
+        <ExpandableCell
+          nOfElementsWhenCollapsed={1}
+          dataSource={external_ids}
+          renderItem={(id, index) => (
+            <div key={index}>
+              <ExternalLink
+                className={styles.dbgapLink}
+                href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${id}`}
+              >
+                {id}
+              </ExternalLink>
+            </div>
+          )}
+        />
+      );
     },
   },
   {
