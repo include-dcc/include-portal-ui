@@ -67,7 +67,7 @@ const TranscriptomicSearchBySample = ({
             }}
           />
         </div>
-        <div className={styles.filterContainer}>
+        <div className={styles.filterContainer} style={{ display: 'none' }}>
           <Button
             icon={<FilterOutlined />}
             disabled={disabled}
