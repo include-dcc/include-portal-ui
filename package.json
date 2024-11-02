@@ -77,7 +77,7 @@
     "@types/loadable__component": "^5.13.4",
     "@types/lodash": "^4.14.178",
     "@types/md5": "^2.3.1",
-    "@types/node": "^16.11.7",
+    "@types/node": "^16.18.113",
     "@types/react-highlight-words": "^0.16.4",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.2",
