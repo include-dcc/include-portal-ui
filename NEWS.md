@@ -8,6 +8,23 @@
 ### Technical / Other changes
 -->
 
+## 2024-11-04 include-portal-ui 1.15.0
+
+### Features:
+
+- [SJIP-983](https://d3b.atlassian.net/browse/SJIP-983) Feature: [Data Exploration] Add fields to Quick Filter
+- [SJIP-1043](https://d3b.atlassian.net/browse/SJIP-1043) Feature: [Data Exploration] Add facets to the Data Exploration in the Participant and File category
+- [SJIP-1063](https://d3b.atlassian.net/browse/SJIP-1063) Feature: [Study Entity] Add Analyze in Cavatica button on DS-Connect -- unharmonized clinical dataset
+
+### Technical/ Other changes:
+
+- [SJIP-353](https://d3b.atlassian.net/browse/SJIP-353) Refactor: [ETL] Automate the retrieval of the obo files for both HPO and MONDO ontologies
+- [SJIP-947](https://d3b.atlassian.net/browse/SJIP-947) Fix: [Variant Exploration] Adjust the participant frequency tooltip
+- [SJIP-959](https://d3b.atlassian.net/browse/SJIP-959) Fix: [Quick Filter] Adjusted the apply button to correspond to the style for numerical range type facets
+- [SJIP-973](https://d3b.atlassian.net/browse/SJIP-973) Refactor: [Analytics] Add the Differential gene expression plot into the cache to reduce loading time
+- [SJIP-992](https://d3b.atlassian.net/browse/SJIP-992) Fix: [Analytics] Adjusted typo in the Transcriptomics app for the facet title "Search by sample"
+- [SJIP-1036](https://d3b.atlassian.net/browse/SJIP-1036) Refactor: [Data Exploration] Remove both Sunburst MONDO & HPO as charts in the summary view
+
 ## 2024-10-15 include-portal-ui 1.14.0
 
 ### Features:
