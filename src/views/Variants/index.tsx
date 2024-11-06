@@ -3,7 +3,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import { MatchTableItem } from '@ferlab/ui/core/components/UploadIds/types';
-import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
+import { BooleanOperators, RangeOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
@@ -195,6 +195,18 @@ const filterGroups: {
           'genes__spliceai__ds',
           'genes__consequences__predictions__sift_pred',
         ],
+        defaults: {
+          genes__consequences__predictions__cadd_score: {
+            min: 2,
+            max: 10,
+            operator: RangeOperators['between'],
+          },
+          genes__consequences__predictions__cadd_phred: {
+            min: 2,
+            max: 8,
+            operator: RangeOperators['>='],
+          },
+        },
         tooltips: [
           'genes__consequences__predictions__cadd_score',
           'genes__consequences__predictions__cadd_phred',
