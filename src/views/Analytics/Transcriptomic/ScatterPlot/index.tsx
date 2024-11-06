@@ -3,6 +3,7 @@ import intl from 'react-intl-universal';
 import Plot from 'react-plotly.js';
 import ChartSkeleton from '@ferlab/ui/core/components/Charts/Skeleton/index';
 import { Annotations, PlotMouseEvent, ScatterData } from 'plotly.js';
+import { TFDRValue } from 'views/Analytics/Transcriptomic/SearchByGene';
 import { formatPadj } from 'views/Analytics/Transcriptomic/utils';
 
 import {
@@ -13,17 +14,43 @@ import {
 import styles from './index.module.css';
 
 type TTranscriptomicsScatterPlotCanvas = {
+  fdrThreshold?: TFDRValue;
   data?: TTranscriptomicsDiffGeneExp[];
   handleGenesSelection: (gene: TTranscriptomicsDatum[]) => void;
   selectedGenes: TTranscriptomicsDatum[];
   loading: boolean;
+  chromosomes: string[];
 };
 
+const markerColours = ['#bebebe', '#b02428', '#6697ea'];
+
+const getMarkerColorByFdrThreshold = (
+  fdr?: TFDRValue,
+): ((e: TTranscriptomicsDatum, index: number) => string) => {
+  if (fdr === undefined) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return (_, index: number) => markerColours[index];
+  }
+
+  return (e: TTranscriptomicsDatum, index: number) =>
+    e.padj > fdr.value ? markerColours[0] : markerColours[index];
+};
+
+const filterMarkerOpacityBySelectedGenes = (selectedGenes: TTranscriptomicsDatum[]) => {
+  const ensemblGeneIds = selectedGenes.map((gene) => gene.ensembl_gene_id);
+  return (e: TTranscriptomicsDatum) => ensemblGeneIds.includes(e.ensembl_gene_id);
+};
+
+const filterMarkerOpacityByChromosomes = (chromosomes: string[]) => (e: TTranscriptomicsDatum) =>
+  chromosomes.includes(e.chromosome);
+
 const ScatterPlotly = ({
+  fdrThreshold,
   data,
   handleGenesSelection,
   selectedGenes,
   loading,
+  chromosomes,
 }: TTranscriptomicsScatterPlotCanvas) => {
   const [annotations, setAnnotations] = useState<Partial<Annotations>[]>([]);
   const [plotKey, setPlotKey] = useState(0);
@@ -58,21 +85,42 @@ const ScatterPlotly = ({
   const memoizedData = useMemo<ScatterData[]>(
     () =>
       data?.map((group, index) => {
-        const markerColours = ['#bebebe', '#b02428', '#6697ea'];
+        const fdrThresholdFunc = getMarkerColorByFdrThreshold(fdrThreshold);
+        let filterSelectedGenes: TTranscriptomicsDatum[] = [];
+        let filterChromosomes: TTranscriptomicsDatum[] = [];
+
+        if (selectedGenes.length > 1) {
+          filterSelectedGenes = group.data.filter(
+            filterMarkerOpacityBySelectedGenes(selectedGenes),
+          );
+        }
+        if (chromosomes.length > 0) {
+          filterChromosomes = group.data.filter(filterMarkerOpacityByChromosomes(chromosomes));
+        }
+
+        const filterOpacity = (e: TTranscriptomicsDatum) =>
+          filterSelectedGenes.includes(e) || filterChromosomes.includes(e) ? 1.0 : 0.4;
+
         return {
           x: group.data.map((e) => e.x) || [],
           y: group.data.map((e) => e.y) || [],
           type: 'scattergl',
           mode: 'markers',
           marker: {
-            color: markerColours[index],
+            color: group.data.map((e) => fdrThresholdFunc(e, index)),
+            opacity:
+              selectedGenes.length > 1 || chromosomes.length > 0
+                ? group.data.map(filterOpacity)
+                : 1.0,
             size: 7,
             line: {
               color: 'white',
               width: 0.8,
             },
           },
-          name: intl.get(`screen.analytics.transcriptomic.scatterPlot.${group.id}`),
+          name: intl.get(`screen.analytics.transcriptomic.scatterPlot.${group.id}`, {
+            threshold: fdrThreshold?.text ?? 'q ≤ 0.1',
+          }),
           hoverlabel: {
             namelength: 0,
           },
@@ -91,7 +139,7 @@ const ScatterPlotly = ({
           text: group.data.map((e) => formatPadj(e.padj)),
         } as unknown as ScatterData;
       }) || [],
-    [data],
+    [data, fdrThreshold, selectedGenes, chromosomes],
   );
 
   useEffect(() => {
@@ -115,11 +163,9 @@ const ScatterPlotly = ({
       setAnnotations(newAnnotations);
       setPlotKey((prevKey) => prevKey + 1);
       return;
-    } else {
-      setAnnotations([]);
-      setPlotKey(0);
-      return;
     }
+    setAnnotations([]);
+    setPlotKey(0);
   }, [selectedGenes]);
 
   if (loading) {
