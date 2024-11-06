@@ -10,7 +10,7 @@ import styles from './index.module.css';
 export type TTranscriptomicSideBarItem = {
   key: string | number;
   title: string | ReactNode;
-  content: (() => ReactNode) | ReactNode;
+  content?: (() => ReactNode) | ReactNode;
 };
 
 type OwnProps = {
@@ -40,10 +40,15 @@ const SideBarFacet = ({ className, menuItems }: OwnProps) => {
           <div className={styles.content}>
             {menuItems.map((item) => (
               <div key={item.key} className={styles.menuItem}>
-                <div className={styles.menuTitle}>{item.title}</div>
-                <div className={styles.menuContent}>
-                  {typeof item.content === 'function' ? item.content() : item.content}
-                </div>
+                {!item.content && <div className={styles.menuTitle}>{item.title}</div>}
+                {item.content && (
+                  <>
+                    <div className={styles.menuLabel}>{item.title}</div>
+                    <div className={styles.menuContent}>
+                      {typeof item.content === 'function' ? item.content() : item.content}
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </div>

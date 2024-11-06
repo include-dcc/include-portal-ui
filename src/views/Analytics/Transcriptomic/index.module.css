@@ -98,3 +98,14 @@
 .sidebarSelect {
   width: 100%;
 }
+
+.tag {
+  display: flex;
+  align-items: center;
+  background-color: var(--blue-8);
+  color: var(--gray-1);
+}
+
+.tag > * {
+  color: var(--gray-1);
+}
