@@ -64,7 +64,7 @@ const GlobalSearch = <T,>({
         (get(options, `${index}.hits.edges`, []) as any[]).map(({ node }) => ({
           ...node,
         })),
-        new RegExp(search.replace(/[-/\\^$*+?.()|[\]{}]/g, ''), 'gi'),
+        new RegExp(search.replace(/[/\\^$*+?.()|[\]{}]/g, ''), 'gi'),
         search,
       )
     }
