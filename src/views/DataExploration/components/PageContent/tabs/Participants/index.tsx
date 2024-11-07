@@ -91,8 +91,10 @@ const getDefaultColumns = (): ProColumnType[] => [
           studyName={study.study_name}
           text={study.study_code || ''}
         ></StudyPopoverRedirect>
+      ) : study?.study_code ? (
+        <Tooltip title={study?.study_name}>{study.study_code}</Tooltip>
       ) : (
-        <Tooltip title={study?.study_name}>{study?.study_code}</Tooltip> || TABLE_EMPTY_PLACE_HOLDER
+        TABLE_EMPTY_PLACE_HOLDER
       ),
   },
   {
