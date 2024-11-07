@@ -58,6 +58,7 @@ const CommunityPage = () => {
         {intl.get('screen.community.title')}
       </Title>
       <FiltersBox
+        activeFilter={activeFilter}
         onMatchFilterChange={debounce((match) => onMatchFilterChange(match), 300)}
         onRoleFilterChange={setRoleFilter}
         onUsageFilterChange={setUsageFilter}
