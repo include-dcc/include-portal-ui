@@ -54,6 +54,7 @@ const VariantGeneSearch = ({ queryBuilderId, type }: OwnProps) => {
       }
       placeHolder={intl.get(`global.search.${type}.placeholder`)}
       options={options}
+      onClose={() => setOptions([])}
       selectedItems={
         (findSqonValueByField(field, activeQuery as ISqonGroupFilter) as string[]) ?? []
       }
