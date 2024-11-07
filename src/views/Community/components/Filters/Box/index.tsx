@@ -5,11 +5,14 @@ import ProLabel from '@ferlab/ui/core/components/ProLabel';
 import { Button, Input, Select, Space, Tag, Typography } from 'antd';
 import { roleOptions, usageOptions } from 'views/Community/contants';
 
+import { ISearchParams } from 'services/api/user';
+
 import Sorter from '../Sorter';
 
 import styles from './index.module.css';
 
 interface OwnProps {
+  activeFilter: ISearchParams;
   onMatchFilterChange: (value: string) => void;
   onRoleFilterChange: (value: string) => void;
   onUsageFilterChange: (value: string) => void;
@@ -18,6 +21,7 @@ interface OwnProps {
 }
 
 const FiltersBox = ({
+  activeFilter,
   onMatchFilterChange,
   onRoleFilterChange,
   onUsageFilterChange,
@@ -28,9 +32,9 @@ const FiltersBox = ({
   const [roleFilter, setRoleFilter] = useState<string[]>([]);
   const [usageFilter, setUsageFilter] = useState<string[]>([]);
 
-  useEffect(() => onRoleFilterChange(roleFilter.join(',')), [roleFilter]);
+  useEffect(() => onRoleFilterChange(roleFilter.join(',')), [roleFilter, onRoleFilterChange]);
 
-  useEffect(() => onUsageFilterChange(usageFilter.join(',')), [usageFilter]);
+  useEffect(() => onUsageFilterChange(usageFilter.join(',')), [usageFilter, onUsageFilterChange]);
 
   return (
     <Space direction="vertical" size={16} className={styles.filtersContainer}>
@@ -60,10 +64,14 @@ const FiltersBox = ({
               placeholder={intl.get('screen.community.search.selectPlaceholder')}
               maxTagCount={1}
               value={roleFilter}
-              onSelect={(value: string) => setRoleFilter([...roleFilter, value])}
-              onDeselect={(value: string) =>
-                setRoleFilter((prev) => prev.filter((val) => val !== value))
-              }
+              onSelect={(value: string) => {
+                activeFilter.pageIndex = 0;
+                setRoleFilter([...roleFilter, value]);
+              }}
+              onDeselect={(value: string) => {
+                activeFilter.pageIndex = 0;
+                setRoleFilter((prev) => prev.filter((val) => val !== value));
+              }}
               options={[
                 ...roleOptions.map((option) => ({
                   label: option.label,
