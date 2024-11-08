@@ -1,12 +1,23 @@
+import { useMemo } from 'react';
 import intl from 'react-intl-universal';
 import { useNavigate } from 'react-router';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { BooleanOperators, TermOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { Button } from 'antd';
+import { useBiospecimen } from 'graphql/biospecimens/actions';
 import { INDEXES } from 'graphql/constants';
-import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
+import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
+import {
+  BIOSPECIMENS_SAVED_SETS_FIELD,
+  DATA_EXPLORATION_QB_ID,
+  DEFAULT_PAGE_SIZE,
+} from 'views/DataExploration/utils/constant';
+import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
+import { SetType } from 'services/api/savedSet/models';
 import {
   TTranscriptomicsDatum,
   TTranscriptomicsSwarmPlotData,
@@ -29,40 +40,57 @@ const TranscriptomicFooter = ({
   filteredSamples,
 }: TTranscriptomicFooter) => {
   const navigate = useNavigate();
-
-  const viewInExploration = () => {
-    const newFilters = [];
-
+  const samples = useMemo<TTranscriptomicsSwarmPlotData[]>(() => {
     if (filteredSamples.length > 0) {
-      newFilters.push(
-        generateValueFilter({
-          field: 'sample_id',
-          value: filteredSamples.map((s) => s.sample_id),
-          index: INDEXES.BIOSPECIMEN,
-        }),
-      );
-    } else if (selectedSamples.length > 0) {
-      newFilters.push(
-        generateValueFilter({
-          field: 'sample_id',
-          value: selectedSamples.map((s) => s.sample_id),
-          index: INDEXES.BIOSPECIMEN,
-        }),
-      );
-    } else {
-      newFilters.push(
-        generateValueFilter({
-          field: 'sample_id',
-          value: (sampleGeneExpData ?? []).map((s) => s.sample_id),
-          index: INDEXES.BIOSPECIMEN,
-        }),
-      );
+      return filteredSamples;
+    }
+    if (selectedSamples.length > 0) {
+      return selectedSamples;
     }
 
+    if (selectedGeneIds.length > 0) {
+      return sampleGeneExpData ?? [];
+    }
+    return [];
+  }, [selectedSamples, filteredSamples, selectedGeneIds, sampleGeneExpData]);
+
+  const sqon = {
+    content: [
+      {
+        content: {
+          field: 'sample_id',
+          index: INDEXES.BIOSPECIMEN,
+          value: samples.map((s) => s.sample_id),
+        },
+        op: TermOperators.in,
+      },
+    ],
+    op: BooleanOperators.and,
+  };
+
+  const results = useBiospecimen({
+    first: DEFAULT_PAGE_SIZE,
+    offset: DEFAULT_OFFSET,
+    sqon,
+    sort: [
+      {
+        field: 'sample_id',
+        order: SortDirection.Asc,
+      },
+    ],
+  });
+
+  const viewInExploration = () => {
     addQuery({
       queryBuilderId: DATA_EXPLORATION_QB_ID,
       query: generateQuery({
-        newFilters,
+        newFilters: [
+          generateValueFilter({
+            field: 'sample_id',
+            value: samples.map((s) => s.sample_id),
+            index: INDEXES.BIOSPECIMEN,
+          }),
+        ],
       }),
       setAsActive: true,
     });
@@ -76,15 +104,27 @@ const TranscriptomicFooter = ({
       </div>
       <div className={styles.sample}>
         {/* <Button>{intl.get('screen.analytics.transcriptomic.footer.download')}</Button> */}
-        {/* <SetsManagementDropdown
+        <SetsManagementDropdown
           idField={BIOSPECIMENS_SAVED_SETS_FIELD}
           key="setManagementDropdown"
-          results={[]}
-          // sqon={getCurrentSqon()}
-          selectedAllResults={selectedSamples.length == 0}
+          results={results}
+          sqon={{
+            content: [
+              {
+                content: {
+                  field: 'sample_id',
+                  index: INDEXES.BIOSPECIMEN,
+                  value: samples.map((s) => s.sample_id),
+                },
+                op: TermOperators.in,
+              },
+            ],
+            op: BooleanOperators.and,
+          }}
+          selectedAllResults={false}
           type={SetType.BIOSPECIMEN}
-          selectedKeys={selectedSamples.map((e) => e.sample_id)}
-        /> */}
+          selectedKeys={samples.map((e) => e.sample_id)}
+        />
         <Button
           disabled={selectedGeneIds?.length === 0 || (sampleGeneExpData ?? []).length === 0}
           onClick={viewInExploration}
