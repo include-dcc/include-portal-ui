@@ -104,10 +104,14 @@ const FiltersBox = ({
               placeholder={intl.get('screen.community.search.selectPlaceholder')}
               maxTagCount={1}
               value={usageFilter}
-              onSelect={(value: string) => setUsageFilter([...usageFilter, value])}
-              onDeselect={(value: string) =>
-                setUsageFilter((prev) => prev.filter((val) => val !== value))
-              }
+              onSelect={(value: string) => {
+                activeFilter.pageIndex = 0;
+                setUsageFilter([...usageFilter, value]);
+              }}
+              onDeselect={(value: string) => {
+                activeFilter.pageIndex = 0;
+                setUsageFilter((prev) => prev.filter((val) => val !== value));
+              }}
               options={[
                 ...usageOptions.map((option) => ({
                   label: option.label,
