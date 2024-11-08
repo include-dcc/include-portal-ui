@@ -3,12 +3,12 @@ import intl from 'react-intl-universal';
 import Empty from '@ferlab/ui/core/components/Empty';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Divider, Select, Space, Typography } from 'antd';
+import { Divider, Select, Space, Tag, Typography } from 'antd';
 import cx from 'classnames';
 import TranscriptomicDataset from 'views/Analytics/Transcriptomic/Dataset';
 import TranscriptomicFooter from 'views/Analytics/Transcriptomic/Footer';
 import Heatmaps from 'views/Analytics/Transcriptomic/Heatmaps';
-import TranscriptomicSearchByGene from 'views/Analytics/Transcriptomic/SearchByGene';
+import TranscriptomicSearchByGene, { TFDRValue } from 'views/Analytics/Transcriptomic/SearchByGene';
 import TranscriptomicSearchBySample from 'views/Analytics/Transcriptomic/SearchBySample';
 import { SCROLL_WRAPPER_ID } from 'views/DataExploration/utils/constant';
 
@@ -26,7 +26,17 @@ import styles from './index.module.css';
 
 const { Title } = Typography;
 
-const menuItems: () => TTranscriptomicSideBarItem[] = () => [
+const chromosomesIndex = new Array(21).fill(0);
+
+type TMenuItems = {
+  handleChromosomes: (value: string[]) => void;
+};
+
+const menuItems = ({ handleChromosomes }: TMenuItems): TTranscriptomicSideBarItem[] => [
+  {
+    key: '0',
+    title: intl.get('screen.analytics.transcriptomic.sidebar.statisticalParameters'),
+  },
   {
     key: '1',
     title: intl.get('screen.analytics.transcriptomic.sidebar.statisticalTest'),
@@ -49,6 +59,40 @@ const menuItems: () => TTranscriptomicSideBarItem[] = () => [
       </Select>
     ),
   },
+  {
+    key: '3',
+    title: intl.get('screen.analytics.transcriptomic.sidebar.location'),
+  },
+  {
+    key: '4',
+    title: intl.get('screen.analytics.transcriptomic.sidebar.chromosome'),
+    content: (
+      <Select
+        mode="multiple"
+        allowClear
+        className={styles.sidebarSelect}
+        onChange={(value) => handleChromosomes(value)}
+        tagRender={({ onClose, label }) => (
+          <Tag className={styles.tag} closable onClose={onClose} style={{ marginRight: 3 }}>
+            {label}
+          </Tag>
+        )}
+        notFoundContent={
+          <Empty
+            size="mini"
+            showImage={false}
+            description={intl.get('screen.analytics.transcriptomic.filter.genes.emptyText')}
+          />
+        }
+      >
+        {chromosomesIndex.map((_, index) => (
+          <Select.Option value={`chr${index + 1}`}>{`chr${index + 1}`}</Select.Option>
+        ))}
+        <Select.Option value={`chrX`}>{`chrX`}</Select.Option>
+        <Select.Option value={`chrY`}>{`chrY`}</Select.Option>
+      </Select>
+    ),
+  },
 ];
 
 export const Transcriptomic = () => {
@@ -56,7 +100,13 @@ export const Transcriptomic = () => {
   const [isHeaderFilterToggled, setIsHeaderFilterToggled] = useState<boolean>(false);
   const [selectedGenes, setSelectedGenes] = useState<TTranscriptomicsDatum[]>([]);
   const [selectedSamples, setSelectedSamples] = useState<TTranscriptomicsSwarmPlotData[]>([]);
+  const [filteredSamples, setFilteredSamples] = useState<TTranscriptomicsSwarmPlotData[]>([]);
+  const [chromosomes, setChromosomes] = useState<string[]>([]);
   const sampleGeneExp = useTranscriptomicsSampleGeneExp(selectedGenes[0]?.ensembl_gene_id ?? '');
+  const [fdrThresholdFilter, setFdrThresholdFilter] = useState<TFDRValue | undefined>(undefined);
+  const [fpkm, setFpkm] = useState<number[]>([]);
+  const [ages, setAges] = useState<number[]>([]);
+  const [sex, setSex] = useState<string[]>([]);
 
   const handleSearchByGeneSelection = (genes: TTranscriptomicsDatum[]) => {
     setSelectedGenes(genes);
@@ -66,10 +116,16 @@ export const Transcriptomic = () => {
   const handleSearchBySampleSelection = (samples: TTranscriptomicsSwarmPlotData[]) => {
     setSelectedSamples(samples);
   };
+  const handleFilteredSamples = (samples: TTranscriptomicsSwarmPlotData[]) => {
+    setFilteredSamples(samples);
+  };
 
   return (
     <div className={styles.transcriptomicPage}>
-      <SideBar className={styles.sideMenu} menuItems={menuItems()} />
+      <SideBar
+        className={styles.sideMenu}
+        menuItems={menuItems({ handleChromosomes: setChromosomes })}
+      />
       <ScrollContent id={SCROLL_WRAPPER_ID} className={styles.scrollContent}>
         <Space direction="vertical" size={16} className={styles.pageContent}>
           <div>
@@ -85,6 +141,8 @@ export const Transcriptomic = () => {
               <TranscriptomicFooter
                 selectedGenes={selectedGenes}
                 sampleGeneExpData={sampleGeneExp.data?.data}
+                selectedSamples={selectedSamples}
+                filteredSamples={filteredSamples}
               />
             }
             content={
@@ -92,6 +150,7 @@ export const Transcriptomic = () => {
                 <div className={styles.header}>
                   <div className={styles.container}>
                     <TranscriptomicSearchByGene
+                      handleFdrThreshold={setFdrThresholdFilter}
                       options={diffGeneExp.data}
                       onSelectOptions={handleSearchByGeneSelection}
                       selectedGenes={selectedGenes}
@@ -107,6 +166,9 @@ export const Transcriptomic = () => {
                   />
                   <div className={styles.container}>
                     <TranscriptomicSearchBySample
+                      handleFPKM={setFpkm}
+                      handleAges={setAges}
+                      handleSex={setSex}
                       selectedGene={selectedGenes[0]}
                       options={sampleGeneExp.data}
                       onSelectOptions={handleSearchBySampleSelection}
@@ -122,10 +184,12 @@ export const Transcriptomic = () => {
                 <div className={styles.content}>
                   <div className={styles.chartContainer}>
                     <ScatterPlot
+                      fdrThreshold={fdrThresholdFilter}
                       loading={diffGeneExp.loading}
                       data={diffGeneExp.data}
-                      handleGenesSelection={setSelectedGenes}
+                      handleGenesSelection={handleSearchByGeneSelection}
                       selectedGenes={selectedGenes}
+                      chromosomes={chromosomes}
                     />
                   </div>
                   <div className={styles.vDivider} />
@@ -139,9 +203,13 @@ export const Transcriptomic = () => {
                     )}
                     {selectedGenes.length === 1 && (
                       <SwarmPlot
+                        fpkm={fpkm}
+                        ages={ages}
+                        sex={sex}
                         selectedGene={selectedGenes[0]}
                         selectedSamples={selectedSamples}
                         handleSampleSelection={handleSearchBySampleSelection}
+                        handleFilteredSamples={handleFilteredSamples}
                         loading={sampleGeneExp.loading}
                         sampleGeneExp={sampleGeneExp.data}
                       />

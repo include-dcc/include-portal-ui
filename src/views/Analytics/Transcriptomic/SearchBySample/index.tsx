@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { FilterOutlined } from '@ant-design/icons';
 import Empty from '@ferlab/ui/core/components/Empty';
@@ -19,6 +19,9 @@ import styles from './index.module.css';
 
 type OwnProps = {
   options?: ITranscriptomicsSampleGeneExp;
+  handleFPKM: (values: number[]) => void;
+  handleAges: (values: number[]) => void;
+  handleSex: (value: string[]) => void;
   selectedGene?: TTranscriptomicsDatum;
   selectedSamples: TTranscriptomicsSwarmPlotData[];
   onSelectOptions: (samples: TTranscriptomicsSwarmPlotData[]) => void;
@@ -28,6 +31,9 @@ type OwnProps = {
 
 const TranscriptomicSearchBySample = ({
   options,
+  handleFPKM,
+  handleAges,
+  handleSex,
   selectedSamples,
   selectedGene,
   onSelectOptions,
@@ -35,8 +41,41 @@ const TranscriptomicSearchBySample = ({
   onToggle,
 }: OwnProps) => {
   const [toggleFilterPanel, setToggleFilterPanel] = useState<boolean>(false);
+  const [fpkm, setFpkm] = useState<[number, number]>([
+    options?.min_fpkm_value ?? 0,
+    options?.max_fpkm_value ?? 1,
+  ]);
+  const [ages, setAges] = useState<[number, number]>([
+    options?.min_age_at_biospecimen_collection_years ?? 0,
+    options?.max_age_at_biospecimen_collection_years ?? 1,
+  ]);
+  const [sex, setSex] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (options) {
+      setFpkm([options.min_fpkm_value, options.max_fpkm_value]);
+      setAges([
+        options.min_age_at_biospecimen_collection_years,
+        options.max_age_at_biospecimen_collection_years,
+      ]);
+      setSex([]);
+    }
+  }, [options]);
+
+  useEffect(() => {
+    handleFPKM(fpkm);
+  }, [fpkm, handleFPKM]);
+
+  useEffect(() => {
+    handleAges(ages);
+  }, [ages, handleAges]);
+
+  useEffect(() => {
+    handleSex(sex);
+  }, [sex, handleSex]);
+
   const parsedOptions = options?.data || [];
-  const pkms = parsedOptions.flatMap((option) => option.y);
+
   return (
     <div className={styles.searchBySample}>
       <SearchLabel
@@ -72,7 +111,7 @@ const TranscriptomicSearchBySample = ({
             }}
           />
         </div>
-        <div className={styles.filterContainer} style={{ display: 'none' }}>
+        <div className={styles.filterContainer}>
           <Button
             icon={<FilterOutlined />}
             disabled={disabled}
@@ -94,11 +133,14 @@ const TranscriptomicSearchBySample = ({
               tooltipText={intl.get('screen.analytics.transcriptomic.filter.genes.tooltip')}
             />
             <Slider
-              max={Math.max(...pkms)}
-              min={Math.min(...pkms)}
-              defaultValue={[20, 50]}
+              min={options?.min_fpkm_value ?? 0}
+              max={options?.max_fpkm_value ?? 1}
+              value={fpkm}
               range
               disabled={disabled}
+              onChange={(value) => {
+                setFpkm(value);
+              }}
             />
           </div>
           <div className={styles.filter}>
@@ -107,7 +149,16 @@ const TranscriptomicSearchBySample = ({
               title={intl.get('screen.analytics.transcriptomic.filter.samples.age_at_biospecimen')}
               tooltipText={intl.get('screen.analytics.transcriptomic.filter.genes.tooltip')}
             />
-            <Slider defaultValue={[20, 50]} range disabled={disabled} />
+            <Slider
+              min={options?.min_age_at_biospecimen_collection_years}
+              max={options?.max_age_at_biospecimen_collection_years}
+              value={ages}
+              range
+              disabled={disabled}
+              onChange={(value) => {
+                setAges(value);
+              }}
+            />
           </div>
           <div className={styles.filter}>
             <SearchLabel
@@ -121,6 +172,10 @@ const TranscriptomicSearchBySample = ({
               maxTagCount="responsive"
               mode="multiple"
               disabled={disabled}
+              value={sex}
+              onChange={(value) => {
+                setSex(value);
+              }}
               notFoundContent={
                 <Empty
                   size="mini"
@@ -136,16 +191,16 @@ const TranscriptomicSearchBySample = ({
               )}
               options={[
                 {
-                  label: 'Female',
-                  value: 'female',
+                  label: intl.get('screen.analytics.transcriptomic.filter.samples.female'),
+                  value: 'Female',
                 },
                 {
-                  label: 'Male',
-                  value: 'male',
+                  label: intl.get('screen.analytics.transcriptomic.filter.samples.male'),
+                  value: 'Male',
                 },
                 {
-                  label: 'Unknown',
-                  value: 'unknow',
+                  label: intl.get('screen.analytics.transcriptomic.filter.samples.unknown'),
+                  value: 'Unknow',
                 },
               ]}
             />

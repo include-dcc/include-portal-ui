@@ -7,6 +7,8 @@ export type TTranscriptomicsSwarmPlotData = {
   sample_id: string;
   x: number;
   y: number;
+  age_at_biospecimen_collection_years: number;
+  sex: string;
 };
 
 export type TTranscriptomicsDatum = ScatterPlotDatum & {
@@ -24,6 +26,10 @@ export interface ITranscriptomicsSampleGeneExp {
   ensembl_gene_id: string;
   nControl: number;
   nT21: number;
+  max_age_at_biospecimen_collection_years: number;
+  max_fpkm_value: number;
+  min_age_at_biospecimen_collection_years: number;
+  min_fpkm_value: number;
 }
 
 export interface ITranscriptomicsFacets {

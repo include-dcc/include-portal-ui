@@ -17,8 +17,32 @@ import TranscriptomicSearch from '../TranscriptomicSearch';
 
 import styles from './index.module.css';
 
+export enum FDROperators {
+  lessThan,
+  lessThanOrEqual,
+}
+
+const getFdrValue = (value: string): TFDRValue | undefined => {
+  switch (value) {
+    case 'q ≤ 0.1':
+      return { value: 0.1, text: 'q ≤ 0.1' };
+    case 'q ≤ 0.05':
+      return { value: 0.05, text: 'q ≤ 0.05' };
+    case 'q ≤ 0.01':
+      return { value: 0.01, text: 'q ≤ 0.01' };
+    default:
+      return undefined;
+  }
+};
+
+export type TFDRValue = {
+  value: number;
+  text: string;
+};
+
 type OwnProps = {
   options?: TTranscriptomicsDiffGeneExp[];
+  handleFdrThreshold: (fdr?: TFDRValue) => void;
   selectedGenes: TTranscriptomicsDatum[];
   onSelectOptions: (genes: TTranscriptomicsDatum[]) => void;
   onToggle?: (isToggled: boolean) => void;
@@ -27,6 +51,7 @@ type OwnProps = {
 const TranscriptomicSearchByGene = ({
   options,
   selectedGenes,
+  handleFdrThreshold,
   onSelectOptions,
   onToggle,
 }: OwnProps) => {
@@ -94,7 +119,7 @@ const TranscriptomicSearchByGene = ({
             }}
           />
         </div>
-        <div className={styles.toggleFilterButton} style={{ display: 'none' }}>
+        <div className={styles.toggleFilterButton}>
           <Button
             icon={<FilterOutlined />}
             onClick={() => {
@@ -116,8 +141,9 @@ const TranscriptomicSearchByGene = ({
           <Select
             allowClear
             autoClearSearchValue
-            maxTagCount="responsive"
-            mode="multiple"
+            onChange={(value) => {
+              handleFdrThreshold(getFdrValue(value));
+            }}
             notFoundContent={
               <Empty
                 size="mini"
@@ -132,8 +158,8 @@ const TranscriptomicSearchByGene = ({
             )}
             options={[
               {
-                label: 'q < 0.1',
-                value: 'q < 0.1',
+                label: 'q ≤ 0.1',
+                value: 'q ≤ 0.1',
               },
               {
                 label: 'q ≤ 0.05',
@@ -142,10 +168,6 @@ const TranscriptomicSearchByGene = ({
               {
                 label: 'q ≤ 0.01',
                 value: 'q ≤ 0.01',
-              },
-              {
-                label: 'q ≤ 0.001',
-                value: 'q ≤ 0.001',
               },
             ]}
           />
