@@ -89,7 +89,6 @@ const SwarmPlotly = ({
   sampleGeneExp,
   loading,
 }: TTranscriptomicsSwarmPlot) => {
-  const isFilterEnabled = getIsFilterEnabled(fpkm, ages, sex, sampleGeneExp);
   const memoizedData = useMemo<SwarmPlotData[]>(() => {
     const data = sampleGeneExp?.data ?? [];
     const isValidSampleFunc = getIsValidSamplesFunc(fpkm, ages, sex);
@@ -182,6 +181,10 @@ const SwarmPlotly = ({
     });
 
   useEffect(() => {
+    if (!getIsFilterEnabled(fpkm, ages, sex, sampleGeneExp)) {
+      handleFilteredSamples([]);
+      return;
+    }
     const filteredSamples: TTranscriptomicsSwarmPlotData[] = [];
     memoizedData.forEach((group) => {
       group.selectedpoints.forEach((index) => {
@@ -190,7 +193,8 @@ const SwarmPlotly = ({
     });
 
     handleFilteredSamples(filteredSamples);
-  }, [handleFilteredSamples, isFilterEnabled, memoizedData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fpkm, ages, sex]);
 
   if (loading) {
     return <ChartSkeleton />;
