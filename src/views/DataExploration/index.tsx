@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import {
   ExperimentOutlined,
   FileSearchOutlined,
+  FileTextOutlined,
   SearchOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -120,6 +121,7 @@ export const filterGroups: {
           'ethnicity',
           'outcomes__vital_status',
         ],
+        categoryIcon: <UserOutlined className={styles.categoryIcon} />,
       },
     ],
   },
@@ -142,6 +144,7 @@ export const filterGroups: {
           'biospecimen_storage',
         ],
         noDataOption: ['age_at_biospecimen_collection'],
+        categoryIcon: <ExperimentOutlined className={styles.categoryIcon} />,
       },
     ],
   },
@@ -161,6 +164,7 @@ export const filterGroups: {
           'file_format',
           'acl',
         ],
+        categoryIcon: <FileTextOutlined className={styles.categoryIcon} />,
       },
     ],
   },
@@ -308,6 +312,7 @@ const DataExploration = () => {
           label: facetName,
           type: 'title',
           index: getIndexFromQFValueFacet(key),
+          categoryIcon: <UserOutlined className={styles.categoryIcon} />,
         });
         suggestions.push(...bucketFiltered);
       }
@@ -370,6 +375,7 @@ const DataExploration = () => {
       headerTooltip: false,
       dictionary: getFacetsDictionary(),
       noDataInputOption: false,
+      categoryIcon: <UserOutlined className={styles.categoryIcon} />,
     });
 
     const filters =
