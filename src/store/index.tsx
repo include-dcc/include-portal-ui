@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import EnvVariables from 'helpers/EnvVariables';
 import { combineReducers } from 'redux';
-import logger from 'redux-logger';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createFilter from 'redux-persist-transform-filter';
@@ -47,7 +46,7 @@ const store = configureStore({
     const defaultMid = getDefaultMiddleware({
       serializableCheck: false,
     });
-    return devMode ? defaultMid.concat(logger) : defaultMid;
+    return defaultMid;
   },
 });
 

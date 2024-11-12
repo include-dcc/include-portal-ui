@@ -7,7 +7,7 @@ import {
 } from '@ferlab/ui/core/components/Widgets/Cavatica/CavaticaAnalyzeModal';
 import { ICavaticaProjects } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import { Button, Divider, Modal, ModalFuncProps, Space, TreeSelect, Typography } from 'antd';
-import { LegacyDataNode } from 'rc-tree-select/lib/TreeSelect';
+import { LegacyDataNode } from 'rc-tree-select/lib/interface';
 
 import styles from './index.module.css';
 
