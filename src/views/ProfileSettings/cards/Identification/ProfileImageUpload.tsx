@@ -31,7 +31,7 @@ const ProfileImageUpload = () => {
       <Space direction="vertical" align="center">
         <UserAvatar imageKey={userInfo?.profile_image_key} size={120} />
         <ImgCrop
-          rotate
+          rotationSlider
           modalOk={intl.get('global.save')}
           modalTitle={intl.get('screen.profileSettings.cards.identification.editPhotoModalTitle')}
         >
