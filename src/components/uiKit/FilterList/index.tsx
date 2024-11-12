@@ -96,6 +96,7 @@ const FilterList = ({
                       : undefined
                   }
                   filterWithFooter={filterWithFooter}
+                  defaults={group.defaults?.[facet]}
                 />
               ) : (
                 <div key={i + ii} className={cx(styles.customFilterWrapper, styles.filter)}>

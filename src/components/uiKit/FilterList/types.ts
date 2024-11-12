@@ -1,10 +1,14 @@
 import React from 'react';
+import { TFilterGroupDefaults } from '@ferlab/ui/core/components/filters/types';
 import { DocumentNode } from 'graphql';
 import { ExtendedMappingResults } from 'graphql/models';
 
 export interface FilterGroup {
   title?: string;
   facets: string[] | React.ReactNode[];
+  defaults?: {
+    [key: string]: TFilterGroupDefaults;
+  };
   tooltips?: string[];
   noDataOption?: string[];
   intervalDecimal?: { [key: string]: number };
