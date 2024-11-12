@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import FilterContainer from '@ferlab/ui/core/components/filters/FilterContainer';
 import { IFilter, IFilterGroup, TExtendedMapping } from '@ferlab/ui/core/components/filters/types';
 import { updateActiveQueryFilters } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
@@ -28,6 +28,7 @@ type OwnProps = {
   noDataInputOption?: boolean;
   intervalDecimal?: number;
   filterWithFooter?: boolean;
+  categoryIcon?: ReactNode;
 };
 
 const CustomFilterContainer = ({
@@ -43,6 +44,7 @@ const CustomFilterContainer = ({
   noDataInputOption,
   intervalDecimal,
   filterWithFooter = true,
+  categoryIcon,
 }: OwnProps) => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(defaultOpen);
@@ -78,6 +80,7 @@ const CustomFilterContainer = ({
     dictionary: getFacetsDictionary(),
     noDataInputOption,
     intervalDecimal,
+    categoryIcon,
   });
 
   const filters = results?.aggregations ? getFilters(results?.aggregations, filterKey) : [];
