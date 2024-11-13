@@ -1,9 +1,9 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import keycloak from 'auth/keycloak-api/keycloak';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const apiInstance = axios.create();
 
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   data: T | undefined;
   response: AxiosResponse;
   error: AxiosError | undefined;
@@ -24,8 +24,8 @@ apiInstance.interceptors.request.use((config) => {
   return config;
 });
 
-export const sendRequest = async <T,>(config: AxiosRequestConfig) => {
-  return apiInstance
+export const sendRequest = async <T,>(config: AxiosRequestConfig) =>
+  apiInstance
     .request<T>(config)
     .then(
       (response): ApiResponse<T> => ({
@@ -41,6 +41,5 @@ export const sendRequest = async <T,>(config: AxiosRequestConfig) => {
         error: err,
       }),
     );
-};
 
 export default apiInstance;

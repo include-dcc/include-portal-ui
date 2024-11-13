@@ -8,6 +8,7 @@ import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { Button } from 'antd';
 import { useBiospecimen } from 'graphql/biospecimens/actions';
 import { INDEXES } from 'graphql/constants';
+import DownloadTranscriptomics from 'views/Analytics/Transcriptomic/Footer/DownloadTranscriptomics';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import {
   BIOSPECIMENS_SAVED_SETS_FIELD,
@@ -18,6 +19,7 @@ import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import { SetType } from 'services/api/savedSet/models';
+import { TranscriptomicsApi } from 'services/api/transcriptomics';
 import {
   TTranscriptomicsDatum,
   TTranscriptomicsSwarmPlotData,
@@ -100,10 +102,17 @@ const TranscriptomicFooter = ({
   return (
     <div className={styles.footer}>
       <div className={styles.gene}>
-        {/* <Button>{intl.get('screen.analytics.transcriptomic.footer.download')}</Button> */}
+        <DownloadTranscriptomics
+          filename="htp-dge-data"
+          handleUrl={TranscriptomicsApi.fetchExportUrlDiffGeneExp}
+        />
       </div>
       <div className={styles.sample}>
-        {/* <Button>{intl.get('screen.analytics.transcriptomic.footer.download')}</Button> */}
+        <DownloadTranscriptomics
+          filename="htp-rnaseq-data"
+          displayNotification
+          handleUrl={TranscriptomicsApi.fetchExportUrlSampleGeneExp}
+        />
         <SetsManagementDropdown
           idField={BIOSPECIMENS_SAVED_SETS_FIELD}
           key="setManagementDropdown"
