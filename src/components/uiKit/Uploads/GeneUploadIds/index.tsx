@@ -1,6 +1,7 @@
 import intl from 'react-intl-universal';
 import UploadIds from '@ferlab/ui/core/components/UploadIds';
 import { MatchTableItem, TFetchMatchFunc } from '@ferlab/ui/core/components/UploadIds/types';
+import { TextTransformMode } from '@ferlab/ui/core/components/UploadIds/UploadModal';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { ButtonProps, Descriptions } from 'antd';
 
@@ -145,6 +146,7 @@ const GenesUploadIds = ({
           </Descriptions>
         ),
       }}
+      textTransformMode={TextTransformMode.UPPER}
       placeHolder={uploadDictionary.content.placeholder}
       fetchMatch={fetchMatch}
       onUpload={(matches: MatchTableItem[]) => {
