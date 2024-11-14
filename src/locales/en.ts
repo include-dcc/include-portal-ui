@@ -1466,9 +1466,9 @@ const en = {
         },
         heatmap: {
           title: 'Fold Change with T21',
-          fold_change: 'Fold Change',
+          fold_change: 'Fold change',
           qvalue: 'q-value',
-          gene_symbol: 'Gene',
+          gene_symbol: 'Gene symbol',
         },
         filter: {
           genes: {
