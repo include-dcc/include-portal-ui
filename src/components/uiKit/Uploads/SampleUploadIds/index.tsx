@@ -1,6 +1,7 @@
 import intl from 'react-intl-universal';
 import UploadIds from '@ferlab/ui/core/components/UploadIds';
 import { MatchTableItem } from '@ferlab/ui/core/components/UploadIds/types';
+import { TextTransformMode } from '@ferlab/ui/core/components/UploadIds/UploadModal';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { ButtonProps, Descriptions } from 'antd';
 
@@ -150,6 +151,7 @@ const SampleUploadIds = ({
           </Descriptions>
         ),
       }}
+      textTransformMode={TextTransformMode.LOWER}
       placeHolder={uploadDictionary.content.placeholder}
       fetchMatch={async (ids: string[]) => {
         const response = await TranscriptomicsApi.checkSampleIdsAndGene({
