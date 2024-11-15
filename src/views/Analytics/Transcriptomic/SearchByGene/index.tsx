@@ -136,7 +136,6 @@ const TranscriptomicSearchByGene = ({
           <SearchLabel
             className={styles.searchLabel}
             title={intl.get('screen.analytics.transcriptomic.filter.genes.fdr')}
-            tooltipText={intl.get('screen.analytics.transcriptomic.filter.genes.tooltip')}
           />
           <Select
             onChange={(value) => {
