@@ -97,7 +97,8 @@ const menuItems = ({ handleChromosomes }: TMenuItems): TTranscriptomicSideBarIte
 
 export const Transcriptomic = () => {
   const diffGeneExp = useTranscriptomicsDiffGeneExp();
-  const [isHeaderFilterToggled, setIsHeaderFilterToggled] = useState<boolean>(false);
+  const [isHeaderGeneFilterToggled, setIsHeaderGeneFilterToggled] = useState<boolean>(false);
+  const [isHeaderSampleFilterToggled, setIsHeaderSampleFilterToggled] = useState<boolean>(false);
   const [selectedGenes, setSelectedGenes] = useState<TTranscriptomicsDatum[]>([]);
   const [selectedSamples, setSelectedSamples] = useState<TTranscriptomicsSwarmPlotData[]>([]);
   const [filteredSamples, setFilteredSamples] = useState<TTranscriptomicsSwarmPlotData[]>([]);
@@ -155,13 +156,13 @@ export const Transcriptomic = () => {
                       onSelectOptions={handleSearchByGeneSelection}
                       selectedGenes={selectedGenes}
                       onToggle={(isToggled) => {
-                        setIsHeaderFilterToggled(isToggled);
+                        setIsHeaderGeneFilterToggled(isToggled);
                       }}
                     />
                   </div>
                   <div
                     className={cx(styles.vDivider, styles.containerDivider, {
-                      [styles.toggled]: isHeaderFilterToggled,
+                      [styles.toggled]: isHeaderGeneFilterToggled || isHeaderSampleFilterToggled,
                     })}
                   />
                   <div className={styles.container}>
@@ -175,7 +176,7 @@ export const Transcriptomic = () => {
                       selectedSamples={selectedSamples}
                       disabled={selectedGenes.length !== 1}
                       onToggle={(isToggled) => {
-                        setIsHeaderFilterToggled(isToggled);
+                        setIsHeaderSampleFilterToggled(isToggled);
                       }}
                     />
                   </div>
