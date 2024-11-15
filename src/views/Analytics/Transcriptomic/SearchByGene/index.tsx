@@ -3,7 +3,7 @@ import intl from 'react-intl-universal';
 import { FilterOutlined } from '@ant-design/icons';
 import Empty from '@ferlab/ui/core/components/Empty/index';
 import { MatchTableItem } from '@ferlab/ui/core/components/UploadIds/types';
-import { Button, Select, Tag } from 'antd';
+import { Button, Select } from 'antd';
 
 import SearchLabel from 'components/uiKit/search/SearchLabel';
 import GenesUploadIds from 'components/uiKit/Uploads/GeneUploadIds';
@@ -139,11 +139,10 @@ const TranscriptomicSearchByGene = ({
             tooltipText={intl.get('screen.analytics.transcriptomic.filter.genes.tooltip')}
           />
           <Select
-            allowClear
-            autoClearSearchValue
             onChange={(value) => {
               handleFdrThreshold(getFdrValue(value));
             }}
+            defaultValue="q ≤ 0.1"
             notFoundContent={
               <Empty
                 size="mini"
@@ -151,11 +150,6 @@ const TranscriptomicSearchByGene = ({
                 description={intl.get('screen.analytics.transcriptomic.filter.genes.emptyText')}
               />
             }
-            tagRender={({ onClose, label }) => (
-              <Tag className={styles.tag} closable onClose={onClose} style={{ marginRight: 3 }}>
-                {label}
-              </Tag>
-            )}
             options={[
               {
                 label: 'q ≤ 0.1',
