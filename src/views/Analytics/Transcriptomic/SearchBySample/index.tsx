@@ -79,6 +79,7 @@ const TranscriptomicSearchBySample = ({
   return (
     <div className={styles.searchBySample}>
       <SearchLabel
+        className={styles.searchLabel}
         title={intl.get('screen.analytics.transcriptomic.filter.samples.title')}
         tooltipText={intl.get('screen.analytics.transcriptomic.filter.samples.tooltip')}
       />
@@ -130,7 +131,6 @@ const TranscriptomicSearchBySample = ({
             <SearchLabel
               className={styles.searchLabel}
               title={intl.get('screen.analytics.transcriptomic.filter.samples.fpkm')}
-              tooltipText={intl.get('screen.analytics.transcriptomic.filter.genes.tooltip')}
             />
             <Slider
               min={options?.min_fpkm_value ?? 0}
@@ -147,7 +147,9 @@ const TranscriptomicSearchBySample = ({
             <SearchLabel
               className={styles.searchLabel}
               title={intl.get('screen.analytics.transcriptomic.filter.samples.age_at_biospecimen')}
-              tooltipText={intl.get('screen.analytics.transcriptomic.filter.genes.tooltip')}
+              tooltipText={intl.get(
+                'screen.analytics.transcriptomic.filter.samples.age_at_biospecimen_tooltips',
+              )}
             />
             <Slider
               min={options?.min_age_at_biospecimen_collection_years}
@@ -164,7 +166,6 @@ const TranscriptomicSearchBySample = ({
             <SearchLabel
               className={styles.searchLabel}
               title={intl.get('screen.analytics.transcriptomic.filter.samples.sex')}
-              tooltipText={intl.get('screen.analytics.transcriptomic.filter.genes.tooltip')}
             />
             <Select
               allowClear
