@@ -106,7 +106,7 @@
     "react-dom": "^18.3.1",
     "react-ga4": "^2.1.0",
     "react-highlight-words": "^0.18.0",
-    "react-intl-universal": "^2.11.3",
+    "react-intl-universal": "^2.11.4",
     "react-plotly.js": "^2.6.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.28.0",
