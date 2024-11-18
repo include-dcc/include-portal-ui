@@ -29,6 +29,9 @@ export default class EnvironmentVariables {
     REPORTS_API_URL: process.env.REACT_APP_REPORTS_API_URL,
     // GA
     MEASUREMENT_ID: process.env.REACT_APP_MEASUREMENT_ID,
+    WEB_ROOT: process.env.REACT_APP_WEB_ROOT,
+    // Sentry
+    SENTRY_API: process.env.REACT_APP_SENTRY_API,
   };
 
   static configFor(key: string): string {
