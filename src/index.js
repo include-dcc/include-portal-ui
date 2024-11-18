@@ -10,6 +10,10 @@ import './index.css';
 
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
+import { ContextLines } from '@sentry/integrations';
+import LocalStorageIntegrations from 'services/sentry/localStorageIntegrations';
+import EnvironmentVariables from 'helpers/EnvVariables';
 
 import { initUserSnap } from 'services/initUsersnap';
 
@@ -17,6 +21,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 initUserSnap();
+
+const reactAppWebRoot = EnvironmentVariables.configFor('REACT_APP_WEB_ROOT');
+const SentryDSN = EnvironmentVariables.configFor('SENTRY_API');
+
+Sentry.init({
+  dsn: SentryDSN,
+  // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
+  tracePropagationTargets: ['localhost', reactAppWebRoot],
+  integrations: [
+    new ContextLines(),
+    Sentry.browserTracingIntegration(),
+    Sentry.browserProfilingIntegration(),
+    new LocalStorageIntegrations('LocalStorage'),
+  ],
+  // Performance Monitoring
+  tracesSampleRate: 1.0, // Capture 100% of the transactions
+});
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
