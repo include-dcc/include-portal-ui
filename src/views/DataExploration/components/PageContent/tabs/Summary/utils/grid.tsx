@@ -1,5 +1,6 @@
 import intl from 'react-intl-universal';
 import { IResizableGridLayoutConfig } from '@ferlab/ui/core/layout/ResizableGridLayout';
+import UpsetGraphCard from 'views/DataExploration/components/PageContent/tabs/Summary/Upset';
 
 import DataCategoryGraphCard from '../DataCategoryGraphCard';
 import DataTypeGraphCard from '../DataTypeGraphCard';
@@ -320,6 +321,49 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       w: 6,
       x: 0,
       y: 34,
+    },
+  },
+  {
+    title: 'POC-Upset',
+    id: 'upset',
+    component: <UpsetGraphCard />,
+    base: {
+      minH: 4,
+      minW: 8,
+      h: 3,
+      w: 16,
+      x: 0,
+      y: 13,
+    },
+    lg: {
+      h: 4,
+      w: 8,
+      x: 0,
+      y: 13,
+    },
+    md: {
+      h: 4,
+      w: 8,
+      x: 0,
+      y: 13,
+    },
+    sm: {
+      h: 4,
+      w: 12,
+      x: 0,
+      y: 13,
+    },
+    xs: {
+      h: 4,
+      w: 12,
+      x: 0,
+      y: 37,
+    },
+    xxs: {
+      h: 4,
+      w: 12,
+      x: 0,
+      y: 37,
     },
   },
 ];
