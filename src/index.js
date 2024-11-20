@@ -11,8 +11,8 @@ import './index.css';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import * as Sentry from '@sentry/react';
-import { ContextLines } from '@sentry/integrations';
-import LocalStorageIntegrations from 'services/sentry/localStorageIntegrations';
+import { localStorageIntegration } from '@ferlab/ui/core/utils/sentry/localStorageIntegration';
+
 import EnvironmentVariables from 'helpers/EnvVariables';
 
 import { initUserSnap } from 'services/initUsersnap';
@@ -28,12 +28,13 @@ const SentryDSN = EnvironmentVariables.configFor('SENTRY_API');
 Sentry.init({
   dsn: SentryDSN,
   // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
-  tracePropagationTargets: ['localhost', reactAppWebRoot],
   integrations: [
-    new ContextLines(),
-    Sentry.browserTracingIntegration(),
+    Sentry.browserTracingIntegration({
+      tracePropagationTargets: ['localhost', reactAppWebRoot],
+    }),
+    Sentry.contextLinesIntegration(),
     Sentry.browserProfilingIntegration(),
-    new LocalStorageIntegrations('LocalStorage'),
+    localStorageIntegration('LocalStorage'),
   ],
   // Performance Monitoring
   tracesSampleRate: 1.0, // Capture 100% of the transactions
