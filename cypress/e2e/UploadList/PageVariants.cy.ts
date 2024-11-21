@@ -67,7 +67,7 @@ describe('Page des variants - Téléverser une liste de gènes', () => {
     cy.get('[id*="panel-matched"] [data-row-key="176763:2"] td').eq(2).contains('PRDX1').should('exist');
   });
 
-  it('Vérifier les informations affichées - Section Résumé (onglet Inconnus)', () => {
+  it('Vérifier les informations affichées - Section Résumé (onglet Inconnus) [SJIP-1091]', () => {
     cy.get('[class*="UploadModal"] span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[data-node-key="unmatched"]').clickAndWait({force: true});
 
