@@ -104,7 +104,7 @@ describe('Page des études - Consultation du tableau', () => {
     cy.validateTableFirstRow('X01-deSmith', 1);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Name [SJIP-1054]', () => {
+  it('Valider les fonctionnalités du tableau - Tri Name', () => {
     cy.sortTableAndIntercept('Name', 1);
     cy.validateTableFirstRow('Alzheimer Biomarker Consortium - Down Syndrome', 2);
     cy.sortTableAndIntercept('Name', 1);

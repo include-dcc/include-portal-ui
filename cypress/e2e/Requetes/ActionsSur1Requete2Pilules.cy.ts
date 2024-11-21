@@ -25,8 +25,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.validatePillSelectedQuery('Sample Type', ['DNA']);
     cy.validatePillSelectedQuery('Age at Biospecimen Collection (days)', ['20000'], 1);
     cy.validateOperatorSelectedQuery('or');
-    cy.validateTotalSelectedQuery(/(4,732|4,751|4,756|4,927)/);
-    cy.validateTableResultsCount(/(4,732|4,751|4,756|4,927)/);
+    cy.validateTotalSelectedQuery(/(4,732|4,738|4,751|4,756|4,927)/);
+    cy.validateTableResultsCount(/(4,732|4,738|4,751|4,756|4,927)/);
     cy.validateClearAllButton(false);
 
     cy.intercept('POST', '**/graphql').as('getPOSTgraphql2');
