@@ -67,8 +67,8 @@ export const getFieldWithPrefixUnderscore = (index: string, field: string): stri
 export const getSqonForQuickFilterFacetValue = (activeQuery: ISyntheticSqon): ISyntheticSqon => {
   const activeQueryUpdated = cloneDeep(activeQuery);
   activeQueryUpdated.content.forEach((sqonContent: TSyntheticSqonContentValue) => {
-    const originalIndex = (sqonContent as IValueFilter).content.index;
-    const originalField = (sqonContent as IValueFilter).content.field;
+    const originalIndex = (sqonContent as IValueFilter)?.content?.index;
+    const originalField = (sqonContent as IValueFilter)?.content?.field;
     const fieldPrefixed = originalIndex
       ? getFieldWithPrefixParticipant(originalIndex, originalField)
       : originalField;
@@ -84,8 +84,8 @@ export const getSqonForQuickFilterFacetView = (
 ): ISyntheticSqon => {
   const activeQueryUpdated = cloneDeep(activeQuery);
   activeQueryUpdated.content.forEach((sqonContent: TSyntheticSqonContentValue) => {
-    const originalIndex = (sqonContent as IValueFilter).content.index;
-    const originalField = (sqonContent as IValueFilter).content.field;
+    const originalIndex = (sqonContent as IValueFilter)?.content?.index;
+    const originalField = (sqonContent as IValueFilter)?.content?.field;
     let fieldPrefixed = originalField;
     if (index === INDEXES.PARTICIPANT && originalIndex)
       fieldPrefixed = getFieldWithPrefixParticipant(originalIndex, originalField);
