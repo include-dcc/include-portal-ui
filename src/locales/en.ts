@@ -405,6 +405,8 @@ const en = {
           cancelText: 'Cancel',
         },
         errors: {
+          updateMsg:
+            'Following a recent software update, please rename your set name using the following valid characters: A-Z a-z 0-9 ()[]-_:|.,',
           permittedCharacters: 'Permitted characters: A-Z a-z 0-9 ()[]-_:|.,',
         },
       },

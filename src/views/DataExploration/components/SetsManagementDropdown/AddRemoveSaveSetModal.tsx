@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { Form, Modal } from 'antd';
 import { Store } from 'antd/lib/form/interface';
+import { PERMITTED_CHARACTERS_REGEX } from 'views/Dashboard/components/DashboardCards/SavedSets/CreateEditModal';
 
 import { trackSetActions } from 'services/analytics';
 import { IUserSetOutput, SetType } from 'services/api/savedSet/models';
+import { globalActions } from 'store/global';
 import { PROJECT_ID, useSavedSet } from 'store/savedSet';
 import { updateSavedSet } from 'store/savedSet/thunks';
 
@@ -101,6 +103,25 @@ const AddRemoveSaveSetModal = ({
     setIsVisible(false);
     hideModalCb();
   };
+
+  useEffect(() => {
+    if (isVisible) {
+      const invalidSets = userSets
+        .filter((s) => s.setType === type)
+        .filter((s) => !PERMITTED_CHARACTERS_REGEX.test(s.tag));
+
+      if (invalidSets.length > 0) {
+        dispatch(
+          globalActions.displayNotification({
+            type: 'error',
+            message: '',
+            description: intl.get('components.savedSets.modal.errors.updateMsg'),
+            duration: 5,
+          }),
+        );
+      }
+    }
+  }, [isVisible]);
 
   return (
     <Modal

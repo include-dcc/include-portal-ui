@@ -11,6 +11,7 @@ import { SetActionType } from 'views/DataExploration/components/SetsManagementDr
 import filtersToName from 'common/sqonToName';
 import { trackSetActions } from 'services/analytics';
 import { IUserSetOutput, SetType } from 'services/api/savedSet/models';
+import { globalActions } from 'store/global';
 import { PROJECT_ID, useSavedSet } from 'store/savedSet';
 import { createSavedSet, updateSavedSet } from 'store/savedSet/thunks';
 
@@ -18,6 +19,8 @@ import styles from './index.module.css';
 
 const FORM_NAME = 'save-set';
 const SET_NAME_KEY = 'nameSet';
+
+export const PERMITTED_CHARACTERS_REGEX = new RegExp(/^[a-zA-Z0-9 ()[\]\-_:|.,]+$/i);
 
 type OwnProps = {
   title: string;
@@ -55,6 +58,19 @@ const CreateEditModal = ({
   useEffect(() => {
     if (visible !== isVisible) {
       setIsVisible(visible);
+    }
+
+    if (visible) {
+      if (!PERMITTED_CHARACTERS_REGEX.exec(getSetDefaultName(form.getFieldValue(SET_NAME_KEY)))) {
+        dispatch(
+          globalActions.displayNotification({
+            type: 'error',
+            message: '',
+            description: intl.get('components.savedSets.modal.errors.updateMsg'),
+            duration: 5,
+          }),
+        );
+      }
     }
     // eslint-disable-next-line
   }, [visible]);
@@ -180,7 +196,7 @@ const CreateEditModal = ({
             },
             {
               type: 'string',
-              pattern: new RegExp(/^[a-zA-Z0-9 ()[\]\-_:|.,]+$/i),
+              pattern: PERMITTED_CHARACTERS_REGEX,
               message: intl.get('components.savedSets.modal.errors.permittedCharacters'),
             },
             {
