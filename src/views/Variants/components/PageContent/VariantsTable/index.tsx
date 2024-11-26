@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ConsequencesCell from '@ferlab/ui/core/components/Consequences/Cell';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import FixedSizeTable from '@ferlab/ui/core/components/FixedSizeTable';
@@ -21,7 +22,7 @@ import {
 } from '@ferlab/ui/core/graphql/types';
 import { numberWithCommas, toExponentialNotation } from '@ferlab/ui/core/utils/numberUtils';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Space, Tooltip } from 'antd';
+import { Modal, Space, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { hydrateResults } from 'graphql/models';
 import {
@@ -33,7 +34,7 @@ import {
   IVariantInternalFrequencies,
   IVariantStudyEntity,
 } from 'graphql/variants/models';
-import { capitalize } from 'lodash';
+import { capitalize, isEmpty } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import { DATA_EXPLORATION_QB_ID, DEFAULT_PAGE_INDEX } from 'views/DataExploration/utils/constant';
 import { SCROLL_WRAPPER_ID, VARIANT_SAVED_SETS_FIELD } from 'views/Variants/utils/constants';
@@ -42,13 +43,14 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import ManeCell from 'components/ManeCell';
 import { SetType } from 'services/api/savedSet/models';
+import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
 
-import { GnomadCircle, renderClinvar, renderOmim } from './utils';
+import { exportTsvColumns, GnomadCircle, renderClinvar, renderOmim } from './utils';
 
 import styles from './index.module.css';
 
@@ -128,7 +130,7 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
   },
   {
     title: intl.get('screen.variants.table.gene'),
-    key: 'genes',
+    key: 'genes.symbol',
     dataIndex: 'genes',
     render: (genes: IArrangerResultsTree<IGeneEntity>) => {
       const geneWithPickedConsequence = genes?.hits?.edges?.find((e) =>
@@ -209,7 +211,7 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
     width: 80,
   },
   {
-    key: 'omim',
+    key: 'genes.omim.inheritance',
     title: intl.get('screen.variants.table.omim.title'),
     tooltip: intl.get('screen.variants.table.omim.tooltip'),
     dataIndex: 'genes',
@@ -227,7 +229,7 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
     width: 95,
   },
   {
-    key: 'clinvar',
+    key: 'clinvar.clin_sig',
     title: intl.get('screen.variants.table.clinvar'),
     dataIndex: 'clinvar',
     render: (clinVar: IClinVar) => renderClinvar(clinVar),
@@ -331,7 +333,7 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
     title: intl.get('screen.variants.table.studies.title'),
     tooltip: intl.get('screen.variants.table.studies.tooltip'),
     dataIndex: 'studies',
-    key: 'studies',
+    key: 'studies.study_code',
     render: (studies: IArrangerResultsTree<IVariantStudyEntity>) => {
       const total = studies?.hits?.total ?? 0;
       if (total == 0) {
@@ -368,7 +370,7 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
     width: 80,
   },
   {
-    key: 'CADD',
+    key: 'genes.consequences.predictions.cadd_phred',
     title: intl.get('screen.variants.table.CADD.title'),
     tooltip: intl.get('screen.variants.table.CADD.tooltip'),
     dataIndex: 'genes',
@@ -392,7 +394,7 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
     width: 90,
   },
   {
-    key: 'REVEL',
+    key: 'genes.consequences.predictions.revel_score',
     title: intl.get('screen.variants.table.revel'),
     dataIndex: 'genes',
     defaultHidden: true,
@@ -437,7 +439,9 @@ const getDefaultColumns = (queryBuilderId: string, noData: boolean = false): Pro
       multiple: 1,
     },
     render: (internalFrequencies: IVariantInternalFrequencies) =>
-      internalFrequencies.total.hom ? numberWithCommas(internalFrequencies.total.hom) : 0,
+      internalFrequencies.total.hom || internalFrequencies.total.hom === 0
+        ? numberWithCommas(internalFrequencies.total.hom)
+        : TABLE_EMPTY_PLACE_HOLDER,
     width: 75,
   },
 ];
@@ -511,6 +515,7 @@ const VariantsTable = ({
                   total: results.total,
                 },
                 enableColumnSort: true,
+                enableTableExport: true,
                 onColumnSortChange: (newState) =>
                   dispatch(
                     updateUserConfig({
@@ -527,6 +532,34 @@ const VariantsTable = ({
                 onSelectedRowsChange: (keys, selectedRows) => {
                   setSelectedKeys(keys);
                   setSelectedRows(selectedRows);
+                },
+                onTableExportClick: () => {
+                  if (
+                    selectedRows.length > 10000 ||
+                    (isEmpty(selectedRows) && results.total > 10000)
+                  ) {
+                    Modal.confirm({
+                      title: intl.get('screen.variants.table.exportModal.title'),
+                      icon: <ExclamationCircleOutlined />,
+                      content: intl.get('screen.variants.table.exportModal.content'),
+                      cancelText: intl.get('screen.variants.table.exportModal.button'),
+                      okButtonProps: { className: styles.okButtonConfirmModal },
+                      cancelButtonProps: { type: 'primary' },
+                      type: 'warn',
+                    });
+                  } else {
+                    dispatch(
+                      fetchTsvReport({
+                        columnStates: exportTsvColumns,
+                        columns: getDefaultColumns(
+                          queryBuilderId,
+                          results.data.length === 0 ? true : false,
+                        ),
+                        index: INDEXES.VARIANTS,
+                        sqon: getCurrentSqon(),
+                      }),
+                    );
+                  }
                 },
                 extra: [
                   <SetsManagementDropdown
