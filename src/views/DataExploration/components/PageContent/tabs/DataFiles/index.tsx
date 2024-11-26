@@ -447,6 +447,7 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
               fileIds={selectedAllResults ? [] : selectedKeys}
               sqon={sqon}
               sort={queryConfig.sort ?? DEFAULT_FILE_QUERY_SORT}
+              maxFileReached={hasTooManyFiles}
               key="file-cavatica-upload"
               index={INDEXES.FILE}
             />,

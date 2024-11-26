@@ -1353,6 +1353,12 @@ const en = {
           title: 'Data Files ({count})',
           cavatica: {
             analyseInCavatica: 'Analyze in Cavatica',
+            maxFileReached: {
+              title: 'Maximum number exceeded',
+              description:
+                'A maximum of 10,000 items can be copied at a time. Please narrow your selection and try again.',
+              okText: 'Close',
+            },
             bulkImportLimit: {
               title: 'Maximum file count exceeded',
               description:
