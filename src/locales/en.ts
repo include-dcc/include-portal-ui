@@ -244,10 +244,13 @@ const en = {
         participant:
           '{count, plural, =0 {Selected participant} =1 {Selected participant} other {Selected participants}}',
       },
+      loading: {
+        message: 'Your download is being prepared. This process may take several minutes.',
+      },
       error: {
         title: 'Error',
-        message: 'We were unable to generate the report at this time. Please try again later or ',
-        support: 'contact support',
+        message:
+          'An error has occurred. Your download could not be processed. Please try again or <a target="_blank" href="{mailto}" style="color: unset; text-decoration: underline;">contact support</a>.',
         tooMuchFilesTitle: 'Maximum number exceeded',
         tooMuchFiles:
           'A maximum of 10,000 files can be inlcuded at a time. Please narrow your selection and try again.',
@@ -971,6 +974,12 @@ const en = {
         variant: 'Variant',
         variant_class: 'Variant class',
         variant_id: 'Variant ID',
+        exportModal: {
+          title: 'Maximum number exceeded',
+          content:
+            'A maximum of 10,000 items can be exported at a time. Please narrow your selection and try again.',
+          button: 'Close',
+        },
       },
       summary: {
         summary: 'Summary',
