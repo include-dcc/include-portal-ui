@@ -27,19 +27,9 @@ const showErrorReportNotif = (thunkApi: any, errorMessage?: string) =>
     globalActions.displayNotification({
       type: 'error',
       message: intl.get('api.report.error.title'),
-      description: errorMessage ? (
-        errorMessage
-      ) : (
-        <div>
-          {intl.get('api.report.error.message')}
-          <a
-            style={{ color: 'unset', textDecoration: 'underline' }}
-            href={`mailto:${SUPPORT_EMAIL}`}
-          >
-            {intl.get('api.report.error.support')}
-          </a>
-        </div>
-      ),
+      description: errorMessage
+        ? errorMessage
+        : intl.get('api.report.error.message', { mailto: `mailto:${SUPPORT_EMAIL}` }),
       duration: 5,
     }),
   );
@@ -96,7 +86,7 @@ const fetchTsvReport = createAsyncThunk<void, TFetchTSVArgs, { rejectValue: stri
       globalActions.displayMessage({
         type: 'loading',
         key: messageKey,
-        content: 'Please wait while we generate your report',
+        content: intl.get('api.report.loading.message'),
         duration: 0,
       }),
     );
@@ -216,7 +206,7 @@ const fetchTsxReport = async (
     : args.columns.map((col, index) => ({
         index,
         key: col.key,
-        visible: col.defaultHidden || true,
+        visible: col.defaultHidden === true ? false : true,
       }));
   colStates = colStates
     .filter(({ visible }) => !!visible)
