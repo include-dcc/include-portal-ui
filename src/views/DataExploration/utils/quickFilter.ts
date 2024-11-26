@@ -67,13 +67,16 @@ export const getFieldWithPrefixUnderscore = (index: string, field: string): stri
 export const getSqonForQuickFilterFacetValue = (activeQuery: ISyntheticSqon): ISyntheticSqon => {
   const activeQueryUpdated = cloneDeep(activeQuery);
   activeQueryUpdated.content.forEach((sqonContent: TSyntheticSqonContentValue) => {
-    const originalIndex = (sqonContent as IValueFilter)?.content?.index;
-    const originalField = (sqonContent as IValueFilter)?.content?.field;
-    const fieldPrefixed = originalIndex
-      ? getFieldWithPrefixParticipant(originalIndex, originalField)
-      : originalField;
-    (sqonContent as IValueFilter).content.index = INDEXES.PARTICIPANT;
-    (sqonContent as IValueFilter).content.field = fieldPrefixed;
+    if ((sqonContent as IValueFilter)?.content) {
+      const originalIndex = (sqonContent as IValueFilter).content.index;
+      const originalField = (sqonContent as IValueFilter).content.field;
+      const fieldPrefixed = originalIndex
+        ? getFieldWithPrefixParticipant(originalIndex, originalField)
+        : originalField;
+
+      (sqonContent as IValueFilter).content.index = INDEXES.PARTICIPANT;
+      (sqonContent as IValueFilter).content.field = fieldPrefixed;
+    }
   });
   return activeQueryUpdated;
 };
@@ -84,17 +87,19 @@ export const getSqonForQuickFilterFacetView = (
 ): ISyntheticSqon => {
   const activeQueryUpdated = cloneDeep(activeQuery);
   activeQueryUpdated.content.forEach((sqonContent: TSyntheticSqonContentValue) => {
-    const originalIndex = (sqonContent as IValueFilter)?.content?.index;
-    const originalField = (sqonContent as IValueFilter)?.content?.field;
-    let fieldPrefixed = originalField;
-    if (index === INDEXES.PARTICIPANT && originalIndex)
-      fieldPrefixed = getFieldWithPrefixParticipant(originalIndex, originalField);
-    else if (index === INDEXES.BIOSPECIMEN && originalIndex)
-      fieldPrefixed = getFieldWithPrefixBiospecimen(originalIndex, originalField);
-    else if (index === INDEXES.FILE && originalIndex)
-      fieldPrefixed = getFieldWithPrefixFile(originalIndex, originalField);
-    (sqonContent as IValueFilter).content.index = INDEXES.PARTICIPANT;
-    (sqonContent as IValueFilter).content.field = fieldPrefixed;
+    if ((sqonContent as IValueFilter)?.content) {
+      const originalIndex = (sqonContent as IValueFilter).content.index;
+      const originalField = (sqonContent as IValueFilter).content.field;
+      let fieldPrefixed = originalField;
+      if (index === INDEXES.PARTICIPANT && originalIndex)
+        fieldPrefixed = getFieldWithPrefixParticipant(originalIndex, originalField);
+      else if (index === INDEXES.BIOSPECIMEN && originalIndex)
+        fieldPrefixed = getFieldWithPrefixBiospecimen(originalIndex, originalField);
+      else if (index === INDEXES.FILE && originalIndex)
+        fieldPrefixed = getFieldWithPrefixFile(originalIndex, originalField);
+      (sqonContent as IValueFilter).content.index = INDEXES.PARTICIPANT;
+      (sqonContent as IValueFilter).content.field = fieldPrefixed;
+    }
   });
   return activeQueryUpdated;
 };
