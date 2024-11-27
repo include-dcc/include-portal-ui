@@ -47,6 +47,7 @@ import {
   TAB_IDS,
 } from 'views/DataExploration/utils/constant';
 import {
+  getFieldCategoryIcon,
   getFieldWithoutPrefix,
   getIndexFromQFValueFacet,
   getSelectedOptionsByQuery,
@@ -375,7 +376,7 @@ const DataExploration = () => {
       headerTooltip: false,
       dictionary: getFacetsDictionary(),
       noDataInputOption: false,
-      categoryIcon: <UserOutlined className={styles.categoryIcon} />,
+      categoryIcon: getFieldCategoryIcon(option.key, { className: styles.categoryIcon }),
     });
 
     const filters =
