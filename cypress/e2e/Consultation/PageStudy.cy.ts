@@ -107,7 +107,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="statistic"] [id="data-type"]').contains('Participants by Data Type').should('exist');
   });
 
-  it('Panneau Data Access [SJIP-1099]', () => {
+  it('Panneau Data Access', () => {
     cy.get('[id="data_access"] [class*="EntityDescriptions_title"]').contains('Data Access').should('exist');
     cy.get('[id="data_access"] [class="ant-collapse-header"]').contains('Data Access').should('exist');
     cy.get('[id="data_access"] [class="ant-descriptions-item-label"]').eq(0).contains('Access Limitation').should('exist');
@@ -120,7 +120,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(2).contains('Angela Rachubinski; dsresearch@cuanschutz.edu').should('exist');
   });
 
-  it('Panneau HTP Whole Blood RNAseq (v1) [SJIP-1100]', () => {
+  it('Panneau HTP Whole Blood RNAseq (v1)', () => {
     cy.get('[class*="StudyEntity_datasetTitle"]').contains('Dataset').should('exist');
     cy.get('[class*="StudyEntity_datasetTitle"] [class*="StudyEntity_datasetInfo"]').should('exist');
     cy.get('[class*="EntityDataset_panel"]').eq(0).find('[class="ant-collapse-header"]').contains('HTP Whole Blood RNAseq (v1)').should('exist');
@@ -231,17 +231,17 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('HTP').should('exist');
   });
 
-  it('Lien Duo de l\'Access Limitation du panneau Data Access [SJIP-1099]', () => {
+  it('Lien Duo de l\'Access Limitation du panneau Data Access', () => {
     cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(0).find('[href]')
       .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/DUO_0000042');
   });
 
-  it('Lien Publication du panneau HTP Whole Blood RNAseq (v1) [SJIP-1100]', () => {
+  it('Lien Publication du panneau HTP Whole Blood RNAseq (v1)', () => {
     cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(4).find('[href]')
       .should('have.attr', 'href', 'https://pubmed.ncbi.nlm.nih.gov/37379383');
   });
 
-  it('Lien Repository du panneau HTP Whole Blood RNAseq (v1) [SJIP-1100]', () => {
+  it('Lien Repository du panneau HTP Whole Blood RNAseq (v1)', () => {
     cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(5).find('[href]')
       .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE190125');
   });
@@ -290,7 +290,7 @@ describe('Page d\'une étude - Valider les panneaux masquables', () => {
     cy.get('[id="data_access"] div[class*="ant-collapse-content-active"]').should('exist');
   });
 
-  it('Panneau HTP Whole Blood RNAseq (v1) [SJIP-1100]', () => {
+  it('Panneau HTP Whole Blood RNAseq (v1)', () => {
     cy.get('[class*="EntityDataset_panel"]').eq(0).find('div[class*="ant-collapse-content-active"]').should('exist');
     cy.get('[class*="EntityDataset_panel"]').eq(0).find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
     cy.get('[class*="EntityDataset_panel"]').eq(0).find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
