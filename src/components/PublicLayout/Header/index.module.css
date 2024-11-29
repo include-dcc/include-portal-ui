@@ -1,0 +1,59 @@
+.mainHeader {
+  height: var(--main-header-height);
+  background-color: var(--gray-1);
+  padding: 12px 32px;
+  box-shadow: 0 0 8px 0 rgba(38, 67, 111, 0.25);
+  z-index: 1000;
+}
+.mainHeader * {
+  overflow: unset;
+}
+.mainHeader div[class$='-header-heading'],
+.mainHeader span[class$='-header-heading-title'],
+.mainHeader div[class$='-header-heading-left'] {
+  height: 100%;
+}
+.mainHeader span[class$='-header-heading-title'] {
+  margin-right: 28px;
+}
+.mainHeader div[class$='-header-heading-left'] {
+  margin: 0;
+}
+.mainHeader span[class$='-header-heading-extra'] {
+  display: flex;
+  align-items: center;
+}
+.mainHeader .logo {
+  height: 100%;
+  width: auto;
+}
+.mainHeader .resourcesMenuTrigger {
+  color: var(--gray-8);
+  margin: 5px 8px;
+}
+.mainHeader .resourcesMenuTrigger .resources {
+  margin-right: 8px;
+}
+
+.linkText {
+  padding-left: 8px;
+}
+
+.dropdown {
+  min-width: 120px !important;
+}
+
+.connectionWrapper {
+  border-left: 1px solid var(--gray-4);
+  display: flex;
+  margin-left: 8px;
+  gap: 8px;
+}
+
+.loginBtn {
+  padding: 5px 8px;
+}
+
+.signUpBtn {
+  padding: 5px 16px;
+}
