@@ -1,0 +1,43 @@
+.wrapper {
+  height: 100%;
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.wrapper .content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+:global([class^="root-upset-"] text[class^="setTextStyle-upset"])  {
+  font-size: 9px;
+}
+
+:global([class^="root-upset-"] text[class^="hoverBarTextStyle-upset"])  {
+  fill: var(--gray-7);
+}
+
+:global([class^="root-upset-"] [class^="interactive-upset"]):hover > [class^="hoverBar-upset"] {
+  stroke: var(--gray-7);
+}  
+
+:global([class^="root-upset-"] [class^="upsetLine-upset"]),
+:global([class^="root-upset-"] [class^="upsetSelectionLine-upset"]),
+:global([class^="root-upset-"] [class^="fillPrimary-upset"])  {
+  fill: var(--blue-7);
+  stroke: var(--blue-7); 
+}
+
+:global([class^="root-upset-"] [class^="fillSelection-upset"])  {
+  fill: var(--gold-6);
+}
+
+:global([class^="root-upset-"] [class^="fillAlternating-upset"])  {
+  fill: var(--gray-4);
+}
+
+:global([class^="root-upset-"] [class^="fillNotMember-upset"])  {
+  fill: var(--gray-5);
+}

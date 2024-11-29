@@ -93,3 +93,8 @@ export interface ArrangerPhenotypes {
   type: string;
   aggregations_filter_themselves: boolean;
 }
+
+export interface IArrangerUpset {
+  name: string;
+  elems: string[];
+}

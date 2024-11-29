@@ -1,3 +1,4 @@
+import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import EnvironmentVariables from 'helpers/EnvVariables';
 import {
   ARRANGER_API,
@@ -30,6 +31,16 @@ const fetchStatistics = () =>
     method: 'GET',
     url: `${ARRANGER_API_URL}/statistics`,
     headers: headers(),
+  });
+
+const fetchCoOccuringConditions = (sqon: ISqonGroupFilter, topN: number) =>
+  sendRequest<any>({
+    method: 'POST',
+    url: `${ARRANGER_API_URL}/upset`,
+    data: {
+      sqon,
+      topN,
+    },
   });
 
 const fetchStudiesParticipants = () =>
@@ -81,4 +92,5 @@ export const ArrangerApi = {
   fetchPhenotypes,
   columnStates,
   searchSuggestions,
+  fetchCoOccuringConditions,
 };

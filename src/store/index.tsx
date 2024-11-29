@@ -16,6 +16,7 @@ import ReportReducer from 'store/report';
 import SavedFilterReducer from 'store/savedFilter';
 import SavedSetReducer from 'store/savedSet';
 import { RootState } from 'store/types';
+import UpsetReducer from 'store/upset';
 import UserReducer from 'store/user';
 
 const devMode = EnvVariables.configFor('ENV') === 'development';
@@ -37,6 +38,7 @@ const rootReducer = combineReducers<RootState>({
   savedSet: SavedSetReducer,
   remote: RemoteReducer,
   analytics: AnalyticsReducer,
+  upset: UpsetReducer,
 });
 
 const store = configureStore({
