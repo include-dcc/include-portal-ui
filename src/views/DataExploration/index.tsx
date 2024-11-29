@@ -293,6 +293,7 @@ const DataExploration = () => {
 
         if (regexp.exec(label)) {
           ++totalResult;
+
           bucketFiltered.push({
             key: bucket.key,
             label,
@@ -313,7 +314,10 @@ const DataExploration = () => {
           label: facetName,
           type: 'title',
           index: getIndexFromQFValueFacet(key),
-          categoryIcon: <UserOutlined className={styles.categoryIcon} />,
+          categoryIcon:
+            bucketFiltered.length > 0 ? (
+              <UserOutlined className={styles.categoryIcon} />
+            ) : undefined,
         });
         suggestions.push(...bucketFiltered);
       }
