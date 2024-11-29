@@ -8,14 +8,23 @@ interface OwnProps {
   className?: string;
   icon?: React.ReactElement;
   isActive?: boolean;
+  onClick?: () => void;
   title: string;
 }
 
-const HeaderButton = ({ className = '', icon, isActive = false, title, ...props }: OwnProps) => (
+const HeaderButton = ({
+  className = '',
+  icon,
+  isActive = false,
+  onClick,
+  title,
+  ...props
+}: OwnProps) => (
   <Button
     className={cx(className, style.headerBtn, isActive ? style.active : '')}
     onClick={(event) => {
       event.currentTarget.blur();
+      onClick && onClick();
     }}
     icon={icon}
     {...props}

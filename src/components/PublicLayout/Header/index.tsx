@@ -1,4 +1,5 @@
 import intl from 'react-intl-universal';
+import { useNavigate } from 'react-router';
 import {
   DotChartOutlined,
   DownOutlined,
@@ -16,6 +17,7 @@ import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import IncludeIcon from 'components/Icons/IncludeIcon';
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import { trackVisitResources } from 'services/analytics';
+import { STATIC_ROUTES } from 'utils/routes';
 
 import HeaderButton from './HeaderButton';
 
@@ -26,6 +28,7 @@ const iconSize = { width: 14, height: 14 };
 const { Text } = Typography;
 
 const Header = () => {
+  const navigate = useNavigate();
   const ft_variant = getFTEnvVarByKey('VARIANT');
   const ft_analyticsPage = getFTEnvVarByKey('ANALYTICS_PAGE');
 
@@ -159,9 +162,14 @@ const Header = () => {
             className={style.loginBtn}
             key="community"
             icon={<LoginOutlined />}
+            onClick={() => navigate(STATIC_ROUTES.LOGIN)}
             title={intl.get('screen.loginPage.login')}
           />
-          <Button className={style.signUpBtn} type="primary">
+          <Button
+            className={style.signUpBtn}
+            onClick={() => navigate(STATIC_ROUTES.LOGIN)}
+            type="primary"
+          >
             {intl.get('screen.loginPage.signup')}
           </Button>
         </div>,
