@@ -1270,6 +1270,10 @@ const en = {
             mostFrequentPhenotypes: 'Most Frequent Phenotypes (HPO)',
             mostFrequentDiagnoses: 'Most Frequent Diagnoses (MONDO)',
           },
+          coOccuringConditions: {
+            title: 'Co-occurring Conditions',
+            label: '# of participants',
+          },
           sampleType: {
             cardTitle: 'Sample Type',
           },
