@@ -1,5 +1,6 @@
 import intl from 'react-intl-universal';
 import { IResizableGridLayoutConfig } from '@ferlab/ui/core/layout/ResizableGridLayout';
+import CoOccuringConditionsGraphCard from 'views/DataExploration/components/PageContent/tabs/Summary/CoOccuringConditions';
 
 import DataCategoryGraphCard from '../DataCategoryGraphCard';
 import DataTypeGraphCard from '../DataTypeGraphCard';
@@ -283,6 +284,49 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
     title: intl.get('screen.dataExploration.tabs.summary.availableData.sampleTypeTitle'),
     id: 'sample_type',
     component: <SampleTypeGraphCard />,
+    base: {
+      minH: 2,
+      minW: 2,
+      h: 3,
+      w: 7,
+      x: 9,
+      y: 13,
+    },
+    lg: {
+      h: 3,
+      w: 7,
+      x: 9,
+      y: 13,
+    },
+    md: {
+      h: 3,
+      w: 7,
+      x: 0,
+      y: 13,
+    },
+    sm: {
+      h: 3,
+      w: 7,
+      x: 0,
+      y: 13,
+    },
+    xs: {
+      h: 3,
+      w: 6,
+      x: 0,
+      y: 34,
+    },
+    xxs: {
+      h: 3,
+      w: 6,
+      x: 0,
+      y: 34,
+    },
+  },
+  {
+    title: intl.get('screen.dataExploration.tabs.summary.coOccuringConditions.title'),
+    id: 'co-occurring-conditions',
+    component: <CoOccuringConditionsGraphCard />,
     base: {
       minH: 2,
       minW: 2,
