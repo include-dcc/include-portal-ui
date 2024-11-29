@@ -36,6 +36,7 @@ const Dashboard = loadable(() => import('views/Dashboard'), loadableProps);
 const Community = loadable(() => import('views/Community'), loadableProps);
 const CommunityMember = loadable(() => import('views/Community/Member'), loadableProps);
 const Studies = loadable(() => import('views/Studies'), loadableProps);
+const PublicStudies = loadable(() => import('views/PublicStudies'), loadableProps);
 const StudyEntity = loadable(() => import('views/StudyEntity'), loadableProps);
 const DataExploration = loadable(() => import('views/DataExploration'), loadableProps);
 const Variants = loadable(() => import('views/Variants'), loadableProps);
@@ -83,6 +84,7 @@ const App = () => {
                   />
                   <Route path={STATIC_ROUTES.LOGIN} element={<Login />} />
                   <Route path={DYNAMIC_ROUTES.ERROR} element={<ErrorPage />} />
+                  <Route path={STATIC_ROUTES.PUBLIC_STUDIES} element={<PublicStudies />} />
                   <Route
                     path={STATIC_ROUTES.DASHBOARD}
                     element={
