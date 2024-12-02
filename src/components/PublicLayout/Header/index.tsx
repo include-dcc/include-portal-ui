@@ -1,5 +1,4 @@
 import intl from 'react-intl-universal';
-import { useNavigate } from 'react-router';
 import {
   DotChartOutlined,
   DownOutlined,
@@ -10,12 +9,15 @@ import {
   ReadOutlined,
   TeamOutlined,
 } from '@ant-design/icons';
+import { useKeycloak } from '@react-keycloak/web';
 import { Button, Dropdown, PageHeader, Typography } from 'antd';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
+import { REDIRECT_URI_KEY } from 'common/constants';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import IncludeIcon from 'components/Icons/IncludeIcon';
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
+import useQueryParams from 'hooks/useQueryParams';
 import { trackVisitResources } from 'services/analytics';
 import { STATIC_ROUTES } from 'utils/routes';
 
@@ -28,7 +30,19 @@ const iconSize = { width: 14, height: 14 };
 const { Text } = Typography;
 
 const Header = () => {
-  const navigate = useNavigate();
+  const { keycloak } = useKeycloak();
+  const query = useQueryParams();
+
+  const handleSignin = async () => {
+    const url = keycloak.createLoginUrl({
+      redirectUri: `${window.location.origin}/${
+        query.get(REDIRECT_URI_KEY) || STATIC_ROUTES.STUDIES
+      }`,
+      locale: intl.getInitOptions().currentLocale,
+    });
+    window.location.assign(url);
+  };
+
   const ft_variant = getFTEnvVarByKey('VARIANT');
   const ft_analyticsPage = getFTEnvVarByKey('ANALYTICS_PAGE');
 
@@ -162,14 +176,10 @@ const Header = () => {
             className={style.loginBtn}
             key="community"
             icon={<LoginOutlined />}
-            onClick={() => navigate(STATIC_ROUTES.LOGIN)}
+            onClick={handleSignin}
             title={intl.get('screen.loginPage.login')}
           />
-          <Button
-            className={style.signUpBtn}
-            onClick={() => navigate(STATIC_ROUTES.LOGIN)}
-            type="primary"
-          >
+          <Button className={style.signUpBtn} onClick={handleSignin} type="primary">
             {intl.get('screen.loginPage.signup')}
           </Button>
         </div>,
