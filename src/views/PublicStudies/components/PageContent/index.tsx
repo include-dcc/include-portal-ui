@@ -71,7 +71,6 @@ const PageContent = () => {
             showSorterTooltip={false}
             bordered
             headerConfig={{
-              // itemCount: undefined,
               hideItemsCount: true,
             }}
             size="small"
