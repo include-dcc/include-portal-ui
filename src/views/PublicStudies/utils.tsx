@@ -17,7 +17,7 @@ import style from './index.module.css';
 export const SCROLL_WRAPPER_ID = 'public-studies-scroll-wrapper';
 export const TABLE_ID = 'public-studies';
 
-export const getColumns = (): ProColumnType<IStudiesParticipants>[] => [
+export const getColumns = (): ProColumnType<any>[] => [
   {
     key: 'is_harmonized',
     iconTitle: <AuditOutlined />,

@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import ProLabel from '@ferlab/ui/core/components/ProLabel';
 import ProTable from '@ferlab/ui/core/components/ProTable';
-import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Input, Space, Typography } from 'antd';
-import { TABLE_ID } from 'views/PublicStudies/utils';
+import { getColumns, TABLE_ID } from 'views/PublicStudies/utils';
 
 import { useGlobals } from 'store/global';
 import { getProTableDictionary } from 'utils/translation';
@@ -14,23 +13,33 @@ import styles from './index.module.css';
 
 const { Title } = Typography;
 
-type OwnProps = {
-  defaultColumns: ProColumnType<any>[];
-};
-
-const PageContent = ({ defaultColumns = [] }: OwnProps) => {
+const PageContent = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const { stats, isFetchingStats } = useGlobals();
   const { studiesParticipants = [] } = stats || {};
 
+  const [filteredStudies, setFilteredStudies] = useState(studiesParticipants);
+
+  useEffect(() => {
+    setFilteredStudies(studiesParticipants);
+  }, [studiesParticipants]);
+
   const searchPrescription = (value: any) => {
     if (value?.target?.value) {
-      setSearchValue(value.target.value);
+      const searchValue = value.target.value;
+      setSearchValue(searchValue);
+
+      const filteredValues = studiesParticipants.filter((study) =>
+        study.study_name.toLowerCase().includes(searchValue.toLowerCase()),
+      );
+      setFilteredStudies(filteredValues);
     } else {
       setSearchValue('');
     }
   };
+
+  const defaultColumns = getColumns();
 
   return (
     <Space direction="vertical" size={16} className={styles.pageContent}>
@@ -64,11 +73,11 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
               itemCount: {
                 pageIndex: 0,
                 pageSize: 20,
-                total: studiesParticipants.length,
+                total: filteredStudies.length,
               },
             }}
             size="small"
-            dataSource={studiesParticipants.map((i) => ({ ...i, key: i.study_code }))}
+            dataSource={filteredStudies.map((i) => ({ ...i, key: i.study_code }))}
             dictionary={getProTableDictionary()}
           />
         }
