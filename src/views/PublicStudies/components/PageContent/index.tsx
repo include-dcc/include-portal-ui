@@ -47,7 +47,7 @@ const PageContent = () => {
         {intl.get('screen.publicStudies.title')}
       </Title>
 
-      <div className={styles.patientContentHeader}>
+      <div>
         <ProLabel className={styles.label} title={intl.get('screen.publicStudies.search.title')} />
         <div className={styles.inputContainer}>
           <Input
@@ -70,11 +70,8 @@ const PageContent = () => {
             showSorterTooltip={false}
             bordered
             headerConfig={{
-              itemCount: {
-                pageIndex: 0,
-                pageSize: 20,
-                total: filteredStudies.length,
-              },
+              // itemCount: undefined,
+              hideItemsCount: true,
             }}
             size="small"
             dataSource={filteredStudies.map((i) => ({ ...i, key: i.study_code }))}
