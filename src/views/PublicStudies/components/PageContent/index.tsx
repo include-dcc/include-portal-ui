@@ -36,6 +36,7 @@ const PageContent = () => {
       setFilteredStudies(filteredValues);
     } else {
       setSearchValue('');
+      setFilteredStudies(studiesParticipants);
     }
   };
 
