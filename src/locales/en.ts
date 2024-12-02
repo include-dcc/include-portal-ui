@@ -1440,6 +1440,13 @@ const en = {
       start: 'Start',
       title: 'Studies',
     },
+    publicStudies: {
+      title: 'Studies',
+      search: {
+        title: 'Search by study name',
+        placeholder: 'The Human Trisome Project',
+      },
+    },
     analytics: {
       title: 'Data Analysis',
       subtitle: 'Quickly visualize and interpret INCLUDE Data with our user-friendly tools.',

@@ -9,6 +9,7 @@ import BriLogo from 'components/assets/studies/study-logo-BRI.png';
 import DefaultLogo from 'components/assets/studies/study-logo-default.svg';
 import DsconnectLogo from 'components/assets/studies/study-logo-DSC.png';
 import KfLogo from 'components/assets/studies/study-logo-KF.svg';
+import { IStudiesParticipants } from 'services/api/arranger/models';
 
 import { useGlobals } from '../../../store/global';
 
@@ -35,18 +36,19 @@ const studies = [
   { code: 'DS-NEXUS', formattedCode: 'dsnexus', logo: DsnexusLogo },
 ];
 
-const formatStudies = (studiesParticipants: Record<string, number>) =>
+const formatStudies = (studiesParticipants: IStudiesParticipants[]) =>
   studies.map((study) => ({
     code: study.code,
     title: <img src={study.logo} alt="Study Logo" className={styles.logo} />,
     subtitle: intl.get(`screen.loginPage.studies.${study.formattedCode}.name`),
     description: intl.getHTML(`screen.loginPage.studies.${study.formattedCode}.description`),
-    participantCount: studiesParticipants[study.code],
+    participantCount: studiesParticipants.find((studyPart) => studyPart.study_code === study.code)
+      ?.participant_count,
   }));
 
 const StudiesSection = () => {
   const { stats } = useGlobals();
-  const { studiesParticipants = {}, studies: studiesCount = 0 } = stats || {};
+  const { studiesParticipants = [], studies: studiesCount = 0 } = stats || {};
   const formattedStudies = formatStudies(studiesParticipants);
   return (
     <div className={styles.container}>

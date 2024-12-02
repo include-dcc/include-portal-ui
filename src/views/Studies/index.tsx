@@ -27,7 +27,7 @@ import { SCROLL_WRAPPER_ID } from './utils/constants';
 
 import styles from './index.module.css';
 
-const enum DataCategory {
+export const enum DataCategory {
   METABOLOMIC = 'Metabolomics',
   GENOMIC = 'Genomics',
   PROTEOMIC = 'Proteomics',
@@ -36,7 +36,7 @@ const enum DataCategory {
   IMMUNE_MAP = 'Immune-Map',
 }
 
-const hasDataCategory = (dataCategory: string[], category: DataCategory) =>
+export const hasDataCategory = (dataCategory: string[], category: DataCategory) =>
   dataCategory?.includes(category) ? <CheckOutlined /> : TABLE_EMPTY_PLACE_HOLDER;
 
 const filterInfo: FilterInfo = {

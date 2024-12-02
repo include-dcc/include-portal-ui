@@ -10,17 +10,9 @@ const fetchStats = createAsyncThunk<IStatistics, void, { rejectValue: string; st
     const { data: statistics } = await ArrangerApi.fetchStatistics();
     const { data: studiesStatistics } = await ArrangerApi.fetchStudiesParticipants();
 
-    const formattedStudiesStatistics = studiesStatistics?.reduce(
-      (acc, { study_code, participant_count }) => {
-        acc[study_code] = participant_count;
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-
     const data: IStatistics = {
       ...statistics!,
-      studiesParticipants: formattedStudiesStatistics!,
+      studiesParticipants: studiesStatistics!,
     };
 
     return data;
