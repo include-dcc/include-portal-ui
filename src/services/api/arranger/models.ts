@@ -26,8 +26,19 @@ export type Suggestion = {
 };
 
 export interface IStudiesParticipants {
+  data_category: string[];
+  description?: string;
+  domains?: string[];
+  external_ids?: string[];
+  family_count?: number;
+  file_count?: number;
+  guid?: string;
+  is_harmonized?: boolean;
   participant_count: number;
+  program: string;
   study_code: string;
+  study_id: string;
+  study_name: string;
 }
 
 export interface IDiagnosis {
@@ -47,7 +58,7 @@ export interface IStatistics {
   samples: number;
   sex: Record<string, number>;
   studies: number;
-  studiesParticipants: Record<string, number>;
+  studiesParticipants: IStudiesParticipants[];
   transcriptomes: number;
   variants: number;
 }
