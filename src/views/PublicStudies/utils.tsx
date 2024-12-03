@@ -1,5 +1,4 @@
 import intl from 'react-intl-universal';
-import { Link } from 'react-router-dom';
 import { AuditOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
@@ -56,7 +55,7 @@ export const getColumns = (): ProColumnType<any>[] => [
     title: intl.get('entities.study.code'),
     dataIndex: 'study_code',
     // TODO Open modal
-    render: (study_code: string) => <Link to={''}>{study_code}</Link>,
+    render: (study_code: string) => <a>{study_code}</a>,
   },
   {
     key: 'study_name',
@@ -146,7 +145,7 @@ export const getColumns = (): ProColumnType<any>[] => [
 
       return participantCount ? (
         // TODO Open modal
-        <Link to={''}>{numberWithCommas(participantCount)}</Link>
+        <a>{numberWithCommas(participantCount)}</a>
       ) : (
         participantCount || TABLE_EMPTY_PLACE_HOLDER
       );
@@ -160,7 +159,7 @@ export const getColumns = (): ProColumnType<any>[] => [
 
       return fileCount ? (
         // TODO Open modal
-        <Link to={''}>{numberWithCommas(fileCount)}</Link>
+        <a>{numberWithCommas(fileCount)}</a>
       ) : (
         fileCount || TABLE_EMPTY_PLACE_HOLDER
       );
