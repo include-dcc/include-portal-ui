@@ -144,10 +144,12 @@ export const getColumns = (): ProColumnType<any>[] => [
     render: (record: IStudiesParticipants) => {
       const participantCount = record?.participant_count || 0;
 
-      return participantCount
-        ? // TODO Open modal
-          numberWithCommas(participantCount)
-        : participantCount || TABLE_EMPTY_PLACE_HOLDER;
+      return participantCount ? (
+        // TODO Open modal
+        <Link to={''}>{numberWithCommas(participantCount)}</Link>
+      ) : (
+        participantCount || TABLE_EMPTY_PLACE_HOLDER
+      );
     },
   },
   {
@@ -156,10 +158,12 @@ export const getColumns = (): ProColumnType<any>[] => [
     render: (record: IStudiesParticipants) => {
       const fileCount = record?.file_count || 0;
 
-      return fileCount
-        ? // TODO Open modal
-          numberWithCommas(fileCount)
-        : fileCount || TABLE_EMPTY_PLACE_HOLDER;
+      return fileCount ? (
+        // TODO Open modal
+        <Link to={''}>{numberWithCommas(fileCount)}</Link>
+      ) : (
+        fileCount || TABLE_EMPTY_PLACE_HOLDER
+      );
     },
   },
   {
