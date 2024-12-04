@@ -1448,13 +1448,14 @@ const en = {
         placeholder: 'The Human Trisome Project',
       },
       loginModal: {
-        title: 'INCLUDE DATA HUB',
+        title: 'INCLUDE Data Hub',
         subtitleStart: 'Uncover ',
         subtitleBlue: 'new insights',
         subtitleEnd: ' into the biology of Down Syndrome and co-occurring conditions.',
         text: 'Access large-scale integrated data resources and analyze custom built cohort datasets based on participants, biospecimens, clinical, and genomic data.',
         login: 'Login',
         signup: 'Sign up',
+        close: 'Close',
       },
     },
     analytics: {
