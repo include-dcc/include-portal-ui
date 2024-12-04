@@ -1,7 +1,7 @@
-import * as React from "react";
-import { IconProps } from "components/Icons";
+/* eslint-disable max-len */
+import { IconProps } from 'components/Icons';
 
-const IncludeIcon = ({ width = 58, height = 60, className = "" }: IconProps) => (
+const IncludeIcon = ({ width = 58, height = 60, className = '' }: IconProps) => (
   <svg
     width={width}
     height={height}

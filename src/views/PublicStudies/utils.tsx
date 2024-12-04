@@ -16,7 +16,11 @@ import style from './index.module.css';
 export const SCROLL_WRAPPER_ID = 'public-studies-scroll-wrapper';
 export const TABLE_ID = 'public-studies';
 
-export const getColumns = (): ProColumnType<any>[] => [
+type ColumnsProps = {
+  manageLoginModal: (isOpen: boolean) => void;
+};
+
+export const getColumns = ({ manageLoginModal }: ColumnsProps): ProColumnType<any>[] => [
   {
     key: 'is_harmonized',
     iconTitle: <AuditOutlined />,
@@ -54,8 +58,7 @@ export const getColumns = (): ProColumnType<any>[] => [
     key: 'study_code',
     title: intl.get('entities.study.code'),
     dataIndex: 'study_code',
-    // TODO Open modal
-    render: (study_code: string) => <a>{study_code}</a>,
+    render: (study_code: string) => <a onClick={() => manageLoginModal(true)}>{study_code}</a>,
   },
   {
     key: 'study_name',
@@ -144,8 +147,7 @@ export const getColumns = (): ProColumnType<any>[] => [
       const participantCount = record?.participant_count || 0;
 
       return participantCount ? (
-        // TODO Open modal
-        <a>{numberWithCommas(participantCount)}</a>
+        <a onClick={() => manageLoginModal(true)}>{numberWithCommas(participantCount)}</a>
       ) : (
         participantCount || TABLE_EMPTY_PLACE_HOLDER
       );
@@ -158,8 +160,7 @@ export const getColumns = (): ProColumnType<any>[] => [
       const fileCount = record?.file_count || 0;
 
       return fileCount ? (
-        // TODO Open modal
-        <a>{numberWithCommas(fileCount)}</a>
+        <a onClick={() => manageLoginModal(true)}>{numberWithCommas(fileCount)}</a>
       ) : (
         fileCount || TABLE_EMPTY_PLACE_HOLDER
       );

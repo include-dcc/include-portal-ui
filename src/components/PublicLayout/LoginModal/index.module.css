@@ -1,0 +1,47 @@
+.modal {
+  width: 660px !important;
+}
+
+.modal :global(.ant-modal-body) {
+  padding: 40px;
+  background-image: url('../../../components/assets/landing-page/page-header.jpg');
+  background-repeat: no-repeat;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+  align-self: stretch;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  margin-bottom: 0 !important;
+  color: var(--gray-1) !important;
+}
+
+.subtitle {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 32px;
+  color: var(--gray-1);
+}
+
+.subtitleBlue {
+  color: var(--blue-4);
+}
+
+.description {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--gray-1);
+}
