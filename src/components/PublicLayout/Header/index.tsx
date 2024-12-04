@@ -19,7 +19,7 @@ import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import IncludeIcon from 'components/Icons/IncludeIcon';
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import useQueryParams from 'hooks/useQueryParams';
-import { trackVisitResources } from 'services/analytics';
+import { trackPublicStudies, trackVisitResources } from 'services/analytics';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import LoginModal from '../LoginModal';
@@ -39,7 +39,8 @@ const Header = () => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const closeLoginModal = () => setOpenLoginModal(false);
 
-  const handleSignin = async () => {
+  const handleSignin = async (btnName: string) => {
+    trackPublicStudies(btnName);
     const url = keycloak.createLoginUrl({
       redirectUri: `${window.location.origin}/${
         query.get(REDIRECT_URI_KEY) || STATIC_ROUTES.STUDIES
@@ -61,7 +62,10 @@ const Header = () => {
             <HeaderButton
               key="dashboard"
               icon={<HomeOutlined />}
-              onClick={() => setOpenLoginModal(true)}
+              onClick={() => {
+                trackPublicStudies('Dashboard');
+                setOpenLoginModal(true);
+              }}
               title={intl.get('layout.main.menu.dashboard')}
             />
             <HeaderButton
@@ -73,7 +77,10 @@ const Header = () => {
             <HeaderButton
               key="explore-data"
               icon={<FileSearchOutlined />}
-              onClick={() => setOpenLoginModal(true)}
+              onClick={() => {
+                trackPublicStudies('Data Exploration');
+                setOpenLoginModal(true);
+              }}
               title={intl.get('layout.main.menu.explore')}
             />
 
@@ -81,7 +88,10 @@ const Header = () => {
               <HeaderButton
                 key="variant-data"
                 icon={<LineStyleIcon />}
-                onClick={() => setOpenLoginModal(true)}
+                onClick={() => {
+                  trackPublicStudies('Variants');
+                  setOpenLoginModal(true);
+                }}
                 title={intl.get('layout.main.menu.variants')}
               />
             )}
@@ -89,7 +99,10 @@ const Header = () => {
               <HeaderButton
                 key="analytics-data"
                 icon={<DotChartOutlined />}
-                onClick={() => setOpenLoginModal(true)}
+                onClick={() => {
+                  trackPublicStudies('Analysis');
+                  setOpenLoginModal(true);
+                }}
                 title={intl.get('layout.main.menu.analysis')}
               />
             )}
@@ -99,7 +112,10 @@ const Header = () => {
           <HeaderButton
             key="community"
             icon={<TeamOutlined />}
-            onClick={() => setOpenLoginModal(true)}
+            onClick={() => {
+              trackPublicStudies('Community');
+              setOpenLoginModal(true);
+            }}
             title={intl.get('layout.main.menu.community')}
           />,
           <Dropdown
@@ -186,12 +202,16 @@ const Header = () => {
           <div className={style.connectionWrapper}>
             <HeaderButton
               className={style.loginBtn}
-              key="community"
+              key="login"
               icon={<LoginOutlined />}
-              onClick={handleSignin}
+              onClick={() => handleSignin('Login')}
               title={intl.get('screen.loginPage.login')}
             />
-            <Button className={style.signUpBtn} onClick={handleSignin} type="primary">
+            <Button
+              className={style.signUpBtn}
+              onClick={() => handleSignin('Sign Up')}
+              type="primary"
+            >
               {intl.get('screen.loginPage.signup')}
             </Button>
           </div>,
