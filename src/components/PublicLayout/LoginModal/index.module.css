@@ -8,6 +8,22 @@
   background-repeat: no-repeat;
 }
 
+.modal :global(.ant-modal-close) {
+  padding-right: 25px;
+}
+
+.closeBtn {
+  display: flex;
+  gap: 4px;
+  color: var(--gray-1);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.closeIcon {
+  font-size: 16px;
+}
+
 .contentWrapper {
   display: flex;
   flex-direction: column;
@@ -15,6 +31,7 @@
   align-items: flex-start;
   gap: 32px;
   align-self: stretch;
+  padding: 70px 0;
 }
 
 .titleWrapper {

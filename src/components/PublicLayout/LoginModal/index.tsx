@@ -1,4 +1,5 @@
 import intl from 'react-intl-universal';
+import { CloseOutlined } from '@ant-design/icons';
 import { useKeycloak } from '@react-keycloak/web';
 import { Button, Modal, Space, Typography } from 'antd';
 
@@ -31,7 +32,19 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   };
 
   return (
-    <Modal closable open={isOpen} onCancel={onClose} footer={null} className={style.modal}>
+    <Modal
+      closable
+      closeIcon={
+        <div className={style.closeBtn}>
+          <CloseOutlined className={style.closeIcon} />
+          {intl.get('screen.publicStudies.loginModal.close')}
+        </div>
+      }
+      open={isOpen}
+      onCancel={onClose}
+      footer={null}
+      className={style.modal}
+    >
       <div className={style.contentWrapper}>
         <div className={style.titleWrapper}>
           <IncludeIcon height={56} />
