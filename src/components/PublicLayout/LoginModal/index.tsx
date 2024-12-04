@@ -6,6 +6,7 @@ import { Button, Modal, Space, Typography } from 'antd';
 import { REDIRECT_URI_KEY } from 'common/constants';
 import IncludeIcon from 'components/Icons/IncludeIcon';
 import useQueryParams from 'hooks/useQueryParams';
+import { trackPublicStudies } from 'services/analytics';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import style from './index.module.css';
@@ -21,7 +22,8 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   const { keycloak } = useKeycloak();
   const query = useQueryParams();
 
-  const handleSignin = async () => {
+  const handleSignin = async (btnName: string) => {
+    trackPublicStudies(btnName);
     const url = keycloak.createLoginUrl({
       redirectUri: `${window.location.origin}/${
         query.get(REDIRECT_URI_KEY) || STATIC_ROUTES.STUDIES
@@ -61,10 +63,15 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
         </div>
         <div className={style.description}>{intl.get('screen.publicStudies.loginModal.text')}</div>
         <Space size={8}>
-          <Button type="primary" size="large" data-cy="Login" onClick={handleSignin}>
+          <Button
+            type="primary"
+            size="large"
+            data-cy="Login"
+            onClick={() => handleSignin('Modal Login')}
+          >
             {intl.get('screen.publicStudies.loginModal.login')}
           </Button>
-          <Button ghost size="large" data-cy="Signup" onClick={handleSignin}>
+          <Button ghost size="large" data-cy="Signup" onClick={() => handleSignin('Modal Sign up')}>
             {intl.get('screen.publicStudies.loginModal.signup')}
           </Button>
         </Space>

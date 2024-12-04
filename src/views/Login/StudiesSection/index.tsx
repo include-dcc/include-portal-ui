@@ -11,6 +11,7 @@ import BriLogo from 'components/assets/studies/study-logo-BRI.png';
 import DefaultLogo from 'components/assets/studies/study-logo-default.svg';
 import DsconnectLogo from 'components/assets/studies/study-logo-DSC.png';
 import KfLogo from 'components/assets/studies/study-logo-KF.svg';
+import { trackViewAllStudies } from 'services/analytics';
 import { IStudiesParticipants } from 'services/api/arranger/models';
 import { STATIC_ROUTES } from 'utils/routes';
 
@@ -57,7 +58,12 @@ const StudiesSection = () => {
 
   const publicStudiesBtn = getFTEnvVarByKey('PUBLIC_STUDIES');
   const studiesBtnOnClick =
-    publicStudiesBtn === 'true' ? () => navigate(STATIC_ROUTES.PUBLIC_STUDIES) : undefined;
+    publicStudiesBtn === 'true'
+      ? () => {
+          trackViewAllStudies();
+          navigate(STATIC_ROUTES.PUBLIC_STUDIES);
+        }
+      : undefined;
 
   return (
     <div className={styles.container}>
