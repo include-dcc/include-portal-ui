@@ -297,7 +297,7 @@ const fr = {
         title: 'Upload a {entity} list',
         submittedColTitle: 'Submitted {entity} identifiers',
         uploadBtnText: 'Upload a {entity} list',
-        mappedTo: 'Mapped To',
+        mappedTo: 'Mapped to',
         collapseTitle: 'Summary Table  ({matchCount} matched, {unMatchCount} unmatched)',
         inputLabel: 'Copy-paste a list of identifiers or upload a file',
         match: 'Matched ({count})',

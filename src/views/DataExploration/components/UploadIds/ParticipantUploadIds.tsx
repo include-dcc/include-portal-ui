@@ -21,7 +21,7 @@ interface OwnProps {
 const ParticipantUploadIds = ({ queryBuilderId }: OwnProps) => (
   <EntityUploadIds
     entityId="participant"
-    entityIdTrans="Participant"
+    entityIdTrans="participant"
     entityIdentifiers={intl.get('components.uploadIds.modal.identifiers.participant')}
     placeHolder={intl.get('components.uploadIds.modal.placeholders.participant')}
     fetchMatch={async (ids) => {
