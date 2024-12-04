@@ -1,5 +1,7 @@
 import intl from 'react-intl-universal';
+import { useNavigate } from 'react-router';
 import Studies from '@ferlab/ui/core/pages/LandingPage/Studies';
+import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
 import DsnexusLogo from 'components/assets/studies/light/study-logo-DS-NEXUS.png';
 import DssleepLogo from 'components/assets/studies/light/study-logo-DS-Sleep.png';
@@ -10,6 +12,7 @@ import DefaultLogo from 'components/assets/studies/study-logo-default.svg';
 import DsconnectLogo from 'components/assets/studies/study-logo-DSC.png';
 import KfLogo from 'components/assets/studies/study-logo-KF.svg';
 import { IStudiesParticipants } from 'services/api/arranger/models';
+import { STATIC_ROUTES } from 'utils/routes';
 
 import { useGlobals } from '../../../store/global';
 
@@ -47,17 +50,25 @@ const formatStudies = (studiesParticipants: IStudiesParticipants[]) =>
   }));
 
 const StudiesSection = () => {
+  const navigate = useNavigate();
   const { stats } = useGlobals();
   const { studiesParticipants = [], studies: studiesCount = 0 } = stats || {};
   const formattedStudies = formatStudies(studiesParticipants);
+
+  const publicStudiesBtn = getFTEnvVarByKey('PUBLIC_STUDIES');
+  const studiesBtnOnClick =
+    publicStudiesBtn === 'true' ? () => navigate(STATIC_ROUTES.PUBLIC_STUDIES) : undefined;
+
   return (
     <div className={styles.container}>
       <Studies
-        studiesCount={studiesCount}
         studies={formattedStudies}
+        studiesBtnOnClick={studiesBtnOnClick}
+        studiesCount={studiesCount}
         dictionary={{
-          title: intl.get('screen.loginPage.studies.title'),
           summary: intl.get('screen.loginPage.studies.summary'),
+          title: intl.get('screen.loginPage.studies.title'),
+          viewAllBtn: intl.get('screen.loginPage.studies.viewAllBtn'),
         }}
       />
       <div className={styles.graphStatsContainer}>

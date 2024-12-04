@@ -617,6 +617,7 @@ const en = {
         'Access large-scale integrated data resources and analyze custom built cohort datasets based on participants, biospecimen, clinical, and genomic data.',
       login: 'Login',
       signup: 'Sign up',
+      viewAllBtn: 'View all studies',
       mondoChart: {
         title: 'Most Frequent Co-occurring Conditions (MONDO)',
         bottomAxis: '# of participants',
