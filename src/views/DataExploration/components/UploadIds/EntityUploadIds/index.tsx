@@ -25,7 +25,9 @@ const EntityUploadIds = ({
 }: OwnProps) => (
   <UploadIds
     dictionary={{
-      modalTitle: intl.get('components.uploadIds.modal.title', { entity: entityIdTrans }),
+      modalTitle: intl.get('components.uploadIds.modal.title', {
+        entity: entityIdTrans,
+      }),
       submittedColTitle: intl.get('components.uploadIds.modal.submittedColTitle', {
         entity: entityIdTrans,
       }),

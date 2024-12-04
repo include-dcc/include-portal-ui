@@ -21,7 +21,7 @@ interface OwnProps {
 const BiospecimenUploadIds = ({ queryBuilderId }: OwnProps) => (
   <EntityUploadIds
     entityId="biospecimen"
-    entityIdTrans="Sample"
+    entityIdTrans="sample"
     entityIdentifiers={intl.get('components.uploadIds.modal.identifiers.biospecimen')}
     placeHolder={intl.get('components.uploadIds.modal.placeholders.biospecimen')}
     fetchMatch={async (ids) => {

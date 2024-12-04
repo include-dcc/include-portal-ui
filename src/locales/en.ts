@@ -431,7 +431,7 @@ const en = {
         title: 'Upload a {entity} list',
         submittedColTitle: 'Submitted {entity} identifiers',
         uploadBtnText: 'Upload a {entity} list',
-        mappedTo: 'Mapped To',
+        mappedTo: 'Mapped to',
         collapseTitle: 'Summary Table  ({matchCount} matched, {unMatchCount} unmatched)',
         inputLabel: 'Copy-paste a list of identifiers or upload a file',
         match: 'Matched ({count})',
@@ -2024,7 +2024,7 @@ const en = {
           placeholder: 'ex. ENSG00000157764, TP53',
           submittedColTitle: 'Submitted gene identifiers',
           uploadBtnText: 'Upload a gene list',
-          mappedTo: 'Mapped To',
+          mappedTo: 'Mapped to',
           collapseTitle: 'Summary Table  ({matchCount} matched, {unMatchCount} unmatched)',
           identifiers: 'Gene Symbol, Gene Alias, Ensembl ID',
           input: {
@@ -2074,7 +2074,7 @@ const en = {
           title: 'Upload a sample list',
           submittedColTitle: 'Submitted sample identifiers',
           uploadBtnText: 'Upload a sample list',
-          mappedTo: 'Mapped To',
+          mappedTo: 'Mapped to',
           collapseTitle: 'Summary Table  ({matchCount} matched, {unMatchCount} unmatched)',
           identifiers: 'Sample ID',
           input: {
