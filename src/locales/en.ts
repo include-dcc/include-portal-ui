@@ -1518,6 +1518,8 @@ const en = {
         },
         footer: {
           download: 'Download data',
+          notification:
+            'Please wait while we generate your report. This process may take a few moments.',
         },
         about: {
           title: 'About this dataset',

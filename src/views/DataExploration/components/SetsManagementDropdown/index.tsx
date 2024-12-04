@@ -4,6 +4,7 @@ import {
   DownOutlined,
   ExperimentOutlined,
   FileTextOutlined,
+  FolderOutlined,
   InfoCircleOutlined,
   PlusOutlined,
   UserOutlined,
@@ -233,7 +234,11 @@ const SetsManagementDropdown = ({
               document.getElementById(`${type}-set-dropdown-container`) as HTMLElement
             }
           >
-            <Button className={'save-set-btn'} onClick={(e) => e.preventDefault()}>
+            <Button
+              className={'save-set-btn'}
+              icon={<FolderOutlined />}
+              onClick={(e) => e.preventDefault()}
+            >
               {intl.get('screen.dataExploration.setsManagementDropdown.saveSet', {
                 type: singularizeSetTypeIfNeeded(type),
               })}

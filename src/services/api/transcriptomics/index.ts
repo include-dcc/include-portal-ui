@@ -38,6 +38,20 @@ const fetchSampleGeneExp = (id: string) =>
     },
   });
 
+const fetchExportUrlDiffGeneExp = () =>
+  sendRequest<{ url: string }>({
+    method: 'GET',
+    url: `${ARRANGER_API}/transcriptomics/diffGeneExp/export`,
+    headers: headers(),
+  });
+
+const fetchExportUrlSampleGeneExp = () =>
+  sendRequest<{ url: string }>({
+    method: 'GET',
+    url: `${ARRANGER_API}/transcriptomics/sampleGeneExp/export`,
+    headers: headers(),
+  });
+
 const checkSampleIdsAndGene = (data: { ensembl_gene_id?: string; sample_ids: string[] }) =>
   sendRequest<ITranscriptomicsSampleGeneExp>({
     method: 'POST',
@@ -62,4 +76,6 @@ export const TranscriptomicsApi = {
   fetchDiffGeneExp,
   checkSampleIdsAndGene,
   checkGenesExist,
+  fetchExportUrlDiffGeneExp,
+  fetchExportUrlSampleGeneExp,
 };
