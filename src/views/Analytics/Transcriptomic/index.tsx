@@ -140,6 +140,7 @@ export const Transcriptomic = () => {
             contentClassName={styles.gridCardContent}
             footer={
               <TranscriptomicFooter
+                loading={diffGeneExp.loading}
                 selectedGenes={selectedGenes}
                 sampleGeneExpData={sampleGeneExp.data?.data}
                 selectedSamples={selectedSamples}
