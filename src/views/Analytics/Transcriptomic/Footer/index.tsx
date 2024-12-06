@@ -29,6 +29,7 @@ import { STATIC_ROUTES } from 'utils/routes';
 import styles from './index.module.css';
 
 type TTranscriptomicFooter = {
+  loading: boolean;
   selectedGenes: TTranscriptomicsDatum[];
   sampleGeneExpData?: TTranscriptomicsSwarmPlotData[];
   selectedSamples: TTranscriptomicsSwarmPlotData[];
@@ -36,6 +37,7 @@ type TTranscriptomicFooter = {
 };
 
 const TranscriptomicFooter = ({
+  loading,
   sampleGeneExpData,
   selectedGenes: selectedGeneIds,
   selectedSamples,
@@ -105,6 +107,7 @@ const TranscriptomicFooter = ({
         <DownloadTranscriptomics
           filename="htp-dge-data"
           handleUrl={TranscriptomicsApi.fetchExportUrlDiffGeneExp}
+          disabled={loading}
         />
       </div>
       <div className={styles.sample}>
@@ -112,6 +115,7 @@ const TranscriptomicFooter = ({
           filename="htp-rnaseq-data"
           displayNotification
           handleUrl={TranscriptomicsApi.fetchExportUrlSampleGeneExp}
+          disabled={loading}
         />
         <SetsManagementDropdown
           idField={BIOSPECIMENS_SAVED_SETS_FIELD}
