@@ -140,7 +140,7 @@ describe('Navigation', () => {
     cy.get('[data-cy="SidebarMenuItem_Participant"]').clickAndWait({force: true});
 
     cy.get('button[class*="UploadIdsButton"]').clickAndWait({force: true});
-    cy.get('[class="ant-modal-header"]').contains('Participant').should('exist');
+    cy.get('[class="ant-modal-header"]').contains('participant').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
     cy.get('div[class*="Filters_filter"]').contains('Phenotype (HPO)').clickAndWait({force: true});
@@ -154,13 +154,13 @@ describe('Navigation', () => {
     cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').clickAndWait({force: true});
 
     cy.get('button[class*="UploadIdsButton"]').clickAndWait({force: true});
-    cy.get('[class="ant-modal-header"]').contains('Sample').should('exist');
+    cy.get('[class="ant-modal-header"]').contains('sample').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
     cy.get('[data-cy="SidebarMenuItem_Data File"]').clickAndWait({force: true});
 
     cy.get('button[class*="UploadIdsButton"]').clickAndWait({force: true});
-    cy.get('[class="ant-modal-header"]').contains('File').should('exist');
+    cy.get('[class="ant-modal-header"]').contains('file').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
     // Query Builder
