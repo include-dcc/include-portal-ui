@@ -30,6 +30,7 @@ describe('Page Landing - Vérifier les informations affichées', () => {
     cy.get('[class*="Studies_container"] [class*="Summary"] [class*="TextIcon_layout"]').contains(/\d{1}/).should('exist');
     cy.get('[class*="Studies_container"] [class*="Summary"] [class*="TextIcon_layout"]').contains('Studies').should('exist');
     cy.get('[class*="Studies_container"] [class*="Summary"]').contains('Explore a curated collection of harmonized studies, ranging from participant-reported programs, INCLUDE-funded cohorts, institutional initiatives, and dedicated consortia focused on Down Syndrome research.').should('exist');
+    cy.get('[class*="Studies_container"] [class*="Summary"] button[class*="ant-btn-primary"]').contains('View all studies').should('exist');
   });
 
   it('Section Studies Right Panel Tile', () => {
