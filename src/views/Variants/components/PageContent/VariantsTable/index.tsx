@@ -536,7 +536,8 @@ const VariantsTable = ({
                 onTableExportClick: () => {
                   if (
                     selectedRows.length > 10000 ||
-                    (isEmpty(selectedRows) && results.total > 10000)
+                    (isEmpty(selectedRows) && !selectedAllResults && results.total > 10000) ||
+                    (selectedAllResults && results.total > 10000)
                   ) {
                     Modal.confirm({
                       title: intl.get('screen.variants.table.exportModal.title'),
