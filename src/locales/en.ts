@@ -1531,6 +1531,8 @@ const en = {
           download: 'Download data',
           notification:
             'Please wait while we generate your report. This process may take a few moments.',
+          diffGeneTooltip: 'Download differential gene expression across all genes',
+          sampleTooltip: 'Download gene expression data across all genes',
         },
         about: {
           title: 'About this dataset',
