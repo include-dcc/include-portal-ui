@@ -16,9 +16,10 @@ const { Title } = Typography;
 type LoginModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  redirectUri?: string;
 };
 
-const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+const LoginModal = ({ isOpen, onClose, redirectUri }: LoginModalProps) => {
   const { keycloak } = useKeycloak();
   const query = useQueryParams();
 
@@ -26,7 +27,7 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
     trackPublicStudies(btnName);
     const url = keycloak.createLoginUrl({
       redirectUri: `${window.location.origin}/${
-        query.get(REDIRECT_URI_KEY) || STATIC_ROUTES.STUDIES
+        redirectUri || query.get(REDIRECT_URI_KEY) || STATIC_ROUTES.STUDIES
       }`,
       locale: intl.getInitOptions().currentLocale,
     });

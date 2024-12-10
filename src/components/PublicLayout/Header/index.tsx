@@ -37,7 +37,7 @@ const Header = () => {
   const { keycloak } = useKeycloak();
   const query = useQueryParams();
   const navigate = useNavigate();
-
+  const [redirectUri, setRedirectUri] = useState<string>();
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const closeLoginModal = () => setOpenLoginModal(false);
 
@@ -73,6 +73,7 @@ const Header = () => {
               key="dashboard"
               icon={<HomeOutlined />}
               onClick={() => {
+                setRedirectUri(STATIC_ROUTES.DASHBOARD);
                 trackPublicStudies('Dashboard');
                 setOpenLoginModal(true);
               }}
@@ -88,6 +89,7 @@ const Header = () => {
               key="explore-data"
               icon={<FileSearchOutlined />}
               onClick={() => {
+                setRedirectUri(STATIC_ROUTES.DATA_EXPLORATION);
                 trackPublicStudies('Data Exploration');
                 setOpenLoginModal(true);
               }}
@@ -99,6 +101,7 @@ const Header = () => {
                 key="variant-data"
                 icon={<LineStyleIcon />}
                 onClick={() => {
+                  setRedirectUri(STATIC_ROUTES.VARIANTS);
                   trackPublicStudies('Variants');
                   setOpenLoginModal(true);
                 }}
@@ -110,6 +113,7 @@ const Header = () => {
                 key="analytics-data"
                 icon={<DotChartOutlined />}
                 onClick={() => {
+                  setRedirectUri(STATIC_ROUTES.ANALYTICS);
                   trackPublicStudies('Analysis');
                   setOpenLoginModal(true);
                 }}
@@ -123,6 +127,7 @@ const Header = () => {
             key="community"
             icon={<TeamOutlined />}
             onClick={() => {
+              setRedirectUri(STATIC_ROUTES.COMMUNITY);
               trackPublicStudies('Community');
               setOpenLoginModal(true);
             }}
@@ -228,7 +233,9 @@ const Header = () => {
         ]}
         className={style.mainHeader}
       />
-      {openLoginModal && <LoginModal isOpen={openLoginModal} onClose={closeLoginModal} />}
+      {openLoginModal && (
+        <LoginModal isOpen={openLoginModal} onClose={closeLoginModal} redirectUri={redirectUri} />
+      )}
     </>
   );
 };

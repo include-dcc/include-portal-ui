@@ -2,14 +2,19 @@ import intl from 'react-intl-universal';
 import { AuditOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { Space, Tag, Tooltip, Typography } from 'antd';
+import { INDEXES } from 'graphql/constants';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
+import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { DataCategory, hasDataCategory } from 'views/Studies';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { IStudiesParticipants } from 'services/api/arranger/models';
+import { STATIC_ROUTES } from 'utils/routes';
 
 import style from './index.module.css';
 
@@ -18,9 +23,13 @@ export const TABLE_ID = 'public-studies';
 
 type ColumnsProps = {
   manageLoginModal: (isOpen: boolean) => void;
+  manageRedirectUri: (uri: string) => void;
 };
 
-export const getColumns = ({ manageLoginModal }: ColumnsProps): ProColumnType<any>[] => [
+export const getColumns = ({
+  manageLoginModal,
+  manageRedirectUri,
+}: ColumnsProps): ProColumnType<any>[] => [
   {
     key: 'is_harmonized',
     iconTitle: <AuditOutlined />,
@@ -58,7 +67,16 @@ export const getColumns = ({ manageLoginModal }: ColumnsProps): ProColumnType<an
     key: 'study_code',
     title: intl.get('entities.study.code'),
     dataIndex: 'study_code',
-    render: (study_code: string) => <a onClick={() => manageLoginModal(true)}>{study_code}</a>,
+    render: (study_code: string) => (
+      <a
+        onClick={() => {
+          manageRedirectUri(STATIC_ROUTES.STUDIES);
+          manageLoginModal(true);
+        }}
+      >
+        {study_code}
+      </a>
+    ),
   },
   {
     key: 'study_name',
@@ -147,7 +165,27 @@ export const getColumns = ({ manageLoginModal }: ColumnsProps): ProColumnType<an
       const participantCount = record?.participant_count || 0;
 
       return participantCount ? (
-        <a onClick={() => manageLoginModal(true)}>{numberWithCommas(participantCount)}</a>
+        <a
+          onClick={() => {
+            manageRedirectUri(STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS);
+            manageLoginModal(true);
+            addQuery({
+              queryBuilderId: DATA_EXPLORATION_QB_ID,
+              query: generateQuery({
+                newFilters: [
+                  generateValueFilter({
+                    field: 'study.study_code',
+                    value: [record.study_code],
+                    index: INDEXES.PARTICIPANT,
+                  }),
+                ],
+              }),
+              setAsActive: true,
+            });
+          }}
+        >
+          {numberWithCommas(participantCount)}
+        </a>
       ) : (
         participantCount || TABLE_EMPTY_PLACE_HOLDER
       );
@@ -160,7 +198,27 @@ export const getColumns = ({ manageLoginModal }: ColumnsProps): ProColumnType<an
       const fileCount = record?.file_count || 0;
 
       return fileCount ? (
-        <a onClick={() => manageLoginModal(true)}>{numberWithCommas(fileCount)}</a>
+        <a
+          onClick={() => {
+            manageRedirectUri(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
+            manageLoginModal(true);
+            addQuery({
+              queryBuilderId: DATA_EXPLORATION_QB_ID,
+              query: generateQuery({
+                newFilters: [
+                  generateValueFilter({
+                    field: 'study.study_code',
+                    value: [record.study_code],
+                    index: INDEXES.PARTICIPANT,
+                  }),
+                ],
+              }),
+              setAsActive: true,
+            });
+          }}
+        >
+          {numberWithCommas(fileCount)}
+        </a>
       ) : (
         fileCount || TABLE_EMPTY_PLACE_HOLDER
       );
