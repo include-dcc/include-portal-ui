@@ -47,7 +47,7 @@ describe('Page des variants - Téléverser une liste de gènes', () => {
     cy.get('[class*="UploadModal"] div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
   });
 
-  it('Vérifier les informations affichées - Section Résumé (onglet Reconnus) [SJIP-1127]', () => {
+  it('Vérifier les informations affichées - Section Résumé (onglet Reconnus)', () => {
     cy.get('[class*="UploadModal"] span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
 
     cy.get('[class*="UploadModal_tablesMessages"]').contains('4 submitted identifiers mapped to 1 unique system identifiers').should('exist');
