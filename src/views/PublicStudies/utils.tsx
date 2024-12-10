@@ -2,10 +2,14 @@ import intl from 'react-intl-universal';
 import { AuditOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import { Space, Tag, Tooltip, Typography } from 'antd';
+import { INDEXES } from 'graphql/constants';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
+import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { DataCategory, hasDataCategory } from 'views/Studies';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
@@ -165,6 +169,19 @@ export const getColumns = ({
           onClick={() => {
             manageRedirectUri(STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS);
             manageLoginModal(true);
+            addQuery({
+              queryBuilderId: DATA_EXPLORATION_QB_ID,
+              query: generateQuery({
+                newFilters: [
+                  generateValueFilter({
+                    field: 'study.study_code',
+                    value: [record.study_code],
+                    index: INDEXES.PARTICIPANT,
+                  }),
+                ],
+              }),
+              setAsActive: true,
+            });
           }}
         >
           {numberWithCommas(participantCount)}
@@ -185,6 +202,19 @@ export const getColumns = ({
           onClick={() => {
             manageRedirectUri(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
             manageLoginModal(true);
+            addQuery({
+              queryBuilderId: DATA_EXPLORATION_QB_ID,
+              query: generateQuery({
+                newFilters: [
+                  generateValueFilter({
+                    field: 'study.study_code',
+                    value: [record.study_code],
+                    index: INDEXES.PARTICIPANT,
+                  }),
+                ],
+              }),
+              setAsActive: true,
+            });
           }}
         >
           {numberWithCommas(fileCount)}
