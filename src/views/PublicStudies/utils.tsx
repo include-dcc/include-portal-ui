@@ -10,6 +10,7 @@ import { DataCategory, hasDataCategory } from 'views/Studies';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { IStudiesParticipants } from 'services/api/arranger/models';
+import { STATIC_ROUTES } from 'utils/routes';
 
 import style from './index.module.css';
 
@@ -18,9 +19,13 @@ export const TABLE_ID = 'public-studies';
 
 type ColumnsProps = {
   manageLoginModal: (isOpen: boolean) => void;
+  manageRedirectUri: (uri: string) => void;
 };
 
-export const getColumns = ({ manageLoginModal }: ColumnsProps): ProColumnType<any>[] => [
+export const getColumns = ({
+  manageLoginModal,
+  manageRedirectUri,
+}: ColumnsProps): ProColumnType<any>[] => [
   {
     key: 'is_harmonized',
     iconTitle: <AuditOutlined />,
@@ -58,7 +63,16 @@ export const getColumns = ({ manageLoginModal }: ColumnsProps): ProColumnType<an
     key: 'study_code',
     title: intl.get('entities.study.code'),
     dataIndex: 'study_code',
-    render: (study_code: string) => <a onClick={() => manageLoginModal(true)}>{study_code}</a>,
+    render: (study_code: string) => (
+      <a
+        onClick={() => {
+          manageRedirectUri(STATIC_ROUTES.STUDIES);
+          manageLoginModal(true);
+        }}
+      >
+        {study_code}
+      </a>
+    ),
   },
   {
     key: 'study_name',
@@ -147,7 +161,14 @@ export const getColumns = ({ manageLoginModal }: ColumnsProps): ProColumnType<an
       const participantCount = record?.participant_count || 0;
 
       return participantCount ? (
-        <a onClick={() => manageLoginModal(true)}>{numberWithCommas(participantCount)}</a>
+        <a
+          onClick={() => {
+            manageRedirectUri(STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS);
+            manageLoginModal(true);
+          }}
+        >
+          {numberWithCommas(participantCount)}
+        </a>
       ) : (
         participantCount || TABLE_EMPTY_PLACE_HOLDER
       );
@@ -160,7 +181,14 @@ export const getColumns = ({ manageLoginModal }: ColumnsProps): ProColumnType<an
       const fileCount = record?.file_count || 0;
 
       return fileCount ? (
-        <a onClick={() => manageLoginModal(true)}>{numberWithCommas(fileCount)}</a>
+        <a
+          onClick={() => {
+            manageRedirectUri(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
+            manageLoginModal(true);
+          }}
+        >
+          {numberWithCommas(fileCount)}
+        </a>
       ) : (
         fileCount || TABLE_EMPTY_PLACE_HOLDER
       );
