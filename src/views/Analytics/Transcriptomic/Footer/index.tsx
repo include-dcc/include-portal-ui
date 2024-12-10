@@ -105,6 +105,7 @@ const TranscriptomicFooter = ({
     <div className={styles.footer}>
       <div className={styles.gene}>
         <DownloadTranscriptomics
+          tooltip={intl.get('screen.analytics.transcriptomic.footer.diffGeneTooltip')}
           filename="htp-dge-data"
           handleUrl={TranscriptomicsApi.fetchExportUrlDiffGeneExp}
           disabled={loading}
@@ -112,6 +113,7 @@ const TranscriptomicFooter = ({
       </div>
       <div className={styles.sample}>
         <DownloadTranscriptomics
+          tooltip={intl.get('screen.analytics.transcriptomic.footer.sampleTooltip')}
           filename="htp-rnaseq-data"
           displayNotification
           handleUrl={TranscriptomicsApi.fetchExportUrlSampleGeneExp}
