@@ -70,7 +70,7 @@ export const getColumns = ({
     render: (study_code: string) => (
       <a
         onClick={() => {
-          manageRedirectUri(STATIC_ROUTES.STUDIES);
+          manageRedirectUri(`${STATIC_ROUTES.STUDIES}/${study_code}`);
           manageLoginModal(true);
         }}
       >
