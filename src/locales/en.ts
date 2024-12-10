@@ -614,7 +614,7 @@ const en = {
       subtitle:
         'Uncover <span style="color: #7dd3fc;">new insights</span> into the biology of Down Syndrome and co-occurring conditions.',
       resume:
-        'Access large-scale integrated data resources and analyze custom built cohort datasets based on participants, biospecimen, clinical, and genomic data.',
+        'Access large-scale integrated data resources and analyze custom built cohort datasets based on participants, biospecimens, clinical, and genomic data.',
       login: 'Login',
       signup: 'Sign up',
       viewAllBtn: 'View all studies',
