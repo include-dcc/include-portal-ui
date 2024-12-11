@@ -12,7 +12,7 @@ describe('Page Landing - Vérifier les informations affichées', () => {
     cy.get('[class*="LoginForm_subtitle"]').contains('Uncover ').should('exist');
     cy.get('[class*="LoginForm_subtitle"]').contains('new insights').should('exist');
     cy.get('[class*="LoginForm_subtitle"]').contains(' into the biology of Down Syndrome and co-occurring conditions.').should('exist');
-    cy.get('[class*="LoginForm_description"]').contains('Access large-scale integrated data resources and analyze custom built cohort datasets based on participants, biospecimen, clinical, and genomic data.').should('exist');
+    cy.get('[class*="LoginForm_description"]').contains('Access large-scale integrated data resources and analyze custom built cohort datasets based on participants, biospecimens, clinical, and genomic data.').should('exist');
     cy.get('[data-cy="Login"]').contains('Login').should('exist');
     cy.get('[data-cy="Signup"]').contains('Sign up').should('exist');
   });
