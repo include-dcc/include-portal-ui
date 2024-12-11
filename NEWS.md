@@ -8,6 +8,37 @@
 ### Technical / Other changes
 -->
 
+## 2024-12-11 include-portal-ui 1.16.0
+
+### Features:
+
+- [SJIP-281](https://d3b.atlassian.net/browse/SJIP-281) Feature: [Data exploration] Add Category icon above each facet and in Quick Filter
+- [SJIP-666](https://d3b.atlassian.net/browse/SJIP-666) Feature: [Variant Exploration] Add export as TSV
+- [SJIP-935](https://d3b.atlassian.net/browse/SJIP-935) Feature: [Saved Set] Update the feedback message to respect given special characters
+- [SJIP-963](https://d3b.atlassian.net/browse/SJIP-963) Feature: [Transcriptomics] Add Download data to the volcano plot and box plot
+- [SJIP-984](https://d3b.atlassian.net/browse/SJIP-984) Feature: [Transcriptomics] Add Save as biospecimen set to the box plot
+- [SJIP-1032](https://d3b.atlassian.net/browse/SJIP-1032) Feature: [Studies] Show more than one dbGaP accession number
+- [SJIP-1035](https://d3b.atlassian.net/browse/SJIP-1035) Feature: [Transcriptomics] Add Multi-select to the plots
+- [SJIP-1067](https://d3b.atlassian.net/browse/SJIP-1067) Feature: [Transcriptomics] Add new facets
+- [SJIP-1094](https://d3b.atlassian.net/browse/SJIP-1094) Feature: [Public Studies] Add Public Studies page
+- [SJIP-1095](https://d3b.atlassian.net/browse/SJIP-1095) Feature: [Data Exploration] Add Maximum 10,000 limit modal prior to Analyze in Cavatica modal
+- [SJIP-1114](https://d3b.atlassian.net/browse/SJIP-1114) Feature: [Data Exploration] Across all horizontal bar charts set the max bars to 10
+
+### Technical/ Other changes:
+
+- [SJIP-427](https://d3b.atlassian.net/browse/SJIP-427) Task: [ETL] Added Age at First Patient Engagement and First Patient Engagement Type
+- [SJIP-860](https://d3b.atlassian.net/browse/SJIP-860) Fix: [Upload List] Corrected typos
+- [SJIP-913](https://d3b.atlassian.net/browse/SJIP-913) Fix: [Variant Exploration] Misalignment of a button
+- [SJIP-915](https://d3b.atlassian.net/browse/SJIP-915) Fix: [Summary View] Alignment of "No data" to center it
+- [SJIP-1058](https://d3b.atlassian.net/browse/SJIP-1058) Fix: [Community] Issue with filters when on pages > 1
+- [SJIP-1066](https://d3b.atlassian.net/browse/SJIP-1066) Fix: [Studies] Search by dbGaP when more than one dbGaP per study
+- [SJIP-1068](https://d3b.atlassian.net/browse/SJIP-1068) Fix: [Data Exploration] Search by facets auto suggestion loses highlight if there is a - in search
+- [SJIP-1069](https://d3b.atlassian.net/browse/SJIP-1069) Fix: [Data Exploration] Search by Suggestion List remains visible when input field loses focus
+- [SJIP-1073](https://d3b.atlassian.net/browse/SJIP-1073) Task: [ETL] Enrich the ETL by adding fields returned by the PubMed API
+- [SJIP-1082](https://d3b.atlassian.net/browse/SJIP-1082) Refactor: [UI] Update package and dependencies
+- [SJIP-1091](https://d3b.atlassian.net/browse/SJIP-1091) Fix: [Transcriptomics] The gene upload list search should be case insensitive
+- [SJIP-1096](https://d3b.atlassian.net/browse/SJIP-1096) Task: [Monitoring] Add Sentry
+
 ## 2024-11-04 include-portal-ui 1.15.0
 
 ### Features:
