@@ -66,8 +66,8 @@ describe('Page d\'un variant - Vérifier les informations affichées', () => {
     cy.get('div[class*="EntityVariantSummary_geneSplice"] [class*="ant-descriptions-item-content"]').eq(2).contains('0.01').should('exist');
     cy.get('div[class*="EntityVariantSummary_geneSplice"] [class*="ant-descriptions-item-content"]').eq(2).find('[class*="ant-tag"]').contains('DL').should('exist');
     cy.get('div[class*="EntityVariantSummary_omim"] [class*="EntityVariantSummary_detailsTitle"]').eq(0).contains('Associated Conditions (OMIM)').should('exist');
-    cy.get('div[class*="EntityVariantSummary_omim"] [class*="ant-descriptions-item-content"]').eq(0).contains('Fontaine progeroid syndrome').should('exist');
-    cy.get('div[class*="EntityVariantSummary_omim"] [class*="ant-descriptions-item-content"]').eq(0).find('[class*="ant-tag"]').contains('AD').should('exist');
+    cy.get('div[class*="EntityVariantSummary_omim"] [class*="ant-descriptions-item-label"]').eq(0).contains('Fontaine progeroid syndrome').should('exist');
+    cy.get('div[class*="EntityVariantSummary_omim"] [class*="ant-descriptions-item-content"]').eq(0).find('[class="ant-tag"]').contains('AD').should('exist');
   });
 
   it('Panneau Transcripts', () => {
@@ -231,7 +231,7 @@ describe('Page d\'un variant - Valider les liens disponibles', () => {
   });
 
   it('Lien OMIM du panneau Summary', () => {
-    cy.get('div[class*="EntityVariantSummary_omim"] [class*="ant-descriptions-item-content"]').eq(0).find('a') // data-cy="Summary_Omim_ExternalLink"
+    cy.get('div[class*="EntityVariantSummary_omim"] [class*="ant-descriptions-item-label"]').eq(0).find('a') // data-cy="Summary_Omim_ExternalLink"
     .should('have.attr', 'href', 'https://www.omim.org/entry/612289');
   });
 
