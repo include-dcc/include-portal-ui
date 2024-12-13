@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Space, Tag, Tooltip, Typography } from 'antd';
 import { IStudyEntity } from 'graphql/studies/models';
 
+import Publication from 'components/Publication';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from '../index.module.css';
@@ -141,18 +141,11 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
         </Tooltip>
       </Space>
     ),
-    value: study?.publications?.length ? (
-      <ExpandableCell
-        nOfElementsWhenCollapsed={3}
-        dataSource={study.publications}
-        renderItem={(sourceText) => (
-          <ExternalLink className={styles.externalLink} href={sourceText}>
-            {sourceText}
-          </ExternalLink>
-        )}
+    value: (
+      <Publication
+        publications={study?.publications}
+        publications_details={study?.publications_details}
       />
-    ) : (
-      TABLE_EMPTY_PLACE_HOLDER
     ),
   },
   {
