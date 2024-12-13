@@ -28,7 +28,7 @@ const getPublications = ({ publications, publications_details }: PublicationProp
   }
 
   if (publications?.length) {
-    publications.map((pub) => {
+    publications.forEach((pub) => {
       if (!pub.includes(PUBMED_URL)) noPubMed.push(pub);
     });
   }
