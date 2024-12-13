@@ -26,6 +26,31 @@ export interface IStudyDataset {
   repository_url?: string;
 }
 
+export interface IAuthor {
+  id: string;
+  family: string;
+  given: string;
+}
+
+export interface IPublicationDetails {
+  id: string;
+  authors: ArrangerResultsTree<IAuthor>;
+  DOI?: string;
+  ISSN?: string;
+  PMCID?: string;
+  PMID: string;
+  accessed_date_parts?: number[];
+  container_title?: string;
+  container_title_short?: string;
+  issue?: string;
+  issued_date_parts: number[];
+  page?: string;
+  pubmed_id?: string;
+  source?: string;
+  title: string;
+  volume?: string;
+}
+
 export interface IDataType {
   id: string;
   data_type: string;
@@ -79,6 +104,7 @@ export interface IStudyEntity {
   participant_count: number;
   program: string;
   publications?: string[];
+  publications_details?: ArrangerResultsTree<IPublicationDetails>;
   selection_criteria?: string[];
   study_designs?: string[];
   study_meta_categories?: string[];

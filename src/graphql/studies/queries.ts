@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_STUDIES = gql`
-  query getStudy($sqon: JSON, $first: Int, $offset: Int, $sort: [Sort]) {
+  query getStudies($sqon: JSON, $first: Int, $offset: Int, $sort: [Sort]) {
     study {
       hits(filters: $sqon, first: $first, offset: $offset, sort: $sort) {
         total
@@ -56,7 +56,7 @@ export const GET_STUDIES = gql`
 `;
 
 export const GET_STUDY = gql`
-  query getStudies($sqon: JSON, $first: Int, $offset: Int, $sort: [Sort]) {
+  query getStudy($sqon: JSON, $first: Int, $offset: Int, $sort: [Sort]) {
     study {
       hits(offset: $offset, sort: $sort, first: $first, filters: $sqon) {
         total
@@ -122,6 +122,38 @@ export const GET_STUDY = gql`
             participant_count
             program
             publications
+            publications_details {
+              hits {
+                edges {
+                  node {
+                    authors {
+                      hits {
+                        edges {
+                          node {
+                            family
+                            given
+                          }
+                        }
+                      }
+                    }
+                    DOI
+                    ISSN
+                    PMCID
+                    PMID
+                    accessed_date_parts
+                    container_title
+                    container_title_short
+                    issue
+                    issued_date_parts
+                    page
+                    pubmed_id
+                    source
+                    title
+                    volume
+                  }
+                }
+              }
+            }
             selection_criteria
             study_code
             study_designs
