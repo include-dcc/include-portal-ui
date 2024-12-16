@@ -1,3 +1,10 @@
 .copy {
   margin-left: 4px;
 }
+
+.seeMore {
+  padding: 0;
+  margin-top: 8px;
+  height: auto;
+  font-size: 12px;
+}

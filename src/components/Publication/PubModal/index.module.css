@@ -1,0 +1,20 @@
+.modalWrapper {
+  width: 780px !important;
+}
+
+.modalWrapper :global(.ant-modal-body) {
+  padding: 16px 24px;
+  overflow: auto;
+  max-height: 480px;
+}
+
+.pubMedWrapper {
+  padding: 8px 16px;
+}
+.pubMedWrapper:not(:last-child) {
+  border-bottom: 1px solid var(--gray-4);
+}
+
+.pubAndNoPub:first-child {
+  border-top: 1px solid var(--gray-4);
+}
