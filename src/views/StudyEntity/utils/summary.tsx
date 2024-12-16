@@ -145,6 +145,7 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
       <Publication
         publications={study?.publications}
         publications_details={study?.publications_details}
+        studyName={study?.study_name}
       />
     ),
   },

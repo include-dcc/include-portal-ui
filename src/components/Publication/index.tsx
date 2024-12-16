@@ -1,4 +1,6 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
+import intl from 'react-intl-universal';
+import { Button } from 'antd';
 import { ArrangerResultsTree } from 'graphql/models';
 import { IPublicationDetails } from 'graphql/studies/models';
 import { cloneDeep } from 'lodash';
@@ -7,15 +9,22 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
 import NoPubMed from './NoPubMed';
 import PubMed from './PubMed';
+import PubModal from './PubModal';
+
+import style from './index.module.css';
 
 const PUBMED_URL = 'pubmed';
 
-type PublicationProps = {
+type GetPublicationProps = {
   publications?: string[];
   publications_details?: ArrangerResultsTree<IPublicationDetails>;
 };
 
-const getPublications = ({ publications, publications_details }: PublicationProps) => {
+type PublicationProps = GetPublicationProps & {
+  studyName?: string;
+};
+
+const getPublications = ({ publications, publications_details }: GetPublicationProps) => {
   const publicationsDetails = cloneDeep(publications_details?.hits?.edges);
   const noPubMed: string[] = [];
   if (publicationsDetails?.length) {
@@ -36,7 +45,12 @@ const getPublications = ({ publications, publications_details }: PublicationProp
   return { pubMed: publicationsDetails, noPubMed };
 };
 
-const Publication = ({ publications, publications_details }: PublicationProps): ReactElement => {
+const Publication = ({
+  publications,
+  publications_details,
+  studyName,
+}: PublicationProps): ReactElement => {
+  const [openModal, setOpenModal] = useState(false);
   const publicationsSorted = getPublications({
     publications: publications,
     publications_details: publications_details,
@@ -45,9 +59,29 @@ const Publication = ({ publications, publications_details }: PublicationProps): 
 
   if (!pubMed?.length && !noPubMed.length) return <>{TABLE_EMPTY_PLACE_HOLDER}</>;
 
-  if (pubMed?.length) return <PubMed publication={pubMed[0].node} />;
-
-  return <NoPubMed publication={noPubMed[0]} />;
+  return (
+    <>
+      {!!pubMed?.length && <PubMed publication={pubMed[0].node} />}
+      {!pubMed?.length && <NoPubMed publication={noPubMed[0]} />}
+      {((!!pubMed?.length && pubMed?.length > 1) ||
+        (!!noPubMed?.length && noPubMed.length > 1)) && (
+        <div>
+          <Button className={style.seeMore} type="link" onClick={() => setOpenModal(true)}>
+            {intl.get('entities.study.publicationDetails.seeMore')}
+          </Button>
+        </div>
+      )}
+      {openModal && (
+        <PubModal
+          isOpen={openModal}
+          onClose={() => setOpenModal(false)}
+          studyName={studyName}
+          pubMed={pubMed}
+          noPubMed={noPubMed}
+        />
+      )}
+    </>
+  );
 };
 
 export default Publication;
