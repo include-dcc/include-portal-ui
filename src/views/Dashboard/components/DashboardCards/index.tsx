@@ -50,13 +50,12 @@ export const dashboardCards: TSortableItems[] = [
     className: cx(styles.cardColxxl6, styles.cardColxxl5),
     component: <SavedSets id="4" className={styles.dashboardCard} />,
   },
+  {
+    id: '5',
+    xs: 24,
+    md: 12,
+    xxl: 8,
+    className: cx(styles.cardColxxl6, styles.cardColxxl5),
+    component: <BiospecimenRequests id="5" className={styles.dashboardCard} />,
+  },
 ];
-
-export const biospecimenRequestCard = {
-  id: '5',
-  xs: 24,
-  md: 12,
-  xxl: 8,
-  className: cx(styles.cardColxxl6, styles.cardColxxl5),
-  component: <BiospecimenRequests id="5" className={styles.dashboardCard} />,
-};

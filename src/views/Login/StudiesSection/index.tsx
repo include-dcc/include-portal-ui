@@ -1,7 +1,6 @@
 import intl from 'react-intl-universal';
 import { useNavigate } from 'react-router';
 import Studies from '@ferlab/ui/core/pages/LandingPage/Studies';
-import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
 import DsnexusLogo from 'components/assets/studies/light/study-logo-DS-NEXUS.png';
 import DssleepLogo from 'components/assets/studies/light/study-logo-DS-Sleep.png';
@@ -56,14 +55,10 @@ const StudiesSection = () => {
   const { studiesParticipants = [], studies: studiesCount = 0 } = stats || {};
   const formattedStudies = formatStudies(studiesParticipants);
 
-  const publicStudiesBtn = getFTEnvVarByKey('PUBLIC_STUDIES');
-  const studiesBtnOnClick =
-    publicStudiesBtn === 'true'
-      ? () => {
-          trackViewAllStudies();
-          navigate(STATIC_ROUTES.PUBLIC_STUDIES);
-        }
-      : undefined;
+  const studiesBtnOnClick = () => {
+    trackViewAllStudies();
+    navigate(STATIC_ROUTES.PUBLIC_STUDIES);
+  };
 
   return (
     <div className={styles.container}>

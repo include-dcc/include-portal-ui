@@ -45,10 +45,6 @@ const Header = () => {
   const currentPathName = location.pathname;
   const tokenParsed = keycloak.tokenParsed as IncludeKeycloakTokenParsed;
 
-  // TODO: to remove after indexaction
-  const ft_variant = getFTEnvVarByKey('VARIANT');
-  const ft_analyticsPage = getFTEnvVarByKey('ANALYTICS_PAGE');
-
   return (
     <>
       <NotificationBanner
@@ -90,25 +86,20 @@ const Header = () => {
               icon={<FileSearchOutlined />}
               title={intl.get('layout.main.menu.explore')}
             />
-
-            {ft_variant === 'true' && (
-              <HeaderLink
-                key="variant-data"
-                currentPathName={currentPathName}
-                to={[STATIC_ROUTES.VARIANTS]}
-                icon={<LineStyleIcon />}
-                title={intl.get('layout.main.menu.variants')}
-              />
-            )}
-            {ft_analyticsPage === 'true' && (
-              <HeaderLink
-                key="analytics-data"
-                currentPathName={currentPathName}
-                to={[STATIC_ROUTES.ANALYTICS]}
-                icon={<DotChartOutlined />}
-                title={intl.get('layout.main.menu.analysis')}
-              />
-            )}
+            <HeaderLink
+              key="variant-data"
+              currentPathName={currentPathName}
+              to={[STATIC_ROUTES.VARIANTS]}
+              icon={<LineStyleIcon />}
+              title={intl.get('layout.main.menu.variants')}
+            />
+            <HeaderLink
+              key="analytics-data"
+              currentPathName={currentPathName}
+              to={[STATIC_ROUTES.ANALYTICS]}
+              icon={<DotChartOutlined />}
+              title={intl.get('layout.main.menu.analysis')}
+            />
           </nav>
         }
         extra={[

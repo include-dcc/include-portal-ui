@@ -13,7 +13,6 @@ import {
 } from '@ant-design/icons';
 import { useKeycloak } from '@react-keycloak/web';
 import { Button, Dropdown, PageHeader, Typography } from 'antd';
-import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
 import { REDIRECT_URI_KEY } from 'common/constants';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
@@ -51,9 +50,6 @@ const Header = () => {
     });
     window.location.assign(url);
   };
-
-  const ft_variant = getFTEnvVarByKey('VARIANT');
-  const ft_analyticsPage = getFTEnvVarByKey('ANALYTICS_PAGE');
 
   return (
     <>
@@ -95,31 +91,26 @@ const Header = () => {
               }}
               title={intl.get('layout.main.menu.explore')}
             />
-
-            {ft_variant === 'true' && (
-              <HeaderButton
-                key="variant-data"
-                icon={<LineStyleIcon />}
-                onClick={() => {
-                  setRedirectUri(STATIC_ROUTES.VARIANTS);
-                  trackPublicStudies('Variants');
-                  setOpenLoginModal(true);
-                }}
-                title={intl.get('layout.main.menu.variants')}
-              />
-            )}
-            {ft_analyticsPage === 'true' && (
-              <HeaderButton
-                key="analytics-data"
-                icon={<DotChartOutlined />}
-                onClick={() => {
-                  setRedirectUri(STATIC_ROUTES.ANALYTICS);
-                  trackPublicStudies('Analysis');
-                  setOpenLoginModal(true);
-                }}
-                title={intl.get('layout.main.menu.analysis')}
-              />
-            )}
+            <HeaderButton
+              key="variant-data"
+              icon={<LineStyleIcon />}
+              onClick={() => {
+                setRedirectUri(STATIC_ROUTES.VARIANTS);
+                trackPublicStudies('Variants');
+                setOpenLoginModal(true);
+              }}
+              title={intl.get('layout.main.menu.variants')}
+            />
+            <HeaderButton
+              key="analytics-data"
+              icon={<DotChartOutlined />}
+              onClick={() => {
+                setRedirectUri(STATIC_ROUTES.ANALYTICS);
+                trackPublicStudies('Analysis');
+                setOpenLoginModal(true);
+              }}
+              title={intl.get('layout.main.menu.analysis')}
+            />
           </nav>
         }
         extra={[

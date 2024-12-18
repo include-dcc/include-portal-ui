@@ -32,7 +32,6 @@ import { INDEXES } from 'graphql/constants';
 import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { useStudy } from 'graphql/studies/actions';
-import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 import {
   cavaticaCreateProjectDictionary,
   getDSConnectDrsItems,
@@ -622,10 +621,7 @@ const StudyEntity = () => {
                 );
               }
 
-              if (
-                dataset.data_category === 'Transcriptomics' &&
-                getFTEnvVarByKey('ANALYTICS_TRANSCRIPTOMIC') === 'true'
-              ) {
+              if (dataset.data_category === 'Transcriptomics') {
                 titleExtra.push(
                   <Button
                     size="small"

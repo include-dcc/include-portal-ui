@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { BIOSPECIMEN_REQUEST_KEY } from '@ferlab/ui/core/components/BiospecimenRequest/requestBiospecimen.utils';
 import SortableGrid from '@ferlab/ui/core/layout/SortableGrid';
 import { Space, Typography } from 'antd';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
@@ -16,7 +15,7 @@ import useFeatureToggle from '../../hooks/useFeatureToggle';
 import { globalActions } from '../../store/global';
 import { SubscriptionStatus } from '../../store/user/types';
 
-import { biospecimenRequestCard, dashboardCards } from './components/DashboardCards';
+import { dashboardCards } from './components/DashboardCards';
 import DataExplorationLinks from './components/DashboardCards/DataExplorationLinks';
 
 import styles from './index.module.css';
@@ -32,9 +31,6 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const { isEnabled, hideFeature } = useFeatureToggle(FT_FLAG_NEWSLETTER_KEY);
   const { userInfo } = useUser();
-  const hasRequestBio = getFTEnvVarByKey(BIOSPECIMEN_REQUEST_KEY);
-  const cards =
-    hasRequestBio === 'true' ? [...dashboardCards, biospecimenRequestCard] : dashboardCards;
 
   useEffect(() => {
     if (isEnabled && userInfo?.newsletter_subscription_status === SubscriptionStatus.FAILED) {
@@ -77,7 +73,7 @@ const Dashboard = () => {
             }),
           )
         }
-        items={orderCardIfNeeded(cards, userInfo?.config.dashboard?.cards?.order)}
+        items={orderCardIfNeeded(dashboardCards, userInfo?.config.dashboard?.cards?.order)}
         gutter={[24, 24]}
       />
     </Space>
