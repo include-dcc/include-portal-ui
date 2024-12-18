@@ -158,6 +158,17 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
     value: study?.institutions?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
+    label: intl.get('entities.study.study_contact'),
+    value: study?.contacts?.hits?.edges?.length
+      ? study?.contacts?.hits?.edges.map((contact, index) => (
+          <div key={index}>
+            {contact.node.name && <Text>{contact.node.name}; </Text>}
+            {contact.node.email && <Text>{contact.node.email}</Text>}
+          </div>
+        ))
+      : TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
     label: intl.get('entities.study.virtual_biorepository_email'),
     value: study?.biobank_contact ? (
       <ExternalLink href={`mailto:${study.biobank_contact}`}>{study.biobank_contact}</ExternalLink>
