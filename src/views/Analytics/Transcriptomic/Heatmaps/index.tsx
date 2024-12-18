@@ -1,8 +1,10 @@
 import intl from 'react-intl-universal';
 import Plot from 'react-plotly.js';
+import { useDispatch } from 'react-redux';
 import { formatPadj } from 'views/Analytics/Transcriptomic/utils';
 
 import { TTranscriptomicsDatum } from 'services/api/transcriptomics/models';
+import { analyticsActions } from 'store/analytics/slice';
 
 import styles from './index.module.css';
 
@@ -10,6 +12,7 @@ const MAX_LABEL_THRESHOLD = 40;
 
 export type TTranscriptomicHeatmaps = {
   selectedGenes: TTranscriptomicsDatum[];
+  handleGenesSelection: (gene: TTranscriptomicsDatum[]) => void;
 };
 
 /**
@@ -19,7 +22,8 @@ export type TTranscriptomicHeatmaps = {
  * y = label
  * z = data
  */
-const Heatmaps = ({ selectedGenes }: TTranscriptomicHeatmaps) => {
+const Heatmaps = ({ selectedGenes, handleGenesSelection }: TTranscriptomicHeatmaps) => {
+  const dispatch = useDispatch();
   const padj: any = [];
   const label: string[] = [];
   const data: any = [];
@@ -69,6 +73,15 @@ const Heatmaps = ({ selectedGenes }: TTranscriptomicHeatmaps) => {
           'pan2d',
           'select2d',
         ],
+      }}
+      onClick={(event: Readonly<Plotly.PlotMouseEvent>) => {
+        if (event.points.length > 0) {
+          const gene = selectedGenes.find((gene) => gene.gene_symbol === event.points[0].y);
+          if (gene) {
+            handleGenesSelection([gene]);
+            dispatch(analyticsActions.resetTranscriptomicsSampleGeneExp());
+          }
+        }
       }}
       layout={{
         title: {

@@ -216,7 +216,12 @@ export const Transcriptomic = () => {
                         sampleGeneExp={sampleGeneExp.data}
                       />
                     )}
-                    {selectedGenes.length > 1 && <Heatmaps selectedGenes={selectedGenes} />}
+                    {selectedGenes.length > 1 && (
+                      <Heatmaps
+                        selectedGenes={selectedGenes}
+                        handleGenesSelection={handleSearchByGeneSelection}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
