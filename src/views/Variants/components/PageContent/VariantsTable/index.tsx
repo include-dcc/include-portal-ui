@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ConsequencesCell from '@ferlab/ui/core/components/Consequences/Cell';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import FixedSizeTable from '@ferlab/ui/core/components/FixedSizeTable';
@@ -22,7 +21,7 @@ import {
 } from '@ferlab/ui/core/graphql/types';
 import { numberWithCommas, toExponentialNotation } from '@ferlab/ui/core/utils/numberUtils';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Modal, Space, Tooltip } from 'antd';
+import { Space, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { hydrateResults } from 'graphql/models';
 import {
@@ -34,7 +33,7 @@ import {
   IVariantInternalFrequencies,
   IVariantStudyEntity,
 } from 'graphql/variants/models';
-import { capitalize, isEmpty } from 'lodash';
+import { capitalize } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import { DATA_EXPLORATION_QB_ID, DEFAULT_PAGE_INDEX } from 'views/DataExploration/utils/constant';
 import { SCROLL_WRAPPER_ID, VARIANT_SAVED_SETS_FIELD } from 'views/Variants/utils/constants';
@@ -43,18 +42,15 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import ManeCell from 'components/ManeCell';
 import { SetType } from 'services/api/savedSet/models';
-import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
 
-import { exportTsvColumns, GnomadCircle, renderClinvar, renderOmim } from './utils';
+import { GnomadCircle, renderClinvar, renderOmim } from './utils';
 
 import styles from './index.module.css';
-
-const EXPORT_TSV_LIMIT = 10000;
 
 interface OwnProps {
   pageIndex: number;
@@ -517,7 +513,6 @@ const VariantsTable = ({
                   total: results.total,
                 },
                 enableColumnSort: true,
-                enableTableExport: true,
                 onColumnSortChange: (newState) =>
                   dispatch(
                     updateUserConfig({
@@ -534,37 +529,6 @@ const VariantsTable = ({
                 onSelectedRowsChange: (keys, selectedRows) => {
                   setSelectedKeys(keys);
                   setSelectedRows(selectedRows);
-                },
-                onTableExportClick: () => {
-                  if (
-                    selectedRows.length > EXPORT_TSV_LIMIT ||
-                    (isEmpty(selectedRows) &&
-                      !selectedAllResults &&
-                      results.total > EXPORT_TSV_LIMIT) ||
-                    (selectedAllResults && results.total > EXPORT_TSV_LIMIT)
-                  ) {
-                    Modal.confirm({
-                      title: intl.get('screen.variants.table.exportModal.title'),
-                      icon: <ExclamationCircleOutlined />,
-                      content: intl.get('screen.variants.table.exportModal.content'),
-                      cancelText: intl.get('screen.variants.table.exportModal.button'),
-                      okButtonProps: { className: styles.okButtonConfirmModal },
-                      cancelButtonProps: { type: 'primary' },
-                      type: 'warn',
-                    });
-                  } else {
-                    dispatch(
-                      fetchTsvReport({
-                        columnStates: exportTsvColumns,
-                        columns: getDefaultColumns(
-                          queryBuilderId,
-                          results.data.length === 0 ? true : false,
-                        ),
-                        index: INDEXES.VARIANTS,
-                        sqon: getCurrentSqon(),
-                      }),
-                    );
-                  }
                 },
                 extra: [
                   <SetsManagementDropdown
