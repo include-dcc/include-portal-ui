@@ -20,7 +20,6 @@ import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Button, Input, Space, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useStudies } from 'graphql/studies/actions';
-import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 import { cloneDeep } from 'lodash';
 
 import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
@@ -124,7 +123,6 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
     }));
   }, [queryConfig.pageIndex]);
 
-  const displayNDAGuids = getFTEnvVarByKey('NDA_GUIDS');
   const handleOpenGuidModal = () => {
     setIsGuidModalOpen(true);
   };
@@ -174,13 +172,11 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
             size="large"
             value={searchValue}
           />
-          {displayNDAGuids === 'true' && (
-            <Tooltip title={intl.get('screen.studies.ndaGuids.buttonTooltip')}>
-              <Button className={styles.guidButton} type="primary" onClick={handleOpenGuidModal}>
-                {intl.get('screen.studies.ndaGuids.button')}
-              </Button>
-            </Tooltip>
-          )}
+          <Tooltip title={intl.get('screen.studies.ndaGuids.buttonTooltip')}>
+            <Button className={styles.guidButton} type="primary" onClick={handleOpenGuidModal}>
+              {intl.get('screen.studies.ndaGuids.button')}
+            </Button>
+          </Tooltip>
         </div>
       </div>
 
@@ -241,7 +237,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
         }
       />
 
-      {isGuidModalOpen && displayNDAGuids === 'true' && (
+      {isGuidModalOpen && (
         <NdaGuidsModal
           open={isGuidModalOpen}
           onClose={handleCloseGuidModal}
@@ -249,7 +245,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
           {...cavatica}
         />
       )}
-      {isCavaticaModalOpen && displayNDAGuids === 'true' && (
+      {isCavaticaModalOpen && (
         <AnalyzeModal
           open={isCavaticaModalOpen}
           onClose={handleCloseCavaticaModal}
@@ -276,7 +272,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
         />
       )}
 
-      {isProjectModalOpen && displayNDAGuids === 'true' && (
+      {isProjectModalOpen && (
         <CavaticaCreateProjectModal
           dictionary={cavaticaCreateProjectDictionary}
           handleCloseModal={() => {

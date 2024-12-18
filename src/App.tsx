@@ -9,7 +9,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import { ConfigProvider } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import frFR from 'antd/lib/locale/fr_FR';
-import { getEnvVarByKey, getFTEnvVarByKey } from 'helpers/EnvVariables';
+import { getEnvVarByKey } from 'helpers/EnvVariables';
 import AuthMiddleware from 'middleware/AuthMiddleware';
 import ProtectedRoute from 'ProtectedRoute';
 import ApolloProvider from 'provider/ApolloProvider';
@@ -174,27 +174,24 @@ const App = () => {
                     }
                   />
 
-                  {getFTEnvVarByKey('ANALYTICS') === 'true' && (
-                    <Route
-                      path={STATIC_ROUTES.ANALYTICS}
-                      element={
-                        <ProtectedRoute>
-                          <Analytics />
-                        </ProtectedRoute>
-                      }
-                    />
-                  )}
+                  <Route
+                    path={STATIC_ROUTES.ANALYTICS}
+                    element={
+                      <ProtectedRoute>
+                        <Analytics />
+                      </ProtectedRoute>
+                    }
+                  />
 
-                  {getFTEnvVarByKey('ANALYTICS_TRANSCRIPTOMIC') === 'true' && (
-                    <Route
-                      path={STATIC_ROUTES.ANALYTICS_TRANSCRIPTOMIC}
-                      element={
-                        <ProtectedRoute>
-                          <Transcriptomic />
-                        </ProtectedRoute>
-                      }
-                    />
-                  )}
+                  <Route
+                    path={STATIC_ROUTES.ANALYTICS_TRANSCRIPTOMIC}
+                    element={
+                      <ProtectedRoute>
+                        <Transcriptomic />
+                      </ProtectedRoute>
+                    }
+                  />
+
                   <Route path="*" element={<Navigate to={STATIC_ROUTES.DASHBOARD} />} />
                 </Routes>
                 <NotificationContextHolder />
