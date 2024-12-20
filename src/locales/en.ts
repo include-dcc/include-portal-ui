@@ -1895,6 +1895,8 @@ const en = {
       code: 'Code',
       count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
       dataset: {
+        access_limitations: 'Access Limitations',
+        access_requirements: 'Access Requirements',
         cavatica: {
           button: 'Analyze in Cavatica',
           modal: {
@@ -1907,14 +1909,19 @@ const en = {
             createProjectToPushFileTo: 'Create a project to push your files to.',
           },
         },
+        data_categories: 'Data Category',
+        data_collection_start_year: 'Data Collection Start (Year)',
+        data_collection_end_year: 'Data Collection End (Year)',
         data_type: 'Data Type',
         dataset_id: 'Dataset ID',
+        dbgap: 'dbGaP Accession Number',
+        description: 'Description',
+        expected_data_categories: 'Data Category',
         experimental_platform: 'Experimental Platform',
         experimental_strategy: 'Experimental Strategy',
         infoTootlip:
           "Datasets are subsets of the study's data designated to capture specific information not applicable to the entire study data.",
         publication: 'Publication',
-        repository: 'Repository',
         title: 'Dataset',
       },
       data_access: 'Data Access',

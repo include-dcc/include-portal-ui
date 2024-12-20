@@ -8,22 +8,22 @@ export interface IStudyDataset {
   id: string;
   access_limitations?: string[];
   access_requirements?: string[];
-  biospecimen_count?: number;
-  data_category?: string;
+  data_categories?: string[];
   data_types?: string[];
   dataset_id?: string;
   dataset_name?: string;
-  date_collection_end_year?: string;
-  date_collection_start_year?: string;
+  data_collection_end_year?: string;
+  data_collection_start_year?: string;
+  dbgap?: string;
+  description?: string;
   expected_data_categories?: string[];
+  expected_number_of_files?: number;
+  expected_number_participants?: number;
   experimental_platform?: string;
   experimental_strategy?: string;
-  file_count?: number;
+  external_dataset_id?: string;
   is_harmonized?: boolean;
-  participant_count?: number;
   publications?: string[];
-  repository?: string;
-  repository_url?: string;
 }
 
 export interface IAuthor {
@@ -84,7 +84,7 @@ export interface IStudyEntity {
   data_category: string[];
   data_sources?: string[];
   data_types?: ArrangerResultsTree<IDataType>;
-  dataset?: ArrangerResultsTree<IStudyDataset>;
+  datasets?: ArrangerResultsTree<IStudyDataset>;
   date_collection_end_year?: string;
   date_collection_start_year?: string;
   description?: string;

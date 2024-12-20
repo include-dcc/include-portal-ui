@@ -162,29 +162,29 @@ export const GET_STUDY = gql`
             website
             data_category
             data_sources
-            dataset {
+            datasets {
               hits {
                 total
                 edges {
                   node {
                     access_limitations
                     access_requirements
-                    biospecimen_count
-                    data_category
+                    data_categories
                     data_types
                     dataset_id
                     dataset_name
-                    date_collection_start_year
-                    date_collection_end_year
+                    data_collection_start_year
+                    data_collection_end_year
+                    dbgap
+                    description
                     expected_data_categories
+                    expected_number_of_files
+                    expected_number_participants
                     experimental_platform
                     experimental_strategy
-                    file_count
+                    external_dataset_id
                     is_harmonized
-                    participant_count
                     publications
-                    repository
-                    repository_url
                   }
                 }
               }

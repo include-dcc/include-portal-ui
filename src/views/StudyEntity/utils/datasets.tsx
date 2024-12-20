@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import intl from 'react-intl-universal';
 import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
@@ -15,6 +16,30 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
     items.push({
       label: intl.get('entities.study.dataset.dataset_id'),
       value: dataset.dataset_id || TABLE_EMPTY_PLACE_HOLDER,
+    });
+
+  if (dataset.description)
+    items.push({
+      label: intl.get('entities.study.dataset.description'),
+      value: dataset.description || TABLE_EMPTY_PLACE_HOLDER,
+    });
+
+  if (dataset.data_collection_start_year)
+    items.push({
+      label: intl.get('entities.study.dataset.data_collection_start_year'),
+      value: dataset.data_collection_start_year || TABLE_EMPTY_PLACE_HOLDER,
+    });
+
+  if (dataset.data_collection_end_year)
+    items.push({
+      label: intl.get('entities.study.dataset.data_collection_end_year'),
+      value: dataset.data_collection_end_year || TABLE_EMPTY_PLACE_HOLDER,
+    });
+
+  if (dataset.expected_data_categories?.length)
+    items.push({
+      label: intl.get('entities.study.dataset.expected_data_categories'),
+      value: dataset.expected_data_categories?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
     });
 
   if (dataset.data_types?.length)
@@ -62,15 +87,31 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
       ),
     });
 
-  if (dataset.repository && dataset.repository_url)
+  if (dataset.access_limitations)
     items.push({
-      label: intl.get('entities.study.dataset.repository'),
-      value:
-        dataset.repository && dataset.repository_url ? (
-          <ExternalLink href={dataset.repository_url}>{dataset.repository}</ExternalLink>
-        ) : (
-          TABLE_EMPTY_PLACE_HOLDER
-        ),
+      label: intl.get('entities.study.dataset.access_limitations'),
+      value: dataset.access_limitations?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
+    });
+
+  if (dataset.access_requirements)
+    items.push({
+      label: intl.get('entities.study.dataset.access_requirements'),
+      value: dataset.access_requirements?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
+    });
+
+  if (dataset.dbgap)
+    items.push({
+      label: intl.get('entities.study.dataset.dbgap'),
+      value: dataset.dbgap ? (
+        <ExternalLink
+          href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${dataset.dbgap}`}
+          key={dataset.dbgap}
+        >
+          {dataset.dbgap}
+        </ExternalLink>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
     });
 
   return items;

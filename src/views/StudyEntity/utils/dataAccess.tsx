@@ -46,7 +46,7 @@ const renderAccess = (data?: Set<string>): ReactNode => {
 };
 
 const getDataAccessDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[] => {
-  const flatDataset = getFlatDataset(study?.dataset);
+  const flatDataset = getFlatDataset(study?.datasets);
 
   return [
     {
