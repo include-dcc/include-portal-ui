@@ -36,10 +36,10 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
       value: dataset.data_collection_end_year || TABLE_EMPTY_PLACE_HOLDER,
     });
 
-  if (dataset.data_categories?.length)
+  if (dataset.expected_data_categories?.length)
     items.push({
-      label: intl.get('entities.study.dataset.data_categories'),
-      value: dataset.data_categories?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
+      label: intl.get('entities.study.dataset.expected_data_categories'),
+      value: dataset.expected_data_categories?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
     });
 
   if (dataset.data_types?.length)

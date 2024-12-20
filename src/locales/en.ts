@@ -1916,6 +1916,7 @@ const en = {
         dataset_id: 'Dataset ID',
         dbgap: 'dbGaP Accession Number',
         description: 'Description',
+        expected_data_categories: 'Data Category',
         experimental_platform: 'Experimental Platform',
         experimental_strategy: 'Experimental Strategy',
         infoTootlip:
