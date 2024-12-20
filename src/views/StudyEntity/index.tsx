@@ -621,7 +621,6 @@ const StudyEntity = () => {
                 );
               }
 
-              // changer pour check data set name
               if (dataset.dataset_name === 'HTP Whole Blood RNAseq (2020)') {
                 titleExtra.push(
                   <Button

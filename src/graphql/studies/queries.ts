@@ -169,7 +169,6 @@ export const GET_STUDY = gql`
                   node {
                     access_limitations
                     access_requirements
-                    # biospecimen_count
                     data_categories
                     data_types
                     dataset_id
@@ -184,12 +183,8 @@ export const GET_STUDY = gql`
                     experimental_platform
                     experimental_strategy
                     external_dataset_id
-                    # file_count
                     is_harmonized
-                    # participant_count
                     publications
-                    # repository
-                    # repository_url
                   }
                 }
               }
