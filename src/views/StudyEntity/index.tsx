@@ -251,7 +251,7 @@ const StudyEntity = () => {
     },
   });
 
-  const hasDataset = study?.dataset?.hits?.edges && study.dataset.hits.edges.length > 0;
+  const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
   const hasDataAccess =
     hasDataset || (study?.contacts?.hits?.edges && study?.contacts?.hits?.edges.length > 0);
   const hasFiles = (study?.file_count ?? 0) > 0;
@@ -320,7 +320,7 @@ const StudyEntity = () => {
       href: `#${SectionId.DATASET}`,
       title: intl.get('entities.study.dataset.title'),
     });
-    datasetLength = study?.dataset?.hits.edges.length || 0;
+    datasetLength = study?.datasets?.hits.edges.length || 0;
   }
 
   if (hasFiles) {
@@ -605,7 +605,7 @@ const StudyEntity = () => {
                 <InfoCircleOutlined className={style.datasetInfo} />
               </Tooltip>
             </Title>
-            {study?.dataset?.hits.edges.map(({ node: dataset }, index: number) => {
+            {study?.datasets?.hits.edges.map(({ node: dataset }, index: number) => {
               const titleExtra = [];
 
               if (study.study_id === DSC_STUDY_ID && dataset.dataset_id === DSC_DATASET_ID) {
@@ -621,7 +621,8 @@ const StudyEntity = () => {
                 );
               }
 
-              if (dataset.data_category === 'Transcriptomics') {
+              // changer pour check data set name
+              if (dataset.dataset_name === 'HTP Whole Blood RNAseq (2020)') {
                 titleExtra.push(
                   <Button
                     size="small"
@@ -643,7 +644,7 @@ const StudyEntity = () => {
                     participants: intl.get('entities.participant.participants'),
                     files: intl.get('entities.file.files'),
                   }}
-                  file_count={dataset?.file_count || 0}
+                  file_count={dataset?.expected_number_of_files || 0}
                   titleExtra={titleExtra}
                   header={
                     dataset?.dataset_name ? (
@@ -666,7 +667,7 @@ const StudyEntity = () => {
                   id={SectionId.DATASET}
                   key={dataset?.id}
                   loading={loading}
-                  participant_count={dataset?.participant_count || 0}
+                  participant_count={dataset?.expected_number_participants || 0}
                 />
               );
             })}
