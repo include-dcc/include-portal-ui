@@ -4,6 +4,8 @@ import { Tag, Tooltip } from 'antd';
 import { IParticipantEntity, Sex } from 'graphql/participants/models';
 import { capitalize } from 'lodash';
 
+import AgeCell from '../AgeCell';
+
 import styles from '../styles/styles.module.css';
 
 const getProfileItems = (participant?: IParticipantEntity): IEntityDescriptionsItem[] => [
@@ -46,6 +48,10 @@ const getProfileItems = (participant?: IParticipantEntity): IEntityDescriptionsI
       </Tooltip>
     ),
     value: participant?.down_syndrome_status,
+  },
+  {
+    label: intl.get('entities.participant.age_at_first_patient_engagement_complete'),
+    value: <AgeCell ageInDays={participant?.age_at_first_patient_engagement?.value} />,
   },
 ];
 

@@ -118,6 +118,10 @@ export const GET_PARTICIPANT_ENTITY = gql`
         edges {
           node {
             id
+            age_at_first_patient_engagement {
+              unit
+              value
+            }
             diagnosis {
               hits {
                 edges {

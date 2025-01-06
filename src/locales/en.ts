@@ -1843,6 +1843,7 @@ const en = {
     participant: {
       age: 'Age',
       age_at_first_patient_engagement: 'Age',
+      age_at_first_patient_engagement_complete: 'Age at First Patient Engagement',
       age_at_first_patient_engagement_tooltip: 'Age at First Patient Engagement',
       age_tooltip_diagnosis: 'Age at Diagnosis',
       age_tooltip_phenotype: 'Age at Phenotype',
