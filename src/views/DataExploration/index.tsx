@@ -116,6 +116,7 @@ export const filterGroups: {
           'diagnosis__age_at_event_days',
           'outcomes__age_at_event_days__value',
           'observed_phenotype__age_at_event_days',
+          'age_at_first_patient_engagement__value',
           'family_type',
           'sex',
           'race',

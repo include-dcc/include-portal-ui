@@ -34,6 +34,10 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
             race
             nb_files
             nb_biospecimens
+            age_at_first_patient_engagement {
+              unit
+              value
+            }
 
             files {
               hits {

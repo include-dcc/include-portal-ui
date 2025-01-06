@@ -1614,6 +1614,7 @@ const en = {
       age_at_event_days: 'Age at Observed Phenotype',
     },
     age_at_data_collection: 'Age at data collection',
+    age_at_first_patient_engagement: { value: 'Age At First Patient Engagement (days)' },
     family_type: 'Family Unit',
     family: {
       family_id: 'Family ID',
@@ -1841,6 +1842,8 @@ const en = {
     },
     participant: {
       age: 'Age',
+      age_at_first_patient_engagement: 'Age',
+      age_at_first_patient_engagement_tooltip: 'Age at First Patient Engagement',
       age_tooltip_diagnosis: 'Age at Diagnosis',
       age_tooltip_phenotype: 'Age at Phenotype',
       biospecimens: 'Biospecimens',

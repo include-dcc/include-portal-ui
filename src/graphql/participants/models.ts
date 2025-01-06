@@ -119,6 +119,7 @@ export interface IParticipantEntity {
   family: IParticipantFamily;
   families_id: string;
   biospecimens: ArrangerResultsTree<IParticipantBiospecimen>;
+  age_at_first_patient_engagement?: { value?: number; unit?: string };
 }
 
 export type ITableParticipantEntity = IParticipantEntity & {
