@@ -34,6 +34,10 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
             race
             nb_files
             nb_biospecimens
+            age_at_first_patient_engagement {
+              unit
+              value
+            }
 
             files {
               hits {
@@ -114,6 +118,10 @@ export const GET_PARTICIPANT_ENTITY = gql`
         edges {
           node {
             id
+            age_at_first_patient_engagement {
+              unit
+              value
+            }
             diagnosis {
               hits {
                 edges {

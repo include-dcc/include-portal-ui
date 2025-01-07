@@ -46,6 +46,7 @@ import {
   extractPhenotypeTitleAndCode,
 } from 'views/DataExploration/utils/helper';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
+import AgeCell from 'views/ParticipantEntity/AgeCell';
 import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
@@ -158,6 +159,15 @@ const getDefaultColumns = (): ProColumnType[] => [
       multiple: 1,
     },
     render: (ethnicity: string) => ethnicity || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
+    key: 'age_at_first_patient_engagement.value',
+    title: intl.get('entities.participant.age_at_first_patient_engagement'),
+    tooltip: intl.get('entities.participant.age_at_first_patient_engagement_tooltip'),
+    defaultHidden: true,
+    render: (participant: IParticipantEntity) => (
+      <AgeCell ageInDays={participant?.age_at_first_patient_engagement?.value} />
+    ),
   },
   {
     key: 'external_id',

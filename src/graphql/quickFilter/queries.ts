@@ -72,6 +72,11 @@ export const GET_QUICK_FILTER_EXPLO = gql`
           stats {
             count
           }
+        } # range
+        age_at_first_patient_engagement__value {
+          stats {
+            count
+          }
         }
         # Biospecimen
         files__biospecimens__sample_type {
