@@ -1,7 +1,13 @@
-import {
-  ScatterPlotDatum,
-  ScatterPlotRawSerie,
-} from '@ferlab/ui/core/components/Charts/ScatterPlot/type';
+export type ScatterPlotValue = number | string | Date;
+
+export interface ScatterPlotDatum {
+  x: ScatterPlotValue;
+  y: ScatterPlotValue;
+}
+export type ScatterPlotRawSerie<RawDatum extends ScatterPlotDatum> = {
+  id: string | number;
+  data: RawDatum[];
+};
 
 export type TTranscriptomicsSwarmPlotData = {
   sample_id: string;

@@ -22,7 +22,6 @@ import ListItem from './ListItem';
 import styles from './index.module.css';
 
 const { Text } = Typography;
-const { TabPane } = Tabs;
 
 const getItemList = (
   type: SetType,
@@ -91,80 +90,86 @@ const SavedSets = ({ id, key, className = '' }: DashboardCardProps) => {
         />
       }
       content={
-        <Tabs className={cx(styles.setTabs, 'navNoMarginBtm')} defaultActiveKey="participants">
-          <TabPane
-            tab={
-              <div>
-                <UserOutlined />
-                {intl.get('screen.dashboard.cards.savedSets.participantsTab', {
-                  count: savedSets.filter((s) => s.setType === SetType.PARTICIPANT).length,
-                })}
-              </div>
-            }
-            key="participants"
-          >
-            {getItemList(
-              SetType.PARTICIPANT,
-              savedSets,
-              fetchingError,
-              isLoading,
-              <UserOutlined />,
-            )}
-          </TabPane>
-          <TabPane
-            tab={
-              <div>
-                <ExperimentOutlined />
-                {intl.get('screen.dashboard.cards.savedSets.biospecimensTab', {
-                  count: savedSets.filter((s) => s.setType === SetType.BIOSPECIMEN).length,
-                })}
-              </div>
-            }
-            key="biospecimen"
-          >
-            {getItemList(
-              SetType.BIOSPECIMEN,
-              savedSets,
-              fetchingError,
-              isLoading,
-              <ExperimentOutlined />,
-            )}
-          </TabPane>
-          <TabPane
-            tab={
-              <div>
-                <FileTextOutlined />
-                {intl.get('screen.dashboard.cards.savedSets.Filestab', {
-                  count: savedSets.filter((s) => s.setType === SetType.FILE).length,
-                })}
-                Files ({savedSets.filter((s) => s.setType === SetType.FILE).length})
-              </div>
-            }
-            key="files"
-          >
-            {getItemList(SetType.FILE, savedSets, fetchingError, isLoading, <FileTextOutlined />)}
-          </TabPane>
-          <TabPane
-            tab={
-              <div>
-                <LineStyleIcon />
-                {intl.get('screen.dashboard.cards.savedSets.variantsTab', {
-                  count: savedSets.filter((s) => s.setType === SetType.VARIANT).length,
-                })}
-              </div>
-            }
-            key="variants"
-          >
-            {getItemList(
-              SetType.VARIANT,
-              savedSets,
-              fetchingError,
-              isLoading,
-              <LineStyleIcon />,
-              VARIANT_REPO_QB_ID,
-            )}
-          </TabPane>
-        </Tabs>
+        <Tabs
+          className={cx(styles.setTabs, 'navNoMarginBtm')}
+          defaultActiveKey="participants"
+          items={[
+            {
+              key: 'participants',
+              label: (
+                <div>
+                  <UserOutlined />
+                  {intl.get('screen.dashboard.cards.savedSets.participantsTab', {
+                    count: savedSets.filter((s) => s.setType === SetType.PARTICIPANT).length,
+                  })}
+                </div>
+              ),
+              children: getItemList(
+                SetType.PARTICIPANT,
+                savedSets,
+                fetchingError,
+                isLoading,
+                <UserOutlined />,
+              ),
+            },
+            {
+              key: 'biospecimen',
+              label: (
+                <div>
+                  <ExperimentOutlined />
+                  {intl.get('screen.dashboard.cards.savedSets.biospecimensTab', {
+                    count: savedSets.filter((s) => s.setType === SetType.BIOSPECIMEN).length,
+                  })}
+                </div>
+              ),
+              children: getItemList(
+                SetType.BIOSPECIMEN,
+                savedSets,
+                fetchingError,
+                isLoading,
+                <ExperimentOutlined />,
+              ),
+            },
+            {
+              key: 'files',
+              label: (
+                <div>
+                  <FileTextOutlined />
+                  {intl.get('screen.dashboard.cards.savedSets.Filestab', {
+                    count: savedSets.filter((s) => s.setType === SetType.FILE).length,
+                  })}
+                  Files ({savedSets.filter((s) => s.setType === SetType.FILE).length})
+                </div>
+              ),
+              children: getItemList(
+                SetType.FILE,
+                savedSets,
+                fetchingError,
+                isLoading,
+                <FileTextOutlined />,
+              ),
+            },
+            {
+              key: 'variants',
+              label: (
+                <div>
+                  <LineStyleIcon />
+                  {intl.get('screen.dashboard.cards.savedSets.variantsTab', {
+                    count: savedSets.filter((s) => s.setType === SetType.VARIANT).length,
+                  })}
+                </div>
+              ),
+              children: getItemList(
+                SetType.VARIANT,
+                savedSets,
+                fetchingError,
+                isLoading,
+                <LineStyleIcon />,
+                VARIANT_REPO_QB_ID,
+              ),
+            },
+          ]}
+        />
       }
     />
   );
