@@ -180,6 +180,7 @@ export const GET_FILE_ENTITY = gql`
             controlled_access
             data_category
             data_type
+            dataset_names
             file_id
             file_name
             file_format

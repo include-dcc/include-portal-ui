@@ -53,6 +53,7 @@ export interface IFileEntity {
   access_urls: string;
   data_category: string;
   data_type: string;
+  dataset_names?: string[];
   file_format: string;
   file_id: string;
   size: number;

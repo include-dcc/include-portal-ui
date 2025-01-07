@@ -21,6 +21,10 @@ const getSummaryItems = (file?: IFileEntity): IEntityDescriptionsItem[] => [
       : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
+    label: intl.get('entities.study.dataset.title'),
+    value: file?.dataset_names ? file.dataset_names.join(', ') : TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
     label: intl.get('entities.file.format'),
     value: file?.file_format || TABLE_EMPTY_PLACE_HOLDER,
   },
