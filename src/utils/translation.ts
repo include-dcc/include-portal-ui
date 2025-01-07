@@ -285,7 +285,7 @@ export const getFacetsDictionary = () => ({
     source_text: 'Condition (Source Text)',
     source_text_tumor_location: 'Tumor Location (Source Text)',
   },
-  age_at_first_patient_engagement: { value: 'Age At First Patient Engagement (days)' },
+  age_at_first_patient_engagement: { value: 'Age at First Patient Engagement (days)' },
   mondo: {
     name: 'Diagnosis (MONDO)',
   },
