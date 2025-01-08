@@ -22,6 +22,7 @@ interface IDownloadFileManifestProps {
   isDisabled?: boolean;
   disabledTooltip?: string;
   hasTooManyFiles?: boolean;
+  fileName?: string;
 }
 
 const DownloadFileManifestModal = ({
@@ -31,6 +32,7 @@ const DownloadFileManifestModal = ({
   isDisabled,
   disabledTooltip,
   hasTooManyFiles,
+  fileName,
 }: IDownloadFileManifestProps) => {
   const dispatch = useDispatch();
 
@@ -76,7 +78,7 @@ const DownloadFileManifestModal = ({
             fetchReport({
               data: {
                 name: ReportType.FILE_MANIFEST,
-                fileName: ReportType.FILE_MANIFEST,
+                fileName: fileName || ReportType.FILE_MANIFEST,
                 sqon,
               },
               callback: () => setIsModalVisible(false),

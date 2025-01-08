@@ -636,6 +636,7 @@ const StudyEntity = () => {
                     isDisabled={false}
                     hasTooManyFiles={false}
                     size="small"
+                    fileName="datasetName_manifest"
                   />,
                 );
               }
