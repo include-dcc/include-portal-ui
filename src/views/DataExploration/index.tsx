@@ -160,6 +160,7 @@ export const filterGroups: {
       {
         facets: [
           'controlled_access',
+          'dataset_names',
           'data_category',
           'data_type',
           'sequencing_experiment__experiment_strategy',
