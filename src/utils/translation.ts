@@ -438,6 +438,7 @@ export const getFacetsDictionary = () => ({
       },
     },
   },
+  dataset_names: 'Dataset',
 });
 
 export const getResizableGridDictionary = () => ({

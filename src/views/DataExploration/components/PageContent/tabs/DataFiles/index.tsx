@@ -169,6 +169,14 @@ const getDefaultColumns = (
       ),
   },
   {
+    key: 'dataset_names',
+    dataIndex: 'dataset_names',
+    title: intl.get('entities.study.dataset.title'),
+    defaultHidden: true,
+    sorter: { multiple: 1 },
+    render: (dataset_names: string[]) => dataset_names?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
     key: 'data_category',
     title: intl.get('entities.file.data_category'),
     dataIndex: 'data_category',

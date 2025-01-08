@@ -1645,6 +1645,7 @@ const en = {
     // File
     files: filesFacets,
     ...filesFacets,
+    dataset_names: 'Dataset',
 
     //Other
     collection_sample_type: 'Collection Sample Type',

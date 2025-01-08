@@ -14,6 +14,7 @@ export const SEARCH_FILES_QUERY = gql`
             external_id
             data_category
             data_type
+            dataset_names
             file_format
             size
             controlled_access

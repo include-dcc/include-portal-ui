@@ -134,6 +134,12 @@ export const GET_QUICK_FILTER_EXPLO = gql`
             doc_count
           }
         }
+        files__dataset_names {
+          buckets {
+            key
+            doc_count
+          }
+        }
         files__data_category {
           buckets {
             key
