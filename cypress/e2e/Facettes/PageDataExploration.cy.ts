@@ -83,43 +83,43 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
   });
 
   it('Age at Diagnosis (days)', () => {
-    cy.validateFacetNumFilter('Age at Diagnosis (days)', '10000', /\d{1}/);
+    cy.validateFacetNumFilter('Max', 'Age at Diagnosis (days)', '10000', /\d{1}/);
     cy.validateFacetRank(3, 'Age at Diagnosis (days)');
   });
 
   it('Age at Vital Status (days)', () => {
-    cy.validateFacetNumFilter('Age at Vital Status (days)', '10000', /\d{1}/);
+    cy.validateFacetNumFilter('Max', 'Age at Vital Status (days)', '10000', /\d{1}/);
     cy.validateFacetRank(4, 'Age at Vital Status (days)');
   });
 
   it('Age at Observed Phenotype (days)', () => {
-    cy.validateFacetNumFilter('Age at Observed Phenotype (days)', '10000', /\d{1}/);
+    cy.validateFacetNumFilter('Max', 'Age at Observed Phenotype (days)', '10000', /\d{1}/);
     cy.validateFacetRank(5, 'Age at Observed Phenotype (days)');
   });
 
   it('Family Unit - Proband-only', () => {
     cy.validateFacetFilter('Family Unit', 'Proband-only', 'proband-only', /\d{1}/);
-    cy.validateFacetRank(6, 'Family Unit');
+    cy.validateFacetRank(7, 'Family Unit');
   });
 
   it('Sex - Female', () => {
     cy.validateFacetFilter('Sex', 'Female', 'female', /\d{1}/);
-    cy.validateFacetRank(7, 'Sex');
+    cy.validateFacetRank(8, 'Sex');
   });
 
   it('Race - White', () => {
     cy.validateFacetFilter('Race', 'White', 'White', /\d{1}/);
-    cy.validateFacetRank(8, 'Race');
+    cy.validateFacetRank(9, 'Race');
   });
 
   it('Ethnicity - Not Hispanic or Latino', () => {
     cy.validateFacetFilter('Ethnicity', 'Not Hispanic or Latino', 'Not Hispanic or Latino', /\d{1}/);
-    cy.validateFacetRank(9, 'Ethnicity');
+    cy.validateFacetRank(10, 'Ethnicity');
   });
 
   it('Vital Status - Alive', () => {
     cy.validateFacetFilter('Vital Status', 'Alive', 'Alive', /\d{1}/);
-    cy.validateFacetRank(10, 'Vital Status');
+    cy.validateFacetRank(11, 'Vital Status');
   });
 });
 
@@ -220,7 +220,7 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
   });
 
   it('Age at Biospecimen Collection (days)', () => {
-    cy.validateFacetNumFilter('Age at Biospecimen Collection (days)', '0.01', /\d{1}/);
+    cy.validateFacetNumFilter('Max', 'Age at Biospecimen Collection (days)', '0.01', /\d{1}/);
     cy.validateFacetRank(3, 'Age at Biospecimen Collection (days)');
   });
 

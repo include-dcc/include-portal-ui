@@ -84,14 +84,16 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(16).contains('Joaquin M. Espinosa').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(17).contains('Institution').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).contains('Linda Crnic Institute for Down Syndrome').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(18).contains('Virtual Biorepository Email').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).contains('dsresearch@cuanschutz.edu').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(19).contains('Virtual Biorepository URL').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).contains('https://redcap.link/HTPVBRrequest').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(20).contains('Citation Statement').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(20).contains('-').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(21).contains('Acknowledgement').should('exist');
+    cy.get('[id="data_access"] [class="ant-descriptions-item-label"]').eq(18).contains('Study Contact').should('exist');
+    cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(18).contains('Angela Rachubinski; dsresearch@cuanschutz.edu').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(19).contains('Virtual Biorepository Email').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).contains('dsresearch@cuanschutz.edu').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(20).contains('Virtual Biorepository URL').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(20).contains('https://redcap.link/HTPVBRrequest').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(21).contains('Citation Statement').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(21).contains('-').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(22).contains('Acknowledgement').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(22).contains('-').should('exist');
   });
 
   it('Panneau Statistic', () => {
@@ -116,33 +118,41 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(0).contains('0000042').should('exist');
     cy.get('[id="data_access"] [class="ant-descriptions-item-label"]').eq(1).contains('Access Requirement').should('exist');
     cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(1).contains('-').should('exist');
-    cy.get('[id="data_access"] [class="ant-descriptions-item-label"]').eq(2).contains('Study Contact').should('exist');
-    cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(2).contains('Angela Rachubinski; dsresearch@cuanschutz.edu').should('exist');
   });
 
-  it('Panneau HTP Whole Blood RNAseq (v1)', () => {
+  it('Panneau HTP Whole Blood RNAseq (2020)', () => {
+    cy.get('[class*="EntityDataset_panel"]').each(($el: JQuery<HTMLElement>) => {
+      if ($el.text().includes('HTP Whole Blood RNAseq (2020)')) {
+        cy.wrap($el).as('datasetPanel');
+      }
+    });
+
     cy.get('[class*="StudyEntity_datasetTitle"]').contains('Dataset').should('exist');
     cy.get('[class*="StudyEntity_datasetTitle"] [class*="StudyEntity_datasetInfo"]').should('exist');
-    cy.get('[class*="EntityDataset_panel"]').eq(0).find('[class="ant-collapse-header"]').contains('HTP Whole Blood RNAseq (v1)').should('exist');
-    cy.get('[class*="EntityDataset_panel"]').eq(0).find('[class="ant-collapse-header"] [class*="ant-tag-green"]').contains('Harmonized').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-label"]').eq(0).contains('Dataset ID').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(0).contains('HTP-TR').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-label"]').eq(1).contains('Data Type').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(1).find('[class="ant-tag"]').contains('Normalized relative expression (FPKM)').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-label"]').eq(2).contains('Experimental Strategy').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(2).find('[class="ant-tag"]').contains('Bulk polyA+ RNAseq').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-label"]').eq(3).contains('Experimental Platform').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(3).contains('Illumina Novaseq').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-label"]').eq(4).contains('Publication').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(4).contains('PMID: 37379383').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-label"]').eq(5).contains('Repository').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(5).contains('Gene Expression Omnibus').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(0).find('g[id="family"]').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(0).contains(/^400$/).should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(0).contains('Participants').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(1).find('g[id="file"]').should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(1).contains(/^3200$/).should('exist');
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class*="EntityDataset_rowCountCard"]').eq(1).contains('Files').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-collapse-header"]').contains('HTP Whole Blood RNAseq (2020)').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-collapse-header"] [class*="ant-tag-green"]').contains('Harmonized').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(0).contains('Dataset ID').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(0).contains('Dataset-Metadata-HTP-RNAseq-WholeBlood-2020').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(5).contains('Data Type').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Alternative Splicing').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Chimeric Aligned Reads').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Gene Expression Count').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Aligned Reads').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Raw Gene').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('RNAseq Alignment Metrics Fusion').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Splice Junction').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(6).contains('Experimental Strategy').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(6).find('[class="ant-tag"]').contains('Bulk RNA-Seq').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(7).contains('Experimental Platform').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(7).contains('Illumina NovaSeq 6000').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(8).contains('Publication').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).contains('https://pubmed.ncbi.nlm.nih.gov/37379383/').should('exist');
+    cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(0).find('g[id="family"]').should('exist');
+    cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(0).contains(/^400$/).should('exist');
+    cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(0).contains('Participants').should('exist');
+    cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(1).find('g[id="file"]').should('exist');
+    cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(1).contains(/^11.2K$/).should('exist');
+    cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(1).contains('Files').should('exist');
   });
 
   it('Panneau Files', () => {
@@ -204,23 +214,22 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
 
   it('Lien Publication du panneau Summary', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[href]')
-      .should('have.attr', 'href', 'https://pubmed.ncbi.nlm.nih.gov/37379383/');
+      .should('have.attr', 'href').and('match', /https:\/\/pubmed.ncbi.nlm.nih.gov\/37379383(|\/)/);
   });
 
   it('Lien \'See more\' de Publication du panneau Summary', () => {
+    cy.get('[class*="PubModal_modalWrapper"]').should('not.exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('See more').clickAndWait({force: true});
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('https://pubmed.ncbi.nlm.nih.gov/36577365').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('See less').clickAndWait({force: true});
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('https://pubmed.ncbi.nlm.nih.gov/36577365').should('not.exist');
+    cy.get('[class*="PubModal_modalWrapper"]').should('exist');
   });
 
   it('Lien Virtual Biorepository Email du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).find('[href]')
       .should('have.attr', 'href', 'mailto:dsresearch@cuanschutz.edu');
   });
 
   it('Lien Virtual Biorepository URL du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(20).find('[href]')
       .should('have.attr', 'href', 'https://redcap.link/HTPVBRrequest');
   });
 
@@ -236,14 +245,15 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
       .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/DUO_0000042');
   });
 
-  it('Lien Publication du panneau HTP Whole Blood RNAseq (v1)', () => {
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(4).find('[href]')
-      .should('have.attr', 'href', 'https://pubmed.ncbi.nlm.nih.gov/37379383');
-  });
+  it('Lien Publication du panneau HTP Whole Blood RNAseq (2020)', () => {
+    cy.get('[class*="EntityDataset_panel"]').each(($el: JQuery<HTMLElement>) => {
+      if ($el.text().includes('HTP Whole Blood RNAseq (2020)')) {
+        cy.wrap($el).as('datasetPanel');
+      }
+    });
 
-  it('Lien Repository du panneau HTP Whole Blood RNAseq (v1)', () => {
-    cy.get('[class*="EntityDataset_card"]').eq(0).find('[class="ant-descriptions-item-content"]').eq(5).find('[href]')
-      .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE190125');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[href]')
+      .should('have.attr', 'href').and('match', /https:\/\/pubmed.ncbi.nlm.nih.gov\/37379383(|\/)/);
   });
 
   it('Lien Files de Gene Expression Quantifications du panneau Files', () => {
@@ -290,12 +300,18 @@ describe('Page d\'une étude - Valider les panneaux masquables', () => {
     cy.get('[id="data_access"] div[class*="ant-collapse-content-active"]').should('exist');
   });
 
-  it('Panneau HTP Whole Blood RNAseq (v1)', () => {
-    cy.get('[class*="EntityDataset_panel"]').eq(0).find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('[class*="EntityDataset_panel"]').eq(0).find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
-    cy.get('[class*="EntityDataset_panel"]').eq(0).find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('[class*="EntityDataset_panel"]').eq(0).find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
-    cy.get('[class*="EntityDataset_panel"]').eq(0).find('div[class*="ant-collapse-content-active"]').should('exist');
+  it('Panneau HTP Whole Blood RNAseq (2020)', () => {
+    cy.get('[class*="EntityDataset_panel"]').each(($el: JQuery<HTMLElement>) => {
+      if ($el.text().includes('HTP Whole Blood RNAseq (2020)')) {
+        cy.wrap($el).as('datasetPanel');
+      }
+    });
+
+    cy.get('@datasetPanel').find('div[class*="ant-collapse-content-active"]').should('exist');
+    cy.get('@datasetPanel').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
+    cy.get('@datasetPanel').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
+    cy.get('@datasetPanel').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
+    cy.get('@datasetPanel').find('div[class*="ant-collapse-content-active"]').should('exist');
   });
 
   it('Panneau Files', () => {

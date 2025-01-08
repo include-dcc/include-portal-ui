@@ -12,7 +12,7 @@ beforeEach(() => {
   cy.showColumn('Access Url');
   cy.wait(1000);
 
-  cy.clickAndIntercept('div[id="content"] svg[data-icon="download"]', 'POST', '**/download', 1, 1);
+  cy.clickAndIntercept('div[id="content"] svg[data-icon="download"]', 'POST', '**/download', 1, false/*beVisible*/, 1);
   cy.waitUntilFile(oneMinute);
 });
 

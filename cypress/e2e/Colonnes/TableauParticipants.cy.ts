@@ -47,23 +47,29 @@ describe('Page Data Exploration (Participants) - Colonnes du tableau', () => {
     cy.get('div[class="ant-popover-inner"]')
       .find('div[class="ant-space-item"]').eq(7)
       .contains('Ethnicity').should('exist');
+
+    cy.get('thead[class="ant-table-thead"]')
+      .contains('Age').should('not.exist');
+    cy.get('div[class="ant-popover-inner"]')
+      .find('div[class="ant-space-item"]').eq(8)
+      .contains('Age').should('exist');
   
     cy.get('thead[class="ant-table-thead"]')
       .contains('External Participant ID').should('not.exist');
     cy.get('div[class="ant-popover-inner"]')
-      .find('div[class="ant-space-item"]').eq(8)
+      .find('div[class="ant-space-item"]').eq(9)
       .contains('External Participant ID').should('exist');
   
     cy.get('thead[class="ant-table-thead"]')
       .contains('Family Unit').should('not.exist');
     cy.get('div[class="ant-popover-inner"]')
-      .find('div[class="ant-space-item"]').eq(9)
+      .find('div[class="ant-space-item"]').eq(10)
       .contains('Family Unit').should('exist');
   
     cy.get('thead[class="ant-table-thead"]')
       .contains('Condition (Source Text)').should('not.exist');
     cy.get('div[class="ant-popover-inner"]')
-      .find('div[class="ant-space-item"]').eq(10)
+      .find('div[class="ant-space-item"]').eq(11)
       .contains('Condition (Source Text)').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')

@@ -43,7 +43,7 @@ describe('Page des études - Filtrer avec les facettes', () => {
   it('Family Data - False', () => {
     cy.get('[aria-expanded="true"] [data-cy="FilterContainer_Family Data"]').should('exist');
     cy.wait(1000);
-    cy.clickAndIntercept('input[type="radio"][value="false"]', 'POST', '**/graphql', 15, 0);
+    cy.clickAndIntercept('input[type="radio"][value="false"]', 'POST', '**/graphql', 15, false/*beVisible*/, 0);
     cy.validateTableResultsCount(/\d{1} Result/);
     cy.validateFacetRank(4, 'Family Data');
   });
@@ -53,7 +53,7 @@ describe('Page des études - Filtrer avec les facettes', () => {
     cy.validateFacetRank(5, 'Data Source');
   });
 
-  it('Design - Longitudinal', () => {
+  it('Design - Longitudinal [SJIP-1165]', () => {
     cy.validateFacetFilter('Design', 'Longitudinal', 'Longitudinal', /\d{1} Result/, false);
     cy.validateFacetRank(6, 'Design');
   });
@@ -61,7 +61,7 @@ describe('Page des études - Filtrer avec les facettes', () => {
   it('Harmonized Data - True', () => {
     cy.get('[aria-expanded="true"] [data-cy="FilterContainer_Harmonized Data"]').should('exist');
     cy.wait(1000);
-    cy.clickAndIntercept('input[type="radio"][value="true"]', 'POST', '**/graphql', 15, 1);
+    cy.clickAndIntercept('input[type="radio"][value="true"]', 'POST', '**/graphql', 15, false/*beVisible*/, 1);
     cy.validateTableResultsCount(/\d{1} Result/);
     cy.validateFacetRank(7, 'Harmonized Data');
   });
