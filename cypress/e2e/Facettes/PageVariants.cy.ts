@@ -185,7 +185,7 @@ describe('Page des variants (Variant) - Filtrer avec les facettes', () => {
   });
 
   it('Position', () => {
-    cy.validateFacetNumFilter('Position', '100000', /^421$/);
+    cy.validateFacetNumFilter('MinMax', 'Position', '108192590', /^1$/);
     cy.validateFacetRank(4, 'Position');
   });
 
@@ -276,12 +276,12 @@ describe('Page des variants (Gene) - Filtrer avec les facettes', () => {
   });
 
   it('gnomAD pLI', () => {
-    cy.validateFacetNumFilter('gnomAD pLI', '0.01', /^123,907$/);
+    cy.validateFacetNumFilter('Min', 'gnomAD pLI', '0.01', /^129,754$/);
     cy.validateFacetRank(2, 'gnomAD pLI');
   });
 
   it('gnomAD LOEUF', () => {
-    cy.validateFacetNumFilter('gnomAD LOEUF', '0.05', /^190$/);
+    cy.validateFacetNumFilter('Max', 'gnomAD LOEUF', '0.05', /^190$/);
     cy.validateFacetRank(3, 'gnomAD LOEUF');
   });
 
@@ -349,17 +349,17 @@ describe('Page des variants (Pathogenicity) - Filtrer avec les facettes', () => 
   });
 
   it('CADD (Raw)', () => {
-    cy.validateFacetNumFilter('CADD (Raw)', '0.01', /^679$/);
+    cy.validateFacetNumFilter('Min', 'CADD (Raw)', '0.01', /^3,763$/);
     cy.validateFacetRank(2, 'CADD (Raw)');
   });
 
   it('CADD (Phred)', () => {
-    cy.validateFacetNumFilter('CADD (Phred)', '0.01', /^136$/);
+    cy.validateFacetNumFilter('Min', 'CADD (Phred)', '0.01', /^4,303$/);
     cy.validateFacetRank(3, 'CADD (Phred)');
   });
 
   it('DANN', () => {
-    cy.validateFacetNumFilter('DANN', '0.1', /^24$/);
+    cy.validateFacetNumFilter('Min', 'DANN', '0.1', /^4,269$/);
     cy.validateFacetRank(4, 'DANN');
   });
 
@@ -379,12 +379,12 @@ describe('Page des variants (Pathogenicity) - Filtrer avec les facettes', () => 
   });
 
   it('REVEL', () => {
-    cy.validateFacetNumFilter('REVEL', '0.01', /^110$/);
+    cy.validateFacetNumFilter('Min', 'REVEL', '0.01', /^3,755$/);
     cy.validateFacetRank(8, 'REVEL');
   });
 
   it('SpliceAI', () => {
-    cy.validateFacetNumFilter('SpliceAI', '0.01', /^158,902$/);
+    cy.validateFacetNumFilter('Min', 'SpliceAI', '0.01', /^12,708$/);
     cy.validateFacetRank(9, 'SpliceAI');
   });
 
@@ -413,32 +413,32 @@ describe('Page des variants (Frequency) - Filtrer avec les facettes', () => {
   });
 
   it('INCLUDE Allele Frequency', () => {
-    cy.validateFacetNumFilter('INCLUDE Allele Frequency', '0.01', /^508,593$/);
+    cy.validateFacetNumFilter('Max', 'INCLUDE Allele Frequency', '0.01', /^508,593$/);
     cy.validateFacetRank(0, 'INCLUDE Allele Frequency');
   });
 
   it('gnomAD Genome 2.1.1', () => {
-    cy.validateFacetNumFilter('gnomAD Genome 2.1.1', '0.01', /^237,252$/);
+    cy.validateFacetNumFilter('Max', 'gnomAD Genome 2.1.1', '0.01', /^237,252$/);
     cy.validateFacetRank(1, 'gnomAD Genome 2.1.1');
   });
 
   it('gnomAD Genome 3.1.2', () => {
-    cy.validateFacetNumFilter('gnomAD Genome 3.1.2', '0.01', /^332,929$/);
+    cy.validateFacetNumFilter('Max', 'gnomAD Genome 3.1.2', '0.01', /^332,929$/);
     cy.validateFacetRank(2, 'gnomAD Genome 3.1.2');
   });
 
   it('gnomAD Exome 2.1.1', () => {
-    cy.validateFacetNumFilter('gnomAD Exome 2.1.1', '0.01', /^7,524$/);
+    cy.validateFacetNumFilter('Max', 'gnomAD Exome 2.1.1', '0.01', /^7,524$/);
     cy.validateFacetRank(3, 'gnomAD Exome 2.1.1');
   });
 
   it('TopMed', () => {
-    cy.validateFacetNumFilter('TopMed', '0.01', /^314,723$/);
+    cy.validateFacetNumFilter('Max', 'TopMed', '0.01', /^314,723$/);
     cy.validateFacetRank(4, 'TopMed');
   });
 
   it('1000 Genomes', () => {
-    cy.validateFacetNumFilter('1000 Genomes', '0.01', /^1,241$/);
+    cy.validateFacetNumFilter('Max', '1000 Genomes', '0.01', /^1,241$/);
     cy.validateFacetRank(5, '1000 Genomes');
   });
 });

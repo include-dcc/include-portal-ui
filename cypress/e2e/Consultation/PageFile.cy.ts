@@ -47,14 +47,14 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(1).contains('1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(2).contains('Study').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(2).contains('The Human Trisome Project (HTP)').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(3).contains('Format').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(3).contains(/^vcf$/).should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(4).contains('Size').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(4).contains('1.04 GB').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(5).contains('URL').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(5).contains('drs://data.kidsfirstdrc.org/ed48ab77-ac23-41a9-bd3f-74bef40b11b5').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(6).contains('Hash').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(6).contains('-').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(4).contains('Format').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(4).contains(/^vcf$/).should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(5).contains('Size').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(5).contains('1.04 GB').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(6).contains('URL').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(6).contains('drs://data.kidsfirstdrc.org/ed48ab77-ac23-41a9-bd3f-74bef40b11b5').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(7).contains('Hash').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(7).contains('-').should('exist');
   });
 
   it('Panneau Data Access', () => {

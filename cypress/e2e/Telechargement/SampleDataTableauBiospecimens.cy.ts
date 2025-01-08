@@ -10,7 +10,7 @@ beforeEach(() => {
   cy.login();
   cy.visitDataExploration('biospecimens', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
   cy.get('div[role="tabpanel"] [class*="ant-table-row"]').eq(0).find('[type="checkbox"]').check({force: true});
-  cy.clickAndIntercept('[class*="Header_ProTableHeader"] button[class*="ant-btn-default"]', 'POST', '**/file-manifest', 1, 1);
+  cy.clickAndIntercept('[class*="Header_ProTableHeader"] button[class*="ant-btn-default"]', 'POST', '**/file-manifest', 1, false/*beVisible*/, 1);
   cy.waitUntilFile(oneMinute);
 });
 

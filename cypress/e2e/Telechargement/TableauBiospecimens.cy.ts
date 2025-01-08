@@ -14,7 +14,7 @@ beforeEach(() => {
   cy.showColumn('Laboratory Procedure');
   cy.showColumn('Biospecimen Storage');
 
-  cy.clickAndIntercept('div[id="content"] svg[data-icon="download"]', 'POST', '**/download', 1, 1);
+  cy.clickAndIntercept('div[id="content"] svg[data-icon="download"]', 'POST', '**/download', 1, false/*beVisible*/, 1);
   cy.waitUntilFile(oneMinute);
 });
 
