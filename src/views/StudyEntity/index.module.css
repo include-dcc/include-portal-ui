@@ -7,6 +7,10 @@
   margin-bottom: 16px !important;
 }
 
+.datasetBtn {
+  margin-left: 12px;
+}
+
 .dbgapLink {
   margin-right: 8px;
 }

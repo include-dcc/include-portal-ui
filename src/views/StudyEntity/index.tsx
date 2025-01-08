@@ -32,6 +32,7 @@ import { INDEXES } from 'graphql/constants';
 import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { useStudy } from 'graphql/studies/actions';
+import { IStudyDataset } from 'graphql/studies/models';
 import {
   cavaticaCreateProjectDictionary,
   getDSConnectDrsItems,
@@ -346,6 +347,25 @@ const StudyEntity = () => {
     }
   };
 
+  const generateSqonForFile = (dataset: IStudyDataset): ISyntheticSqon => {
+    if (study && dataset.dataset_name)
+      return generateQuery({
+        newFilters: [
+          generateValueFilter({
+            field: 'participants.study.study_code',
+            index: INDEXES.PARTICIPANT,
+            value: [study.study_id],
+          }),
+          generateValueFilter({
+            field: 'dataset_names',
+            index: INDEXES.FILE,
+            value: [dataset.dataset_name],
+          }),
+        ],
+      });
+    return fileSqon;
+  };
+
   return (
     <EntityPage
       links={defaultLinks}
@@ -608,9 +628,22 @@ const StudyEntity = () => {
             {study?.datasets?.hits.edges.map(({ node: dataset }, index: number) => {
               const titleExtra = [];
 
+              if (dataset.is_harmonized) {
+                titleExtra.push(
+                  <DownloadFileManifestModal
+                    key="file-entity-manifest"
+                    sqon={generateSqonForFile(dataset)}
+                    isDisabled={false}
+                    hasTooManyFiles={false}
+                    size="small"
+                  />,
+                );
+              }
+
               if (study.study_id === DSC_STUDY_ID && dataset.dataset_id === DSC_DATASET_ID) {
                 titleExtra.push(
                   <Button
+                    className={style.datasetBtn}
                     icon={<CloudUploadOutlined />}
                     onClick={(event) => analyzeCavatica(event)}
                     size="small"
@@ -624,10 +657,12 @@ const StudyEntity = () => {
               if (dataset.dataset_name === 'HTP Whole Blood RNAseq (2020)') {
                 titleExtra.push(
                   <Button
-                    size="small"
+                    className={style.datasetBtn}
                     onClick={() => {
                       navigate(STATIC_ROUTES.ANALYTICS_TRANSCRIPTOMIC);
                     }}
+                    size="small"
+                    type="primary"
                   >
                     {intl.get('global.analyse')}
                     <ExternalLinkIcon />
