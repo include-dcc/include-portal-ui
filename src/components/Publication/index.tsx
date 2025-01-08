@@ -28,12 +28,11 @@ const getPublications = ({ publications, publications_details }: GetPublicationP
   const publicationsDetails = cloneDeep(publications_details?.hits?.edges);
   const noPubMed: string[] = [];
   if (publicationsDetails?.length) {
-    publicationsDetails.sort((a, b) =>
-      a.node.issued_date_parts[0] < b.node.issued_date_parts[0] ||
-      a.node.PMID.localeCompare(b.node.PMID)
-        ? 1
-        : -1,
-    );
+    publicationsDetails.sort((a, b) => {
+      if (a.node.issued_date_parts[0] == b.node.issued_date_parts[0])
+        return a.node.PMID.localeCompare(b.node.PMID);
+      return a.node.issued_date_parts[0] < b.node.issued_date_parts[0] ? 1 : -1;
+    });
   }
 
   if (publications?.length) {
