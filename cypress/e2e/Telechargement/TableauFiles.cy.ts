@@ -9,6 +9,7 @@ beforeEach(() => {
   cy.login();
   cy.visitDataExploration('datafiles', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
   cy.showColumn('File Name');
+  cy.showColumn('Dataset');
   cy.showColumn('Access Url');
   cy.wait(1000);
 

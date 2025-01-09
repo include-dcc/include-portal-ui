@@ -67,6 +67,11 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[id="profile"] [class="ant-descriptions-item-content"]').eq(2).find('[class*="ant-tag-magenta"]').should('exist');
     cy.get('[id="profile"] [class="ant-descriptions-item-label"]').eq(3).contains('Down Syndrome Status').should('exist');
     cy.get('[id="profile"] [class="ant-descriptions-item-content"]').eq(3).contains('D21').should('exist');
+    cy.get('[id="profile"] [class="ant-descriptions-item-label"]').eq(4).contains('Age at First Patient Engagement').should('exist');
+    cy.get('[id="profile"] [class="ant-descriptions-item-content"]').eq(4).contains('53').should('exist');
+    cy.get('[id="profile"] [class="ant-descriptions-item-content"]').eq(4).contains('years').should('exist');
+    cy.get('[id="profile"] [class="ant-descriptions-item-content"]').eq(4).contains('279').should('exist');
+    cy.get('[id="profile"] [class="ant-descriptions-item-content"]').eq(4).contains('days').should('exist');
   });
   
   it('Panneau Family (sans famille)', () => {

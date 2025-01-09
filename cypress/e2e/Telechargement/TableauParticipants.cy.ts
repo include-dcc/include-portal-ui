@@ -10,6 +10,7 @@ beforeEach(() => {
   cy.visitDataExploration('participants', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
   cy.showColumn('Race');
   cy.showColumn('Ethnicity');
+  cy.showColumn('Age');
   cy.showColumn('External Participant ID');
   cy.showColumn('Family Unit');
   cy.showColumn('Condition (Source Text)');

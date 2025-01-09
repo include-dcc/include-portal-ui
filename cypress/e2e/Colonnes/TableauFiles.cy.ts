@@ -46,6 +46,12 @@ describe('Page Data Exploration (Files) - Colonnes du tableau', () => {
       .contains('Study').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
+      .contains('Dataset').should('not.exist');
+    cy.get('div[class="ant-popover-inner"]')
+      .find('div[class="ant-space-item"]').eq(6)
+      .contains('Dataset').should('exist');
+
+    cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(5)
       .should('have.class', 'ant-table-column-has-sorters')
       .contains('Data Category').should('exist');
@@ -63,7 +69,7 @@ describe('Page Data Exploration (Files) - Colonnes du tableau', () => {
     cy.get('thead[class="ant-table-thead"]')
       .contains('Access Url').should('not.exist');
     cy.get('div[class="ant-popover-inner"]')
-      .find('div[class="ant-space-item"]').eq(9)
+      .find('div[class="ant-space-item"]').eq(10)
       .contains('Access Url').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')

@@ -47,6 +47,8 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(1).contains('1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(2).contains('Study').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(2).contains('The Human Trisome Project (HTP)').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(3).contains('Dataset').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(3).contains('HTP WGS (2018 X01)').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(4).contains('Format').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(4).contains(/^vcf$/).should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(5).contains('Size').should('exist');
