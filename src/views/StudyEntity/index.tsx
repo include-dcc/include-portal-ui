@@ -628,15 +628,44 @@ const StudyEntity = () => {
             {study?.datasets?.hits.edges.map(({ node: dataset }, index: number) => {
               const titleExtra = [];
 
+              if (dataset.dataset_name) {
+                titleExtra.push(
+                  <Button
+                    className={style.datasetBtn}
+                    onClick={() => {
+                      addQuery({
+                        queryBuilderId: DATA_EXPLORATION_QB_ID,
+                        query: generateQuery({
+                          newFilters: [
+                            generateValueFilter({
+                              field: 'dataset_names',
+                              index: INDEXES.FILE,
+                              value: [dataset.dataset_name!],
+                            }),
+                          ],
+                        }),
+                        setAsActive: true,
+                      });
+                      navigate(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
+                    }}
+                    size="small"
+                  >
+                    {intl.get('global.viewInExploration')}
+                    <ExternalLinkIcon />
+                  </Button>,
+                );
+              }
+
               if (dataset.is_harmonized) {
                 titleExtra.push(
                   <DownloadFileManifestModal
-                    key="file-entity-manifest"
-                    sqon={generateSqonForFile(dataset)}
-                    isDisabled={false}
-                    hasTooManyFiles={false}
-                    size="small"
+                    className={style.datasetBtn}
                     fileName="datasetName_manifest"
+                    hasTooManyFiles={false}
+                    isDisabled={false}
+                    key="file-entity-dataset-manifest"
+                    size="small"
+                    sqon={generateSqonForFile(dataset)}
                   />,
                 );
               }
