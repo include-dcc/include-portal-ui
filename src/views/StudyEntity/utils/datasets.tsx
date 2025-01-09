@@ -87,13 +87,13 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
       ),
     });
 
-  if (dataset.access_limitations)
+  if (dataset.access_limitations?.length)
     items.push({
       label: intl.get('entities.study.dataset.access_limitations'),
       value: dataset.access_limitations?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
     });
 
-  if (dataset.access_requirements)
+  if (dataset.access_requirements?.length)
     items.push({
       label: intl.get('entities.study.dataset.access_requirements'),
       value: dataset.access_requirements?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
