@@ -17,22 +17,24 @@ import styles from './index.module.css';
 
 interface IDownloadFileManifestProps {
   sqon: ISyntheticSqon;
-  type?: 'default' | 'primary';
-  size?: SizeType;
-  isDisabled?: boolean;
+  className?: string;
   disabledTooltip?: string;
-  hasTooManyFiles?: boolean;
   fileName?: string;
+  hasTooManyFiles?: boolean;
+  isDisabled?: boolean;
+  size?: SizeType;
+  type?: 'default' | 'primary';
 }
 
 const DownloadFileManifestModal = ({
   sqon,
-  type = 'default',
-  size = undefined,
-  isDisabled,
+  className = '',
   disabledTooltip,
-  hasTooManyFiles,
   fileName,
+  hasTooManyFiles,
+  isDisabled,
+  size = undefined,
+  type = 'default',
 }: IDownloadFileManifestProps) => {
   const dispatch = useDispatch();
 
@@ -50,6 +52,7 @@ const DownloadFileManifestModal = ({
     <>
       <Tooltip title={tooltipText}>
         <Button
+          className={className}
           icon={<DownloadOutlined />}
           onClick={(event) => {
             event.stopPropagation();
