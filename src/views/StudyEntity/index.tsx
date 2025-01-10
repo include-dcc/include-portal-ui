@@ -628,7 +628,7 @@ const StudyEntity = () => {
             {study?.datasets?.hits.edges.map(({ node: dataset }, index: number) => {
               const titleExtra = [];
 
-              if (dataset.dataset_name) {
+              if (dataset.dataset_name && dataset.is_harmonized) {
                 titleExtra.push(
                   <Button
                     className={style.datasetBtn}
