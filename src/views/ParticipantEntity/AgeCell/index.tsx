@@ -10,6 +10,9 @@ interface OwnProps {
 }
 
 const AgeCell = ({ ageInDays }: OwnProps) => {
+  if (ageInDays == 0) {
+    return <>{ageInDays}</>;
+  }
   if (!ageInDays) {
     return <>{TABLE_EMPTY_PLACE_HOLDER}</>;
   }
