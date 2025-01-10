@@ -1,10 +1,8 @@
 import intl from 'react-intl-universal';
 import Plot from 'react-plotly.js';
-import { useDispatch } from 'react-redux';
 import { formatPadj } from 'views/Analytics/Transcriptomic/utils';
 
 import { TTranscriptomicsDatum } from 'services/api/transcriptomics/models';
-import { analyticsActions } from 'store/analytics/slice';
 
 import styles from './index.module.css';
 
@@ -23,7 +21,6 @@ export type TTranscriptomicHeatmaps = {
  * z = data
  */
 const Heatmaps = ({ selectedGenes, handleGenesSelection }: TTranscriptomicHeatmaps) => {
-  const dispatch = useDispatch();
   const padj: any = [];
   const label: string[] = [];
   const data: any = [];
@@ -79,7 +76,6 @@ const Heatmaps = ({ selectedGenes, handleGenesSelection }: TTranscriptomicHeatma
           const gene = selectedGenes.find((gene) => gene.gene_symbol === event.points[0].y);
           if (gene) {
             handleGenesSelection([gene]);
-            dispatch(analyticsActions.resetTranscriptomicsSampleGeneExp());
           }
         }
       }}

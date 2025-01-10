@@ -30,12 +30,7 @@ export const AnalyticsState: initialState = {
 const analyticsSlice = createSlice({
   name: 'analytics',
   initialState: AnalyticsState,
-  reducers: {
-    resetTranscriptomicsSampleGeneExp: (state) => {
-      state.transcriptomics.sampleGeneExp.loading = true;
-      state.transcriptomics.sampleGeneExp.error = false;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // Facets
     builder.addCase(fetchTranscriptomicsFacets.pending, (state) => {
