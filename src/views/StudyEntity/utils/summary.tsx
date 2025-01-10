@@ -105,16 +105,8 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
     value: study?.data_sources?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    label: intl.get('entities.study.study_meta_categories'),
-    value: study?.study_meta_categories?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
-  },
-  {
-    label: intl.get('entities.study.date_collection_start'),
-    value: study?.date_collection_start_year || TABLE_EMPTY_PLACE_HOLDER,
-  },
-  {
-    label: intl.get('entities.study.date_collection_end'),
-    value: study?.date_collection_end_year || TABLE_EMPTY_PLACE_HOLDER,
+    label: intl.get('entities.study.expected_data_categories'),
+    value: study?.expected_data_categories?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     label: intl.get('entities.study.selection_criteria'),
