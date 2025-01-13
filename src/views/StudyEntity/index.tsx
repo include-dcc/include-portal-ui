@@ -662,10 +662,10 @@ const StudyEntity = () => {
                   <DownloadFileManifestModal
                     className={style.datasetBtn}
                     familyCheckbox={false}
-                    fileName="datasetName_manifest"
+                    fileName={`${dataset.external_dataset_id}_manifest`}
                     hasTooManyFiles={false}
                     isDisabled={false}
-                    key="file-entity-dataset-manifest"
+                    key="study-entity-dataset-manifest"
                     size="small"
                     sqon={generateSqonForFile(dataset)}
                   />,
