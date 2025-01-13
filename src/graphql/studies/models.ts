@@ -65,6 +65,7 @@ export interface IExperimentalStrategy {
 
 export interface IContact {
   id: string;
+  institution?: string;
   email?: string;
   name?: string;
 }
