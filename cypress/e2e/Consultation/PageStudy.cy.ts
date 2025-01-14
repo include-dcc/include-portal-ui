@@ -158,7 +158,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('@datasetPanel').find('[class="ant-collapse-header"]').contains('Manifest').should('exist');
     cy.get('@datasetPanel').find('[class="ant-collapse-header"]').contains('Analysis').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(0).contains('Dataset ID').should('exist');
-    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(0).contains('Dataset-Metadata-HTP-RNAseq-WholeBlood-2020').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(0).contains('HTP-RNAseq-WholeBlood-2020').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(5).contains('Data Type').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Alternative Splicing').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Chimeric Aligned Reads').should('exist');
