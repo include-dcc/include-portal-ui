@@ -12,10 +12,10 @@ import styles from '../index.module.css';
 const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[] => {
   const items: IEntityDescriptionsItem[] = [];
 
-  if (dataset.dataset_id)
+  if (dataset.external_dataset_id)
     items.push({
-      label: intl.get('entities.study.dataset.dataset_id'),
-      value: dataset.dataset_id || TABLE_EMPTY_PLACE_HOLDER,
+      label: intl.get('entities.study.dataset.external_dataset_id'),
+      value: dataset.external_dataset_id || TABLE_EMPTY_PLACE_HOLDER,
     });
 
   if (dataset.description)
@@ -36,10 +36,10 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
       value: dataset.data_collection_end_year || TABLE_EMPTY_PLACE_HOLDER,
     });
 
-  if (dataset.expected_data_categories?.length)
+  if (dataset.data_categories?.length)
     items.push({
-      label: intl.get('entities.study.dataset.expected_data_categories'),
-      value: dataset.expected_data_categories?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
+      label: intl.get('entities.study.dataset.data_categories'),
+      value: dataset.data_categories?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
     });
 
   if (dataset.data_types?.length)
