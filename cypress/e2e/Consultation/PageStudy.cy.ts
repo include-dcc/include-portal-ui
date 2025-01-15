@@ -65,58 +65,54 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(8).contains('Investigator Assessment, Medical Record, Participant or Caregiver Report').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(9).contains('Data Category').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(9).contains('Imaging, Harmonized Demographic/Clinical Data, Genomics, Proteomics, Metabolomics, Transcriptomics, Immune Maps, Unharmonized Demographic/Clinical Data, Microbiome').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(10).contains('Date Collection Start (Year)').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(10).contains('2016').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(11).contains('Date Collection End (Year)').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(11).contains('-').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(12).contains('Selection Criteria').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(12).contains('Ages 6 months to 89 years old, with or without Down syndrome').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(13).contains('Study Design').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).contains('Case-control, longitudinal').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(14).contains('Study Website').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).contains('https://www.trisome.org').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(15).contains('Publication').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(0).contains('Donovan');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(0).contains(',');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(0).contains('Micah G');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(1).contains('et al.');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(2).contains(' "');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(2).contains('Variegated overexpression of chromosome 21 genes reveals molecular and immune subtypes of Down syndrome');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(2).contains('"');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(3).find('i').contains('Nat Commun');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(4).contains('vol.');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(4).contains('15');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(5).contains(',');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(5).contains('1');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(6).contains('(');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(6).contains('2024');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(6).contains('):');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(7).contains('5473');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(7).contains('.');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(8).contains('doi:');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(8).contains('10.1038/s41467-024-49781-1');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(8).contains('.');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(9).contains('PMID:');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(9).contains('38942750');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(9).contains('.');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[data-icon="copy"]').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[data-icon="copy"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true});
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(10).contains('Selection Criteria').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(10).contains('Ages 6 months to 89 years old, with or without Down syndrome').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(11).contains('Study Design').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(11).contains('Case-control, longitudinal').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(12).contains('Study Website').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(12).contains('https://www.trisome.org').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(13).contains('Publication').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(0).contains('Donovan');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(0).contains(',');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(0).contains('Micah G');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(1).contains('et al.');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(2).contains(' "');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(2).contains('Variegated overexpression of chromosome 21 genes reveals molecular and immune subtypes of Down syndrome');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(2).contains('"');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(3).find('i').contains('Nat Commun');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(4).contains('vol.');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(4).contains('15');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(5).contains(',');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(5).contains('1');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(6).contains('(');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(6).contains('2024');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(6).contains('):');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(7).contains('5473');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(7).contains('.');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(8).contains('doi:');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(8).contains('10.1038/s41467-024-49781-1');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(8).contains('.');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(9).contains('PMID:');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(9).contains('38942750');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[class="ant-typography"]').eq(9).contains('.');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[data-icon="copy"]').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[data-icon="copy"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true});
     cy.get('div[class="ant-tooltip-inner"]').contains('Copy citation').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('See more').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(16).contains('Principal Investigator').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(16).contains('Joaquin M. Espinosa').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(17).contains('Institution').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).contains('Linda Crnic Institute for Down Syndrome').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(18).contains('Study Contact').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).contains('Angela Rachubinski; dsresearch@cuanschutz.edu').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(19).contains('Virtual Biorepository Email').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).contains('dsresearch@cuanschutz.edu').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(20).contains('Virtual Biorepository URL').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(20).contains('https://redcap.link/HTPVBRrequest').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(21).contains('Citation Statement').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(21).contains('-').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(22).contains('Acknowledgement').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(22).contains('-').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).contains('See more').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(14).contains('Principal Investigator').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).contains('Joaquin M. Espinosa').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(15).contains('Institution').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('Linda Crnic Institute for Down Syndrome').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(16).contains('Study Contact').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(16).contains('Angela Rachubinski; dsresearch@cuanschutz.edu').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(17).contains('Virtual Biorepository Email').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).contains('dsresearch@cuanschutz.edu').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(18).contains('Virtual Biorepository URL').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).contains('https://redcap.link/HTPVBRrequest').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(19).contains('Citation Statement').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).contains('-').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(20).contains('Acknowledgement').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(20).contains('-').should('exist');
   });
 
   it('Panneau Statistic', () => {
@@ -159,6 +155,14 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('@datasetPanel').find('[class="ant-collapse-header"]').contains('Analysis').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(0).contains('Dataset ID').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(0).contains('HTP-RNAseq-WholeBlood-2020').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(1).contains('Description').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(1).contains('Analysis of steady-state mRNA levels in whole blood of euploid controls and participants with trisomy 21').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(2).contains('Data Collection Start (Year)').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(2).contains('2016').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(3).contains('Data Collection End (Year)').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(3).contains('2020').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(4).contains('Data Category').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(4).contains('Transcriptomics').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(5).contains('Data Type').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Alternative Splicing').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Chimeric Aligned Reads').should('exist');
@@ -234,28 +238,28 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
   });
 
   it('Lien Study Website du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(12).find('[href]')
       .should('have.attr', 'href').and('match', /https:\/\/www.trisome.org/);
   });
 
   it('Lien Publication du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[href]')
       .should('have.attr', 'href').and('match', /https:\/\/pubmed.ncbi.nlm.nih.gov\/38942750(|\/)/);
   });
 
   it('Lien \'See more\' de Publication du panneau Summary', () => {
     cy.get('[class*="PubModal_modalWrapper"]').should('not.exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('See more').clickAndWait({force: true});
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).contains('See more').clickAndWait({force: true});
     cy.get('[class*="PubModal_modalWrapper"]').should('exist');
   });
 
   it('Lien Virtual Biorepository Email du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).find('[href]')
       .should('have.attr', 'href', 'mailto:dsresearch@cuanschutz.edu');
   });
 
   it('Lien Virtual Biorepository URL du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(20).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).find('[href]')
       .should('have.attr', 'href', 'https://redcap.link/HTPVBRrequest');
   });
 
