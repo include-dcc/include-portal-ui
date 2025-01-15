@@ -16,7 +16,7 @@ describe('Page d\'un fichier - Bouton Manifest', () => {
     cy.get('[class*="EntityTitle"] button[class*="ant-btn-default"]').click({force: true});
   });
 
-  it('Vérifier les informations affichées - Modal [SJIP-1182]', () => {
+  it('Vérifier les informations affichées - Modal', () => {
     cy.get('[class="ant-modal-title"]').contains('File manifest').should('exist');
     cy.get('[class="ant-modal-body"]').contains('Download a manifest of the selected files which can be used for bulk downloading using Cavatica’s ').should('exist');
     cy.get('[class="ant-modal-body"]').contains('Import from an GA4GH Data Repository Service (DRS)').should('exist');
@@ -83,7 +83,7 @@ describe('Page d\'un fichier - Télécharger le manifest (checkbox)', () => {
     cy.waitUntilFile(oneMinute);
   });
 
-  it('Valider le nom du fichier [SJIP-1182]', () => {
+  it('Valider le nom du fichier', () => {
     cy.validateFileName('include_familyManifest_'+`${strDate.slice(0, 4)}${strDate.slice(4, 6)}${strDate.slice(6, 8)}`+'T*.tsv');
   });
 
