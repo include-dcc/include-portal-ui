@@ -133,7 +133,7 @@ const ScatterPlotly = ({
             )}: %{customdata.ensembl_gene_id} <br>` +
             `${intl.get(
               'screen.analytics.transcriptomic.scatterPlot.fold_change',
-            )}: %{y:.2f} <br>` +
+            )}: %{customdata.fold_change:.2f} <br>` +
             `${intl.get('screen.analytics.transcriptomic.scatterPlot.qvalue')}: %{text}`,
           customdata: group.data.map((e) => e),
           text: group.data.map((e) => formatPadj(e.padj)),
