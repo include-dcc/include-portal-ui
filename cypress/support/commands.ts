@@ -458,10 +458,12 @@ Cypress.Commands.add('validateTableFirstRow', (expectedValue: string|RegExp, eq:
 
 Cypress.Commands.add('validateTableResultsCount', (expectedCount: string|RegExp, shouldExist: boolean = true) => {
   const strExist = shouldExist ? 'exist' : 'not.exist';
+  cy.waitWhileSpin(oneMinute);
   cy.get('div[class*="ProTableHeader"]').contains(expectedCount).should(strExist);
 });
 
 Cypress.Commands.add('validateTotalSelectedQuery', (expectedCount: string|RegExp) => {
+  cy.waitWhileSpin(oneMinute);
   cy.get('[class*="QueryBar_selected"] [class*="QueryBar_total"]').contains(expectedCount).should('exist');
 });
 
@@ -543,7 +545,7 @@ Cypress.Commands.add('visitParticipantEntity', (participantId: string, nbCalls?:
 Cypress.Commands.add('visitProfileSettingsPage', () => {
 cy.visitAndIntercept('/profile/settings',
                      'GET',
-                     '**.includedcc.org',
+                     '**/user',
                      1);
 });
 

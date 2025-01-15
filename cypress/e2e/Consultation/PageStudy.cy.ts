@@ -76,16 +76,39 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(14).contains('Study Website').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).contains('https://www.trisome.org').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(15).contains('Publication').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('https://pubmed.ncbi.nlm.nih.gov/37379383/').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('https://pubmed.ncbi.nlm.nih.gov/37360690').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('https://pubmed.ncbi.nlm.nih.gov/37277650').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(0).contains('Donovan');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(0).contains(',');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(0).contains('Micah G');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(1).contains('et al.');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(2).contains(' "');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(2).contains('Variegated overexpression of chromosome 21 genes reveals molecular and immune subtypes of Down syndrome');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(2).contains('"');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(3).find('i').contains('Nat Commun');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(4).contains('vol.');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(4).contains('15');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(5).contains(',');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(5).contains('1');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(6).contains('(');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(6).contains('2024');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(6).contains('):');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(7).contains('5473');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(7).contains('.');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(8).contains('doi:');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(8).contains('10.1038/s41467-024-49781-1');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(8).contains('.');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(9).contains('PMID:');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(9).contains('38942750');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[class="ant-typography"]').eq(9).contains('.');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[data-icon="copy"]').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[data-icon="copy"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true});
+    cy.get('div[class="ant-tooltip-inner"]').contains('Copy citation').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('See more').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(16).contains('Principal Investigator').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(16).contains('Joaquin M. Espinosa').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(17).contains('Institution').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).contains('Linda Crnic Institute for Down Syndrome').should('exist');
-    cy.get('[id="data_access"] [class="ant-descriptions-item-label"]').eq(18).contains('Study Contact').should('exist');
-    cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(18).contains('Angela Rachubinski; dsresearch@cuanschutz.edu').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(18).contains('Study Contact').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).contains('Angela Rachubinski; dsresearch@cuanschutz.edu').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(19).contains('Virtual Biorepository Email').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).contains('dsresearch@cuanschutz.edu').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(20).contains('Virtual Biorepository URL').should('exist');
@@ -131,6 +154,9 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[class*="StudyEntity_datasetTitle"] [class*="StudyEntity_datasetInfo"]').should('exist');
     cy.get('@datasetPanel').find('[class="ant-collapse-header"]').contains('HTP Whole Blood RNAseq (2020)').should('exist');
     cy.get('@datasetPanel').find('[class="ant-collapse-header"] [class*="ant-tag-green"]').contains('Harmonized').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-collapse-header"]').contains('View in exploration').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-collapse-header"]').contains('Manifest').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-collapse-header"]').contains('Analysis').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(0).contains('Dataset ID').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(0).contains('Dataset-Metadata-HTP-RNAseq-WholeBlood-2020').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(5).contains('Data Type').should('exist');
@@ -214,7 +240,7 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
 
   it('Lien Publication du panneau Summary', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).find('[href]')
-      .should('have.attr', 'href').and('match', /https:\/\/pubmed.ncbi.nlm.nih.gov\/37379383(|\/)/);
+      .should('have.attr', 'href').and('match', /https:\/\/pubmed.ncbi.nlm.nih.gov\/38942750(|\/)/);
   });
 
   it('Lien \'See more\' de Publication du panneau Summary', () => {
@@ -245,7 +271,20 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
       .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/DUO_0000042');
   });
 
-  it('Lien Publication du panneau HTP Whole Blood RNAseq (2020)', () => {
+  it('Lien DataExploration du panneau HTP Whole Blood RNAseq (2020)', () => {
+    cy.get('[class*="EntityDataset_panel"]').each(($el: JQuery<HTMLElement>) => {
+      if ($el.text().includes('HTP Whole Blood RNAseq (2020)')) {
+        cy.wrap($el).as('datasetPanel');
+      }
+    });
+
+    cy.get('@datasetPanel').find('[class="ant-collapse-header"] button').eq(0).clickAndWait({force: true});
+    cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
+    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Dataset').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('HTP Whole Blood RNAseq (2020)').should('exist');
+  });
+
+  it('Lien Publication du panneau HTP Whole Blood RNAseq (2020) [SJIP-1179]', () => {
     cy.get('[class*="EntityDataset_panel"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('HTP Whole Blood RNAseq (2020)')) {
         cy.wrap($el).as('datasetPanel');

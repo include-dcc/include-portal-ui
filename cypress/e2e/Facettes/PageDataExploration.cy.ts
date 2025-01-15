@@ -97,6 +97,11 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.validateFacetRank(5, 'Age at Observed Phenotype (days)');
   });
 
+  it('Age at First Patient Engagement (days)', () => {
+    cy.validateFacetNumFilter('Max', 'Age at First Patient Engagement (days)', '10000', /\d{1}/);
+    cy.validateFacetRank(6, 'Age at First Patient Engagement (days)');
+  });
+
   it('Family Unit - Proband-only', () => {
     cy.validateFacetFilter('Family Unit', 'Proband-only', 'proband-only', /\d{1}/);
     cy.validateFacetRank(7, 'Family Unit');
@@ -153,6 +158,7 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.wait('@getRouteMatcher');
     cy.wait('@getRouteMatcher');
     cy.wait('@getRouteMatcher');
+    cy.wait(2000);
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('bs-03ynynfs').should('exist'); //data-cy="Search_Dropdown"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
@@ -172,6 +178,7 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.wait('@getRouteMatcher');
     cy.wait('@getRouteMatcher');
     cy.wait('@getRouteMatcher');
+    cy.wait(2000);
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('bs-03ynynfs').should('exist'); //data-cy="Search_Dropdown"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
@@ -192,6 +199,7 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.wait('@getRouteMatcher');
     cy.wait('@getRouteMatcher');
     cy.wait('@getRouteMatcher');
+    cy.wait(2000);
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('bs-m623h3mrgg').should('exist'); //data-cy="Search_Dropdown"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
@@ -279,28 +287,33 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.validateFacetRank(0, 'Access');
   });
 
+  it('Dataset - HTP Whole Blood RNAseq (2020)', () => {
+    cy.validateFacetFilter('Dataset', 'HTP Whole Blood RNAseq (2020)', 'HTP Whole Blood RNAseq (2020)', /\d{1}/);
+    cy.validateFacetRank(1, 'Dataset');
+  });
+
   it('Data Category - Genomics', () => {
     cy.validateFacetFilter('Data Category', 'Genomics', 'Genomics', /\d{1}/);
-    cy.validateFacetRank(1, 'Data Category');
+    cy.validateFacetRank(2, 'Data Category');
   });
 
   it('Data Type - GVCF', () => {
     cy.validateFacetFilter('Data Type', 'GVCF', 'gVCF', /\d{1}/);
-    cy.validateFacetRank(2, 'Data Type');
+    cy.validateFacetRank(3, 'Data Type');
   });
 
   it('Experimental Strategy - Whole Genome Sequencing', () => {
     cy.validateFacetFilter('Experimental Strategy', 'Whole Genome Sequencing', 'Whole Genome Sequencing', /\d{1}/);
-    cy.validateFacetRank(3, 'Experimental Strategy');
+    cy.validateFacetRank(4, 'Experimental Strategy');
   });
 
   it('File Format - gVCF [SJIP-553]', () => {
     cy.validateFacetFilter('File Format', 'GVCF', 'gvcf', /\d{1}/);
-    cy.validateFacetRank(4, 'File Format');
+    cy.validateFacetRank(5, 'File Format');
   });
 
   it('ACL - Open Access', () => {
     cy.validateFacetFilter('ACL', 'Open Access', 'open_access', /\d{1}/);
-    cy.validateFacetRank(5, 'ACL');
+    cy.validateFacetRank(6, 'ACL');
   });
 });

@@ -8,12 +8,18 @@ beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
 
   cy.login();
-  cy.visitStudyEntity('DS-NEXUS', 1);
+  cy.visitStudyEntity('HTP', 1);
+
+  cy.get('[class*="EntityDataset_panel"]').each(($el: JQuery<HTMLElement>) => {
+    if ($el.text().includes('HTP WGS (2021 X01)')) {
+      cy.wrap($el).as('datasetPanel');
+    }
+  });
 });
 
-describe('Page d\'une étude - Bouton Manifest', {retries: {runMode: 0}}, () => {
+describe('Dataset d\'une étude - Bouton Manifest', {retries: {runMode: 0}}, () => {
   beforeEach(() => {
-    cy.get('[class*="EntityTitleLogo"] button[class*="ant-btn-primary"]').click({force: true});
+    cy.get('@datasetPanel').find('[class="ant-collapse-header"] button[class*="ant-btn-default "]').eq(1).click({force: true});
   });
 
   it('Vérifier les informations affichées - Modal', () => {
@@ -27,17 +33,17 @@ describe('Page d\'une étude - Bouton Manifest', {retries: {runMode: 0}}, () => 
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(2).contains('Files').should('exist');
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(3).contains('Size').should('exist');
     cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(0).contains('gVCF').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(1).contains(/^41$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(2).contains(/^41$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(3).contains(/^196.08 GB$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Simple Nucleotide Variations"] td').eq(0).contains('Simple Nucleotide Variations').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Simple Nucleotide Variations"] td').eq(1).contains(/^82$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Simple Nucleotide Variations"] td').eq(2).contains(/^82$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Simple Nucleotide Variations"] td').eq(3).contains(/^99.11 GB$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(1).contains(/^19$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(2).contains(/^19$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(3).contains(/^117.64 GB$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Variant Calls"] td').eq(0).contains('Variant Calls').should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Variant Calls"] td').eq(1).contains(/^19$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Variant Calls"] td').eq(2).contains(/^19$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Variant Calls"] td').eq(3).contains(/^31.11 GB$/).should('exist');
     cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(0).contains('Aligned Reads').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(1).contains(/^41$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(2).contains(/^41$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(3).contains(/^705.31 GB$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(1).contains(/^19$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(2).contains(/^19$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(3).contains(/^322.68 GB$/).should('exist');
 
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-default"]').contains('Cancel').should('exist');
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').contains('Download').should('exist');
@@ -63,22 +69,34 @@ describe('Page d\'une étude - Bouton Manifest', {retries: {runMode: 0}}, () => 
   });
 });
 
-describe('Page d\'une étude - Télécharger le manifest', {retries: {runMode: 0}}, () => {
+describe('Dataset Unharmonized d\'une étude - Bouton Manifest', () => {
+  it('Vérifier les informations affichées - Modal', () => {
+    cy.get('[class*="EntityDataset_panel"]').each(($el: JQuery<HTMLElement>) => {
+      if ($el.text().includes('HTP Mass Cytometry (2020)')) {
+        cy.wrap($el).as('datasetPanel');
+      }
+    });
+
+    cy.get('@datasetPanel').find('[class="ant-collapse-header"]').contains('Manifest').should('not.exist');
+  });
+});
+
+describe('Dataset d\'une étude - Télécharger le manifest', {retries: {runMode: 0}}, () => {
   beforeEach(() => {
-    cy.get('[class*="EntityTitleLogo"] button[class*="ant-btn-primary"]').click({force: true});
+    cy.get('@datasetPanel').find('[class="ant-collapse-header"] button[class*="ant-btn-default "]').eq(1).click({force: true});
     cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/file-manifest', 1);
     cy.waitUntilFile(oneMinute);
   });
 
-  it('Valider le nom du fichier', () => {
-    cy.validateFileName('include_manifest_'+`${strDate.slice(0, 4)}${strDate.slice(4, 6)}${strDate.slice(6, 8)}`+'T*.tsv');
+  it('Valider le nom du fichier [SJIP-1186]', () => {
+    cy.validateFileName('include_HTP WGS (2021 X01)_manifest_'+`${strDate.slice(0, 4)}${strDate.slice(4, 6)}${strDate.slice(6, 8)}`+'T*.tsv');
   });
 
   it('Valider les en-têtes du fichier', () => {
-    cy.validateFileHeaders('DownloadManifestStudy.json');
+    cy.validateFileHeaders('DownloadManifestDataset.json');
   });
 
   it('Valider le contenu du fichier [SJIP-967]', () => {
-    cy.validateFileContent('DownloadManifestStudy.json');
+    cy.validateFileContent('DownloadManifestDataset.json');
   });
 });
