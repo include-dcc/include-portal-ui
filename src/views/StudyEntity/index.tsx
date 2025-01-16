@@ -388,11 +388,12 @@ const StudyEntity = () => {
               )}
               {study && (
                 <DownloadFileManifestModal
+                  disabledTooltip={intl.get('entities.study.unharmonizedWarningTooltip')}
+                  familyCheckbox={false}
+                  isDisabled={!study?.is_harmonized}
                   key="download-file-manifest"
                   sqon={fileSqon}
                   type="primary"
-                  isDisabled={!study?.is_harmonized}
-                  disabledTooltip={intl.get('entities.study.unharmonizedWarningTooltip')}
                 />
               )}
             </Space>
@@ -660,10 +661,11 @@ const StudyEntity = () => {
                 titleExtra.push(
                   <DownloadFileManifestModal
                     className={style.datasetBtn}
-                    fileName="datasetName_manifest"
+                    familyCheckbox={false}
+                    fileName={`${dataset.external_dataset_id}_manifest`}
                     hasTooManyFiles={false}
                     isDisabled={false}
-                    key="file-entity-dataset-manifest"
+                    key="study-entity-dataset-manifest"
                     size="small"
                     sqon={generateSqonForFile(dataset)}
                   />,

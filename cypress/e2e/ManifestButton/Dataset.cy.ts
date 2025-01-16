@@ -88,8 +88,8 @@ describe('Dataset d\'une étude - Télécharger le manifest', {retries: {runMode
     cy.waitUntilFile(oneMinute);
   });
 
-  it('Valider le nom du fichier [SJIP-1186]', () => {
-    cy.validateFileName('include_HTP WGS (2021 X01)_manifest_'+`${strDate.slice(0, 4)}${strDate.slice(4, 6)}${strDate.slice(6, 8)}`+'T*.tsv');
+  it('Valider le nom du fichier', () => {
+    cy.validateFileName('include_HTP-WGS-2021-X01_manifest_'+`${strDate.slice(0, 4)}${strDate.slice(4, 6)}${strDate.slice(6, 8)}`+'T*.tsv');
   });
 
   it('Valider les en-têtes du fichier', () => {
