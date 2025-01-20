@@ -274,6 +274,7 @@ export const getFacetsDictionary = () => ({
   transmissions: 'Transmission',
   controlled_access: 'Access',
   is_harmonized: 'Harmonized Data',
+  is_guid_mapped: 'GUID Available',
   data_sources: 'Data Source',
   is_proband: 'Proband',
   variant_class: 'Variant Type',
@@ -398,7 +399,6 @@ export const getFacetsDictionary = () => ({
     },
   },
   age_at_biospecimen_collection: 'Age at Biospecimen Collection (days)',
-  guid: 'GUID Type',
   tooltips: {
     genes: {
       consequences: {

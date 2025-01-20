@@ -100,6 +100,7 @@ export interface IStudyEntity {
   guid?: string;
   institutions?: string[];
   investigator_names?: string[];
+  is_guid_mapped?: boolean;
   is_harmonized?: boolean;
   part_lifespan_stages?: string[];
   participant_count: number;
