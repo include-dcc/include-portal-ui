@@ -64,28 +64,27 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
     },
     {
       label: intl.get('entities.study.guid'),
-      value:
-        study?.guid === 'NDAR' ? (
-          <Tooltip
-            title={
-              <>
-                {intl.get('entities.study.guidEntityTooltip1')}
-                <Link
-                  to={STATIC_ROUTES.STUDIES}
-                  style={{ textDecoration: 'underline' }}
-                  target="_blank"
-                >
-                  {intl.get('entities.study.guidEntityTooltip2')}
-                </Link>
-                .
-              </>
-            }
-          >
-            <Tag color="volcano">{study.guid}</Tag>
-          </Tooltip>
-        ) : (
-          TABLE_EMPTY_PLACE_HOLDER
-        ),
+      value: study?.is_guid_mapped ? (
+        <Tooltip
+          title={
+            <>
+              {intl.get('entities.study.guidEntityTooltip1')}
+              <Link
+                to={STATIC_ROUTES.STUDIES}
+                style={{ textDecoration: 'underline' }}
+                target="_blank"
+              >
+                {intl.get('entities.study.guidEntityTooltip2')}
+              </Link>
+              .
+            </>
+          }
+        >
+          <Tag color="green">True</Tag>
+        </Tooltip>
+      ) : (
+        <Tag color="default">False</Tag>
+      ),
     },
     {
       label: intl.get('entities.study.participant_life_span'),

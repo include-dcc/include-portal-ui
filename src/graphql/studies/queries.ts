@@ -118,6 +118,7 @@ export const GET_STUDY = gql`
             guid
             institutions
             investigator_names
+            is_guid_mapped
             is_harmonized
             part_lifespan_stages
             participant_count
