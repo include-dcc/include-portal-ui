@@ -288,7 +288,7 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('HTP Whole Blood RNAseq (2020)').should('exist');
   });
 
-  it('Lien Publication du panneau HTP Whole Blood RNAseq (2020) [SJIP-1179]', () => {
+  it('Lien Publication du panneau HTP Whole Blood RNAseq (2020)', () => {
     cy.get('[class*="EntityDataset_panel"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('HTP Whole Blood RNAseq (2020)')) {
         cy.wrap($el).as('datasetPanel');

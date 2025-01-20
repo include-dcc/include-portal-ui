@@ -74,10 +74,7 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
           nOfElementsWhenCollapsed={2}
           dataSource={dataset.publications}
           renderItem={(sourceText) => (
-            <ExternalLink
-              className={styles.externalLink}
-              href={`https://pubmed.ncbi.nlm.nih.gov/${sourceText.replace('PMID: ', '')}`}
-            >
+            <ExternalLink className={styles.externalLink} href={sourceText}>
               {sourceText}
             </ExternalLink>
           )}
