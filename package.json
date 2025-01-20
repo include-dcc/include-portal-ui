@@ -86,6 +86,7 @@
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
+    "@upsetjs/react": "^1.11.0",
     "antd": "^4.24.16",
     "antd-img-crop": "^4.23.0",
     "axios": "^0.24.0",

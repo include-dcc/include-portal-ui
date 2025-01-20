@@ -8,6 +8,7 @@ import { RemoteInitialState } from './remote';
 import { ReportInitialState } from './report';
 import { SavedFilterInitialState } from './savedFilter';
 import { SavedSetInitialState } from './savedSet';
+import { UpsetInitialState } from './upset';
 
 export type RootState = {
   global: GlobalInitialState;
@@ -19,4 +20,5 @@ export type RootState = {
   remote: RemoteInitialState;
   passport: PassportInitialState;
   analytics: AnalyticsInitialState;
+  upset: UpsetInitialState;
 };
