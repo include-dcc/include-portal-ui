@@ -77,6 +77,7 @@ export const GET_STUDY = gql`
                 edges {
                   node {
                     email
+                    institution
                     name
                   }
                 }
