@@ -52,7 +52,7 @@ const redirectToPage = (setType: string) => {
   }
 };
 
-const getIdField = (setType: string) => {
+export const getIdField = (setType: string) => {
   switch (setType) {
     case INDEXES.FILE:
       return DATA_FILES_SAVED_SETS_FIELD;

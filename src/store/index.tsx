@@ -18,6 +18,7 @@ import SavedSetReducer from 'store/savedSet';
 import { RootState } from 'store/types';
 import UpsetReducer from 'store/upset';
 import UserReducer from 'store/user';
+import VennReducer from 'store/venn';
 
 const devMode = EnvVariables.configFor('ENV') === 'development';
 
@@ -39,6 +40,7 @@ const rootReducer = combineReducers<RootState>({
   remote: RemoteReducer,
   analytics: AnalyticsReducer,
   upset: UpsetReducer,
+  venn: VennReducer,
 });
 
 const store = configureStore({

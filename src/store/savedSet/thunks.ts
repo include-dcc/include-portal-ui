@@ -41,11 +41,11 @@ const fetchSavedSet = createAsyncThunk<IUserSetOutput[], void | string, { reject
 
 const createSavedSet = createAsyncThunk<
   IUserSetOutput,
-  TUserSavedSetInsert & { onCompleteCb: () => void },
+  TUserSavedSetInsert & { onCompleteCb: (data?: IUserSetOutput) => void },
   { rejectValue: string }
 >('savedsets/create', async (set, thunkAPI) => {
   const { data, error } = await SavedSetApi.create(set);
-  set.onCompleteCb();
+  set.onCompleteCb(data);
 
   return handleThunkApiResponse({
     error,
