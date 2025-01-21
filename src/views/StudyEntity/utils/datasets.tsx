@@ -2,14 +2,11 @@
 import intl from 'react-intl-universal';
 import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-// import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Tag } from 'antd';
 import { IStudyDataset } from 'graphql/studies/models';
 
 import Publication from 'components/Publication';
-
-// import styles from '../index.module.css';
 
 const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[] => {
   const items: IEntityDescriptionsItem[] = [];
