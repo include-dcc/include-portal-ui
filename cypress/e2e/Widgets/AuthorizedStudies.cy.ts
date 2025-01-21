@@ -29,7 +29,7 @@ describe('Page Dashboard - Widget Authorized Studies (déconnecté)', () => {
     cy.get('a[href="https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?login=&page=login"]').contains('applying for data access').should('exist');
   });
 
-  it('Vérifier les informations affichées - Carte [SJIP-906]', () => {
+  it('Vérifier les informations affichées - Carte', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Authorized Studies')) {
         cy.wrap($el).find('[class*="Gridcard_contentWrapper"]').as('gridCard');
@@ -87,7 +87,7 @@ describe('Page Dashboard - Widget Authorized Studies (connecté)', () => {
     cy.get('@authenticatedHeader').find('button').contains('Disconnect').should('exist');
   });
 
-  it('Vérifier les informations affichées - Study [SJIP-906]', () => {
+  it('Vérifier les informations affichées - Study', () => {
       cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
         if ($el.text().includes('Authorized Studies')) {
           cy.wrap($el).as('authStudiesCard');
