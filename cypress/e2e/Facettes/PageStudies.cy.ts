@@ -53,7 +53,7 @@ describe('Page des études - Filtrer avec les facettes', () => {
     cy.validateFacetRank(5, 'Data Source');
   });
 
-  it('Design - Longitudinal [SJIP-1165]', () => {
+  it('Design - Longitudinal', () => {
     cy.validateFacetFilter('Design', 'Longitudinal', 'Longitudinal', /\d{1} Result/, false);
     cy.validateFacetRank(6, 'Design');
   });
