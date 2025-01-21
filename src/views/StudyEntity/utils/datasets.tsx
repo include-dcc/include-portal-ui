@@ -2,12 +2,14 @@
 import intl from 'react-intl-universal';
 import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
-import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
+// import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Tag } from 'antd';
 import { IStudyDataset } from 'graphql/studies/models';
 
-import styles from '../index.module.css';
+import Publication from 'components/Publication';
+
+// import styles from '../index.module.css';
 
 const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[] => {
   const items: IEntityDescriptionsItem[] = [];
@@ -66,21 +68,15 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
       value: dataset.experimental_platform || TABLE_EMPTY_PLACE_HOLDER,
     });
 
-  if (dataset.publications?.length)
+  if (dataset.publications?.length || dataset.publications_details?.hits?.edges?.length)
     items.push({
       label: intl.get('entities.study.dataset.publication'),
-      value: dataset.publications?.length ? (
-        <ExpandableCell
-          nOfElementsWhenCollapsed={2}
-          dataSource={dataset.publications}
-          renderItem={(sourceText) => (
-            <ExternalLink className={styles.externalLink} href={sourceText}>
-              {sourceText}
-            </ExternalLink>
-          )}
+      value: (
+        <Publication
+          modalTitle={dataset?.dataset_name}
+          publications={dataset?.publications}
+          publications_details={dataset?.publications_details}
         />
-      ) : (
-        TABLE_EMPTY_PLACE_HOLDER
       ),
     });
 
