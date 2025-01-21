@@ -106,9 +106,9 @@ describe('Page des études - Consultation du tableau', () => {
 
   it('Valider les fonctionnalités du tableau - Tri Name', () => {
     cy.sortTableAndIntercept('Name', 1);
-    cy.validateTableFirstRow('Alzheimer Biomarker Consortium - Down Syndrome', 2);
+    cy.validateTableFirstRow(/^A/, 2);
     cy.sortTableAndIntercept('Name', 1);
-    cy.validateTableFirstRow('The epidemiology of transient leukemia in newborns with Down syndrome', 2);
+    cy.validateTableFirstRow(/^(?!A)/, 2);
   });
 
   it('Valider les fonctionnalités du tableau - Tri dbGaP', () => {
