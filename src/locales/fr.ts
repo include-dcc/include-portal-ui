@@ -476,12 +476,12 @@ const fr = {
           connectedNotice:
             'You have access to the following INCLUDE controlled data through your NIH credentials.',
           disconnectedNotice:
-            'Access INCLUDE controlled-access data by connecting your account using your NIH Credentials',
+            'Access INCLUDE controlled-access data by connecting your account using your NIH Credentials.',
           disconnect: 'Disconnect',
           noAvailableStudies: 'No available studies',
           authorization: 'Authorization',
           of: 'of',
-          files: 'Files',
+          files: 'files',
           dataGroups: 'Data use groups: {groups}',
           infoPopover: {
             title: 'Accessing Data',
