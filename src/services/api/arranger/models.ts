@@ -33,6 +33,7 @@ export interface IStudiesParticipants {
   family_count?: number;
   file_count?: number;
   guid?: string;
+  is_guid_mapped?: boolean;
   is_harmonized?: boolean;
   participant_count: number;
   program: string;

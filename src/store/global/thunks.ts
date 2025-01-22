@@ -10,9 +10,12 @@ const fetchStats = createAsyncThunk<IStatistics, void, { rejectValue: string; st
     const { data: statistics } = await ArrangerApi.fetchStatistics();
     const { data: studiesStatistics } = await ArrangerApi.fetchStudiesParticipants();
 
+    const sortedStudies =
+      studiesStatistics?.sort((a, b) => a.study_code.localeCompare(b.study_code)) || [];
+
     const data: IStatistics = {
       ...statistics!,
-      studiesParticipants: studiesStatistics!,
+      studiesParticipants: sortedStudies,
     };
 
     return data;
