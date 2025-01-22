@@ -21,7 +21,7 @@ type GetPublicationProps = {
 };
 
 type PublicationProps = GetPublicationProps & {
-  studyName?: string;
+  modalTitle?: string;
 };
 
 const getPublications = ({ publications, publications_details }: GetPublicationProps) => {
@@ -45,9 +45,9 @@ const getPublications = ({ publications, publications_details }: GetPublicationP
 };
 
 const Publication = ({
+  modalTitle,
   publications,
   publications_details,
-  studyName,
 }: PublicationProps): ReactElement => {
   const [openModal, setOpenModal] = useState(false);
   const publicationsSorted = getPublications({
@@ -74,7 +74,7 @@ const Publication = ({
         <PubModal
           isOpen={openModal}
           onClose={() => setOpenModal(false)}
-          studyName={studyName}
+          title={modalTitle}
           pubMed={pubMed}
           noPubMed={noPubMed}
         />

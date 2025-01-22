@@ -187,6 +187,38 @@ export const GET_STUDY = gql`
                     external_dataset_id
                     is_harmonized
                     publications
+                    publications_details {
+                      hits {
+                        edges {
+                          node {
+                            authors {
+                              hits {
+                                edges {
+                                  node {
+                                    family
+                                    given
+                                  }
+                                }
+                              }
+                            }
+                            DOI
+                            ISSN
+                            PMCID
+                            PMID
+                            accessed_date_parts
+                            container_title
+                            container_title_short
+                            issue
+                            issued_date_parts
+                            page
+                            pubmed_id
+                            source
+                            title
+                            volume
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }

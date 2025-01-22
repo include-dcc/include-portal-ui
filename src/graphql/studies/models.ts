@@ -24,6 +24,7 @@ export interface IStudyDataset {
   external_dataset_id?: string;
   is_harmonized?: boolean;
   publications?: string[];
+  publications_details?: ArrangerResultsTree<IPublicationDetails>;
 }
 
 export interface IAuthor {

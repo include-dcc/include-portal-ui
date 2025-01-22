@@ -176,7 +176,33 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(7).contains('Experimental Platform').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(7).contains('Illumina NovaSeq 6000').should('exist');
     cy.get('@datasetPanel').find('[class="ant-descriptions-item-label"]').eq(8).contains('Publication').should('exist');
-    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).contains('https://pubmed.ncbi.nlm.nih.gov/37379383/').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(0).contains('Galbraith');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(0).contains(',');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(0).contains('Matthew D');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(1).contains('et al.');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(2).contains(' "');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(2).contains('Multidimensional definition of the interferonopathy of Down syndrome and its response to JAK inhibition');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(2).contains('"');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(3).find('i').contains('Sci Adv');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(4).contains('vol.');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(4).contains('9');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(5).contains(',');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(5).contains('26');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(6).contains('(');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(6).contains('2023');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(6).contains('):');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(7).contains('eadg6218');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(7).contains('.');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(8).contains('doi:');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(8).contains('10.1126/sciadv.adg6218');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(8).contains('.');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(9).contains('PMID:');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(9).contains('37379383');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[class="ant-typography"]').eq(9).contains('.');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[data-icon="copy"]').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).find('[data-icon="copy"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true});
+    cy.get('div[class="ant-tooltip-inner"]').contains('Copy citation').should('exist');
+    cy.get('@datasetPanel').find('[class="ant-descriptions-item-content"]').eq(8).contains('See more').should('not.exist');
     cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(0).find('g[id="family"]').should('exist');
     cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(0).contains(/^400$/).should('exist');
     cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(0).contains('Participants').should('exist');
@@ -184,7 +210,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(1).contains(/^11.2K$/).should('exist');
     cy.get('@datasetPanel').find('[class*="EntityDataset_rowCountCard"]').eq(1).contains('Files').should('exist');
   });
-
+  
   it('Panneau Files', () => {
     cy.get('[id="data_file"] [class*="EntityTable_title"]').contains('File').should('exist');
     cy.get('[id="data_file"] [class="ant-collapse-header"]').contains('Files').should('exist');

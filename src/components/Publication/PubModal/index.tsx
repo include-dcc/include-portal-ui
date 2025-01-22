@@ -14,10 +14,10 @@ interface IPubModalProps {
   noPubMed?: string[];
   onClose: () => void;
   pubMed?: ArrangerEdge<IPublicationDetails>[];
-  studyName?: string;
+  title?: string;
 }
 
-const PubModal = ({ isOpen, noPubMed, onClose, pubMed, studyName }: IPubModalProps) => (
+const PubModal = ({ isOpen, noPubMed, onClose, pubMed, title }: IPubModalProps) => (
   <Modal
     closable
     footer={
@@ -27,7 +27,7 @@ const PubModal = ({ isOpen, noPubMed, onClose, pubMed, studyName }: IPubModalPro
     }
     onCancel={onClose}
     open={isOpen}
-    title={`${studyName} ${intl.get('entities.study.publicationModal.title')}`}
+    title={`${title} ${intl.get('entities.study.publicationModal.title')}`}
     className={style.modalWrapper}
   >
     {!!pubMed?.length && (

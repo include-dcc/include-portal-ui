@@ -139,9 +139,9 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
       ),
       value: (
         <Publication
+          modalTitle={study?.study_name}
           publications={study?.publications}
           publications_details={study?.publications_details}
-          studyName={study?.study_name}
         />
       ),
     },
