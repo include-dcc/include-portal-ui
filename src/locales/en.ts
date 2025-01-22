@@ -1959,7 +1959,7 @@ const en = {
       expected_data_categories: 'Data Category',
       file: 'File',
       files: 'Files',
-      guid: 'GUID Type',
+      guid: 'GUID Available',
       guidAbrv: 'G',
       guidTooltip: 'NDA GUIDs',
       guidEntityTooltip1:

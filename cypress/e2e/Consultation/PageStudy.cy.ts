@@ -52,8 +52,8 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(2).contains('INCLUDE').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(3).contains('dbGaP Accession Number').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(3).contains(/(phs002330|phs002981|-)/).should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(4).contains('GUID Type').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(4).find('[class*="ant-tag-volcano"]').contains('NDAR').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(4).contains('GUID Available').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(4).find('[class*="ant-tag-green"]').contains('True').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(5).contains('Participant Lifespan').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(5).find('[class*="ant-tag-cyan"]').contains('Pediatric').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(5).find('[class*="ant-tag-cyan"]').contains('Adult').should('exist');
