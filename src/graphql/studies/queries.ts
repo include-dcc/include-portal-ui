@@ -41,6 +41,7 @@ export const GET_STUDIES = gql`
             guid
             institutions
             investigator_names
+            is_guid_mapped
             is_harmonized
             program
             publications

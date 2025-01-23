@@ -66,9 +66,12 @@ describe('Page des études - Filtrer avec les facettes', () => {
     cy.validateFacetRank(7, 'Harmonized Data');
   });
 
-  it('GUID Type - No GUID', () => {
-    cy.validateFacetFilter('GUID Type', 'No GUID', 'No GUID', /\d{1} Result/, false);
-    cy.validateFacetRank(8, 'GUID Type');
+  it('GUID Available - True', () => {
+    cy.get('[aria-expanded="true"] [data-cy="FilterContainer_GUID Available"]').should('exist');
+    cy.wait(1000);
+    cy.clickAndIntercept('input[type="radio"][value="true"]', 'POST', '**/graphql', 15, false/*beVisible*/, 1);
+    cy.validateTableResultsCount(/\d{1} Result/);
+    cy.validateFacetRank(8, 'GUID Available');
   });
 
   it('Access - Registered', () => {

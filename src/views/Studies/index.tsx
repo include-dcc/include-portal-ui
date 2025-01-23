@@ -49,7 +49,7 @@ const filterInfo: FilterInfo = {
     'data_sources',
     'study_designs',
     'is_harmonized',
-    'guid',
+    'is_guid_mapped',
     'controlled_access',
   ],
   groups: [
@@ -63,7 +63,7 @@ const filterInfo: FilterInfo = {
         'data_sources',
         'study_designs',
         'is_harmonized',
-        'guid',
+        'is_guid_mapped',
         'controlled_access',
       ],
     },
@@ -91,7 +91,7 @@ const getColumns = (): ProColumnType<any>[] => [
           <Tag>{intl.get('entities.study.unharmonizedAbrv')}</Tag>
         </Tooltip>
       );
-      const guidTag = record.guid === 'NDAR' && (
+      const guidTag = record.is_guid_mapped && (
         <Tooltip title={intl.get('entities.study.guidTooltip')}>
           <Tag color="volcano">{intl.get('entities.study.guidAbrv')}</Tag>
         </Tooltip>

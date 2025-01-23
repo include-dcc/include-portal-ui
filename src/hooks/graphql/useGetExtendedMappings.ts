@@ -1,5 +1,6 @@
 import { ExtendedMappingResults } from 'graphql/models';
 import { INDEX_EXTENDED_MAPPING } from 'graphql/queries';
+
 import { useLazyResultQueryOnLoadOnly } from 'hooks/graphql/useLazyResultQuery';
 
 const useGetExtendedMappings = (index: string): ExtendedMappingResults => {
