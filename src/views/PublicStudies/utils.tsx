@@ -50,7 +50,7 @@ export const getColumns = ({
           <Tag>{intl.get('entities.study.unharmonizedAbrv')}</Tag>
         </Tooltip>
       );
-      const guidTag = record.guid === 'NDAR' && (
+      const guidTag = record.is_guid_mapped && (
         <Tooltip title={intl.get('entities.study.guidTooltip')}>
           <Tag color="volcano">{intl.get('entities.study.guidAbrv')}</Tag>
         </Tooltip>
