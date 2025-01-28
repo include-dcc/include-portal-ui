@@ -54,7 +54,7 @@ describe('Page des études - Filtrer avec les facettes', () => {
   });
 
   it('Design - Longitudinal', () => {
-    cy.validateFacetFilter('Design', 'Longitudinal', 'Longitudinal', /\d{1} Result/, false);
+    cy.validateFacetFilter('Design', 'Longitudinal', 'longitudinal', /\d{1} Result/, false);
     cy.validateFacetRank(6, 'Design');
   });
 
