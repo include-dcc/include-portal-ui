@@ -5,6 +5,7 @@ import { formatPadj } from 'views/Analytics/Transcriptomic/utils';
 
 import { TTranscriptomicsDatum } from 'services/api/transcriptomics/models';
 import { analyticsActions } from 'store/analytics/slice';
+import { fetchTranscriptomicsSampleGeneExp } from 'store/analytics/thunks';
 
 import styles from './index.module.css';
 
@@ -80,6 +81,8 @@ const Heatmaps = ({ selectedGenes, handleGenesSelection }: TTranscriptomicHeatma
           if (gene) {
             handleGenesSelection([gene]);
             dispatch(analyticsActions.resetTranscriptomicsSampleGeneExp());
+            if (gene.ensembl_gene_id)
+              dispatch(fetchTranscriptomicsSampleGeneExp({ id: gene.ensembl_gene_id }));
           }
         }
       }}

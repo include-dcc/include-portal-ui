@@ -41,7 +41,7 @@ export const useTranscriptomicsSampleGeneExp = (id: string) => {
   const sampleGeneExp = useSelector(transcriptomicsSampleGeneExpSelector);
 
   useEffect(() => {
-    dispatch(fetchTranscriptomicsSampleGeneExp({ id }));
+    if (id) dispatch(fetchTranscriptomicsSampleGeneExp({ id }));
   }, [dispatch, id]);
   return sampleGeneExp;
 };
