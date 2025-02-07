@@ -368,6 +368,8 @@ const en = {
         changeOperatorTo: 'Change operator to',
         addQuery: 'New query',
         combine: 'Combine',
+        compare: 'Compare',
+        compareTooltips: 'Available with 2 or 3 queries selected',
         labels: 'Labels',
         delete: {
           title: 'Delete this query?',
@@ -1171,6 +1173,39 @@ const en = {
         participant: 'Participant',
         biospecimen: 'Biospecimen',
         datafiles: 'Data File',
+      },
+      venn: {
+        query: {
+          title: 'Selected queries',
+          column: 'Query definition',
+        },
+        set: {
+          title: 'Set definitions',
+          column: 'Set definition',
+          footer: 'Union of selected sets:',
+          tooltips: 'View in exploration',
+        },
+        save: {
+          placeholder: 'My {entity} set',
+          cancel: 'Cancel',
+          checkbox: {
+            label: 'Save this set for future reference',
+            tooltips:
+              'A saved set is a collection of one or more entity IDs which can be saved and revisited for later use.',
+          },
+          label: 'Set name',
+          alreadyExist: 'A set with this name already exists',
+          ok: 'View set',
+          selected:
+            'You have selected {count, plural, =0 {# entity} =1 {# entity} other {# entities}}.',
+          title: 'View in Data Exploration',
+        },
+        count: 'Count :',
+        biospecimens: 'Biospecimens',
+        files: 'Files',
+        participants: 'Participants',
+        title: 'Set operations',
+        ok: 'Close',
       },
       itemSelectionTooltip: 'You must select at least 1 item',
       setsManagementDropdown: {

@@ -1,4 +1,5 @@
-import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
+import { ISqonGroupFilter, ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
+import { INDEXES } from 'graphql/constants';
 import EnvironmentVariables from 'helpers/EnvVariables';
 import {
   ARRANGER_API,
@@ -40,6 +41,17 @@ const fetchCoOccuringConditions = (sqon: ISqonGroupFilter, topN: number) =>
     data: {
       sqon,
       topN,
+    },
+  });
+
+const fetchVenn = (qbSqons: ISyntheticSqon[], entitySqons: ISyntheticSqon[], index: INDEXES) =>
+  sendRequest<any>({
+    method: 'POST',
+    url: `${ARRANGER_API_URL}/venn`,
+    data: {
+      qbSqons,
+      entitySqons,
+      index,
     },
   });
 
@@ -89,6 +101,7 @@ export const ArrangerApi = {
   fetchStudiesParticipants,
   graphqlRequest,
   download,
+  fetchVenn,
   fetchPhenotypes,
   columnStates,
   searchSuggestions,

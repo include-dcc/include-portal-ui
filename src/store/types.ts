@@ -9,6 +9,7 @@ import { ReportInitialState } from './report';
 import { SavedFilterInitialState } from './savedFilter';
 import { SavedSetInitialState } from './savedSet';
 import { UpsetInitialState } from './upset';
+import { VennInitialState } from './venn';
 
 export type RootState = {
   global: GlobalInitialState;
@@ -21,4 +22,5 @@ export type RootState = {
   passport: PassportInitialState;
   analytics: AnalyticsInitialState;
   upset: UpsetInitialState;
+  venn: VennInitialState;
 };
