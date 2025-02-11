@@ -12,7 +12,12 @@
 }
 
 :global([class^="root-upset-"] text[class^="setTextStyle-upset"])  {
-  font-size: 9px;
+  font-size: 10px;
+}
+
+:global([class^="root-upset-"] text[class^="cChartTextStyle-upset"]), 
+:global([class^="root-upset-"] text[class^="sChartTextStyle-upset"])  {
+  font-size: 14px;
 }
 
 :global([class^="root-upset-"] text[class^="hoverBarTextStyle-upset"])  {

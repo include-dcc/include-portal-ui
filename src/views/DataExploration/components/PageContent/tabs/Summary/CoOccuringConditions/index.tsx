@@ -136,6 +136,8 @@ const CoOccuringConditionsGraphCard = () => {
                     limit: 25,
                     type: 'distinctIntersection',
                   }}
+                  widthRatios={[0.12249999999999998, 0.22749999999999998]}
+                  heightRatios={[0.55]}
                   emptySelection={false}
                   width={900}
                   height={600}
@@ -169,6 +171,8 @@ const CoOccuringConditionsGraphCard = () => {
                     limit: 25,
                     type: 'distinctIntersection',
                   }}
+                  widthRatios={[0.12249999999999998, 0.22749999999999998]}
+                  heightRatios={[0.55]}
                   emptySelection={false}
                   width={width}
                   height={height}
