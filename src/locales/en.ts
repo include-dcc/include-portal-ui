@@ -1301,7 +1301,7 @@ const en = {
             mostFrequentDiagnoses: 'Most Frequent Diagnoses (MONDO)',
           },
           coOccuringConditions: {
-            title: 'Co-occurring Conditions',
+            title: 'Co-occurrence of Top 10 Conditions',
             label: '# of participants',
           },
           sampleType: {
