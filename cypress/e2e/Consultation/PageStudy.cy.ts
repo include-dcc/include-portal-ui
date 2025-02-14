@@ -35,7 +35,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[class*="EntityTitleLogo_title"]').contains('The Human Trisome Project');
   });
 
-  it('Panneau Summary [SJIP-1038]', () => {
+  it('Panneau Summary [SJIP-1207]', () => {
     cy.get('button[class*="SummaryHeader_item"]').eq(0).contains(/\d{1}/);
     cy.get('button[class*="SummaryHeader_item"]').eq(0).contains('Participants');
     cy.get('button[class*="SummaryHeader_item"]').eq(1).contains(/\d{1}/);
@@ -68,7 +68,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(10).contains('Selection Criteria').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(10).contains('Ages 6 months to 89 years old, with or without Down syndrome').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(11).contains('Study Design').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(11).contains('Case-control, longitudinal').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(11).contains('longitudinal').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(12).contains('Study Website').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(12).contains('https://www.trisome.org').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(13).contains('Publication').should('exist');

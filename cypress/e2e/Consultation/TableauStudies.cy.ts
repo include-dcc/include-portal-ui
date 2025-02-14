@@ -18,7 +18,7 @@ describe('Page des études - Vérifier les informations affichées', () => {
     cy.get('[class*="PageContent_title"]').contains('Studies'); // data-cy="Title_Studies"
   });
 
-  it('Tableau [SJIP-1038]', () => {
+  it('Tableau [SJIP-1207]', () => {
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(0).find('[class*="ant-tag-green"]').contains('H').should('exist');
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(1).contains('HTP').should('exist');
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(2).contains('The Human Trisome Project').should('exist');
@@ -39,7 +39,6 @@ describe('Page des études - Vérifier les informations affichées', () => {
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(16).contains('Adult').should('exist');
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(17).contains('Investigator Assessment').should('exist');
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(17).contains('Medical Record').should('exist');
-    cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(18).contains('Case-control').should('exist');
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(18).contains('longitudinal').should('exist');
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(19).contains('Joaquin M. Espinosa').should('exist');
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(20).contains('2016').should('exist');
@@ -83,7 +82,7 @@ describe('Page des études - Valider les liens disponibles', () => {
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('HTP').should('exist');
   });
 
-  it('Lien \'See more\' de Data Source du tableau [SJIP-1038]', () => {
+  it('Lien \'See more\' de Data Source du tableau', () => {
     cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See more').clickAndWait({force: true});
     cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).contains('Participant or Caregiver Report').should('exist');
     cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See less').clickAndWait({force: true});
