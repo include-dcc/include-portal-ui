@@ -48,7 +48,7 @@ describe('Page des études - Filtrer avec les facettes', () => {
     cy.validateFacetRank(4, 'Family Data');
   });
 
-  it('Data Source - Medical Record [SJIP-1038]', () => {
+  it('Data Source - Medical Record', () => {
     cy.validateFacetFilter('Data Source', 'Medical Record', 'Medical Record', /\d{1} Result/, false);
     cy.validateFacetRank(5, 'Data Source');
   });
