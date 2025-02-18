@@ -46,17 +46,19 @@ const UserSetsForm = ({
       className={styles.setEditFormItem}
     >
       <Select placeholder="Choose a set" onSelect={(value: string) => onSelectionChange(value)}>
-        {userSets.map((s: IUserSetOutput) => (
-          <Select.Option key={s.id} value={s.id}>
-            <Row>
-              <Col className={styles.setDropdownName}>{s.tag}</Col>
-              <Col style={{ paddingRight: 2 }}>{getIcon(s.setType)}</Col>
-              <Col>
-                <div className={'secondary-text-color'}>{s.size}</div>
-              </Col>
-            </Row>
-          </Select.Option>
-        ))}
+        {userSets
+          .filter((s) => !s.is_invisible)
+          .map((s: IUserSetOutput) => (
+            <Select.Option key={s.id} value={s.id}>
+              <Row>
+                <Col className={styles.setDropdownName}>{s.tag}</Col>
+                <Col style={{ paddingRight: 2 }}>{getIcon(s.setType)}</Col>
+                <Col>
+                  <div className={'secondary-text-color'}>{s.size}</div>
+                </Col>
+              </Row>
+            </Select.Option>
+          ))}
       </Select>
     </Form.Item>
   </Form>

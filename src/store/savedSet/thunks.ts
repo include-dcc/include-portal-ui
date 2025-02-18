@@ -51,22 +51,45 @@ const createSavedSet = createAsyncThunk<
     error,
     data: data!,
     reject: thunkAPI.rejectWithValue,
-    onSuccess: () =>
+    onSuccess: () => {
+      if (data?.is_invisible) {
+        thunkAPI.dispatch(
+          globalActions.displayNotification({
+            type: 'success',
+            message: '',
+            description: intl.get('api.savedSet.success.temporary'),
+          }),
+        );
+        return;
+      }
       thunkAPI.dispatch(
         globalActions.displayNotification({
           type: 'success',
           message: intl.get('api.savedSet.success.titleCreate'),
           description: intl.get('api.savedSet.success.messageCreate'),
         }),
-      ),
-    onError: () =>
+      );
+    },
+    onError: () => {
+      if (set?.is_invisible) {
+        thunkAPI.dispatch(
+          globalActions.displayNotification({
+            type: 'error',
+            message: '',
+            description: intl.get('api.savedSet.error.temporary'),
+          }),
+        );
+        return;
+      }
+
       thunkAPI.dispatch(
         globalActions.displayNotification({
           type: 'error',
           message: intl.get('api.savedSet.error.title'),
           description: intl.get('api.savedSet.error.messageCreate'),
         }),
-      ),
+      );
+    },
   });
 });
 

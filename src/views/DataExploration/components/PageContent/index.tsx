@@ -52,7 +52,15 @@ import { FilterInfo } from 'components/uiKit/FilterList/types';
 import { getNoDataOptionValue } from 'components/utils/filterUtils';
 import useFeatureToggle from 'hooks/useFeatureToggle';
 import useQBStateWithSavedFilters from 'hooks/useQBStateWithSavedFilters';
-import { trackFilterActions } from 'services/analytics';
+import {
+  trackCompareQueries,
+  trackFilterActions,
+  trackVennCancel,
+  trackVennClickOnSections,
+  trackVennViewEntityCounts,
+  trackVennViewInExploration,
+  trackVennViewSet,
+} from 'services/analytics';
 import { ArrangerApi } from 'services/api/arranger';
 import { SavedFilterTag } from 'services/api/savedFilter/models';
 import { globalActions } from 'store/global';
@@ -208,6 +216,7 @@ const PageContent = ({
 
   const handleCompare = isEnabled
     ? (queries: ISyntheticSqon[]) => {
+        trackCompareQueries();
         setVennOpen(true);
         dispatch(fetchVennData({ qbSqons: queries, index: INDEXES.PARTICIPANT }));
       }
@@ -217,15 +226,11 @@ const PageContent = ({
     <>
       <VennModal
         savedSets={savedSets}
-        handleSubmit={({ index, name, sets, persistent, callback }) => {
-          // Use entity sqon
+        handleSubmit={({ index, name, sets, invisible, callback }) => {
           const sqons: ISyntheticSqon[] = sets.map((set) => set.entitySqon);
-          const sqonGoupFilter: ISqonGroupFilter = { op: 'and', content: [] };
+          const sqonGroupFilter: ISqonGroupFilter = { op: 'or', content: [] };
           sets.forEach((set) => {
-            sqonGoupFilter.content = [
-              ...sqonGoupFilter.content,
-              ...resolveSyntheticSqon(sqons, set.entitySqon).content,
-            ];
+            sqonGroupFilter.content.push(resolveSyntheticSqon(sqons, set.entitySqon));
           });
 
           dispatch(
@@ -233,9 +238,10 @@ const PageContent = ({
               idField: getIdField(index),
               projectId: PROJECT_ID,
               sort: [],
-              sqon: sqonGoupFilter,
+              sqon: sqonGroupFilter,
               tag: name,
               type: index,
+              is_invisible: invisible,
               onCompleteCb: (data) => {
                 callback();
                 if (!data) return;
@@ -263,7 +269,10 @@ const PageContent = ({
         summary={vennData.summary}
         operations={vennData.operations}
         loading={vennData.loading}
-        handleClose={() => setVennOpen(false)}
+        handleClose={() => {
+          trackVennCancel();
+          setVennOpen(false);
+        }}
         handleIndexChange={(qbSqons: ISyntheticSqon[], index: string) => {
           dispatch(fetchVennData({ qbSqons, index: index as INDEXES }));
         }}
@@ -277,6 +286,7 @@ const PageContent = ({
             title: intl.get('screen.dataExploration.venn.set.title'),
             footer: intl.get('screen.dataExploration.venn.set.footer'),
             tooltips: intl.get('screen.dataExploration.venn.set.tooltips'),
+            max: intl.get('screen.dataExploration.venn.set.max'),
           },
           save: {
             placeholder: (entity: string) =>
@@ -285,11 +295,17 @@ const PageContent = ({
               'components.querybuilder.header.modal.edit.input.maximumLength',
             ),
             permittedCharacters: intl.get('components.savedSets.modal.errors.permittedCharacters'),
-            alreadyExist: intl.get('screen.dataExploration.venn.save.save.alreadyExist'),
+            alreadyExist: intl.get('screen.dataExploration.venn.save.alreadyExist'),
             requiredField: intl.get('global.forms.errors.requiredField'),
             title: intl.get('screen.dataExploration.venn.save.title'),
-            selected: (count: number) =>
-              intl.get('screen.dataExploration.venn.save.selected', { count }),
+            entity: {
+              participants: (count: number) =>
+                intl.get('screen.dataExploration.venn.save.entity.participants', { count }),
+              biospecimens: (count: number) =>
+                intl.get('screen.dataExploration.venn.save.entity.biospecimens', { count }),
+              files: (count: number) =>
+                intl.get('screen.dataExploration.venn.save.entity.files', { count }),
+            },
             label: intl.get('screen.dataExploration.venn.save.label'),
             checkbox: {
               label: intl.get('screen.dataExploration.venn.save.checkbox.label'),
@@ -304,6 +320,12 @@ const PageContent = ({
           title: intl.get('screen.dataExploration.venn.title'),
           count: intl.get('screen.dataExploration.venn.count'),
           ok: intl.get('screen.dataExploration.venn.ok'),
+        }}
+        analytics={{
+          trackVennViewInExploration,
+          trackVennClickOnSections,
+          trackVennViewSet,
+          trackVennViewEntityCounts,
         }}
       />
       <Space direction="vertical" size={24} className={styles.dataExplorePageContent}>

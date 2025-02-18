@@ -172,12 +172,14 @@ const en = {
     savedSet: {
       error: {
         title: 'Error',
+        temporary: 'Unable to add set to data exploration',
         messageUpdate: 'Unable to update set',
         messageDelete: 'Unable to delete set',
         messageCreate: 'Unable to create set',
       },
       success: {
         titleCreate: 'Your set has been saved.',
+        temporary: 'Set added to data exploration.',
         messageCreate: 'You can add your sets to a query from the sidebar or the dashboard.',
         titleUpdate: 'Success',
         messageUpdate: 'Your set has been updated.',
@@ -1176,14 +1178,15 @@ const en = {
       },
       venn: {
         query: {
-          title: 'Selected queries',
+          title: 'Selected Queries',
           column: 'Query definition',
         },
         set: {
-          title: 'Set definitions',
+          title: 'Set Definitions',
           column: 'Set definition',
           footer: 'Union of selected sets:',
-          tooltips: 'View in exploration',
+          tooltips: 'View in data exploration',
+          max: 'Max 10,000 at a time',
         },
         save: {
           placeholder: 'My {entity} set',
@@ -1191,18 +1194,24 @@ const en = {
           checkbox: {
             label: 'Save this set for future reference',
             tooltips:
-              'A saved set is a collection of one or more entity IDs which can be saved and revisited for later use.',
+              'A saved set is a collection of one or more entity IDs which can be saved and revisited for later use',
           },
           label: 'Set name',
           alreadyExist: 'A set with this name already exists',
           ok: 'View set',
-          selected:
-            'You have selected {count, plural, =0 {# entity} =1 {# entity} other {# entities}}.',
-          title: 'View in Data Exploration',
+          entity: {
+            participants:
+              'You have selected {count, plural, =0 {# participant} =1 {# participant} other {# participants}}',
+            biospecimens:
+              'You have selected {count, plural, =0 {# biospecimen} =1 {# biospecimen} other {# biospecimens}}',
+            files:
+              'You have selected {count, plural, =0 {# data file} =1 {# data file} other {# data files}}',
+          },
+          title: 'View in data exploration',
         },
         count: 'Count :',
         biospecimens: 'Biospecimens',
-        files: 'Files',
+        files: 'Data Files',
         participants: 'Participants',
         title: 'Set operations',
         ok: 'Close',
