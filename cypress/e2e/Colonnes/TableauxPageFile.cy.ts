@@ -3,14 +3,11 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
+  cy.visitFileEntity('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz');
+  cy.resetColumns('participant-sample');
 });
 
 describe('Page d\'un fichier - Colonnes du tableau Participants-Samples', () => {
-  beforeEach(() => {
-    cy.visitFileEntity('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz');
-    cy.resetColumns('participant-sample');
-  });
-
   it('Valider l\'affichage (par défaut/optionnel) et l\'ordre des colonnes', () => {
     cy.get('[id="participant-sample"]')
       .find('thead[class="ant-table-thead"]')
