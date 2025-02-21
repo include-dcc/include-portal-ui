@@ -3,18 +3,14 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
+  cy.visitDataExploration('participants', '?sharedFilterId=443bca8e-4f39-4743-995f-aea57497450c');
+
+  cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').clickAndWait({force: true});
+  cy.get('[class*="Filters_filterExpandBtnWrapper"] button').clickAndWait({force: true});
+  cy.get('[class*="Filters_filterExpandBtnWrapper"] button').contains('Collapse all').should('exist');
 });
 
 describe('Page Data Exploration - Requêtes', () => {
-
-  beforeEach(() => {
-    cy.visitDataExploration('participants', '?sharedFilterId=443bca8e-4f39-4743-995f-aea57497450c');
-
-    cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').clickAndWait({force: true});
-    cy.get('[class*="Filters_filterExpandBtnWrapper"] button').clickAndWait({force: true}); // data-cy="ExpandAll"
-    cy.get('[class*="Filters_filterExpandBtnWrapper"] button').contains('Collapse all').should('exist'); // data-cy="ExpandAll"
-  });
-
   it('Sélectionner une requête', () => {
     cy.validateTableResultsCount(/\d{1}/);
 
