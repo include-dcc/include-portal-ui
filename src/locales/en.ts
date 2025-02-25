@@ -1303,6 +1303,7 @@ const en = {
           coOccuringConditions: {
             title: 'Co-occurrence of Top 10 Conditions',
             label: '# of participants',
+            empty: 'No co-occurring conditions for this query',
           },
           sampleType: {
             cardTitle: 'Sample Type',
