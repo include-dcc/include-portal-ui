@@ -155,7 +155,7 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
     cy.validateTableFirstRow(/^(?!-).*$/, 2, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri DS Status', () => {
+  it('Valider les fonctionnalités du tableau - Tri DS Status [SJIP-1234]', () => {
     cy.sortTableAndIntercept('DS Status', 1);
     cy.validateTableFirstRow('D21', 4, true);
     cy.sortTableAndIntercept('DS Status', 1);
@@ -169,7 +169,7 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
     cy.validateTableFirstRow('Unknown', 5, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Race', () => {
+  it('Valider les fonctionnalités du tableau - Tri Race [SJIP-1234]', () => {
     cy.sortTableAndIntercept('Race', 1);
     cy.validateTableFirstRow('American Indian or Alaska Native', 6, true);
     cy.sortTableAndIntercept('Race', 1);
@@ -190,14 +190,14 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
     cy.validateTableFirstRow(/^(?!-).*$/, 9, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Family Unit', () => {
+  it('Valider les fonctionnalités du tableau - Tri Family Unit [SJIP-1234]', () => {
     cy.sortTableAndIntercept('Family Unit', 1);
     cy.validateTableFirstRow('-', 10, true);
     cy.sortTableAndIntercept('Family Unit', 1);
     cy.validateTableFirstRow('Trio+', 10, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri Biospecimens', () => {
+  it('Valider les fonctionnalités du tableau - Tri Biospecimens [SJIP-1234]', () => {
     cy.sortTableAndIntercept('Biospecimens', 1);
     cy.validateTableFirstRow(/\d{1}/, 14, true);
     cy.sortTableAndIntercept('Biospecimens', 1);

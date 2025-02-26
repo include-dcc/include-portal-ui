@@ -22,7 +22,7 @@ describe('Page d\'un participant - Télécharger le clinical data', () => {
     cy.validateFileName(`include_clinicalData_${strDate.slice(0, 4)}${strDate.slice(4, 6)}${strDate.slice(6, 8)}T*.xlsx`);
   });
 
-  it('Valider le contenu du fichier', () => {
+  it('Valider le contenu du fichier [SJIP-1233]', () => {
     cy.validateXlsxFileContent('DownloadClinicalData.json');
   });
 });
@@ -37,7 +37,7 @@ describe('Page d\'un participant - Télécharger le clinical data (family)', () 
     cy.validateFileName(`include_familyClinicalData_${strDate.slice(0, 4)}${strDate.slice(4, 6)}${strDate.slice(6, 8)}T*.xlsx`);
   });
 
-  it('Valider le contenu du fichier', () => {
+  it('Valider le contenu du fichier [SJIP-1233]', () => {
     cy.validateXlsxFileContent('DownloadClinicalDataFamily.json');
   });
 });
