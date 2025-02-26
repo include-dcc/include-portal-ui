@@ -22,8 +22,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(1).clickAndWait();
     cy.wait('@getPOSTgraphql');
 
-    cy.validateTotalSelectedQuery(/(4,732|4,738|4,743|4,751|4,756|4,927)/);
-    cy.validateTableResultsCount(/(4,732|4,738|4,743|4,751|4,756|4,927)/);
+    cy.validateTotalSelectedQuery('4,738');
+    cy.validateTableResultsCount('4,738');
   });
 
   it.skip('Validation Facette numérique ou No Data ET Facette standard', () => {
@@ -42,8 +42,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(3).clickAndWait();
     cy.wait('@getPOSTgraphql');
 
-    cy.validateTotalSelectedQuery(/(4,732|4,733|4,738|4,743|4,751|4,756|4,927)/);
-    cy.validateTableResultsCount(/(4,732|4,733|4,738|4,743|4,751|4,756|4,927)/);
+    cy.validateTotalSelectedQuery('4,733');
+    cy.validateTableResultsCount('4,733');
   });
 
   it('Validation Facette standard (All of)', () => {
@@ -52,8 +52,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(4).clickAndWait();
     cy.wait('@getPOSTgraphql');
 
-    cy.validateTotalSelectedQuery(/(1,196|1,199|1,361)/);
-    cy.validateTableResultsCount(/(1,196|1,199|1,361)/);
+    cy.validateTotalSelectedQuery('1,199');
+    cy.validateTableResultsCount('1,199');
   });
 
   it('Validation Facette standard (None of)', () => {
@@ -62,8 +62,8 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(5).clickAndWait();
     cy.wait('@getPOSTgraphql');
 
-    cy.validateTotalSelectedQuery(/(4,629|4,656|4,675|4,680|4,688|4,693|4,713|4,715|8,632)/);
-    cy.validateTableResultsCount(/(4,629|4,656|4,675|4,680|4,688|4,693|4,713|4,715|8,632)/);
+    cy.validateTotalSelectedQuery('4,745');
+    cy.validateTableResultsCount('4,745');
   });
 
   it('Validation Facette standard (None of) ET Facette numérique', () => {
@@ -72,7 +72,7 @@ describe('Page Data Exploration - Requêtes', () => {
     cy.get('[class*="QueryBar_queryBarWrapper"]').eq(6).clickAndWait();
     cy.wait('@getPOSTgraphql');
 
-    cy.validateTotalSelectedQuery(/(52|54|59)/);
-    cy.validateTableResultsCount(/(52|54|59)/);
+    cy.validateTotalSelectedQuery('49');
+    cy.validateTableResultsCount('49');
   });
 });
