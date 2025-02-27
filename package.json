@@ -64,7 +64,7 @@
     "@apollo/client": "^3.11.10",
     "@dnd-kit/core": "^4.0.3",
     "@dnd-kit/sortable": "^5.1.0",
-    "@ferlab/ui": "^10.16.0",
+    "@ferlab/ui": "^10.16.7",
     "@loadable/component": "^5.16.4",
     "@react-keycloak/core": "^3.2.0",
     "@react-keycloak/web": "^3.4.0",
