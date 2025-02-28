@@ -29,6 +29,7 @@ const computeUpsetTextSize = () => {
 
     const csNodeTransform = csNode.getAttribute('transform');
     if (!csNodeTransform) return;
+
     const match = csNodeTransform.match(/translate\(([^,]+),/);
     if (!match) return;
 
@@ -79,7 +80,8 @@ const CoOccuringConditionsGraphCard = () => {
     const textElements = document.querySelectorAll(SETS_NAME_QUERY);
     textElements.forEach((element: any) => {
       if (!element.getAttribute(ATTRIBUTE_ID)) {
-        element.setAttribute(ATTRIBUTE_ID, element.textContent);
+        // remove (HP:XXXXXXX) code
+        element.setAttribute(ATTRIBUTE_ID, element.textContent.replace(/\s*\(HP:\d+\)/g, ''));
       }
     });
 
@@ -120,29 +122,40 @@ const CoOccuringConditionsGraphCard = () => {
           ) : (
             <div className={styles.wrapper}>
               <div ref={gridRef} className={styles.content}>
-                <UpSetJS
-                  setLabelAlignment={'left'}
-                  sets={sets}
-                  setName={intl.get(
-                    'screen.dataExploration.tabs.summary.coOccuringConditions.label',
-                  )}
-                  combinationName={intl.get(
-                    'screen.dataExploration.tabs.summary.coOccuringConditions.label',
-                  )}
-                  exportButtons={false}
-                  selection={selection}
-                  combinations={{
-                    min: 2,
-                    limit: 25,
-                    type: 'distinctIntersection',
-                  }}
-                  widthRatios={[0.12249999999999998, 0.22749999999999998]}
-                  heightRatios={[0.55]}
-                  emptySelection={false}
-                  width={900}
-                  height={600}
-                  onHover={(s) => setSelection(s)}
-                />
+                {sets.length > 1 ? (
+                  <UpSetJS
+                    setLabelAlignment={'left'}
+                    sets={sets}
+                    setName={intl.get(
+                      'screen.dataExploration.tabs.summary.coOccuringConditions.label',
+                    )}
+                    combinationName={intl.get(
+                      'screen.dataExploration.tabs.summary.coOccuringConditions.label',
+                    )}
+                    exportButtons={false}
+                    selection={selection}
+                    combinations={{
+                      min: 2,
+                      limit: 25,
+                      type: 'distinctIntersection',
+                    }}
+                    widthRatios={[0.12249999999999998, 0.22749999999999998]}
+                    heightRatios={[0.55]}
+                    emptySelection={false}
+                    width={900}
+                    height={600}
+                    onHover={(s) => setSelection(s)}
+                  />
+                ) : (
+                  <Empty
+                    imageType="grid"
+                    size="large"
+                    noPadding
+                    description={intl.get(
+                      'screen.dataExploration.tabs.summary.coOccuringConditions.empty',
+                    )}
+                  />
+                )}
               </div>
             </div>
           )}
@@ -155,29 +168,40 @@ const CoOccuringConditionsGraphCard = () => {
           ) : (
             <div className={styles.wrapper}>
               <div id="upset" ref={gridRef} className={styles.content}>
-                <UpSetJS
-                  setLabelAlignment={'left'}
-                  sets={sets}
-                  setName={intl.get(
-                    'screen.dataExploration.tabs.summary.coOccuringConditions.label',
-                  )}
-                  combinationName={intl.get(
-                    'screen.dataExploration.tabs.summary.coOccuringConditions.label',
-                  )}
-                  exportButtons={false}
-                  selection={selection}
-                  combinations={{
-                    min: 2,
-                    limit: 25,
-                    type: 'distinctIntersection',
-                  }}
-                  widthRatios={[0.12249999999999998, 0.22749999999999998]}
-                  heightRatios={[0.55]}
-                  emptySelection={false}
-                  width={width}
-                  height={height}
-                  onHover={(s) => setSelection(s)}
-                />
+                {sets.length > 1 ? (
+                  <UpSetJS
+                    setLabelAlignment={'left'}
+                    sets={sets}
+                    setName={intl.get(
+                      'screen.dataExploration.tabs.summary.coOccuringConditions.label',
+                    )}
+                    combinationName={intl.get(
+                      'screen.dataExploration.tabs.summary.coOccuringConditions.label',
+                    )}
+                    exportButtons={false}
+                    selection={selection}
+                    combinations={{
+                      min: 2,
+                      limit: 25,
+                      type: 'distinctIntersection',
+                    }}
+                    widthRatios={[0.12249999999999998, 0.22749999999999998]}
+                    heightRatios={[0.55]}
+                    emptySelection={false}
+                    width={width}
+                    height={height}
+                    onHover={(s) => setSelection(s)}
+                  />
+                ) : (
+                  <Empty
+                    imageType="grid"
+                    size="large"
+                    noPadding
+                    description={intl.get(
+                      'screen.dataExploration.tabs.summary.coOccuringConditions.empty',
+                    )}
+                  />
+                )}
               </div>
             </div>
           )}

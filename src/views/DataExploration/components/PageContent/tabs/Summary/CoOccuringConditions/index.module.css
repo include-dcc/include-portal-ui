@@ -11,6 +11,10 @@
   height: 100%;
 }
 
+:global([class^="root-upset-"] text[class^="hoverBarTextStyle-upset"])  {
+  opacity: 0;
+}
+
 :global([class^="root-upset-"] text[class^="setTextStyle-upset"])  {
   font-size: 10px;
 }
