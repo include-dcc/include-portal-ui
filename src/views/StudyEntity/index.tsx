@@ -80,7 +80,7 @@ import style from './index.module.css';
 
 const { Text, Title } = Typography;
 
-const DSC_DATASET_ID = 'DS-Connect-UNHAR';
+const DSC_DATASET_ID = 'Dataset-Metadata-DSC-UH-Clinical';
 const DSC_STUDY_ID = 'DSC';
 
 const queryId = 'include-study-repo-key';
