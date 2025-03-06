@@ -21,10 +21,11 @@ export const fetchVennData = createAsyncThunk<
   },
   {
     qbSqons: ISyntheticSqon[];
-    index: INDEXES;
+    index?: INDEXES;
   },
   { rejectValue: string; state: RootState }
 >('venn/fetch', async (args, thunkAPI) => {
+  const index = args.index ?? INDEXES.PARTICIPANT;
   const entitySqons: ISqonGroupFilter[] = args.qbSqons.map((sqon) => {
     if (args.index === INDEXES.BIOSPECIMEN) {
       return mapFilterForBiospecimen(resolveSyntheticSqon(args.qbSqons, sqon));
@@ -35,13 +36,13 @@ export const fetchVennData = createAsyncThunk<
     return mapFilterForParticipant(resolveSyntheticSqon(args.qbSqons, sqon));
   });
 
-  const { data, error } = await ArrangerApi.fetchVenn(args.qbSqons, entitySqons, args.index);
+  const { data, error } = await ArrangerApi.fetchVenn(args.qbSqons, entitySqons, index);
   return handleThunkApiResponse({
     error,
     data: {
       summary: data.data.summary,
       operations: data.data.operations,
-      index: args.index,
+      index,
     },
     reject: thunkAPI.rejectWithValue,
   });

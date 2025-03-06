@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import {
   ExperimentOutlined,
   FileSearchOutlined,
@@ -197,7 +196,6 @@ const filtersContainer = (
 
 const DataExploration = () => {
   const dispatch = useDispatch();
-  const { tab } = useParams<{ tab: string }>();
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
   const participantMappingResults = useGetExtendedMappings(INDEXES.PARTICIPANT);
   const fileMappingResults = useGetExtendedMappings(INDEXES.FILE);
@@ -470,7 +468,7 @@ const DataExploration = () => {
       <TreeFacetModal key="mondo_tree" type={RemoteComponentList.MondoTree} field={'mondo'} />
       <SidebarMenu
         className={styles.sideMenu}
-        menuItems={menuItems} /* defaultSelectedKey={tab} */
+        menuItems={menuItems}
         quickFilter={{
           dictionary: getFiltersDictionary(),
           handleFacetClick,
@@ -492,7 +490,6 @@ const DataExploration = () => {
           biospecimenMapping={biospecimenMappingResults}
           participantMapping={participantMappingResults}
           filterGroups={filterGroups}
-          tabId={tab}
         />
       </ScrollContent>
     </div>

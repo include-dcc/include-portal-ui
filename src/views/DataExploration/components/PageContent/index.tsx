@@ -1,7 +1,7 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   ExperimentOutlined,
   FileTextOutlined,
@@ -137,10 +137,11 @@ const PageContent = ({
   fileMapping,
   biospecimenMapping,
   participantMapping,
-  tabId = TAB_IDS.SUMMARY,
   filterGroups,
 }: OwnProps) => {
   const dispatch = useDispatch<any>();
+  const { tab } = useParams<{ tab: string }>();
+  const [tabId, setTabId] = useState<TAB_IDS>((tab as TAB_IDS) ?? TAB_IDS.SUMMARY);
   const { isEnabled } = useFeatureToggle(FT_FLAG_VENN_COMPARE);
   const navigate = useNavigate();
   const location = useLocation();
@@ -218,13 +219,24 @@ const PageContent = ({
     ? (queries: ISyntheticSqon[]) => {
         trackCompareQueries();
         setVennOpen(true);
-        dispatch(fetchVennData({ qbSqons: queries, index: INDEXES.PARTICIPANT }));
+
+        dispatch(fetchVennData({ qbSqons: queries }));
       }
     : undefined;
+
+  useEffect(() => {
+    setTabId(tab as TAB_IDS);
+  }, [tab]);
 
   return (
     <>
       <VennModal
+        analytics={{
+          trackVennViewInExploration,
+          trackVennClickOnSections,
+          trackVennViewSet,
+          trackVennViewEntityCounts,
+        }}
         savedSets={savedSets}
         handleSubmit={({ index, name, sets, invisible, callback }) => {
           const sqons: ISyntheticSqon[] = sets.map((set) => set.entitySqon);
@@ -262,9 +274,42 @@ const PageContent = ({
               },
             }),
           );
+
+          let newTabId = TAB_IDS.PARTICIPANTS;
+          if (index === INDEXES.BIOSPECIMEN) {
+            newTabId = TAB_IDS.BIOSPECIMENS;
+          } else if (index === INDEXES.FILE) {
+            newTabId = TAB_IDS.DATA_FILES;
+          }
+          if (!location.pathname.includes(newTabId)) {
+            navigate(`${STATIC_ROUTES.DATA_EXPLORATION}/${newTabId}${window.location.search}`);
+          }
+
+          setTabId(newTabId as TAB_IDS);
         }}
         queryPillDictionary={getQueryBuilderDictionary(facetTransResolver, savedSets)}
         error={vennData.error}
+        options={[
+          {
+            label: intl.get('screen.dataExploration.venn.participants'),
+            value: INDEXES.PARTICIPANT,
+            tabId: TAB_IDS.PARTICIPANTS,
+            icon: <UserOutlined size={16} />,
+          },
+          {
+            label: intl.get('screen.dataExploration.venn.biospecimens'),
+            value: INDEXES.BIOSPECIMEN,
+            tabId: TAB_IDS.BIOSPECIMENS,
+            icon: <ExperimentOutlined size={16} />,
+          },
+
+          {
+            label: intl.get('screen.dataExploration.venn.files'),
+            value: INDEXES.FILE,
+            tabId: TAB_IDS.DATA_FILES,
+            icon: <FileTextOutlined size={16} />,
+          },
+        ]}
         open={vennOpen}
         summary={vennData.summary}
         operations={vennData.operations}
@@ -289,8 +334,7 @@ const PageContent = ({
             max: intl.get('screen.dataExploration.venn.set.max'),
           },
           save: {
-            placeholder: (entity: string) =>
-              intl.get('screen.dataExploration.venn.save.placeholder', { entity }),
+            nameTemplate: intl.get('screen.dataExploration.venn.save.nameTemplate'),
             maximumLength: intl.get(
               'components.querybuilder.header.modal.edit.input.maximumLength',
             ),
@@ -298,13 +342,20 @@ const PageContent = ({
             alreadyExist: intl.get('screen.dataExploration.venn.save.alreadyExist'),
             requiredField: intl.get('global.forms.errors.requiredField'),
             title: intl.get('screen.dataExploration.venn.save.title'),
-            entity: {
-              participants: (count: number) =>
-                intl.get('screen.dataExploration.venn.save.entity.participants', { count }),
-              biospecimens: (count: number) =>
-                intl.get('screen.dataExploration.venn.save.entity.biospecimens', { count }),
-              files: (count: number) =>
-                intl.get('screen.dataExploration.venn.save.entity.files', { count }),
+            getEntityText: (index: string, entityCount: number) => {
+              if (index === INDEXES.BIOSPECIMEN) {
+                return intl.get('screen.dataExploration.venn.save.entity.biospecimens', {
+                  count: entityCount,
+                });
+              } else if (index === INDEXES.FILE) {
+                return intl.get('screen.dataExploration.venn.save.entity.files', {
+                  count: entityCount,
+                });
+              } else {
+                return intl.get('screen.dataExploration.venn.save.entity.participants', {
+                  count: entityCount,
+                });
+              }
             },
             label: intl.get('screen.dataExploration.venn.save.label'),
             checkbox: {
@@ -320,12 +371,6 @@ const PageContent = ({
           title: intl.get('screen.dataExploration.venn.title'),
           count: intl.get('screen.dataExploration.venn.count'),
           ok: intl.get('screen.dataExploration.venn.ok'),
-        }}
-        analytics={{
-          trackVennViewInExploration,
-          trackVennClickOnSections,
-          trackVennViewSet,
-          trackVennViewEntityCounts,
         }}
       />
       <Space direction="vertical" size={24} className={styles.dataExplorePageContent}>
@@ -406,11 +451,12 @@ const PageContent = ({
         <Tabs
           type="card"
           className="navNoMarginBtm"
-          activeKey={tabId || TAB_IDS.SUMMARY}
+          activeKey={tabId}
           onChange={(key) => {
             if (!location.pathname.includes(key)) {
               navigate(`${STATIC_ROUTES.DATA_EXPLORATION}/${key}${window.location.search}`);
             }
+            setTabId(key as TAB_IDS);
           }}
           items={[
             {
