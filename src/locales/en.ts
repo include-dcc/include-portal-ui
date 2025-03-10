@@ -1189,7 +1189,7 @@ const en = {
           max: 'Max 10,000 at a time',
         },
         save: {
-          placeholder: 'My {entity} set',
+          nameTemplate: 'Combined set',
           cancel: 'Cancel',
           checkbox: {
             label: 'Save this set for future reference',
