@@ -1,60 +1,68 @@
 import intl from 'react-intl-universal';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { EntityTable } from '@ferlab/ui/core/pages/EntityPage';
-import { Button } from 'antd';
+import { EntityCustomContent } from '@ferlab/ui/core/pages/EntityPage';
+import { Button, Tabs } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
-import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
+import BiospecimenTree from 'components/Biospecimens/Tree';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
-import { generateLocalTsvReport } from 'store/report/thunks';
-import { useUser } from 'store/user';
-import { updateUserConfig } from 'store/user/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
-import { userColsHaveSameKeyAsDefaultCols } from 'utils/tables';
 
 import { SectionId } from '../utils/anchorLinks';
-import {
-  getBiospecimensDefaultColumns,
-  getBiospecimensFromParticipant,
-} from '../utils/biospecimens';
+import { getBiospecimensFromParticipant } from '../utils/biospecimens';
+
+import TableView from './TableView';
+
+import styles from './index.module.css';
 
 interface OwnProps {
   participant?: IParticipantEntity;
   loading: boolean;
 }
 
+enum BiospecimenTabs {
+  TreeView = 'tree',
+  TableView = 'table',
+}
+
 const BiospecimenTable = ({ participant, loading }: OwnProps) => {
   const navigate = useNavigate();
-  const { userInfo } = useUser();
-  const dispatch = useDispatch();
 
   const { biospecimens, total } = getBiospecimensFromParticipant(participant);
 
-  const biospecimensDefaultColumns = getBiospecimensDefaultColumns();
-
-  const userColumnPreferences = userInfo?.config?.participants?.tables?.biospecimens?.columns || [];
-  const userColumnPreferencesOrDefault = userColsHaveSameKeyAsDefaultCols(
-    userColumnPreferences,
-    biospecimensDefaultColumns,
-  )
-    ? [...userColumnPreferences]
-    : biospecimensDefaultColumns.map((c, index) => ({
-        visible: true,
-        index,
-        key: c.key,
-      }));
-
   return (
-    <EntityTable
+    <EntityCustomContent
       id={SectionId.BIOSPECIMEN}
       loading={loading}
-      data={biospecimens}
+      customContent={
+        <Tabs
+          className={styles.tabs}
+          defaultActiveKey={BiospecimenTabs.TreeView}
+          items={[
+            {
+              key: BiospecimenTabs.TreeView,
+              label: intl.get('screen.participant.treeViewTab'),
+              children: (
+                <>
+                  <BiospecimenTree />
+                </>
+              ),
+            },
+            {
+              key: BiospecimenTabs.TableView,
+              label: intl.get('screen.participant.tableViewTab'),
+              children: <TableView data={biospecimens} loading={loading} />,
+            },
+          ]}
+        />
+      }
+      header={intl.get('entities.biospecimen.biospecimen')}
       title={intl.get('entities.biospecimen.biospecimen')}
+      total={total}
       titleExtra={[
         <Button
           size="small"
@@ -79,45 +87,6 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
           <ExternalLinkIcon />
         </Button>,
       ]}
-      total={total}
-      header={intl.get('entities.biospecimen.biospecimen')}
-      columns={biospecimensDefaultColumns}
-      initialColumnState={userColumnPreferencesOrDefault}
-      headerConfig={{
-        extra: [
-          <DownloadDataButton
-            biospecimenIds={[...biospecimens.map((biospecimen) => biospecimen.sample_id)]}
-            key="downloadSampleData"
-          />,
-        ],
-        enableTableExport: true,
-        enableColumnSort: true,
-        onColumnSortChange: (newState) =>
-          dispatch(
-            updateUserConfig({
-              participants: {
-                tables: {
-                  biospecimens: {
-                    columns: newState,
-                  },
-                },
-              },
-            }),
-          ),
-        onTableExportClick: () =>
-          dispatch(
-            generateLocalTsvReport({
-              index: INDEXES.PARTICIPANT,
-              fileName: 'biospecimens',
-              headers: biospecimensDefaultColumns,
-              cols: userColumnPreferencesOrDefault.map((x) => ({
-                visible: x.visible,
-                key: x.key,
-              })),
-              rows: biospecimens,
-            }),
-          ),
-      }}
     />
   );
 };
