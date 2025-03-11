@@ -1630,6 +1630,10 @@ const en = {
         },
       },
     },
+    participant: {
+      treeViewTab: 'Tree view',
+      tableViewTab: 'Table view',
+    },
   },
   facets: {
     // Participant
