@@ -8,6 +8,38 @@
 ### Technical / Other changes
 -->
 
+## 2025-03-11 include-portal-ui 1.17.0
+
+### Features:
+
+- [SJIP-1000](https://d3b.atlassian.net/browse/SJIP-1000) Feature: [Study Entity] Add new fields to Dataset Section
+- [SJIP-1001](https://d3b.atlassian.net/browse/SJIP-1001) Feature: [Data Exploration] Add Dataset Facet and Column to the Data Files tab
+- [SJIP-1002](https://d3b.atlassian.net/browse/SJIP-1002) Feature: [File Entity] Add Dataset Name in the File Entity Summary section
+- [SJIP-1003](https://d3b.atlassian.net/browse/SJIP-1003) Feature: [Study Entity] Add a View in Exploration button
+- [SJIP-1004](https://d3b.atlassian.net/browse/SJIP-1004) Feature: [Study Entity] Add a Manifest button to the Dataset block
+- [SJIP-1080](https://d3b.atlassian.net/browse/SJIP-1080) Feature: [Study Entity] Implement Pubmed API citation format to the Publication field
+- [SJIP-1081](https://d3b.atlassian.net/browse/SJIP-1081) Feature: [Study Entity] Create modal to display citations when study over 2 publications
+- [SJIP-1115](https://d3b.atlassian.net/browse/SJIP-1115) Feature: [Summary View] Implement Upset Plot to Summary View
+- [SJIP-1116](https://d3b.atlassian.net/browse/SJIP-1116) Feature: [Query Builder] Implement Venn diagram when comparing 2 or 3 queries
+- [SJIP-1131](https://d3b.atlassian.net/browse/SJIP-1131) Feature: [Transcriptomics] Open boxplot from gradient chart
+- [SJIP-1155](https://d3b.atlassian.net/browse/SJIP-1155) Feature: [Data Exploration] Add new age field to Data Exploration
+- [SJIP-1183](https://d3b.atlassian.net/browse/SJIP-1183) Feature: [Study Entity] Implement the Pubmed API citation format for dataset publication url
+
+### Technical/ Other changes:
+
+- [SJIP-898](https://d3b.atlassian.net/browse/SJIP-898) Refactor: [Study Entity] Move the Study contact up to the summary table
+- [SJIP-906](https://d3b.atlassian.net/browse/SJIP-906) Issue: [Authorized Studies] Fixed typos on the Authorized Studies widget
+- [SJIP-1083](https://d3b.atlassian.net/browse/SJIP-1083) Refactor: [Package] Update package and dependancies (December)
+- [SJIP-1153](https://d3b.atlassian.net/browse/SJIP-1153) Refactor: [Variant exploration] Remove export as TSV feature
+- [SJIP-1154](https://d3b.atlassian.net/browse/SJIP-1154) Refactor: [Facet] Set default operators across facets
+- [SJIP-1160](https://d3b.atlassian.net/browse/SJIP-1160) Issue: [Transcriptomics] Update the Tooltip for Fold change value
+- [SJIP-1161](https://d3b.atlassian.net/browse/SJIP-1161) Issue: [Transcriptomics] Adjusted y-axis values to properly reflect (-log10\(q-value))
+- [SJIP-1166](https://d3b.atlassian.net/browse/SJIP-1166) Issue: [Sentry] Fixed issues reported by Sentry
+- [SJIP-1167](https://d3b.atlassian.net/browse/SJIP-1167) Refactor: [Study Entity] Update field from GUID Type to GUID Mapped
+- [SJIP-1200](https://d3b.atlassian.net/browse/SJIP-1200) Issue: [Transcriptomics] Fixed box plot not always appearing when selecting a gene
+- [SJIP-1204](https://d3b.atlassian.net/browse/SJIP-1204) Issue: [Analytics] Fix error 400 bad request in the transcriptomics analytics page 
+- [SJIP-1215](https://d3b.atlassian.net/browse/SJIP-1215) Refactor: [Study Entity] Hide the rows or sections that do not have values 
+
 ## 2024-12-11 include-portal-ui 1.16.0
 
 ### Features:
