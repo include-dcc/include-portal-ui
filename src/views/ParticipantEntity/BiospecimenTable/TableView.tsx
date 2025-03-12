@@ -7,7 +7,6 @@ import { Card, Space } from 'antd';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
 
-import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
 import { generateLocalTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
@@ -62,12 +61,6 @@ const TableView = ({ data, loading }: TableViewProps): ReactElement => {
               pageSize: 0,
               total: 0,
             },
-            extra: [
-              <DownloadDataButton
-                biospecimenIds={[...data.map((biospecimen) => biospecimen.sample_id)]}
-                key="downloadSampleData"
-              />,
-            ],
             enableTableExport: true,
             enableColumnSort: true,
             onColumnSortChange: (newState) =>

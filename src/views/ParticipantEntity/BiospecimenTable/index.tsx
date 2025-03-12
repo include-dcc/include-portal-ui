@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import intl from 'react-intl-universal';
 import { useNavigate } from 'react-router';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
@@ -8,6 +9,7 @@ import { INDEXES } from 'graphql/constants';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
+import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
 import BiospecimenTree from 'components/Biospecimens/Tree';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -31,6 +33,7 @@ enum BiospecimenTabs {
 
 const BiospecimenTable = ({ participant, loading }: OwnProps) => {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<string>(BiospecimenTabs.TreeView);
 
   const { biospecimens, total } = getBiospecimensFromParticipant(participant);
 
@@ -42,6 +45,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
         <Tabs
           className={styles.tabs}
           defaultActiveKey={BiospecimenTabs.TreeView}
+          onChange={(activeKey) => setActiveTab(activeKey)}
           items={[
             {
               key: BiospecimenTabs.TreeView,
@@ -58,6 +62,16 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
               children: <TableView data={biospecimens} loading={loading} />,
             },
           ]}
+          tabBarExtraContent={
+            <>
+              <DownloadDataButton
+                biospecimenIds={[...biospecimens.map((biospecimen) => biospecimen.sample_id)]}
+                key="downloadSampleData"
+                size="small"
+              />
+              {activeTab === BiospecimenTabs.TableView && <span>export</span>}
+            </>
+          }
         />
       }
       header={intl.get('entities.biospecimen.biospecimen')}

@@ -1707,6 +1707,18 @@ const en = {
     participant: {
       treeViewTab: 'Tree view',
       tableViewTab: 'Table view',
+      searchPlaceholder: 'Search',
+      collapseAll: 'Collapse all',
+      expandAll: 'Expand all',
+      legend: {
+        title: 'Legend',
+        collection: 'Collection',
+        sample: 'Sample',
+        container: 'Container',
+        fileAvailable: 'File available',
+        sampleAvailable: 'Sample available',
+        oneSampleAvailable: 'At least one sample available',
+      },
     },
   },
   facets: {
