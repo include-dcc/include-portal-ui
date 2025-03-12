@@ -1,6 +1,15 @@
-import { CheckCircleFilled, CheckCircleOutlined, FileTextOutlined } from '@ant-design/icons';
-// import { Typography } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import intl from 'react-intl-universal';
+import {
+  CheckCircleFilled,
+  CheckCircleOutlined,
+  FileTextOutlined,
+  InfoCircleOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
+import { Button, Card, Input, Popover, Space, Typography } from 'antd';
 import Tree, { DataNode } from 'antd/lib/tree';
+import cx from 'classnames';
 
 import CollectionLogo from 'components/assets/biospecimen/collection.svg';
 import ContainerLogo from 'components/assets/biospecimen/container.svg';
@@ -103,47 +112,205 @@ const getTypeIcon = (type: string) => {
   }
 };
 
-const convertToDataTree = (data: INode[]): DataNode[] => {
+const convertToDataTree = (data: INode[], searchValue: string): DataNode[] => {
   const treeNodes: DataNode[] = [];
+  const searchValueLowerCase = searchValue.toLowerCase();
   data.forEach((node: INode) => {
+    const strTitle = node.key.toLowerCase();
+    const index = strTitle.indexOf(searchValueLowerCase);
+    const beforeStr = strTitle.substring(0, index);
+    const matchStr = strTitle.substring(index, index + searchValue.length);
+    const afterStr = strTitle.slice(index + searchValue.length);
+    const keyLabel =
+      index > -1 ? (
+        <span>
+          {beforeStr}
+          <span className={styles.searchHighlight}>{matchStr}</span>
+          {afterStr}
+        </span>
+      ) : (
+        <span>{strTitle}</span>
+      );
+
     const treeNode: DataNode = {
       key: node.key,
       title: (
         <>
-          {node.key}
+          {keyLabel}
           {node.count && ` (${node.count})`}
-          {node.hasCollectionAvailability && <CheckCircleOutlined className={styles.checkIcon} />}
-          {node.isSampleAvailable && <CheckCircleFilled className={styles.checkIcon} />}
-          {node.hasFiles && <FileTextOutlined className={styles.fileIcon} />}
+          {node.hasCollectionAvailability && (
+            <CheckCircleOutlined className={cx(styles.checkIcon, styles.icon)} />
+          )}
+          {node.isSampleAvailable && (
+            <CheckCircleFilled className={cx(styles.checkIcon, styles.icon)} />
+          )}
+          {node.hasFiles && <FileTextOutlined className={styles.icon} />}
         </>
       ),
       icon: getTypeIcon(node.type),
-      children: node.children ? convertToDataTree(node.children) : [],
+      children: node.children ? convertToDataTree(node.children, searchValue) : [],
     };
     treeNodes.push(treeNode);
   });
   return treeNodes;
 };
 
+const getParentKey = (key: React.Key, tree: DataNode[]): React.Key => {
+  let parentKey: React.Key;
+  for (let i = 0; i < tree.length; i++) {
+    const node = tree[i];
+    if (node.children) {
+      if (node.children.some((item) => item.key === key)) {
+        parentKey = node.key;
+      } else if (getParentKey(key, node.children)) {
+        parentKey = getParentKey(key, node.children);
+      }
+    }
+  }
+  return parentKey!;
+};
+
+const generateList = (
+  data: DataNode[],
+  dataList: { key: React.Key; title: string }[],
+  allKeys: React.Key[],
+) => {
+  for (let i = 0; i < data.length; i++) {
+    const node = data[i];
+    const { key } = node;
+    dataList.push({ key, title: key as string });
+    allKeys.push(key);
+    if (node.children) {
+      generateList(node.children, dataList, allKeys);
+    }
+  }
+};
+
 const BiospecimenTree = () => {
+  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [autoExpandParent, setAutoExpandParent] = useState(true);
+
+  const onExpand = (newExpandedKeys: React.Key[]) => {
+    setExpandedKeys(newExpandedKeys);
+    setAutoExpandParent(false);
+  };
+
   // Call back end ou ça vient dans le biospecimen / participant
-  const treeData = convertToDataTree(data);
+  // const treeData = convertToDataTree(data, searchValue);
+  const treeData = useMemo(() => convertToDataTree(data, searchValue), [searchValue]);
+
+  const dataList: { key: React.Key; title: string }[] = [];
+  const allKeys: React.Key[] = [];
+  generateList(treeData, dataList, allKeys);
+  useEffect(() => {
+    setExpandedKeys(allKeys);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const newExpandedKeys = dataList
+      .map((item) => {
+        if (item.title.toLowerCase().indexOf(value.toLowerCase()) > -1) {
+          return getParentKey(item.key, treeData);
+        }
+        return null;
+      })
+      .filter((item, i, self) => item && self.indexOf(item) === i);
+    setExpandedKeys(newExpandedKeys as React.Key[]);
+    setSearchValue(value);
+    setAutoExpandParent(true);
+  };
 
   return (
-    <div>
-      {/* <Typography.Title level={4} style={{ marginBottom: '16px' }}>
-        Biospecimen tree
-      </Typography.Title> */}
-      <Tree
-        // checkable
-        // defaultExpandedKeys={['0-0-0', '0-0-1']}
-        // defaultSelectedKeys={['0-0-0', '0-0-1']}
-        // defaultCheckedKeys={['0-0-0', '0-0-1']}
-        // onSelect={onSelect}
-        // onCheck={onCheck}
-        showIcon
-        treeData={treeData}
-      />
+    <div className={styles.treeViewWrapper}>
+      <Card className={styles.treeCard}>
+        <Space direction="vertical" size={8} className={styles.treeSpace}>
+          <div className={styles.searchWrapper}>
+            <div className={styles.inputWrapper}>
+              <Input
+                placeholder={intl.get('screen.participant.searchPlaceholder')}
+                prefix={<SearchOutlined className={styles.searchIcon} />}
+                onChange={onSearch}
+                value={searchValue}
+                size="small"
+                allowClear
+              />
+            </div>
+            <div className={styles.collapseAllWrapper}>
+              {expandedKeys.length > 0 ? (
+                <Button
+                  className={styles.collapseAll}
+                  type="link"
+                  onClick={() => {
+                    setExpandedKeys([]);
+                    setSearchValue('');
+                  }}
+                >
+                  {intl.get('screen.participant.collapseAll')}
+                </Button>
+              ) : (
+                <Button
+                  className={styles.collapseAll}
+                  type="link"
+                  onClick={() => setExpandedKeys(allKeys)}
+                >
+                  {intl.get('screen.participant.expandAll')}
+                </Button>
+              )}
+            </div>
+          </div>
+          <div className={styles.treeWrapper}>
+            <Tree
+              onExpand={onExpand}
+              expandedKeys={expandedKeys}
+              autoExpandParent={autoExpandParent}
+              showIcon
+              treeData={treeData}
+            />
+          </div>
+          <div className={styles.legendWrapper}>
+            <Popover
+              title={intl.get('screen.participant.legend.title')}
+              content={
+                <>
+                  <Typography>
+                    <img alt="collection" src={CollectionLogo} />
+                    {intl.get('screen.participant.legend.collection')}
+                  </Typography>
+                  <Typography>
+                    <img alt="sample" src={SampleLogo} />
+                    {intl.get('screen.participant.legend.sample')}
+                  </Typography>
+                  <Typography>
+                    <img alt="container" src={ContainerLogo} />
+                    {intl.get('screen.participant.legend.container')}
+                  </Typography>
+                  <Typography>
+                    <FileTextOutlined className={styles.legendIcon} />
+                    {intl.get('screen.participant.legend.fileAvailable')}
+                  </Typography>
+                  <Typography>
+                    <CheckCircleOutlined className={cx(styles.checkIcon, styles.legendIcon)} />
+                    {intl.get('screen.participant.legend.sampleAvailable')}
+                  </Typography>
+                  <Typography>
+                    <CheckCircleFilled className={cx(styles.checkIcon, styles.legendIcon)} />
+                    {intl.get('screen.participant.legend.oneSampleAvailable')}
+                  </Typography>
+                </>
+              }
+            >
+              {/* <Typography style={{ fontSize: '12px' }}> */}
+              <InfoCircleOutlined className={styles.infoIcon} />{' '}
+              {intl.get('screen.participant.legend.title')}
+              {/* </Typography> */}
+            </Popover>
+          </div>
+        </Space>
+      </Card>
+      <div className={styles.treeCard}>Coucou</div>
     </div>
   );
 };
