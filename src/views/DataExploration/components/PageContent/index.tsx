@@ -237,6 +237,7 @@ const PageContent = ({
           trackVennViewSet,
           trackVennViewEntityCounts,
         }}
+        vennSize={{ width: 540, height: 498 }}
         savedSets={savedSets}
         handleSubmit={({ index, name, sets, invisible, callback }) => {
           const sqons: ISyntheticSqon[] = sets.map((set) => set.entitySqon);
