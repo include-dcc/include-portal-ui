@@ -4,10 +4,17 @@ import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { IArrangerResultsTree } from '@ferlab/ui/core/graphql/types';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
-import { IStudyDataset, IStudyEntity } from 'graphql/studies/models';
+import { IStudyDataset } from 'graphql/studies/models';
 import { extractDuoTitleAndCode } from 'views/DataExploration/utils/helper';
 
-const getFlatDataset = (dataset?: IArrangerResultsTree<IStudyDataset>) => {
+type TFlatDataset = {
+  accessLimitations: Set<string>;
+  accessRequirements: Set<string>;
+};
+
+export const getFlatDataset = (
+  dataset?: IArrangerResultsTree<IStudyDataset>,
+): TFlatDataset | undefined => {
   if (!dataset?.hits?.edges?.length) return undefined;
 
   const accessLimitations: string[] = [];
@@ -45,23 +52,19 @@ const renderAccess = (data?: Set<string>): ReactNode => {
   return <>{formattedData}</>;
 };
 
-const getDataAccessDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[] => {
-  const flatDataset = getFlatDataset(study?.datasets);
-
-  return [
-    {
-      label: intl.get('entities.study.access_limitation'),
-      value: flatDataset?.accessLimitations.size
-        ? renderAccess(flatDataset?.accessLimitations)
-        : TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
-      label: intl.get('entities.study.access_requirement'),
-      value: flatDataset?.accessRequirements.size
-        ? renderAccess(flatDataset.accessRequirements)
-        : TABLE_EMPTY_PLACE_HOLDER,
-    },
-  ];
-};
+const getDataAccessDescriptions = (flatDataset?: TFlatDataset): IEntityDescriptionsItem[] => [
+  {
+    label: intl.get('entities.study.access_limitation'),
+    value: flatDataset?.accessLimitations.size
+      ? renderAccess(flatDataset?.accessLimitations)
+      : TABLE_EMPTY_PLACE_HOLDER,
+  },
+  {
+    label: intl.get('entities.study.access_requirement'),
+    value: flatDataset?.accessRequirements.size
+      ? renderAccess(flatDataset.accessRequirements)
+      : TABLE_EMPTY_PLACE_HOLDER,
+  },
+];
 
 export default getDataAccessDescriptions;

@@ -69,7 +69,7 @@ import { DATA_EXPLORATION_QB_ID } from '../DataExploration/utils/constant';
 import { getFlattenTree, TreeNode } from '../DataExploration/utils/OntologyTree';
 import { PhenotypeStore } from '../DataExploration/utils/PhenotypeStore';
 
-import getDataAccessDescriptions from './utils/dataAccess';
+import getDataAccessDescriptions, { getFlatDataset } from './utils/dataAccess';
 import getDatasetDescription from './utils/datasets';
 import getFileTables from './utils/file';
 import getSummaryDescriptions from './utils/summary';
@@ -180,6 +180,7 @@ const StudyEntity = () => {
         }),
       );
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Demography
@@ -253,8 +254,11 @@ const StudyEntity = () => {
   });
 
   const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
+
+  const flatDataset = getFlatDataset(study?.datasets);
   const hasDataAccess =
-    hasDataset || (study?.contacts?.hits?.edges && study?.contacts?.hits?.edges.length > 0);
+    flatDataset?.accessLimitations.size || flatDataset?.accessRequirements.size ? true : false;
+
   const hasFiles = (study?.file_count ?? 0) > 0;
 
   const defaultLinks = [
@@ -609,7 +613,7 @@ const StudyEntity = () => {
 
         {hasDataAccess && (
           <EntityDescriptions
-            descriptions={getDataAccessDescriptions(study)}
+            descriptions={getDataAccessDescriptions(flatDataset)}
             header={intl.get('entities.study.data_access')}
             id={SectionId.DATA_ACCESS}
             loading={loading}
