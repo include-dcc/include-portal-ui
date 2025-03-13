@@ -44,7 +44,7 @@
 }
 
 .treeWrapper {
-  max-height: 188px;
+  max-height: 200px;
   overflow: auto;
 }
 
@@ -64,4 +64,8 @@
 
 .legendIcon {
   margin-right: 4px;
+}
+
+.detailWrapper {
+  width: 100%;
 }

@@ -1704,7 +1704,7 @@ const en = {
         },
       },
     },
-    participant: {
+    hierarchicalBiospecimen: {
       treeViewTab: 'Tree view',
       tableViewTab: 'Table view',
       searchPlaceholder: 'Search',
@@ -1718,6 +1718,30 @@ const en = {
         fileAvailable: 'File available',
         sampleAvailable: 'Sample available',
         oneSampleAvailable: 'At least one sample available',
+      },
+      details: {
+        collection: {
+          collectionSampleId: 'Collection Sample ID',
+          externalCollectionSampleId: 'External Collection ID',
+          collectionSampleType: 'Collection Sample Type',
+        },
+        sample: {
+          sampleId: 'Sample ID',
+          externalSampleId: 'External Sample ID',
+          sampleType: 'Sample Type',
+          parentSampleType: 'Parent Sample Type',
+          ageAtBiospecimenCollection: 'Age At Biospecimen Collection',
+          status: 'Sample Availability',
+          laboratoryProcedure: 'Laboratory Procedure',
+          nbFiles: 'Files',
+          participantFhirId: 'Participant ID',
+        },
+        container: {
+          containerId: 'Container ID',
+          volume: 'Volume',
+          volumeUnit: 'Volume Unit',
+          biospecimenStorage: 'Biospecimen Storage',
+        },
       },
     },
   },

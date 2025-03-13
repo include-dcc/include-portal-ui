@@ -7,13 +7,21 @@ import {
   InfoCircleOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Input, Popover, Space, Typography } from 'antd';
+import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
+import { Button, Card, Descriptions, Input, Popover, Space, Typography } from 'antd';
 import Tree, { DataNode } from 'antd/lib/tree';
 import cx from 'classnames';
 
 import CollectionLogo from 'components/assets/biospecimen/collection.svg';
 import ContainerLogo from 'components/assets/biospecimen/container.svg';
 import SampleLogo from 'components/assets/biospecimen/sample.svg';
+
+import {
+  getCollectionDetails,
+  getContainerDetails,
+  getSampleDetails,
+  IDescriptionsItem,
+} from './utils';
 
 import styles from './index.module.css';
 
@@ -23,7 +31,7 @@ enum NODE_TYPE {
   CONTAINER = 'container',
 }
 
-interface INode {
+export interface INode {
   key: string; // l’id du container / sample / collected sample futur title de l’arbre
   type: string; // pour l’icône du début
   hasCollectionAvailability?: boolean; // pour la collection si au moins un enfant a un sample disponible (icône check outlined vert)
@@ -137,7 +145,7 @@ const convertToDataTree = (data: INode[], searchValue: string): DataNode[] => {
       title: (
         <>
           {keyLabel}
-          {node.count && ` (${node.count})`}
+          {node.count && node.count > 0 && ` (${node.count})`}
           {node.hasCollectionAvailability && (
             <CheckCircleOutlined className={cx(styles.checkIcon, styles.icon)} />
           )}
@@ -186,10 +194,25 @@ const generateList = (
   }
 };
 
+const getNodeDetails = (key: React.Key, data: INode[]): INode | undefined => {
+  let result;
+  for (let index = 0; index < data.length; index++) {
+    const node = data[index];
+    if (node.key === key) {
+      result = node;
+      break;
+    } else if (node.children && !result) {
+      result = getNodeDetails(key, node.children);
+    }
+  }
+  return result;
+};
+
 const BiospecimenTree = () => {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
+  const [descriptions, setDescriptions] = useState<IDescriptionsItem[]>([]);
 
   const onExpand = (newExpandedKeys: React.Key[]) => {
     setExpandedKeys(newExpandedKeys);
@@ -230,7 +253,7 @@ const BiospecimenTree = () => {
           <div className={styles.searchWrapper}>
             <div className={styles.inputWrapper}>
               <Input
-                placeholder={intl.get('screen.participant.searchPlaceholder')}
+                placeholder={intl.get('screen.hierarchicalBiospecimen.searchPlaceholder')}
                 prefix={<SearchOutlined className={styles.searchIcon} />}
                 onChange={onSearch}
                 value={searchValue}
@@ -248,7 +271,7 @@ const BiospecimenTree = () => {
                     setSearchValue('');
                   }}
                 >
-                  {intl.get('screen.participant.collapseAll')}
+                  {intl.get('screen.hierarchicalBiospecimen.collapseAll')}
                 </Button>
               ) : (
                 <Button
@@ -256,7 +279,7 @@ const BiospecimenTree = () => {
                   type="link"
                   onClick={() => setExpandedKeys(allKeys)}
                 >
-                  {intl.get('screen.participant.expandAll')}
+                  {intl.get('screen.hierarchicalBiospecimen.expandAll')}
                 </Button>
               )}
             </div>
@@ -268,49 +291,81 @@ const BiospecimenTree = () => {
               autoExpandParent={autoExpandParent}
               showIcon
               treeData={treeData}
+              onSelect={(selectedKeys) => {
+                setDescriptions([]);
+                const nodeDetails = getNodeDetails(selectedKeys[0], data);
+                if (nodeDetails?.type) {
+                  switch (nodeDetails.type) {
+                    case NODE_TYPE.COLLECTED_SAMPLE:
+                      setDescriptions(getCollectionDetails(nodeDetails));
+                      break;
+                    case NODE_TYPE.SAMPLE:
+                      setDescriptions(getSampleDetails(nodeDetails));
+                      break;
+                    case NODE_TYPE.CONTAINER:
+                      setDescriptions(getContainerDetails(nodeDetails));
+                      break;
+                    default:
+                      setDescriptions([]);
+                      break;
+                  }
+                }
+              }}
             />
           </div>
           <div className={styles.legendWrapper}>
             <Popover
-              title={intl.get('screen.participant.legend.title')}
+              title={intl.get('screen.hierarchicalBiospecimen.legend.title')}
               content={
                 <>
                   <Typography>
                     <img alt="collection" src={CollectionLogo} />
-                    {intl.get('screen.participant.legend.collection')}
+                    {intl.get('screen.hierarchicalBiospecimen.legend.collection')}
                   </Typography>
                   <Typography>
                     <img alt="sample" src={SampleLogo} />
-                    {intl.get('screen.participant.legend.sample')}
+                    {intl.get('screen.hierarchicalBiospecimen.legend.sample')}
                   </Typography>
                   <Typography>
                     <img alt="container" src={ContainerLogo} />
-                    {intl.get('screen.participant.legend.container')}
+                    {intl.get('screen.hierarchicalBiospecimen.legend.container')}
                   </Typography>
                   <Typography>
                     <FileTextOutlined className={styles.legendIcon} />
-                    {intl.get('screen.participant.legend.fileAvailable')}
+                    {intl.get('screen.hierarchicalBiospecimen.legend.fileAvailable')}
                   </Typography>
                   <Typography>
                     <CheckCircleOutlined className={cx(styles.checkIcon, styles.legendIcon)} />
-                    {intl.get('screen.participant.legend.sampleAvailable')}
+                    {intl.get('screen.hierarchicalBiospecimen.legend.sampleAvailable')}
                   </Typography>
                   <Typography>
                     <CheckCircleFilled className={cx(styles.checkIcon, styles.legendIcon)} />
-                    {intl.get('screen.participant.legend.oneSampleAvailable')}
+                    {intl.get('screen.hierarchicalBiospecimen.legend.oneSampleAvailable')}
                   </Typography>
                 </>
               }
             >
-              {/* <Typography style={{ fontSize: '12px' }}> */}
               <InfoCircleOutlined className={styles.infoIcon} />{' '}
-              {intl.get('screen.participant.legend.title')}
-              {/* </Typography> */}
+              {intl.get('screen.hierarchicalBiospecimen.legend.title')}
             </Popover>
           </div>
         </Space>
       </Card>
-      <div className={styles.treeCard}>Coucou</div>
+      <div className={styles.detailWrapper}>
+        {descriptions.length > 0 && (
+          <Descriptions bordered column={1} size="small">
+            {descriptions.map((description, index) => (
+              <Descriptions.Item
+                key={`${description.label}:${index}`}
+                label={description.label}
+                labelStyle={{ width: '50%' }}
+              >
+                {description.value || TABLE_EMPTY_PLACE_HOLDER}
+              </Descriptions.Item>
+            ))}
+          </Descriptions>
+        )}
+      </div>
     </div>
   );
 };

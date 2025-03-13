@@ -49,7 +49,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
           items={[
             {
               key: BiospecimenTabs.TreeView,
-              label: intl.get('screen.participant.treeViewTab'),
+              label: intl.get('screen.hierarchicalBiospecimen.treeViewTab'),
               children: (
                 <>
                   <BiospecimenTree />
@@ -58,7 +58,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
             },
             {
               key: BiospecimenTabs.TableView,
-              label: intl.get('screen.participant.tableViewTab'),
+              label: intl.get('screen.hierarchicalBiospecimen.tableViewTab'),
               children: <TableView data={biospecimens} loading={loading} />,
             },
           ]}
@@ -69,7 +69,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
                 key="downloadSampleData"
                 size="small"
               />
-              {activeTab === BiospecimenTabs.TableView && <span>export</span>}
+              {activeTab === BiospecimenTabs.TableView && <span> export</span>}
             </>
           }
         />
