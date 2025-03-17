@@ -3,21 +3,35 @@ import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { DownloadOutlined } from '@ant-design/icons';
+import RequestBiospecimenButton from '@ferlab/ui/core/components/BiospecimenRequest/RequestBiospecimenButton';
 import { generateColumnState } from '@ferlab/ui/core/components/ProTable';
 import ColumnSelector from '@ferlab/ui/core/components/ProTable/ColumnSelector';
 import { TColumnStates } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { BooleanOperators, TermOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { EntityCustomContent } from '@ferlab/ui/core/pages/EntityPage';
 import { Button, Space, Tabs, Tooltip } from 'antd';
+import { AxiosRequestConfig } from 'axios';
 import { INDEXES } from 'graphql/constants';
 import { IParticipantEntity } from 'graphql/participants/models';
+import EnvironmentVariables from 'helpers/EnvVariables';
+import {
+  getDataTypeColumns,
+  getRequestBiospecimenDictionary,
+} from 'views/DataExploration/components/PageContent/tabs/Biospecimens/utils';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
 import BiospecimenTree from 'components/Biospecimens/Tree';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
-import { generateLocalTsvReport } from 'store/report/thunks';
+import useApi from 'hooks/useApi';
+import { trackRequestBiospecimen } from 'services/analytics';
+import { headers } from 'services/api/reports';
+import { ReportType } from 'services/api/reports/models';
+import { fetchReport, generateLocalTsvReport } from 'store/report/thunks';
+import { PROJECT_ID, useSavedSet } from 'store/savedSet';
+import { fetchSavedSet } from 'store/savedSet/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -32,6 +46,9 @@ import {
 import TableView from './TableView';
 
 import styles from './index.module.css';
+
+const ARRANGER_PROJECT_ID = EnvironmentVariables.configFor('ARRANGER_PROJECT_ID');
+const REPORTS_API_URL = EnvironmentVariables.configFor('REPORTS_API_URL');
 
 interface OwnProps {
   participant?: IParticipantEntity;
@@ -70,6 +87,51 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
     biospecimensDefaultColumns,
   );
 
+  const requestSqon = {
+    content: [
+      {
+        content: {
+          field: 'sample_id',
+          index: INDEXES.BIOSPECIMEN,
+          value: biospecimens.map((s) => s.sample_id),
+        },
+        op: TermOperators.in,
+      },
+    ],
+    op: BooleanOperators.and,
+  };
+
+  const config: AxiosRequestConfig = {
+    url: `${REPORTS_API_URL}/reports/biospecimen-request/stats`,
+    method: 'POST',
+    responseType: 'json',
+    data: {
+      sqon: requestSqon,
+      projectId: ARRANGER_PROJECT_ID,
+    },
+    headers: headers(),
+  };
+
+  const fetchRequestBioReport = (name: string) => {
+    dispatch(
+      fetchReport({
+        data: {
+          sqon: requestSqon,
+          name: ReportType.BIOSEPCIMEN_REQUEST,
+          projectId: PROJECT_ID,
+          biospecimenRequestName: name,
+        },
+        translation: {
+          errorMessage: intl.get('api.biospecimenRequest.error.manifestReport'),
+          successMessage: intl.get('api.biospecimenRequest.success.manifestReport'),
+        },
+        callback: () => {
+          dispatch(fetchSavedSet());
+        },
+      }),
+    );
+  };
+
   return (
     <EntityCustomContent
       id={SectionId.BIOSPECIMEN}
@@ -104,6 +166,23 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
           ]}
           tabBarExtraContent={
             <Space size={8}>
+              <RequestBiospecimenButton
+                additionalHandleClick={() => trackRequestBiospecimen('Participant - open modal')}
+                additionalHandleFinish={() =>
+                  trackRequestBiospecimen('Participant - download manifest')
+                }
+                createAndFetchReport={(name) => fetchRequestBioReport(name)}
+                dictionary={getRequestBiospecimenDictionary()}
+                columns={getDataTypeColumns()}
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                getSamples={() => useApi({ config })}
+                getSavedSets={useSavedSet}
+                key="requestBiospecimen"
+                maxTitleLength={200}
+                nbBiospecimenSelected={biospecimens.length}
+                sqon={requestSqon}
+                size="small"
+              />
               <DownloadDataButton
                 biospecimenIds={[...biospecimens.map((biospecimen) => biospecimen.sample_id)]}
                 key="downloadSampleData"
