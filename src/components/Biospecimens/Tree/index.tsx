@@ -33,12 +33,12 @@ enum NODE_TYPE {
 }
 
 export interface INode {
-  key: string; // l’id du container / sample / collected sample futur title de l’arbre
-  type: string; // pour l’icône du début
-  hasCollectionAvailability?: boolean; // pour la collection si au moins un enfant a un sample disponible (icône check outlined vert)
-  isSampleAvailable?: boolean; // pour le sample qui a un sample disponible (icône check plein vert)
-  count?: number; // Nombre d’enfants directs
-  hasFiles?: boolean; // Pour afficher l’icône file si au moins un fichier lié au container
+  key: string;
+  type: string;
+  hasCollectionAvailability?: boolean;
+  isSampleAvailable?: boolean;
+  count?: number;
+  hasFiles?: boolean;
   children?: INode[];
 }
 
