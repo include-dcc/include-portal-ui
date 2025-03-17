@@ -3,28 +3,36 @@ import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import Empty from '@ferlab/ui/core/components/Empty';
 import ProTable from '@ferlab/ui/core/components/ProTable';
+import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { Card, Space } from 'antd';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
 import { INDEXES } from 'graphql/constants';
 
 import { generateLocalTsvReport } from 'store/report/thunks';
-import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
-import { userColsHaveSameKeyAsDefaultCols } from 'utils/tables';
 
 import { SectionId } from '../utils/anchorLinks';
-import { getBiospecimensDefaultColumns } from '../utils/biospecimens';
 
 import styles from './index.module.css';
 
 interface TableViewProps {
   loading: boolean;
   data: IBiospecimenEntity[];
+  biospecimensDefaultColumns: ProColumnType[];
+  userColumnPreferencesOrDefault: {
+    index: number;
+    key: string;
+    visible: boolean;
+  }[];
 }
 
-const TableView = ({ data, loading }: TableViewProps): ReactElement => {
+const TableView = ({
+  biospecimensDefaultColumns,
+  data,
+  loading,
+  userColumnPreferencesOrDefault,
+}: TableViewProps): ReactElement => {
   const dispatch = useDispatch();
-  const { userInfo } = useUser();
   const [scroll, setScroll] = useState<{ y: number } | undefined>(undefined);
   const tableRef = useCallback((node: any) => {
     const height = node?.clientHeight ?? 0;
@@ -32,20 +40,6 @@ const TableView = ({ data, loading }: TableViewProps): ReactElement => {
       setScroll({ y: 400 });
     }
   }, []);
-
-  const biospecimensDefaultColumns = getBiospecimensDefaultColumns();
-
-  const userColumnPreferences = userInfo?.config?.participants?.tables?.biospecimens?.columns || [];
-  const userColumnPreferencesOrDefault = userColsHaveSameKeyAsDefaultCols(
-    userColumnPreferences,
-    biospecimensDefaultColumns,
-  )
-    ? [...userColumnPreferences]
-    : biospecimensDefaultColumns.map((c, index) => ({
-        visible: true,
-        index,
-        key: c.key,
-      }));
 
   return (
     <Card className={styles.card} loading={loading}>
@@ -61,8 +55,8 @@ const TableView = ({ data, loading }: TableViewProps): ReactElement => {
               pageSize: 0,
               total: 0,
             },
-            enableTableExport: true,
-            enableColumnSort: true,
+            // enableTableExport: true,
+            // enableColumnSort: true,
             onColumnSortChange: (newState) =>
               dispatch(
                 updateUserConfig({

@@ -1669,6 +1669,7 @@ const en = {
           biospecimenStorage: 'Biospecimen Storage',
         },
       },
+      exportAsTsv: 'Export as TSV',
     },
   },
   facets: {
