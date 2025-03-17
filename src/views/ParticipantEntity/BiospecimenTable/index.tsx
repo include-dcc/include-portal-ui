@@ -145,11 +145,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
             {
               key: BiospecimenTabs.TreeView,
               label: intl.get('screen.hierarchicalBiospecimen.treeViewTab'),
-              children: (
-                <>
-                  <BiospecimenTree />
-                </>
-              ),
+              children: <BiospecimenTree />,
             },
             {
               key: BiospecimenTabs.TableView,
