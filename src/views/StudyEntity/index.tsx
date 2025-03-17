@@ -33,6 +33,7 @@ import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { useStudy } from 'graphql/studies/actions';
 import { IStudyDataset } from 'graphql/studies/models';
+import { getEnvVarByKey } from 'helpers/EnvVariables';
 import {
   cavaticaCreateProjectDictionary,
   getDSConnectDrsItems,
@@ -79,9 +80,6 @@ import SummaryHeader from './SummaryHeader';
 import style from './index.module.css';
 
 const { Text, Title } = Typography;
-
-const DSC_DATASET_ID = 'Dataset-Metadata-DSC-UH-Clinical';
-const DSC_STUDY_ID = 'DSC';
 
 const queryId = 'include-study-repo-key';
 
@@ -676,7 +674,11 @@ const StudyEntity = () => {
                 );
               }
 
-              if (study.study_id === DSC_STUDY_ID && dataset.dataset_id === DSC_DATASET_ID) {
+              if (
+                study.study_id === getEnvVarByKey('STUDY_ID_DATASET_CAVATICA') &&
+                (dataset.dataset_id === getEnvVarByKey('STUDY_DATASET_ID_CAVATICA_1') ||
+                  dataset.dataset_id === getEnvVarByKey('STUDY_DATASET_ID_CAVATICA_2'))
+              ) {
                 titleExtra.push(
                   <Button
                     className={style.datasetBtn}
