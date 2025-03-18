@@ -33,12 +33,12 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
   });
 
   it('Lien Virtual Biorepository Email du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(16).find('[href]')
       .should('have.attr', 'href', 'mailto:dsresearch@cuanschutz.edu');
   });
 
   it('Lien Virtual Biorepository URL du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).find('[href]')
       .should('have.attr', 'href', 'https://redcap.link/HTPVBRrequest');
   });
 
