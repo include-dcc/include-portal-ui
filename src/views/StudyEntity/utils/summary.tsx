@@ -1,7 +1,6 @@
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Space, Tag, Tooltip, Typography } from 'antd';
@@ -20,14 +19,19 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
     ...new Set(study?.contacts?.hits.edges.map((contact) => contact.node.institution)),
   ].filter((institution) => institution);
 
-  return [
-    {
+  const result: IEntityDescriptionsItem[] = [];
+
+  if (study?.study_code) {
+    result.push({
       label: intl.get('entities.study.study_code'),
-      value: study?.study_code || TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study.study_code,
+    });
+  }
+
+  if (study?.study_name) {
+    result.push({
       label: intl.get('entities.study.study_name'),
-      value: study?.study_name ? (
+      value: (
         <Space size={8}>
           <Text>{study.study_name}</Text>
           {study.is_harmonized ? (
@@ -40,95 +44,119 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
             </Tooltip>
           )}
         </Space>
-      ) : (
-        TABLE_EMPTY_PLACE_HOLDER
       ),
-    },
-    {
+    });
+  }
+
+  if (study?.program) {
+    result.push({
       label: intl.get('entities.study.program'),
-      value: study?.program || TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study.program,
+    });
+  }
+
+  if (study?.external_ids?.length) {
+    result.push({
       label: intl.get('entities.study.dbGaP'),
-      value: study?.external_ids?.length
-        ? study.external_ids.map((id) => (
-            <ExternalLink
-              className={styles.dbgapLink}
-              href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${id}`}
-              key={id}
-            >
-              {id}
-            </ExternalLink>
-          ))
-        : TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
-      label: intl.get('entities.study.guid'),
-      value: study?.is_guid_mapped ? (
-        <Tooltip
-          title={
-            <>
-              {intl.get('entities.study.guidEntityTooltip1')}
-              <Link
-                to={STATIC_ROUTES.STUDIES}
-                style={{ textDecoration: 'underline' }}
-                target="_blank"
-              >
-                {intl.get('entities.study.guidEntityTooltip2')}
-              </Link>
-              .
-            </>
-          }
+      value: study.external_ids.map((id) => (
+        <ExternalLink
+          className={styles.dbgapLink}
+          href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${id}`}
+          key={id}
         >
-          <Tag color="green">True</Tag>
-        </Tooltip>
-      ) : (
-        <Tag color="default">False</Tag>
-      ),
-    },
-    {
+          {id}
+        </ExternalLink>
+      )),
+    });
+  }
+
+  result.push({
+    label: intl.get('entities.study.guid'),
+    value: study?.is_guid_mapped ? (
+      <Tooltip
+        title={
+          <>
+            {intl.get('entities.study.guidEntityTooltip1')}
+            <Link
+              to={STATIC_ROUTES.STUDIES}
+              style={{ textDecoration: 'underline' }}
+              target="_blank"
+            >
+              {intl.get('entities.study.guidEntityTooltip2')}
+            </Link>
+            .
+          </>
+        }
+      >
+        <Tag color="green">True</Tag>
+      </Tooltip>
+    ) : (
+      <Tag color="default">False</Tag>
+    ),
+  });
+
+  if (study?.part_lifespan_stages) {
+    result.push({
       label: intl.get('entities.study.participant_life_span'),
-      value: study?.part_lifespan_stages
-        ? study?.part_lifespan_stages.map((lifespan, index) => (
-            <Tag color="cyan" key={index}>
-              {lifespan}
-            </Tag>
-          ))
-        : TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study.part_lifespan_stages.map((lifespan, index) => (
+        <Tag color="cyan" key={index}>
+          {lifespan}
+        </Tag>
+      )),
+    });
+  }
+
+  if (study?.description) {
+    result.push({
       label: intl.get('entities.study.description'),
-      value: study?.description || TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study.description,
+    });
+  }
+
+  if (study?.domains?.length) {
+    result.push({
       label: intl.get('entities.study.domain'),
-      value: study?.domains?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study.domains.join(', '),
+    });
+  }
+
+  if (study?.data_sources?.length) {
+    result.push({
       label: intl.get('entities.study.data_sources'),
-      value: study?.data_sources?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study.data_sources.join(', '),
+    });
+  }
+
+  if (study?.expected_data_categories?.length) {
+    result.push({
       label: intl.get('entities.study.expected_data_categories'),
-      value: study?.expected_data_categories?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study.expected_data_categories.join(', '),
+    });
+  }
+
+  if (study?.selection_criteria?.length) {
+    result.push({
       label: intl.get('entities.study.selection_criteria'),
-      value: study?.selection_criteria?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study?.selection_criteria?.join(', '),
+    });
+  }
+
+  if (study?.study_designs?.length) {
+    result.push({
       label: intl.get('entities.study.study_design'),
-      value: study?.study_designs?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study?.study_designs?.join(', '),
+    });
+  }
+
+  if (study?.website) {
+    result.push({
       label: intl.get('entities.study.study_website'),
-      value: study?.website ? (
-        <ExternalLink href={study.website}>{study.website}</ExternalLink>
-      ) : (
-        TABLE_EMPTY_PLACE_HOLDER
-      ),
-    },
-    {
+      value: <ExternalLink href={study.website}>{study.website}</ExternalLink>,
+    });
+  }
+
+  if (study?.publications?.length) {
+    result.push({
       label: (
         <Space size={4}>
           <Text>{intl.get('entities.study.publication')}</Text>
@@ -144,53 +172,70 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
           publications_details={study?.publications_details}
         />
       ),
-    },
-    {
+    });
+  }
+
+  if (study?.investigator_names?.length) {
+    result.push({
       label: intl.get('entities.study.principal_investigator'),
-      value: study?.investigator_names?.join(', ') || TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study.investigator_names.join(', '),
+    });
+  }
+
+  if (institutions.length) {
+    result.push({
       label: intl.get('entities.study.institution'),
-      value: institutions.length ? institutions.join(', ') : TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: institutions.join(', '),
+    });
+  }
+
+  if (study?.contacts?.hits?.edges?.length) {
+    result.push({
       label: intl.get('entities.study.study_contact'),
-      value: study?.contacts?.hits?.edges?.length
-        ? study?.contacts?.hits?.edges.map((contact, index) => (
-            <div key={index}>
-              {contact.node.name && <Text>{contact.node.name}; </Text>}
-              {contact.node.email && <Text>{contact.node.email}</Text>}
-            </div>
-          ))
-        : TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study.contacts.hits.edges.map((contact, index) => (
+        <div key={index}>
+          {contact.node.name && <Text>{contact.node.name}; </Text>}
+          {contact.node.email && <Text>{contact.node.email}</Text>}
+        </div>
+      )),
+    });
+  }
+
+  if (study?.biobank_contact) {
+    result.push({
       label: intl.get('entities.study.virtual_biorepository_email'),
-      value: study?.biobank_contact ? (
+      value: (
         <ExternalLink href={`mailto:${study.biobank_contact}`}>
           {study.biobank_contact}
         </ExternalLink>
-      ) : (
-        TABLE_EMPTY_PLACE_HOLDER
       ),
-    },
-    {
+    });
+  }
+
+  if (study?.biobank_request_link) {
+    result.push({
       label: intl.get('entities.study.virtual_biorepository_url'),
-      value: study?.biobank_request_link ? (
+      value: (
         <ExternalLink href={study.biobank_request_link}>{study.biobank_request_link}</ExternalLink>
-      ) : (
-        TABLE_EMPTY_PLACE_HOLDER
       ),
-    },
-    {
+    });
+  }
+
+  if (study?.citation_statement) {
+    result.push({
       label: intl.get('entities.study.citation_statement'),
-      value: study?.citation_statement || TABLE_EMPTY_PLACE_HOLDER,
-    },
-    {
+      value: study.citation_statement,
+    });
+  }
+
+  if (study?.acknowledgement) {
+    result.push({
       label: intl.get('entities.study.acknowledgement'),
-      value: study?.acknowledgement || TABLE_EMPTY_PLACE_HOLDER,
-    },
-  ];
+      value: study.acknowledgement,
+    });
+  }
+
+  return result;
 };
 
 export default getSummaryDescriptions;

@@ -86,10 +86,6 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).contains('dsresearch@cuanschutz.edu').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(18).contains('Virtual Biorepository URL').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).contains('https://redcap.link/HTPVBRrequest').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(19).contains('Citation Statement').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).contains('-').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(20).contains('Acknowledgement').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(20).contains('-').should('exist');
   });
 
   it('Panneau Statistic', () => {
