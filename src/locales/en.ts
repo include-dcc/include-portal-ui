@@ -1392,6 +1392,11 @@ const en = {
               },
             },
           },
+          hierarchicalBiospecime: {
+            modal: {
+              title: 'Sample hierarchy - {participantId}',
+            },
+          },
         },
         datafiles: {
           title: 'Data Files ({count})',
