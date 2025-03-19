@@ -11,6 +11,7 @@ import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import { Button, Card, Descriptions, Input, Popover, Space, Typography } from 'antd';
 import Tree, { DataNode } from 'antd/lib/tree';
 import cx from 'classnames';
+import { Status } from 'graphql/biospecimens/models';
 
 import CollectionLogo from 'components/assets/biospecimen/collection.svg';
 import ContainerLogo from 'components/assets/biospecimen/container.svg';
@@ -40,6 +41,22 @@ export interface INode {
   count?: number;
   hasFiles?: boolean;
   children?: INode[];
+  collection_sample_id?: string;
+  external_collection_sample_id?: string;
+  collection_sample_type?: string;
+  sample_id?: string;
+  external_sample_id?: string;
+  sample_type?: string;
+  parent_sample_type?: string;
+  age_at_biospecimen_collection?: number;
+  status?: Status | string;
+  laboratory_procedure?: string;
+  nb_files?: number;
+  participant_fhir_id?: string;
+  container_id?: string;
+  volume?: number;
+  volume_unit?: string;
+  biospecimen_storage?: string;
 }
 
 const getTypeIcon = (type: string) => {
@@ -143,7 +160,11 @@ const getNodeDetails = (key: React.Key, data: INode[]): INode | undefined => {
   return result;
 };
 
-const BiospecimenTree = () => {
+interface BiospecinenTreeProps {
+  hasParticipantLink?: boolean;
+}
+
+const BiospecimenTree = ({ hasParticipantLink = false }: BiospecinenTreeProps) => {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -235,7 +256,7 @@ const BiospecimenTree = () => {
                       setDescriptions(getCollectionDetails(nodeDetails));
                       break;
                     case NODE_TYPE.SAMPLE:
-                      setDescriptions(getSampleDetails(nodeDetails));
+                      setDescriptions(getSampleDetails(nodeDetails, hasParticipantLink));
                       break;
                     case NODE_TYPE.CONTAINER:
                       setDescriptions(getContainerDetails(nodeDetails));
