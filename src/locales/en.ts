@@ -1392,6 +1392,11 @@ const en = {
               },
             },
           },
+          hierarchicalBiospecime: {
+            modal: {
+              title: 'Sample hierarchy - {participantId}',
+            },
+          },
         },
         datafiles: {
           title: 'Data Files ({count})',
@@ -1608,6 +1613,47 @@ const en = {
             'HTP Whole Blood RNAseq (v1) is a dataset generated as part of the Human Trisome Project (HTP), which focuses on the genetic and molecular characteristics of individuals with trisomy conditions, including Down syndrome. This dataset consists of RNA sequencing (RNAseq) data derived from whole blood samples, capturing transcriptomic profiles at high throughput (HTP). The first version (v1) includes baseline gene expression data, with a focus on understanding differential gene expression, alternative splicing, and pathway analysis across samples. It is used for comparative studies between trisomic and euploid populations to identify potential biomarkers and therapeutic targets.',
         },
       },
+    },
+    hierarchicalBiospecimen: {
+      treeViewTab: 'Tree view',
+      tableViewTab: 'Table view',
+      searchPlaceholder: 'Search',
+      collapseAll: 'Collapse all',
+      expandAll: 'Expand all',
+      legend: {
+        title: 'Legend',
+        collection: 'Collection',
+        sample: 'Sample',
+        container: 'Container',
+        fileAvailable: 'File available',
+        sampleAvailable: 'Sample available',
+        oneSampleAvailable: 'At least one sample available',
+      },
+      details: {
+        collection: {
+          collectionSampleId: 'Collection Sample ID',
+          externalCollectionSampleId: 'External Collection ID',
+          collectionSampleType: 'Collection Sample Type',
+        },
+        sample: {
+          sampleId: 'Sample ID',
+          externalSampleId: 'External Sample ID',
+          sampleType: 'Sample Type',
+          parentSampleType: 'Parent Sample Type',
+          ageAtBiospecimenCollection: 'Age At Biospecimen Collection',
+          status: 'Sample Availability',
+          laboratoryProcedure: 'Laboratory Procedure',
+          nbFiles: 'Files',
+          participantFhirId: 'Participant ID',
+        },
+        container: {
+          containerId: 'Container ID',
+          volume: 'Volume',
+          volumeUnit: 'Volume Unit',
+          biospecimenStorage: 'Biospecimen Storage',
+        },
+      },
+      exportAsTsv: 'Export as TSV',
     },
   },
   facets: {
