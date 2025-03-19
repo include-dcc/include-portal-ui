@@ -7,6 +7,14 @@
 
 ### Technical / Other changes
 -->
+## 2025-03-19 include-portal-ui 1.17.1
+
+### Technical/ Other changes:
+
+- [SJIP-1262](https://d3b.atlassian.net/browse/SJIP-1262) Issue: [Study Entity] Missing Analyze in Cavatica button for DS-Connect dataset
+- [SJIP-1248](https://d3b.atlassian.net/browse/SJIP-1248) Issue: [Data Exploration] Venn diagram error 500 when comparing combined queries
+- [SJIP-1267](https://d3b.atlassian.net/browse/SJIP-1267) Refactor: [Study Entity] Hide rows without values in the Study summary section
+- [SJIP-1273](https://d3b.atlassian.net/browse/SJIP-1273) Refactor: [Study Entity & Landing] Update the DS-Connect logo
 
 ## 2025-03-11 include-portal-ui 1.17.0
 
