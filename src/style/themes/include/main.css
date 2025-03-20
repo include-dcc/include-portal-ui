@@ -47,8 +47,11 @@
   --sidebar-menu-item-border-focus-color: var(--gray-1);
   --sidebar-quick-filter-input-box-shadow-hover: 0 0 0 2px var(--blue-8);
   --sidebar-quick-filter-input-box-shadow-focus: 0 0 0 2px var(--gray-8), 0 0 0 3px var(--gray-1);
+  --sidebar-quick-filter-input-box-shadow-focus-error: 0 0 0 2px var(--red-7), 0 0 0 3px white;
   --sidebar-quick-filter-input-placeholder-color: var(--gray-6);
   --sidebar-quick-filter-input-text-color: var(--gray-8);
+  --sidebar-quick-filter-input-border-color-focus-error: var(--red-7);
+  --sidebar-quick-filter-popover-placeholder-error: var(--red-7);
   --sidebar-quick-filter-facet-name-btn: var(--gray-9);
   --sidebar-content-panel-padding: 16px;
   --sidebar-content-panel-width: 320px;
@@ -66,8 +69,14 @@
   --prolabel-required-mark-color: var(--red-8);
   --file-upload-item-color: var(--blue-8);
   --canonical-icon-color: var(--blue-8);
-  --landing-card-gradient: linear-gradient(346deg, #1C3863 20.53%, #0369A1 100.05%), linear-gradient(299deg, #0369A1 0.84%, #1C3863 100.02%), #F0F3F8;
-  --landing-cavatica-gradient: linear-gradient(300deg, rgba(210, 54, 254, 0.30) 0%, rgba(0, 170, 221, 0.30) 100%), #2E3F50;
+  --landing-card-gradient: linear-gradient(346deg, #1c3863 20.53%, #0369a1 100.05%),
+    linear-gradient(299deg, #0369a1 0.84%, #1c3863 100.02%), #f0f3f8;
+  --landing-cavatica-gradient: linear-gradient(
+      300deg,
+      rgba(210, 54, 254, 0.3) 0%,
+      rgba(0, 170, 221, 0.3) 100%
+    ),
+    #2e3f50;
   --landing-text-color: var(--gray-8);
   --landing-text-color-invert: var(--gray-1);
   --landing-text-icon-color-light: var(--blue-3);
