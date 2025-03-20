@@ -103,6 +103,7 @@ export const getFiltersDictionary = (): FiltersDict => ({
   quickFilter: {
     emptyMessage: intl.get('global.filters.quickfilter.emptyMessage'),
     placeholder: intl.get('global.filters.quickfilter.placeholder'),
+    placeholderError: intl.get('global.filters.quickfilter.placeholderError'),
   },
 });
 
