@@ -28,6 +28,181 @@ export const DEMOGRAPHIC_QUERY = `
   }
 `;
 
+export const AGE_QUERY = `
+  query($sqon: JSON) {
+    participant {
+      _0to9T21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "<=", content: { field: "age_at_first_patient_engagement.value", value: [3650] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["T21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _0to9D21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "<=", content: { field: "age_at_first_patient_engagement.value", value: [3650] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["D21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _10to19T21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "between", content: { field: "age_at_first_patient_engagement.value", value: [3651, 7300] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["T21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _10to19D21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "between", content: { field: "age_at_first_patient_engagement.value", value: [3651, 7300] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["D21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _20to29T21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "between", content: { field: "age_at_first_patient_engagement.value", value: [7301, 10950] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["T21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _20to29D21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "between", content: { field: "age_at_first_patient_engagement.value", value: [7301, 10950] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["D21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _30to39T21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "between", content: { field: "age_at_first_patient_engagement.value", value: [10951, 14600] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["T21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _30to39D21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "between", content: { field: "age_at_first_patient_engagement.value", value: [10951, 14600] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["D21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _40to49T21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "between", content: { field: "age_at_first_patient_engagement.value", value: [14601, 18250] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["T21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _40to49D21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "between", content: { field: "age_at_first_patient_engagement.value", value: [14601, 18250] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["D21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _50to59T21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "between", content: { field: "age_at_first_patient_engagement.value", value: [18251, 21900] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["T21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _50to59D21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: "between", content: { field: "age_at_first_patient_engagement.value", value: [18251, 21900] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["D21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _60plusT21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: ">", content: { field: "age_at_first_patient_engagement.value", value: [21900] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["T21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+      _60plusD21: hits(
+        filters: {
+          op: "and"
+          content: [
+            $sqon
+            { op: ">", content: { field: "age_at_first_patient_engagement.value", value: [21900] } }
+            { op: "in", content: { field: "down_syndrome_status", value: ["D21"] } }
+          ]
+        }
+      ) {
+        total
+      }
+    }
+  }
+`;
+
 export const DATATYPE_QUERY = `
   query($sqon: JSON) {
     participant {

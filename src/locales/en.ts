@@ -1272,6 +1272,13 @@ const en = {
               legendAxisLeft: 'Data Types',
               legendAxisBottom: '# of participants',
             },
+            participantsByAgeGraph: {
+              tooltips: 'Participants',
+              T21: 'Trisomy 21',
+              D21: 'Controls',
+              legendAxisLeft: 'Age at First Patient Engagement (years)',
+              legendAxisBottom: '# of participants',
+            },
             sampleTypeGraph: {
               legendAxisLeft: 'Sample Types',
               legendAxisBottom: '# of participants',
@@ -1304,6 +1311,7 @@ const en = {
           },
           availableData: {
             dataCategoryTitle: 'Participants by Data Category',
+            participantsByAge: 'Participants by Age at First Patient Engagement',
             dataTypeTitle: 'Participants by Data Type',
             studiesTitle: 'Participants by Study',
             sampleTypeTitle: 'Participants by Sample Type',
@@ -1314,6 +1322,9 @@ const en = {
             title: 'Co-occurrence of Top 10 Conditions',
             label: '# of participants',
             empty: 'No co-occurring conditions for this query',
+          },
+          participantsByAge: {
+            cardTitle: 'Participants by Age at First Patient Engagement',
           },
           sampleType: {
             cardTitle: 'Sample Type',

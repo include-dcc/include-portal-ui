@@ -7,6 +7,7 @@ import DataTypeGraphCard from '../DataTypeGraphCard';
 import DemographicsGraphCard from '../DemographicGraphCard';
 import MostFrequentDiagnosisGraphCard from '../MostFrequentDiagnosisGraphCard';
 import MostFrequentPhenotypesGraphCard from '../MostFrequentPhenotypesGraphCard';
+import ParticipantsByAgeGraphCard from '../ParticipantsByAge';
 import SampleTypeGraphCard from '../SampleType';
 import StudiesGraphCard from '../StudiesGraphCard';
 
@@ -21,6 +22,7 @@ export const DEMOGRAPHICS_GRAPH_CARD_ID = 'demographics-graph-card';
 export const AGE_AT_DIAGNOSIS_GRAPH_CARD_ID = 'age-at-diagnosis-graph-card';
 export const DATA_CATEGORY_GRAPH_CARD_ID = 'data-category-graph-card';
 export const STUDIES_GRAPH_CARD_ID = 'studies-graph-card';
+export const PARTCIPANTS_BY_AGE_CARD_ID = 'participants-by-age-card';
 export const DATA_TYPE_GRAPH_CARD_ID = 'data-type-graph-card';
 
 export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
@@ -118,26 +120,26 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       minH: 4,
       minW: 6,
       h: 4,
-      w: 8,
+      w: 6,
       x: 0,
       y: 4,
       isResizable: false,
     },
     lg: {
       h: 4,
-      w: 12,
+      w: 10,
       x: 0,
       y: 4,
     },
     md: {
       h: 4,
-      w: 8,
+      w: 7,
       x: 0,
       y: 4,
     },
     sm: {
       h: 4,
-      w: 7,
+      w: 6,
       x: 0,
       y: 4,
     },
@@ -155,9 +157,9 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
     },
   },
   {
-    title: intl.get('screen.dataExploration.tabs.summary.studies.cardTitle'),
-    id: STUDIES_GRAPH_CARD_ID,
-    component: <StudiesGraphCard />,
+    title: intl.get('screen.dataExploration.tabs.summary.participantsByAge.cardTitle'),
+    id: PARTCIPANTS_BY_AGE_CARD_ID,
+    component: <ParticipantsByAgeGraphCard />,
     base: {
       minH: 2,
       minW: 2,
@@ -168,20 +170,20 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
     },
     lg: {
       h: 4,
-      w: 4,
-      x: 12,
+      w: 6,
+      x: 10,
       y: 4,
     },
     md: {
       h: 4,
-      w: 4,
-      x: 9,
+      w: 5,
+      x: 7,
       y: 4,
     },
     sm: {
       h: 4,
-      w: 3,
-      x: 7,
+      w: 4,
+      x: 6,
       y: 4,
     },
     xs: {
@@ -205,31 +207,31 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       minH: 2,
       minW: 4,
       h: 2,
-      w: 6,
+      w: 4,
       x: 0,
       y: 8,
     },
     lg: {
       h: 2,
-      w: 8,
+      w: 6,
       x: 0,
       y: 8,
     },
     md: {
       h: 2,
-      w: 6,
+      w: 4,
       x: 0,
       y: 8,
     },
     sm: {
       h: 2,
-      w: 5,
+      w: 3,
       x: 0,
       y: 8,
     },
     xs: {
       h: 2,
-      w: 6,
+      w: 4,
       x: 0,
       y: 19,
     },
@@ -238,6 +240,49 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       w: 4,
       x: 0,
       y: 18,
+    },
+  },
+  {
+    title: intl.get('screen.dataExploration.tabs.summary.studies.cardTitle'),
+    id: STUDIES_GRAPH_CARD_ID,
+    component: <StudiesGraphCard />,
+    base: {
+      minH: 2,
+      minW: 2,
+      h: 2,
+      w: 2,
+      x: 6,
+      y: 8,
+    },
+    lg: {
+      h: 2,
+      w: 2,
+      x: 6,
+      y: 8,
+    },
+    md: {
+      h: 2,
+      w: 2,
+      x: 4,
+      y: 8,
+    },
+    sm: {
+      h: 2,
+      w: 2,
+      x: 3,
+      y: 8,
+    },
+    xs: {
+      h: 2,
+      w: 2,
+      x: 4,
+      y: 18,
+    },
+    xxs: {
+      h: 2,
+      w: 4,
+      x: 0,
+      y: 20,
     },
   },
   {
@@ -280,7 +325,7 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       h: 2,
       w: 4,
       x: 0,
-      y: 20,
+      y: 22,
     },
   },
   {
@@ -323,7 +368,7 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       h: 3,
       w: 4,
       x: 0,
-      y: 22,
+      y: 24,
     },
   },
   {
@@ -366,7 +411,7 @@ export const getDefaultLayouts = (): IResizableGridLayoutConfig[] => [
       h: 3,
       w: 4,
       x: 0,
-      y: 25,
+      y: 27,
     },
   },
 ];
