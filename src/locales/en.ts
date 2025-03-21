@@ -110,7 +110,7 @@ const en = {
       quickfilter: {
         placeholder: 'Search...',
         emptyMessage: 'Min. 3 characters',
-        placeholderError: 'Forbidden characters  ( ) [ ] | \\',
+        placeholderError: 'Forbidden characters  ( ) [ ] | \\ * + ?',
       },
     },
     forms: {
