@@ -13,9 +13,10 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { useKeycloak } from '@react-keycloak/web';
-import { Dropdown, PageHeader, Space, Typography } from 'antd';
+import { Button, Dropdown, PageHeader, Space, Typography } from 'antd';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
 
+import { LANG } from 'common/constants';
 import { IncludeKeycloakTokenParsed } from 'common/tokenTypes';
 import { AlterTypes } from 'common/types';
 import NotificationBanner from 'components/featureToggle/NotificationBanner';
@@ -25,10 +26,14 @@ import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import HeaderLink from 'components/Layout/Header/HeaderLink';
 import style from 'components/Layout/Header/index.module.css';
 import UserAvatar from 'components/UserAvatar';
+import useFeatureToggle from 'hooks/useFeatureToggle';
 import { trackLogout, trackVisitResources } from 'services/analytics';
+import { globalActions, useLang } from 'store/global';
 import { useUser } from 'store/user';
 import { userActions } from 'store/user/slice';
 import { STATIC_ROUTES } from 'utils/routes';
+
+const FT_FLAG_SHOW_TRANSLATION_BTN = 'SHOW_TRANSLATION_BTN';
 
 const iconSize = { width: 14, height: 14 };
 const FT_FLAG_KEY = 'SITE_WIDE_BANNER';
@@ -44,6 +49,9 @@ const Header = () => {
   const location = useLocation();
   const currentPathName = location.pathname;
   const tokenParsed = keycloak.tokenParsed as IncludeKeycloakTokenParsed;
+  const { isEnabled: isShowTranslationBtnEnabled } = useFeatureToggle(FT_FLAG_SHOW_TRANSLATION_BTN);
+  const lang = useLang();
+  const targetLang = lang === LANG.EN ? LANG.ES : LANG.EN;
 
   return (
     <>
@@ -248,6 +256,15 @@ const Header = () => {
               <DownOutlined />
             </a>
           </Dropdown>,
+          isShowTranslationBtnEnabled && (
+            <Button
+              size="small"
+              type="text"
+              onClick={() => dispatch(globalActions.changeLang(targetLang))}
+            >
+              {targetLang.toUpperCase()}
+            </Button>
+          ),
         ]}
         className={style.mainHeader}
       />

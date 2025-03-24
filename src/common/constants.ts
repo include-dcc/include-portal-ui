@@ -3,6 +3,7 @@ import EnvironmentVariables from 'helpers/EnvVariables';
 export enum LANG {
   EN = 'en',
   FR = 'fr',
+  ES = 'es',
 }
 
 export const REDIRECT_URI_KEY = 'redirect_path';
