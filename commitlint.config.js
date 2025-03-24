@@ -7,7 +7,7 @@ const Configuration = {
         'footer-leading-blank': [1, 'always'],
         'footer-max-line-length': [2, 'always', 100],
         'header-max-length': [2, 'always', 100],
-        'subject-case': [2, 'never', ['start-case', 'pascal-case', 'upper-case']],
+        'subject-case': [2, 'always', ['sentence-case', 'start-case', 'pascal-case', 'upper-case', 'lower-case']],
         'subject-empty': [2, 'never'],
         'subject-full-stop': [2, 'never', '.'],
         'type-case': [2, 'always', 'lower-case'],
@@ -35,7 +35,7 @@ const Configuration = {
     ],
     parserPreset: {
         parserOpts: {
-        headerPattern: /^(\w*)(\([a-zA-Z0-9_ ]+\))?:\s?(\s[\w+\-]*\d+)\s?([\w \-À-ÿ]*)\s*(\(#\d+\))?$/,
+        headerPattern: /^(\w*)(\([a-zA-Z0-9_ ]+\))?:\s?(\s[\w+\-]*\d+)\s?([\w \-\.À-ÿ]*)\s*(\(#\d+\))?$/,
         headerCorrespondence: ['type', 'scope', 'githubTicketNumber', 'subject'],
         },
     },
