@@ -25,6 +25,7 @@ export enum STATIC_ROUTES {
 
   ANALYTICS = '/analytics',
   ANALYTICS_TRANSCRIPTOMIC = '/analytics/transcriptomic',
+  ANALYTICS_SET_OPERATIONS = '/analytics/set-operations',
 }
 
 export enum DYNAMIC_ROUTES {

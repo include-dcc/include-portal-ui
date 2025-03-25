@@ -25,6 +25,7 @@ import { FENCE_NAMES } from 'common/fenceTypes';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Spinner from 'components/uiKit/Spinner';
 import NotificationContextHolder from 'components/utils/NotificationContextHolder';
+import useFeatureToggle from 'hooks/useFeatureToggle';
 import { initGa } from 'services/analytics';
 import { useLang } from 'store/global';
 import { DYNAMIC_ROUTES, STATIC_ROUTES } from 'utils/routes';
@@ -44,6 +45,9 @@ const VariantEntity = loadable(() => import('views/VariantEntity'), loadableProp
 const FileEntity = loadable(() => import('views/FileEntity'), loadableProps);
 const ParticipantEntity = loadable(() => import('views/ParticipantEntity'), loadableProps);
 const ProfileSettings = loadable(() => import('views/ProfileSettings'), loadableProps);
+const SetOperations = loadable(() => import('views/Analytics/SetOperations'), loadableProps);
+
+const FT_SET_OPERATIONS = 'ANALYTICS_SET_OPERATIONS';
 
 initGa();
 
@@ -51,6 +55,8 @@ const App = () => {
   const lang = useLang();
   const { keycloak, initialized } = useKeycloak();
   const keycloakIsReady = keycloak && initialized;
+
+  const { isEnabled: isSetOperationsEnabled } = useFeatureToggle(FT_SET_OPERATIONS);
 
   setLocale(lang);
 
@@ -191,6 +197,17 @@ const App = () => {
                       </ProtectedRoute>
                     }
                   />
+
+                  {isSetOperationsEnabled && (
+                    <Route
+                      path={STATIC_ROUTES.ANALYTICS_SET_OPERATIONS}
+                      element={
+                        <ProtectedRoute>
+                          <SetOperations />
+                        </ProtectedRoute>
+                      }
+                    />
+                  )}
 
                   <Route path="*" element={<Navigate to={STATIC_ROUTES.DASHBOARD} />} />
                 </Routes>
