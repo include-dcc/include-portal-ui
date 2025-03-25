@@ -4,6 +4,7 @@ import { BarChartOutlined } from '@ant-design/icons';
 import { Button, Card, Divider, Space, Tag, Typography } from 'antd';
 
 import logo from 'components/assets/analytics/newsletterWidget1.svg';
+import { trackLaunchSetOperations } from 'services/analytics';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from './index.module.css';
@@ -32,6 +33,7 @@ const SetOperationsWidget = () => {
         <div className={styles.footerWrapper}>
           <Button
             onClick={() => {
+              trackLaunchSetOperations();
               navigate(STATIC_ROUTES.ANALYTICS_SET_OPERATIONS);
             }}
             icon={<BarChartOutlined />}

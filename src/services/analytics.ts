@@ -264,3 +264,12 @@ export const trackVennViewEntityCounts = (type: string, entityCount: number) => 
     });
   }
 };
+
+export const trackLaunchSetOperations = () => {
+  if (isGaActive) {
+    ReactGA.event({
+      category: 'Analytics',
+      action: 'Analytics - Launch set operations',
+    });
+  }
+};
