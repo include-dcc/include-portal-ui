@@ -7,6 +7,14 @@
 
 ### Technical / Other changes
 -->
+## 2025-03-26 include-portal-ui 1.17.2
+
+### Technical/ Other changes:
+
+- [SJIP-1274](https://d3b.atlassian.net/browse/SJIP-1274) Issue:[Sentry] Fixed regex error when searching in the QuickFilter using special characters
+- [SJIP-1276](https://d3b.atlassian.net/browse/SJIP-1276) Issue:[QuickFilter] Fixed regex error when searching in the QuickFilter using special characters *, +, ?
+- [SJIP-1277](https://d3b.atlassian.net/browse/SJIP-1277) [Sentry] Fixed error for UnhandledRejection: Non-Error promise rejection captured with value: true
+
 ## 2025-03-19 include-portal-ui 1.17.1
 
 ### Technical/ Other changes:
