@@ -3,7 +3,12 @@ import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import ProLabel from '@ferlab/ui/core/components/ProLabel';
 import ProTable from '@ferlab/ui/core/components/ProTable';
-import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import {
+  ProColumnType,
+  TColumnState,
+  TColumnStates,
+  TProTableSummary,
+} from '@ferlab/ui/core/components/ProTable/types';
 import { tieBreaker } from '@ferlab/ui/core/components/ProTable/utils';
 import useQueryBuilderState, {
   defaultQueryBuilderState,
@@ -16,10 +21,12 @@ import { FilterOperators } from '@ferlab/ui/core/data/sqon/operators';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, isEmptySqon } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
+import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import { Button, Input, Space, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useStudies } from 'graphql/studies/actions';
+import { IStudyEntity } from 'graphql/studies/models';
 import { cloneDeep } from 'lodash';
 
 import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
@@ -81,6 +88,59 @@ const generateMultipleQuery = (searchValue: string, activeQuery: ISyntheticSqon)
   const newQuery: any = activeQuery;
   newQuery.content = [cloneDeep(searchQuery), cloneDeep(activeQuery)];
   return newQuery;
+};
+
+const renderSummaryValue = (title: string, sum: number): React.ReactNode => (
+  <Space direction="vertical" size={0}>
+    <Typography.Text className={styles.summaryTitle} type="secondary">
+      {title}:
+    </Typography.Text>
+
+    <Typography.Text className={styles.summarySum}>{numberWithCommas(sum)}</Typography.Text>
+  </Space>
+);
+
+const getSummaryColumns = (
+  data: IStudyEntity[],
+  defaultColumns: ProColumnType<any>[],
+  columnsState?: TColumnStates,
+) => {
+  const summaryColumns: any[] = [];
+
+  (columnsState ?? defaultColumns).forEach((c, index) => {
+    let value: React.ReactNode = '';
+
+    if (c.key === 'participant_count') {
+      value = renderSummaryValue(
+        intl.get('entities.participant.participants'),
+        data.reduce((accumulator, d) => accumulator + d.participant_count, 0),
+      );
+    } else if (c.key === 'family_count') {
+      value = renderSummaryValue(
+        intl.get('entities.participant.families'),
+        data.reduce((accumulator, d) => accumulator + (d.family_count ?? 0), 0),
+      );
+    } else if (c.key === 'biospecimen_count') {
+      value = renderSummaryValue(
+        intl.get('entities.biospecimen.biospecimen'),
+        data.reduce((accumulator, d) => accumulator + d.biospecimen_count, 0),
+      );
+    }
+
+    if (columnsState) {
+      if ((c as TColumnState).visible) {
+        summaryColumns.push({ index, value });
+      }
+    } else if (!(c as ProColumnType<any>).defaultHidden) {
+      summaryColumns.push({ index, value, bordered: false });
+    }
+  });
+
+  if (summaryColumns.filter((sc) => sc.value != '').length > 0) {
+    return summaryColumns as TProTableSummary[];
+  }
+
+  return [];
 };
 
 const PageContent = ({ defaultColumns = [] }: OwnProps) => {
@@ -233,6 +293,11 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
             size="small"
             dataSource={data.map((i) => ({ ...i, key: i.study_code }))}
             dictionary={getProTableDictionary()}
+            summaryColumns={getSummaryColumns(
+              data,
+              defaultColumns,
+              userInfo?.config.study?.tables?.study?.columns,
+            )}
           />
         }
       />
