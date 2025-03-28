@@ -8,6 +8,7 @@ import loadable from '@loadable/component';
 import { useKeycloak } from '@react-keycloak/web';
 import { ConfigProvider } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
+import esES from 'antd/lib/locale/es_ES';
 import frFR from 'antd/lib/locale/fr_FR';
 import { getEnvVarByKey } from 'helpers/EnvVariables';
 import AuthMiddleware from 'middleware/AuthMiddleware';
@@ -51,6 +52,17 @@ const FT_SET_OPERATIONS = 'ANALYTICS_SET_OPERATIONS';
 
 initGa();
 
+const getLocale = (lang: string) => {
+  switch (lang) {
+    case LANG.FR:
+      return frFR;
+    case LANG.ES:
+      return esES;
+    default:
+      return enUS;
+  }
+};
+
 const App = () => {
   const lang = useLang();
   const { keycloak, initialized } = useKeycloak();
@@ -70,10 +82,7 @@ const App = () => {
   }
 
   return (
-    <ConfigProvider
-      locale={lang === LANG.FR ? frFR : enUS}
-      renderEmpty={() => <Empty imageType="grid" />}
-    >
+    <ConfigProvider locale={getLocale(lang)} renderEmpty={() => <Empty imageType="grid" />}>
       <ApolloProvider backend={GraphqlBackend.ARRANGER}>
         <div className="App" id="appContainer">
           {keycloakIsReady ? (
