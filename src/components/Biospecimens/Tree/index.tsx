@@ -291,11 +291,11 @@ const BiospecimenTree = ({ hasParticipantLink = false }: BiospecinenTreeProps) =
                     {intl.get('screen.hierarchicalBiospecimen.legend.fileAvailable')}
                   </Typography>
                   <Typography>
-                    <CheckCircleOutlined className={cx(styles.checkIcon, styles.legendIcon)} />
+                    <CheckCircleFilled className={cx(styles.checkIcon, styles.legendIcon)} />
                     {intl.get('screen.hierarchicalBiospecimen.legend.sampleAvailable')}
                   </Typography>
                   <Typography>
-                    <CheckCircleFilled className={cx(styles.checkIcon, styles.legendIcon)} />
+                    <CheckCircleOutlined className={cx(styles.checkIcon, styles.legendIcon)} />
                     {intl.get('screen.hierarchicalBiospecimen.legend.oneSampleAvailable')}
                   </Typography>
                 </>
