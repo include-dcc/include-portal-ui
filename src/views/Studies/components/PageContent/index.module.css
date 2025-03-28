@@ -18,3 +18,14 @@
 .pageContent .guidButton {
   height: auto;
 }
+
+.summaryTitle {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.summarySum {
+  font-size: 12px;
+  font-weight: 600;
+}
