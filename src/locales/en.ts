@@ -30,6 +30,7 @@ const en = {
     cancel: 'Cancel',
     analyse: 'Analysis',
     save: 'Save',
+    total: 'Total',
     pleaseDescribe: 'Please describe',
     connect: 'Connect',
     viewInExploration: 'View in exploration',
