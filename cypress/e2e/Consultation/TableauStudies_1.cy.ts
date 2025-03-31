@@ -44,4 +44,13 @@ describe('Page des études - Vérifier les informations affichées', () => {
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(20).contains('2016').should('exist');
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(21).contains('-').should('exist');
   });
+
+  it('Summary', () => {
+    cy.get('tfoot [class*="summaryTitle"]').eq(0).contains('Participants').should('exist');
+    cy.get('tfoot [class*="summarySum"]').eq(0).contains(/\d{1}/).should('exist');
+    cy.get('tfoot [class*="summaryTitle"]').eq(1).contains('Families').should('exist');
+    cy.get('tfoot [class*="summarySum"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('tfoot [class*="summaryTitle"]').eq(2).contains('Biospecimens').should('exist');
+    cy.get('tfoot [class*="summarySum"]').eq(2).contains(/\d{1}/).should('exist');
+  });
 });
