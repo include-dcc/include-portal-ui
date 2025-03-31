@@ -51,9 +51,9 @@ describe('Page des études - Consultation du tableau', () => {
   });
 
   it('Valider les fonctionnalités du tableau - Tri Biospecimens', () => {
-    cy.sortTableAndIntercept('Biospecimen', 1);
+    cy.sortTableAndIntercept('Biospecimens', 1);
     cy.validateTableFirstRow('-', 8);
-    cy.sortTableAndIntercept('Biospecimen', 1);
+    cy.sortTableAndIntercept('Biospecimens', 1);
     cy.validateTableFirstRow(/\d{1}/, 8);
   });
 
@@ -66,8 +66,8 @@ describe('Page des études - Consultation du tableau', () => {
 
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {
     cy.sortTableAndIntercept('Families', 1);
-    cy.sortTableAndIntercept('Biospecimen', 1);
-    cy.sortTableAndIntercept('Biospecimen', 1);
+    cy.sortTableAndIntercept('Biospecimens', 1);
+    cy.sortTableAndIntercept('Biospecimens', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 1);
   });
 });
