@@ -1601,8 +1601,8 @@ const en = {
           title: 'Effect of Karyotype on {symbol}',
           sample_id: 'Sample ID',
           fpkm: 'FPKM',
-          t21: 'T21 {nT21}',
-          control: 'Control {nControl}',
+          t21: 'T21 ({nT21})',
+          control: 'Control ({nControl})',
         },
         sidebar: {
           statisticalParameters: 'Statistical Parameters',
