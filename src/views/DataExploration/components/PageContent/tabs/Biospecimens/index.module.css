@@ -7,3 +7,14 @@
 .biospecimenTabWrapper .sampleIdCell {
   white-space: nowrap;
 }
+.sampleIdIcon {
+  margin-left: 4px;
+}
+
+.hierarchicalModal {
+  width: 1150px !important;
+
+  :global(.ant-card-body) {
+    padding: 0;
+  }
+}

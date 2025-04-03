@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { DownloadOutlined } from '@ant-design/icons';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { Button, Tooltip } from 'antd';
+import { SizeType } from 'antd/lib/config-provider/SizeContext';
 import { TAB_IDS } from 'views/DataExploration/utils/constant';
 import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon';
 
@@ -14,6 +15,7 @@ interface OwnProps {
   sqon?: ISqonGroupFilter;
   type?: 'default' | 'primary';
   disabled?: boolean;
+  size?: SizeType;
 }
 
 const DownloadDataButton = ({
@@ -21,6 +23,7 @@ const DownloadDataButton = ({
   sqon,
   type = 'default',
   disabled = false,
+  size = undefined,
 }: OwnProps) => {
   const dispatch = useDispatch();
 
@@ -40,6 +43,7 @@ const DownloadDataButton = ({
             }),
           )
         }
+        size={size}
       >
         {intl.get('api.report.biospecimenData.download')}
       </Button>
