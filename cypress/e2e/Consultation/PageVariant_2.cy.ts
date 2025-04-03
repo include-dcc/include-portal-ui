@@ -14,7 +14,7 @@ describe('Page d\'un variant - Valider les liens disponibles', () => {
 
   it('Lien Ensembl du panneau Summary', () => {
     // data-cy="Summary_Ensembl_ExternalLink"
-    cy.get('a[class*="VariantEntity_ensemblLink"]').eq(0).should('have.attr', 'href', 'https://www.ensembl.org/id/ENST00000370041');
+    cy.get('a[class*="VariantEntity_ensemblLink"]').eq(0).should('have.attr', 'href', 'https://www.ensembl.org/id/ENSG00000085491');
   });
 
   it('Lien ClinVar du panneau Summary', () => {
