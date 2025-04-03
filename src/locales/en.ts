@@ -1645,12 +1645,57 @@ const en = {
             biospecimens: 'Biospecimens',
             files: 'Data Files',
             variants: 'Variants',
+            disabledTooltip: 'No set to compare',
           },
           sets: {
             label: 'Sets',
             placeholder: 'Select',
           },
           compare: 'Compare',
+          compareDisabledTooltip: 'Available with 2 or 3 sets selected',
+        },
+        venn: {
+          query: {
+            title: 'Selected Sets',
+            column: 'Set definition',
+          },
+          set: {
+            title: 'Set Definitions',
+            column: 'Set definition',
+            footer: 'Union of selected sets:',
+            tooltips: 'View in exploration',
+            max: 'Max 10,000 at a time',
+          },
+          save: {
+            nameTemplate: 'Combined set',
+            cancel: 'Cancel',
+            checkbox: {
+              label: 'Save this set for future reference',
+              tooltips:
+                'A saved set is a collection of one or more entity IDs which can be saved and revisited for later use',
+            },
+            label: 'Set name',
+            alreadyExist: 'A set with this name already exists',
+            ok: 'View set',
+            entity: {
+              participants:
+                'You have selected {count, plural, =0 {# participant} =1 {# participant} other {# participants}}',
+              biospecimens:
+                'You have selected {count, plural, =0 {# biospecimen} =1 {# biospecimen} other {# biospecimens}}',
+              files:
+                'You have selected {count, plural, =0 {# data file} =1 {# data file} other {# data files}}',
+              variants:
+                'You have selected {count, plural, =0 {# variant} =1 {# variant} other {# variants}}',
+            },
+            title: 'View in exploration',
+          },
+          count: 'Count :',
+          biospecimens: 'Biospecimens',
+          files: 'Data Files',
+          participants: 'Participants',
+          variants: 'Variants',
+          title: 'Set operations',
+          ok: 'Close',
         },
       },
     },

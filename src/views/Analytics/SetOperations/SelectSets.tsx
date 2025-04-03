@@ -1,30 +1,42 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
-import { ExperimentOutlined, FileTextOutlined, UserOutlined } from '@ant-design/icons';
 import AndOrIcon from '@ferlab/ui/core/components/Icons/AndOrIcon';
-import { Button, Select, Space, Tag, Typography } from 'antd';
+import ProLabel from '@ferlab/ui/core/components/ProLabel';
+import { Button, Select, Space, Tag, Tooltip, Typography } from 'antd';
+import cx from 'classnames';
 
 import logo from 'components/assets/analytics/newsletterWidget1.svg';
-import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import { IUserSetOutput, SetType } from 'services/api/savedSet/models';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from './index.module.css';
 
 interface ISelectSetsProps {
-  savedSets: IUserSetOutput[];
-  setCompareSets: (value: boolean) => void;
+  biospecimenSets: IUserSetOutput[];
+  entityOptions: { value: string; label: string; icon: ReactNode; disabled: boolean }[];
+  entitySelected: SetType | undefined;
+  fileSets: IUserSetOutput[];
+  handleCompare: (setIdsSelected: string[]) => void;
+  participantSets: IUserSetOutput[];
+  setEntitySelected: (value: SetType | undefined) => void;
+  setIdsSelected: string[];
+  setSetIdsSelected: (value: string[]) => void;
+  variantSets: IUserSetOutput[];
 }
 
-const SelectSets = ({ savedSets, setCompareSets }: ISelectSetsProps) => {
-  const [entitySelected, setEntitySelected] = useState<SetType | undefined>(undefined);
+const SelectSets = ({
+  biospecimenSets,
+  entityOptions,
+  entitySelected,
+  fileSets,
+  handleCompare,
+  participantSets,
+  setEntitySelected,
+  setIdsSelected,
+  setSetIdsSelected,
+  variantSets,
+}: ISelectSetsProps) => {
   const [setOptions, setSetOptions] = useState<IUserSetOutput[]>([]);
-  const [setIdsSelected, setSetIdsSelected] = useState<string[]>([]);
-
-  const participantSets = savedSets.filter((savedSet) => savedSet.setType === SetType.PARTICIPANT);
-  const biospecimenSets = savedSets.filter((savedSet) => savedSet.setType === SetType.BIOSPECIMEN);
-  const fileSets = savedSets.filter((savedSet) => savedSet.setType === SetType.FILE);
-  const variantSets = savedSets.filter((savedSet) => savedSet.setType === SetType.VARIANT);
 
   useEffect(() => {
     switch (entitySelected) {
@@ -65,9 +77,10 @@ const SelectSets = ({ savedSets, setCompareSets }: ISelectSetsProps) => {
         </Typography.Text>
       </div>
       <div className={styles.selectSetForm}>
-        <Typography className={styles.inputLabel}>
-          {intl.get('screen.analytics.setOperations.selectSet.entityType.label')}
-        </Typography>
+        <ProLabel
+          className={styles.inputLabel}
+          title={intl.get('screen.analytics.setOperations.selectSet.entityType.label')}
+        />
         <Select
           placeholder={intl.get('screen.analytics.setOperations.selectSet.entityType.placeholder')}
           className={styles.selectEntity}
@@ -77,38 +90,44 @@ const SelectSets = ({ savedSets, setCompareSets }: ISelectSetsProps) => {
           }}
           value={entitySelected}
         >
-          {participantSets.length > 1 && (
-            <Select.Option value={SetType.PARTICIPANT} className={styles.option}>
-              <UserOutlined className={styles.iconOption} />
-              {intl.get('screen.analytics.setOperations.selectSet.entityType.participants')}
+          {entityOptions.map((option) => (
+            <Select.Option
+              className={cx(styles.labelOption, option.disabled && styles.disabledOption)}
+              disabled={option.disabled}
+              key={option.value}
+              value={option.value}
+            >
+              {option.disabled ? (
+                <Tooltip
+                  title={intl.get(
+                    'screen.analytics.setOperations.selectSet.entityType.disabledTooltip',
+                  )}
+                >
+                  <span className={cx(styles.iconOption, option.disabled && styles.disabledOption)}>
+                    {option.icon}
+                  </span>
+                  {option.label}
+                </Tooltip>
+              ) : (
+                <>
+                  <span className={cx(styles.iconOption, option.disabled && styles.disabledOption)}>
+                    {option.icon}
+                  </span>
+                  {option.label}
+                </>
+              )}
             </Select.Option>
-          )}
-          {biospecimenSets.length > 1 && (
-            <Select.Option value={SetType.BIOSPECIMEN} className={styles.option}>
-              <ExperimentOutlined className={styles.iconOption} />
-              {intl.get('screen.analytics.setOperations.selectSet.entityType.biospecimens')}
-            </Select.Option>
-          )}
-          {fileSets.length > 1 && (
-            <Select.Option value={SetType.FILE} className={styles.option}>
-              <FileTextOutlined className={styles.iconOption} />
-              {intl.get('screen.analytics.setOperations.selectSet.entityType.files')}
-            </Select.Option>
-          )}
-          {variantSets.length > 1 && (
-            <Select.Option value={SetType.VARIANT} className={styles.option}>
-              <LineStyleIcon className={styles.iconOption} />
-              {intl.get('screen.analytics.setOperations.selectSet.entityType.variants')}
-            </Select.Option>
-          )}
+          ))}
         </Select>
         {entitySelected && (
           <>
-            <Typography className={styles.inputLabel}>
-              {intl.get('screen.analytics.setOperations.selectSet.sets.label')}
-            </Typography>
+            <ProLabel
+              className={styles.inputLabel}
+              title={intl.get('screen.analytics.setOperations.selectSet.sets.label')}
+            />
             <Select
               className={styles.selectSets}
+              dropdownStyle={{ maxHeight: 250, overflow: 'auto' }}
               mode="multiple"
               allowClear
               onClear={() => setSetIdsSelected([])}
@@ -119,7 +138,8 @@ const SelectSets = ({ savedSets, setCompareSets }: ISelectSetsProps) => {
                 setSetIdsSelected([...setIdsSelected, value]);
               }}
               onDeselect={(value: string) => {
-                setSetIdsSelected((prev) => prev.filter((val) => val !== value));
+                const ids = setIdsSelected.filter((val) => val !== value);
+                setSetIdsSelected(ids);
               }}
               tagRender={({ onClose, label }) => (
                 <Tag className={styles.filterTag} closable onClose={onClose}>
@@ -127,22 +147,26 @@ const SelectSets = ({ savedSets, setCompareSets }: ISelectSetsProps) => {
                 </Tag>
               )}
             >
-              {setOptions.map((option) => (
-                <Select.Option
-                  key={option.id}
-                  value={option.id}
-                  className={styles.option}
-                  disabled={getDisabledOption(option, setIdsSelected)}
-                >
-                  {option.tag}
-                </Select.Option>
-              ))}
+              {setOptions.map((option) => {
+                const isDisabled = getDisabledOption(option, setIdsSelected);
+                return (
+                  <Select.Option
+                    key={option.id}
+                    value={option.id}
+                    className={cx(styles.option, isDisabled && styles.disabledOption)}
+                    disabled={isDisabled}
+                  >
+                    {option.tag}
+                  </Select.Option>
+                );
+              })}
             </Select>
           </>
         )}
         {setIdsSelected.length > 1 && (
           <div className={styles.compareWrapper}>
-            <Button onClick={() => setCompareSets(true)} type="primary">
+            {/* //TODO comment passer le sqon au handle compare */}
+            <Button onClick={() => handleCompare(setIdsSelected)} type="primary">
               <AndOrIcon />
               {intl.get('screen.analytics.setOperations.selectSet.compare')}
             </Button>

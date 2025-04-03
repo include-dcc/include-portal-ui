@@ -39,11 +39,7 @@
   margin-bottom: 24px;
 }
 .inputLabel {
-  margin-bottom: 4px;
-  color: var(--gray-8);
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 20px;
+  padding-bottom: 4px;
 }
 .option {
   color: var(--gray-9);
@@ -78,4 +74,8 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 12px;
+}
+
+.disabledOption {
+  color: var(--gray-6) !important;
 }
