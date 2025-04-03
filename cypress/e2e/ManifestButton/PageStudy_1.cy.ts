@@ -13,7 +13,7 @@ beforeEach(() => {
 });
 
 describe('Page d\'une étude - Bouton Manifest', {retries: {runMode: 0}}, () => {
-  it('Vérifier les informations affichées - Modal', () => {
+  it('Vérifier les informations affichées - Modal [SJIP-1291]', () => {
     cy.get('[class="ant-modal-title"]').contains('File manifest').should('exist');
     cy.get('[class="ant-modal-body"]').contains('Download a manifest of the selected files which can be used for bulk downloading using Cavatica’s ').should('exist');
     cy.get('[class="ant-modal-body"]').contains('Import from an GA4GH Data Repository Service (DRS)').should('exist');
