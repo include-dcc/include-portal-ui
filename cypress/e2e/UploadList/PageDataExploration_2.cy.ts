@@ -79,7 +79,7 @@ describe('Page Data Exploration (Biospecimens) - Téléverser une liste d\'ident
   
   it('Valider les fonctionnalités de la modal - Bouton Téléverser', () => {
     cy.wait(2000);
-    cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/graphql', 3);
+    cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/graphql', 2);
 
     cy.validatePillSelectedQuery('Sample ID', ['Uploaded List']);
     cy.validateTotalSelectedQuery('1');
