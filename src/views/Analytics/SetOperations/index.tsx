@@ -14,9 +14,12 @@ import {
 } from '@ferlab/ui/core/data/sqon/utils';
 import PageHeader from '@ferlab/ui/core/layout/PageHeader';
 import { INDEXES } from 'graphql/constants';
-import { getIdField } from 'views/Dashboard/components/DashboardCards/SavedSets/ListItem';
-import { DATA_EXPLORATION_QB_ID, TAB_IDS } from 'views/DataExploration/utils/constant';
-import { VARIANT_REPO_QB_ID } from 'views/Variants/utils/constants';
+import {
+  BIOSPECIMENS_SAVED_SETS_FIELD,
+  DATA_EXPLORATION_QB_ID,
+  TAB_IDS,
+} from 'views/DataExploration/utils/constant';
+import { VARIANT_REPO_QB_ID, VARIANT_SAVED_SETS_FIELD } from 'views/Variants/utils/constants';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import useGetExtendedMappings from 'hooks/graphql/useGetExtendedMappings';
@@ -53,6 +56,17 @@ const getIndexBySetType = (setType?: string) => {
     default:
     case SetType.PARTICIPANT:
       return INDEXES.PARTICIPANT;
+  }
+};
+
+const getIdField = (setType: string) => {
+  switch (setType) {
+    case INDEXES.BIOSPECIMEN:
+      return BIOSPECIMENS_SAVED_SETS_FIELD;
+    case INDEXES.VARIANTS:
+      return VARIANT_SAVED_SETS_FIELD;
+    default:
+      return 'fhir_id';
   }
 };
 
@@ -205,14 +219,14 @@ const SetOperations = () => {
               entitySelected={entitySelected || SetType.PARTICIPANT}
               error={vennData.error}
               handleCompare={handleCompare}
-              handleSubmit={({ index, name, sets, invisible, callback }) => {
+              handleSubmit={async ({ index, name, sets, invisible, callback }) => {
                 const sqons: ISyntheticSqon[] = sets.map((set) => set.entitySqon);
                 const sqonGroupFilter: ISqonGroupFilter = { op: 'or', content: [] };
                 sets.forEach((set) => {
                   sqonGroupFilter.content.push(resolveSyntheticSqon(sqons, set.entitySqon));
                 });
 
-                dispatch(
+                await dispatch(
                   createSavedSet({
                     idField: getIdField(index),
                     projectId: PROJECT_ID,

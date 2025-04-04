@@ -1653,6 +1653,7 @@ const en = {
           },
           compare: 'Compare',
           compareDisabledTooltip: 'Available with 2 or 3 sets selected',
+          resetTooltip: 'Reset',
         },
         venn: {
           query: {
@@ -1663,7 +1664,8 @@ const en = {
             title: 'Set Definitions',
             column: 'Set definition',
             footer: 'Union of selected sets:',
-            tooltips: 'View in exploration',
+            tooltipDataExplo: 'View in data exploration',
+            tooltipVariantExplo: 'View in variant exploration',
             max: 'Max 10,000 at a time',
           },
           save: {
@@ -1687,7 +1689,8 @@ const en = {
               variants:
                 'You have selected {count, plural, =0 {# variant} =1 {# variant} other {# variants}}',
             },
-            title: 'View in exploration',
+            titleData: 'View in data exploration',
+            titleVariant: 'View in variant exploration',
           },
           count: 'Count :',
           biospecimens: 'Biospecimens',

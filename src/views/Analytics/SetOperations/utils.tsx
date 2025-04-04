@@ -11,7 +11,8 @@ export const vennDictionary: TVennChartDictionary = {
     column: intl.get('screen.analytics.setOperations.venn.set.column'),
     title: intl.get('screen.analytics.setOperations.venn.set.title'),
     footer: intl.get('screen.analytics.setOperations.venn.set.footer'),
-    tooltips: intl.get('screen.analytics.setOperations.venn.set.tooltips'),
+    tooltipDataExplo: intl.get('screen.analytics.setOperations.venn.set.tooltipDataExplo'),
+    tooltipVariantExplo: intl.get('screen.analytics.setOperations.venn.set.tooltipVariantExplo'),
     max: intl.get('screen.analytics.setOperations.venn.set.max'),
   },
   save: {
@@ -20,7 +21,8 @@ export const vennDictionary: TVennChartDictionary = {
     permittedCharacters: intl.get('components.savedSets.modal.errors.permittedCharacters'),
     alreadyExist: intl.get('screen.analytics.setOperations.venn.save.alreadyExist'),
     requiredField: intl.get('global.forms.errors.requiredField'),
-    title: intl.get('screen.analytics.setOperations.venn.save.title'),
+    titleData: intl.get('screen.analytics.setOperations.venn.save.titleData'),
+    titleVariant: intl.get('screen.analytics.setOperations.venn.save.titleVariant'),
     getEntityText: (index: string, entityCount: number) => {
       if (index === INDEXES.BIOSPECIMEN) {
         return intl.get('screen.analytics.setOperations.venn.save.entity.biospecimens', {
@@ -62,6 +64,7 @@ export const vennDictionary: TVennChartDictionary = {
     optionDisabledTooltip: intl.get(
       'screen.analytics.setOperations.selectSet.entityType.disabledTooltip',
     ),
+    resetTooltip: intl.get('screen.analytics.setOperations.selectSet.resetTooltip'),
     selectEntity: intl.get('screen.analytics.setOperations.selectSet.entityType.label'),
     selectEntityPlaceholder: intl.get(
       'screen.analytics.setOperations.selectSet.entityType.placeholder',
