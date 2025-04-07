@@ -53,9 +53,7 @@ export const vennDictionary: TVennChartDictionary = {
   participants: intl.get('screen.analytics.setOperations.venn.participants'),
   biospecimens: intl.get('screen.analytics.setOperations.venn.biospecimens'),
   files: intl.get('screen.analytics.setOperations.venn.files'),
-  // title: intl.get('screen.analytics.setOperations.venn.title'),
   count: intl.get('screen.analytics.setOperations.venn.count'),
-  // ok: intl.get('screen.analytics.setOperations.venn.ok'),
   filters: {
     compareButton: intl.get('screen.analytics.setOperations.selectSet.compare'),
     compareDisabledTooltip: intl.get(
