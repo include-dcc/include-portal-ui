@@ -273,3 +273,12 @@ export const trackLaunchSetOperations = () => {
     });
   }
 };
+
+export const trackCompareSetOperations = () => {
+  if (isGaActive) {
+    ReactGA.event({
+      category: 'Analytics',
+      action: 'Analytics - Set Operations Compare',
+    });
+  }
+};

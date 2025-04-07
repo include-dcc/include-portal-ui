@@ -24,7 +24,7 @@ import { VARIANT_REPO_QB_ID, VARIANT_SAVED_SETS_FIELD } from 'views/Variants/uti
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
 import useGetExtendedMappings from 'hooks/graphql/useGetExtendedMappings';
 import {
-  trackCompareQueries,
+  trackCompareSetOperations,
   trackVennClickOnSections,
   trackVennViewEntityCounts,
   trackVennViewInExploration,
@@ -100,7 +100,7 @@ const SetOperations = () => {
   );
 
   const handleCompare = (setIdsSelected: string[], entity: string) => {
-    trackCompareQueries();
+    trackCompareSetOperations();
     const sets = savedSets.filter((set) => setIdsSelected.includes(set.id));
     const queries: ISyntheticSqon[] = [];
     sets.forEach((set) => {
