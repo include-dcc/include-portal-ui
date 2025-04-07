@@ -37,6 +37,7 @@ const SelectSets = ({
   variantSets,
 }: ISelectSetsProps) => {
   const [setOptions, setSetOptions] = useState<IUserSetOutput[]>([]);
+  const [openDropdown, setOpenDropdown] = useState(false);
 
   useEffect(() => {
     switch (entitySelected) {
@@ -57,6 +58,14 @@ const SelectSets = ({
         break;
     }
   }, [entitySelected, participantSets, biospecimenSets, fileSets, variantSets]);
+
+  useEffect(() => {
+    if (entityOptions.filter((option) => !option.disabled).length === 1) {
+      const selectedOption = entityOptions.find((option) => !option.disabled);
+      setEntitySelected(selectedOption?.value as SetType);
+      setOpenDropdown(true);
+    }
+  }, [entityOptions, setEntitySelected]);
 
   const getDisabledOption = (option: IUserSetOutput, setIdsSelected: string[]): boolean => {
     if (setIdsSelected.length < 3) return false;
@@ -146,6 +155,8 @@ const SelectSets = ({
                   <Typography.Text className={styles.filterTagText}>{label}</Typography.Text>
                 </Tag>
               )}
+              open={openDropdown}
+              onDropdownVisibleChange={(open) => setOpenDropdown(open)}
             >
               {setOptions.map((option) => {
                 const isDisabled = getDisabledOption(option, setIdsSelected);
@@ -156,7 +167,7 @@ const SelectSets = ({
                     className={cx(styles.option, isDisabled && styles.disabledOption)}
                     disabled={isDisabled}
                   >
-                    {option.tag}
+                    {`${option.tag} (${option.size})`}
                   </Select.Option>
                 );
               })}
