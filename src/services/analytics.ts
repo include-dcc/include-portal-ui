@@ -269,7 +269,16 @@ export const trackLaunchSetOperations = () => {
   if (isGaActive) {
     ReactGA.event({
       category: 'Analytics',
-      action: 'Analytics - Launch set operations',
+      action: 'Analytics - Set Operations Launch',
+    });
+  }
+};
+
+export const trackCompareSetOperations = () => {
+  if (isGaActive) {
+    ReactGA.event({
+      category: 'Analytics',
+      action: 'Analytics - Set Operations Compare',
     });
   }
 };
