@@ -37,7 +37,8 @@ const SelectSets = ({
   variantSets,
 }: ISelectSetsProps) => {
   const [setOptions, setSetOptions] = useState<IUserSetOutput[]>([]);
-  const [openDropdown, setOpenDropdown] = useState(false);
+  const [openEntityDropdown, setOpenEntityDropdown] = useState(false);
+  const [openSetsDropdown, setOpenSetsDropdown] = useState(false);
 
   useEffect(() => {
     switch (entitySelected) {
@@ -63,9 +64,9 @@ const SelectSets = ({
     if (entityOptions.filter((option) => !option.disabled).length === 1) {
       const selectedOption = entityOptions.find((option) => !option.disabled);
       setEntitySelected(selectedOption?.value as SetType);
-      setOpenDropdown(true);
-    }
-  }, [entityOptions, setEntitySelected]);
+      setOpenSetsDropdown(true);
+    } else setOpenEntityDropdown(true);
+  }, []);
 
   const getDisabledOption = (option: IUserSetOutput, setIdsSelected: string[]): boolean => {
     if (setIdsSelected.length < 3) return false;
@@ -80,7 +81,10 @@ const SelectSets = ({
           {intl.get('screen.analytics.setOperations.selectSet.title')}
         </Typography.Title>
         <Typography.Text className={styles.noSetDescription}>
-          {intl.getHTML('screen.analytics.setOperations.selectSet.description', {
+          {intl.getHTML('screen.analytics.setOperations.selectSet.descriptionVenn')}
+        </Typography.Text>
+        <Typography.Text className={styles.noSetDescription}>
+          {intl.getHTML('screen.analytics.setOperations.selectSet.descriptionSet', {
             dashboard: STATIC_ROUTES.DASHBOARD,
           })}
         </Typography.Text>
@@ -96,8 +100,12 @@ const SelectSets = ({
           onChange={(value) => {
             setEntitySelected(value);
             setSetIdsSelected([]);
+            setOpenEntityDropdown(false);
+            setOpenSetsDropdown(true);
           }}
           value={entitySelected}
+          open={openEntityDropdown}
+          onDropdownVisibleChange={(open) => setOpenEntityDropdown(open)}
         >
           {entityOptions.map((option) => (
             <Select.Option
@@ -128,7 +136,7 @@ const SelectSets = ({
             </Select.Option>
           ))}
         </Select>
-        {entitySelected && (
+        {entitySelected !== undefined && (
           <>
             <ProLabel
               className={styles.inputLabel}
@@ -155,8 +163,8 @@ const SelectSets = ({
                   <Typography.Text className={styles.filterTagText}>{label}</Typography.Text>
                 </Tag>
               )}
-              open={openDropdown}
-              onDropdownVisibleChange={(open) => setOpenDropdown(open)}
+              open={openSetsDropdown}
+              onDropdownVisibleChange={(open) => setOpenSetsDropdown(open)}
             >
               {setOptions.map((option) => {
                 const isDisabled = getDisabledOption(option, setIdsSelected);
@@ -176,7 +184,6 @@ const SelectSets = ({
         )}
         {setIdsSelected.length > 1 && (
           <div className={styles.compareWrapper}>
-            {/* //TODO comment passer le sqon au handle compare */}
             <Button onClick={() => handleCompare(setIdsSelected)} type="primary">
               <AndOrIcon />
               {intl.get('screen.analytics.setOperations.selectSet.compare')}

@@ -1636,8 +1636,10 @@ const en = {
         },
         selectSet: {
           title: 'Select two or three sets to get started',
-          description:
-            'Visualize intersections between saved sets using an interactive Venn diagram. View your saved sets in the <a href="{dashboard}" style="text-decoration: underline;">Dashboard</a>.',
+          descriptionVenn:
+            'Visualize intersections between saved sets using an interactive Venn diagram.',
+          descriptionSet:
+            'View your saved sets in the <a href="{dashboard}" style="text-decoration: underline;">Dashboard</a>.',
           entityType: {
             label: 'Entity type',
             placeholder: 'Select',
