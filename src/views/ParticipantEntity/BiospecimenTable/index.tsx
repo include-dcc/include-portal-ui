@@ -132,6 +132,10 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
     );
   };
 
+  const collectionFhirIds = [
+    ...new Set(biospecimens.map((biospecimen) => biospecimen.collection_fhir_id)),
+  ];
+
   return (
     <EntityCustomContent
       id={SectionId.BIOSPECIMEN}
@@ -145,7 +149,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
             {
               key: BiospecimenTabs.TreeView,
               label: intl.get('screen.hierarchicalBiospecimen.treeViewTab'),
-              children: <BiospecimenTree />,
+              children: <BiospecimenTree collectionFhirIds={collectionFhirIds} />,
             },
             {
               key: BiospecimenTabs.TableView,

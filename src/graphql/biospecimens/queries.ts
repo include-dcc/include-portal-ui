@@ -24,6 +24,7 @@ export const SEARCH_BIOSPECIMEN_QUERY = gql`
             parent_sample_type
             collection_sample_id
             collection_sample_type
+            collection_fhir_id
             age_at_biospecimen_collection
             laboratory_procedure
             volume
@@ -92,6 +93,24 @@ export const BIOSPECIMEN_SEARCH_BY_ID_QUERY = gql`
             sample_id
             external_sample_id
             collection_sample_id
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_HIERARCHY_BIOSPECIMEN = gql`
+  query getHierarchicalBiospecimen($sqon: JSON, $first: Int, $offset: Int, $sort: [Sort]) {
+    biospecimen_trees {
+      hits(filters: $sqon, first: $first, offset: $offset, sort: $sort) {
+        total
+        edges {
+          node {
+            fhir_id
+            tree_str
+            sample_id
+            collection_fhir_id
           }
         }
       }

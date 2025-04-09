@@ -178,6 +178,7 @@ export const GET_PARTICIPANT_ENTITY = gql`
                             parent_sample_type
                             collection_sample_id
                             collection_sample_type
+                            collection_fhir_id
                             container_id
                             volume
                             volume_unit

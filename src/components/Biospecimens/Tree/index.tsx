@@ -8,16 +8,16 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
-import { Button, Card, Descriptions, Input, Popover, Space, Typography } from 'antd';
+import { Button, Card, Descriptions, Input, Popover, Skeleton, Space, Typography } from 'antd';
 import Tree, { DataNode } from 'antd/lib/tree';
 import cx from 'classnames';
+import { useHierarchicalBiospecimen } from 'graphql/biospecimens/actions';
 import { Status } from 'graphql/biospecimens/models';
 
 import CollectionLogo from 'components/assets/biospecimen/collection.svg';
 import ContainerLogo from 'components/assets/biospecimen/container.svg';
 import SampleLogo from 'components/assets/biospecimen/sample.svg';
 
-import { data } from './mock';
 import {
   getCollectionDetails,
   getContainerDetails,
@@ -28,7 +28,7 @@ import {
 import styles from './index.module.css';
 
 enum NODE_TYPE {
-  COLLECTED_SAMPLE = 'collectedSample',
+  COLLECTED_SAMPLE = 'collected_sample',
   SAMPLE = 'sample',
   CONTAINER = 'container',
 }
@@ -36,10 +36,10 @@ enum NODE_TYPE {
 export interface INode {
   key: string;
   type: string;
-  hasCollectionAvailability?: boolean;
-  isSampleAvailable?: boolean;
+  has_collection_availability?: boolean;
+  is_sample_available?: boolean;
   count?: number;
-  hasFiles?: boolean;
+  has_files?: boolean;
   children?: INode[];
   collection_sample_id?: string;
   external_collection_sample_id?: string;
@@ -51,7 +51,7 @@ export interface INode {
   age_at_biospecimen_collection?: number;
   status?: Status | string;
   laboratory_procedure?: string;
-  nb_files?: number;
+  nb_files?: number; // NOT FILLED
   participant_fhir_id?: string;
   container_id?: string;
   volume?: number;
@@ -92,19 +92,21 @@ const convertToDataTree = (data: INode[], searchValue: string): DataNode[] => {
         <span>{strTitle}</span>
       );
 
+    const count = node.count && node.count > 0 ? ` (${node.count})` : '';
+
     const treeNode: DataNode = {
       key: node.key,
       title: (
         <>
           {keyLabel}
-          {node.count && node.count > 0 && ` (${node.count})`}
-          {node.hasCollectionAvailability && (
+          {count}
+          {node.has_collection_availability && (
             <CheckCircleOutlined className={cx(styles.checkIcon, styles.icon)} />
           )}
-          {node.isSampleAvailable && (
+          {node.is_sample_available && (
             <CheckCircleFilled className={cx(styles.checkIcon, styles.icon)} />
           )}
-          {node.hasFiles && <FileTextOutlined className={styles.icon} />}
+          {node.has_files && <FileTextOutlined className={styles.icon} />}
         </>
       ),
       icon: getTypeIcon(node.type),
@@ -161,10 +163,14 @@ const getNodeDetails = (key: React.Key, data: INode[]): INode | undefined => {
 };
 
 interface BiospecinenTreeProps {
+  collectionFhirIds: string[];
   hasParticipantLink?: boolean;
 }
 
-const BiospecimenTree = ({ hasParticipantLink = false }: BiospecinenTreeProps) => {
+const BiospecimenTree = ({
+  hasParticipantLink = false,
+  collectionFhirIds,
+}: BiospecinenTreeProps) => {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -175,12 +181,15 @@ const BiospecimenTree = ({ hasParticipantLink = false }: BiospecinenTreeProps) =
     setAutoExpandParent(false);
   };
 
-  // Call back end ou ça vient dans le biospecimen / participant
-  // const treeData = convertToDataTree(data, searchValue);
-  const treeData = useMemo(() => convertToDataTree(data, searchValue), [searchValue]);
+  const { loading, data } = useHierarchicalBiospecimen(collectionFhirIds);
+  const dataParsed: INode[] = useMemo(() => data?.map((item) => JSON.parse(item)) || [], [data]);
+  const treeData = useMemo(
+    () => convertToDataTree(dataParsed, searchValue),
+    [dataParsed, searchValue],
+  );
 
   const dataList: { key: React.Key; title: string }[] = [];
-  const allKeys: React.Key[] = [];
+  const allKeys: React.Key[] = useMemo(() => [], []);
   generateList(treeData, dataList, allKeys);
   useEffect(() => {
     setExpandedKeys(allKeys);
@@ -241,33 +250,42 @@ const BiospecimenTree = ({ hasParticipantLink = false }: BiospecinenTreeProps) =
             </div>
           </div>
           <div className={styles.treeWrapper}>
-            <Tree
-              onExpand={onExpand}
-              expandedKeys={expandedKeys}
-              autoExpandParent={autoExpandParent}
-              showIcon
-              treeData={treeData}
-              onSelect={(selectedKeys) => {
-                setDescriptions([]);
-                const nodeDetails = getNodeDetails(selectedKeys[0], data);
-                if (nodeDetails?.type) {
-                  switch (nodeDetails.type) {
-                    case NODE_TYPE.COLLECTED_SAMPLE:
-                      setDescriptions(getCollectionDetails(nodeDetails));
-                      break;
-                    case NODE_TYPE.SAMPLE:
-                      setDescriptions(getSampleDetails(nodeDetails, hasParticipantLink));
-                      break;
-                    case NODE_TYPE.CONTAINER:
-                      setDescriptions(getContainerDetails(nodeDetails));
-                      break;
-                    default:
-                      setDescriptions([]);
-                      break;
+            {loading && (
+              <Skeleton
+                paragraph={{
+                  rows: 6,
+                }}
+              />
+            )}
+            {!loading && (
+              <Tree
+                onExpand={onExpand}
+                expandedKeys={expandedKeys}
+                autoExpandParent={autoExpandParent}
+                showIcon
+                treeData={treeData}
+                onSelect={(selectedKeys) => {
+                  setDescriptions([]);
+                  const nodeDetails = getNodeDetails(selectedKeys[0], dataParsed);
+                  if (nodeDetails?.type) {
+                    switch (nodeDetails.type) {
+                      case NODE_TYPE.COLLECTED_SAMPLE:
+                        setDescriptions(getCollectionDetails(nodeDetails));
+                        break;
+                      case NODE_TYPE.SAMPLE:
+                        setDescriptions(getSampleDetails(nodeDetails, hasParticipantLink));
+                        break;
+                      case NODE_TYPE.CONTAINER:
+                        setDescriptions(getContainerDetails(nodeDetails));
+                        break;
+                      default:
+                        setDescriptions([]);
+                        break;
+                    }
                   }
-                }
-              }}
-            />
+                }}
+              />
+            )}
           </div>
           <div className={styles.legendWrapper}>
             <Popover

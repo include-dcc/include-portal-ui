@@ -23,7 +23,10 @@ const HierarchicalBiospecimenModal = ({ biospecimen, isOpen, onClose }: OwnProps
     cancelButtonProps={{ hidden: true }}
     className={styles.hierarchicalModal}
   >
-    <BiospecimenTree hasParticipantLink={true} />
+    <BiospecimenTree
+      hasParticipantLink={true}
+      collectionFhirIds={biospecimen ? [biospecimen.collection_fhir_id] : []}
+    />
   </Modal>
 );
 
