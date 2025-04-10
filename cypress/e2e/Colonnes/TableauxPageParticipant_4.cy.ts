@@ -4,6 +4,7 @@ import '../../support/commands';
 beforeEach(() => {
   cy.login();
   cy.visitParticipantEntity('pt-0dxdyebh');
+  cy.get('[id="biospecimen"] [data-node-key="table"]').clickAndWait({force: true});
   cy.resetColumns('biospecimen');
 });
 
