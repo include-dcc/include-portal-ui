@@ -1717,7 +1717,7 @@ const en = {
       expandAll: 'Expand all',
       legend: {
         title: 'Legend',
-        collection: 'Collection',
+        collection: 'Collection sample',
         sample: 'Sample',
         container: 'Container',
         fileAvailable: 'File available',

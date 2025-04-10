@@ -305,16 +305,16 @@ const BiospecimenTree = ({
                     {intl.get('screen.hierarchicalBiospecimen.legend.container')}
                   </Typography>
                   <Typography>
-                    <FileTextOutlined className={styles.legendIcon} />
-                    {intl.get('screen.hierarchicalBiospecimen.legend.fileAvailable')}
-                  </Typography>
-                  <Typography>
                     <CheckCircleFilled className={cx(styles.checkIcon, styles.legendIcon)} />
                     {intl.get('screen.hierarchicalBiospecimen.legend.sampleAvailable')}
                   </Typography>
                   <Typography>
                     <CheckCircleOutlined className={cx(styles.checkIcon, styles.legendIcon)} />
                     {intl.get('screen.hierarchicalBiospecimen.legend.oneSampleAvailable')}
+                  </Typography>
+                  <Typography>
+                    <FileTextOutlined className={styles.legendIcon} />
+                    {intl.get('screen.hierarchicalBiospecimen.legend.fileAvailable')}
                   </Typography>
                 </>
               }
