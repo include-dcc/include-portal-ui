@@ -29,7 +29,7 @@
   "scripts": {
     "theme:watch": "nodemon --watch './src/style/themes' -e scss,less --exec 'npm run theme'",
     "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true node --max_old_space_size=4096 node_modules/.bin/react-scripts build",
     "build:netlify": "npm ci && npm run build",
     "test": "react-scripts test",
     "test:github": "react-scripts test --coverage --watchAll=false --no-watchman --coverageReporters=\"text-summary\"",
