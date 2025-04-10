@@ -7,6 +7,11 @@ export const vennDictionary: TVennChartDictionary = {
     column: intl.get('screen.analytics.setOperations.venn.query.column'),
     title: intl.get('screen.analytics.setOperations.venn.query.title'),
   },
+  download: {
+    png: intl.get('screen.dataExploration.venn.download.png'),
+    fileNameDateFormat: intl.get('screen.dataExploration.venn.download.fileNameDateFormat'),
+    fileNameTemplate: intl.get('screen.dataExploration.venn.download.fileNameTemplate'),
+  },
   set: {
     column: intl.get('screen.analytics.setOperations.venn.set.column'),
     title: intl.get('screen.analytics.setOperations.venn.set.title'),

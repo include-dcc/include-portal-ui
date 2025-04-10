@@ -1179,6 +1179,11 @@ const en = {
         datafiles: 'Data File',
       },
       venn: {
+        download: {
+          png: 'Download PNG',
+          fileNameTemplate: 'include-%name-%type-%date%extension',
+          fileNameDateFormat: 'yyyy-MM-dd',
+        },
         query: {
           title: 'Selected Queries',
           column: 'Query definition',

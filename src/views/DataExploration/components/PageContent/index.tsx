@@ -327,6 +327,11 @@ const PageContent = ({
             column: intl.get('screen.dataExploration.venn.query.column'),
             title: intl.get('screen.dataExploration.venn.query.title'),
           },
+          download: {
+            png: intl.get('screen.dataExploration.venn.download.png'),
+            fileNameDateFormat: intl.get('screen.dataExploration.venn.download.fileNameDateFormat'),
+            fileNameTemplate: intl.get('screen.dataExploration.venn.download.fileNameTemplate'),
+          },
           set: {
             column: intl.get('screen.dataExploration.venn.set.column'),
             title: intl.get('screen.dataExploration.venn.set.title'),
