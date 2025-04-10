@@ -72,14 +72,14 @@ export const getSampleDetails = (
     label: intl.get('screen.hierarchicalBiospecimen.details.sample.laboratoryProcedure'),
     value: node.laboratory_procedure || TABLE_EMPTY_PLACE_HOLDER,
   },
-  {
-    label: intl.get('screen.hierarchicalBiospecimen.details.sample.nbFiles'),
-    value: node.nb_files ? (
-      <Link to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}>{node.nb_files}</Link>
-    ) : (
-      TABLE_EMPTY_PLACE_HOLDER
-    ),
-  },
+  // {
+  //   label: intl.get('screen.hierarchicalBiospecimen.details.sample.nbFiles'),
+  //   value: node.nb_files ? (
+  //     <Link to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}>{node.nb_files}</Link>
+  //   ) : (
+  //     TABLE_EMPTY_PLACE_HOLDER
+  //   ),
+  // },
   {
     label: intl.get('screen.hierarchicalBiospecimen.details.sample.participantFhirId'),
     value: renderParticipantFhirId(node.participant_fhir_id, hasParticipantLink),

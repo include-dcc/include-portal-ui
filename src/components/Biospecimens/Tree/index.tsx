@@ -51,7 +51,7 @@ export interface INode {
   age_at_biospecimen_collection?: number;
   status?: Status | string;
   laboratory_procedure?: string;
-  nb_files?: number; // NOT FILLED
+  nb_files?: number; // NOT FILLED BY BACK
   participant_fhir_id?: string;
   container_id?: string;
   volume?: number;
