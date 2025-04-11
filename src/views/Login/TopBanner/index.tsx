@@ -23,7 +23,7 @@ const TopBanner = () => {
         {isShowTranslationBtnEnabled && (
           <Button
             className={styles.language}
-            type="ghost"
+            ghost
             onClick={() => dispatch(globalActions.changeLang(targetLang))}
           >
             {targetLang.toUpperCase()}
