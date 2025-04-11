@@ -70,3 +70,10 @@
 .detailWrapper {
   width: 100%;
 }
+
+.participantLink {
+  text-decoration: underline;
+}
+.participantLink:hover {
+  text-decoration: none;
+}

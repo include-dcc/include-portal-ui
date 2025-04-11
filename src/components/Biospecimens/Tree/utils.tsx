@@ -7,6 +7,8 @@ import { STATIC_ROUTES } from 'utils/routes';
 
 import { INode } from '.';
 
+import styles from './index.module.css';
+
 export interface IDescriptionsItem {
   label: React.ReactNode;
   value?: React.ReactNode | string;
@@ -27,10 +29,19 @@ export const getCollectionDetails = (node: INode): IDescriptionsItem[] => [
   },
 ];
 
-const renderParticipantFhirId = (participantFhirId?: string, hasParticipantLink?: boolean) => {
-  if (participantFhirId && hasParticipantLink) {
+const renderParticipantFhirId = (
+  participantFhirId?: string,
+  hasParticipantLink?: boolean,
+  participantId?: string,
+) => {
+  if (hasParticipantLink && participantId) {
     return (
-      <Link to={`${STATIC_ROUTES.PARTICIPANTS}/${participantFhirId}`}>{participantFhirId}</Link>
+      <Link
+        to={`${STATIC_ROUTES.PARTICIPANTS}/${participantId}`}
+        className={styles.participantLink}
+      >
+        {participantId}
+      </Link>
     );
   }
   return participantFhirId || TABLE_EMPTY_PLACE_HOLDER;
@@ -39,6 +50,7 @@ const renderParticipantFhirId = (participantFhirId?: string, hasParticipantLink?
 export const getSampleDetails = (
   node: INode,
   hasParticipantLink?: boolean,
+  participantId?: string,
 ): IDescriptionsItem[] => [
   {
     label: intl.get('screen.hierarchicalBiospecimen.details.sample.sampleId'),
@@ -82,7 +94,7 @@ export const getSampleDetails = (
   // },
   {
     label: intl.get('screen.hierarchicalBiospecimen.details.sample.participantFhirId'),
-    value: renderParticipantFhirId(node.participant_fhir_id, hasParticipantLink),
+    value: renderParticipantFhirId(node.participant_fhir_id, hasParticipantLink, participantId),
   },
 ];
 

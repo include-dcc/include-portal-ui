@@ -165,11 +165,13 @@ const getNodeDetails = (key: React.Key, data: INode[]): INode | undefined => {
 interface BiospecinenTreeProps {
   collectionFhirIds: string[];
   hasParticipantLink?: boolean;
+  participantId?: string;
 }
 
 const BiospecimenTree = ({
   hasParticipantLink = false,
   collectionFhirIds,
+  participantId,
 }: BiospecinenTreeProps) => {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [searchValue, setSearchValue] = useState('');
@@ -273,7 +275,9 @@ const BiospecimenTree = ({
                         setDescriptions(getCollectionDetails(nodeDetails));
                         break;
                       case NODE_TYPE.SAMPLE:
-                        setDescriptions(getSampleDetails(nodeDetails, hasParticipantLink));
+                        setDescriptions(
+                          getSampleDetails(nodeDetails, hasParticipantLink, participantId),
+                        );
                         break;
                       case NODE_TYPE.CONTAINER:
                         setDescriptions(getContainerDetails(nodeDetails));
