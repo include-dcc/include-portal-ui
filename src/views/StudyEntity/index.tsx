@@ -16,6 +16,7 @@ import {
 } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
+import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import {
   aggregationToChartData,
   treeNodeToChartData,
@@ -326,7 +327,14 @@ const StudyEntity = () => {
     datasetLength = study?.datasets?.hits.edges.length || 0;
   }
 
-  if (hasFiles) {
+  const dataTypes = hydrateResults(study?.data_types?.hits?.edges || []).filter(
+    (dateType) => dateType.file_count > 0,
+  );
+  const experimentStrategies = hydrateResults(
+    study?.experimental_strategies?.hits?.edges || [],
+  ).filter((dateType) => dateType.file_count > 0);
+
+  if (hasFiles && (dataTypes.length > 0 || experimentStrategies.length > 0)) {
     defaultLinks.push({ href: `#${SectionId.DATA_FILE}`, title: intl.get('entities.study.file') });
   }
 
@@ -746,12 +754,12 @@ const StudyEntity = () => {
           </>
         )}
 
-        {hasFiles && (
+        {hasFiles && (experimentStrategies.length > 0 || dataTypes.length > 0) && (
           <EntityTableMultiple
             header={intl.get('entities.study.files')}
             id={SectionId.DATA_FILE}
             loading={loading}
-            tables={getFileTables(study)}
+            tables={getFileTables(dataTypes, experimentStrategies, study)}
             title={intl.get('entities.study.file')}
             titleExtra={[
               <Tooltip

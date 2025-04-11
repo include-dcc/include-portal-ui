@@ -4,7 +4,6 @@ import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import { numberFormat } from '@ferlab/ui/core/utils/numberUtils';
 import { Progress } from 'antd';
 import { INDEXES } from 'graphql/constants';
@@ -25,7 +24,7 @@ const getDataTypeColumns = (files_nb: number, study_code: string): ProColumnType
     key: 'nb_files',
     title: intl.get('entities.file.files'),
     render: (dataType: IDataType) =>
-      (
+      dataType.file_count ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
@@ -51,7 +50,9 @@ const getDataTypeColumns = (files_nb: number, study_code: string): ProColumnType
         >
           {numberFormat(dataType.file_count)}
         </Link>
-      ) || TABLE_EMPTY_PLACE_HOLDER,
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
     width: '100px',
   },
   {
@@ -81,7 +82,7 @@ const getExperimentalStrategyColumns = (
     key: 'nb_files',
     title: intl.get('entities.file.files'),
     render: (experimentalStrategy: IExperimentalStrategy) =>
-      (
+      experimentalStrategy.file_count ? (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
@@ -107,7 +108,9 @@ const getExperimentalStrategyColumns = (
         >
           {numberFormat(experimentalStrategy.file_count)}
         </Link>
-      ) || TABLE_EMPTY_PLACE_HOLDER,
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
     width: '100px',
   },
   {
@@ -122,16 +125,12 @@ const getExperimentalStrategyColumns = (
   },
 ];
 
-const getFileTable = (study?: IStudyEntity) => {
+const getFileTable = (
+  dataTypes: IDataType[],
+  experimentStrategies: IExperimentalStrategy[],
+  study?: IStudyEntity,
+) => {
   const total = study?.file_count || 0;
-
-  const dataTypes = hydrateResults(study?.data_types?.hits?.edges || []).filter(
-    (dateType) => dateType.file_count > 0,
-  );
-
-  const experimentStrategies = hydrateResults(
-    study?.experimental_strategies?.hits?.edges || [],
-  ).filter((dateType) => dateType.file_count > 0);
 
   return [
     {
