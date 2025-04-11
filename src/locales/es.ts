@@ -3,7 +3,7 @@ import translations from './es.json'; /* eslint-disable max-len */
 
 const filesFacets = {
   data_category: 'Categoría de Datos',
-  controlled_access: 'Acceso',
+  controlled_access: 'Acceso Controlado',
   data_type: 'Tipo de Datos',
   file_format: 'Formato de Archivo',
   file_id: 'ID de Archivo',
@@ -65,6 +65,11 @@ const es = {
         title: 'Buscar por ID de participante',
         tooltip: 'Buscar por ID de participante o ID de participante externo',
       },
+      participantSet: {
+        emptyText: 'No se encontraron conjuntos de participantes',
+        placeholder: 'Selecciona un conjunto guardado',
+        title: 'Conjuntos de Participantes Guardados',
+      },
       biospecimen: {
         emptyText: 'No se encontraron muestras',
         placeholder: 'p. ej., bs-019260B4, SSH3953290',
@@ -76,10 +81,18 @@ const es = {
           title: 'Buscar por ID de colección',
         },
       },
+      biospecimenSet: {
+        title: 'Conjuntos de Biospecímenes Guardados',
+        emptyText: 'No se encontraron conjuntos de muestras',
+      },
       file: {
         emptyText: 'No se encontraron archivos',
         placeholder: 'p. ej., GF_001CSF26',
         title: 'Buscar por ID de archivo',
+      },
+      fileSet: {
+        title: 'Conjuntos de Archivos Guardados',
+        emptyText: 'No se encontraron conjuntos de archivos',
       },
     },
     filters: {
@@ -148,6 +161,15 @@ const es = {
       selected: 'elemento seleccionado',
       selectedPlural: 'elementos seleccionados',
       selectAll: 'Seleccionar todos los resultados',
+      tooltips: {
+        tableExport: 'Exportar como TSV',
+      },
+      columnSelector: {
+        tooltips: {
+          columns: 'Columnas',
+        },
+        reset: 'Restablecer',
+      },
     },
     viewInDataExploration: 'Ver en exploración de datos',
   },
@@ -171,7 +193,13 @@ const es = {
       },
     },
     savedSet: {
+      modal: {
+        okText: 'Guardar',
+        name: 'Nombre',
+        placeholder: 'Ingresa el nombre de tu nuevo conjunto',
+      },
       error: {
+        duplicate: 'Ya existe un conjunto con este nombre',
         title: 'Error',
         temporary: 'No se pudo agregar el conjunto a la exploración de datos',
         messageUpdate: 'No se pudo actualizar el conjunto',
@@ -359,6 +387,8 @@ const es = {
         myFiltersDropdown: {
           title: 'Mis filtros',
           manageMyFilter: 'Gestionar filtros',
+          okText: 'Cerrar',
+          lastSavedAt: 'Última guardado: hace {date}',
         },
         duplicateFilterTitleSuffix: 'COPIA',
       },
@@ -552,6 +582,21 @@ const es = {
           oldest: 'Más antiguos primero',
           lastnameAlpha: 'Alfabético (apellido)',
         },
+      },
+      roleOptions: {
+        researcher: 'Investigador en una Institución Académica o sin fines de lucro',
+        representative: 'Representante de una entidad con fines de lucro o comercial',
+        developer: 'Desarrollador de herramientas o algoritmos',
+        clinician: 'Clínico',
+        community_member: 'Miembro de la Comunidad',
+        federal_employee: 'Empleado Federal',
+      },
+      usage: {
+        learn_more_about_down_syndrome:
+          'Aprender más sobre el síndrome de Down y sus resultados de salud, manejo y/o tratamiento',
+        help_design_new_research_study: 'Ayudarme a diseñar un nuevo estudio de investigación',
+        identifying_dataset: 'Identificar conjuntos de datos que quiero analizar',
+        commercial_purpose: 'Propósitos comerciales',
       },
     },
     profileSettings: {
@@ -894,6 +939,7 @@ const es = {
         pathogenicity: 'Patogenicidad',
       },
       title: 'Exploración de Variantes',
+      variant: 'Variante',
       table: {
         alt: {
           title: 'ALT',
@@ -1279,6 +1325,13 @@ const es = {
               legendAxisLeft: 'Tipos de Datos',
               legendAxisBottom: '# de participantes',
             },
+            participantsByAgeGraph: {
+              tooltips: 'Participantes',
+              T21: 'Trisomía 21',
+              D21: 'Controles',
+              legendAxisLeft: 'Edad en el primer contacto con el paciente (años)',
+              legendAxisBottom: 'N.º de participantes',
+            },
             sampleTypeGraph: {
               legendAxisLeft: 'Tipos de Muestra',
               legendAxisBottom: '# de participantes',
@@ -1311,6 +1364,7 @@ const es = {
           },
           availableData: {
             dataCategoryTitle: 'Participantes por Categoría de Datos',
+            participantsByAge: 'Participantes por edad en la primera interacción con el paciente',
             dataTypeTitle: 'Participantes por Tipo de Datos',
             studiesTitle: 'Participantes por Estudio',
             sampleTypeTitle: 'Participantes por Tipo de Muestra',
@@ -1321,6 +1375,9 @@ const es = {
             title: 'Co-ocurrencia de las 10 Principales Condiciones',
             label: '# de participantes',
             empty: 'No hay condiciones co-ocurrentes para esta consulta',
+          },
+          participantsByAge: {
+            cardTitle: 'Participantes por edad en la primera interacción con el paciente',
           },
           sampleType: {
             cardTitle: 'Tipo de Muestra',
@@ -1623,6 +1680,9 @@ const es = {
   },
   facets: {
     // Participante
+    biospecimen_storage: 'Almacenamiento de Biospecímenes',
+    laboratory_procedure: 'Procedimiento de Laboratorio',
+    parent_sample_type: 'Tipo de Muestra Padre',
     participant_id: 'ID del Participante',
     participant_facet_ids: {
       participant_fhir_id_1: 'ID del Participante',
@@ -1647,7 +1707,7 @@ const es = {
       transmission: 'Transmisión',
       zygosity: 'Zigosidad',
     },
-    is_proband: 'Proband',
+    is_proband: 'Individuo índice',
     study_id: 'Código del Estudio',
     down_syndrome_status: 'Estado del Síndrome de Down',
     down_syndrome_diagnosis: 'Diagnóstico de Síndrome de Down',
@@ -1674,7 +1734,9 @@ const es = {
       age_at_event_days: 'Edad al Fenotipo Observado',
     },
     age_at_data_collection: 'Edad al Recoger los Datos',
-    age_at_first_patient_engagement: { value: 'Edad al Primer Encuentro con el Paciente (días)' },
+    age_at_first_patient_engagement: {
+      value: 'Edad al Primer Encuentro con el Paciente (días)',
+    },
     family_type: 'Unidad Familiar',
     family: {
       family_id: 'ID de la Familia',
@@ -1741,7 +1803,7 @@ const es = {
         consequence: 'Consecuencia',
         vep_impact: 'VEP',
         predictions: {
-          cadd_score: 'CADD (Raw)',
+          cadd_score: 'CADD (Crudo)',
           cadd_phred: 'CADD (Phred)',
           dann_score: 'DANN',
           fathmm_pred: 'FATHMM',
@@ -1780,19 +1842,19 @@ const es = {
     },
     external_frequencies: {
       gnomad_genomes_2_1_1: {
-        af: 'gnomAD Genome 2.1.1',
+        af: 'gnomAD Genoma 2.1.1',
       },
       gnomad_genomes_3: {
-        af: 'gnomAD Genome 3.1.2',
+        af: 'gnomAD Genoma 3.1.2',
       },
       gnomad_exomes_2_1_1: {
-        af: 'gnomAD Exome 2.1.1',
+        af: 'gnomAD Exoma 2.1.1',
       },
       topmed_bravo: {
         af: 'TopMed',
       },
       thousand_genomes: {
-        af: '1000 Genomes',
+        af: '1000 Genomas',
       },
     },
     internal_frequencies: {
@@ -1805,22 +1867,22 @@ const es = {
         upper_bound_kf: { af: 'Frecuencia de Alelos KF' },
       },
       gnomad_genomes_2_1: {
-        af: 'gnomAD Genome 2.1',
+        af: 'gnomAD Genoma 2.1',
       },
       gnomad_genomes_3_0: {
-        af: 'gnomAD Genome 3.0',
+        af: 'gnomAD Genoma 3.0',
       },
       gnomad_genomes_3_1_1: {
-        af: 'gnomAD Genome 3.1',
+        af: 'gnomAD Genoma 3.1',
       },
       gnomad_exomes_2_1: {
-        af: 'gnomAD Exome 2.1',
+        af: 'gnomAD Exoma 2.1',
       },
       topmed: {
         af: 'TopMed',
       },
       one_thousand_genomes: {
-        af: '1000 Genomes',
+        af: '1000 Genomas',
       },
     },
 
@@ -1867,6 +1929,8 @@ const es = {
       volume_unit: 'Unidad de volumen',
     },
     file: {
+      controlled: 'Controlado',
+      registered: 'Registrado',
       fileAuthorization: 'Autorización de archivo',
       access: 'Acceso',
       access_url: 'URL de acceso',

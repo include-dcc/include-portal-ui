@@ -72,7 +72,7 @@ const CreateEditModal = ({
       form.setFields([
         {
           name: SET_NAME_KEY,
-          errors: ['A set with this name already exists'],
+          errors: [intl.get('api.savedSet.error.duplicate')],
         },
       ]);
     } else {
@@ -146,7 +146,7 @@ const CreateEditModal = ({
       onCancel={handleCancel}
       onOk={() => form.submit()}
       okButtonProps={{ disabled: isLoading, loading: isLoading || isUpdating }}
-      okText="Save"
+      okText={intl.get('api.savedSet.modal.okText')}
       destroyOnClose
       forceRender
     >
@@ -166,7 +166,7 @@ const CreateEditModal = ({
         }}
       >
         <Form.Item
-          label="Name"
+          label={intl.get('api.savedSet.modal.name')}
           className={styles.setCreateFormItem}
           name={SET_NAME_KEY}
           rules={[
@@ -194,7 +194,7 @@ const CreateEditModal = ({
           ]}
           required={false}
         >
-          <Input autoFocus placeholder="Enter the name of your new set" />
+          <Input autoFocus placeholder={intl.get('api.savedSet.modal.placeholder')} />
         </Form.Item>
       </Form>
     </Modal>

@@ -126,7 +126,7 @@ const MostFrequentPhenotypesGraphCard = () => {
       content={
         <>
           {isEmpty(phenotypes) ? (
-            <Empty imageType="grid" size="large" noPadding />
+            <Empty imageType="grid" size="large" noPadding description={intl.get('api.noData')} />
           ) : (
             <BarChart
               data={phenotypes}

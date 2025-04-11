@@ -152,7 +152,7 @@ const DemographicsGraphCard = () => {
         <Row gutter={[12, 24]} className={styles.graphRowWrapper}>
           <Col sm={12} md={12} lg={8}>
             {isEmpty(sexData) ? (
-              <Empty imageType="grid" noPadding />
+              <Empty imageType="grid" noPadding description={intl.get('api.noData')} />
             ) : (
               <PieChart
                 title={intl.get('screen.dataExploration.tabs.summary.demographic.sexTitle')}

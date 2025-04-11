@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import intl from 'react-intl-universal';
 import Empty from '@ferlab/ui/core/components/Empty';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import {
@@ -90,7 +91,7 @@ const SetSearch = ({
         filterOption={(input, option) =>
           option ? option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0 : false
         }
-        placeholder="Select a saved set"
+        placeholder={intl.get('global.search.participantSet.placeholder')}
         mode="multiple"
         maxTagCount={1}
         value={values}
