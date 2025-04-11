@@ -98,6 +98,7 @@ describe('Page d\'un variant - Vérifier les informations affichées', () => {
     cy.get('[id="consequence"] div[class*="VariantEntity_expandedTable"] tbody td[class="ant-table-cell"]').eq(0).contains('p.Tyr11Cys').should('exist');
     cy.get('[id="consequence"] div[class*="VariantEntity_expandedTable"] tbody td[class="ant-table-cell"]').eq(1).find('svg[class*="Cell_moderateImpact"]').should('exist');
     cy.get('[id="consequence"] div[class*="VariantEntity_expandedTable"] tbody td[class="ant-table-cell"]').eq(1).contains('Missense').should('exist');
+    cy.get('[id="consequence"] div[class*="VariantEntity_expandedTable"] tbody td[class="ant-table-cell"]').eq(1).find('span[class*="VariantEntity_pickedIcon"]').should('exist');
     cy.get('[id="consequence"] div[class*="VariantEntity_expandedTable"] tbody td[class="ant-table-cell"]').eq(2).contains('c.32T>C').should('exist');
     cy.get('[id="consequence"] div[class*="VariantEntity_expandedTable"] tbody td[class="ant-table-cell"]').eq(3).find('span[class*="ant-typography"]').eq(0).contains('SIFT').should('exist');
     cy.get('[id="consequence"] div[class*="VariantEntity_expandedTable"] tbody td[class="ant-table-cell"]').eq(3).find('span[class*="ant-typography"]').eq(1).contains('Damaging').should('exist');
