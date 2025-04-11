@@ -92,7 +92,7 @@ const DataCategoryGraphCard = () => {
       content={
         <>
           {isEmpty(dataCategoryResults) ? (
-            <Empty imageType="grid" size="large" noPadding />
+            <Empty imageType="grid" size="large" noPadding description={intl.get('api.noData')} />
           ) : (
             <BarChart
               data={dataCategoryResults}

@@ -66,6 +66,11 @@ const en = {
         title: 'Search by Participant ID',
         tooltip: 'Search by Participant ID or External Participant ID',
       },
+      participantSet: {
+        emptyText: 'No participant sets found',
+        placeholder: 'Select a saved set',
+        title: 'Saved Participant Sets',
+      },
       biospecimen: {
         emptyText: 'No samples found',
         placeholder: 'e.g. bs-019260B4, SSH3953290',
@@ -77,10 +82,18 @@ const en = {
           title: 'Search by Collection ID',
         },
       },
+      biospecimenSet: {
+        title: 'Saved Biospecimen Sets',
+        emptyText: 'No sample sets found',
+      },
       file: {
         emptyText: 'No files found',
         placeholder: 'e.g. GF_001CSF26',
         title: 'Search by File ID',
+      },
+      fileSet: {
+        title: 'Saved File Sets',
+        emptyText: 'No file sets found',
       },
     },
     filters: {
@@ -149,6 +162,15 @@ const en = {
       selected: 'item selected',
       selectedPlural: 'items selected',
       selectAll: 'Select all results',
+      tooltips: {
+        tableExport: 'Export as TSV',
+      },
+      columnSelector: {
+        tooltips: {
+          columns: 'Columns',
+        },
+        reset: 'Reset',
+      },
     },
     viewInDataExploration: 'View in data exploration',
   },
@@ -172,7 +194,13 @@ const en = {
       },
     },
     savedSet: {
+      modal: {
+        okText: 'Save',
+        name: 'Name',
+        placeholder: 'Enter the name of your new set',
+      },
       error: {
+        duplicate: 'A set with this name already exists',
         title: 'Error',
         temporary: 'Unable to add set to data exploration',
         messageUpdate: 'Unable to update set',
@@ -356,7 +384,9 @@ const en = {
         },
         myFiltersDropdown: {
           title: 'My Filters',
-          manageMyFilter: 'Manage filters',
+          manageMyFilters: 'Manage filters',
+          okText: 'Close',
+          lastSavedAt: 'Last saved : {date} ago',
         },
         duplicateFilterTitleSuffix: 'COPY',
       },
@@ -548,6 +578,21 @@ const en = {
           oldest: 'Oldest first',
           lastnameAlpha: 'Alphabetical (last name)',
         },
+      },
+      roleOptions: {
+        researcher: 'Researcher at an Academic or not-for-profit Institution',
+        representative: 'Representative from a for-profit or Commercial Entity',
+        developer: 'tool or algorithm developer',
+        clinician: 'Clinician',
+        community_member: 'Community Member',
+        federal_employee: 'Federal Employee',
+      },
+      usage: {
+        learn_more_about_down_syndrome:
+          'Learning more about Down syndrome and its health outcomes, management, and/or treatment',
+        help_design_new_research_study: 'Helping me design a new research study',
+        identifying_dataset: 'Identifying datasets that I want to analyze',
+        commercial_purpose: 'Commercial purposes',
       },
     },
     profileSettings: {
@@ -888,6 +933,7 @@ const en = {
         pathogenicity: 'Pathogenicity',
       },
       title: 'Variants Exploration',
+      variant: 'Variants',
       table: {
         alt: {
           title: 'ALT',
@@ -1759,6 +1805,10 @@ const en = {
     },
   },
   facets: {
+    program: 'Program',
+    biospecimen_storage: 'Biospecimen Storage',
+    laboratory_procedure: 'Laboratory Procedure',
+    parent_sample_type: 'Parent Sample Type',
     // Participant
     participant_id: 'Participant ID',
     participant_facet_ids: {
@@ -1794,7 +1844,7 @@ const en = {
     diagnosis: {
       affected_status: 'Clinical Status',
       mondo_display_term: 'Diagnosis (MONDO)',
-      ncit_id_diagnosis: 'Diagnosis (NCIT)',
+      ncit_id_diagnosis: 'Age at Diagnosis (days)',
       age_at_event_days: 'Age at Diagnosis (days)',
       source_text: 'Condition (Source Text)',
       source_text_tumor_location: 'Tumor Location (Source Text)',
@@ -1808,11 +1858,12 @@ const en = {
     phenotype: {
       hpo_phenotype_observed: 'Observed Phenotype (HPO)',
       hpo_phenotype_not_observed: 'Not Observed Phenotype (HPO)',
-      age_at_event_days: 'Age at Observed Phenotype',
+      age_at_event_days: 'Age at Observed Phenotype (days)',
     },
     age_at_data_collection: 'Age at data collection',
     age_at_first_patient_engagement: { value: 'Age at First Patient Engagement (days)' },
     family_type: 'Family Unit',
+    family_data: 'Family Data',
     family: {
       family_id: 'Family ID',
     },
@@ -1857,6 +1908,8 @@ const en = {
     genePanels: 'Gene Panels',
     start: 'Position',
     locus: 'Variant ID',
+    variant_external_reference: 'Variant External Reference',
+    gene_external_reference: 'Gene External Reference',
     consequences: {
       consequences: 'Consequence',
       biotype: 'Gene Type',
@@ -1962,7 +2015,7 @@ const en = {
     },
 
     // Studies
-    domain: 'Study Domain',
+    domain: 'Domain',
     population: 'Population',
     donors: {
       diagnoses: {
@@ -1975,6 +2028,50 @@ const en = {
       },
       observed_phenotype_tagged: {
         main_category: 'Type of Phenotypic Abnormality (HPO)',
+      },
+    },
+    study_design: 'Design',
+    part_lifespan_stages: 'Participant Lifespan Stage',
+    is_harmonized: 'Harmonized Data',
+    is_guid_mapped: 'GUID Available',
+    data_sources: 'Data Source',
+    tooltips: {
+      genes: {
+        consequences: {
+          vep_impact: 'Ensembl Variant Effect Predictor',
+          predictions: {
+            cadd_score: 'Combined Annotation Dependent Depletion',
+            cadd_phred: 'Combined Annotation-Dependent Depletion PHRED',
+            dann_score: 'Deleterious Annotation of genetic variants using Neural Networks',
+            fathmm_pred: 'Functional Analysis Through Hidden Markov Models',
+            lrt_pred: 'Likelihood Ratio Test',
+            polyphen2_hvar_pred: 'Polymorphism Phenotyping v2 HumVar',
+            revel_score: 'Rare Exome Variant Ensemble Learner',
+            sift_pred: 'Sorting Intolerant From Tolerant',
+          },
+        },
+        hpo: {
+          hpo_term_label: 'Human Phenotype Ontology',
+        },
+        orphanet: {
+          panel: 'ORPHANET',
+        },
+        omim: {
+          name: 'Online Mendelian Inheritance in Man ',
+        },
+        ddd: {
+          disease_name: 'Deciphering Developmental Disorders',
+        },
+        cosmic: {
+          tumour_types_germline: 'Catalogue Of Somatic Mutations In Cancer',
+        },
+        spliceai: {
+          ds: 'NEW',
+        },
+        gnomad: {
+          pli: 'NEW',
+          loeuf: 'NEW',
+        },
       },
     },
   },
@@ -2004,6 +2101,8 @@ const en = {
       volume_unit: 'Volume Unit',
     },
     file: {
+      controlled: 'Controlled',
+      registered: 'Registered',
       fileAuthorization: 'File Authorization',
       access: 'Access',
       access_url: 'Access Url',
