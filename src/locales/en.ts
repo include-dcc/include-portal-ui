@@ -1219,6 +1219,7 @@ const en = {
         ok: 'Close',
       },
       itemSelectionTooltip: 'You must select at least 1 item',
+      buttonDisabledTooltip: 'This participant does not have available samples for request',
       setsManagementDropdown: {
         newTitle: 'Save {filter} set',
         editTitle: 'Edit {filter} set',

@@ -427,7 +427,7 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
               additionalHandleClick={() => trackRequestBiospecimen('open modal')}
               additionalHandleFinish={() => trackRequestBiospecimen('download manifest')}
               createAndFetchReport={(name) => fetchRequestBioReport(name)}
-              dictionary={getRequestBiospecimenDictionary()}
+              dictionary={getRequestBiospecimenDictionary({})}
               disabled={selectedKeys.length === 0 && !selectedAllResults}
               columns={getDataTypeColumns()}
               // eslint-disable-next-line react-hooks/rules-of-hooks

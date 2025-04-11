@@ -172,7 +172,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
                   trackRequestBiospecimen('Participant - download manifest')
                 }
                 createAndFetchReport={(name) => fetchRequestBioReport(name)}
-                dictionary={getRequestBiospecimenDictionary()}
+                dictionary={getRequestBiospecimenDictionary({ isParticipantEntity: true })}
                 columns={getDataTypeColumns()}
                 // eslint-disable-next-line react-hooks/rules-of-hooks
                 getSamples={() => useApi({ config })}
@@ -182,6 +182,7 @@ const BiospecimenTable = ({ participant, loading }: OwnProps) => {
                 nbBiospecimenSelected={biospecimens.length}
                 sqon={requestSqon}
                 size="small"
+                disabled={biospecimens.filter((b) => b.status === 'available').length === 0}
               />
               <DownloadDataButton
                 biospecimenIds={[...biospecimens.map((biospecimen) => biospecimen.sample_id)]}

@@ -8,9 +8,17 @@ import { ColumnType } from 'antd/lib/table';
 
 import styles from './index.module.css';
 
-export const getRequestBiospecimenDictionary = (): IRequestBiospecimenDictionary => ({
+interface OwnProps {
+  isParticipantEntity?: boolean;
+}
+
+export const getRequestBiospecimenDictionary = ({
+  isParticipantEntity = false,
+}: OwnProps): IRequestBiospecimenDictionary => ({
   buttonLabel: intl.get('screen.dataExploration.tabs.biospecimens.request.buttonLabel'),
-  itemSelectionTooltip: intl.get('screen.dataExploration.itemSelectionTooltip'),
+  itemSelectionTooltip: isParticipantEntity
+    ? intl.get('screen.dataExploration.buttonDisabledTooltip')
+    : intl.get('screen.dataExploration.itemSelectionTooltip'),
   modal: {
     title: intl.get('screen.dataExploration.tabs.biospecimens.request.modal.title'),
     okText: intl.get('screen.dataExploration.tabs.biospecimens.request.modal.okText'),
