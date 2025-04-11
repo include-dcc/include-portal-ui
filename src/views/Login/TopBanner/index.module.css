@@ -13,6 +13,7 @@
   align-items: center;
   gap: 80px;
   max-width: 1200px;
+  position: relative;
   width: 100%;
 }
 
@@ -59,7 +60,17 @@
   color: var(--gray-1);
 }
 
+.language {
+  color: var(--gray-1);
+  top: -48px;
+  right: 0;
+  position: absolute;
+}
+
 @media (min-width: 800px) and (max-width: 1024px) {
+  .language {
+    top: 0;
+  }
   .topBanner {
     padding: 40px 40px;
   }
@@ -71,6 +82,9 @@
   }
 }
 @media (max-width: 800px) {
+  .language {
+    top: 10px;
+  }
   .topBanner {
     background-position: center;
     background-size: auto 100%;
