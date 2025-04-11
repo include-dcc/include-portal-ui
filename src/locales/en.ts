@@ -1129,6 +1129,7 @@ const en = {
         conservation: 'Conservation',
         phyloP17Way: 'PhyloP17Way',
         pickedTooltip: 'Gene with most deleterious consequence',
+        pickedConsequenceTooltip: 'Most deleterious consequence',
       },
       frequencies: {
         includeStudies: 'INCLUDE Studies',
