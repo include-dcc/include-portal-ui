@@ -115,6 +115,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
   });
   
   it('Panneau Biospecimens', () => {
+    cy.get('[id="biospecimen"] [data-node-key="table"]').clickAndWait({force: true});
     cy.resetColumns('biospecimen');
     cy.showColumn(/^Volume$/);
     cy.showColumn('Volume Unit');
@@ -123,7 +124,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.showColumn('Biospecimen Storage');
     cy.showColumn('Parent Sample ID');
     cy.showColumn('Parent Sample Type');
-    cy.get('[id="biospecimen"] [class*="EntityTable_title"]').contains('Biospecimen').should('exist');
+    cy.get('[id="biospecimen"] [class*="EntityCustomContent_title"]').contains('Biospecimen').should('exist');
     cy.get('[id="biospecimen"] [class="ant-collapse-header"]').contains('Biospecimen').should('exist');
     cy.get('[id="biospecimen"] [class="ant-collapse-header"]').contains(/\d{1}/).should('exist');
     cy.get('[id="biospecimen"] [class="ant-collapse-header"]').contains('View in exploration').should('exist');

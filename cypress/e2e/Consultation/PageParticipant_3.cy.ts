@@ -61,6 +61,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
   });
 
   it('Lien DataExploration du panneau Biospecimens', () => {
+    cy.get('[id="biospecimen"] [data-node-key="table"]').clickAndWait({force: true});
     cy.resetColumns('biospecimen');
     cy.get('[id="biospecimen"] [class="ant-collapse-header"] button').clickAndWait({force: true}); // data-cy="Biospecimens_RedirectLink"
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
@@ -69,6 +70,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
   });
 
   it('Lien Collection ID du panneau Biospecimens', () => {
+    cy.get('[id="biospecimen"] [data-node-key="table"]').clickAndWait({force: true});
     cy.resetColumns('biospecimen');
     cy.get('[id="biospecimen"] [data-row-key="bs-e3g4mq8bcx"] [href]').clickAndWait({force: true});
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"

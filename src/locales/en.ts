@@ -1225,6 +1225,7 @@ const en = {
         ok: 'Close',
       },
       itemSelectionTooltip: 'You must select at least 1 item',
+      buttonDisabledTooltip: 'This participant does not have available samples for request',
       setsManagementDropdown: {
         newTitle: 'Save {filter} set',
         editTitle: 'Edit {filter} set',
@@ -1409,6 +1410,11 @@ const en = {
                 limitDescription:
                   'A maximum of 10,000 biospecimens can be included at once. Please narrow down your selection and try again.',
               },
+            },
+          },
+          hierarchicalBiospecime: {
+            modal: {
+              title: 'Sample hierarchy - {participantId}',
             },
           },
         },
@@ -1709,6 +1715,47 @@ const en = {
           ok: 'Close',
         },
       },
+    },
+    hierarchicalBiospecimen: {
+      treeViewTab: 'Tree view',
+      tableViewTab: 'Table view',
+      searchPlaceholder: 'Search',
+      collapseAll: 'Collapse all',
+      expandAll: 'Expand all',
+      legend: {
+        title: 'Legend',
+        collection: 'Collection sample',
+        sample: 'Sample',
+        container: 'Container',
+        fileAvailable: 'File available',
+        sampleAvailable: 'Sample available',
+        oneSampleAvailable: 'At least one sample available',
+      },
+      details: {
+        collection: {
+          collectionSampleId: 'Collection Sample ID',
+          externalCollectionSampleId: 'External Collection ID',
+          collectionSampleType: 'Collection Sample Type',
+        },
+        sample: {
+          sampleId: 'Sample ID',
+          externalSampleId: 'External Sample ID',
+          sampleType: 'Sample Type',
+          parentSampleType: 'Parent Sample Type',
+          ageAtBiospecimenCollection: 'Age At Biospecimen Collection',
+          status: 'Sample Availability',
+          laboratoryProcedure: 'Laboratory Procedure',
+          nbFiles: 'Files',
+          participantFhirId: 'Participant ID',
+        },
+        container: {
+          containerId: 'Container ID',
+          volume: 'Volume',
+          volumeUnit: 'Volume Unit',
+          biospecimenStorage: 'Biospecimen Storage',
+        },
+      },
+      exportAsTsv: 'Export as TSV',
     },
   },
   facets: {
