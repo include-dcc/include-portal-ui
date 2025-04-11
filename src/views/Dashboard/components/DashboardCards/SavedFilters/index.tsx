@@ -102,7 +102,7 @@ const SavedFilters = ({ id, key, className = '' }: DashboardCardProps) => {
               label: (
                 <div>
                   <FileSearchOutlined />
-                  Data Exploration (
+                  {intl.get('screen.dataExploration.title')} (
                   {
                     savedFilters.filter((s) => s.tag === SavedFilterTag.ParticipantsExplorationPage)
                       .length
@@ -124,7 +124,7 @@ const SavedFilters = ({ id, key, className = '' }: DashboardCardProps) => {
               label: (
                 <div>
                   <LineStyleIcon height={14} width={14} />
-                  Variants (
+                  {intl.get('screen.variants.variant')} (
                   {
                     savedFilters.filter((s) => s.tag === SavedFilterTag.VariantsExplorationPage)
                       .length
