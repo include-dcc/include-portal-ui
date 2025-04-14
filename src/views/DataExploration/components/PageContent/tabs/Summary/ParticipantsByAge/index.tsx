@@ -8,7 +8,6 @@ import ResizableGridCard from '@ferlab/ui/core/layout/ResizableGridLayout/Resiza
 import { INDEXES } from 'graphql/constants';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { AGE_QUERY } from 'graphql/summary/queries';
-import { isEmpty } from 'lodash';
 import { ARRANGER_API_PROJECT_URL } from 'provider/ApolloProvider';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
@@ -136,6 +135,9 @@ const buildSqonFromRange = (rangeValue: string) => {
   }
 };
 
+const isParticipantByAgeEmpty = (result: any[]): boolean =>
+  result.filter((r) => r.T21 > 0 || r.D21 > 0).length == 0;
+
 const ParticipantsByAgeGraphCard = () => {
   const { sqon } = useParticipantResolvedSqon(DATA_EXPLORATION_QB_ID);
   const { loading, result } = useApi<any>({
@@ -250,7 +252,7 @@ const ParticipantsByAgeGraphCard = () => {
       }}
       content={
         <>
-          {isEmpty(participantsByAgeResults) ? (
+          {isParticipantByAgeEmpty(participantsByAgeResults) ? (
             <Empty imageType="grid" size="large" noPadding />
           ) : (
             <BarChart
