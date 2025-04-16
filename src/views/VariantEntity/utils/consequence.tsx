@@ -143,6 +143,9 @@ export const getExpandedColumns = (): ColumnType<any>[] => [
           <Text className={style.consequence}>
             {removeUnderscoreAndCapitalize(consequence.consequence[0])}
           </Text>
+          <Tooltip title={intl.get('screen.variants.consequences.pickedConsequenceTooltip')}>
+            {consequence.picked && <CheckCircleFilled className={style.pickedIcon} />}
+          </Tooltip>
         </>
       );
     },

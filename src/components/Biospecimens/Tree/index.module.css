@@ -1,0 +1,79 @@
+.treeViewWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  flex: 1 1;
+}
+
+.treeCard {
+  display: flex;
+  padding: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  width: 100%;
+}
+.treeCard :global(.ant-card-body) {
+  width: 100%;
+}
+
+.searchWrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.inputWrapper {
+  width: 100%;
+}
+
+.collapseAllWrapper,
+.legendWrapper {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--gray-7);
+  font-size: 12px;
+}
+.collapseAll {
+  padding: 0;
+  font-size: 12px;
+}
+
+.treeSpace {
+  width: 100%;
+}
+
+.treeWrapper {
+  min-height: 258px;
+  max-height: 258px;
+  overflow: auto;
+}
+
+.checkIcon {
+  color: var(--green-7);
+}
+
+.icon {
+  margin-left: 8px;
+}
+.searchIcon {
+  color: var(--gray-6);
+}
+.searchHighlight {
+  background-color: yellow;
+}
+
+.legendIcon {
+  margin-right: 4px;
+}
+
+.detailWrapper {
+  width: 100%;
+}
+
+.participantLink {
+  text-decoration: underline;
+}
+.participantLink:hover {
+  text-decoration: none;
+}

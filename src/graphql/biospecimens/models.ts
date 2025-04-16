@@ -28,6 +28,7 @@ export interface IBiospecimenEntity {
   laboratory_procedure: string;
   collection_sample_id: string;
   collection_sample_type: string;
+  collection_fhir_id: string;
   parent_sample_id: string;
   parent_sample_type: string;
   external_sample_id: string;

@@ -1,0 +1,30 @@
+.tabs:global(.ant-tabs-top) :global(.ant-tabs-nav)::before {
+  border: none;
+}
+.notStriped {
+  background-color: inherit !important;
+}
+.tableHeader {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.contentTable {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.card {
+  border: none;
+}
+.card *[class$='-card-body'] {
+  padding: 0;
+}
+.card .content {
+  width: 100%;
+}
+.card .content *[class$='-space-item'] {
+  width: 100%;
+}

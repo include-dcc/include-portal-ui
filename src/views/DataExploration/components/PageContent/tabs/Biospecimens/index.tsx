@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { ApartmentOutlined } from '@ant-design/icons';
 import RequestBiospecimenButton from '@ferlab/ui/core/components/BiospecimenRequest/RequestBiospecimenButton';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
@@ -41,21 +42,21 @@ import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
+import useApi from 'hooks/useApi';
+import { trackRequestBiospecimen } from 'services/analytics';
+import { headers } from 'services/api/reports';
+import { ReportType } from 'services/api/reports/models';
 import { SetType } from 'services/api/savedSet/models';
 import { fetchReport, fetchTsvReport } from 'store/report/thunks';
+import { PROJECT_ID, useSavedSet } from 'store/savedSet';
+import { fetchSavedSet } from 'store/savedSet/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
 import { getProTableDictionary } from 'utils/translation';
 
-import useApi from '../../../../../../hooks/useApi';
-import { trackRequestBiospecimen } from '../../../../../../services/analytics';
-import { headers } from '../../../../../../services/api/reports';
-import { ReportType } from '../../../../../../services/api/reports/models';
-import { PROJECT_ID, useSavedSet } from '../../../../../../store/savedSet';
-import { fetchSavedSet } from '../../../../../../store/savedSet/thunks';
-
+import HierarchicalBiospecimenModal from './HierarchicalBiospecimenModal';
 import { getDataTypeColumns, getRequestBiospecimenDictionary } from './utils';
 
 import styles from './index.module.css';
@@ -67,14 +68,30 @@ interface OwnProps {
   sqon?: ISqonGroupFilter;
 }
 
-const getDefaultColumns = (): ProColumnType<any>[] => [
+const getDefaultColumns = (
+  setHierarchicalModal: React.Dispatch<React.SetStateAction<boolean>>,
+  setBiospecimenSelected: React.Dispatch<React.SetStateAction<IBiospecimenEntity | undefined>>,
+): ProColumnType<any>[] => [
   {
     key: 'sample_id',
     title: intl.get('entities.biospecimen.sample_id'),
-    dataIndex: 'sample_id',
     sorter: { multiple: 1 },
     className: styles.sampleIdCell,
-    render: (sample_id: string) => sample_id || TABLE_EMPTY_PLACE_HOLDER,
+    render: (record: IBiospecimenEntity) =>
+      record.sample_id ? (
+        <Link
+          to={''}
+          onClick={() => {
+            setHierarchicalModal(true);
+            setBiospecimenSelected(record);
+          }}
+        >
+          {record.sample_id}
+          <ApartmentOutlined className={styles.sampleIdIcon} />
+        </Link>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'study.study_code',
@@ -262,6 +279,8 @@ const getDefaultColumns = (): ProColumnType<any>[] => [
 const BioSpecimenTab = ({ sqon }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
+  const [hierarchicalModal, setHierarchicalModal] = useState(false);
+  const [biospecimenSelected, setBiospecimenSelected] = useState<IBiospecimenEntity>();
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
   const [selectedAllResults, setSelectedAllResults] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -354,118 +373,127 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
   };
 
   return (
-    <ProTable
-      tableId="biospecimen_table"
-      columns={getDefaultColumns()}
-      wrapperClassName={styles.biospecimenTabWrapper}
-      loading={results.loading}
-      initialColumnState={userInfo?.config.data_exploration?.tables?.biospecimens?.columns}
-      enableRowSelection={true}
-      initialSelectedKey={selectedKeys}
-      showSorterTooltip={false}
-      onChange={(_pagination, _filter, sorter) => {
-        setPageIndex(DEFAULT_PAGE_INDEX);
-        setQueryConfig({
-          pageIndex: DEFAULT_PAGE_INDEX,
-          size: queryConfig.size!,
-          sort: formatQuerySortList(sorter),
-        });
-      }}
-      headerConfig={{
-        itemCount: {
-          pageIndex: pageIndex,
-          pageSize: queryConfig.size,
-          total: results.total,
-        },
-        enableColumnSort: true,
-        enableTableExport: true,
-        onSelectAllResultsChange: setSelectedAllResults,
-        onSelectedRowsChange: (keys) => setSelectedKeys(keys),
-        onColumnSortChange: (newState) =>
-          dispatch(
-            updateUserConfig({
-              data_exploration: {
-                tables: {
-                  biospecimens: {
-                    columns: newState,
+    <>
+      <ProTable
+        tableId="biospecimen_table"
+        columns={getDefaultColumns(setHierarchicalModal, setBiospecimenSelected)}
+        wrapperClassName={styles.biospecimenTabWrapper}
+        loading={results.loading}
+        initialColumnState={userInfo?.config.data_exploration?.tables?.biospecimens?.columns}
+        enableRowSelection={true}
+        initialSelectedKey={selectedKeys}
+        showSorterTooltip={false}
+        onChange={(_pagination, _filter, sorter) => {
+          setPageIndex(DEFAULT_PAGE_INDEX);
+          setQueryConfig({
+            pageIndex: DEFAULT_PAGE_INDEX,
+            size: queryConfig.size!,
+            sort: formatQuerySortList(sorter),
+          });
+        }}
+        headerConfig={{
+          itemCount: {
+            pageIndex: pageIndex,
+            pageSize: queryConfig.size,
+            total: results.total,
+          },
+          enableColumnSort: true,
+          enableTableExport: true,
+          onSelectAllResultsChange: setSelectedAllResults,
+          onSelectedRowsChange: (keys) => setSelectedKeys(keys),
+          onColumnSortChange: (newState) =>
+            dispatch(
+              updateUserConfig({
+                data_exploration: {
+                  tables: {
+                    biospecimens: {
+                      columns: newState,
+                    },
                   },
                 },
-              },
-            }),
-          ),
-        onTableExportClick: () =>
-          dispatch(
-            fetchTsvReport({
-              columnStates: userInfo?.config.data_exploration?.tables?.biospecimens?.columns,
-              columns: getDefaultColumns(),
-              index: INDEXES.BIOSPECIMEN,
-              sqon: getCurrentSqon(),
-            }),
-          ),
-        extra: [
-          <RequestBiospecimenButton
-            additionalHandleClick={() => trackRequestBiospecimen('open modal')}
-            additionalHandleFinish={() => trackRequestBiospecimen('download manifest')}
-            createAndFetchReport={(name) => fetchRequestBioReport(name)}
-            dictionary={getRequestBiospecimenDictionary()}
-            disabled={selectedKeys.length === 0 && !selectedAllResults}
-            columns={getDataTypeColumns()}
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            getSamples={() => useApi({ config })}
-            getSavedSets={useSavedSet}
-            key="requestBiospecimen"
-            maxTitleLength={200}
-            nbBiospecimenSelected={selectedAllResults ? results.total : selectedKeys.length}
-            sqon={getCurrentSqon()}
-            type="primary"
-          />,
-          <SetsManagementDropdown
-            idField={BIOSPECIMENS_SAVED_SETS_FIELD}
-            key="setManagementDropdown"
-            results={results}
-            sqon={getCurrentSqon()}
-            selectedAllResults={selectedAllResults}
-            type={SetType.BIOSPECIMEN}
-            selectedKeys={selectedKeys}
-          />,
-          <DownloadDataButton
-            disabled={selectedKeys.length === 0 && !selectedAllResults}
-            biospecimenIds={selectedAllResults ? [] : selectedKeys}
-            sqon={getCurrentSqon()}
-            key="downloadSampleData"
-          />,
-        ],
-      }}
-      bordered
-      size="small"
-      pagination={{
-        current: pageIndex,
-        queryConfig,
-        setQueryConfig,
-        onChange: (page: number) => {
-          scrollToTop(SCROLL_WRAPPER_ID);
-          setPageIndex(page);
-        },
-        searchAfter: results.searchAfter,
-        onViewQueryChange: (viewPerQuery: PaginationViewPerQuery) => {
-          dispatch(
-            updateUserConfig({
-              data_exploration: {
-                tables: {
-                  biospecimens: {
-                    ...userInfo?.config.data_exploration?.tables?.biospecimens,
-                    viewPerQuery,
+              }),
+            ),
+          onTableExportClick: () =>
+            dispatch(
+              fetchTsvReport({
+                columnStates: userInfo?.config.data_exploration?.tables?.biospecimens?.columns,
+                columns: getDefaultColumns(setHierarchicalModal, setBiospecimenSelected),
+                index: INDEXES.BIOSPECIMEN,
+                sqon: getCurrentSqon(),
+              }),
+            ),
+          extra: [
+            <RequestBiospecimenButton
+              additionalHandleClick={() => trackRequestBiospecimen('open modal')}
+              additionalHandleFinish={() => trackRequestBiospecimen('download manifest')}
+              createAndFetchReport={(name) => fetchRequestBioReport(name)}
+              dictionary={getRequestBiospecimenDictionary({})}
+              disabled={selectedKeys.length === 0 && !selectedAllResults}
+              columns={getDataTypeColumns()}
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              getSamples={() => useApi({ config })}
+              getSavedSets={useSavedSet}
+              key="requestBiospecimen"
+              maxTitleLength={200}
+              nbBiospecimenSelected={selectedAllResults ? results.total : selectedKeys.length}
+              sqon={getCurrentSqon()}
+              type="primary"
+            />,
+            <SetsManagementDropdown
+              idField={BIOSPECIMENS_SAVED_SETS_FIELD}
+              key="setManagementDropdown"
+              results={results}
+              sqon={getCurrentSqon()}
+              selectedAllResults={selectedAllResults}
+              type={SetType.BIOSPECIMEN}
+              selectedKeys={selectedKeys}
+            />,
+            <DownloadDataButton
+              disabled={selectedKeys.length === 0 && !selectedAllResults}
+              biospecimenIds={selectedAllResults ? [] : selectedKeys}
+              sqon={getCurrentSqon()}
+              key="downloadSampleData"
+            />,
+          ],
+        }}
+        bordered
+        size="small"
+        pagination={{
+          current: pageIndex,
+          queryConfig,
+          setQueryConfig,
+          onChange: (page: number) => {
+            scrollToTop(SCROLL_WRAPPER_ID);
+            setPageIndex(page);
+          },
+          searchAfter: results.searchAfter,
+          onViewQueryChange: (viewPerQuery: PaginationViewPerQuery) => {
+            dispatch(
+              updateUserConfig({
+                data_exploration: {
+                  tables: {
+                    biospecimens: {
+                      ...userInfo?.config.data_exploration?.tables?.biospecimens,
+                      viewPerQuery,
+                    },
                   },
                 },
-              },
-            }),
-          );
-        },
-        defaultViewPerQuery: queryConfig.size,
-      }}
-      dataSource={results.data.map((i) => ({ ...i, key: i.id }))}
-      dictionary={getProTableDictionary()}
-    />
+              }),
+            );
+          },
+          defaultViewPerQuery: queryConfig.size,
+        }}
+        dataSource={results.data.map((i) => ({ ...i, key: i.id }))}
+        dictionary={getProTableDictionary()}
+      />
+      {hierarchicalModal && (
+        <HierarchicalBiospecimenModal
+          isOpen={hierarchicalModal}
+          biospecimen={biospecimenSelected}
+          onClose={() => setHierarchicalModal(false)}
+        />
+      )}
+    </>
   );
 };
 

@@ -7,3 +7,7 @@ export enum INDEXES {
   VARIANTS = 'variants',
   GENES = 'genes',
 }
+
+export enum ES_INDEXES {
+  VARIANT = 'variant',
+}

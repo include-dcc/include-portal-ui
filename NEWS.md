@@ -7,6 +7,22 @@
 
 ### Technical / Other changes
 -->
+
+## 2025-04-15 include-portal-ui 1.18.0
+
+### Features:
+
+- [SJIP-731](https://d3b.atlassian.net/browse/SJIP-731) Feature:[Variant Entity] Add picked symbol to associated consequence
+- [SJIP-1157](https://d3b.atlassian.net/browse/SJIP-1157) Feature:[Data Exploration] Add Age at First Patient Engagement to reports
+- [SJIP-1210](https://d3b.atlassian.net/browse/SJIP-1210) Feature:[Data Exploration] Implement hierarchical Biospecimen tree visualization across samples
+- [SJIP-1235](https://d3b.atlassian.net/browse/SJIP-1235) Feature:[Entity] Implement hierarchical Biospecimen tree visualization in Participant Entity page
+- [SJIP-1251](https://d3b.atlassian.net/browse/SJIP-1251) Feature:[Analytics] Generate a Venn Diagram from Saved set inputs
+
+### Technical/ Other changes:
+
+- [SJIP-1276](https://d3b.atlassian.net/browse/SJIP-1276) Issue:[Data Exploration] Fixed issue on the upset plot when a saved set is inputted into the query
+- [SJIP-1315](https://d3b.atlassian.net/browse/SJIP-1315) Refactor:[Study Entity] Hide file section for files without data type and experimental strategy
+
 ## 2025-03-26 include-portal-ui 1.17.2
 
 ### Technical/ Other changes:

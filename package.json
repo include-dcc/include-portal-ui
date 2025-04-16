@@ -1,6 +1,6 @@
 {
   "name": "include-portal-ui",
-  "version": "1.17.3",
+  "version": "1.18.0",
   "private": true,
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
@@ -64,7 +64,7 @@
     "@apollo/client": "^3.13.1",
     "@dnd-kit/core": "^4.0.3",
     "@dnd-kit/sortable": "^5.1.0",
-    "@ferlab/ui": "^10.18.4",
+    "@ferlab/ui": "^10.22.0",
     "@loadable/component": "^5.16.4",
     "@react-keycloak/core": "^3.2.0",
     "@react-keycloak/web": "^3.4.0",

@@ -4,11 +4,6 @@ import '../../support/commands';
 beforeEach(() => {
   cy.login();
   cy.visitDataExploration('biospecimens');
-  cy.showColumn('External Sample ID');
-  cy.showColumn('Volume');
-  cy.showColumn('Volume Unit');
-  cy.showColumn('Laboratory Procedure');
-  cy.showColumn('Biospecimen Storage');
 });
 
 describe('Page Data Exploration (Biospecimens) - Valider les fonctionnalités du tableau', () => {
@@ -70,16 +65,16 @@ describe('Page Data Exploration (Biospecimens) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Sample Availability', () => {
     cy.sortTableAndIntercept('Sample Availability', 1);
-    cy.validateTableFirstRow('-', 14, true);
+    cy.validateTableFirstRow('-', 11, true);
     cy.sortTableAndIntercept('Sample Availability', 1);
-    cy.validateTableFirstRow('No', 14, true);
+    cy.validateTableFirstRow('No', 11, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Files', () => {
     cy.sortTableAndIntercept('Files', 1);
-    cy.validateTableFirstRow(/\d{1}/, 17, true);
+    cy.validateTableFirstRow(/\d{1}/, 12, true);
     cy.sortTableAndIntercept('Files', 1);
-    cy.validateTableFirstRow(/\d{1}/, 17, true);
+    cy.validateTableFirstRow(/\d{1}/, 12, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {

@@ -30,6 +30,7 @@ const en = {
     cancel: 'Cancel',
     analyse: 'Analysis',
     save: 'Save',
+    total: 'Total',
     pleaseDescribe: 'Please describe',
     connect: 'Connect',
     viewInExploration: 'View in exploration',
@@ -1128,6 +1129,7 @@ const en = {
         conservation: 'Conservation',
         phyloP17Way: 'PhyloP17Way',
         pickedTooltip: 'Gene with most deleterious consequence',
+        pickedConsequenceTooltip: 'Most deleterious consequence',
       },
       frequencies: {
         includeStudies: 'INCLUDE Studies',
@@ -1178,6 +1180,11 @@ const en = {
         datafiles: 'Data File',
       },
       venn: {
+        download: {
+          png: 'Download PNG',
+          fileNameTemplate: 'include-%name-%type-%date%extension',
+          fileNameDateFormat: 'yyyy-MM-dd',
+        },
         query: {
           title: 'Selected Queries',
           column: 'Query definition',
@@ -1218,6 +1225,7 @@ const en = {
         ok: 'Close',
       },
       itemSelectionTooltip: 'You must select at least 1 item',
+      buttonDisabledTooltip: 'This participant does not have available samples for request',
       setsManagementDropdown: {
         newTitle: 'Save {filter} set',
         editTitle: 'Edit {filter} set',
@@ -1272,6 +1280,13 @@ const en = {
               legendAxisLeft: 'Data Types',
               legendAxisBottom: '# of participants',
             },
+            participantsByAgeGraph: {
+              tooltips: 'Participants',
+              T21: 'Trisomy 21',
+              D21: 'Controls',
+              legendAxisLeft: 'Age at First Patient Engagement (years)',
+              legendAxisBottom: '# of participants',
+            },
             sampleTypeGraph: {
               legendAxisLeft: 'Sample Types',
               legendAxisBottom: '# of participants',
@@ -1304,6 +1319,7 @@ const en = {
           },
           availableData: {
             dataCategoryTitle: 'Participants by Data Category',
+            participantsByAge: 'Participants by Age at First Patient Engagement',
             dataTypeTitle: 'Participants by Data Type',
             studiesTitle: 'Participants by Study',
             sampleTypeTitle: 'Participants by Sample Type',
@@ -1314,6 +1330,9 @@ const en = {
             title: 'Co-occurrence of Top 10 Conditions',
             label: '# of participants',
             empty: 'No co-occurring conditions for this query',
+          },
+          participantsByAge: {
+            cardTitle: 'Participants by Age at First Patient Engagement',
           },
           sampleType: {
             cardTitle: 'Sample Type',
@@ -1391,6 +1410,11 @@ const en = {
                 limitDescription:
                   'A maximum of 10,000 biospecimens can be included at once. Please narrow down your selection and try again.',
               },
+            },
+          },
+          hierarchicalBiospecime: {
+            modal: {
+              title: 'Sample hierarchy - {participantId}',
             },
           },
         },
@@ -1589,8 +1613,8 @@ const en = {
           title: 'Effect of Karyotype on {symbol}',
           sample_id: 'Sample ID',
           fpkm: 'FPKM',
-          t21: 'T21 {nT21}',
-          control: 'Control {nControl}',
+          t21: 'T21 ({nT21})',
+          control: 'Control ({nControl})',
         },
         sidebar: {
           statisticalParameters: 'Statistical Parameters',
@@ -1609,6 +1633,129 @@ const en = {
             'HTP Whole Blood RNAseq (v1) is a dataset generated as part of the Human Trisome Project (HTP), which focuses on the genetic and molecular characteristics of individuals with trisomy conditions, including Down syndrome. This dataset consists of RNA sequencing (RNAseq) data derived from whole blood samples, capturing transcriptomic profiles at high throughput (HTP). The first version (v1) includes baseline gene expression data, with a focus on understanding differential gene expression, alternative splicing, and pathway analysis across samples. It is used for comparative studies between trisomic and euploid populations to identify potential biomarkers and therapeutic targets.',
         },
       },
+      setOperations: {
+        title: 'Set Operations',
+        description:
+          'Visualize intersections between virtual cohorts saved as sets of the same type using an interactive Venn diagram.',
+        tags: {
+          clinical: 'Clinical',
+          genomics: 'Genomics',
+        },
+        noSet: {
+          title: 'No sets to compare',
+          description:
+            'You need at least two saved sets of entity IDs (e.g. two sets of participants) in order to use this tool. You can create saved sets at the top of the table of results in the <a href="{dataExploration}" style="text-decoration: underline;">Data Exploration</a> and <a href="{variantExploration}" style="text-decoration: underline;">Variants Exploration</a> pages.',
+        },
+        selectSet: {
+          title: 'Select two or three sets to get started',
+          descriptionVenn:
+            'Visualize intersections between saved sets using an interactive Venn diagram.',
+          descriptionSet:
+            'View your saved sets in the <a href="{dashboard}" style="text-decoration: underline;">Dashboard</a>.',
+          entityType: {
+            label: 'Entity type',
+            placeholder: 'Select',
+            participants: 'Participants',
+            biospecimens: 'Biospecimens',
+            files: 'Data Files',
+            variants: 'Variants',
+            disabledTooltip: 'No set to compare',
+          },
+          sets: {
+            label: 'Sets',
+            placeholder: 'Select',
+          },
+          compare: 'Compare',
+          compareDisabledTooltip: 'Available with 2 or 3 sets selected',
+          resetTooltip: 'Reset',
+        },
+        venn: {
+          query: {
+            title: 'Selected Sets',
+            column: 'Set definition',
+          },
+          set: {
+            title: 'Set Definitions',
+            column: 'Set definition',
+            footer: 'Union of selected sets:',
+            tooltipDataExplo: 'View in data exploration',
+            tooltipVariantExplo: 'View in variant exploration',
+            max: 'Max 10,000 at a time',
+          },
+          save: {
+            nameTemplate: 'Combined set',
+            cancel: 'Cancel',
+            checkbox: {
+              label: 'Save this set for future reference',
+              tooltips:
+                'A saved set is a collection of one or more entity IDs which can be saved and revisited for later use',
+            },
+            label: 'Set name',
+            alreadyExist: 'A set with this name already exists',
+            ok: 'View set',
+            entity: {
+              participants:
+                'You have selected {count, plural, =0 {# participant} =1 {# participant} other {# participants}}',
+              biospecimens:
+                'You have selected {count, plural, =0 {# biospecimen} =1 {# biospecimen} other {# biospecimens}}',
+              files:
+                'You have selected {count, plural, =0 {# data file} =1 {# data file} other {# data files}}',
+              variants:
+                'You have selected {count, plural, =0 {# variant} =1 {# variant} other {# variants}}',
+            },
+            titleData: 'View in data exploration',
+            titleVariant: 'View in variant exploration',
+          },
+          count: 'Count :',
+          biospecimens: 'Biospecimens',
+          files: 'Data Files',
+          participants: 'Participants',
+          variants: 'Variants',
+          title: 'Set operations',
+          ok: 'Close',
+        },
+      },
+    },
+    hierarchicalBiospecimen: {
+      treeViewTab: 'Tree view',
+      tableViewTab: 'Table view',
+      searchPlaceholder: 'Search',
+      collapseAll: 'Collapse all',
+      expandAll: 'Expand all',
+      legend: {
+        title: 'Legend',
+        collection: 'Collection sample',
+        sample: 'Sample',
+        container: 'Container',
+        fileAvailable: 'File available',
+        sampleAvailable: 'Sample available',
+        oneSampleAvailable: 'At least one sample available',
+      },
+      details: {
+        collection: {
+          collectionSampleId: 'Collection Sample ID',
+          externalCollectionSampleId: 'External Collection ID',
+          collectionSampleType: 'Collection Sample Type',
+        },
+        sample: {
+          sampleId: 'Sample ID',
+          externalSampleId: 'External Sample ID',
+          sampleType: 'Sample Type',
+          parentSampleType: 'Parent Sample Type',
+          ageAtBiospecimenCollection: 'Age At Biospecimen Collection',
+          status: 'Sample Availability',
+          laboratoryProcedure: 'Laboratory Procedure',
+          nbFiles: 'Files',
+          participantFhirId: 'Participant ID',
+        },
+        container: {
+          containerId: 'Container ID',
+          volume: 'Volume',
+          volumeUnit: 'Volume Unit',
+          biospecimenStorage: 'Biospecimen Storage',
+        },
+      },
+      exportAsTsv: 'Export as TSV',
     },
   },
   facets: {

@@ -221,7 +221,7 @@ const getColumns = (): ProColumnType<any>[] => [
   },
   {
     key: 'biospecimen_count',
-    title: intl.get('entities.biospecimen.biospecimen'),
+    title: intl.get('entities.biospecimen.biospecimens'),
     sorter: { multiple: 1 },
     render: (record: IStudyEntity) => {
       const biospecimenCount = record?.biospecimen_count || 0;

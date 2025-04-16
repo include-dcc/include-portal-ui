@@ -31,14 +31,16 @@ const HtpWidget = () => {
           </Space>
         </Space>
         <Divider className={styles.divider} />
-        <Button
-          onClick={() => {
-            navigate(STATIC_ROUTES.ANALYTICS_TRANSCRIPTOMIC);
-          }}
-          icon={<BarChartOutlined />}
-        >
-          {intl.get('screen.analytics.widget.launch')}
-        </Button>
+        <div className={styles.footerWrapper}>
+          <Button
+            onClick={() => {
+              navigate(STATIC_ROUTES.ANALYTICS_TRANSCRIPTOMIC);
+            }}
+            icon={<BarChartOutlined />}
+          >
+            {intl.get('screen.analytics.widget.launch')}
+          </Button>
+        </div>
       </Space>
     </Card>
   );
