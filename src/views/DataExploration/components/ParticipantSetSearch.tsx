@@ -1,9 +1,12 @@
-import { ICustomSearchProps } from 'components/uiKit/search/GlobalSearch';
+import intl from 'react-intl-universal';
 import { INDEXES } from 'graphql/constants';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
-import { SetType } from 'services/api/savedSet/models';
-import { DATA_EXPLORATION_QB_ID } from '../utils/constant';
+
+import { ICustomSearchProps } from 'components/uiKit/search/GlobalSearch';
 import SetSearch from 'components/uiKit/search/SetSearch';
+import { SetType } from 'services/api/savedSet/models';
+
+import { DATA_EXPLORATION_QB_ID } from '../utils/constant';
 
 const ParticipantSetSearch = ({ queryBuilderId }: ICustomSearchProps) => {
   const { sqon } = useParticipantResolvedSqon(queryBuilderId);
@@ -11,11 +14,11 @@ const ParticipantSetSearch = ({ queryBuilderId }: ICustomSearchProps) => {
   return (
     <SetSearch
       index={INDEXES.PARTICIPANT}
-      title="Saved Participant Sets"
+      title={intl.get('global.search.participantSet.title')}
       queryBuilderId={DATA_EXPLORATION_QB_ID}
       type={SetType.PARTICIPANT}
       sqon={sqon}
-      emptyDescription={'No participant sets found'}
+      emptyDescription={intl.get('global.search.participantSet.emptyText')}
     />
   );
 };

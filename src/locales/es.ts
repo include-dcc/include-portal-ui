@@ -3,7 +3,7 @@ import translations from './es.json'; /* eslint-disable max-len */
 
 const filesFacets = {
   data_category: 'Categoría de Datos',
-  controlled_access: 'Acceso',
+  controlled_access: 'Acceso Controlado',
   data_type: 'Tipo de Datos',
   file_format: 'Formato de Archivo',
   file_id: 'ID de Archivo',
@@ -65,6 +65,11 @@ const es = {
         title: 'Buscar por ID de participante',
         tooltip: 'Buscar por ID de participante o ID de participante externo',
       },
+      participantSet: {
+        emptyText: 'No se encontraron conjuntos de participantes',
+        placeholder: 'Selecciona un conjunto guardado',
+        title: 'Conjuntos de Participantes Guardados',
+      },
       biospecimen: {
         emptyText: 'No se encontraron muestras',
         placeholder: 'p. ej., bs-019260B4, SSH3953290',
@@ -76,10 +81,18 @@ const es = {
           title: 'Buscar por ID de colección',
         },
       },
+      biospecimenSet: {
+        title: 'Conjuntos de Biospecímenes Guardados',
+        emptyText: 'No se encontraron conjuntos de muestras',
+      },
       file: {
         emptyText: 'No se encontraron archivos',
         placeholder: 'p. ej., GF_001CSF26',
         title: 'Buscar por ID de archivo',
+      },
+      fileSet: {
+        title: 'Conjuntos de Archivos Guardados',
+        emptyText: 'No se encontraron conjuntos de archivos',
       },
     },
     filters: {
@@ -148,6 +161,15 @@ const es = {
       selected: 'elemento seleccionado',
       selectedPlural: 'elementos seleccionados',
       selectAll: 'Seleccionar todos los resultados',
+      tooltips: {
+        tableExport: 'Exportar como TSV',
+      },
+      columnSelector: {
+        tooltips: {
+          columns: 'Columnas',
+        },
+        reset: 'Restablecer',
+      },
     },
     viewInDataExploration: 'Ver en exploración de datos',
   },
@@ -171,7 +193,13 @@ const es = {
       },
     },
     savedSet: {
+      modal: {
+        okText: 'Guardar',
+        name: 'Nombre',
+        placeholder: 'Ingresa el nombre de tu nuevo conjunto',
+      },
       error: {
+        duplicate: 'Ya existe un conjunto con este nombre',
         title: 'Error',
         temporary: 'No se pudo agregar el conjunto a la exploración de datos',
         messageUpdate: 'No se pudo actualizar el conjunto',
@@ -359,6 +387,8 @@ const es = {
         myFiltersDropdown: {
           title: 'Mis filtros',
           manageMyFilter: 'Gestionar filtros',
+          okText: 'Cerrar',
+          lastSavedAt: 'Última guardado: hace {date}',
         },
         duplicateFilterTitleSuffix: 'COPIA',
       },
@@ -552,6 +582,21 @@ const es = {
           oldest: 'Más antiguos primero',
           lastnameAlpha: 'Alfabético (apellido)',
         },
+      },
+      roleOptions: {
+        researcher: 'Investigador en una Institución Académica o sin fines de lucro',
+        representative: 'Representante de una entidad con fines de lucro o comercial',
+        developer: 'Desarrollador de herramientas o algoritmos',
+        clinician: 'Clínico',
+        community_member: 'Miembro de la Comunidad',
+        federal_employee: 'Empleado Federal',
+      },
+      usage: {
+        learn_more_about_down_syndrome:
+          'Aprender más sobre el síndrome de Down y sus resultados de salud, manejo y/o tratamiento',
+        help_design_new_research_study: 'Ayudarme a diseñar un nuevo estudio de investigación',
+        identifying_dataset: 'Identificar conjuntos de datos que quiero analizar',
+        commercial_purpose: 'Propósitos comerciales',
       },
     },
     profileSettings: {
@@ -894,6 +939,7 @@ const es = {
         pathogenicity: 'Patogenicidad',
       },
       title: 'Exploración de Variantes',
+      variant: 'Variante',
       table: {
         alt: {
           title: 'ALT',
@@ -1279,6 +1325,13 @@ const es = {
               legendAxisLeft: 'Tipos de Datos',
               legendAxisBottom: '# de participantes',
             },
+            participantsByAgeGraph: {
+              tooltips: 'Participantes',
+              T21: 'Trisomía 21',
+              D21: 'Controles',
+              legendAxisLeft: 'Edad en el primer contacto con el paciente (años)',
+              legendAxisBottom: 'N.º de participantes',
+            },
             sampleTypeGraph: {
               legendAxisLeft: 'Tipos de Muestra',
               legendAxisBottom: '# de participantes',
@@ -1311,6 +1364,7 @@ const es = {
           },
           availableData: {
             dataCategoryTitle: 'Participantes por Categoría de Datos',
+            participantsByAge: 'Participantes por edad en la primera interacción con el paciente',
             dataTypeTitle: 'Participantes por Tipo de Datos',
             studiesTitle: 'Participantes por Estudio',
             sampleTypeTitle: 'Participantes por Tipo de Muestra',
@@ -1321,6 +1375,9 @@ const es = {
             title: 'Co-ocurrencia de las 10 Principales Condiciones',
             label: '# de participantes',
             empty: 'No hay condiciones co-ocurrentes para esta consulta',
+          },
+          participantsByAge: {
+            cardTitle: 'Participantes por edad en la primera interacción con el paciente',
           },
           sampleType: {
             cardTitle: 'Tipo de Muestra',
@@ -1622,6 +1679,11 @@ const es = {
     },
   },
   facets: {
+    program: 'Programa',
+    biospecimen_storage: 'Almacenamiento de Muestras Biológicas',
+    laboratory_procedure: 'Procedimiento de Laboratorio',
+    parent_sample_type: 'Tipo de Muestra Principal',
+
     // Participante
     participant_id: 'ID del Participante',
     participant_facet_ids: {
@@ -1636,7 +1698,7 @@ const es = {
       biospecimen_fhir_id_1: 'ID de la Muestra',
       biospecimen_fhir_id_2: 'ID de la Muestra',
     },
-    biospecimen_id: 'Biospecimen',
+    biospecimen_id: 'Muestra Biológica',
     study: {
       study_code: 'Código del Estudio',
       study_name: 'Nombre del Estudio',
@@ -1645,11 +1707,11 @@ const es = {
     studies: {
       study_code: 'Código del Estudio',
       transmission: 'Transmisión',
-      zygosity: 'Zigosidad',
+      zygosity: 'Cigocidad',
     },
     is_proband: 'Proband',
     study_id: 'Código del Estudio',
-    down_syndrome_status: 'Estado del Síndrome de Down',
+    down_syndrome_status: 'Estado de Síndrome de Down',
     down_syndrome_diagnosis: 'Diagnóstico de Síndrome de Down',
     mondo: {
       name: 'Diagnóstico (MONDO)',
@@ -1657,10 +1719,10 @@ const es = {
     diagnosis: {
       affected_status: 'Estado Clínico',
       mondo_display_term: 'Diagnóstico (MONDO)',
-      ncit_id_diagnosis: 'Diagnóstico (NCIT)',
+      ncit_id_diagnosis: 'Edad al Diagnóstico (días)',
       age_at_event_days: 'Edad al Diagnóstico (días)',
-      source_text: 'Condición (Texto de Fuente)',
-      source_text_tumor_location: 'Ubicación del Tumor (Texto de Fuente)',
+      source_text: 'Condición (Texto Fuente)',
+      source_text_tumor_location: 'Ubicación del Tumor (Texto Fuente)',
     },
     outcomes: {
       age_at_event_days: {
@@ -1671,11 +1733,12 @@ const es = {
     phenotype: {
       hpo_phenotype_observed: 'Fenotipo Observado (HPO)',
       hpo_phenotype_not_observed: 'Fenotipo No Observado (HPO)',
-      age_at_event_days: 'Edad al Fenotipo Observado',
+      age_at_event_days: 'Edad al Fenotipo Observado (días)',
     },
-    age_at_data_collection: 'Edad al Recoger los Datos',
-    age_at_first_patient_engagement: { value: 'Edad al Primer Encuentro con el Paciente (días)' },
+    age_at_data_collection: 'Edad al momento de recolección de datos',
+    age_at_first_patient_engagement: { value: 'Edad al Primer Contacto con el Paciente (días)' },
     family_type: 'Unidad Familiar',
+    family_data: 'Datos familiares',
     family: {
       family_id: 'ID de la Familia',
     },
@@ -1691,40 +1754,43 @@ const es = {
       T21: 'Trisomía 21',
     },
 
-    // Biospecimen
-    biospecimen_type: 'Tipo de Biospecimen',
+    // Muestras biológicas
+    biospecimen_type: 'Tipo de Muestra Biológica',
     sample_type: 'Tipo de Muestra',
     derived_sample_type: 'Tipo de Muestra Derivada',
     ncit_id_tissue_type: 'Tipo de Tejido (NCIT)',
     status: 'Disponibilidad',
-    age_at_biospecimen_collection: 'Edad en la Recolección de Biospecimen (días)',
-    bio_repository: 'Biorepositorio',
-    collection_sample_id: 'ID de Colección',
-    sample_id: 'ID de Muestra',
+    age_at_biospecimen_collection:
+      'Edad al momento de la recolección de la muestra biológica (días)',
+    bio_repository: 'Biobanco',
+    collection_sample_id: 'ID de la Colección',
+    sample_id: 'ID de la Muestra',
 
-    // Archivo
+    // Archivos
     files: filesFacets,
     ...filesFacets,
     dataset_names: 'Conjunto de Datos',
 
     // Otro
-    collection_sample_type: 'Tipo de Muestra de Colección',
+    collection_sample_type: 'Tipo de Muestra de la Colección',
 
     // Variantes
     variant_class: 'Tipo de Variante',
     type: 'Tipo',
     chromosome: 'Cromosoma',
     position: 'Posición',
-    zygosity: 'Zigosidad',
+    zygosity: 'Cigocidad',
     transmissions: 'Transmisión',
     genePanels: 'Paneles de Genes',
     start: 'Posición',
-    locus: 'ID de Variante',
+    locus: 'ID de la Variante',
+    variant_external_reference: 'Referencia Externa de la Variante',
+    gene_external_reference: 'Referencia Externa del Gen',
     consequences: {
       consequences: 'Consecuencia',
       biotype: 'Tipo de Gen',
       vep_impact: 'VEP',
-      symbol: 'Símbolo de Gen',
+      symbol: 'Símbolo del Gen',
       symbol_id_1: 'Genes',
       predictions: {
         sift_pred: 'SIFT',
@@ -1741,7 +1807,7 @@ const es = {
         consequence: 'Consecuencia',
         vep_impact: 'VEP',
         predictions: {
-          cadd_score: 'CADD (Raw)',
+          cadd_score: 'CADD (Bruto)',
           cadd_phred: 'CADD (Phred)',
           dann_score: 'DANN',
           fathmm_pred: 'FATHMM',
@@ -1780,67 +1846,112 @@ const es = {
     },
     external_frequencies: {
       gnomad_genomes_2_1_1: {
-        af: 'gnomAD Genome 2.1.1',
+        af: 'gnomAD Genoma 2.1.1',
       },
       gnomad_genomes_3: {
-        af: 'gnomAD Genome 3.1.2',
+        af: 'gnomAD Genoma 3.1.2',
       },
       gnomad_exomes_2_1_1: {
-        af: 'gnomAD Exome 2.1.1',
+        af: 'gnomAD Exoma 2.1.1',
       },
       topmed_bravo: {
         af: 'TopMed',
       },
       thousand_genomes: {
-        af: '1000 Genomes',
+        af: '1000 Genomas',
       },
     },
     internal_frequencies: {
       total: {
-        af: 'Frecuencia de Alelos INCLUDE',
+        af: 'Frecuencia Alélica (INCLUDE)',
       },
     },
     frequencies: {
       internal: {
-        upper_bound_kf: { af: 'Frecuencia de Alelos KF' },
+        upper_bound_kf: { af: 'Frecuencia Alélica KF' },
       },
       gnomad_genomes_2_1: {
-        af: 'gnomAD Genome 2.1',
+        af: 'gnomAD Genoma 2.1',
       },
       gnomad_genomes_3_0: {
-        af: 'gnomAD Genome 3.0',
+        af: 'gnomAD Genoma 3.0',
       },
       gnomad_genomes_3_1_1: {
-        af: 'gnomAD Genome 3.1',
+        af: 'gnomAD Genoma 3.1',
       },
       gnomad_exomes_2_1: {
-        af: 'gnomAD Exome 2.1',
+        af: 'gnomAD Exoma 2.1',
       },
       topmed: {
         af: 'TopMed',
       },
       one_thousand_genomes: {
-        af: '1000 Genomes',
+        af: '1000 Genomas',
       },
     },
 
     // Estudios
-    domain: 'Dominio del Estudio',
+    domain: 'Dominio',
     population: 'Población',
     donors: {
       diagnoses: {
         tagged_icd: {
-          main_category: 'Tipo de Enfermedad (ICD-10)',
+          main_category: 'Tipo de Enfermedad (CIE-10)',
         },
         tagged_mondo: {
           main_category: 'Diagnóstico (MONDO)',
         },
       },
       observed_phenotype_tagged: {
-        main_category: 'Tipo de Anomalía Fenotípica (HPO)',
+        main_category: 'Tipo de Anormalidad Fenotípica (HPO)',
+      },
+    },
+    study_design: 'Diseño',
+    part_lifespan_stages: 'Etapa de Vida del Participante',
+    is_harmonized: 'Datos Armonizados',
+    is_guid_mapped: 'GUID Disponible',
+    data_sources: 'Fuente de Datos',
+    tooltips: {
+      genes: {
+        consequences: {
+          vep_impact: 'Predictor de Efecto de Variante de Ensembl',
+          predictions: {
+            cadd_score: 'Depleción Dependiente de Anotación Combinada',
+            cadd_phred: 'CADD PHRED',
+            dann_score: 'Anotación Deleteria con Redes Neuronales',
+            fathmm_pred: 'Análisis Funcional con Modelos Ocultos de Markov',
+            lrt_pred: 'Prueba de Razón de Verosimilitudes',
+            polyphen2_hvar_pred: 'Polimorfismo Fenotípico v2 HumVar',
+            revel_score: 'Aprendizaje Ensamblado de Variantes Exómicas Raras',
+            sift_pred: 'Clasificación de Intolerantes desde Tolerantes',
+          },
+        },
+        hpo: {
+          hpo_term_label: 'Ontología de Fenotipo Humano',
+        },
+        orphanet: {
+          panel: 'ORPHANET',
+        },
+        omim: {
+          name: 'Herencia Mendeliana en Línea del Hombre',
+        },
+        ddd: {
+          disease_name: 'Desentrañando Trastornos del Desarrollo',
+        },
+        cosmic: {
+          tumour_types_germline: 'Catálogo de Mutaciones Somáticas en Cáncer',
+        },
+        spliceai: {
+          ds: 'NUEVO',
+        },
+        gnomad: {
+          pli: 'NUEVO',
+          loeuf: 'NUEVO',
+        },
       },
     },
   },
+
   entities: {
     global: {
       id: 'ID',
@@ -1867,6 +1978,8 @@ const es = {
       volume_unit: 'Unidad de volumen',
     },
     file: {
+      controlled: 'Controlado',
+      registered: 'Registrado',
       fileAuthorization: 'Autorización de archivo',
       access: 'Acceso',
       access_url: 'URL de acceso',

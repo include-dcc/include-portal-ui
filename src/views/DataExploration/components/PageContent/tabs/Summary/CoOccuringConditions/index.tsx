@@ -164,7 +164,7 @@ const CoOccuringConditionsGraphCard = () => {
       content={
         <>
           {isEmpty(data) ? (
-            <Empty imageType="grid" size="large" noPadding />
+            <Empty imageType="grid" size="large" noPadding description={intl.get('api.noData')} />
           ) : (
             <div className={styles.wrapper}>
               <div id="upset" ref={gridRef} className={styles.content}>

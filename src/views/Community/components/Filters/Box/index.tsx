@@ -74,7 +74,7 @@ const FiltersBox = ({
               }}
               options={[
                 ...roleOptions.map((option) => ({
-                  label: option.label,
+                  label: intl.get(`screen.community.roleOptions.${option.key}`),
                   value: option.value,
                 })),
                 {
@@ -114,7 +114,7 @@ const FiltersBox = ({
               }}
               options={[
                 ...usageOptions.map((option) => ({
-                  label: option.label,
+                  label: intl.get(`screen.community.usage.${option.key}`),
                   value: option.value,
                 })),
                 {

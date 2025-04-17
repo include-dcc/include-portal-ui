@@ -125,11 +125,11 @@ const getDefaultColumns = (
         return TABLE_EMPTY_PLACE_HOLDER;
       }
       return controlled_access.toLowerCase() === FileAccessType.CONTROLLED.toLowerCase() ? (
-        <Tooltip title="Controlled">
+        <Tooltip title={intl.get('entities.file.controlled')}>
           <Tag color="geekblue">C</Tag>
         </Tooltip>
       ) : (
-        <Tooltip title="Registered">
+        <Tooltip title={intl.get('entities.file.registered')}>
           <Tag color="green">R</Tag>
         </Tooltip>
       );
