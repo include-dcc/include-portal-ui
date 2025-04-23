@@ -406,7 +406,9 @@ const es = {
         addQuery: 'Nueva consulta',
         combine: 'Combinar',
         compare: 'Comparar',
-        compareTooltips: 'Disponible con 2 o 3 consultas seleccionadas',
+        compareLessTooltips:
+          'Selecciona 2 o 3 consultas para generar una comparación de diagrama de Venn',
+        compareGreaterTooltips: 'Solo disponible con 2 o 3 consultas seleccionadas',
         labels: 'Etiquetas',
         delete: {
           title: '¿Eliminar esta consulta?',
