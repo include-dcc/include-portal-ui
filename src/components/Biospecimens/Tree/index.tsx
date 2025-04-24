@@ -202,12 +202,13 @@ const BiospecimenTree = ({
   }, []);
 
   useEffect(() => {
-    if (!loading && biospecimen && biospecimen.sample_id) {
-      setSelectedKeys([biospecimen.sample_id]);
-      const nodeDetails = getNodeDetails(biospecimen.sample_id, dataParsed);
+    if (!loading && biospecimen) {
+      setSelectedKeys([biospecimen.fhir_id]);
+      const nodeDetails = getNodeDetails(biospecimen.fhir_id, dataParsed);
       nodeDetails &&
         setDescriptions(getSampleDetails(nodeDetails, hasParticipantLink, participantId));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [biospecimen, loading]);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
