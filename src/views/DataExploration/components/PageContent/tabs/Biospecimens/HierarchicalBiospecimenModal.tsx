@@ -27,6 +27,7 @@ const HierarchicalBiospecimenModal = ({ biospecimen, isOpen, onClose }: OwnProps
       hasParticipantLink={true}
       collectionFhirIds={biospecimen ? [biospecimen.collection_fhir_id] : []}
       participantId={biospecimen?.participant?.participant_id}
+      biospecimen={biospecimen}
     />
   </Modal>
 );
