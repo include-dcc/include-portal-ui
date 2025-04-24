@@ -280,6 +280,7 @@ const SetOperations = () => {
                 }
               }}
               idsSelected={setIdsSelected}
+              isSetsView={true}
               loading={vennData.loading}
               operations={vennData.operations}
               options={[
@@ -310,8 +311,9 @@ const SetOperations = () => {
               ]}
               queryPillDictionary={getQueryBuilderDictionary(facetTransResolver, savedSets)}
               savedSets={savedSets}
-              size={{ width: 540, height: 498 }}
+              size={{ width: 830, height: 498 }}
               summary={vennData.summary}
+              chartClassname={styles.vennChart}
             />
           </div>
         )}
