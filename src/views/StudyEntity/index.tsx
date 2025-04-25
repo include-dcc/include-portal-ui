@@ -637,8 +637,6 @@ const StudyEntity = () => {
           />
         )}
 
-        <div id="testScroll">Coucou</div>
-
         {hasDataset && (
           <>
             <Title level={4} className={style.datasetTitle} id={SectionId.DATASET}>
