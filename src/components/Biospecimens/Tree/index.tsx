@@ -12,7 +12,7 @@ import { Button, Card, Descriptions, Input, Popover, Skeleton, Space, Typography
 import Tree, { DataNode } from 'antd/lib/tree';
 import cx from 'classnames';
 import { useHierarchicalBiospecimen } from 'graphql/biospecimens/actions';
-import { Status } from 'graphql/biospecimens/models';
+import { IBiospecimenEntity, Status } from 'graphql/biospecimens/models';
 
 import CollectionLogo from 'components/assets/biospecimen/collection.svg';
 import ContainerLogo from 'components/assets/biospecimen/container.svg';
@@ -166,17 +166,20 @@ interface BiospecinenTreeProps {
   collectionFhirIds: string[];
   hasParticipantLink?: boolean;
   participantId?: string;
+  biospecimen?: IBiospecimenEntity;
 }
 
 const BiospecimenTree = ({
   hasParticipantLink = false,
   collectionFhirIds,
   participantId,
+  biospecimen,
 }: BiospecinenTreeProps) => {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [descriptions, setDescriptions] = useState<IDescriptionsItem[]>([]);
+  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
 
   const onExpand = (newExpandedKeys: React.Key[]) => {
     setExpandedKeys(newExpandedKeys);
@@ -197,6 +200,16 @@ const BiospecimenTree = ({
     setExpandedKeys(allKeys);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!loading && biospecimen) {
+      setSelectedKeys([biospecimen.fhir_id]);
+      const nodeDetails = getNodeDetails(biospecimen.fhir_id, dataParsed);
+      nodeDetails &&
+        setDescriptions(getSampleDetails(nodeDetails, hasParticipantLink, participantId));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [biospecimen, loading]);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -266,8 +279,10 @@ const BiospecimenTree = ({
                 autoExpandParent={autoExpandParent}
                 showIcon
                 treeData={treeData}
+                selectedKeys={selectedKeys}
                 onSelect={(selectedKeys) => {
                   setDescriptions([]);
+                  setSelectedKeys(selectedKeys);
                   const nodeDetails = getNodeDetails(selectedKeys[0], dataParsed);
                   if (nodeDetails?.type) {
                     switch (nodeDetails.type) {

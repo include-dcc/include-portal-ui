@@ -15,6 +15,7 @@ export const SEARCH_BIOSPECIMEN_QUERY = gql`
           searchAfter
           node {
             id
+            fhir_id
             container_id
             status
             sample_id
