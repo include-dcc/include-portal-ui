@@ -114,6 +114,17 @@ const StudyEntity = () => {
   const [isCavaticaModalOpen, setIsCavaticaModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
+  const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
+
+  useEffect(() => {
+    if (hasDataset && window.location.hash)
+      setTimeout(() => {
+        document
+          .getElementById(window.location.hash.slice(1))
+          ?.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+      }, 100);
+  }, [hasDataset]);
+
   /** We initialize here a sqon by queryBuilderId to handle actions */
   useEffect(() => {
     if (study_code) {
@@ -251,8 +262,6 @@ const StudyEntity = () => {
       },
     },
   });
-
-  const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
 
   const flatDataset = getFlatDataset(study?.datasets);
   const hasDataAccess =
@@ -628,9 +637,11 @@ const StudyEntity = () => {
           />
         )}
 
+        <div id="testScroll">Coucou</div>
+
         {hasDataset && (
           <>
-            <Title level={4} className={style.datasetTitle}>
+            <Title level={4} className={style.datasetTitle} id={SectionId.DATASET}>
               {intl.get('entities.study.dataset.title')}
               <Tooltip title={intl.get('entities.study.dataset.infoTootlip')}>
                 <InfoCircleOutlined className={style.datasetInfo} />
@@ -744,7 +755,7 @@ const StudyEntity = () => {
                       ''
                     )
                   }
-                  id={SectionId.DATASET}
+                  id={dataset?.external_dataset_id || SectionId.DATASET}
                   key={dataset?.id}
                   loading={loading}
                   participant_count={dataset?.expected_number_participants || 0}
