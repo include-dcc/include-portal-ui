@@ -1,9 +1,9 @@
-import React from 'react';
 import intl from 'react-intl-universal';
+import { useLocation } from 'react-router';
 import { useKeycloak } from '@react-keycloak/web';
 import { Button, Space } from 'antd';
 
-import { REDIRECT_URI_KEY } from 'common/constants';
+import { HASH_DATASET_KEY, REDIRECT_URI_KEY } from 'common/constants';
 import IncludeIconLogin from 'components/Icons/IncludeIconLogin';
 import useQueryParams from 'hooks/useQueryParams';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -13,12 +13,15 @@ import styles from './index.module.css';
 const LoginForm = () => {
   const { keycloak } = useKeycloak();
   const query = useQueryParams();
+  const location = useLocation();
+  const params = new URLSearchParams(location.hash.substring(1));
+  const dataset_id = params.get(HASH_DATASET_KEY);
 
   const handleSignin = async () => {
     const url = keycloak.createLoginUrl({
       redirectUri: `${window.location.origin}/${
         query.get(REDIRECT_URI_KEY) || STATIC_ROUTES.STUDIES
-      }`,
+      }${dataset_id ? `#${HASH_DATASET_KEY}=${dataset_id}` : ''}`,
       locale: intl.getInitOptions().currentLocale,
     });
     window.location.assign(url);

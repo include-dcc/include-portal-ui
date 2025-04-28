@@ -7,6 +7,7 @@ export enum LANG {
 }
 
 export const REDIRECT_URI_KEY = 'redirect_path';
+export const HASH_DATASET_KEY = 'dataset_id';
 
 export const TABLE_EMPTY_PLACE_HOLDER = '-';
 

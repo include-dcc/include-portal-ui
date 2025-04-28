@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import {
   CloudUploadOutlined,
   ExclamationCircleOutlined,
@@ -99,6 +99,7 @@ const StudyEntity = () => {
   const cavatica = useCavaticaPassport();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { study_code } = useParams<{ study_code: string }>();
   const { sqon: participantSqon } = useParticipantResolvedSqon(queryId);
   const { sqon: fileSqon } = useFileResolvedSqon(queryId);
@@ -117,13 +118,15 @@ const StudyEntity = () => {
   const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
 
   useEffect(() => {
-    if (hasDataset && window.location.hash)
+    const params = new URLSearchParams(location.hash.substring(1));
+    const dataset_id = params.get('dataset_id');
+    if (hasDataset && dataset_id)
       setTimeout(() => {
         document
-          .getElementById(window.location.hash.slice(1))
+          .getElementById(dataset_id)
           ?.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
       }, 100);
-  }, [hasDataset]);
+  }, [hasDataset, location.hash]);
 
   /** We initialize here a sqon by queryBuilderId to handle actions */
   useEffect(() => {
