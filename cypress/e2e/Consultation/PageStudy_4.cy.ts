@@ -32,17 +32,11 @@ describe('Page d\'une étude - Valider les panneaux masquables', () => {
   });
 
   it('Panneau HTP Whole Blood RNAseq (2020)', () => {
-    cy.get('[class*="EntityDataset_panel"]').each(($el: JQuery<HTMLElement>) => {
-      if ($el.text().includes('HTP Whole Blood RNAseq (2020)')) {
-        cy.wrap($el).as('datasetPanel');
-      }
-    });
-
-    cy.get('@datasetPanel').find('div[class*="ant-collapse-content-active"]').should('exist');
-    cy.get('@datasetPanel').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
-    cy.get('@datasetPanel').find('div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
-    cy.get('@datasetPanel').find('span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
-    cy.get('@datasetPanel').find('div[class*="ant-collapse-content-active"]').should('exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] div[class*="ant-collapse-content-active"]').should('exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] div[class*="ant-collapse-content-active"]').should('exist');
   });
 
   it('Panneau Files', () => {

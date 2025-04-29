@@ -9,12 +9,7 @@ beforeEach(() => {
 
   cy.login();
   cy.visitStudyEntity('HTP', 1);
-  cy.get('[class*="EntityDataset_panel"]').each(($el: JQuery<HTMLElement>) => {
-    if ($el.text().includes('HTP WGS (2021 X01)')) {
-      cy.wrap($el).as('datasetPanel');
-    }
-  });
-  cy.get('@datasetPanel').find('[class="ant-collapse-header"] button[class*="ant-btn-default "]').eq(1).click({force: true});
+  cy.get('[id="HTP-WGS-2021-X01"] [class="ant-collapse-header"] button[class*="ant-btn-default "]').eq(1).click({force: true});
 });
 
 describe('Dataset d\'une étude - Bouton Manifest', {retries: {runMode: 0}}, () => {

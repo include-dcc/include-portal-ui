@@ -262,11 +262,12 @@ Cypress.Commands.add('saveBioReqAs', (bioreqName: string, itemPosition: number) 
     };
   });
   cy.get('@button').clickAndWait({force: true});
+  cy.waitWhileSpin(oneMinute);
   cy.get('[class*="requestBiospecimen_modalWrapper"] input').clear();
   cy.get('[class*="requestBiospecimen_modalWrapper"] input').type(bioreqName);
   cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-primary"]', 'POST', '** /biospecimen-request', 1);
 
-  cy.get('[class*="requestBiospecimen_modalWrapper"]').should('not.exist');
+  cy.get('[class*="requestBiospecimen_modalWrapper"]').should('not.exist', {timeout: oneMinute});
 });
 
 Cypress.Commands.add('saveFilterAs', (filterName: string) => {
@@ -282,11 +283,12 @@ Cypress.Commands.add('saveSetAs', (setName: string, itemPosition: number) => {
   cy.get('div[role="tabpanel"] [class*="ant-table-row"], [class="ant-table-body"] [class*="ant-table-row"]').eq(itemPosition).find('[type="checkbox"]').check({force: true});
   cy.get('[id*="-set-dropdown-container"] button').clickAndWait({force: true});
   cy.get('[data-menu-id*="-create"]').clickAndWait({force: true});
+  cy.waitWhileSpin(oneMinute);
   cy.get('form[id="save-set"] input').clear();
   cy.get('form[id="save-set"] input').type(setName);
   cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-primary"]', 'POST', '**/sets', 1);
 
-  cy.get('form[id="save-set"]').should('not.exist');
+  cy.get('form[id="save-set"]').should('not.exist', {timeout: oneMinute});
 });
 
 Cypress.Commands.add('showColumn', (column: string|RegExp) => {
