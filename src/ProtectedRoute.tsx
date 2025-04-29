@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useKeycloak } from '@react-keycloak/web';
 
-import { REDIRECT_URI_KEY } from 'common/constants';
+import { HASH_DATASET_KEY, REDIRECT_URI_KEY } from 'common/constants';
 import PageLayout from 'components/Layout';
 import { useUser } from 'store/user';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -16,6 +16,8 @@ const ProtectedRoute = ({ children }: TProtectedRoute) => {
   const location = useLocation();
   const { keycloak } = useKeycloak();
   const userNeedsToLogin = !userInfo || !keycloak.authenticated;
+  const params = new URLSearchParams(location.hash.substring(1));
+  const dataset_id = params.get(HASH_DATASET_KEY);
 
   if (error) {
     return <Navigate to={STATIC_ROUTES.ERROR} />;
@@ -27,6 +29,7 @@ const ProtectedRoute = ({ children }: TProtectedRoute) => {
         to={{
           pathname: STATIC_ROUTES.LOGIN,
           search: `${REDIRECT_URI_KEY}=${location?.pathname}${location?.search}`,
+          hash: dataset_id ? `${HASH_DATASET_KEY}=${dataset_id}` : undefined,
         }}
       />
     );

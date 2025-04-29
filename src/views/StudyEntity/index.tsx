@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import {
   CloudUploadOutlined,
   ExclamationCircleOutlined,
@@ -99,6 +99,7 @@ const StudyEntity = () => {
   const cavatica = useCavaticaPassport();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { study_code } = useParams<{ study_code: string }>();
   const { sqon: participantSqon } = useParticipantResolvedSqon(queryId);
   const { sqon: fileSqon } = useFileResolvedSqon(queryId);
@@ -113,6 +114,19 @@ const StudyEntity = () => {
   const [mondoLoading, setMondoLoading] = useState<boolean>(true);
   const [isCavaticaModalOpen, setIsCavaticaModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+
+  const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.hash.substring(1));
+    const dataset_id = params.get('dataset_id');
+    if (hasDataset && dataset_id)
+      setTimeout(() => {
+        document
+          .getElementById(dataset_id)
+          ?.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+      }, 100);
+  }, [hasDataset, location.hash]);
 
   /** We initialize here a sqon by queryBuilderId to handle actions */
   useEffect(() => {
@@ -251,8 +265,6 @@ const StudyEntity = () => {
       },
     },
   });
-
-  const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
 
   const flatDataset = getFlatDataset(study?.datasets);
   const hasDataAccess =
@@ -630,7 +642,7 @@ const StudyEntity = () => {
 
         {hasDataset && (
           <>
-            <Title level={4} className={style.datasetTitle}>
+            <Title level={4} className={style.datasetTitle} id={SectionId.DATASET}>
               {intl.get('entities.study.dataset.title')}
               <Tooltip title={intl.get('entities.study.dataset.infoTootlip')}>
                 <InfoCircleOutlined className={style.datasetInfo} />
@@ -744,7 +756,7 @@ const StudyEntity = () => {
                       ''
                     )
                   }
-                  id={SectionId.DATASET}
+                  id={dataset?.external_dataset_id || SectionId.DATASET}
                   key={dataset?.id}
                   loading={loading}
                   participant_count={dataset?.expected_number_participants || 0}
