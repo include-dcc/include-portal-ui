@@ -30,7 +30,7 @@
     "theme:watch": "nodemon --watch './src/style/themes' -e scss,less --exec 'npm run theme'",
     "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
-    "build:netlify": "NODE_OPTIONS='--max-old-space-size=4096' npm ci && npm run build",
+    "build:netlify": "npm ci && npm run build",
     "test": "react-scripts test",
     "test:github": "react-scripts test --coverage --watchAll=false --no-watchman --coverageReporters=\"text-summary\"",
     "coverage:changed": "npm test -- --coverage --watchAll=false --onlyChanged --coverageReporters=\"json-summary\"",
