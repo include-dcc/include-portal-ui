@@ -210,7 +210,7 @@ export const Transcriptomic = () => {
                         sex={sex}
                         selectedGene={selectedGenes[0]}
                         selectedSamples={selectedSamples}
-                        handleSampleSelection={handleSearchBySampleSelection}
+                        handleSamplesSelection={handleSearchBySampleSelection}
                         handleFilteredSamples={handleFilteredSamples}
                         loading={sampleGeneExp.loading}
                         sampleGeneExp={sampleGeneExp.data}

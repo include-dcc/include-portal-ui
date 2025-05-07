@@ -20,7 +20,7 @@ export type TTranscriptomicsSwarmPlot = {
   sex: string[];
   selectedGene: TTranscriptomicsDatum;
   selectedSamples: TTranscriptomicsSwarmPlotData[];
-  handleSampleSelection: (samples: TTranscriptomicsSwarmPlotData[]) => void;
+  handleSamplesSelection: (samples: TTranscriptomicsSwarmPlotData[]) => void;
   handleFilteredSamples: (samples: TTranscriptomicsSwarmPlotData[]) => void;
   sampleGeneExp?: ITranscriptomicsSampleGeneExp;
   loading: boolean;
@@ -83,7 +83,7 @@ const SwarmPlotly = ({
   fpkm,
   ages,
   sex,
-  handleSampleSelection,
+  handleSamplesSelection,
   handleFilteredSamples,
   selectedSamples,
   sampleGeneExp,
@@ -205,10 +205,20 @@ const SwarmPlotly = ({
       (p) => p.customdata,
     )[0] as unknown as TTranscriptomicsSwarmPlotData;
     if (selectedSamples.includes(target)) {
-      handleSampleSelection([]);
+      handleSamplesSelection([]);
       return;
     }
-    handleSampleSelection([target]);
+    handleSamplesSelection([target]);
+  };
+
+  const handleOnSelect = (event: Readonly<Plotly.PlotSelectionEvent>) => {
+    const samples: TTranscriptomicsSwarmPlotData[] = [];
+    event.points.forEach((point) => {
+      if (point?.customdata) {
+        samples.push(point.customdata as unknown as TTranscriptomicsSwarmPlotData);
+      }
+    });
+    handleSamplesSelection(samples);
   };
 
   return (
@@ -261,11 +271,11 @@ const SwarmPlotly = ({
           'zoomIn2d',
           'zoomOut2d',
           'pan2d',
-          'select2d',
         ],
         displaylogo: false,
       }}
       onClick={handlePlotClick}
+      onSelecting={handleOnSelect}
     />
   );
 };
