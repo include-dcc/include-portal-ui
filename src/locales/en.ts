@@ -878,6 +878,9 @@ const en = {
             message:
               'Please refresh and try again or <a href="{href}" style="color:inherit;text-decoration: underline;">contact our support</a>.',
           },
+          compare: 'Compare',
+          compareLessTooltips: 'Select 2 or 3 sets to generate a Venn diagram comparison',
+          compareGreaterTooltips: 'Only available with 2 or 3 sets selected',
         },
         biospecimenRequest: {
           title: 'Biospecimen Requests',

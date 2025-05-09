@@ -4,10 +4,12 @@ import { IUserSetOutput } from 'services/api/savedSet/models';
 import { initialState } from 'store/savedSet/types';
 
 import {
+  clearCompareSets,
   createSavedSet,
   deleteSavedSet,
   fetchSavedSet,
   fetchSharedBiospecimenRequest,
+  saveCompareSets,
   updateSavedSet,
 } from './thunks';
 
@@ -103,6 +105,24 @@ const savedSetSlice = createSlice({
     builder.addCase(deleteSavedSet.rejected, (state, action) => ({
       ...state,
       error: action.payload,
+    }));
+    // Compare set save
+    builder.addCase(saveCompareSets.fulfilled, (state, action) => ({
+      ...state,
+      dashboardCompareSets: action.payload,
+    }));
+    builder.addCase(saveCompareSets.rejected, (state) => ({
+      ...state,
+      dashboardCompareSets: { entityType: undefined, ids: [] },
+    }));
+    // Compare set clear
+    builder.addCase(clearCompareSets.fulfilled, (state) => ({
+      ...state,
+      dashboardCompareSets: { entityType: undefined, ids: [] },
+    }));
+    builder.addCase(clearCompareSets.rejected, (state) => ({
+      ...state,
+      dashboardCompareSets: { entityType: undefined, ids: [] },
     }));
   },
 });
