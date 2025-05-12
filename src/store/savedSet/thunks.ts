@@ -24,6 +24,7 @@ import { handleThunkApiResponse } from 'store/utils';
 
 import { SUPPORT_EMAIL } from '../report/thunks';
 
+import { IDashboardCompareSets } from './types';
 import { getSetFieldId } from '.';
 
 const fetchSavedSet = createAsyncThunk<IUserSetOutput[], void | string, { rejectValue: string }>(
@@ -212,10 +213,34 @@ const fetchSharedBiospecimenRequest = createAsyncThunk<
   });
 });
 
+const saveCompareSets = createAsyncThunk<
+  IDashboardCompareSets,
+  IDashboardCompareSets,
+  { rejectValue: string }
+>('compareSet/save', async (compareSets, thunkAPI) =>
+  handleThunkApiResponse({
+    error: undefined,
+    data: compareSets,
+    reject: thunkAPI.rejectWithValue,
+  }),
+);
+
+const clearCompareSets = createAsyncThunk<void, void | string, { rejectValue: string }>(
+  'compareSet/clear',
+  async (_, thunkAPI) =>
+    handleThunkApiResponse({
+      error: undefined,
+      data: undefined,
+      reject: thunkAPI.rejectWithValue,
+    }),
+);
+
 export {
   fetchSavedSet,
   createSavedSet,
   updateSavedSet,
   deleteSavedSet,
   fetchSharedBiospecimenRequest,
+  saveCompareSets,
+  clearCompareSets,
 };

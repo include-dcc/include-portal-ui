@@ -32,7 +32,7 @@ import {
 } from 'services/analytics';
 import { SetType } from 'services/api/savedSet/models';
 import { getSetFieldId, PROJECT_ID, useSavedSet } from 'store/savedSet';
-import { createSavedSet } from 'store/savedSet/thunks';
+import { clearCompareSets, createSavedSet } from 'store/savedSet/thunks';
 import { useVennData } from 'store/venn';
 import { fetchVennData } from 'store/venn/thunks';
 import { combineExtendedMappings } from 'utils/fieldMapper';
@@ -75,7 +75,7 @@ const SetOperations = () => {
   const dispatch = useDispatch<any>();
   const [hasSets, setHasSets] = useState<boolean>(false);
   const [compareSets, setCompareSets] = useState<boolean>(false);
-  const { savedSets } = useSavedSet();
+  const { dashboardCompareSets, savedSets } = useSavedSet();
   const vennData = useVennData();
 
   const [entitySelected, setEntitySelected] = useState<SetType | undefined>(undefined);
@@ -119,6 +119,17 @@ const SetOperations = () => {
     });
     dispatch(fetchVennData({ qbSqons: queries, index: getIndexBySetType(entity) }));
   };
+
+  useEffect(() => {
+    if (dashboardCompareSets?.ids?.length && dashboardCompareSets?.entityType) {
+      setSetIdsSelected(dashboardCompareSets.ids);
+      setEntitySelected(dashboardCompareSets.entityType);
+      handleCompare(dashboardCompareSets.ids, dashboardCompareSets.entityType);
+      setCompareSets(true);
+      dispatch(clearCompareSets());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (

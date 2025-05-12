@@ -7,7 +7,7 @@ import ListItemWithActions from '@ferlab/ui/core/components/List/ListItemWithAct
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { Col, Modal, Row, Typography } from 'antd';
+import { Checkbox, Col, Modal, Row, Typography } from 'antd';
 import { formatDistance } from 'date-fns';
 import { INDEXES } from 'graphql/constants';
 import { SetActionType } from 'views/DataExploration/components/SetsManagementDropdown';
@@ -18,6 +18,7 @@ import {
 } from 'views/DataExploration/utils/constant';
 import { VARIANT_SAVED_SETS_FIELD } from 'views/Variants/utils/constants';
 
+import useFeatureToggle from 'hooks/useFeatureToggle';
 import { trackSetActions } from 'services/analytics';
 import { IUserSetOutput } from 'services/api/savedSet/models';
 import { getSetFieldId } from 'store/savedSet';
@@ -26,6 +27,7 @@ import { STATIC_ROUTES } from 'utils/routes';
 import { numberWithCommas } from 'utils/string';
 
 import CreateEditModal from '../CreateEditModal';
+import { FT_DASHBOARD_SET_COMPARE } from '..';
 
 import styles from './index.module.css';
 
@@ -70,6 +72,8 @@ const ListItem = ({ data, icon, queryBuilderId }: OwnProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { isEnabled: isSetCompareEnabled } = useFeatureToggle(FT_DASHBOARD_SET_COMPARE);
+
   const onCancel = () => {
     setModalVisible(false);
   };
@@ -77,6 +81,7 @@ const ListItem = ({ data, icon, queryBuilderId }: OwnProps) => {
   return (
     <>
       <ListItemWithActions
+        avatar={isSetCompareEnabled ? <Checkbox value={data.id} /> : undefined}
         key={data.id}
         className={styles.savedSetListItem}
         onEdit={() => setModalVisible(true)}
