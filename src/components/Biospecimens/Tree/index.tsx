@@ -72,11 +72,24 @@ const getTypeIcon = (type: string) => {
   }
 };
 
+const getKeyByType = (node: INode) => {
+  switch (node.type) {
+    case NODE_TYPE.COLLECTED_SAMPLE:
+      return node.collection_sample_id;
+    case NODE_TYPE.SAMPLE:
+      return node.sample_id;
+    case NODE_TYPE.CONTAINER:
+      return node.container_id;
+    default:
+      return node.key;
+  }
+};
+
 const convertToDataTree = (data: INode[], searchValue: string): DataNode[] => {
   const treeNodes: DataNode[] = [];
   const searchValueLowerCase = searchValue.toLowerCase();
   data.forEach((node: INode) => {
-    const strTitle = node.key.toLowerCase();
+    const strTitle = getKeyByType(node) || node.key;
     const index = strTitle.indexOf(searchValueLowerCase);
     const beforeStr = strTitle.substring(0, index);
     const matchStr = strTitle.substring(index, index + searchValue.length);
@@ -203,7 +216,7 @@ const BiospecimenTree = ({
 
   useEffect(() => {
     if (!loading && biospecimen) {
-      setSelectedKeys([biospecimen.fhir_id]);
+      setSelectedKeys([biospecimen.sample_id]);
       const nodeDetails = getNodeDetails(biospecimen.fhir_id, dataParsed);
       nodeDetails &&
         setDescriptions(getSampleDetails(nodeDetails, hasParticipantLink, participantId));
