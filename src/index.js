@@ -38,20 +38,7 @@ Sentry.init({
   ],
   // Performance Monitoring
   tracesSampleRate: 1.0, // Capture 100% of the transactions
-  beforeSend(event) {
-    // Check if it is an exception, and if so, check if it is an error
-    if (event.exception) {
-      const error = event.exception.values[0];
-      if (error.type === 'Error') {
-        // Check if the error message is the same as the one we want to ignore
-        const regexError = /^Non-Error promise rejection captured with value: true$/;
-        if (regexError.test(error.value)) {
-          return null;
-        }
-      }
-    }
-    return event;
-  },
+  ignoreErrors: ['Non-Error promise rejection captured'],
 });
 
 const container = document.getElementById('root');
