@@ -1330,7 +1330,7 @@ const es = {
             participantsByAgeGraph: {
               tooltips: 'Participantes',
               T21: 'Trisomía 21',
-              D21: 'Controles',
+              D21: 'Disomía 21',
               legendAxisLeft: 'Edad en el primer contacto con el paciente (años)',
               legendAxisBottom: 'N.º de participantes',
             },

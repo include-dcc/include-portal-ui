@@ -1333,7 +1333,7 @@ const en = {
             participantsByAgeGraph: {
               tooltips: 'Participants',
               T21: 'Trisomy 21',
-              D21: 'Controls',
+              D21: 'Disomy 21',
               legendAxisLeft: 'Age at First Patient Engagement (years)',
               legendAxisBottom: '# of participants',
             },
