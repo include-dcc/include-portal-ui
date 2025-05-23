@@ -34,8 +34,8 @@ const graphSetting = {
 
 const graphModalSettings = {
   margin: {
-    top: -32,
-    bottom: 116,
+    top: -142,
+    bottom: 160,
     left: 12,
     right: 12,
   },
@@ -135,7 +135,7 @@ const DemographicsGraphCard = () => {
                   translateX: 0,
                   translateY: (LEGEND_ITEM_HEIGHT * raceData.length - 1) / 2,
                   direction: 'column',
-                  itemWidth: 100,
+                  itemWidth: 160,
                   itemHeight: LEGEND_ITEM_HEIGHT,
                 },
               ]}
@@ -146,7 +146,7 @@ const DemographicsGraphCard = () => {
       }
       modalSettings={{
         width: 1000,
-        height: 600,
+        height: 700,
       }}
       content={
         <Row gutter={[12, 24]} className={styles.graphRowWrapper}>
