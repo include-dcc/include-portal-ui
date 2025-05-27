@@ -1,4 +1,5 @@
 import intl from 'react-intl-universal';
+import LegendSymbol from '@ferlab/ui/core/components/Charts/LegendSymbol';
 import PieChart from '@ferlab/ui/core/components/Charts/Pie';
 import Empty from '@ferlab/ui/core/components/Empty';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
@@ -100,6 +101,7 @@ const DemographicsGraphCard = () => {
                   anchor: 'bottom',
                   translateX: 0,
                   translateY: (LEGEND_ITEM_HEIGHT * sexData.length - 1) / 2,
+                  symbolShape: (props) => <LegendSymbol {...props} data={sexData} />,
                   direction: 'column',
                   itemWidth: 100,
                   itemHeight: LEGEND_ITEM_HEIGHT,
@@ -117,6 +119,7 @@ const DemographicsGraphCard = () => {
                   anchor: 'bottom',
                   translateX: 0,
                   translateY: (LEGEND_ITEM_HEIGHT * ethnicityData.length - 1) / 2,
+                  symbolShape: (props) => <LegendSymbol {...props} data={ethnicityData} />,
                   direction: 'column',
                   itemWidth: 100,
                   itemHeight: LEGEND_ITEM_HEIGHT,
@@ -134,6 +137,7 @@ const DemographicsGraphCard = () => {
                   anchor: 'bottom',
                   translateX: 0,
                   translateY: (LEGEND_ITEM_HEIGHT * raceData.length - 1) / 2,
+                  symbolShape: (props) => <LegendSymbol {...props} data={raceData} />,
                   direction: 'column',
                   itemWidth: 160,
                   itemHeight: LEGEND_ITEM_HEIGHT,
