@@ -1,5 +1,6 @@
 import intl from 'react-intl-universal';
 import BarChart from '@ferlab/ui/core/components/Charts/Bar';
+import LegendSymbol from '@ferlab/ui/core/components/Charts/LegendSymbol';
 import Empty from '@ferlab/ui/core/components/Empty';
 import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { ArrangerValues } from '@ferlab/ui/core/data/arranger/formatting';
@@ -151,7 +152,8 @@ const ParticipantsByAgeGraphCard = () => {
     },
   });
 
-  const participantsByAgeResults = transformParticipantsByAge(result);
+  const data = transformParticipantsByAge(result);
+  const legendData = [{ id: T21 }, { id: D21 }];
 
   return (
     <ResizableGridCard
@@ -163,7 +165,7 @@ const ParticipantsByAgeGraphCard = () => {
       loadingType="spinner"
       headerTitle={intl.get('screen.dataExploration.tabs.summary.availableData.participantsByAge')}
       tsvSettings={{
-        data: [participantsByAgeResults],
+        data: [data],
         headers: [
           'label',
           intl.get(`screen.dataExploration.tabs.summary.graphs.participantsByAgeGraph.${T21}`),
@@ -173,7 +175,7 @@ const ParticipantsByAgeGraphCard = () => {
       }}
       modalContent={
         <BarChart
-          data={participantsByAgeResults}
+          data={data}
           groupMode="grouped"
           axisLeft={{
             legend: intl.get(
@@ -222,6 +224,7 @@ const ParticipantsByAgeGraphCard = () => {
               itemDirection: 'left-to-right',
               itemOpacity: 0.85,
               symbolSize: 10,
+              symbolShape: (props) => <LegendSymbol {...props} data={legendData} />,
               effects: [
                 {
                   on: 'hover',
@@ -252,11 +255,11 @@ const ParticipantsByAgeGraphCard = () => {
       }}
       content={
         <>
-          {isParticipantByAgeEmpty(participantsByAgeResults) ? (
+          {isParticipantByAgeEmpty(data) ? (
             <Empty imageType="grid" size="large" noPadding />
           ) : (
             <BarChart
-              data={participantsByAgeResults}
+              data={data}
               groupMode="grouped"
               axisLeft={{
                 legend: intl.get(
@@ -307,6 +310,7 @@ const ParticipantsByAgeGraphCard = () => {
                   itemDirection: 'left-to-right',
                   itemOpacity: 0.85,
                   symbolSize: 10,
+                  symbolShape: (props) => <LegendSymbol {...props} data={legendData} />,
                   effects: [
                     {
                       on: 'hover',
