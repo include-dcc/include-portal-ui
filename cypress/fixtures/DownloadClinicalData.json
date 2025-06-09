@@ -13,7 +13,6 @@
                "Age at First Patient Engagement (Days)",
                "pt-as0aepqm",
                "HTP0577",
-               "F0441",
                "proband-only",
                "The Human Trisome Project",
                "HTP",
@@ -46,6 +45,5 @@
                "complete trisomy 21 (MONDO:0700030)",
                "Complete trisomy 21",
                "psoriasis (MONDO:0005083)",
-               "Family Role",
-               "Proband"]
+               "Family Role"]
 }
