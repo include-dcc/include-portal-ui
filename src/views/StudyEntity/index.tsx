@@ -118,10 +118,6 @@ const StudyEntity = () => {
 
   const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
 
-  // useEffect(() => {
-  //   document.title = `INCLUDE Data Hub - ${study_code}`;
-  // }, [study_code]);
-
   useEffect(() => {
     const params = new URLSearchParams(location.hash.substring(1));
     const dataset_id = params.get('dataset_id');
