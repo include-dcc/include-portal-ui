@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router';
@@ -397,6 +398,9 @@ const StudyEntity = () => {
       emptyText={intl.get('no.data.available')}
     >
       <>
+        <Helmet>
+          <title>INCLUDE Data Hub - {study_code}</title>
+        </Helmet>
         <EntityTitleLogo
           extra={
             <Space>
