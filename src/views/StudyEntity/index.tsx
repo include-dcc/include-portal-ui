@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router';
@@ -116,6 +117,10 @@ const StudyEntity = () => {
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
   const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
+
+  // useEffect(() => {
+  //   document.title = `INCLUDE Data Hub - ${study_code}`;
+  // }, [study_code]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.hash.substring(1));
@@ -397,6 +402,9 @@ const StudyEntity = () => {
       emptyText={intl.get('no.data.available')}
     >
       <>
+        <Helmet>
+          <title>INCLUDE Data Hub - {study_code}</title>
+        </Helmet>
         <EntityTitleLogo
           extra={
             <Space>

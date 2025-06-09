@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import { Layout as AntLayout } from 'antd';
 
@@ -14,6 +15,9 @@ interface OwnProps {
 
 const Layout = ({ children }: OwnProps) => (
   <AntLayout className={styles.mainLayout}>
+    <Helmet>
+      <title>INCLUDE Data Hub</title>
+    </Helmet>
     <Header />
     <ScrollContent id={MAIN_SCROLL_WRAPPER_ID} className={styles.mainContent}>
       <div id="content">{children}</div>
