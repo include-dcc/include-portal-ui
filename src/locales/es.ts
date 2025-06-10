@@ -1673,7 +1673,7 @@ const es = {
         dataset: {
           label: 'Conjunto de Datos',
           about: 'Acerca de este conjunto de datos',
-          datasetValue: 'HTP Whole Blood RNAseq (v1)',
+          datasetValue: 'HTP Whole Blood RNAseq (2020)',
           aboutContent:
             'HTP Whole Blood RNAseq (v1) es un conjunto de datos generado como parte del Proyecto Humano de Trisomía (HTP), que se centra en las características genéticas y moleculares de individuos con condiciones trisómicas, incluido el síndrome de Down. Este conjunto de datos consiste en datos de secuenciación de ARN (RNAseq) derivados de muestras de sangre entera, capturando perfiles transcriptómicos de alta capacidad (HTP). La primera versión (v1) incluye datos de expresión génica basal, con un enfoque en la comprensión de la expresión génica diferencial, el empalme alternativo y el análisis de vías entre muestras. Se utiliza para estudios comparativos entre poblaciones trisómicas y euploides para identificar posibles biomarcadores y objetivos terapéuticos.',
         },

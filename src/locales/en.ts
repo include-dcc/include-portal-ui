@@ -1678,7 +1678,7 @@ const en = {
         dataset: {
           label: 'Dataset',
           about: 'About this dataset',
-          datasetValue: 'HTP Whole Blood RNAseq (v1)',
+          datasetValue: 'HTP Whole Blood RNAseq (2020)',
           aboutContent:
             'HTP Whole Blood RNAseq (v1) is a dataset generated as part of the Human Trisome Project (HTP), which focuses on the genetic and molecular characteristics of individuals with trisomy conditions, including Down syndrome. This dataset consists of RNA sequencing (RNAseq) data derived from whole blood samples, capturing transcriptomic profiles at high throughput (HTP). The first version (v1) includes baseline gene expression data, with a focus on understanding differential gene expression, alternative splicing, and pathway analysis across samples. It is used for comparative studies between trisomic and euploid populations to identify potential biomarkers and therapeutic targets.',
         },
