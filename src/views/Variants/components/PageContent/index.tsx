@@ -39,6 +39,7 @@ import {
   updateSavedFilter,
 } from 'store/savedFilter/thunks';
 import { useSavedSet } from 'store/savedSet';
+import { fetchSetsAliases } from 'store/savedSet/thunks';
 import { useUser } from 'store/user';
 import { combineExtendedMappings } from 'utils/fieldMapper';
 import { getCurrentUrl } from 'utils/helper';
@@ -63,7 +64,7 @@ const addTagToFilter = (filter: ISavedFilter) => ({
 const PageContent = ({ variantMapping, filterGroups }: OwnProps) => {
   const dispatch = useDispatch<any>();
   const { userInfo } = useUser();
-  const { savedSets } = useSavedSet();
+  const { savedSets, alias } = useSavedSet();
   const { queryList, activeQuery, selectedSavedFilter, savedFilterList } =
     useQBStateWithSavedFilters(VARIANT_REPO_QB_ID, SavedFilterTag.VariantsExplorationPage);
   const [queryConfig, setQueryConfig] = useState({
@@ -141,6 +142,10 @@ const PageContent = ({ variantMapping, filterGroups }: OwnProps) => {
     );
   };
 
+  useEffect(() => {
+    dispatch(fetchSetsAliases(queryList));
+  }, [queryList]);
+
   return (
     <Space direction="vertical" size={24} className={styles.variantsPageContent}>
       <div className={styles.pageHeader}>
@@ -200,7 +205,7 @@ const PageContent = ({ variantMapping, filterGroups }: OwnProps) => {
         IconTotal={<LineStyleIcon width={18} height={18} />}
         currentQuery={isEmptySqon(activeQuery) ? {} : activeQuery}
         total={results.total}
-        dictionary={getQueryBuilderDictionary(facetTransResolver, savedSets)}
+        dictionary={getQueryBuilderDictionary(facetTransResolver, savedSets, alias)}
         getResolvedQueryForCount={(sqon) => resolveSyntheticSqon(queryList, sqon)}
         fetchQueryCount={async (sqon) => {
           const { data } = await ArrangerApi.graphqlRequest<{ data: IVariantResultTree }>({
