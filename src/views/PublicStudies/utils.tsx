@@ -1,4 +1,5 @@
 import intl from 'react-intl-universal';
+import { Link } from 'react-router-dom';
 import { AuditOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
@@ -24,11 +25,13 @@ export const TABLE_ID = 'public-studies';
 type ColumnsProps = {
   manageLoginModal: (isOpen: boolean) => void;
   manageRedirectUri: (uri: string) => void;
+  isPublicStudyEnabled?: boolean;
 };
 
 export const getColumns = ({
   manageLoginModal,
   manageRedirectUri,
+  isPublicStudyEnabled = false,
 }: ColumnsProps): ProColumnType<any>[] => [
   {
     key: 'is_harmonized',
@@ -67,16 +70,19 @@ export const getColumns = ({
     key: 'study_code',
     title: intl.get('entities.study.code'),
     dataIndex: 'study_code',
-    render: (study_code: string) => (
-      <a
-        onClick={() => {
-          manageRedirectUri(`${STATIC_ROUTES.STUDIES}/${study_code}`);
-          manageLoginModal(true);
-        }}
-      >
-        {study_code}
-      </a>
-    ),
+    render: (study_code: string) =>
+      isPublicStudyEnabled ? (
+        <Link to={`${STATIC_ROUTES.PUBLIC_STUDIES}/${study_code}`}>{study_code}</Link>
+      ) : (
+        <a
+          onClick={() => {
+            manageRedirectUri(`${STATIC_ROUTES.STUDIES}/${study_code}`);
+            manageLoginModal(true);
+          }}
+        >
+          {study_code}
+        </a>
+      ),
   },
   {
     key: 'study_name',

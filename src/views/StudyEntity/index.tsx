@@ -72,6 +72,7 @@ import { DATA_EXPLORATION_QB_ID } from '../DataExploration/utils/constant';
 import { getFlattenTree, TreeNode } from '../DataExploration/utils/OntologyTree';
 import { PhenotypeStore } from '../DataExploration/utils/PhenotypeStore';
 
+import { getStatisticsDictionary, queryId, SectionId } from './utils/constants';
 import getDataAccessDescriptions, { getFlatDataset } from './utils/dataAccess';
 import getDatasetDescription from './utils/datasets';
 import getFileTables from './utils/file';
@@ -82,16 +83,6 @@ import SummaryHeader from './SummaryHeader';
 import style from './index.module.css';
 
 const { Text, Title } = Typography;
-
-const queryId = 'include-study-repo-key';
-
-enum SectionId {
-  SUMMARY = 'summary',
-  STATISTIC = 'statistic',
-  DATA_ACCESS = 'data_access',
-  DATA_FILE = 'data_file',
-  DATASET = 'dataset',
-}
 
 const hasData = (data: unknown[]) => data && data.length > 0;
 
@@ -478,73 +469,7 @@ const StudyEntity = () => {
                 </Button>
               </Tooltip>,
             ]}
-            dictionary={{
-              download: {
-                fileNameTemplate: 'include-%name-%extra-%type-%date',
-                fileNameAdditionalInfo: study?.study_code,
-              },
-              phenotype: {
-                headerTitle: intl.get('entities.study.statistic.phenotype'),
-                legendAxisLeft: intl.get(
-                  'screen.dataExploration.tabs.summary.observed_phenotype.legendAxisLeft',
-                ),
-                legendAxisBottom: intl.get(
-                  'screen.dataExploration.tabs.summary.observed_phenotype.legendAxisBottom',
-                ),
-              },
-              mondo: {
-                headerTitle: intl.get('entities.study.statistic.mondo'),
-                legendAxisLeft: intl.get(
-                  'screen.dataExploration.tabs.summary.mondo.legendAxisLeft',
-                ),
-                legendAxisBottom: intl.get(
-                  'screen.dataExploration.tabs.summary.mondo.legendAxisBottom',
-                ),
-              },
-              demography: {
-                headerTitle: intl.get('screen.dataExploration.tabs.summary.demographic.cardTitle'),
-                sexTitle: intl.get('screen.dataExploration.tabs.summary.demographic.sexTitle'),
-                ethnicityTitle: intl.get(
-                  'screen.dataExploration.tabs.summary.demographic.ethnicityTitle',
-                ),
-                raceTitle: intl.get('screen.dataExploration.tabs.summary.demographic.raceTitle'),
-              },
-              downSyndromeStatus: {
-                headerTitle: intl.get(
-                  'screen.dataExploration.tabs.summary.downSyndromeStatus.cardTitle',
-                ),
-              },
-              sampleType: {
-                headerTitle: intl.get('screen.dataExploration.tabs.summary.sampleType.cardTitle'),
-              },
-              sampleAvailability: {
-                headerTitle: intl.get(
-                  'screen.dataExploration.tabs.summary.sampleAvailability.cardTitle',
-                ),
-              },
-              dataCategory: {
-                headerTitle: intl.get(
-                  'screen.dataExploration.tabs.summary.availableData.dataCategoryTitle',
-                ),
-                legendAxisLeft: intl.get(
-                  'screen.dataExploration.tabs.summary.graphs.dataCategory.legendAxisLeft',
-                ),
-                legendAxisBottom: intl.get(
-                  'screen.dataExploration.tabs.summary.graphs.dataCategory.legendAxisBottom',
-                ),
-              },
-              dataType: {
-                headerTitle: intl.get(
-                  'screen.dataExploration.tabs.summary.availableData.dataTypeTitle',
-                ),
-                legendAxisLeft: intl.get(
-                  'screen.dataExploration.tabs.summary.graphs.dataTypeGraph.legendAxisLeft',
-                ),
-                legendAxisBottom: intl.get(
-                  'screen.dataExploration.tabs.summary.graphs.dataTypeGraph.legendAxisBottom',
-                ),
-              },
-            }}
+            dictionary={getStatisticsDictionary(study?.study_code)}
             statistic={{
               phenotype: {
                 loading: phenotypesLoading,
@@ -775,7 +700,7 @@ const StudyEntity = () => {
             header={intl.get('entities.study.files')}
             id={SectionId.DATA_FILE}
             loading={loading}
-            tables={getFileTables(dataTypes, experimentStrategies, study)}
+            tables={getFileTables({ dataTypes, experimentStrategies, study })}
             title={intl.get('entities.study.file')}
             titleExtra={[
               <Tooltip
