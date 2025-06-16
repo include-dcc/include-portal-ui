@@ -7,12 +7,14 @@ import { Input, Space, Typography } from 'antd';
 import { getColumns, TABLE_ID } from 'views/PublicStudies/utils';
 
 import LoginModal from 'components/PublicLayout/LoginModal';
+import useFeatureToggle from 'hooks/useFeatureToggle';
 import { useGlobals } from 'store/global';
 import { getProTableDictionary } from 'utils/translation';
 
 import styles from './index.module.css';
 
 const { Title } = Typography;
+const FT_PUBLIC_STUDY = 'PUBLIC_STUDY';
 
 const PageContent = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -45,7 +47,8 @@ const PageContent = () => {
     }
   };
 
-  const defaultColumns = getColumns({ manageLoginModal, manageRedirectUri });
+  const { isEnabled: isPublicStudyEnabled } = useFeatureToggle(FT_PUBLIC_STUDY);
+  const defaultColumns = getColumns({ manageLoginModal, manageRedirectUri, isPublicStudyEnabled });
 
   return (
     <Space direction="vertical" size={16} className={styles.pageContent}>

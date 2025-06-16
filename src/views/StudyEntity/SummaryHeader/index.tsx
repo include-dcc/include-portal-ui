@@ -17,9 +17,17 @@ import styles from './index.module.css';
 
 interface ISummaryHeaderProps {
   study?: IStudyEntity;
+  manageLoginModal?: (isOpen: boolean) => void;
+  manageRedirectUri?: (uri: string) => void;
+  isPublicStudyEnabled?: boolean;
 }
 
-const SummaryHeader = ({ study }: ISummaryHeaderProps) => {
+const SummaryHeader = ({
+  study,
+  manageLoginModal,
+  manageRedirectUri,
+  isPublicStudyEnabled = false,
+}: ISummaryHeaderProps) => {
   const navigate = useNavigate();
   const participantCount = study?.participant_count || 0;
   const fileCount = study?.file_count || 0;
@@ -60,6 +68,13 @@ const SummaryHeader = ({ study }: ISummaryHeaderProps) => {
               disabled={!study?.is_harmonized}
               className={styles.item}
               onClick={() => {
+                if (isPublicStudyEnabled) {
+                  manageRedirectUri && manageRedirectUri(item.route);
+                  manageLoginModal && manageLoginModal(true);
+                } else {
+                  navigate(item.route);
+                }
+
                 addQuery({
                   queryBuilderId: DATA_EXPLORATION_QB_ID,
                   query: generateQuery({
@@ -73,7 +88,6 @@ const SummaryHeader = ({ study }: ISummaryHeaderProps) => {
                   }),
                   setAsActive: true,
                 });
-                navigate(item.route);
               }}
             >
               <StatisticIcon

@@ -39,6 +39,7 @@ const Community = loadable(() => import('views/Community'), loadableProps);
 const CommunityMember = loadable(() => import('views/Community/Member'), loadableProps);
 const Studies = loadable(() => import('views/Studies'), loadableProps);
 const PublicStudies = loadable(() => import('views/PublicStudies'), loadableProps);
+const PublicStudyEntity = loadable(() => import('views/PublicStudyEntity'), loadableProps);
 const StudyEntity = loadable(() => import('views/StudyEntity'), loadableProps);
 const DataExploration = loadable(() => import('views/DataExploration'), loadableProps);
 const Variants = loadable(() => import('views/Variants'), loadableProps);
@@ -49,6 +50,7 @@ const ProfileSettings = loadable(() => import('views/ProfileSettings'), loadable
 const SetOperations = loadable(() => import('views/Analytics/SetOperations'), loadableProps);
 
 const FT_SET_OPERATIONS = 'ANALYTICS_SET_OPERATIONS';
+const FT_PUBLIC_STUDY = 'PUBLIC_STUDY';
 
 initGa();
 
@@ -69,6 +71,7 @@ const App = () => {
   const keycloakIsReady = keycloak && initialized;
 
   const { isEnabled: isSetOperationsEnabled } = useFeatureToggle(FT_SET_OPERATIONS);
+  const { isEnabled: isPublicStudyEnabled } = useFeatureToggle(FT_PUBLIC_STUDY);
 
   setLocale(lang);
 
@@ -100,6 +103,9 @@ const App = () => {
                   <Route path={STATIC_ROUTES.LOGIN} element={<Login />} />
                   <Route path={DYNAMIC_ROUTES.ERROR} element={<ErrorPage />} />
                   <Route path={STATIC_ROUTES.PUBLIC_STUDIES} element={<PublicStudies />} />
+                  {isPublicStudyEnabled && (
+                    <Route path={DYNAMIC_ROUTES.PUBLIC_STUDY} element={<PublicStudyEntity />} />
+                  )}
                   <Route
                     path={STATIC_ROUTES.DASHBOARD}
                     element={

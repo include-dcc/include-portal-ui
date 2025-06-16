@@ -1,0 +1,46 @@
+.studyPage {
+  display: flex;
+}
+
+.scrollContent {
+  width: 100%;
+  padding: var(--default-page-content-padding);
+}
+
+.externalLink {
+  display: block;
+}
+
+.datasetTitle,
+.datasetContainer {
+  margin-bottom: 16px !important;
+}
+
+.datasetBtn {
+  margin-left: 12px;
+}
+
+.dbgapLink {
+  margin-right: 8px;
+}
+
+.datasetInfo {
+  color: var(--gray-7);
+  margin-left: 8px;
+}
+
+.publicationIcon {
+  color: var(--gray-7);
+}
+
+.logo {
+  max-width: 100%;
+}
+
+.titleIcon {
+  color: var(--gray-8) !important;
+}
+
+.spotIcon {
+  color: var(--blue-3) !important;
+}

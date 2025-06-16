@@ -12,7 +12,61 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
 import { STATIC_ROUTES } from 'utils/routes';
 
-const getDataTypeColumns = (files_nb: number, study_code: string): ProColumnType<any>[] => [
+const addDataTypeQuery = (studyCode: string, dataType: string) =>
+  addQuery({
+    queryBuilderId: DATA_EXPLORATION_QB_ID,
+    query: generateQuery({
+      newFilters: [
+        generateValueFilter({
+          field: 'study.study_code',
+          value: [studyCode],
+          index: INDEXES.STUDY,
+        }),
+        generateValueFilter({
+          field: 'data_type',
+          value: [dataType],
+          index: INDEXES.FILE,
+        }),
+      ],
+    }),
+    setAsActive: true,
+  });
+
+const addExperimentalStrategyQuery = (studyCode: string, experimentalStrategy: string) =>
+  addQuery({
+    queryBuilderId: DATA_EXPLORATION_QB_ID,
+    query: generateQuery({
+      newFilters: [
+        generateValueFilter({
+          field: 'study.study_code',
+          value: [studyCode],
+          index: INDEXES.STUDY,
+        }),
+        generateValueFilter({
+          field: 'sequencing_experiment.experiment_strategy',
+          value: [experimentalStrategy],
+          index: INDEXES.FILE,
+        }),
+      ],
+    }),
+    setAsActive: true,
+  });
+
+type GetColumnsProps = {
+  files_nb: number;
+  study_code: string;
+  manageLoginModal?: (isOpen: boolean) => void;
+  manageRedirectUri?: (uri: string) => void;
+  isPublicStudyEnabled?: boolean;
+};
+
+export const getDataTypeColumns = ({
+  files_nb,
+  study_code,
+  manageLoginModal,
+  manageRedirectUri,
+  isPublicStudyEnabled = false,
+}: GetColumnsProps): ProColumnType<any>[] => [
   {
     key: 'data_type',
     dataIndex: 'data_type',
@@ -23,36 +77,28 @@ const getDataTypeColumns = (files_nb: number, study_code: string): ProColumnType
     align: 'right',
     key: 'nb_files',
     title: intl.get('entities.file.files'),
-    render: (dataType: IDataType) =>
-      dataType.file_count ? (
+    render: (dataType: IDataType) => {
+      if (!dataType.file_count) return TABLE_EMPTY_PLACE_HOLDER;
+
+      return isPublicStudyEnabled ? (
+        <a
+          onClick={() => {
+            manageRedirectUri && manageRedirectUri(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
+            manageLoginModal && manageLoginModal(true);
+            addDataTypeQuery(study_code, dataType.data_type);
+          }}
+        >
+          {numberFormat(dataType.file_count)}
+        </a>
+      ) : (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
-          onClick={() =>
-            addQuery({
-              queryBuilderId: DATA_EXPLORATION_QB_ID,
-              query: generateQuery({
-                newFilters: [
-                  generateValueFilter({
-                    field: 'study.study_code',
-                    value: [study_code],
-                    index: INDEXES.STUDY,
-                  }),
-                  generateValueFilter({
-                    field: 'data_type',
-                    value: [dataType.data_type],
-                    index: INDEXES.FILE,
-                  }),
-                ],
-              }),
-              setAsActive: true,
-            })
-          }
+          onClick={() => addDataTypeQuery(study_code, dataType.data_type)}
         >
           {numberFormat(dataType.file_count)}
         </Link>
-      ) : (
-        TABLE_EMPTY_PLACE_HOLDER
-      ),
+      );
+    },
     width: '100px',
   },
   {
@@ -67,10 +113,13 @@ const getDataTypeColumns = (files_nb: number, study_code: string): ProColumnType
   },
 ];
 
-const getExperimentalStrategyColumns = (
-  files_nb: number,
-  study_code: string,
-): ProColumnType<any>[] => [
+const getExperimentalStrategyColumns = ({
+  files_nb,
+  study_code,
+  manageLoginModal,
+  manageRedirectUri,
+  isPublicStudyEnabled = false,
+}: GetColumnsProps): ProColumnType<any>[] => [
   {
     key: 'experimental_strategy',
     dataIndex: 'experimental_strategy',
@@ -81,36 +130,29 @@ const getExperimentalStrategyColumns = (
     align: 'right',
     key: 'nb_files',
     title: intl.get('entities.file.files'),
-    render: (experimentalStrategy: IExperimentalStrategy) =>
-      experimentalStrategy.file_count ? (
+    render: (experimentalStrategy: IExperimentalStrategy) => {
+      if (!experimentalStrategy.file_count) return TABLE_EMPTY_PLACE_HOLDER;
+      return isPublicStudyEnabled ? (
+        <a
+          onClick={() => {
+            manageRedirectUri && manageRedirectUri(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
+            manageLoginModal && manageLoginModal(true);
+            addExperimentalStrategyQuery(study_code, experimentalStrategy.experimental_strategy);
+          }}
+        >
+          {numberFormat(experimentalStrategy.file_count)}
+        </a>
+      ) : (
         <Link
           to={STATIC_ROUTES.DATA_EXPLORATION_DATAFILES}
           onClick={() =>
-            addQuery({
-              queryBuilderId: DATA_EXPLORATION_QB_ID,
-              query: generateQuery({
-                newFilters: [
-                  generateValueFilter({
-                    field: 'study.study_code',
-                    value: [study_code],
-                    index: INDEXES.STUDY,
-                  }),
-                  generateValueFilter({
-                    field: 'sequencing_experiment.experiment_strategy',
-                    value: [experimentalStrategy.experimental_strategy],
-                    index: INDEXES.FILE,
-                  }),
-                ],
-              }),
-              setAsActive: true,
-            })
+            addExperimentalStrategyQuery(study_code, experimentalStrategy.experimental_strategy)
           }
         >
           {numberFormat(experimentalStrategy.file_count)}
         </Link>
-      ) : (
-        TABLE_EMPTY_PLACE_HOLDER
-      ),
+      );
+    },
     width: '100px',
   },
   {
@@ -125,21 +167,49 @@ const getExperimentalStrategyColumns = (
   },
 ];
 
-const getFileTable = (
-  dataTypes: IDataType[],
-  experimentStrategies: IExperimentalStrategy[],
-  study?: IStudyEntity,
-) => {
+type GetFileTableProps = {
+  dataTypes: IDataType[];
+  experimentStrategies: IExperimentalStrategy[];
+  study?: IStudyEntity;
+  manageLoginModal?: (isOpen: boolean) => void;
+  manageRedirectUri?: (uri: string) => void;
+  isPublicStudyEnabled?: boolean;
+};
+
+const getFileTable = ({
+  dataTypes,
+  experimentStrategies,
+  study,
+  manageLoginModal,
+  manageRedirectUri,
+  isPublicStudyEnabled = false,
+}: GetFileTableProps) => {
   const total = study?.file_count || 0;
 
   return [
     {
-      columns: study ? getDataTypeColumns(total, study.study_code) : [],
+      columns: study
+        ? getDataTypeColumns({
+            files_nb: total,
+            study_code: study.study_code,
+            manageLoginModal,
+            manageRedirectUri,
+            isPublicStudyEnabled,
+          })
+        : [],
       data: dataTypes,
       subTitle: intl.get('entities.study.numberByDataTypes'),
     },
     {
-      columns: study ? getExperimentalStrategyColumns(total, study.study_code) : [],
+      columns: study
+        ? getExperimentalStrategyColumns({
+            files_nb: total,
+            study_code: study.study_code,
+            manageLoginModal,
+            manageRedirectUri,
+            isPublicStudyEnabled,
+          })
+        : [],
       data: experimentStrategies,
       subTitle: intl.get('entities.study.numberByExperimentalStrategy'),
     },
