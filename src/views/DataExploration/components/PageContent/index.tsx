@@ -72,7 +72,7 @@ import {
   updateSavedFilter,
 } from 'store/savedFilter/thunks';
 import { getSetFieldId, PROJECT_ID, useSavedSet } from 'store/savedSet';
-import { createSavedSet } from 'store/savedSet/thunks';
+import { createSavedSet, fetchSetsAliases } from 'store/savedSet/thunks';
 import { useVennData } from 'store/venn';
 import { fetchVennData } from 'store/venn/thunks';
 import {
@@ -145,7 +145,7 @@ const PageContent = ({
   const { isEnabled } = useFeatureToggle(FT_FLAG_VENN_COMPARE);
   const navigate = useNavigate();
   const location = useLocation();
-  const { savedSets } = useSavedSet();
+  const { savedSets, alias } = useSavedSet();
   const vennData = useVennData();
   const [vennOpen, setVennOpen] = useState<boolean>(false);
   const { queryList, activeQuery, selectedSavedFilter, savedFilterList } =
@@ -225,6 +225,10 @@ const PageContent = ({
     : undefined;
 
   useEffect(() => {
+    dispatch(fetchSetsAliases(queryList));
+  }, [queryList]);
+
+  useEffect(() => {
     setTabId(tab as TAB_IDS);
   }, [tab]);
 
@@ -288,7 +292,7 @@ const PageContent = ({
 
           setTabId(newTabId as TAB_IDS);
         }}
-        queryPillDictionary={getQueryBuilderDictionary(facetTransResolver, savedSets)}
+        queryPillDictionary={getQueryBuilderDictionary(facetTransResolver, savedSets, alias)}
         error={vennData.error}
         options={[
           {

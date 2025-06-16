@@ -8,6 +8,7 @@ import {
   createSavedSet,
   deleteSavedSet,
   fetchSavedSet,
+  fetchSetsAliases,
   fetchSharedBiospecimenRequest,
   saveCompareSets,
   updateSavedSet,
@@ -15,6 +16,7 @@ import {
 
 export const SavedSetState: initialState = {
   savedSets: [],
+  alias: [],
   sharedBiospecimenRequest: undefined,
   isLoading: true,
   isUpdating: false,
@@ -45,6 +47,21 @@ const savedSetSlice = createSlice({
       isLoading: false,
     }));
     builder.addCase(fetchSavedSet.rejected, (state, action) => ({
+      ...state,
+      fetchingError: action.payload,
+      isLoading: false,
+    }));
+    // Fetch Alias
+    builder.addCase(fetchSetsAliases.pending, (state) => {
+      state.isLoading = true;
+      state.fetchingError = undefined;
+    });
+    builder.addCase(fetchSetsAliases.fulfilled, (state, action) => ({
+      ...state,
+      alias: action.payload,
+      isLoading: false,
+    }));
+    builder.addCase(fetchSetsAliases.rejected, (state, action) => ({
       ...state,
       fetchingError: action.payload,
       isLoading: false,

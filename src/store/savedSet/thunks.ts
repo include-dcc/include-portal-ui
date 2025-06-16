@@ -5,7 +5,7 @@ import {
   setQueryBuilderState,
   updateActiveQueryField,
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import { IValueFilter, SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
+import { ISyntheticSqon, IValueFilter, SET_ID_PREFIX } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Modal } from 'antd';
@@ -14,6 +14,7 @@ import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 import { SavedSetApi } from 'services/api/savedSet';
 import {
   IUserSetOutput,
+  IUserSetOutputAlias,
   SetType,
   TBiospecimenRequest,
   TUserSavedSetInsert,
@@ -39,6 +40,20 @@ const fetchSavedSet = createAsyncThunk<IUserSetOutput[], void | string, { reject
     });
   },
 );
+
+const fetchSetsAliases = createAsyncThunk<
+  IUserSetOutputAlias[],
+  ISyntheticSqon[],
+  { rejectValue: string }
+>('sharedsavedsets/fetch', async (sqon, thunkAPI) => {
+  const { data, error } = await SavedSetApi.fetchSetsAliases(sqon);
+
+  return handleThunkApiResponse({
+    error,
+    data: data?.data || [],
+    reject: thunkAPI.rejectWithValue,
+  });
+});
 
 const createSavedSet = createAsyncThunk<
   IUserSetOutput,
@@ -237,6 +252,7 @@ const clearCompareSets = createAsyncThunk<void, void | string, { rejectValue: st
 
 export {
   fetchSavedSet,
+  fetchSetsAliases,
   createSavedSet,
   updateSavedSet,
   deleteSavedSet,

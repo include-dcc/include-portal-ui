@@ -917,14 +917,6 @@ const es = {
             existingNameError: 'Ya existe una solicitud de biospecímenes con este nombre',
             maximumLength: 'caracteres máximo',
           },
-          shareModal: {
-            title: '¿Compartir el enlace a la solicitud de biospecímenes?',
-            cancelText: 'Cancelar',
-            okText: 'Copiar enlace',
-            content: 'Ten en cuenta que cualquier persona con este enlace tendrá acceso a:',
-            firstPoint: 'El título de la solicitud de biospecímenes',
-            secondPoint: 'La lista de biospecímenes en la solicitud',
-          },
           shareLink: {
             success: { title: 'Éxito', description: 'Enlace copiado al portapapeles' },
             error: { title: 'Error', description: 'No se pudo copiar el enlace al portapapeles' },
