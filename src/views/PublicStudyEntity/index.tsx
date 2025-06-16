@@ -6,10 +6,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
-import {
-  aggregationToChartData,
-  treeNodeToChartData,
-} from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
+import { aggregationToChartData } from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import EntityPage, {
   EntityDataset,
@@ -36,6 +33,7 @@ import { STATIC_ROUTES } from '../../utils/routes';
 import { DATA_EXPLORATION_QB_ID } from '../DataExploration/utils/constant';
 
 import { mockPublicStudyEntity } from './mock';
+import { mockGraph, mockMondo, mockPhenotypes } from './mockGraph';
 
 import style from './index.module.css';
 
@@ -57,11 +55,12 @@ const PublicStudyEntity = () => {
   // TODO block by SJIP-1373 backend
   const study = mockPublicStudyEntity;
   const loading = false;
-
-  const [phenotypes, setPhenotypes] = useState<any>([]);
-  const [mondo, setMondo] = useState<any>([]);
-  const [phenotypesLoading, setPhenotypesLoading] = useState<boolean>(true);
-  const [mondoLoading, setMondoLoading] = useState<boolean>(true);
+  const graphs = mockGraph;
+  const graphLoading = false;
+  const phenotypes = mockPhenotypes;
+  const phenotypesLoading = false;
+  const mondo = mockMondo;
+  const mondoLoading = false;
 
   const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
 
@@ -95,79 +94,6 @@ const PublicStudyEntity = () => {
     }
   }, [study_code]);
 
-  // TODO Statistics SJIP-1378
-  useEffect(() => {
-    setPhenotypesLoading(false);
-    setPhenotypes([]);
-    setMondoLoading(false);
-    setMondo([]);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Demography
-  const demographic = {
-    result: {
-      data: {
-        participant: {
-          aggregations: { race: { buckets: [] }, sex: { buckets: [] }, ethnicity: { buckets: [] } },
-          hits: { total: 0 },
-        },
-      },
-    },
-    loading: false,
-  };
-
-  // Data category
-  const dataCategory = {
-    result: {
-      data: {
-        participant: {
-          aggregations: { files__data_category: { buckets: [] } },
-          hits: { total: 0 },
-        },
-      },
-    },
-    loading: false,
-  };
-
-  // Data Type
-  const dataType = {
-    result: {
-      data: {
-        participant: { aggregations: { files__data_type: { buckets: [] } }, hits: { total: 0 } },
-      },
-    },
-    loading: false,
-  };
-
-  // down_syndrome status
-  const downSyndromeStatus = {
-    result: {
-      data: {
-        participant: {
-          aggregations: { down_syndrome_status: { buckets: [] } },
-          hits: { total: 0 },
-        },
-      },
-    },
-    loading: false,
-  };
-
-  // sample
-  const samples = {
-    result: {
-      data: {
-        biospecimen: {
-          aggregations: { sample_type: { buckets: [] }, status: { buckets: [] } },
-          hits: { total: 0 },
-        },
-        participant: { hits: { total: 0 } },
-      },
-    },
-    loading: false,
-  };
-
   const flatDataset = getFlatDataset(study?.datasets);
   const hasDataAccess =
     flatDataset?.accessLimitations.size || flatDataset?.accessRequirements.size ? true : false;
@@ -180,43 +106,16 @@ const PublicStudyEntity = () => {
 
   const hasStatistics =
     !loading &&
-    (hasData(treeNodeToChartData(phenotypes)) ||
-      hasData(treeNodeToChartData(mondo)) ||
-      hasData(
-        aggregationToChartData(demographic?.result?.data?.participant?.aggregations?.race?.buckets),
-      ) ||
-      hasData(
-        aggregationToChartData(demographic?.result?.data?.participant?.aggregations?.sex?.buckets),
-      ) ||
-      hasData(
-        aggregationToChartData(
-          demographic?.result?.data?.participant?.aggregations?.ethnicity?.buckets,
-        ),
-      ) ||
-      hasData(
-        aggregationToChartData(
-          dataCategory?.result?.data?.participant?.aggregations?.files__data_category?.buckets,
-        ),
-      ) ||
-      hasData(
-        aggregationToChartData(
-          dataType?.result?.data?.participant?.aggregations?.files__data_type?.buckets,
-        ),
-      ) ||
-      hasData(
-        aggregationToChartData(
-          downSyndromeStatus?.result?.data?.participant?.aggregations?.down_syndrome_status
-            ?.buckets,
-        ),
-      ) ||
-      hasData(
-        aggregationToChartData(
-          samples?.result?.data?.biospecimen?.aggregations?.sample_type?.buckets,
-        ),
-      ) ||
-      hasData(
-        aggregationToChartData(samples?.result?.data?.biospecimen?.aggregations?.status?.buckets),
-      ));
+    (hasData(phenotypes) ||
+      hasData(mondo) ||
+      hasData(aggregationToChartData(graphs?.demographic?.race)) ||
+      hasData(aggregationToChartData(graphs?.demographic?.sex)) ||
+      hasData(aggregationToChartData(graphs?.demographic?.ethnicity)) ||
+      hasData(aggregationToChartData(graphs?.files_data_category?.data)) ||
+      hasData(aggregationToChartData(graphs?.files_data_type?.data)) ||
+      hasData(aggregationToChartData(graphs?.down_syndrome_status?.data)) ||
+      hasData(aggregationToChartData(graphs?.samples?.sample_type)) ||
+      hasData(aggregationToChartData(graphs?.samples?.status)));
 
   if (hasStatistics) {
     defaultLinks.push({
@@ -334,7 +233,7 @@ const PublicStudyEntity = () => {
                 statistic={{
                   phenotype: {
                     loading: phenotypesLoading,
-                    data: treeNodeToChartData(phenotypes),
+                    data: phenotypes,
                     filter: {
                       total: 10,
                       excludeZeroValue: true,
@@ -343,7 +242,7 @@ const PublicStudyEntity = () => {
                   },
                   mondo: {
                     loading: mondoLoading,
-                    data: treeNodeToChartData(mondo),
+                    data: mondo,
                     filter: {
                       total: 10,
                       unique: true,
@@ -360,62 +259,57 @@ const PublicStudyEntity = () => {
                     },
                   },
                   demography: {
-                    loading: demographic.loading,
+                    loading: graphLoading,
                     race: aggregationToChartData(
-                      demographic.result?.data?.participant?.aggregations?.race?.buckets,
-                      demographic.result?.data?.participant?.hits?.total,
+                      graphs?.demographic?.race,
+                      graphs?.demographic?.totalParticipant,
                     ),
                     sex: aggregationToChartData(
-                      demographic.result?.data?.participant?.aggregations?.sex?.buckets,
-                      demographic.result?.data?.participant?.hits?.total,
+                      graphs?.demographic?.sex,
+                      graphs?.demographic?.totalParticipant,
                     ),
                     ethnicity: aggregationToChartData(
-                      demographic.result?.data?.participant?.aggregations?.ethnicity?.buckets,
-                      demographic.result?.data?.participant?.hits?.total,
+                      graphs?.demographic?.ethnicity,
+                      graphs?.demographic?.totalParticipant,
                     ),
                   },
                   dataCategory: {
-                    loading: dataCategory.loading,
-                    data: aggregationToChartData(
-                      dataCategory.result?.data?.participant?.aggregations?.files__data_category
-                        .buckets,
-                    ),
+                    loading: graphLoading,
+                    data: aggregationToChartData(graphs?.files_data_category?.data),
                     filter: {
                       total: 10,
                     },
                   },
                   dataType: {
-                    loading: dataType.loading,
-                    data: aggregationToChartData(
-                      dataType.result?.data?.participant?.aggregations?.files__data_type.buckets,
-                    ),
+                    loading: graphLoading,
+                    data: aggregationToChartData(graphs?.files_data_type?.data),
                     filter: {
                       total: 10,
                     },
                   },
                   downSyndromeStatus: {
-                    loading: downSyndromeStatus.loading,
+                    loading: graphLoading,
                     data: aggregationToChartData(
-                      downSyndromeStatus.result?.data?.participant?.aggregations
-                        ?.down_syndrome_status?.buckets,
-                      downSyndromeStatus.result?.data?.participant?.hits?.total,
+                      graphs?.down_syndrome_status?.data,
+                      graphs?.down_syndrome_status?.totalParticipant,
                     ),
                   },
                   sampleType: {
-                    loading: samples.loading,
+                    loading: graphLoading,
                     data: aggregationToChartData(
-                      samples.result?.data?.biospecimen?.aggregations?.sample_type?.buckets,
-                      samples.result?.data?.participant?.hits?.total,
+                      graphs?.samples?.sample_type,
+                      graphs?.samples?.totalBiospecimen,
                     ),
                   },
                   sampleAvailability: {
-                    loading: samples.loading,
+                    loading: graphLoading,
                     data: aggregationToChartData(
-                      samples.result?.data?.biospecimen?.aggregations?.status?.buckets,
-                      samples.result?.data?.participant?.hits?.total,
+                      graphs?.samples?.status,
+                      graphs?.samples?.totalBiospecimen,
                     ),
                   },
                 }}
+                withDownload={false}
               />
             )}
 
