@@ -204,7 +204,7 @@ export const AGE_QUERY = `
 `;
 
 export const DATATYPE_QUERY = `
-  query($sqon: JSON) {
+  query AggregationDataTypeInfo($sqon: JSON) {
     participant {
       hits(filters: $sqon) {
         total
@@ -240,7 +240,7 @@ export const PARTICIPANT_BY_STUDIES_QUERY = `
 `;
 
 export const PARTICIPANT_DOWN_SYNDROME_STATUS_QUERY = `
-  query($sqon: JSON) {
+  query AggregationDownSyndromeInfo($sqon: JSON) {
     participant {
       hits(filters: $sqon) {
         total
@@ -258,7 +258,7 @@ export const PARTICIPANT_DOWN_SYNDROME_STATUS_QUERY = `
 `;
 
 export const SAMPLES_QUERY = `
-  query($sqon: JSON) {
+  query AggregationSampleInfo($sqon: JSON) {
     biospecimen {
       hits(filters: $sqon) {
         total
@@ -282,7 +282,7 @@ export const SAMPLES_QUERY = `
 `;
 
 export const DATA_CATEGORY_QUERY = `
-  query($sqon: JSON) {
+  query AggregationDataCategoryInfo($sqon: JSON) {
     participant {
       hits(filters: $sqon) {
         total
