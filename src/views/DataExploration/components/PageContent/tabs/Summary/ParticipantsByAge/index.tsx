@@ -167,7 +167,7 @@ const ParticipantsByAgeGraphCard = () => {
       tsvSettings={{
         data: [data],
         headers: [
-          'label',
+          'Age at First Patient Engagement',
           intl.get(`screen.dataExploration.tabs.summary.graphs.participantsByAgeGraph.${T21}`),
           intl.get(`screen.dataExploration.tabs.summary.graphs.participantsByAgeGraph.${D21}`),
         ],
