@@ -52,5 +52,7 @@ describe('Page des études - Vérifier les informations affichées', () => {
     cy.get('tfoot [class*="summarySum"]').eq(1).contains(/\d{1}/).should('exist');
     cy.get('tfoot [class*="summaryTitle"]').eq(2).contains('Biospecimens').should('exist');
     cy.get('tfoot [class*="summarySum"]').eq(2).contains(/\d{1}/).should('exist');
+    cy.get('tfoot [class*="summaryTitle"]').eq(3).contains('Files').should('exist');
+    cy.get('tfoot [class*="summarySum"]').eq(3).contains(/\d{1}/).should('exist');
   });
 });
