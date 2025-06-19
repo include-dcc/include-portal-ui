@@ -1671,6 +1671,16 @@ const es = {
         },
       },
     },
+    participantEntity: {
+      personPopover: {
+        title: 'Individuo en Estudios Múltiples',
+        content1:
+          'Existen múltiples registros de participantes para este individuo en diferentes estudios. Estos participantes operan dentro del mismo marco de investigación, lo que permite su vinculación. ',
+        content2: 'Ver todos los registros de participantes de este individuo.',
+        content3:
+          'Tenga en cuenta que puede haber participantes adicionales en estudios cruzados, pero se requiere acceso al archivo de mapeo GUID para su identificación. Los estudios INCLUDE con GUID de participantes se identifican con la etiqueta <strong>G</strong> en el <a href="{studiesHref}" style="text-decoration: underline;">Repositorio de Estudios</a>.',
+      },
+    },
   },
   facets: {
     program: 'Programa',
@@ -1746,6 +1756,9 @@ const es = {
     options: {
       D21: 'Disomía 21, euploide',
       T21: 'Trisomía 21',
+    },
+    person: {
+      person_id: 'ID de Persona',
     },
 
     // Muestras biológicas
@@ -2043,6 +2056,7 @@ const es = {
       other: 'Otro',
       participants: 'Participantes',
       participant_id: 'ID de participante',
+      person_id: 'ID de persona',
       phenotype: 'Fenotipo',
       phenotype_hpo: 'Fenotipo (HPO)',
       'proband-only': 'Solo probando',

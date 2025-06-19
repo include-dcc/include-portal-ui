@@ -1799,6 +1799,16 @@ const en = {
       },
       exportAsTsv: 'Export as TSV',
     },
+    participantEntity: {
+      personPopover: {
+        title: 'Individual in Multiple Studies',
+        content1:
+          'Multiple participant records exist for this individual across different studies. These participants operate within the same research framework enabling participant linkage. ',
+        content2: 'See all participant records for this individual.',
+        content3:
+          'Note that additional cross-study participants may exist but require GUID mapping file access for identification. INCLUDE studies with participant GUIDs are identified with the <strong>G</strong> tag on the <a href="{studiesHref}" style="text-decoration: underline;">Study Repository</a>.',
+      },
+    },
   },
   facets: {
     program: 'Program',
@@ -1873,6 +1883,9 @@ const en = {
     options: {
       D21: 'Disomy 21, euploid',
       T21: 'Trisomy 21',
+    },
+    person: {
+      person_id: 'Person ID',
     },
 
     // Biospecimen
@@ -2167,6 +2180,7 @@ const en = {
       other: 'Other',
       participants: 'Participants',
       participant_id: 'Participant ID',
+      person_id: 'Person ID',
       phenotype: 'Phenotype',
       phenotype_hpo: 'Phenotype (HPO)',
       'proband-only': 'Proband-only',
