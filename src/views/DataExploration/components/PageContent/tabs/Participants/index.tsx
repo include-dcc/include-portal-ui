@@ -107,6 +107,7 @@ const getDefaultColumns = (): ProColumnType[] => [
                   >
                     {intl.get('screen.participantEntity.personPopover.content2')}
                   </Link>
+                  {'.'}
                 </p>
                 <span>
                   {intl.getHTML('screen.participantEntity.personPopover.content3', {
