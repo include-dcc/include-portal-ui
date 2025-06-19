@@ -121,6 +121,13 @@ const getSummaryColumns = (
           sum={data.reduce((accumulator, d) => accumulator + d.biospecimen_count, 0)}
         />
       );
+    } else if (c.key === 'file_count') {
+      value = (
+        <SummarySumCell
+          title={intl.get('entities.file.files')}
+          sum={data.reduce((accumulator, d) => accumulator + (d.file_count ?? 0), 0)}
+        />
+      );
     }
 
     if (columnsState) {
