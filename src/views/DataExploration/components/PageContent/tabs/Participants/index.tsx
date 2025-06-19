@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { TeamOutlined } from '@ant-design/icons';
 import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import ProTable from '@ferlab/ui/core/components/ProTable';
@@ -16,7 +17,7 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
-import { Tag, Tooltip } from 'antd';
+import { Popover, Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { ArrangerResultsTree } from 'graphql/models';
 import { useParticipants } from 'graphql/participants/actions';
@@ -68,13 +69,57 @@ const getDefaultColumns = (): ProColumnType[] => [
   {
     key: 'participant_id',
     title: intl.get('entities.participant.participant_id'),
-    dataIndex: 'participant_id',
     sorter: {
       multiple: 1,
     },
     className: styles.participantIdCell,
-    render: (participant_id: string) => (
-      <Link to={`${STATIC_ROUTES.PARTICIPANTS}/${participant_id}`}>{participant_id}</Link>
+    render: (participant: IParticipantEntity) => (
+      <>
+        <Link to={`${STATIC_ROUTES.PARTICIPANTS}/${participant.participant_id}`}>
+          {participant.participant_id}
+        </Link>
+        {participant.person?.person_id && (
+          <Popover
+            overlayStyle={{ maxWidth: '420px' }}
+            title={intl.get('screen.participantEntity.personPopover.title')}
+            content={
+              <>
+                <p>
+                  {intl.get('screen.participantEntity.personPopover.content1')}
+                  <Link
+                    to={STATIC_ROUTES.DATA_EXPLORATION_PARTICIPANTS}
+                    onClick={() =>
+                      addQuery({
+                        queryBuilderId: DATA_EXPLORATION_QB_ID,
+                        query: generateQuery({
+                          newFilters: [
+                            generateValueFilter({
+                              field: 'person.person_id',
+                              value: [participant?.person?.person_id!],
+                              index: INDEXES.PARTICIPANT,
+                            }),
+                          ],
+                        }),
+                        setAsActive: true,
+                      })
+                    }
+                    style={{ textDecoration: 'underline' }}
+                  >
+                    {intl.get('screen.participantEntity.personPopover.content2')}
+                  </Link>
+                </p>
+                <span>
+                  {intl.getHTML('screen.participantEntity.personPopover.content3', {
+                    studiesHref: STATIC_ROUTES.STUDIES,
+                  })}
+                </span>
+              </>
+            }
+          >
+            <TeamOutlined className={styles.person} />
+          </Popover>
+        )}
+      </>
     ),
   },
   {

@@ -38,6 +38,9 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
               unit
               value
             }
+            person {
+              person_id
+            }
 
             files {
               hits {
