@@ -9,7 +9,7 @@ import styles from '../styles/styles.module.css';
 
 export const getSummaryItems = (participant?: IParticipantEntity): IEntityDescriptionsItem[] => [
   {
-    label: intl.get('entities.global.id'),
+    label: intl.get('entities.participant.participant_id'),
     value: participant?.participant_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {

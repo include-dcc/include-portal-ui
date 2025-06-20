@@ -38,6 +38,9 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
               unit
               value
             }
+            person {
+              person_id
+            }
 
             files {
               hits {
@@ -194,10 +197,12 @@ export const GET_PARTICIPANT_ENTITY = gql`
                 }
               }
             }
-
             nb_biospecimens
             nb_files
             participant_id
+            person {
+              person_id
+            }
             phenotype {
               hits {
                 edges {

@@ -8,3 +8,7 @@
 .link:hover {
   text-decoration: none;
 }
+
+.person {
+  margin-left: 8px;
+}
