@@ -9,6 +9,7 @@ import { Progress } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IDataType, IExperimentalStrategy, IStudyEntity } from 'graphql/studies/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
+import { IPublicStudyEntity } from 'views/PublicStudyEntity/types';
 
 import { STATIC_ROUTES } from 'utils/routes';
 
@@ -170,7 +171,7 @@ const getExperimentalStrategyColumns = ({
 type GetFileTableProps = {
   dataTypes: IDataType[];
   experimentStrategies: IExperimentalStrategy[];
-  study?: IStudyEntity;
+  study?: IStudyEntity | IPublicStudyEntity;
   manageLoginModal?: (isOpen: boolean) => void;
   manageRedirectUri?: (uri: string) => void;
   isPublicStudyEnabled?: boolean;
@@ -191,7 +192,7 @@ const getFileTable = ({
       columns: study
         ? getDataTypeColumns({
             files_nb: total,
-            study_code: study.study_code,
+            study_code: study.study_code!,
             manageLoginModal,
             manageRedirectUri,
             isPublicStudyEnabled,
@@ -204,7 +205,7 @@ const getFileTable = ({
       columns: study
         ? getExperimentalStrategyColumns({
             files_nb: total,
-            study_code: study.study_code,
+            study_code: study.study_code!,
             manageLoginModal,
             manageRedirectUri,
             isPublicStudyEnabled,

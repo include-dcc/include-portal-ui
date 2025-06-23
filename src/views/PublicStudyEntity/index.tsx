@@ -5,7 +5,6 @@ import { useLocation, useParams } from 'react-router';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import { aggregationToChartData } from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import EntityPage, {
@@ -17,9 +16,10 @@ import EntityPage, {
 } from '@ferlab/ui/core/pages/EntityPage';
 import { Button, Space, Tag, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
+import { IDataType, IExperimentalStrategy } from 'graphql/studies/models';
 import SummaryHeader from 'views/StudyEntity/SummaryHeader';
 import { getStatisticsDictionary, queryId, SectionId } from 'views/StudyEntity/utils/constants';
-import getDataAccessDescriptions, { getFlatDataset } from 'views/StudyEntity/utils/dataAccess';
+import getDataAccessDescriptions from 'views/StudyEntity/utils/dataAccess';
 import getDatasetDescription from 'views/StudyEntity/utils/datasets';
 import getFileTable from 'views/StudyEntity/utils/file';
 import getSummaryDescriptions from 'views/StudyEntity/utils/summary';
@@ -27,13 +27,14 @@ import { getLogoByStudyCode } from 'views/StudyEntity/utils/title';
 
 import PublicLayout from 'components/PublicLayout';
 import LoginModal from 'components/PublicLayout/LoginModal';
+import { ArrangerApi } from 'services/api/arranger';
 
 import ExternalLinkIcon from '../../components/Icons/ExternalLinkIcon';
 import { STATIC_ROUTES } from '../../utils/routes';
 import { DATA_EXPLORATION_QB_ID } from '../DataExploration/utils/constant';
 
-import { mockPublicStudyEntity } from './mock';
-import { mockGraph, mockMondo, mockPhenotypes } from './mockGraph';
+import { IPublicStudyEntity, IPublicStudyGraphs } from './types';
+import { getFlatDataset } from './utils';
 
 import style from './index.module.css';
 
@@ -52,17 +53,27 @@ const PublicStudyEntity = () => {
   const manageLoginModal = (isOpen: boolean) => setOpenLoginModal(isOpen);
   const manageRedirectUri = (uri: string) => setRedirectUri(uri);
 
-  // TODO block by SJIP-1373 backend
-  const study = mockPublicStudyEntity;
-  const loading = false;
-  const graphs = mockGraph;
-  const graphLoading = false;
-  const phenotypes = mockPhenotypes;
-  const phenotypesLoading = false;
-  const mondo = mockMondo;
-  const mondoLoading = false;
+  const [studyData, setStudyData] = useState<IPublicStudyEntity | undefined>(undefined);
+  const [graphsData, setGraphsData] = useState<IPublicStudyGraphs | undefined>(undefined);
+  const [loadingData, setLoadingData] = useState<boolean>(true);
 
-  const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
+  useEffect(() => {
+    const fetchData = async () => {
+      if (study_code) {
+        setLoadingData(true);
+        const study = await ArrangerApi.fetchPublicStudy(study_code);
+        const studyGraphs = await ArrangerApi.fetchPublicStudyGraphs(study_code);
+
+        setStudyData(study.error ? undefined : study.data);
+        setGraphsData(studyGraphs.error ? undefined : studyGraphs.data);
+        setLoadingData(false);
+      }
+    };
+
+    fetchData();
+  }, [study_code]);
+
+  const hasDataset = studyData?.datasets && studyData.datasets.length > 0;
 
   useEffect(() => {
     const params = new URLSearchParams(location.hash.substring(1));
@@ -94,28 +105,28 @@ const PublicStudyEntity = () => {
     }
   }, [study_code]);
 
-  const flatDataset = getFlatDataset(study?.datasets);
+  const flatDataset = getFlatDataset(studyData?.datasets);
   const hasDataAccess =
     flatDataset?.accessLimitations.size || flatDataset?.accessRequirements.size ? true : false;
 
-  const hasFiles = (study?.file_count ?? 0) > 0;
+  const hasFiles = (studyData?.file_count ?? 0) > 0;
 
   const defaultLinks = [
     { href: `#${SectionId.SUMMARY}`, title: intl.get('entities.global.summary') },
   ];
 
   const hasStatistics =
-    !loading &&
-    (hasData(phenotypes) ||
-      hasData(mondo) ||
-      hasData(aggregationToChartData(graphs?.demographic?.race)) ||
-      hasData(aggregationToChartData(graphs?.demographic?.sex)) ||
-      hasData(aggregationToChartData(graphs?.demographic?.ethnicity)) ||
-      hasData(aggregationToChartData(graphs?.files_data_category?.data)) ||
-      hasData(aggregationToChartData(graphs?.files_data_type?.data)) ||
-      hasData(aggregationToChartData(graphs?.down_syndrome_status?.data)) ||
-      hasData(aggregationToChartData(graphs?.samples?.sample_type)) ||
-      hasData(aggregationToChartData(graphs?.samples?.status)));
+    !loadingData &&
+    (hasData(aggregationToChartData(graphsData?.participant_centric?.data?.race)) ||
+      hasData(aggregationToChartData(graphsData?.participant_centric?.data?.sex)) ||
+      hasData(aggregationToChartData(graphsData?.participant_centric?.data?.ethnicity)) ||
+      hasData(aggregationToChartData(graphsData?.participant_centric?.data?.files_data_category)) ||
+      hasData(aggregationToChartData(graphsData?.participant_centric?.data?.files_data_type)) ||
+      hasData(
+        aggregationToChartData(graphsData?.participant_centric?.data?.down_syndrome_status),
+      ) ||
+      hasData(aggregationToChartData(graphsData?.biospecimens_centric?.data?.sample_type)) ||
+      hasData(aggregationToChartData(graphsData?.biospecimens_centric?.data?.status)));
 
   if (hasStatistics) {
     defaultLinks.push({
@@ -137,17 +148,28 @@ const PublicStudyEntity = () => {
       href: `#${SectionId.DATASET}`,
       title: intl.get('entities.study.dataset.title'),
     });
-    datasetLength = study?.datasets?.hits.edges.length || 0;
+    datasetLength = studyData?.datasets?.length || 0;
   }
 
-  const dataTypes = hydrateResults(study?.data_types?.hits?.edges || []).filter(
-    (dateType) => dateType.file_count > 0,
-  );
-  const experimentStrategies = hydrateResults(
-    study?.experimental_strategies?.hits?.edges || [],
-  ).filter((dateType) => dateType.file_count > 0);
+  const dataTypes: IDataType[] =
+    studyData?.data_types?.map((type: IDataType, index) => ({
+      ...type,
+      key: type.id || index,
+    })) || [];
 
-  if (hasFiles && (dataTypes.length > 0 || experimentStrategies.length > 0)) {
+  const experimentStrategies: IExperimentalStrategy[] =
+    studyData?.experimental_strategies
+      ?.map((strat: IExperimentalStrategy, index) => ({
+        ...strat,
+        key: strat.id || index,
+      }))
+      .filter((dateType) => dateType.file_count > 0) || [];
+
+  if (
+    hasFiles &&
+    ((dataTypes && dataTypes.length > 0) ||
+      (experimentStrategies && experimentStrategies.length > 0))
+  ) {
     defaultLinks.push({ href: `#${SectionId.DATA_FILE}`, title: intl.get('entities.study.file') });
   }
 
@@ -160,27 +182,27 @@ const PublicStudyEntity = () => {
         <ScrollContent id={SCROLL_WRAPPER_ID} className={style.scrollContent}>
           <EntityPage
             links={defaultLinks}
-            data={study}
-            loading={loading}
+            data={studyData}
+            loading={loadingData}
             pageId="public-study-entity-page"
             emptyText={intl.get('no.data.available')}
           >
             <EntityTitleLogo
-              loading={loading}
-              logo={getLogoByStudyCode(study?.study_code)}
-              title={study?.study_name}
+              loading={loadingData}
+              logo={getLogoByStudyCode(studyData?.study_code)}
+              title={studyData?.study_name}
             />
 
             <EntityDescriptions
               id={SectionId.SUMMARY}
               title={intl.get('global.summary')}
               header={intl.get('entities.global.summary')}
-              descriptions={getSummaryDescriptions(study)}
-              loading={loading}
+              descriptions={getSummaryDescriptions(studyData, true)}
+              loading={loadingData}
               noDataLabel={intl.get('no.data.available')}
               subheader={
                 <SummaryHeader
-                  study={study}
+                  study={studyData}
                   manageLoginModal={manageLoginModal}
                   manageRedirectUri={manageRedirectUri}
                   isPublicStudyEnabled={true}
@@ -192,18 +214,18 @@ const PublicStudyEntity = () => {
               <EntityStatistics
                 id={SectionId.STATISTIC}
                 title={intl.get('entities.study.statistic.title')}
-                loading={loading}
+                loading={loadingData}
                 header={intl.get('entities.study.statistic.header')}
                 titleExtra={[
                   <Tooltip
                     title={
-                      !study?.is_harmonized
+                      !studyData?.is_harmonized
                         ? intl.get('entities.study.unharmonizedWarningTooltip')
                         : undefined
                     }
                   >
                     <Button
-                      disabled={!study?.is_harmonized}
+                      disabled={!studyData?.is_harmonized}
                       size="small"
                       onClick={(event) => {
                         event.stopPropagation();
@@ -215,7 +237,7 @@ const PublicStudyEntity = () => {
                             newFilters: [
                               generateValueFilter({
                                 field: 'study.study_code',
-                                value: study ? [study.study_code] : [],
+                                value: studyData?.study_code ? [studyData.study_code] : [],
                                 index: INDEXES.STUDY,
                               }),
                             ],
@@ -229,87 +251,65 @@ const PublicStudyEntity = () => {
                     </Button>
                   </Tooltip>,
                 ]}
-                dictionary={getStatisticsDictionary(study?.study_code)}
+                dictionary={getStatisticsDictionary(studyData?.study_code)}
                 statistic={{
-                  phenotype: {
-                    loading: phenotypesLoading,
-                    data: phenotypes,
-                    filter: {
-                      total: 10,
-                      excludeZeroValue: true,
-                      unique: true,
-                    },
-                  },
-                  mondo: {
-                    loading: mondoLoading,
-                    data: mondo,
-                    filter: {
-                      total: 10,
-                      unique: true,
-                      excludeZeroValue: true,
-                      excludes: [
-                        'complete trisomy 21 (MONDO:0700030)',
-                        'Down syndrome (MONDO:0008608)',
-                        'mosaic translocation Down syndrome (MONDO:0700129)',
-                        'mosaic trisomy 21 (MONDO:0700127)',
-                        'partial segmental duplication (MONDO:0700130)',
-                        'translocation Down syndrome (MONDO:0700128)',
-                        'trisomy 21 (MONDO:0700126)',
-                      ],
-                    },
-                  },
                   demography: {
-                    loading: graphLoading,
+                    loading: loadingData,
                     race: aggregationToChartData(
-                      graphs?.demographic?.race,
-                      graphs?.demographic?.totalParticipant,
+                      graphsData?.participant_centric?.data?.race,
+                      graphsData?.participant_centric?.total,
                     ),
                     sex: aggregationToChartData(
-                      graphs?.demographic?.sex,
-                      graphs?.demographic?.totalParticipant,
+                      graphsData?.participant_centric?.data?.sex,
+                      graphsData?.participant_centric?.total,
                     ),
                     ethnicity: aggregationToChartData(
-                      graphs?.demographic?.ethnicity,
-                      graphs?.demographic?.totalParticipant,
+                      graphsData?.participant_centric?.data?.ethnicity,
+                      graphsData?.participant_centric?.total,
                     ),
                   },
                   dataCategory: {
-                    loading: graphLoading,
-                    data: aggregationToChartData(graphs?.files_data_category?.data),
+                    loading: loadingData,
+                    data: aggregationToChartData(
+                      graphsData?.participant_centric?.data?.files_data_category,
+                    ),
                     filter: {
                       total: 10,
                     },
                   },
                   dataType: {
-                    loading: graphLoading,
-                    data: aggregationToChartData(graphs?.files_data_type?.data),
+                    loading: loadingData,
+                    data: aggregationToChartData(
+                      graphsData?.participant_centric?.data?.files_data_type,
+                    ),
                     filter: {
                       total: 10,
                     },
                   },
                   downSyndromeStatus: {
-                    loading: graphLoading,
+                    loading: loadingData,
                     data: aggregationToChartData(
-                      graphs?.down_syndrome_status?.data,
-                      graphs?.down_syndrome_status?.totalParticipant,
+                      graphsData?.participant_centric?.data?.down_syndrome_status,
+                      graphsData?.participant_centric?.total,
                     ),
                   },
                   sampleType: {
-                    loading: graphLoading,
+                    loading: loadingData,
                     data: aggregationToChartData(
-                      graphs?.samples?.sample_type,
-                      graphs?.samples?.totalBiospecimen,
+                      graphsData?.biospecimens_centric?.data?.sample_type,
+                      graphsData?.biospecimens_centric?.total,
                     ),
                   },
                   sampleAvailability: {
-                    loading: graphLoading,
+                    loading: loadingData,
                     data: aggregationToChartData(
-                      graphs?.samples?.status,
-                      graphs?.samples?.totalBiospecimen,
+                      graphsData?.biospecimens_centric?.data?.status,
+                      graphsData?.biospecimens_centric?.total,
                     ),
                   },
                 }}
                 withDownload={false}
+                withHpoMondo={false}
               />
             )}
 
@@ -318,7 +318,7 @@ const PublicStudyEntity = () => {
                 descriptions={getDataAccessDescriptions(flatDataset)}
                 header={intl.get('entities.study.data_access')}
                 id={SectionId.DATA_ACCESS}
-                loading={loading}
+                loading={loadingData}
                 noDataLabel={intl.get('no.data.available')}
                 title={intl.get('entities.study.data_access')}
               />
@@ -332,7 +332,7 @@ const PublicStudyEntity = () => {
                     <InfoCircleOutlined className={style.datasetInfo} />
                   </Tooltip>
                 </Title>
-                {study?.datasets?.hits.edges.map(({ node: dataset }, index: number) => {
+                {studyData?.datasets?.map((dataset, index: number) => {
                   const titleExtra = [];
 
                   if (dataset.dataset_name && dataset.is_harmonized) {
@@ -369,7 +369,7 @@ const PublicStudyEntity = () => {
                   return (
                     <EntityDataset
                       containerClassName={index != datasetLength - 1 ? style.datasetContainer : ''}
-                      descriptions={getDatasetDescription(dataset)}
+                      descriptions={getDatasetDescription(dataset, true)}
                       dictionnary={{
                         participants: intl.get('entities.participant.participants'),
                         files: intl.get('entities.file.files'),
@@ -396,7 +396,7 @@ const PublicStudyEntity = () => {
                       }
                       id={dataset?.external_dataset_id || SectionId.DATASET}
                       key={dataset?.id}
-                      loading={loading}
+                      loading={loadingData}
                       participant_count={dataset?.expected_number_participants || 0}
                     />
                   );
@@ -404,58 +404,60 @@ const PublicStudyEntity = () => {
               </>
             )}
 
-            {hasFiles && (experimentStrategies.length > 0 || dataTypes.length > 0) && (
-              <EntityTableMultiple
-                header={intl.get('entities.study.files')}
-                id={SectionId.DATA_FILE}
-                loading={loading}
-                tables={getFileTable({
-                  dataTypes,
-                  experimentStrategies,
-                  study,
-                  manageLoginModal,
-                  manageRedirectUri,
-                  isPublicStudyEnabled: true,
-                })}
-                title={intl.get('entities.study.file')}
-                titleExtra={[
-                  <Tooltip
-                    title={
-                      !study?.is_harmonized
-                        ? intl.get('entities.study.unharmonizedWarningTooltip')
-                        : undefined
-                    }
-                  >
-                    <Button
-                      disabled={!study?.is_harmonized}
-                      size="small"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        manageRedirectUri(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
-                        manageLoginModal(true);
-                        addQuery({
-                          queryBuilderId: DATA_EXPLORATION_QB_ID,
-                          query: generateQuery({
-                            newFilters: [
-                              generateValueFilter({
-                                field: 'study.study_code',
-                                value: study ? [study.study_code] : [],
-                                index: INDEXES.STUDY,
-                              }),
-                            ],
-                          }),
-                          setAsActive: true,
-                        });
-                      }}
+            {hasFiles &&
+              ((experimentStrategies && experimentStrategies.length > 0) ||
+                (dataTypes && dataTypes.length > 0)) && (
+                <EntityTableMultiple
+                  header={intl.get('entities.study.files')}
+                  id={SectionId.DATA_FILE}
+                  loading={loadingData}
+                  tables={getFileTable({
+                    dataTypes,
+                    experimentStrategies,
+                    study: studyData,
+                    manageLoginModal,
+                    manageRedirectUri,
+                    isPublicStudyEnabled: true,
+                  })}
+                  title={intl.get('entities.study.file')}
+                  titleExtra={[
+                    <Tooltip
+                      title={
+                        !studyData?.is_harmonized
+                          ? intl.get('entities.study.unharmonizedWarningTooltip')
+                          : undefined
+                      }
                     >
-                      {intl.get('global.viewInExploration')}
-                      <ExternalLinkIcon />
-                    </Button>
-                  </Tooltip>,
-                ]}
-                total={study?.file_count}
-              />
-            )}
+                      <Button
+                        disabled={!studyData?.is_harmonized}
+                        size="small"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          manageRedirectUri(STATIC_ROUTES.DATA_EXPLORATION_DATAFILES);
+                          manageLoginModal(true);
+                          addQuery({
+                            queryBuilderId: DATA_EXPLORATION_QB_ID,
+                            query: generateQuery({
+                              newFilters: [
+                                generateValueFilter({
+                                  field: 'study.study_code',
+                                  value: studyData?.study_code ? [studyData.study_code] : [],
+                                  index: INDEXES.STUDY,
+                                }),
+                              ],
+                            }),
+                            setAsActive: true,
+                          });
+                        }}
+                      >
+                        {intl.get('global.viewInExploration')}
+                        <ExternalLinkIcon />
+                      </Button>
+                    </Tooltip>,
+                  ]}
+                  total={studyData?.file_count}
+                />
+              )}
           </EntityPage>
         </ScrollContent>
         {openLoginModal && (

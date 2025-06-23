@@ -1,12 +1,31 @@
+/* eslint-disable complexity */
 import intl from 'react-intl-universal';
-import { IPublicationDetails } from 'graphql/studies/models';
+import { ArrangerResultsTree } from 'graphql/models';
+import { IAuthor, IPublicationDetails } from 'graphql/studies/models';
+import { PublicPublicationDetails } from 'views/PublicStudyEntity/types';
 
-export const getTextToCopy = ({ publication }: { publication: IPublicationDetails }): string => {
+export const getTextToCopy = ({
+  publication,
+  isPublic = false,
+}: {
+  publication: IPublicationDetails | PublicPublicationDetails;
+  isPublic?: boolean;
+}): string => {
   let textToCopy = '';
-  if (publication.authors.hits.edges.length > 0)
-    textToCopy += `${publication.authors.hits.edges[0].node.family}, ${publication.authors.hits.edges[0].node.given}`;
+  if (!isPublic && (publication.authors as ArrangerResultsTree<IAuthor>).hits.edges.length > 0)
+    textToCopy += `${
+      (publication.authors as ArrangerResultsTree<IAuthor>).hits.edges[0].node.family
+    }, ${(publication.authors as ArrangerResultsTree<IAuthor>).hits.edges[0].node.given}`;
 
-  if (publication.authors.hits.edges.length > 1)
+  if (!isPublic && (publication.authors as ArrangerResultsTree<IAuthor>).hits.edges.length > 1)
+    textToCopy += ` ${intl.get('entities.study.publicationDetails.authors')}`;
+
+  if (isPublic && (publication.authors as IAuthor[]).length > 0)
+    textToCopy += `${(publication.authors as IAuthor[])[0].family}, ${
+      (publication.authors as IAuthor[])[0].given
+    }`;
+
+  if (isPublic && (publication.authors as IAuthor[]).length > 1)
     textToCopy += ` ${intl.get('entities.study.publicationDetails.authors')}`;
 
   if (publication.title) textToCopy += ` "${publication.title}"`;

@@ -5,8 +5,10 @@ import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Space, Tag, Tooltip, Typography } from 'antd';
 import { IStudyEntity } from 'graphql/studies/models';
+import { IPublicStudyEntity } from 'views/PublicStudyEntity/types';
 
 import Publication from 'components/Publication';
+import PublicPublication from 'components/Publication/PublicPublication';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from '../index.module.css';
@@ -14,10 +16,19 @@ import styles from '../index.module.css';
 const { Text } = Typography;
 
 // eslint-disable-next-line complexity
-const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[] => {
-  const institutions = [
-    ...new Set(study?.contacts?.hits.edges.map((contact) => contact.node.institution)),
-  ].filter((institution) => institution);
+const getSummaryDescriptions = (
+  study?: IStudyEntity | IPublicStudyEntity,
+  isPublic = false,
+): IEntityDescriptionsItem[] => {
+  const institutions = isPublic
+    ? [
+        ...new Set((study as IPublicStudyEntity)?.contacts?.map((contact) => contact.institution)),
+      ].filter((institution) => institution)
+    : [
+        ...new Set(
+          (study as IStudyEntity)?.contacts?.hits.edges.map((contact) => contact.node.institution),
+        ),
+      ].filter((institution) => institution);
 
   const result: IEntityDescriptionsItem[] = [];
 
@@ -155,7 +166,7 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
     });
   }
 
-  if (study?.publications?.length) {
+  if (!isPublic && study?.publications?.length) {
     result.push({
       label: (
         <Space size={4}>
@@ -169,7 +180,27 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
         <Publication
           modalTitle={study?.study_name}
           publications={study?.publications}
-          publications_details={study?.publications_details}
+          publications_details={(study as IStudyEntity)?.publications_details}
+        />
+      ),
+    });
+  }
+
+  if (isPublic && study?.publications?.length) {
+    result.push({
+      label: (
+        <Space size={4}>
+          <Text>{intl.get('entities.study.publication')}</Text>
+          <Tooltip title={intl.get('entities.study.publicationTooltip')}>
+            <InfoCircleOutlined className={styles.publicationIcon} />
+          </Tooltip>
+        </Space>
+      ),
+      value: (
+        <PublicPublication
+          modalTitle={study?.study_name}
+          publications={study?.publications}
+          publications_details={(study as IPublicStudyEntity)?.publications_details}
         />
       ),
     });
@@ -189,13 +220,25 @@ const getSummaryDescriptions = (study?: IStudyEntity): IEntityDescriptionsItem[]
     });
   }
 
-  if (study?.contacts?.hits?.edges?.length) {
+  if (!isPublic && study && (study as IStudyEntity).contacts?.hits?.edges?.length) {
     result.push({
       label: intl.get('entities.study.study_contact'),
-      value: study.contacts.hits.edges.map((contact, index) => (
+      value: (study as IStudyEntity)?.contacts?.hits.edges.map((contact, index) => (
         <div key={index}>
           {contact.node.name && <Text>{contact.node.name}; </Text>}
           {contact.node.email && <Text>{contact.node.email}</Text>}
+        </div>
+      )),
+    });
+  }
+
+  if (isPublic && study && (study as IPublicStudyEntity).contacts?.length) {
+    result.push({
+      label: intl.get('entities.study.study_contact'),
+      value: (study as IPublicStudyEntity)?.contacts?.map((contact, index) => (
+        <div key={index}>
+          {contact.name && <Text>{contact.name}; </Text>}
+          {contact.email && <Text>{contact.email}</Text>}
         </div>
       )),
     });
