@@ -3,8 +3,11 @@ import intl from 'react-intl-universal';
 import Empty from '@ferlab/ui/core/components/Empty';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { Card, Space } from 'antd';
 import { IBiospecimenEntity } from 'graphql/biospecimens/models';
+
+import { formatQuerySortList } from 'utils/helper';
 
 import { SectionId } from '../utils/anchorLinks';
 
@@ -21,6 +24,37 @@ interface TableViewProps {
   }[];
 }
 
+const sortByKey = ({
+  array,
+  sortList,
+}: {
+  array: any[];
+  sortList: { field: string; order: SortDirection }[];
+}): any[] => {
+  if (!sortList || !sortList.length) {
+    return array;
+  }
+  let resultSorted = array;
+  sortList.forEach((sort) => {
+    resultSorted = resultSorted.sort((a, b) => {
+      const x = a[sort.field];
+      const y = b[sort.field];
+      return sort.order === SortDirection.Asc
+        ? x < y
+          ? -1
+          : x > y
+          ? 1
+          : 0
+        : x > y
+        ? -1
+        : x < y
+        ? 1
+        : 0;
+    });
+  });
+  return resultSorted;
+};
+
 const TableView = ({
   biospecimensDefaultColumns,
   data,
@@ -34,14 +68,25 @@ const TableView = ({
       setScroll({ y: 400 });
     }
   }, []);
+  const [biospecimens, setBiospecimens] = useState<IBiospecimenEntity[]>(
+    data.map((i) => ({ ...i, key: i.id })),
+  );
 
   return (
     <Card className={styles.card} loading={loading}>
-      {!loading && data.length ? (
+      {!loading && biospecimens.length ? (
         <ProTable
-          bordered={true}
+          bordered
           columns={biospecimensDefaultColumns}
-          dataSource={data}
+          dataSource={biospecimens}
+          showSorterTooltip={false}
+          onChange={(_pagination, _filter, sorter) => {
+            const bioSorted = sortByKey({
+              array: biospecimens,
+              sortList: formatQuerySortList(sorter),
+            });
+            setBiospecimens(bioSorted);
+          }}
           headerConfig={{
             hideItemsCount: true,
             itemCount: {

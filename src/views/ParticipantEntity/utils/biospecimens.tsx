@@ -13,11 +13,13 @@ export const getBiospecimensDefaultColumns = (): ProColumnType[] => [
   {
     key: 'sample_id',
     title: intl.get('entities.biospecimen.sample_id'),
+    sorter: { multiple: 1 },
     render: (biospecimen: IBiospecimenEntity) => biospecimen.sample_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'collection_sample_id',
     title: intl.get('entities.biospecimen.collection_id'),
+    sorter: { multiple: 1 },
     render: (biospecimen: IBiospecimenEntity) =>
       biospecimen.collection_sample_id ? (
         <CollectionIdLink collectionId={biospecimen?.collection_sample_id} />
@@ -28,18 +30,21 @@ export const getBiospecimensDefaultColumns = (): ProColumnType[] => [
   {
     key: 'container_id',
     title: intl.get('entities.biospecimen.container_id'),
+    sorter: { multiple: 1 },
     render: (biospecimen: IBiospecimenEntity) =>
       biospecimen?.container_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'sample_type',
     title: intl.get('entities.biospecimen.sample_type'),
+    sorter: { multiple: 1 },
     render: (biospecimen: IBiospecimenEntity) =>
       biospecimen?.sample_type || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'collection_sample_type',
     title: intl.get('entities.biospecimen.collection_sample_type'),
+    sorter: { multiple: 1 },
     render: (biospecimen: IBiospecimenEntity) =>
       biospecimen?.collection_sample_type || TABLE_EMPTY_PLACE_HOLDER,
   },
@@ -47,6 +52,7 @@ export const getBiospecimensDefaultColumns = (): ProColumnType[] => [
     key: 'age_at_biospecimen_collection',
     title: intl.get('entities.participant.age'),
     tooltip: intl.get('entities.biospecimen.age_tooltip'),
+    sorter: { multiple: 1 },
     render: (biospecimen: IBiospecimenEntity) => (
       <AgeCell ageInDays={biospecimen?.age_at_biospecimen_collection} />
     ),
@@ -54,6 +60,7 @@ export const getBiospecimensDefaultColumns = (): ProColumnType[] => [
   {
     key: 'volume',
     title: intl.get('entities.biospecimen.volume'),
+    sorter: { multiple: 1 },
     render: (biospecimen: IBiospecimenEntity) => biospecimen?.volume || TABLE_EMPTY_PLACE_HOLDER,
     defaultHidden: true,
   },
@@ -68,6 +75,7 @@ export const getBiospecimensDefaultColumns = (): ProColumnType[] => [
     key: 'status',
     title: intl.get('entities.biospecimen.sample_availabilty'),
     defaultHidden: true,
+    sorter: { multiple: 1 },
     render: (biospecimen: IBiospecimenEntity) => {
       const status = biospecimen?.status;
       if (!status) {
@@ -93,6 +101,7 @@ export const getBiospecimensDefaultColumns = (): ProColumnType[] => [
   {
     key: 'parent_sample_id',
     title: intl.get('entities.biospecimen.parent_sample_id'),
+    sorter: { multiple: 1 },
     render: (biospecimen: IBiospecimenEntity) =>
       biospecimen?.parent_sample_id || TABLE_EMPTY_PLACE_HOLDER,
     defaultHidden: true,
@@ -100,6 +109,7 @@ export const getBiospecimensDefaultColumns = (): ProColumnType[] => [
   {
     key: 'parent_sample_type',
     title: intl.get('entities.biospecimen.parent_sample_type'),
+    sorter: { multiple: 1 },
     render: (biospecimen: IBiospecimenEntity) =>
       biospecimen?.parent_sample_type || TABLE_EMPTY_PLACE_HOLDER,
     defaultHidden: true,
