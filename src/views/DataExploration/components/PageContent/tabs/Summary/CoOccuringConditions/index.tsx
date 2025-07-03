@@ -204,17 +204,21 @@ const CoOccuringConditionsGraphCard = () => {
                     onHover={(s) => setSelection(s)}
                     onClick={(s: any) => {
                       const values: string[] = [];
-                      s.sets.forEach((set: any) => {
-                        values.push(set.name);
-                      });
+                      if (s.sets) {
+                        s.sets.forEach((set: any) => {
+                          values.push(set.name);
+                        });
+                      } else {
+                        values.push(s.name);
+                      }
 
                       updateActiveQueryField({
                         queryBuilderId: DATA_EXPLORATION_QB_ID,
                         field: 'observed_phenotype.name',
                         value: values,
-                        operator: TermOperators.in,
+                        operator: TermOperators.all,
                         index: INDEXES.PARTICIPANT,
-                        merge_strategy: MERGE_VALUES_STRATEGIES.OVERRIDE_VALUES,
+                        merge_strategy: MERGE_VALUES_STRATEGIES.APPEND_VALUES,
                         remoteComponent: {
                           id: RemoteComponentList.HPOTree,
                           props: {
