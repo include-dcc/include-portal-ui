@@ -127,7 +127,7 @@
     "@ferlab/eslint-config": "^1.0.1",
     "@testing-library/react": "^14.3.1",
     "@testing-library/user-event": "^13.5.0",
-    "@testquality/cli": "^1.2.3",
+    "@testquality/cli": "^1.2.4",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "@types/react-helmet": "^6.1.11",
