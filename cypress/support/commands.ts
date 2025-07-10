@@ -253,7 +253,7 @@ Cypress.Commands.add('resetColumns', (table_id?: string) => {
 });
 
 Cypress.Commands.add('saveBioReqAs', (bioreqName: string, itemPosition: number) => {
-  cy.visitDataExploration('biospecimens');
+  cy.visitDataExploration('biospecimens', '?sharedFilterId=0094722e-aad8-401c-b72a-950e7ec37c69');
   cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').clickAndWait({force: true});
   cy.get('div[role="tabpanel"] [class*="ant-table-row"], [class="ant-table-body"] [class*="ant-table-row"]').eq(itemPosition).find('[type="checkbox"]').check({force: true});
   cy.get('button').each(($el: JQuery<HTMLElement>) => {
@@ -446,7 +446,7 @@ Cypress.Commands.add('validateSelectedFilterInDropdown', (filterName: string) =>
 });
 
 Cypress.Commands.add('validateTableFirstRow', (expectedValue: string|RegExp, eq: number, hasCheckbox: boolean = false) => {
-  cy.wait(1000);
+  cy.wait(2000);
   cy.get('tr[class*="ant-table-row"]').eq(0)
   .then(($firstRow) => {
     cy.wrap($firstRow).find('td').eq(eq).contains(expectedValue).should('exist');

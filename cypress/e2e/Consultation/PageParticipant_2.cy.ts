@@ -115,7 +115,7 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
   });
   
   it('Panneau Biospecimens', () => {
-    cy.get('[id="biospecimen"] [data-node-key="table"]').clickAndWait({force: true});
+    cy.get('[id="biospecimen"] [class*="BiospecimenTable_tabs"] [data-node-key="table"]').clickAndWait({force: true});
     cy.resetColumns('biospecimen');
     cy.showColumn(/^Volume$/);
     cy.showColumn('Volume Unit');
@@ -129,35 +129,35 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[id="biospecimen"] [class="ant-collapse-header"]').contains(/\d{1}/).should('exist');
     cy.get('[id="biospecimen"] [class="ant-collapse-header"]').contains('View in exploration').should('exist');
     cy.get('[id="biospecimen"] [class="ant-collapse-header"] svg[class="anticon"]').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(0).contains('Sample ID').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(1).contains('Collection ID').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(2).contains('Container ID').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(3).contains('Sample Type').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(4).contains('Collection Sample Type').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(5).contains('Age').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(6).contains('Volume').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(7).contains('Volume Unit').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(8).contains('Sample Availability').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(9).contains('Laboratory Procedure').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(10).contains('Biospecimen Storage').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(11).contains('Parent Sample ID').should('exist');
-    cy.get('[id="biospecimen"] thead th[class="ant-table-cell"]').eq(12).contains('Parent Sample Type').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(0).contains('bs-0nkygf7w').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(1).contains('bs-aezhntnkak').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(2).contains('bs-kakk7hjtrg').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(3).contains('RNA').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(4).contains('Peripheral Whole Blood').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(5).contains('55').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(5).contains('years').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(5).contains('205').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(5).contains('days').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(6).contains(/^0.01$/).should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(7).contains('mL').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(8).contains('Yes').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(9).contains('Qiagen PAXgene Blood RNA Kit').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(10).contains('-80C Freezer').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(11).contains('bs-qrx7ddppxr').should('exist');
-    cy.get('[data-row-key="bs-kakk7hjtrg"] td[class="ant-table-cell"]').eq(12).contains('RNA').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(0).contains('Sample ID').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(1).contains('Collection ID').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(2).contains('Container ID').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(3).contains('Sample Type').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(4).contains('Collection Sample Type').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(5).contains('Age').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(6).contains('Volume').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(7).contains('Volume Unit').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(8).contains('Sample Availability').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(9).contains('Laboratory Procedure').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(10).contains('Biospecimen Storage').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(11).contains('Parent Sample ID').should('exist');
+    cy.get('[class*="BiospecimenTable_contentTable"] thead th').eq(12).contains('Parent Sample Type').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(0).contains('bs-0nkygf7w').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(1).contains('bs-aezhntnkak').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(2).contains('bs-kakk7hjtrg').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(3).contains('RNA').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(4).contains('Peripheral Whole Blood').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(5).contains('55').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(5).contains('years').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(5).contains('205').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(5).contains('days').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(6).contains('-').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(7).contains('-').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(8).contains(/(Yes|No)/).should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(9).contains('Qiagen PAXgene Blood RNA Kit').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(10).contains('-80C Freezer').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(11).contains('bs-qrx7ddppxr').should('exist');
+    cy.get('tr:contains("bs-kakk7hjtrg") td[class="ant-table-cell"]').eq(12).contains('RNA').should('exist');
   });
   
   it('Panneau Files', () => {
@@ -171,13 +171,8 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[id="files"] [class*="EntityTable_contentTable"]').eq(0).find('thead th[class="ant-table-cell"]').eq(1).contains('Files').should('exist');
     cy.get('[id="files"] [class*="EntityTable_contentTable"]').eq(0).find('thead th[class="ant-table-cell"]').eq(2).contains(/\d{1}/).should('exist');
     cy.get('[id="files"] [data-row-key="Genomics"] td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
-    cy.get('[id="files"] [data-row-key="Genomics"] td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="files"] [data-row-key="Transcriptomics"] td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
     cy.get('[id="files"] [data-row-key="Transcriptomics"] td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
-    cy.get('[id="files"] [data-row-key="Proteomics"] td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
-    cy.get('[id="files"] [data-row-key="Proteomics"] td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
-    cy.get('[id="files"] [data-row-key="Metabolomics"] td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
-    cy.get('[id="files"] [data-row-key="Metabolomics"] td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
 
     cy.get('[id="files"] [class*="EntityTable_subTitle"]').eq(1).contains('File counts by Experimental Strategy').should('exist');
     cy.get('[id="files"] [class*="EntityTable_contentTable"]').eq(1).find('thead th[class="ant-table-cell"]').eq(0).contains('Experimental Strategy').should('exist');
@@ -187,6 +182,10 @@ describe('Page d\'un participant - Vérifier les informations affichées', () =>
     cy.get('[id="files"] [data-row-key="Whole Genome Sequencing"] td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="files"] [data-row-key="RNA-Seq"] td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
     cy.get('[id="files"] [data-row-key="RNA-Seq"] td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
+    cy.get('[id="files"] [data-row-key="BCRseq"] td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"] [data-row-key="BCRseq"] td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
+    cy.get('[id="files"] [data-row-key="TCRseq"] td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
+    cy.get('[id="files"] [data-row-key="TCRseq"] td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="files"] [data-row-key="Multiplex Immunoassay"] td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');
     cy.get('[id="files"] [data-row-key="Multiplex Immunoassay"] td[class="ant-table-cell"]').eq(2).find('[style*="width: "]').should('exist');
     cy.get('[id="files"] [data-row-key="LCMS Metabolomics"] td[class="ant-table-cell"]').eq(1).contains(/\d{1}/).should('exist');

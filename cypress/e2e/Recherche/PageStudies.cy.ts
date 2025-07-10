@@ -17,7 +17,7 @@ describe('Page des études - Rechercher des études', () => {
   });
 
   it('Par study name', () => {
-    cy.typeAndIntercept('[class*="PageContent_inputContainer"]', 'SOME', 'POST', '**/graphql', 4);
+    cy.typeAndIntercept('[class*="PageContent_inputContainer"]', 'RISOME', 'POST', '**/graphql', 4);
     cy.validateTableResultsCount(/1 Result/);
     cy.validateTableFirstRow('HTP', 1);
 

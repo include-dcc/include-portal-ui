@@ -9,7 +9,7 @@ beforeEach(() => {
 
   cy.login();
   cy.visitParticipantEntity('pt-as0aepqm');
-  cy.get('[id="biospecimen"] [data-node-key="table"]').clickAndWait({force: true});
+  cy.get('[id="biospecimen"] [class*="BiospecimenTable_tabs"] [data-node-key="table"]').clickAndWait({force: true});
   cy.clickAndIntercept('[id="biospecimen"] [class*="BiospecimenTable"] button[class*="ant-btn-default"]', 'POST', '**/file-manifest', 1, false/*beVisible*/, 1);
   cy.waitUntilFile(oneMinute);
 });
