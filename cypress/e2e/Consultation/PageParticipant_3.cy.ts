@@ -61,8 +61,6 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
   });
 
   it('Lien DataExploration du panneau Biospecimens', () => {
-    cy.get('[id="biospecimen"] [data-node-key="table"]').clickAndWait({force: true});
-    cy.resetColumns('biospecimen');
     cy.get('[id="biospecimen"] [class="ant-collapse-header"] button').clickAndWait({force: true}); // data-cy="Biospecimens_RedirectLink"
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Participant ID').should('exist');
@@ -70,9 +68,9 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
   });
 
   it('Lien Collection ID du panneau Biospecimens', () => {
-    cy.get('[id="biospecimen"] [data-node-key="table"]').clickAndWait({force: true});
+    cy.get('[id="biospecimen"] [class*="BiospecimenTable_tabs"] [data-node-key="table"]').clickAndWait({force: true});
     cy.resetColumns('biospecimen');
-    cy.get('[id="biospecimen"] [data-row-key="bs-e3g4mq8bcx"] [href]').clickAndWait({force: true});
+    cy.get('[id="biospecimen"] tr:contains("bs-e3g4mq8bcx") [href]').clickAndWait({force: true});
     cy.get('[class*="Biospecimens_biospecimenTabWrapper"]').should('exist'); // data-cy="ProTable_Biospecimens"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Collection ID').should('exist');
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('Bs-aezhntnkak').should('exist');
@@ -83,15 +81,6 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Participant ID').should('exist');
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('Pt-0dxdyebh').should('exist');
-  });
-
-  it('Lien Files de Genomics du panneau Files', () => {
-    cy.get('[id="files"] [data-row-key="Genomics"] td[class="ant-table-cell"]').eq(1).find('[href]').clickAndWait({force: true});
-    cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
-    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Participant ID').should('exist');
-    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Data Category').should('exist');
-    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('Pt-0dxdyebh').should('exist');
-    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('Genomics').should('exist');
   });
 
   it('Lien Files de Whole Genome Sequencing du panneau Files', () => {

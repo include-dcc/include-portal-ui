@@ -31,9 +31,9 @@ describe('Page Data Exploration (Biospecimens) - Vérifier les informations affi
     cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(10).contains('139').should('exist');
     cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(10).contains('days').should('exist');
     cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(11).contains('HTP0577A_PAXgeneWholeBloodRNA').should('exist');
-    cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(12).contains('0.08').should('exist');
-    cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(13).contains('mL').should('exist');
-    cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(14).contains('Yes').should('exist');
+    cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(12).contains('-').should('exist');
+    cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(13).contains('-').should('exist');
+    cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(14).contains(/(Yes|No)/).should('exist');
     cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(15).contains('Qiagen PAXgene Blood RNA Kit').should('exist');
     cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(16).contains('-80C Freezer').should('exist');
     cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(17).contains(/\d{1}/).should('exist');

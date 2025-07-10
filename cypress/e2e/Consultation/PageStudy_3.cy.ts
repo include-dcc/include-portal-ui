@@ -76,7 +76,7 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
   });
 
   it('Lien Files de RNA-Seq du panneau Files', () => {
-    cy.get('[id="data_file"] [data-row-key="0"]').eq(1).find('td[class="ant-table-cell"]').eq(1).find('[href]').clickAndWait({force: true});
+    cy.get('[id="data_file"] tr:contains("RNA-Seq") td').eq(1).find('[href]').clickAndWait({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Study Code').should('exist');
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Experimental Strategy').should('exist');

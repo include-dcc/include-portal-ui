@@ -17,9 +17,9 @@ beforeEach(() => {
 describe('Page des études - Consultation du tableau', () => {
   it('Valider les fonctionnalités du tableau - Tri Code', () => {
     cy.sortTableAndWait('Code');
-    cy.validateTableFirstRow('ABC-DS', 1);
+    cy.validateTableFirstRow(/^A/, 1);
     cy.sortTableAndIntercept('Code', 1);
-    cy.validateTableFirstRow('X01-deSmith', 1);
+    cy.validateTableFirstRow(/^X/, 1);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Name', () => {

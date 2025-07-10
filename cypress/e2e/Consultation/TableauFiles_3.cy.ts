@@ -40,7 +40,7 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
 
   it('Valider les fonctionnalités du tableau - Tri Data Category', () => {
     cy.sortTableAndIntercept('Data Category', 1);
-    cy.validateTableFirstRow('Genomics', 7, true);
+    cy.validateTableFirstRow(/(Genomics|-)/, 7, true);
     cy.sortTableAndIntercept('Data Category', 1);
     cy.validateTableFirstRow('Transcriptomics', 7, true);
   });

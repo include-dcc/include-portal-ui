@@ -45,7 +45,7 @@ describe('Page d\'un fichier - Vérifier les informations affichées', () => {
 
   it('Panneau Data Type', () => {
     cy.get('[id="data-type"] [class="ant-descriptions-item-label"]').eq(0).contains('Category').should('exist');
-    cy.get('[id="data-type"] [class="ant-descriptions-item-content"]').eq(0).contains('Genomics').should('exist');
+    cy.get('[id="data-type"] [class="ant-descriptions-item-content"]').eq(0).contains('-').should('exist');
     cy.get('[id="data-type"] [class="ant-descriptions-item-label"]').eq(1).contains('Type').should('exist');
     cy.get('[id="data-type"] [class="ant-descriptions-item-content"]').eq(1).contains('Variant Calls').should('exist');
     cy.get('[id="data-type"] [class="ant-descriptions-item-label"]').eq(2).contains('Experimental Strategy').should('exist');
