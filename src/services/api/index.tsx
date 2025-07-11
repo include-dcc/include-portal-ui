@@ -1,5 +1,5 @@
 import keycloak from 'auth/keycloak-api/keycloak';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosHeaders, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const apiInstance = axios.create();
 
@@ -15,10 +15,8 @@ apiInstance.interceptors.request.use((config) => {
 
   const token = keycloak?.token;
   if (token) {
-    config.headers = {
-      ...(token && { Authorization: `Bearer ${token}` }),
-      ...config.headers,
-    };
+    if (!config.headers) config.headers = {} as AxiosHeaders;
+    config.headers['Authorization'] = `Bearer ${token}`;
   }
 
   return config;

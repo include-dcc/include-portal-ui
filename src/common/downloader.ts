@@ -69,10 +69,10 @@ const downloader = async (opts: AxiosRequestConfig = {}) => {
       try {
         const filenameFromContentDisposition = disposition
           .split(';')
-          .map((part) => part.trim())
+          .map((part: string) => part.trim())
           // Matching the modern format`filename="MyFile.txt"`,
           //  but not the derelict syntax `filename*=utf-8''MyFile.txt`
-          .find((part) => /filename=".*"/i.test(part));
+          .find((part: string) => /filename=".*"/i.test(part));
         // @ts-ignore
         filename = /filename="(.*)"/i.exec(filenameFromContentDisposition)[1];
       } catch (err) {
