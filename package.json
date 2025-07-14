@@ -88,7 +88,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "@upsetjs/react": "^1.11.0",
     "antd": "^4.24.16",
-    "antd-img-crop": "^4.24.0",
+    "antd-img-crop": "^4.25.0",
     "axios": "^0.24.0",
     "classnames": "^2.5.1",
     "d3": "^5.16.0",
