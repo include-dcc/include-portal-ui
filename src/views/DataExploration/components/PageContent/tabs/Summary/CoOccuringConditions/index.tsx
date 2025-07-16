@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import Empty from '@ferlab/ui/core/components/Empty';
+import { updateActiveQueryField } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { TermOperators } from '@ferlab/ui/core/data/sqon/operators';
+import { MERGE_VALUES_STRATEGIES } from '@ferlab/ui/core/data/sqon/types';
 import ResizableGridCard from '@ferlab/ui/core/layout/ResizableGridLayout/ResizableGridCard';
 import { asSets, ISetLike, UpSetJS } from '@upsetjs/react';
+import { INDEXES } from 'graphql/constants';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { isEmpty, throttle } from 'lodash';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
+import { RemoteComponentList } from 'store/remote/types';
 import { useCoOccuringConditions } from 'store/upset';
 import { getResizableGridDictionary } from 'utils/translation';
 
@@ -115,6 +120,12 @@ const CoOccuringConditionsGraphCard = () => {
         png: true,
         tsv: false,
       }}
+      infoPopover={{
+        content: intl.getHTML(
+          'screen.dataExploration.tabs.summary.coOccuringConditions.infoPopover.content',
+        ),
+      }}
+      isResizable={false}
       modalContent={
         <>
           {isEmpty(data) ? (
@@ -191,6 +202,32 @@ const CoOccuringConditionsGraphCard = () => {
                     width={width}
                     height={height}
                     onHover={(s) => setSelection(s)}
+                    onClick={(s: any) => {
+                      const values: string[] = [];
+                      if (s.sets) {
+                        s.sets.forEach((set: any) => {
+                          values.push(set.name);
+                        });
+                      } else {
+                        values.push(s.name);
+                      }
+
+                      updateActiveQueryField({
+                        queryBuilderId: DATA_EXPLORATION_QB_ID,
+                        field: 'observed_phenotype.name',
+                        value: values,
+                        operator: TermOperators.all,
+                        index: INDEXES.PARTICIPANT,
+                        merge_strategy: MERGE_VALUES_STRATEGIES.APPEND_VALUES,
+                        remoteComponent: {
+                          id: RemoteComponentList.HPOTree,
+                          props: {
+                            visible: true,
+                            field: 'observed_phenotype',
+                          },
+                        },
+                      });
+                    }}
                   />
                 ) : (
                   <Empty

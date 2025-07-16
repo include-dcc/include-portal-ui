@@ -1376,6 +1376,10 @@ const en = {
             title: 'Co-occurrence of Top 10 Conditions',
             label: '# of participants',
             empty: 'No co-occurring conditions for this query',
+            infoPopover: {
+              content:
+                'The co-occurrence plot is based on participants annotated with the <strong>exact Phenotype HPO term only</strong>. It does <strong>not include descendant terms</strong> as seen in the Phenotype (HPO) browser that can be opened from the Participant search criteria in the sidebar which leverages the ontology’s hierarchical structure.<br><br>If phenotypes are added to the query bar by clicking on the upset plot bars, the results will <strong>include all the descendant terms of the selected phenotypes</strong> – not just participants annotated with the <strong>exact term</strong> as shown in the plot.',
+            },
           },
           participantsByAge: {
             cardTitle: 'Participants by Age at First Patient Engagement',
