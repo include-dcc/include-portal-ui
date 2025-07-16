@@ -100,6 +100,20 @@ const searchSuggestions = (type: SuggestionType, value: string) =>
     url: `${ARRANGER_API}/${type}Feature/suggestions/${value}`,
   });
 
+const fetchPublicStudy = (studyCode: string) =>
+  sendRequest<any>({
+    method: 'GET',
+    url: `${ARRANGER_API_URL}/public-study/study/${studyCode}`,
+    headers: headers(),
+  });
+
+const fetchPublicStudyGraphs = (studyCode: string) =>
+  sendRequest<any>({
+    method: 'GET',
+    url: `${ARRANGER_API_URL}/public-study/graphs/${studyCode}`,
+    headers: headers(),
+  });
+
 export const ArrangerApi = {
   fetchStatistics,
   fetchStudiesParticipants,
@@ -110,4 +124,6 @@ export const ArrangerApi = {
   columnStates,
   searchSuggestions,
   fetchCoOccuringConditions,
+  fetchPublicStudy,
+  fetchPublicStudyGraphs,
 };

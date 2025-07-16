@@ -3,6 +3,7 @@ import { Button, List, Modal } from 'antd';
 import cx from 'classnames';
 import { ArrangerEdge } from 'graphql/models';
 import { IPublicationDetails } from 'graphql/studies/models';
+import { PublicPublicationDetails } from 'views/PublicStudyEntity/types';
 
 import NoPubMed from '../NoPubMed';
 import PubMed from '../PubMed';
@@ -13,11 +14,19 @@ interface IPubModalProps {
   isOpen: boolean;
   noPubMed?: string[];
   onClose: () => void;
-  pubMed?: ArrangerEdge<IPublicationDetails>[];
+  pubMed?: ArrangerEdge<IPublicationDetails>[] | PublicPublicationDetails[];
   title?: string;
+  isPublic?: boolean;
 }
 
-const PubModal = ({ isOpen, noPubMed, onClose, pubMed, title }: IPubModalProps) => (
+const PubModal = ({
+  isOpen,
+  noPubMed,
+  onClose,
+  pubMed,
+  title,
+  isPublic = false,
+}: IPubModalProps) => (
   <Modal
     closable
     footer={
@@ -30,12 +39,22 @@ const PubModal = ({ isOpen, noPubMed, onClose, pubMed, title }: IPubModalProps) 
     title={`${title} ${intl.get('entities.study.publicationModal.title')}`}
     className={style.modalWrapper}
   >
-    {!!pubMed?.length && (
+    {!isPublic && !!pubMed?.length && (
       <List
-        dataSource={pubMed}
+        dataSource={pubMed as ArrangerEdge<IPublicationDetails>[]}
         renderItem={(pub) => (
           <div className={style.pubMedWrapper}>
             <PubMed publication={pub.node} />
+          </div>
+        )}
+      />
+    )}
+    {isPublic && !!pubMed?.length && (
+      <List
+        dataSource={pubMed as PublicPublicationDetails[]}
+        renderItem={(pub) => (
+          <div className={style.pubMedWrapper}>
+            <PubMed publication={pub} isPublic={true} />
           </div>
         )}
       />

@@ -7,7 +7,7 @@ import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { IStudyDataset } from 'graphql/studies/models';
 import { extractDuoTitleAndCode } from 'views/DataExploration/utils/helper';
 
-type TFlatDataset = {
+export type TFlatDataset = {
   accessLimitations: Set<string>;
   accessRequirements: Set<string>;
 };

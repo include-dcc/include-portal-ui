@@ -4,11 +4,17 @@ import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Tag } from 'antd';
-import { IStudyDataset } from 'graphql/studies/models';
+import { ArrangerResultsTree } from 'graphql/models';
+import { IPublicationDetails, IStudyDataset } from 'graphql/studies/models';
+import { PublicPublicationDetails, PublicStudyDataset } from 'views/PublicStudyEntity/types';
 
 import Publication from 'components/Publication';
+import PublicPublication from 'components/Publication/PublicPublication';
 
-const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[] => {
+const getDatasetDescription = (
+  dataset: IStudyDataset | PublicStudyDataset,
+  isPublic = false,
+): IEntityDescriptionsItem[] => {
   const items: IEntityDescriptionsItem[] = [];
 
   if (dataset.external_dataset_id)
@@ -65,17 +71,40 @@ const getDatasetDescription = (dataset: IStudyDataset): IEntityDescriptionsItem[
       value: dataset.experimental_platform || TABLE_EMPTY_PLACE_HOLDER,
     });
 
-  if (dataset.publications?.length || dataset.publications_details?.hits?.edges?.length)
+  if (
+    !isPublic &&
+    (dataset.publications?.length ||
+      (dataset.publications_details as ArrangerResultsTree<IPublicationDetails>)?.hits?.edges
+        ?.length)
+  ) {
     items.push({
       label: intl.get('entities.study.dataset.publication'),
       value: (
         <Publication
           modalTitle={dataset?.dataset_name}
           publications={dataset?.publications}
-          publications_details={dataset?.publications_details}
+          publications_details={
+            dataset?.publications_details as ArrangerResultsTree<IPublicationDetails>
+          }
         />
       ),
     });
+  } else if (
+    isPublic &&
+    (dataset.publications?.length ||
+      (dataset.publications_details as PublicPublicationDetails[])?.length)
+  ) {
+    items.push({
+      label: intl.get('entities.study.dataset.publication'),
+      value: (
+        <PublicPublication
+          modalTitle={dataset?.dataset_name}
+          publications={dataset?.publications}
+          publications_details={dataset?.publications_details as PublicPublicationDetails[]}
+        />
+      ),
+    });
+  }
 
   if (dataset.access_limitations?.length)
     items.push({

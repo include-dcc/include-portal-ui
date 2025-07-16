@@ -5,7 +5,9 @@ import { CopyOutlined } from '@ant-design/icons';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { Tooltip, Typography } from 'antd';
 import copy from 'copy-to-clipboard';
-import { IPublicationDetails } from 'graphql/studies/models';
+import { ArrangerResultsTree } from 'graphql/models';
+import { IAuthor, IPublicationDetails } from 'graphql/studies/models';
+import { PublicPublicationDetails } from 'views/PublicStudyEntity/types';
 
 import { globalActions } from 'store/global';
 
@@ -14,25 +16,45 @@ import { getTextToCopy } from './utils';
 import style from './index.module.css';
 
 interface PubMedProps {
-  publication: IPublicationDetails;
+  publication: IPublicationDetails | PublicPublicationDetails;
+  isPublic?: boolean;
 }
 
-const PubMed = ({ publication }: PubMedProps): ReactElement => {
+const PubMed = ({ publication, isPublic = false }: PubMedProps): ReactElement => {
   const dispatch = useDispatch();
   return (
     <>
       <span id={publication.PMID}>
-        {publication.authors.hits.edges.length > 0 && (
-          <Typography.Text>
-            {publication.authors.hits.edges[0].node.family},{' '}
-            {publication.authors.hits.edges[0].node.given}
-          </Typography.Text>
-        )}
-        {publication.authors.hits.edges.length > 1 && (
-          <Typography.Text>
-            {' '}
-            {intl.get('entities.study.publicationDetails.authors')}
-          </Typography.Text>
+        {isPublic ? (
+          <>
+            {(publication as PublicPublicationDetails).authors.length > 0 && (
+              <Typography.Text>
+                {(publication.authors as IAuthor[])[0].family},{' '}
+                {(publication.authors as IAuthor[])[0].given}
+              </Typography.Text>
+            )}
+            {(publication.authors as IAuthor[]).length > 1 && (
+              <Typography.Text>
+                {' '}
+                {intl.get('entities.study.publicationDetails.authors')}
+              </Typography.Text>
+            )}
+          </>
+        ) : (
+          <>
+            {(publication.authors as ArrangerResultsTree<IAuthor>).hits.edges.length > 0 && (
+              <Typography.Text>
+                {(publication.authors as ArrangerResultsTree<IAuthor>).hits.edges[0].node.family},{' '}
+                {(publication.authors as ArrangerResultsTree<IAuthor>).hits.edges[0].node.given}
+              </Typography.Text>
+            )}
+            {(publication.authors as ArrangerResultsTree<IAuthor>).hits.edges.length > 1 && (
+              <Typography.Text>
+                {' '}
+                {intl.get('entities.study.publicationDetails.authors')}
+              </Typography.Text>
+            )}
+          </>
         )}
         {publication.title && <Typography.Text> "{publication.title}"</Typography.Text>}
         {publication.container_title_short && (
@@ -70,7 +92,7 @@ const PubMed = ({ publication }: PubMedProps): ReactElement => {
       <Tooltip title={intl.get('entities.study.publicationDetails.copyTooltip')}>
         <a
           onClick={() => {
-            copy(getTextToCopy({ publication }));
+            copy(getTextToCopy({ publication, isPublic }));
             dispatch(
               globalActions.displayMessage({
                 content: intl.get('entities.study.publicationDetails.copyMessage'),

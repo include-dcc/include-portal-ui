@@ -10,13 +10,14 @@ import { Button, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IStudyEntity } from 'graphql/studies/models';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
+import { IPublicStudyEntity } from 'views/PublicStudyEntity/types';
 
 import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from './index.module.css';
 
 interface ISummaryHeaderProps {
-  study?: IStudyEntity;
+  study?: IStudyEntity | IPublicStudyEntity;
   manageLoginModal?: (isOpen: boolean) => void;
   manageRedirectUri?: (uri: string) => void;
   isPublicStudyEnabled?: boolean;
@@ -81,7 +82,7 @@ const SummaryHeader = ({
                     newFilters: [
                       generateValueFilter({
                         field: 'study.study_code',
-                        value: study ? [study.study_code] : [],
+                        value: study?.study_code ? [study.study_code] : [],
                         index: INDEXES.STUDY,
                       }),
                     ],
