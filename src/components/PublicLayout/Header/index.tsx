@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import intl from 'react-intl-universal';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import {
   DotChartOutlined,
   DownOutlined,
@@ -18,6 +18,7 @@ import { REDIRECT_URI_KEY } from 'common/constants';
 import ExternalLinkIcon from 'components/Icons/ExternalLinkIcon';
 import IncludeIcon from 'components/Icons/IncludeIcon';
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
+import HeaderLink from 'components/Layout/Header/HeaderLink';
 import useQueryParams from 'hooks/useQueryParams';
 import { trackPublicStudies, trackVisitResources } from 'services/analytics';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -36,6 +37,8 @@ const Header = () => {
   const { keycloak } = useKeycloak();
   const query = useQueryParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentPathName = location.pathname;
   const [redirectUri, setRedirectUri] = useState<string>();
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const closeLoginModal = () => setOpenLoginModal(false);
@@ -75,10 +78,11 @@ const Header = () => {
               }}
               title={intl.get('layout.main.menu.dashboard')}
             />
-            <HeaderButton
+            <HeaderLink
               key="studies"
+              currentPathName={currentPathName}
+              to={STATIC_ROUTES.PUBLIC_STUDIES}
               icon={<ReadOutlined />}
-              isActive={true}
               title={intl.get('layout.main.menu.studies')}
             />
             <HeaderButton
