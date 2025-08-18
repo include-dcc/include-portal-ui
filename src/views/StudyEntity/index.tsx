@@ -35,10 +35,9 @@ import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { useStudy } from 'graphql/studies/actions';
 import { IStudyDataset } from 'graphql/studies/models';
-import { getEnvVarByKey } from 'helpers/EnvVariables';
 import {
   cavaticaCreateProjectDictionary,
-  getDSConnectDrsItems,
+  getDRSItems,
 } from 'views/Studies/components/PageContent/Guid/utils';
 
 import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
@@ -72,6 +71,7 @@ import { DATA_EXPLORATION_QB_ID } from '../DataExploration/utils/constant';
 import { getFlattenTree, TreeNode } from '../DataExploration/utils/OntologyTree';
 import { PhenotypeStore } from '../DataExploration/utils/PhenotypeStore';
 
+import { hasCavaticaButton } from './utils/cavatica';
 import { getStatisticsDictionary, queryId, SectionId } from './utils/constants';
 import getDataAccessDescriptions, { getFlatDataset } from './utils/dataAccess';
 import getDatasetDescription from './utils/datasets';
@@ -106,6 +106,7 @@ const StudyEntity = () => {
   const [mondoLoading, setMondoLoading] = useState<boolean>(true);
   const [isCavaticaModalOpen, setIsCavaticaModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [cavaticaDatasetId, setCavaticaDatasetId] = useState<string | undefined>(undefined);
 
   const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
 
@@ -623,16 +624,15 @@ const StudyEntity = () => {
                 );
               }
 
-              if (
-                study.study_id === getEnvVarByKey('STUDY_ID_DATASET_CAVATICA') &&
-                (dataset.dataset_id === getEnvVarByKey('STUDY_DATASET_ID_CAVATICA_1') ||
-                  dataset.dataset_id === getEnvVarByKey('STUDY_DATASET_ID_CAVATICA_2'))
-              ) {
+              if (hasCavaticaButton({ study, dataset })) {
                 titleExtra.push(
                   <Button
                     className={style.datasetBtn}
                     icon={<CloudUploadOutlined />}
-                    onClick={(event) => analyzeCavatica(event)}
+                    onClick={(event) => {
+                      analyzeCavatica(event);
+                      setCavaticaDatasetId(dataset.dataset_id);
+                    }}
                     size="small"
                     type="primary"
                   >
@@ -742,10 +742,19 @@ const StudyEntity = () => {
         {isCavaticaModalOpen && (
           <AnalyzeModal
             open={isCavaticaModalOpen}
-            onClose={() => setIsCavaticaModalOpen(false)}
-            handleSubmit={(value: ICavaticaTreeNode) => {
-              dispatch(startImportJob({ drsItems: getDSConnectDrsItems(value), node: value }));
+            onClose={() => {
               setIsCavaticaModalOpen(false);
+              setCavaticaDatasetId(undefined);
+            }}
+            handleSubmit={(value: ICavaticaTreeNode) => {
+              dispatch(
+                startImportJob({
+                  drsItems: getDRSItems(value, study?.study_id, cavaticaDatasetId),
+                  node: value,
+                }),
+              );
+              setIsCavaticaModalOpen(false);
+              setCavaticaDatasetId(undefined);
             }}
             handleFilesAndFolders={CavaticaApi.listFilesAndFolders}
             handleCreateProjectClick={() => {
