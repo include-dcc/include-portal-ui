@@ -1,25 +1,69 @@
+import { Dispatch } from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { CopyOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Space, Tag, Tooltip, Typography } from 'antd';
+import copy from 'copy-to-clipboard';
 import { IStudyEntity } from 'graphql/studies/models';
 import { IPublicStudyEntity } from 'views/PublicStudyEntity/types';
 
 import Publication from 'components/Publication';
 import PublicPublication from 'components/Publication/PublicPublication';
+import { globalActions } from 'store/global';
 import { STATIC_ROUTES } from 'utils/routes';
 
 import styles from '../index.module.css';
 
 const { Text } = Typography;
 
+interface IGetSummaryDescriptions {
+  dispatch: Dispatch<any>;
+  study?: IStudyEntity | IPublicStudyEntity;
+  isPublic?: boolean;
+}
+
+const renderDoiCitation = (doi: { citation?: string; url?: string }, dispatch: Dispatch<any>) => {
+  if (!doi.citation) return TABLE_EMPTY_PLACE_HOLDER;
+
+  const citation = doi.citation;
+  const doiUrlIndex = citation.indexOf('https://doi');
+  const citationSliced = citation.slice(0, doiUrlIndex);
+
+  return (
+    <>
+      <Text>
+        {citationSliced}
+        {doi.url && <ExternalLink href={doi.url}>{doi.url}.</ExternalLink>}
+      </Text>
+      <Tooltip title={intl.get('entities.study.doi.copyTooltip')}>
+        <a
+          onClick={() => {
+            copy(doi.citation || '');
+            dispatch(
+              globalActions.displayMessage({
+                content: intl.get('entities.study.doi.copyMessage'),
+                type: 'success',
+              }),
+            );
+          }}
+          className={styles.copy}
+        >
+          <CopyOutlined />
+        </a>
+      </Tooltip>
+    </>
+  );
+};
+
 // eslint-disable-next-line complexity
-const getSummaryDescriptions = (
-  study?: IStudyEntity | IPublicStudyEntity,
+const getSummaryDescriptions = ({
+  study,
   isPublic = false,
-): IEntityDescriptionsItem[] => {
+  dispatch,
+}: IGetSummaryDescriptions): IEntityDescriptionsItem[] => {
   const institutions = isPublic
     ? [
         ...new Set((study as IPublicStudyEntity)?.contacts?.map((contact) => contact.institution)),
@@ -203,6 +247,13 @@ const getSummaryDescriptions = (
           publications_details={(study as IPublicStudyEntity)?.publications_details}
         />
       ),
+    });
+  }
+
+  if (study?.doi?.citation) {
+    result.push({
+      label: intl.get('entities.study.doi.citation'),
+      value: renderDoiCitation(study.doi, dispatch),
     });
   }
 

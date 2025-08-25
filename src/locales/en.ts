@@ -2234,6 +2234,11 @@ const en = {
         data_type: 'Data Type',
         dbgap: 'dbGaP Accession Number',
         description: 'Description',
+        doi: {
+          label: 'DOI',
+          copyMessage: 'DOI URL copied to clipboard',
+          copyTooltip: 'Copy DOI URL',
+        },
         experimental_platform: 'Experimental Platform',
         experimental_strategy: 'Experimental Strategy',
         external_dataset_id: 'Dataset ID',
@@ -2264,6 +2269,11 @@ const en = {
       dbGaP: 'dbGaP Accession Number',
       dbgap: 'dbGaP',
       description: 'Description',
+      doi: {
+        citation: 'DOI Citation',
+        copyMessage: 'DOI Citation copied to clipboard',
+        copyTooltip: 'Copy DOI Citation',
+      },
       domain: 'Research Domain',
       domains: 'Domain',
       expected_data_categories: 'Data Category',

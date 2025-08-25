@@ -29,6 +29,10 @@ export interface IPublicStudyEntity {
   data_types?: IDataType[];
   datasets?: PublicStudyDataset[];
   description?: string;
+  doi?: {
+    citation?: string;
+    url?: string;
+  };
   domains?: string[];
   expected_data_categories?: string[];
   experimental_strategies?: IExperimentalStrategy[];

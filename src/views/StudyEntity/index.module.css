@@ -35,3 +35,7 @@
 .spotIcon {
   color: var(--blue-3) !important;
 }
+
+.copy {
+  margin-left: 4px;
+}

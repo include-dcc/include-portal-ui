@@ -424,7 +424,7 @@ const StudyEntity = () => {
           id={SectionId.SUMMARY}
           title={intl.get('global.summary')}
           header={intl.get('entities.global.summary')}
-          descriptions={getSummaryDescriptions(study)}
+          descriptions={getSummaryDescriptions({ study, dispatch })}
           loading={loading}
           noDataLabel={intl.get('no.data.available')}
           subheader={<SummaryHeader study={study} />}
@@ -660,7 +660,7 @@ const StudyEntity = () => {
               return (
                 <EntityDataset
                   containerClassName={index != datasetLength - 1 ? style.datasetContainer : ''}
-                  descriptions={getDatasetDescription(dataset)}
+                  descriptions={getDatasetDescription({ dataset, dispatch })}
                   dictionnary={{
                     participants: intl.get('entities.participant.participants'),
                     files: intl.get('entities.file.files'),

@@ -99,6 +99,10 @@ export const GET_STUDY = gql`
             date_collection_end_year
             date_collection_start_year
             description
+            doi {
+              citation
+              url
+            }
             domains
             expected_data_categories
             expected_number_participants
@@ -180,6 +184,7 @@ export const GET_STUDY = gql`
                     data_collection_end_year
                     dbgap
                     description
+                    doi_url
                     expected_data_categories
                     expected_number_of_files
                     expected_number_participants

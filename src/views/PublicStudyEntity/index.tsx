@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import intl from 'react-intl-universal';
+import { useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
@@ -45,6 +46,7 @@ const hasData = (data: unknown[]) => data && data.length > 0;
 
 // eslint-disable-next-line complexity
 const PublicStudyEntity = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const { study_code } = useParams<{ study_code: string }>();
 
@@ -197,7 +199,7 @@ const PublicStudyEntity = () => {
               id={SectionId.SUMMARY}
               title={intl.get('global.summary')}
               header={intl.get('entities.global.summary')}
-              descriptions={getSummaryDescriptions(studyData, true)}
+              descriptions={getSummaryDescriptions({ study: studyData, isPublic: true, dispatch })}
               loading={loadingData}
               noDataLabel={intl.get('no.data.available')}
               subheader={
@@ -369,7 +371,7 @@ const PublicStudyEntity = () => {
                   return (
                     <EntityDataset
                       containerClassName={index != datasetLength - 1 ? style.datasetContainer : ''}
-                      descriptions={getDatasetDescription(dataset, true)}
+                      descriptions={getDatasetDescription({ dataset, isPublic: true, dispatch })}
                       dictionnary={{
                         participants: intl.get('entities.participant.participants'),
                         files: intl.get('entities.file.files'),

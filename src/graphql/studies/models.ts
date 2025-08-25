@@ -16,6 +16,7 @@ export interface IStudyDataset {
   data_collection_start_year?: string;
   dbgap?: string;
   description?: string;
+  doi_url?: string;
   expected_data_categories?: string[];
   expected_number_of_files?: number;
   expected_number_participants?: number;
@@ -90,6 +91,10 @@ export interface IStudyEntity {
   date_collection_end_year?: string;
   date_collection_start_year?: string;
   description?: string;
+  doi?: {
+    citation?: string;
+    url?: string;
+  };
   domains?: string[];
   expected_data_categories?: string[];
   expected_number_participants?: number;
