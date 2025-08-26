@@ -1760,6 +1760,9 @@ const es = {
     person: {
       person_id: 'ID de Persona',
     },
+    maxo: {
+      code: 'Intervention (MAxO)',
+    },
 
     // Muestras biológicas
     biospecimen_type: 'Tipo de Muestra Biológica',
@@ -2050,6 +2053,7 @@ const es = {
       files: 'Archivos',
       hpo_term: 'Término HPO',
       hpo_term_tooltip: '# de participantes con este término HPO exacto',
+      maxo_code: 'Intervención (MAxO)',
       measurement: {
         title: 'Medición',
         type: 'Tipo',

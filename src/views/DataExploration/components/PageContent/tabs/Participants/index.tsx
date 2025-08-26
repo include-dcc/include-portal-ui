@@ -23,6 +23,7 @@ import { ArrangerResultsTree } from 'graphql/models';
 import { useParticipants } from 'graphql/participants/actions';
 import {
   FamilyType,
+  IMaxo,
   IParticipantDiagnosis,
   IParticipantEntity,
   IParticipantObservedPhenotype,
@@ -258,6 +259,40 @@ const getDefaultColumns = (): ProColumnType[] => [
           nOfElementsWhenCollapsed={1}
           dataSource={sourceTexts}
           renderItem={(sourceText, index): React.ReactNode => <div key={index}>{sourceText}</div>}
+        />
+      );
+    },
+  },
+  {
+    key: 'maxo.code',
+    title: intl.get('entities.participant.maxo_code'),
+    defaultHidden: true,
+    render: (participant: IParticipantEntity) => {
+      const maxos: IMaxo[] = participant?.maxo?.hits?.edges?.map((e) => ({ ...e.node })) || [];
+
+      if (maxos.length === 0) {
+        return TABLE_EMPTY_PLACE_HOLDER;
+      }
+
+      return (
+        <ExpandableCell
+          nOfElementsWhenCollapsed={1}
+          dataSource={maxos}
+          renderItem={(maxo, index): React.ReactNode =>
+            maxo.display ? (
+              <div key={index}>
+                {capitalize(maxo.display)} (MAxO:{' '}
+                <ExternalLink
+                  href={`http://purl.obolibrary.org/obo/MAXO_${maxo.code?.slice('MAXO:'.length)}`}
+                >
+                  {maxo.code?.slice('MAXO:'.length)}
+                </ExternalLink>
+                )
+              </div>
+            ) : (
+              TABLE_EMPTY_PLACE_HOLDER
+            )
+          }
         />
       );
     },

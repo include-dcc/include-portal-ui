@@ -110,6 +110,12 @@ export interface IMeasurement {
   fhir_id?: string;
 }
 
+export interface IMaxo {
+  id: string;
+  code: string;
+  display: string;
+}
+
 export interface IParticipantEntity {
   id: string;
   score: number;
@@ -141,6 +147,7 @@ export interface IParticipantEntity {
   age_at_first_patient_engagement?: { value?: number; unit?: string };
   person?: { person_id: string };
   measurements?: ArrangerResultsTree<IMeasurement>;
+  maxo?: ArrangerResultsTree<IMaxo>;
 }
 
 export type ITableParticipantEntity = IParticipantEntity & {
