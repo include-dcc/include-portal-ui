@@ -2,7 +2,7 @@ import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import EntityPage, { EntityDescriptions } from '@ferlab/ui/core/pages/EntityPage';
 import { useParticipantEntity } from 'graphql/participants/actions';
-import { IFamilyRelationToProband } from 'graphql/participants/models';
+import { IFamilyRelationToProband, IMeasurement } from 'graphql/participants/models';
 
 import { getLinks, SectionId } from './utils/anchorLinks';
 import getProfileItems from './utils/getProfileItems';
@@ -11,6 +11,7 @@ import BiospecimenTable from './BiospecimenTable';
 import DiagnosisTable from './DiagnosisTable';
 import FamilyTable from './FamilyTable';
 import FileTable from './FileTable';
+import MeasurementTable from './MeasurementTable';
 import PhenotypeTable from './PhenotypeTable';
 import SummaryHeader from './SummaryHeader';
 import ParticipantEntityTitle from './Title';
@@ -27,6 +28,10 @@ const ParticipantEntity = () => {
   const familyMembers: IFamilyRelationToProband[] =
     participant?.family?.relations_to_proband?.hits?.edges?.map((x) => ({ ...x.node })) || [];
   const showFamilyTable = !loading && familyMembers.length > 0;
+
+  const measurements: IMeasurement[] =
+    participant?.measurements?.hits?.edges?.map((e) => ({ ...e.node })) || [];
+  const showMeasurementTable = !loading && measurements.length > 0;
 
   return (
     <EntityPage
@@ -59,6 +64,8 @@ const ParticipantEntity = () => {
       <DiagnosisTable participant={participant} loading={loading} />
 
       <PhenotypeTable participant={participant} loading={loading} />
+
+      {showMeasurementTable && <MeasurementTable measurements={measurements} loading={loading} />}
 
       <BiospecimenTable participant={participant} loading={loading} />
 

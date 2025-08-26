@@ -91,6 +91,24 @@ export interface IParticipantOutcomes {
   };
 }
 
+export interface IMeasurement {
+  measurement_type?: string;
+  quantity?: {
+    unit?: string;
+    value?: number;
+  };
+  code?: string;
+  effective_date_time?: {
+    value?: number;
+    unit?: string;
+  };
+  display?: string;
+  formatted_term?: string;
+  code_text?: string;
+  url?: string;
+  fhir_id?: string;
+}
+
 export interface IParticipantEntity {
   id: string;
   score: number;
@@ -121,6 +139,7 @@ export interface IParticipantEntity {
   biospecimens: ArrangerResultsTree<IParticipantBiospecimen>;
   age_at_first_patient_engagement?: { value?: number; unit?: string };
   person?: { person_id: string };
+  measurements?: ArrangerResultsTree<any>;
 }
 
 export type ITableParticipantEntity = IParticipantEntity & {

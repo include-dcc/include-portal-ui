@@ -7,6 +7,7 @@ export enum SectionId {
   FAMILY = 'family',
   DIAGNOSIS = 'diagnosis',
   PHENOTYPE = 'phenotype',
+  MEASUREMENT = 'measurement',
   BIOSPECIMEN = 'biospecimen',
   FILES = 'files',
 }
@@ -17,6 +18,10 @@ export const getLinks = (showFamilyTable: boolean): IAnchorLink[] => {
     { href: `#${SectionId.PROFILE}`, title: intl.get('entities.participant.profile') },
     { href: `#${SectionId.DIAGNOSIS}`, title: intl.get('entities.participant.diagnosis') },
     { href: `#${SectionId.PHENOTYPE}`, title: intl.get('entities.participant.phenotype') },
+    {
+      href: `#${SectionId.MEASUREMENT}`,
+      title: intl.get('entities.participant.measurement.title'),
+    },
     {
       href: `#${SectionId.BIOSPECIMEN}`,
       title: intl.get('entities.biospecimen.biospecimen'),

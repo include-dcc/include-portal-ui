@@ -26,8 +26,12 @@ const AgeCell = ({ ageInDays }: OwnProps) => {
           <span className={styles.timeUnitText}>{intl.get('date.years', { years })}</span>
         </>
       )}
-      {` ${days} `}
-      <span className={styles.timeUnitText}>{intl.get('date.days', { days })}</span>{' '}
+      {days != 0 && (
+        <>
+          {` ${days} `}
+          <span className={styles.timeUnitText}>{intl.get('date.days', { days })}</span>
+        </>
+      )}
     </>
   );
 };
