@@ -1,16 +1,22 @@
 /// <reference types="cypress"/>
 import '../../support/commands';
-import { getDateTime, oneMinute } from '../../support/utils';
-
-const { strDate } = getDateTime();
+import { oneMinute } from '../../support/utils';
 
 beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
 
   cy.login();
-  cy.visitDataExploration('datafiles', '?sharedFilterId=75272e84-9a2d-4e0b-b69e-fb9e5df63762');
-  cy.get('div[role="tabpanel"] [class*="ant-table-row"]').eq(0).find('[type="checkbox"]').check({force: true});
-  cy.get('[class*="Header_ProTableHeader"] button[class*="ant-btn-default"]').eq(1).click({force: true});
+  cy.visitDataExplorationFileMock();
+  cy.get('div[role="tabpanel"] [class*="ant-table-row"] [type="checkbox"]').check({force: true});
+
+  cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
+      req.alias = 'postStats';
+      req.reply(mockResponseBody);
+    });
+    cy.get('[class*="Header_ProTableHeader"] button[class*="ant-btn-default"]').eq(1).click({force: true});
+    cy.wait('@postStats');
+  });
 });
 
 describe('Page Data Exploration (Data Files) - Bouton Manifest', () => {
@@ -24,10 +30,10 @@ describe('Page Data Exploration (Data Files) - Bouton Manifest', () => {
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(1).contains('Participants').should('exist');
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(2).contains('Files').should('exist');
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(3).contains('Size').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Gene Fusions"] td').eq(0).contains('Gene Fusions').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Gene Fusions"] td').eq(1).contains(/^1$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Gene Fusions"] td').eq(2).contains(/^1$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Gene Fusions"] td').eq(3).contains(/^708.45 KB$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(0).contains('Unaligned Reads').should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(1).contains(/^1$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(2).contains(/^1$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(3).contains(/^3.13 GB$/).should('exist');
 
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-default"]').contains('Cancel').should('exist');
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').contains('Download').should('exist');
@@ -47,7 +53,22 @@ describe('Page Data Exploration (Data Files) - Bouton Manifest', () => {
   });
 
   it('Valider les fonctionnalités - Bouton Download', () => {
-    cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/file-manifest', 1);
+    cy.fixture('ResponseBody/FileManifestDownload.tsv').then((mockResponseBody) => {
+      cy.intercept('POST', '**/reports/file-manifest', (req) => {
+        req.alias = 'postManifest';
+        req.reply({
+          statusCode: 200,
+          headers: {
+            'content-type': 'text/tab-separated-values',
+            'content-disposition': 'attachment; filename="include_manifest_mock.tsv"'
+          },
+          body: mockResponseBody
+        });
+      });
+      cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').click({force: true});
+      cy.wait('@postManifest');
+    });
+
     cy.get('[class*="DownloadFileManifestModal_modal"]').should('have.css', 'display', 'none');
     cy.waitUntilFile(oneMinute);
     cy.validateFileName('*.tsv');

@@ -23,7 +23,7 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
   it('Search by File ID - HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz', () => {
     cy.get('[class*="SearchLabel_title"]').contains('Search by File ID').should('exist'); //data-cy="SearchLabel_Title"
 
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'htp.htp0577a_frrb192320222-1a_HWHKMDSXX_L1_2.fq.gz', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'htp.htp0577a_frrb192320222-1a_HWHKMDSXX_L1_2.fq.gz', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz').should('exist'); //data-cy="Search_Dropdown"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 

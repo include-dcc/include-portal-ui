@@ -8,8 +8,8 @@ beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
 
   cy.login();
-  cy.visitStudiesPage();
-  cy.typeAndIntercept('[class*="PageContent_inputContainer"]', 'HTP', 'POST', '**/graphql', 6);
+  cy.visitStudiesMock();
+  cy.typeAndIntercept('[class*="PageContent_inputContainer"] input', 'HTP', 'POST', '**/graphql', 6);
   cy.showColumn('Description');
   cy.showColumn('Participant Lifespan');
   cy.showColumn('Data Source');

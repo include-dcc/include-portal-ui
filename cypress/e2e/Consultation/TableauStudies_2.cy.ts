@@ -3,7 +3,7 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitStudiesPage();
+  cy.visitStudiesMock();
   cy.showColumn('Description');
   cy.showColumn('Participant Lifespan');
   cy.showColumn('Data Source');
@@ -23,7 +23,7 @@ describe('Page des études - Valider les liens disponibles', () => {
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(5).invoke('text').then((invokeText) => {
       if (!invokeText.includes('-')) {
         cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(5).find('[href]')
-        .should('have.attr', 'href').and('match', /https:\/\/www\.ncbi\.nlm\.nih\.gov\/projects\/gap\/cgi-bin\/study\.cgi\?study_id\=(phs002330|phs002981)/);
+        .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002981');
       };
     });
   });

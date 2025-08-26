@@ -1,0 +1,19 @@
+{
+    "sqon": {
+        "content": [
+            {
+                "content": {
+                    "field": "file_id",
+                    "index": "file",
+                    "value": [
+                        "HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz"
+                    ]
+                },
+                "op": "in"
+            }
+        ],
+        "id": "5a5e3de6-9076-478e-a8d0-9d3873b2ddbb",
+        "op": "and"
+    },
+    "projectId": "include"
+}

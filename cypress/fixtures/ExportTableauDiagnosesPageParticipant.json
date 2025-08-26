@@ -2,7 +2,7 @@
   "headers": ["Diagnosis (MONDO)",
               "Condition (Source Text)",
               "Age"],
-  "content": ["anxiety (MONDO:0011918)",
-              "Anxiety",
-              "--"]
+  "content": ["hypothyroidism (MONDO:0005420)",
+              "Hypothyroidism",
+              "5000"]
 }

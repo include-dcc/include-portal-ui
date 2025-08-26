@@ -28,11 +28,20 @@ beforeEach(() => {
       "links": []
   },
   }).as('cavaticaProjects');
-
-  cy.visitFileEntity('HTP.ce770763-b904-4c66-8b08-c54dd4e7c7b5.rsem.isoforms.results.gz');
+  cy.visitFileEntityMock();
   cy.wait('@cavaticaAuthenticated');
   cy.wait('@cavaticaProjects');
-  cy.get('button[aria-label="Analyze in Cavatica"]').clickAndWait({force: true});
+
+  cy.fixture('ResponseBody/DataExplorationFile.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.query.includes('searchFiles')) {
+        req.reply(mockResponseBody);
+      };
+    }).as('postGraphql');
+    
+    cy.get('button[aria-label="Analyze in Cavatica"]').clickAndWait({force: true});
+    cy.wait('@postGraphql');
+  });
 });
 
 describe('Page Dashboard - Bouton Analyze in Cavatica (connecté)', () => {

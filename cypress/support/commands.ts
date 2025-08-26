@@ -322,12 +322,13 @@ Cypress.Commands.add('sortTableAndWait', (column: string) => {
 Cypress.Commands.add('typeAndIntercept', (selector: string, text: string, methodHTTP: string, routeMatcher: string, nbCalls: number) => {
   cy.intercept(methodHTTP, routeMatcher).as('getRouteMatcher');
 
-  cy.get(selector).find('input').type(text, {force: true});
+  cy.get(selector).type(text, {force: true});
 
   for (let i = 0; i < nbCalls; i++) {
     cy.wait('@getRouteMatcher', {timeout: oneMinute});
   };
 
+  cy.wait(500);
   cy.waitWhileSpin(oneMinute);
 });
 
@@ -529,19 +530,101 @@ Cypress.Commands.add('visitDataExploration', (tab?: string, sharedFilterOption?:
   };
 });
 
-Cypress.Commands.add('visitFileEntity', (fileId: string) => {
-  cy.visitAndIntercept(`/files/${fileId}`,
-                       'POST',
-                       '**/graphql',
-                       1);
+Cypress.Commands.add('visitDataExplorationBiospecimenMock', () => {
+  cy.fixture('ResponseBody/DataExplorationBiospecimen.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.query.includes('searchBiospecimen')) {
+        req.alias = 'postGraphql';
+        req.reply(mockResponseBody);
+      };
+    });
+    cy.visitDataExploration('biospecimens');
+    cy.wait('@postGraphql');
+  });
+});
+
+Cypress.Commands.add('visitDataExplorationFileMock', () => {
+  cy.fixture('ResponseBody/DataExplorationFile.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.query.includes('searchFiles')) {
+        req.alias = 'postGraphql';
+        req.reply(mockResponseBody);
+      };
+    });
+    cy.visitDataExploration('datafiles');
+    cy.wait('@postGraphql');
+  });
+});
+
+Cypress.Commands.add('visitDataExplorationParticipantMock', () => {
+  cy.fixture('ResponseBody/DataExplorationParticipant.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.query.includes('searchParticipant')) {
+        req.alias = 'postGraphql';
+        req.reply(mockResponseBody);
+      };
+    });
+    cy.visitDataExploration('participants');
+    cy.wait('@postGraphql');
+  });
+});
+
+Cypress.Commands.add('visitFileEntityMock', () => {
+  cy.fixture('ResponseBody/FileEntity.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.query.includes('getFileEntity')) {
+        req.alias = 'postGraphql';
+        req.reply(mockResponseBody);
+      };
+    });
+    cy.visitAndIntercept(`/files/mock`,
+                        'POST',
+                        '**/graphql',
+                        1);
+    cy.wait('@postGraphql');
+  });
 });
 
 Cypress.Commands.add('visitParticipantEntity', (participantId: string, nbCalls?: number) => {
   const numNbCalls = nbCalls !== undefined ? nbCalls : 12;
+  cy.intercept('POST', '**/graphql', (req) => {
+    req.continue();
+  });
   cy.visitAndIntercept(`/participants/${participantId}`,
                        'POST',
                        '**/graphql',
                        numNbCalls);
+});
+
+Cypress.Commands.add('visitParticipantEntityMock', () => {
+  cy.fixture('ResponseBody/ParticipantEntity.json').then((mockResponsePartBody) => {
+    cy.fixture('ResponseBody/BiospecimenTree.json').then((mockResponseTreeBody) => {
+      cy.fixture('ResponseBody/DSStatus.json').then((mockResponseDSStatusBody) => {
+        cy.intercept('POST', '**/graphql', (req) => {
+          if (req.body.query.includes('getParticipantEntity')) {
+            req.alias = 'postPartGraphql';
+            req.reply(mockResponsePartBody);
+          };
+        });
+        cy.intercept('POST', '**/graphql', (req) => {
+          if (req.body.query.includes('getHierarchicalBiospecimen')) {
+            req.alias = 'postTreeGraphql';
+            req.reply(mockResponseTreeBody);
+          };
+        });
+        cy.intercept('POST', '**/graphql', (req) => {
+          if (req.body.query.includes('getParticipantDownSyndromeStatus')) {
+            req.alias = 'postDSStatusGraphql';
+            req.reply(mockResponseDSStatusBody);
+          };
+        });
+        cy.visit('/participants/mock');
+        cy.wait('@postPartGraphql');
+        cy.wait('@postTreeGraphql');
+        cy.wait('@postDSStatusGraphql');
+      });
+    });
+  });
 });
 
 Cypress.Commands.add('visitProfileSettingsPage', () => {
@@ -562,6 +645,38 @@ Cypress.Commands.add('visitStudyEntity', (studyId: string, nbCalls: number) => {
                        'POST',
                        '**/graphql',
                        nbCalls);
+});
+
+Cypress.Commands.add('visitStudyEntityMock', () => {
+  cy.fixture('ResponseBody/StudyEntity.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.query.includes('getStudy')) {
+        req.alias = 'postGraphql';
+        req.reply(mockResponseBody);
+      };
+    });
+    cy.visitStudyEntity('mock', 0);
+    cy.wait('@postGraphql');
+  });
+});
+
+Cypress.Commands.add('visitStudiesMock', () => {
+  cy.fixture('ResponseBody/StudyEntity.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/graphql', (req) => {
+      if (req.body.query.includes('getStudies')) {
+        req.alias = 'postGraphql';
+        req.reply(mockResponseBody);
+      };
+    });
+    cy.visit('/studies');
+    cy.wait('@postGraphql');
+  });
+  cy.get('[class*="Header_ProTableHeader"] button').then(($button) => {
+    if ($button.hasClass('Header_clearFilterLink')) {
+      cy.get(`button[class*="Header_clearFilterLink"]`).clickAndWait({force: true});
+      };
+    });
+  cy.resetColumns();
 });
 
 Cypress.Commands.add('visitStudiesPage', () => {

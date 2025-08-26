@@ -3,7 +3,7 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitParticipantEntity('pt-0dxdyebh');
+  cy.visitParticipantEntityMock();
   cy.get('[id="biospecimen"] [class*="BiospecimenTable_tabs"] [data-node-key="table"]').clickAndWait({force: true});
   cy.resetColumns('biospecimen');
 });

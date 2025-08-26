@@ -10,6 +10,7 @@ beforeEach(() => {
   cy.showColumn('External Participant ID');
   cy.showColumn('Family Unit');
   cy.showColumn('Condition (Source Text)');
+  cy.showColumn('Intervention (MAxO)');
 });
 
 describe('Page Data Exploration (Participants) - Valider les fonctionnalités du tableau', () => {
@@ -27,9 +28,9 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
     cy.validateTableFirstRow(/^(?!-).*$/, 2, true);
   });
 
-  it('Valider les fonctionnalités du tableau - Tri DS Status', () => {
+  it('Valider les fonctionnalités du tableau - Tri DS Status [SJIP-1435]', () => {
     cy.sortTableAndIntercept('DS Status', 1);
-    cy.validateTableFirstRow('D21', 4, true);
+    cy.validateTableFirstRow('-', 4, true);
     cy.sortTableAndIntercept('DS Status', 1);
     cy.validateTableFirstRow('T21', 4, true);
   });
@@ -71,16 +72,16 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Biospecimens', () => {
     cy.sortTableAndIntercept('Biospecimens', 1);
-    cy.validateTableFirstRow(/\d{1}/, 14, true);
+    cy.validateTableFirstRow(/\d{1}/, 15, true);
     cy.sortTableAndIntercept('Biospecimens', 1);
-    cy.validateTableFirstRow(/\d{1}/, 14, true);
+    cy.validateTableFirstRow(/\d{1}/, 15, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri Files', () => {
     cy.sortTableAndWait('Files');
-    cy.validateTableFirstRow(/\d{1}/, 15, true);
+    cy.validateTableFirstRow(/\d{1}/, 16, true);
     cy.sortTableAndWait('Files');
-    cy.validateTableFirstRow(/\d{1}/, 15, true);
+    cy.validateTableFirstRow(/\d{1}/, 16, true);
   });
 
   it('Valider les fonctionnalités du tableau - Tri multiple', () => {

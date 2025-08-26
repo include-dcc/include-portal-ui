@@ -1,0 +1,81 @@
+{
+    "data": {
+        "file": {
+            "hits": {
+                "edges": [
+                    {
+                        "node": {
+                            "id": "dp664ZgBsTnisjdbJ9xo",
+                            "access_urls": "drs://data.kidsfirstdrc.org/ac7eec60-b1aa-4f10-ae32-bca5f5de23c9",
+                            "participants": {
+                                "hits": {
+                                    "total": 1,
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "biospecimens": {
+                                                    "hits": {
+                                                        "total": 1,
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "sample_id": "bs-03ynynfs",
+                                                                    "sample_type": "RNA",
+                                                                    "collection_sample_id": "bs-m623h3mrgg",
+                                                                    "collection_sample_type": "Peripheral Whole Blood"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "down_syndrome_status": "T21",
+                                                "participant_id": "pt-as0aepqm",
+                                                "study": {
+                                                    "study_code": "HTP",
+                                                    "external_id": "phs002981"
+                                                },
+                                                "study_id": "HTP"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "controlled_access": "Registered",
+                            "data_category": "Transcriptomics",
+                            "data_type": "Unaligned Reads",
+                            "dataset_names": [
+                                "HTP Whole Blood RNAseq (2020)"
+                            ],
+                            "file_id": "HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz",
+                            "file_name": "HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz",
+                            "file_format": "fastq",
+                            "hashes": {
+                                "etag": null
+                            },
+                            "nb_biospecimens": 1,
+                            "nb_participants": 1,
+                            "sequencing_experiment": {
+                                "hits": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "experiment_strategy": "RNA-Seq"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "size": 3128354249,
+                            "study": {
+                                "external_id": "phs002981",
+                                "study_code": "HTP",
+                                "study_id": "HTP",
+                                "study_name": "The Human Trisome Project"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

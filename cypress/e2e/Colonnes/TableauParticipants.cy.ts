@@ -3,7 +3,7 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitDataExploration('participants');
+  cy.visitDataExplorationParticipantMock();
 });
 
 describe('Page Data Exploration (Participants) - Colonnes du tableau', () => {
@@ -68,6 +68,12 @@ describe('Page Data Exploration (Participants) - Colonnes du tableau', () => {
     cy.get('div[class="ant-popover-inner"]')
       .find('div[class="ant-space-item"]').eq(11)
       .contains('Condition (Source Text)').should('exist');
+  
+    cy.get('thead[class="ant-table-thead"]')
+      .contains('Intervention (MAxO)').should('not.exist');
+    cy.get('div[class="ant-popover-inner"]')
+      .find('div[class="ant-space-item"]').eq(12)
+      .contains('Intervention (MAxO)').should('exist');
 
     cy.get('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(6)

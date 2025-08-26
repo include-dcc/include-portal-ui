@@ -1,29 +1,51 @@
 /// <reference types="cypress"/>
 import '../../support/commands';
-import { getDateTime, oneMinute } from '../../support/utils';
-
-const { strDate } = getDateTime();
+import { oneMinute } from '../../support/utils';
 
 beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
 
   cy.login();
-  cy.visitFileEntity('HTP.ce770763-b904-4c66-8b08-c54dd4e7c7b5.arriba.fusions.pdf');
-  cy.get('[class*="EntityTitle"] button[class*="ant-btn-default"]').click({force: true});
-  cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/file-manifest', 1);
+  cy.visitFileEntityMock();
+
+  cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
+      req.alias = 'postStats';
+      req.reply(mockResponseBody);
+    });
+    cy.get('[class*="EntityTitle"] button[class*="ant-btn-default"]').click({force: true});
+    cy.wait('@postStats');
+  });
+
+  cy.fixture('ResponseBody/FileManifestDownload.tsv').then((mockResponseBody) => {
+    cy.intercept('POST', '**/reports/file-manifest', (req) => {
+      req.alias = 'postManifest';
+      req.reply({
+        statusCode: 200,
+        headers: {
+          'content-type': 'text/tab-separated-values',
+          'content-disposition': 'attachment; filename="include_manifest_mock.tsv"'
+        },
+        body: mockResponseBody
+      });
+    });
+    cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').click({force: true});
+    cy.wait('@postManifest');
+  });
+  
   cy.waitUntilFile(oneMinute);
 });
 
 describe('Page d\'un fichier - Télécharger le manifest', () => {
   it('Valider le nom du fichier', () => {
-    cy.validateFileName('include_manifest_'+`${strDate.slice(0, 4)}${strDate.slice(4, 6)}${strDate.slice(6, 8)}`+'T*.tsv');
+    cy.validateFileName('include_manifest_mock.tsv');
   });
 
   it('Valider les en-têtes du fichier', () => {
-    cy.validateFileHeaders('DownloadManifest.json');
+    cy.validateFileHeaders('DownloadManifestMock.json');
   });
 
-  it('Valider le contenu du fichier [SJIP-967]', () => {
-    cy.validateFileContent('DownloadManifest.json');
+  it('Valider le contenu du fichier', () => {
+    cy.validateFileContent('DownloadManifestMock.json');
   });
 });

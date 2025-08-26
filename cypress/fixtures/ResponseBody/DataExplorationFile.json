@@ -1,0 +1,159 @@
+{
+    "data": {
+        "file": {
+            "hits": {
+                "total": 1,
+                "edges": [
+                    {
+                        "searchAfter": [
+                            "htp.htp0577a_frrb192320222-1a_hwhkmdsxx_l1_1.fq.gz"
+                        ],
+                        "node": {
+                            "id": "vZ674ZgBsTnisjdbtu-_",
+                            "fhir_id": "203631",
+                            "file_id": "HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz",
+                            "external_id": "drs://data.kidsfirstdrc.org/1cd34bd9-d780-47f4-907e-0f04be67ef68",
+                            "data_category": "Transcriptomics",
+                            "data_type": "Unaligned Reads",
+                            "dataset_names": [
+                                "HTP Whole Blood RNAseq (2020)"
+                            ],
+                            "file_format": "fastq",
+                            "size": 3128354249,
+                            "controlled_access": "Registered",
+                            "access_urls": "drs://data.kidsfirstdrc.org/1cd34bd9-d780-47f4-907e-0f04be67ef68",
+                            "acl": [],
+                            "file_name": "HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz",
+                            "repository": "gen3",
+                            "nb_participants": 1,
+                            "nb_biospecimens": 1,
+                            "fhir_document_reference": "https://include-api-fhir-service-upgrade-qa.includedcc.org/DocumentReference?identifier=HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz",
+                            "index": null,
+                            "study": {
+                                "study_id": "HTP",
+                                "study_code": "HTP",
+                                "study_name": "The Human Trisome Project",
+                                "program": "INCLUDE"
+                            },
+                            "sequencing_experiment": {
+                                "hits": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "experiment_strategy": "RNA-Seq"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "participants": {
+                                "hits": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "participant_id": "pt-as0aepqm",
+                                                "down_syndrome_status": "T21",
+                                                "external_id": "HTP0577",
+                                                "ethnicity": "Not Hispanic or Latino",
+                                                "sex": "female",
+                                                "race": "White",
+                                                "families_id": "F0441",
+                                                "family_type": "proband-only",
+                                                "family": {
+                                                    "relations_to_proband": {
+                                                        "hits": {
+                                                            "edges": [
+                                                                {
+                                                                    "node": {
+                                                                        "role": "Proband"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "diagnosis": {
+                                                    "hits": {
+                                                        "total": 2,
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "mondo_display_term": "hypothyroidism (MONDO:0005420)",
+                                                                    "source_text": "Hypothyroidism",
+                                                                    "age_at_event_days": null
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "mondo_display_term": "congenital heart disease (MONDO:0005453)",
+                                                                    "source_text": "Congenital heart defect (CHD) - any",
+                                                                    "age_at_event_days": null
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "outcomes": {
+                                                    "hits": {
+                                                        "total": 0,
+                                                        "edges": []
+                                                    }
+                                                },
+                                                "phenotype": {
+                                                    "hits": {
+                                                        "total": 2,
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "age_at_event_days": null,
+                                                                    "hpo_phenotype_observed": "Atrial septal defect (HP:0001631)"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "age_at_event_days": null,
+                                                                    "hpo_phenotype_observed": "Abnormal heart morphology (HP:0001627)"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "biospecimens": {
+                                                    "hits": {
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "external_parent_sample_id": "HTP0577A_PAXgeneWholeBloodRNATube",
+                                                                    "external_collection_sample_id": "HTP0577A_WholeBlood",
+                                                                    "external_container_id": "1042478",
+                                                                    "sample_id": "bs-03ynynfs",
+                                                                    "sample_type": "RNA",
+                                                                    "external_sample_id": "HTP0577A_PAXgeneWholeBloodRNA",
+                                                                    "collection_sample_type": "Peripheral Whole Blood",
+                                                                    "age_at_biospecimen_collection": 10366,
+                                                                    "collection_sample_id": "bs-m623h3mrgg",
+                                                                    "parent_sample_id": "bs-3m4a3fy3zm",
+                                                                    "parent_sample_type": "RNA",
+                                                                    "biospecimen_storage": "-80C Freezer",
+                                                                    "container_id": "bs-ag3azt3gmq",
+                                                                    "volume": null,
+                                                                    "volume_unit": null,
+                                                                    "laboratory_procedure": "Qiagen PAXgene Blood RNA Kit",
+                                                                    "status": "unavailable"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

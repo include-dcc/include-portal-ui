@@ -6,7 +6,7 @@ const { strDate } = getDateTime();
 beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
   cy.login();
-  cy.visitFileEntity('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz');
+  cy.visitFileEntityMock();
   cy.resetColumns('participant-sample');
   cy.get('div[id="content"] svg[data-icon="download"]').eq(1).clickAndWait({force:true});
   cy.waitUntilFile(oneMinute);
@@ -17,11 +17,13 @@ describe('Page d\'un fichier - Exporter le tableau Participants-Samples en TSV',
     cy.validateFileName('include-participants-samples-table-'+`${strDate.slice(0, 4)}-${strDate.slice(4, 6)}-${strDate.slice(6, 8)}`+'.tsv');
   });
 
-  it('Valider les en-têtes du fichier', () => {
-    cy.validateFileHeaders('ExportTableauParticipantsPageFile.json');
-  });
-
   it('Valider le contenu du fichier', () => {
-    cy.validateFileContent('ExportTableauParticipantsPageFile.json');
+    cy.fixture('ExportTableauParticipantsPageFile.tsv').then((expectedContent) => {
+      cy.exec(`/bin/ls ${Cypress.config('downloadsFolder')}/*`).then((result) => {
+        cy.readFile(result.stdout.trim()).then((actualContent) => {
+          expect(actualContent.trim()).to.equal(expectedContent.trim());
+        });
+      });
+    });
   });
 });

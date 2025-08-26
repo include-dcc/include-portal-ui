@@ -3,7 +3,7 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitDataExploration('participants');
+  cy.visitDataExplorationParticipantMock();
   cy.get('[id="query-builder-header-tools"] [data-icon="plus"]').clickAndWait({force: true});
   cy.createFilterIfNotExists('Cypress_F2');
 });

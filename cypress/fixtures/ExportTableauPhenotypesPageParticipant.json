@@ -2,7 +2,7 @@
   "headers": ["Phenotype (HPO)",
               "Condition (Source Text)",
               "Age"],
-  "content": ["Anxiety (HP:0000739)",
-              "Anxiety",
-              "--"]
+  "content": ["Atrial septal defect (HP:0001631)",
+              "Atrial septal defect (ASD)",
+              "500"]
 }
