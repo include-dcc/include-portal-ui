@@ -6,10 +6,10 @@ const { strDate } = getDateTime();
 beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
   cy.login();
-  cy.visitParticipantEntity('pt-0dxdyebh');
+  cy.visitParticipantEntityMock();
   cy.get('[id="biospecimen"] [class*="BiospecimenTable_tabs"] [data-node-key="table"]').clickAndWait({force: true});
   cy.resetColumns('biospecimen');
-  cy.get('div[id="content"] svg[data-icon="download"]').eq(5).clickAndWait({force:true});
+  cy.get('div[id="content"] svg[data-icon="download"]').eq(6).clickAndWait({force:true});
   cy.waitUntilFile(oneMinute);
 });
 

@@ -1,0 +1,642 @@
+{
+    "data": {
+        "study": {
+            "hits": {
+                "total": 1,
+                "edges": [
+                    {
+                        "node": {
+                            "id": "4LW14ZgBpGSP7kO2mC8U",
+                            "study_id": "HTP",
+                            "study_code": "HTP",
+                            "study_name": "The Human Trisome Project",
+                            "acknowledgement": "Acknowledgement",
+                            "biobank_contact": "dsresearch@cuanschutz.edu",
+                            "biobank_request_link": "https://redcap.link/HTPVBRrequest",
+                            "biospecimen_count": 58049,
+                            "citation_statement": "Citation Statement",
+                            "contacts": {
+                                "hits": {
+                                    "total": 2,
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "email": "dsresearch@cuanschutz.edu",
+                                                "institution": "Linda Crnic Institute for Down Syndrome",
+                                                "name": "Virtual Biorepository Contact"
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "email": "dsresearch@cuanschutz.edu",
+                                                "institution": "Linda Crnic Institute for Down Syndrome",
+                                                "name": "Angela Rachubinski"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "controlled_access": [
+                                "Controlled",
+                                "Registered"
+                            ],
+                            "data_types": {
+                                "hits": {
+                                    "total": 11,
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "data_type": "Preprocessed metabolite relative abundance",
+                                                "file_count": 418
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_type": "Gene Expression Quantifications",
+                                                "file_count": 2865
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_type": "Protein abundance (absolute protein concentration)",
+                                                "file_count": 477
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_type": "Aligned Reads",
+                                                "file_count": 1033
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_type": "Read Pairs",
+                                                "file_count": 1
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_type": "Variant Calls",
+                                                "file_count": 438
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_type": "Assay Metadata",
+                                                "file_count": 1
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_type": "Gene Fusions",
+                                                "file_count": 2865
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_type": "Other",
+                                                "file_count": 7
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_type": "Unaligned Reads",
+                                                "file_count": 3184
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_type": "gVCF",
+                                                "file_count": 464
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "date_collection_end_year": "2025",
+                            "date_collection_start_year": "2016",
+                            "description": "The Human Trisome Project (HTP) is a large and comprehensive natural history study of Down syndrome involving collection of deep clinical data, multimodal phenotyping, a multi-dimensional biobank, generation of pan-omics datasets, and rapid release of data. The HTP has enabled many discoveries about the pathophysiology of Down syndrome, leading to new clinical trials testing  therapies to improve diverse health outcomes in this population. This study is supported by the Linda Crnic Institute for Down Syndrome and the Global Down Syndrome Foundation.",
+                            "doi": {
+                                "citation": "Espinosa J. The Human Trisome Project [Internet]. The INCLUDE Data Coordinating Center; 2022. https://doi.org/10.71738/p0a9-2v09.",
+                                "url": "https://doi.org/10.71738/p0a9-2v09"
+                            },
+                            "domains": [
+                                "All Co-occurring Conditions"
+                            ],
+                            "expected_data_categories": [
+                                "Imaging",
+                                "Harmonized Demographic/Clinical Data",
+                                "Genomics",
+                                "Proteomics",
+                                "Metabolomics",
+                                "Transcriptomics",
+                                "Unharmonized Demographic/Clinical Data",
+                                "Microbiome"
+                            ],
+                            "expected_number_participants": 500,
+                            "experimental_strategies": {
+                                "hits": {
+                                    "total": 6,
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "experimental_strategy": "TCRseq",
+                                                "file_count": 1180
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "experimental_strategy": "RNA-Seq",
+                                                "file_count": 7099
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "experimental_strategy": "Whole Genome Sequencing",
+                                                "file_count": 1373
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "experimental_strategy": "Multiplex Immunoassay",
+                                                "file_count": 477
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "experimental_strategy": "LCMS Metabolomics",
+                                                "file_count": 418
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "experimental_strategy": "BCRseq",
+                                                "file_count": 1204
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "external_id": "phs002981",
+                            "external_ids": [
+                                "phs002981",
+                                "phs002330"
+                            ],
+                            "file_count": 11753,
+                            "guid": "NDAR",
+                            "institutions": "Linda Crnic Institute for Down Syndrome",
+                            "investigator_names": ["Joaquin M. Espinosa"],
+                            "is_guid_mapped": true,
+                            "is_harmonized": true,
+                            "part_lifespan_stages": [
+                                "Adult",
+                                "Pediatric"
+                            ],
+                            "participant_count": 1225,
+                            "program": "INCLUDE",
+                            "publications": [
+                                "https://pubmed.ncbi.nlm.nih.gov/37379383/",
+                                "https://pubmed.ncbi.nlm.nih.gov/37360690"
+                            ],
+                            "publications_details": {
+                                "hits": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "authors": {
+                                                    "hits": {
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "family": "Rachubinski",
+                                                                    "given": "Angela L"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Wallace",
+                                                                    "given": "Elizabeth"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "DOI": "10.7554/eLife.99323",
+                                                "ISSN": "2050-084X",
+                                                "PMCID": "PMC11687933",
+                                                "PMID": "39737640",
+                                                "accessed_date_parts": [
+                                                    2025,
+                                                    8,
+                                                    25
+                                                ],
+                                                "container_title": "eLife",
+                                                "container_title_short": "Elife",
+                                                "issue": "25",
+                                                "issued_date_parts": [
+                                                    2024,
+                                                    12,
+                                                    31
+                                                ],
+                                                "page": "RP99323",
+                                                "pubmed_id": "pmid:39737640",
+                                                "source": "PubMed",
+                                                "title": "JAK inhibition decreases the autoimmune burden in Down syndrome",
+                                                "volume": "13"
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "authors": {
+                                                    "hits": {
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "family": "Donovan",
+                                                                    "given": "Micah G"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Eduthan",
+                                                                    "given": "Neetha P"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Smith",
+                                                                    "given": "Keith P"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Britton",
+                                                                    "given": "Eleanor C"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Lyford",
+                                                                    "given": "Hannah R"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Araya",
+                                                                    "given": "Paula"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Granrath",
+                                                                    "given": "Ross E"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Waugh",
+                                                                    "given": "Katherine A"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Enriquez Estrada",
+                                                                    "given": "Belinda"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Rachubinski",
+                                                                    "given": "Angela L"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Sullivan",
+                                                                    "given": "Kelly D"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Galbraith",
+                                                                    "given": "Matthew D"
+                                                                }
+                                                            },
+                                                            {
+                                                                "node": {
+                                                                    "family": "Espinosa",
+                                                                    "given": "Joaquin M"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "DOI": "10.1038/s41467-024-49781-1",
+                                                "ISSN": "2041-1723",
+                                                "PMCID": "PMC11213896",
+                                                "PMID": "38942750",
+                                                "accessed_date_parts": [
+                                                    2025,
+                                                    8,
+                                                    25
+                                                ],
+                                                "container_title": "Nature communications",
+                                                "container_title_short": "Nat Commun",
+                                                "issue": "1",
+                                                "issued_date_parts": [
+                                                    2024,
+                                                    6,
+                                                    28
+                                                ],
+                                                "page": "5473",
+                                                "pubmed_id": "pmid:38942750",
+                                                "source": "PubMed",
+                                                "title": "Variegated overexpression of chromosome 21 genes reveals molecular and immune subtypes of Down syndrome",
+                                                "volume": "15"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "selection_criteria": [
+                                "Ages 6 months to 89 years old, with or without Down syndrome"
+                            ],
+                            "study_designs": [
+                                "Case-Control",
+                                "longitudinal"
+                            ],
+                            "study_meta_categories": [],
+                            "website": "https://www.trisome.org/",
+                            "data_category": [
+                                "Transcriptomics"
+                            ],
+                            "data_sources": [
+                                "Investigator Assessment",
+                                "Medical Record",
+                                "Participant or Caregiver Report"
+                            ],
+                            "datasets": {
+                                "hits": {
+                                    "total": 3,
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "access_limitations": [
+                                                    "general research use (DUO:0000042)"
+                                                ],
+                                                "access_requirements": [
+                                                    "genetic studies only (DUO:0000016)"],
+                                                "data_categories": [
+                                                    "Genomics"
+                                                ],
+                                                "data_types": [
+                                                    "Aligned Reads",
+                                                    "Annotated Variant Call",
+                                                    "Genomic Variant"
+                                                ],
+                                                "dataset_id": "HTP-WGS-2021-X01",
+                                                "dataset_name": "HTP WGS (2021 X01)",
+                                                "data_collection_start_year": "2021",
+                                                "data_collection_end_year": "2025",
+                                                "dbgap": "phs002981",
+                                                "description": "Analysis of whole genome (detection of single nucleotide variant, insertions/deletions, copy number changes) in whole blood of euploid controls and participants with trisomy 21",
+                                                "doi_url": "https://doi.org/10.71738/p0a9-2v09",
+                                                "expected_data_categories": [
+                                                    "Imaging",
+                                                    "Harmonized Demographic/Clinical Data",
+                                                    "Genomics",
+                                                    "Proteomics",
+                                                    "Metabolomics",
+                                                    "Transcriptomics",
+                                                    "Unharmonized Demographic/Clinical Data",
+                                                    "Microbiome"
+                                                ],
+                                                "expected_number_of_files": "57",
+                                                "expected_number_participants": 19,
+                                                "experimental_platform": "Illumina",
+                                                "experimental_strategy": "WGS",
+                                                "external_dataset_id": "HTP-WGS-2021-X01",
+                                                "is_harmonized": true,
+                                                "publications": [],
+                                                "publications_details": "publications_details"
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "access_limitations": [
+                                                    "general research use (DUO:0000042)"
+                                                ],
+                                                "access_requirements": [],
+                                                "data_categories": [
+                                                    "Proteomics"
+                                                ],
+                                                "data_types": [
+                                                    "Preprocessed protein relative abundance"
+                                                ],
+                                                "dataset_id": "HTP-SomaScan-2020",
+                                                "dataset_name": "HTP Plasma SomaScan Proteomics (2020)",
+                                                "data_collection_start_year": "2016",
+                                                "data_collection_end_year": "2020",
+                                                "dbgap": "phs002981",
+                                                "description": "Analysis of plasma proteome of euploid controls and participants with trisomy 21",
+                                                "doi_url": "https://doi.org/10.71738/p0a9-2v09",
+                                                "expected_data_categories": [
+                                                    "Imaging",
+                                                    "Harmonized Demographic/Clinical Data",
+                                                    "Genomics",
+                                                    "Proteomics",
+                                                    "Metabolomics",
+                                                    "Transcriptomics",
+                                                    "Unharmonized Demographic/Clinical Data",
+                                                    "Microbiome"
+                                                ],
+                                                "expected_number_of_files": "419",
+                                                "expected_number_participants": 419,
+                                                "experimental_platform": "SomaScan",
+                                                "experimental_strategy": "Plasma proteomics",
+                                                "external_dataset_id": "HTP-SomaScan-2020",
+                                                "is_harmonized": false,
+                                                "publications": [
+                                                    "https://pubmed.ncbi.nlm.nih.gov/37379383/"
+                                                ],
+                                                "publications_details": "publications_details"
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "access_limitations": [
+                                                    "general research use (DUO:0000042)"
+                                                ],
+                                                "access_requirements": [],
+                                                "data_categories": [
+                                                    "Transcriptomics"
+                                                ],
+                                                "data_types": [
+                                                    "Alternative Splicing",
+                                                    "Chimeric Aligned Reads",
+                                                    "Gene Expression Count",
+                                                    "Aligned Reads",
+                                                    "Raw Gene",
+                                                    "RNAseq Alignment Metrics Fusion",
+                                                    "Splice Junction"
+                                                ],
+                                                "dataset_id": "HTP-RNAseq-WholeBlood-2020",
+                                                "dataset_name": "HTP Whole Blood RNAseq (2020)",
+                                                "data_collection_start_year": "2016",
+                                                "data_collection_end_year": "2020",
+                                                "dbgap": "phs002330",
+                                                "description": "Analysis of steady-state mRNA levels in whole blood of euploid controls and participants with trisomy 21",
+                                                "doi_url": "https://doi.org/10.71738/n9tr-ba81",
+                                                "expected_data_categories": [
+                                                    "Imaging",
+                                                    "Harmonized Demographic/Clinical Data",
+                                                    "Genomics",
+                                                    "Proteomics",
+                                                    "Metabolomics",
+                                                    "Transcriptomics",
+                                                    "Unharmonized Demographic/Clinical Data",
+                                                    "Microbiome"
+                                                ],
+                                                "expected_number_of_files": "11199",
+                                                "expected_number_participants": 400,
+                                                "experimental_platform": "Illumina NovaSeq 6000",
+                                                "experimental_strategy": "Bulk RNA-Seq",
+                                                "external_dataset_id": "HTP-RNAseq-WholeBlood-2020",
+                                                "is_harmonized": true,
+                                                "publications": [
+                                                    "https://pubmed.ncbi.nlm.nih.gov/37379383|https://pubmed.ncbi.nlm.nih.gov/39737640"
+                                                ],
+                                                "publications_details": {
+                                                    "hits": {
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "authors": {
+                                                                        "hits": {
+                                                                            "edges": [
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Galbraith",
+                                                                                        "given": "Matthew D"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Rachubinski",
+                                                                                        "given": "Angela L"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Smith",
+                                                                                        "given": "Keith P"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Araya",
+                                                                                        "given": "Paula"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Waugh",
+                                                                                        "given": "Katherine A"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Enriquez-Estrada",
+                                                                                        "given": "Belinda"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Worek",
+                                                                                        "given": "Kayleigh"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Granrath",
+                                                                                        "given": "Ross E"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Kinning",
+                                                                                        "given": "Kohl T"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Paul Eduthan",
+                                                                                        "given": "Neetha"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Ludwig",
+                                                                                        "given": "Michael P"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Hsieh",
+                                                                                        "given": "Elena W Y"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Sullivan",
+                                                                                        "given": "Kelly D"
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "node": {
+                                                                                        "family": "Espinosa",
+                                                                                        "given": "Joaquin M"
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    "DOI": "10.1126/sciadv.adg6218",
+                                                                    "ISSN": "2375-2548",
+                                                                    "PMCID": "PMC10306300",
+                                                                    "PMID": "37379383",
+                                                                    "accessed_date_parts": [
+                                                                        2025,
+                                                                        6,
+                                                                        11
+                                                                    ],
+                                                                    "container_title": "Science advances",
+                                                                    "container_title_short": "Sci Adv",
+                                                                    "issue": "26",
+                                                                    "issued_date_parts": [
+                                                                        2023,
+                                                                        6,
+                                                                        28
+                                                                    ],
+                                                                    "page": "eadg6218",
+                                                                    "pubmed_id": "pmid:37379383",
+                                                                    "source": "PubMed",
+                                                                    "title": "Multidimensional definition of the interferonopathy of Down syndrome and its response to JAK inhibition",
+                                                                    "volume": "9"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

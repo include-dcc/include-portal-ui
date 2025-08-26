@@ -3,7 +3,11 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitStudyEntity('HTP', 1);
+  cy.visitStudyEntityMock();
+  cy.intercept('POST', '**/graphql', {
+    statusCode: 200,
+    body: {},
+  }).as('emptyGraphql');
 });
 
 describe('Page d\'une étude - Valider les redirections', () => {

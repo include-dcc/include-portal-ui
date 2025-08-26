@@ -3,7 +3,7 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitStudiesPage();
+  cy.visitStudiesMock();
 });
 
 describe('Page des études - Colonnes du tableau', () => {

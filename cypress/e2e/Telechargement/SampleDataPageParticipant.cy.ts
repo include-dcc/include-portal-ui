@@ -8,9 +8,9 @@ beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
 
   cy.login();
-  cy.visitParticipantEntity('pt-as0aepqm');
+  cy.visitParticipantEntityMock();
   cy.get('[id="biospecimen"] [class*="BiospecimenTable_tabs"] [data-node-key="table"]').clickAndWait({force: true});
-  cy.clickAndIntercept('[id="biospecimen"] [class*="BiospecimenTable"] button[class*="ant-btn-default"]', 'POST', '**/file-manifest', 1, false/*beVisible*/, 1);
+  cy.clickAndIntercept('[id="biospecimen"] [class*="BiospecimenTable"] button[class*="ant-btn-default"]', 'POST', '**/reports/biospecimen-data', 1, false/*beVisible*/, 1);
   cy.waitUntilFile(oneMinute);
 });
 

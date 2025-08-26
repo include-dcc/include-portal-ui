@@ -1,15 +1,21 @@
 /// <reference types="cypress"/>
 import '../../support/commands';
-import { getDateTime, oneMinute } from '../../support/utils';
-
-const { strDate } = getDateTime();
+import { oneMinute } from '../../support/utils';
 
 beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
 
   cy.login();
-  cy.visitFileEntity('HTP.ce770763-b904-4c66-8b08-c54dd4e7c7b5.arriba.fusions.pdf');
-  cy.get('[class*="EntityTitle"] button[class*="ant-btn-default"]').click({force: true});
+  cy.visitFileEntityMock();
+  
+  cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
+      req.alias = 'postStats';
+      req.reply(mockResponseBody);
+    });
+    cy.get('[class*="EntityTitle"] button[class*="ant-btn-default"]').click({force: true});
+    cy.wait('@postStats');
+  });
 });
 
 describe('Page d\'un fichier - Bouton Manifest', () => {
@@ -23,10 +29,10 @@ describe('Page d\'un fichier - Bouton Manifest', () => {
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(1).contains('Participants').should('exist');
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(2).contains('Files').should('exist');
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(3).contains('Size').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Gene Fusions"] td').eq(0).contains('Gene Fusions').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Gene Fusions"] td').eq(1).contains(/^1$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Gene Fusions"] td').eq(2).contains(/^1$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Gene Fusions"] td').eq(3).contains(/^708.45 KB$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(0).contains('Unaligned Reads').should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(1).contains(/^1$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(2).contains(/^1$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(3).contains(/^3.13 GB$/).should('exist');
 
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-default"]').contains('Cancel').should('exist');
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').contains('Download').should('exist');
@@ -39,13 +45,29 @@ describe('Page d\'un fichier - Bouton Manifest', () => {
   it('Valider les fonctionnalités - Bouton Cancel', () => {
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-default"]').click({force: true});
     cy.get('[class*="DownloadFileManifestModal_modal"]').should('have.css', 'display', 'none');
+    cy.wait(5000);
     cy.task('fileExists', `${Cypress.config('downloadsFolder')}`).then((exists) => {
       assert.isTrue(!exists);
     });
   });
 
   it('Valider les fonctionnalités - Bouton Download', () => {
-    cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/file-manifest', 1);
+    cy.fixture('ResponseBody/FileManifestDownload.tsv').then((mockResponseBody) => {
+      cy.intercept('POST', '**/reports/file-manifest', (req) => {
+        req.alias = 'postManifest';
+        req.reply({
+          statusCode: 200,
+          headers: {
+            'content-type': 'text/tab-separated-values',
+            'content-disposition': 'attachment; filename="include_manifest_mock.tsv"'
+          },
+          body: mockResponseBody
+        });
+      });
+      cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').click({force: true});
+      cy.wait('@postManifest');
+    });
+
     cy.get('[class*="DownloadFileManifestModal_modal"]').should('have.css', 'display', 'none');
     cy.waitUntilFile(oneMinute);
     cy.validateFileName('*.tsv');

@@ -46,11 +46,17 @@ declare namespace Cypress {
     visitCommunityPage(): cy & CyEventEmitter;
     visitDashboard(): cy & CyEventEmitter;
     visitDataExploration(tab?: string, sharedFilterOption?: string): cy & CyEventEmitter;
-    visitFileEntity(fileId: string): cy & CyEventEmitter;
+    visitDataExplorationBiospecimenMock(): cy & CyEventEmitter;
+    visitDataExplorationFileMock(): cy & CyEventEmitter;
+    visitDataExplorationParticipantMock(): cy & CyEventEmitter;
+    visitFileEntityMock(): cy & CyEventEmitter;
     visitParticipantEntity(participantId: string, nbCalls?: number): cy & CyEventEmitter;
+    visitParticipantEntityMock(): cy & CyEventEmitter;
     visitProfileSettingsPage(): cy & CyEventEmitter;
     visitProfileViewPage(): cy & CyEventEmitter;
     visitStudyEntity(studyId: string, nbCalls: number): cy & CyEventEmitter;
+    visitStudyEntityMock(): cy & CyEventEmitter;
+    visitStudiesMock(): cy & CyEventEmitter;
     visitStudiesPage(): cy & CyEventEmitter;
     visitVariantEntityPage(locusId: string, nbGraphqlCalls: number): cy & CyEventEmitter;
     visitVariantsPage(sharedFilterOption?: string): cy & CyEventEmitter;

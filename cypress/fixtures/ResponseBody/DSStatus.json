@@ -1,0 +1,34 @@
+{
+    "data": {
+        "participant": {
+            "hits": {
+                "edges": [
+                    {
+                        "node": {
+                            "participant_id": "pt-as0aepqm",
+                            "down_syndrome_status": "T21"
+                        }
+                    },
+                    {
+                        "node": {
+                            "participant_id": "pt-v66khv4x",
+                            "down_syndrome_status": "D21"
+                        }
+                    },
+                    {
+                        "node": {
+                            "participant_id": "pt-0dxdyebh",
+                            "down_syndrome_status": "D21"
+                        }
+                    },
+                    {
+                        "node": {
+                            "participant_id": "pt-cw432mnt",
+                            "down_syndrome_status": "D21"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

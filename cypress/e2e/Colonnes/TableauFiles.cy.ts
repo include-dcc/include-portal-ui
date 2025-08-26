@@ -3,7 +3,7 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitDataExploration('datafiles');
+  cy.visitDataExplorationFileMock();
 });
 
 describe('Page Data Exploration (Files) - Colonnes du tableau', () => {

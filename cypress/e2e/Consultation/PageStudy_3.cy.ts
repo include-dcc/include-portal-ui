@@ -3,7 +3,11 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitStudyEntity('HTP', 1);
+  cy.visitStudyEntityMock();
+  cy.intercept('POST', '**/graphql', {
+    statusCode: 200,
+    body: {},
+  }).as('emptyGraphql');
 });
 
 describe('Page d\'une étude - Valider les liens disponibles', () => {
@@ -11,7 +15,7 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(3).invoke('text').then((invokeText) => {
       if (!invokeText.includes('-')) {
         cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(3).find('[href]')
-        .should('have.attr', 'href').and('match', /https:\/\/www\.ncbi\.nlm\.nih\.gov\/projects\/gap\/cgi-bin\/study\.cgi\?study_id\=(phs002330|phs002981)/);
+        .should('have.attr', 'href').and('match', /https:\/\/www\.ncbi\.nlm\.nih\.gov\/projects\/gap\/cgi-bin\/study\.cgi\?study_id\=phs002981/);
       };
     });
   });
@@ -38,20 +42,13 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
   });
 
   it('Lien Virtual Biorepository Email du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).find('[href]')
       .should('have.attr', 'href', 'mailto:dsresearch@cuanschutz.edu');
   });
 
   it('Lien Virtual Biorepository URL du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).find('[href]')
       .should('have.attr', 'href', 'https://redcap.link/HTPVBRrequest');
-  });
-
-  it('Lien DataExploration du panneau Summary Statistics', () => {
-    cy.get('[id="statistic"] [class="ant-collapse-header"] button').clickAndWait({force: true});
-    cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
-    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Study Code').should('exist');
-    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('HTP').should('exist');
   });
 
   it('Lien Duo de l\'Access Limitation du panneau Data Access', () => {

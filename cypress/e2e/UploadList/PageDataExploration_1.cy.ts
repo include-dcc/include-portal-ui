@@ -1,12 +1,14 @@
 /// <reference types="cypress"/>
 import '../../support/commands';
+import { oneMinute } from '../../support/utils';
 
 beforeEach(() => {
   cy.login();
-  cy.visitDataExploration('participants');
+  cy.visitDataExplorationParticipantMock();
   cy.get('[data-cy="SidebarMenuItem_Participant"]').clickAndWait({force: true});
   cy.get('button[class*="UploadIdsButton"]').clickAndWait({force: true});
-  cy.get('[class*="UploadModal"] textarea').type('PT-AS0AEPQM,htp0577 unknown');
+  cy.typeAndIntercept('[class*="UploadModal"] textarea', 'PT-AS0AEPQM,htp0577 unknown', 'POST', '**/graphql', 1);
+  cy.waitWhileSpin(oneMinute);
 });
 
 describe('Page Data Exploration (Participants) - Téléverser une liste d\'identifiants', () => {
@@ -78,7 +80,7 @@ describe('Page Data Exploration (Participants) - Téléverser une liste d\'ident
   });
   
   it('Valider les fonctionnalités de la modal - Bouton Téléverser', () => {
-    cy.wait(2000);
+    cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', {timeout: oneMinute}).should('be.enabled');
     cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/graphql', 3);
 
     cy.validatePillSelectedQuery('Participant ID', ['Uploaded List']);

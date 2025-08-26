@@ -3,7 +3,7 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitDataExploration('biospecimens');
+  cy.visitDataExplorationBiospecimenMock();
 });
 
 describe('Page Data Exploration (Biospecimens) - Colonnes du tableau', () => {

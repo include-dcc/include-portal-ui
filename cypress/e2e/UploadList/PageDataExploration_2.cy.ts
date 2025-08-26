@@ -1,12 +1,14 @@
 /// <reference types="cypress"/>
 import '../../support/commands';
+import { oneMinute } from '../../support/utils';
 
 beforeEach(() => {
   cy.login();
-  cy.visitDataExploration('biospecimens');
+  cy.visitDataExplorationBiospecimenMock();
   cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').clickAndWait({force: true});
   cy.get('button[class*="UploadIdsButton"]').clickAndWait({force: true});
-  cy.get('[class*="UploadModal"] textarea').type('BS-03YNYNFS,htp0577a_paxgenewholebloodrna unknown');
+  cy.typeAndIntercept('[class*="UploadModal"] textarea', 'BS-03YNYNFS,htp0577a_paxgenewholebloodrna unknown', 'POST', '**/graphql', 1);
+  cy.waitWhileSpin(oneMinute);
 });
 
 describe('Page Data Exploration (Biospecimens) - Téléverser une liste d\'identifiants', () => {

@@ -3,7 +3,7 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitParticipantEntity('pt-0dxdyebh');
+  cy.visitParticipantEntityMock();
 });
 
 describe('Page d\'un participant - Valider les panneaux masquables', () => {

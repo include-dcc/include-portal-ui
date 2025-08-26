@@ -1,0 +1,50 @@
+{
+    "data": {
+        "biospecimen": {
+            "hits": {
+                "total": 1,
+                "edges": [
+                    {
+                        "searchAfter": [
+                            "bs-03ynynfs"
+                        ],
+                        "node": {
+                            "id": "rbMLy5gBpGSP7kO2XO5F",
+                            "fhir_id": "bs-03ynynfs",
+                            "container_id": "bs-ag3azt3gmq",
+                            "status": "unavailable",
+                            "sample_id": "bs-03ynynfs",
+                            "external_sample_id": "HTP0577A_PAXgeneWholeBloodRNA",
+                            "sample_type": "RNA",
+                            "parent_sample_id": "bs-3m4a3fy3zm",
+                            "parent_sample_type": "RNA",
+                            "collection_sample_id": "bs-m623h3mrgg",
+                            "collection_sample_type": "Peripheral Whole Blood",
+                            "collection_fhir_id": "bs-m623h3mrgg",
+                            "age_at_biospecimen_collection": 10366,
+                            "laboratory_procedure": "Qiagen PAXgene Blood RNA Kit",
+                            "volume": "0.42",
+                            "volume_unit": "mL",
+                            "biospecimen_storage": "-80C Freezer",
+                            "study_id": "HTP",
+                            "study": {
+                                "study_code": "HTP",
+                                "study_id": "HTP",
+                                "study_name": "The Human Trisome Project"
+                            },
+                            "nb_files": 8,
+                            "participant": {
+                                "participant_id": "pt-as0aepqm"
+                            },
+                            "files": {
+                                "hits": {
+                                    "total": 8
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

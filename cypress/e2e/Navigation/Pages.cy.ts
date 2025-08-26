@@ -117,7 +117,7 @@ describe('Navigation', () => {
   });
 
   it('Onglets de la page Data Exploration', () => {
-    cy.visitDataExploration('participants');
+    cy.visitDataExplorationParticipantMock();
 
     cy.get('[role="tablist"] [data-node-key="datafiles"]').clickAndWait({force: true}); // data-cy="Tab_DataFiles"
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
@@ -134,7 +134,7 @@ describe('Navigation', () => {
   });
 
   it('Modals de la page Data Exploration', () => {
-    cy.visitDataExploration('participants');
+    cy.visitDataExplorationParticipantMock();
 
     // Facettes
     cy.get('[data-cy="SidebarMenuItem_Participant"]').clickAndWait({force: true});
@@ -176,7 +176,7 @@ describe('Navigation', () => {
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
     // Onglet Data Files
-    cy.visitDataExploration('datafiles');
+    cy.visitDataExplorationFileMock();
     cy.get('[class*="ant-table-row"]').eq(0).find('input[type="checkbox"]').check({force: true});
   });
  
@@ -194,7 +194,7 @@ describe('Navigation', () => {
   });
  
   it('Modals de la page d\'un fichier', () => {
-    cy.visitFileEntity('HTP.1730dafb-464b-4aa6-b2dc-35f729cbdb2d.CGP.filtered.deNovo.vep.vcf.gz');
+    cy.visitFileEntityMock();
 
     cy.get('[data-icon="cloud-upload"]').clickAndWait({force: true});
     cy.contains(/(Connect to Cavatica|Analyze in Cavatica)/).should('exist');

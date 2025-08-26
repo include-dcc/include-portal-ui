@@ -1,12 +1,14 @@
 /// <reference types="cypress"/>
 import '../../support/commands';
+import { oneMinute } from '../../support/utils';
 
 beforeEach(() => {
   cy.login();
-  cy.visitDataExploration('datafiles');
+  cy.visitDataExplorationFileMock();
   cy.get('[data-cy="SidebarMenuItem_Data File"]').clickAndWait({force: true});
   cy.get('button[class*="UploadIdsButton"]').clickAndWait({force: true});
-  cy.get('[class*="UploadModal"] textarea').type('htp.htp0577a_frrb192320222-1a_HWHKMDSXX_L1_2.fq.gz,unknown');
+  cy.typeAndIntercept('[class*="UploadModal"] textarea', 'htp.htp0577a_frrb192320222-1a_HWHKMDSXX_L1_2.fq.gz,unknown', 'POST', '**/graphql', 1);
+  cy.waitWhileSpin(oneMinute);
 });
 
 describe('Page Data Exploration (Data Files) - Téléverser une liste d\'identifiants', () => {
@@ -76,7 +78,8 @@ describe('Page Data Exploration (Data Files) - Téléverser une liste d\'identif
   
   it('Valider les fonctionnalités de la modal - Bouton Téléverser', () => {
     cy.wait(2000);
-    cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/graphql', 3);
+    cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/graphql', 2);
+    cy.waitWhileSpin(oneMinute);
 
     cy.validatePillSelectedQuery('File ID', ['Uploaded List']);
     cy.validateTotalSelectedQuery('1');

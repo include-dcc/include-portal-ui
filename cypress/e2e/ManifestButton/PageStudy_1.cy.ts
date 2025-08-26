@@ -1,19 +1,25 @@
 /// <reference types="cypress"/>
 import '../../support/commands';
-import { getDateTime, oneMinute } from '../../support/utils';
-
-const { strDate } = getDateTime();
+import { oneMinute } from '../../support/utils';
 
 beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
 
   cy.login();
-  cy.visitStudyEntity('DS-NEXUS', 1);
-  cy.get('[class*="EntityTitleLogo"] button[class*="ant-btn-primary"]').click({force: true});
+  cy.visitStudyEntityMock();
+  
+  cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
+    cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
+      req.alias = 'postStats';
+      req.reply(mockResponseBody);
+    });
+    cy.get('[class*="EntityTitleLogo"] button[class*="ant-btn-primary"]').click({force: true});
+    cy.wait('@postStats');
+  });
 });
 
-describe('Page d\'une étude - Bouton Manifest', {retries: {runMode: 0}}, () => {
-  it('Vérifier les informations affichées - Modal [SJIP-1291]', () => {
+describe('Page d\'une étude - Bouton Manifest', () => {
+  it('Vérifier les informations affichées - Modal', () => {
     cy.get('[class="ant-modal-title"]').contains('File manifest').should('exist');
     cy.get('[class="ant-modal-body"]').contains('Download a manifest of the selected files which can be used for bulk downloading using Cavatica’s ').should('exist');
     cy.get('[class="ant-modal-body"]').contains('Import from an GA4GH Data Repository Service (DRS)').should('exist');
@@ -23,18 +29,10 @@ describe('Page d\'une étude - Bouton Manifest', {retries: {runMode: 0}}, () => 
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(1).contains('Participants').should('exist');
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(2).contains('Files').should('exist');
     cy.get('[class*="DownloadFileManifestModal_table"] thead th').eq(3).contains('Size').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(0).contains('gVCF').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(1).contains(/^41$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(2).contains(/^41$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="gVCF"] td').eq(3).contains(/^196.08 GB$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Simple Nucleotide Variations"] td').eq(0).contains('Simple Nucleotide Variations').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Simple Nucleotide Variations"] td').eq(1).contains(/^82$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Simple Nucleotide Variations"] td').eq(2).contains(/^82$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Simple Nucleotide Variations"] td').eq(3).contains(/^99.11 GB$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(0).contains('Aligned Reads').should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(1).contains(/^41$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(2).contains(/^41$/).should('exist');
-    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Aligned Reads"] td').eq(3).contains(/^705.31 GB$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(0).contains('Unaligned Reads').should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(1).contains(/^1$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(2).contains(/^1$/).should('exist');
+    cy.get('[class*="DownloadFileManifestModal_table"] [data-row-key="Unaligned Reads"] td').eq(3).contains(/^3.13 GB$/).should('exist');
 
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-default"]').contains('Cancel').should('exist');
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').contains('Download').should('exist');
@@ -53,7 +51,22 @@ describe('Page d\'une étude - Bouton Manifest', {retries: {runMode: 0}}, () => 
   });
 
   it('Valider les fonctionnalités - Bouton Download', () => {
-    cy.clickAndIntercept('[class="ant-modal-footer"] button[class*="ant-btn-primary"]', 'POST', '**/file-manifest', 1);
+    cy.fixture('ResponseBody/FileManifestDownload.tsv').then((mockResponseBody) => {
+      cy.intercept('POST', '**/reports/file-manifest', (req) => {
+        req.alias = 'postManifest';
+        req.reply({
+          statusCode: 200,
+          headers: {
+            'content-type': 'text/tab-separated-values',
+            'content-disposition': 'attachment; filename="include_manifest_mock.tsv"'
+          },
+          body: mockResponseBody
+        });
+      });
+      cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').click({force: true});
+      cy.wait('@postManifest');
+    });
+
     cy.get('[class*="DownloadFileManifestModal_modal"]').should('have.css', 'display', 'none');
     cy.waitUntilFile(oneMinute);
     cy.validateFileName('*.tsv');

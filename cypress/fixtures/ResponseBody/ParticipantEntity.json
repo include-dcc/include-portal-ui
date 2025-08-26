@@ -1,0 +1,365 @@
+{
+    "data": {
+        "participant": {
+            "hits": {
+                "edges": [
+                    {
+                        "node": {
+                            "id": "jJ634ZgBsTnisjdbpdNs",
+                            "age_at_first_patient_engagement": {
+                                "unit": "d",
+                                "value": 10366
+                            },
+                            "diagnosis": {
+                                "hits": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "mondo_display_term": "hypothyroidism (MONDO:0005420)",
+                                                "source_text": "Hypothyroidism",
+                                                "age_at_event_days": 5000,
+                                                "diagnosis_id": "HTP0577.Hypothyroidism.HP:0000821.MONDO:0005420.NA"
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "mondo_display_term": "congenital heart disease (MONDO:0005453)",
+                                                "source_text": "Congenital heart defect (CHD) - any",
+                                                "age_at_event_days": 6000,
+                                                "diagnosis_id": "HTP0577.Congenital heart defect (CHD) - any.HP:0001627.MONDO:0005453.NA"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "down_syndrome_status": "T21",
+                            "ethnicity": "Not Hispanic or Latino",
+                            "external_id": "HTP0577",
+                            "family": {
+                                "family_id": "F0013",
+                                "relations_to_proband": {
+                                    "hits": {
+                                        "edges": [
+                                            {
+                                                "node": {
+                                                    "role": "Father",
+                                                    "participant_id": "pt-v66khv4x"
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "role": "Mother",
+                                                    "participant_id": "pt-0dxdyebh"
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "role": "Sibling",
+                                                    "participant_id": "pt-cw432mnt"
+                                                }
+                                            },
+                                            {
+                                                "node": {
+                                                    "role": "Proband",
+                                                    "participant_id": "pt-as0aepqm"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "family_type": "trio+",
+                            "files": {
+                                "hits": {
+                                    "total": 5,
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "data_category": "Transcriptomics",
+                                                "sequencing_experiment": {
+                                                    "hits": {
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "experiment_strategy": "BCRseq"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "biospecimens": {
+                                                    "hits": {
+                                                        "total": 1,
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "age_at_biospecimen_collection": 256,
+                                                                    "sample_id": "bs-fjdditnwrr",
+                                                                    "sample_type": "RNA",
+                                                                    "parent_sample_id": "bs-cxwczc3k88",
+                                                                    "parent_sample_type": "RNA",
+                                                                    "collection_sample_id": "bs-7zahnqfgir",
+                                                                    "collection_sample_type": "Peripheral Whole Blood",
+                                                                    "collection_fhir_id": "bs-7zahnqfgir",
+                                                                    "container_id": "bs-nqz2w826hr",
+                                                                    "volume": 42,
+                                                                    "volume_unit": "ml",
+                                                                    "laboratory_procedure": "Qiagen PAXgene Blood RNA Kit",
+                                                                    "biospecimen_storage": "-80C Freezer",
+                                                                    "fhir_id": "bs-fjdditnwrr",
+                                                                    "status": "unavailable"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_category": "Transcriptomics",
+                                                "sequencing_experiment": {
+                                                    "hits": {
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "experiment_strategy": "BCRseq"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "biospecimens": {
+                                                    "hits": {
+                                                        "total": 1,
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "age_at_biospecimen_collection": 256,
+                                                                    "sample_id": "bs-fjdditnwrr",
+                                                                    "sample_type": "RNA",
+                                                                    "parent_sample_id": "bs-cxwczc3k88",
+                                                                    "parent_sample_type": "RNA",
+                                                                    "collection_sample_id": "bs-7zahnqfgir",
+                                                                    "collection_sample_type": "Peripheral Whole Blood",
+                                                                    "collection_fhir_id": "bs-7zahnqfgir",
+                                                                    "container_id": "bs-nqz2w826hr",
+                                                                    "volume": 42,
+                                                                    "volume_unit": "ml",
+                                                                    "laboratory_procedure": "Qiagen PAXgene Blood RNA Kit",
+                                                                    "biospecimen_storage": "-80C Freezer",
+                                                                    "fhir_id": "bs-fjdditnwrr",
+                                                                    "status": "unavailable"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_category": null,
+                                                "sequencing_experiment": {
+                                                    "hits": {
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "experiment_strategy": "TCRseq"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "biospecimens": {
+                                                    "hits": {
+                                                        "total": 1,
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "age_at_biospecimen_collection": 256,
+                                                                    "sample_id": "bs-fjdditnwrr",
+                                                                    "sample_type": "RNA",
+                                                                    "parent_sample_id": "bs-cxwczc3k88",
+                                                                    "parent_sample_type": "RNA",
+                                                                    "collection_sample_id": "bs-7zahnqfgir",
+                                                                    "collection_sample_type": "Peripheral Whole Blood",
+                                                                    "collection_fhir_id": "bs-7zahnqfgir",
+                                                                    "container_id": "bs-nqz2w826hr",
+                                                                    "volume": 42,
+                                                                    "volume_unit": "ml",
+                                                                    "laboratory_procedure": "Qiagen PAXgene Blood RNA Kit",
+                                                                    "biospecimen_storage": "-80C Freezer",
+                                                                    "fhir_id": "bs-fjdditnwrr",
+                                                                    "status": "unavailable"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_category": null,
+                                                "sequencing_experiment": {
+                                                    "hits": {
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "experiment_strategy": "TCRseq"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "biospecimens": {
+                                                    "hits": {
+                                                        "total": 1,
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "age_at_biospecimen_collection": 256,
+                                                                    "sample_id": "bs-fjdditnwrr",
+                                                                    "sample_type": "RNA",
+                                                                    "parent_sample_id": "bs-cxwczc3k88",
+                                                                    "parent_sample_type": "RNA",
+                                                                    "collection_sample_id": "bs-7zahnqfgir",
+                                                                    "collection_sample_type": "Peripheral Whole Blood",
+                                                                    "collection_fhir_id": "bs-7zahnqfgir",
+                                                                    "container_id": "bs-nqz2w826hr",
+                                                                    "volume": 42,
+                                                                    "volume_unit": "ml",
+                                                                    "laboratory_procedure": "Qiagen PAXgene Blood RNA Kit",
+                                                                    "biospecimen_storage": "-80C Freezer",
+                                                                    "fhir_id": "bs-fjdditnwrr",
+                                                                    "status": "unavailable"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "data_category": null,
+                                                "sequencing_experiment": null,
+                                                "biospecimens": {
+                                                    "hits": {
+                                                        "total": 1,
+                                                        "edges": [
+                                                            {
+                                                                "node": {
+                                                                    "age_at_biospecimen_collection": 456,
+                                                                    "sample_id": "bs-cxwczc3k88",
+                                                                    "sample_type": "RNA",
+                                                                    "parent_sample_id": "bs-7zahnqfgir",
+                                                                    "parent_sample_type": "Peripheral Whole Blood",
+                                                                    "collection_sample_id": "bs-7zahnqfgir",
+                                                                    "collection_sample_type": "Peripheral Whole Blood",
+                                                                    "collection_fhir_id": "bs-7zahnqfgir",
+                                                                    "container_id": "bs-9twfdnytke",
+                                                                    "volume": 21,
+                                                                    "volume_unit": "ml",
+                                                                    "laboratory_procedure": "PAXgene Blood RNA Tube",
+                                                                    "biospecimen_storage": "-80C Freezer",
+                                                                    "fhir_id": "bs-cxwczc3k88",
+                                                                    "status": "available"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "measurements": {
+                                "hits": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "measurement_type": "Vital Signs",
+                                                "quantity": {
+                                                    "unit": "inches",
+                                                    "value": 57.52
+                                                },
+                                                "code": "LOINC:8302-2",
+                                                "effective_date_time": {
+                                                    "unit": "d",
+                                                    "value": 1000
+                                                },
+                                                "display": "Body height",
+                                                "formatted_term": "Body height (LOINC:8302-2)",
+                                                "code_text": "Body height",
+                                                "url": "https://loinc.org/8302-2",
+                                                "fhir_id": "997134"
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "measurement_type": "Vital Signs",
+                                                "quantity": {
+                                                    "unit": "kg/m2",
+                                                    "value": 32.67
+                                                },
+                                                "code": "LOINC:39156-5",
+                                                "effective_date_time": {
+                                                    "unit": "d",
+                                                    "value": 2000
+                                                },
+                                                "display": "Body mass index (BMI)",
+                                                "formatted_term": "Body mass index (BMI) (LOINC:39156-5)",
+                                                "code_text": "Body mass index (BMI)",
+                                                "url": "https://loinc.org/39156-5",
+                                                "fhir_id": "997135"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "nb_biospecimens": 2,
+                            "nb_files": 4,
+                            "participant_id": "pt-as0aepqm",
+                            "person": null,
+                            "phenotype": {
+                                "hits": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "age_at_event_days": 500,
+                                                "fhir_id": "185639",
+                                                "hpo_phenotype_observed": "Atrial septal defect (HP:0001631)",
+                                                "observed": null,
+                                                "source_text": "Atrial septal defect (ASD)"
+                                            }
+                                        },
+                                        {
+                                            "node": {
+                                                "age_at_event_days": 600,
+                                                "fhir_id": "185640",
+                                                "hpo_phenotype_observed": "Abnormal heart morphology (HP:0001627)",
+                                                "observed": null,
+                                                "source_text": "Congenital heart defect (CHD) - any"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "race": "White",
+                            "study": {
+                                "study_name": "The Human Trisome Project",
+                                "external_id": "phs002981",
+                                "study_code": "HTP"
+                            },
+                            "study_id": "HTP",
+                            "sex": "female"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

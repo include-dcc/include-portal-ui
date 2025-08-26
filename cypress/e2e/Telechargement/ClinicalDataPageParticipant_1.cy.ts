@@ -8,9 +8,9 @@ beforeEach(() => {
   cy.removeFilesFromFolder(Cypress.config('downloadsFolder'));
 
   cy.login();
-  cy.visitParticipantEntity('pt-as0aepqm');
+  cy.visitParticipantEntityMock();
   cy.get('[class*="EntityTitle"] button[class*="ant-dropdown-trigger"]').click({force: true});
-  cy.clickAndIntercept('[data-menu-id*="-clinicalData"]', 'POST', '**/file-manifest', 1);
+  cy.clickAndIntercept('[data-menu-id*="-clinicalData"]', 'POST', '**/reports/clinical-data', 1);
   cy.waitUntilFile(oneMinute);
 });
 

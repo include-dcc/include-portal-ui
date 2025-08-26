@@ -26,7 +26,7 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.get('[class*="SearchLabel_tooltipIcon"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true}); //data-cy="SearchLabel_InfoCircleOutlined"
     cy.get('div[class="ant-tooltip-inner"]').contains('Search by Participant ID or External Participant ID').should('exist');
 
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'PT-AS0AEPQM', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'PT-AS0AEPQM', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('pt-as0aepqm').should('exist'); //data-cy="Search_Dropdown"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
@@ -40,7 +40,7 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
   });
 
   it('Search by external Participant ID - HTP0577', () => {
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"]', 'htp0577', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'htp0577', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('pt-as0aepqm').should('exist'); //data-cy="Search_Dropdown"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
@@ -78,48 +78,53 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.validateFacetRank(2, 'Condition (Source Text)');
   });
 
+  it('Intervention (MAxO) - Hearing examination (MAxO:0000873) [SJIP-1445]', () => {
+    cy.validateFacetFilter('Intervention (MAxO)', 'Hearing examination (MAxO:0000873)', 'Hearing examination (MAxO:0000873)', /\d{1}/);
+    cy.validateFacetRank(3, 'Intervention (MAxO)');
+  });
+
   it('Age at Diagnosis (days)', () => {
     cy.validateFacetNumFilter('Max', 'Age at Diagnosis (days)', '10000', /\d{1}/);
-    cy.validateFacetRank(3, 'Age at Diagnosis (days)');
+    cy.validateFacetRank(4, 'Age at Diagnosis (days)');
   });
 
   it('Age at Vital Status (days)', () => {
     cy.validateFacetNumFilter('Max', 'Age at Vital Status (days)', '10000', /\d{1}/);
-    cy.validateFacetRank(4, 'Age at Vital Status (days)');
+    cy.validateFacetRank(5, 'Age at Vital Status (days)');
   });
 
   it('Age at Observed Phenotype (days)', () => {
     cy.validateFacetNumFilter('Max', 'Age at Observed Phenotype (days)', '10000', /\d{1}/);
-    cy.validateFacetRank(5, 'Age at Observed Phenotype (days)');
+    cy.validateFacetRank(6, 'Age at Observed Phenotype (days)');
   });
 
   it('Age at First Patient Engagement (days)', () => {
     cy.validateFacetNumFilter('Max', 'Age at First Patient Engagement (days)', '10000', /\d{1}/);
-    cy.validateFacetRank(6, 'Age at First Patient Engagement (days)');
+    cy.validateFacetRank(7, 'Age at First Patient Engagement (days)');
   });
 
   it('Family Unit - Proband-only', () => {
     cy.validateFacetFilter('Family Unit', 'Proband-only', 'proband-only', /\d{1}/);
-    cy.validateFacetRank(7, 'Family Unit');
+    cy.validateFacetRank(8, 'Family Unit');
   });
 
   it('Sex - Female', () => {
     cy.validateFacetFilter('Sex', 'Female', 'female', /\d{1}/);
-    cy.validateFacetRank(8, 'Sex');
+    cy.validateFacetRank(9, 'Sex');
   });
 
   it('Race - White', () => {
     cy.validateFacetFilter('Race', 'White', 'White', /\d{1}/);
-    cy.validateFacetRank(9, 'Race');
+    cy.validateFacetRank(10, 'Race');
   });
 
   it('Ethnicity - Not Hispanic or Latino', () => {
     cy.validateFacetFilter('Ethnicity', 'Not Hispanic or Latino', 'Not Hispanic or Latino', /\d{1}/);
-    cy.validateFacetRank(10, 'Ethnicity');
+    cy.validateFacetRank(11, 'Ethnicity');
   });
 
   it('Vital Status - Alive', () => {
     cy.validateFacetFilter('Vital Status', 'Alive', 'Alive', /\d{1}/);
-    cy.validateFacetRank(11, 'Vital Status');
+    cy.validateFacetRank(12, 'Vital Status');
   });
 });

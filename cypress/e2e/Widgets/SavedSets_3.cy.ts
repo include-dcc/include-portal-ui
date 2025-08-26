@@ -3,7 +3,7 @@ import '../../support/commands';
 
 beforeEach(() => {
   cy.login();
-  cy.visitDataExploration('participants');
+  cy.visitDataExplorationParticipantMock();
   cy.get('[data-cy="SidebarMenuItem_Participant"]').clickAndWait({force: true});
   cy.createSetIfNotExists('Cypress_SA', 0);
   cy.deleteSetIfExists('participants', 'Cypress_SB');
