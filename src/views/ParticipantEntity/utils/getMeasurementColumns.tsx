@@ -38,20 +38,17 @@ const getMeasurementColumns = (): ProColumnType[] => [
   },
   {
     title: intl.get('entities.participant.measurement.value'),
-    // dataIndex: ['quantity', 'value'],
     key: 'quantity.value',
     render: (measurement: IMeasurement) => measurement.quantity?.value || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     title: intl.get('entities.participant.measurement.unit'),
-    // dataIndex: ['quantity', 'unit'],
     key: 'quantity.unit',
     render: (measurement: IMeasurement) => measurement.quantity?.unit || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     title: intl.get('entities.participant.measurement.age'),
     tooltip: intl.get('entities.participant.measurement.age_tooltip'),
-    // dataIndex: ['effective_date_time', 'value'],
     key: 'effective_date_time.value',
     render: (measurement: IMeasurement) => (
       <AgeCell ageInDays={measurement.effective_date_time?.value} />

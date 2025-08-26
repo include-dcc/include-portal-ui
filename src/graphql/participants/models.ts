@@ -92,6 +92,7 @@ export interface IParticipantOutcomes {
 }
 
 export interface IMeasurement {
+  id: string;
   measurement_type?: string;
   quantity?: {
     unit?: string;
@@ -139,7 +140,7 @@ export interface IParticipantEntity {
   biospecimens: ArrangerResultsTree<IParticipantBiospecimen>;
   age_at_first_patient_engagement?: { value?: number; unit?: string };
   person?: { person_id: string };
-  measurements?: ArrangerResultsTree<any>;
+  measurements?: ArrangerResultsTree<IMeasurement>;
 }
 
 export type ITableParticipantEntity = IParticipantEntity & {
