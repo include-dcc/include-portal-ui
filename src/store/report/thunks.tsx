@@ -1,4 +1,5 @@
 import intl from 'react-intl-universal';
+import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -136,6 +137,11 @@ const fetchTsvReport = createAsyncThunk<void, TFetchTSVArgs, { rejectValue: stri
   },
 );
 
+const getNestedValue = (obj: any, path: string): any => {
+  const value = path.split('.').reduce((acc, part) => acc && acc[part], obj);
+  return value ? value : TABLE_EMPTY_PLACE_HOLDER;
+};
+
 const generateLocalTsvReport = createAsyncThunk<
   void,
   {
@@ -160,7 +166,7 @@ const generateLocalTsvReport = createAsyncThunk<
     const visibleHeaders = args.headers.filter((h) => visibleKeys.includes(h.key));
     const visibleTitle = visibleHeaders.map((h) => h.title);
     const visibleRows = (args.rows || []).reduce(
-      (rs, r) => [...rs, visibleHeaders.map((h) => r[h.key])],
+      (rs, r) => [...rs, visibleHeaders.map((h) => getNestedValue(r, h.key))],
       [],
     );
 

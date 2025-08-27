@@ -63,6 +63,7 @@ export type TUserConfig = {
       family?: TUserTableConfig;
       phenotype?: TUserTableConfig;
       biospecimens?: TUserTableConfig;
+      measurements?: TUserTableConfig;
     };
   };
   dashboard?: {

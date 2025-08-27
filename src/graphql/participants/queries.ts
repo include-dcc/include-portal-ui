@@ -197,6 +197,29 @@ export const GET_PARTICIPANT_ENTITY = gql`
                 }
               }
             }
+            measurements {
+              hits {
+                edges {
+                  node {
+                    measurement_type
+                    quantity {
+                      unit
+                      value
+                    }
+                    code
+                    effective_date_time {
+                      unit
+                      value
+                    }
+                    display
+                    formatted_term
+                    code_text
+                    url
+                    fhir_id
+                  }
+                }
+              }
+            }
             nb_biospecimens
             nb_files
             participant_id
