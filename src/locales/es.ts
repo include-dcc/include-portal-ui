@@ -2102,6 +2102,11 @@ const es = {
         data_type: 'Tipo de datos',
         dbgap: 'Número de acceso dbGaP',
         description: 'Descripción',
+        doi: {
+          label: 'DOI',
+          copyMessage: 'URL DOI copiada al portapapeles',
+          copyTooltip: 'Copiar URL DOI',
+        },
         experimental_platform: 'Plataforma experimental',
         experimental_strategy: 'Estrategia experimental',
         external_dataset_id: 'ID del conjunto de datos',
@@ -2132,6 +2137,11 @@ const es = {
       dbGaP: 'Número de acceso dbGaP',
       dbgap: 'dbGaP',
       description: 'Descripción',
+      doi: {
+        citation: 'Citación DOI',
+        copyMessage: 'Citación DOI copiada al portapapeles',
+        copyTooltip: 'Copiar citación DOI',
+      },
       domain: 'Dominio de investigación',
       domains: 'Dominio',
       expected_data_categories: 'Categoría de datos',

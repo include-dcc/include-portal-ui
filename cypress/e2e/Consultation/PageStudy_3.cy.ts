@@ -32,13 +32,18 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
     cy.get('[class*="PubModal_modalWrapper"]').should('exist');
   });
 
+  it('Lien DOI Citation du panneau Summary', () => {
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).find('[href]')
+      .should('have.attr', 'href').and('match', /https:\/\/doi.org\/10.71738\/p0a9-2v09/);
+  });
+
   it('Lien Virtual Biorepository Email du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(16).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).find('[href]')
       .should('have.attr', 'href', 'mailto:dsresearch@cuanschutz.edu');
   });
 
   it('Lien Virtual Biorepository URL du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).find('[href]')
       .should('have.attr', 'href', 'https://redcap.link/HTPVBRrequest');
   });
 
@@ -64,6 +69,11 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
   it('Lien Publication du panneau HTP Whole Blood RNAseq (2020)', () => {
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-content"]').eq(8).find('[href]')
       .should('have.attr', 'href').and('match', /https:\/\/pubmed.ncbi.nlm.nih.gov\/37379383(|\/)/);
+  });
+
+  it('Lien DOI du panneau HTP Whole Blood RNAseq (2020)', () => {
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-content"]').eq(9).find('[href]')
+      .should('have.attr', 'href').and('match', /https:\/\/doi.org\/10.71738\/n9tr-ba81/);
   });
 
   it('Lien Files de Gene Expression Quantifications du panneau Files', () => {

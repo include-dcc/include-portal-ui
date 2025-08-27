@@ -76,16 +76,22 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[data-icon="copy"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true});
     cy.get('div[class="ant-tooltip-inner"]').contains('Copy citation').should('exist');
     cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).contains('See more').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(14).contains('Principal Investigator').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).contains('Joaquin M. Espinosa').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(15).contains('Institution').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('Linda Crnic Institute for Down Syndrome').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(16).contains('Study Contact').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(16).contains('Angela Rachubinski; dsresearch@cuanschutz.edu').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(17).contains('Virtual Biorepository Email').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).contains('dsresearch@cuanschutz.edu').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(18).contains('Virtual Biorepository URL').should('exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).contains('https://redcap.link/HTPVBRrequest').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(14).contains('DOI Citation').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).contains('Espinosa J. The Human Trisome Project [Internet]. The INCLUDE Data Coordinating Center; 2022.').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).contains('https://doi.org/10.71738/p0a9-2v09.').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).find('[data-icon="copy"]').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).find('[data-icon="copy"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true});
+    cy.get('div[class="ant-tooltip-inner"]').contains('Copy DOI Citation').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(15).contains('Principal Investigator').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('Joaquin M. Espinosa').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(16).contains('Institution').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(16).contains('Linda Crnic Institute for Down Syndrome').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(17).contains('Study Contact').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(17).contains('Angela Rachubinski; dsresearch@cuanschutz.edu').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(18).contains('Virtual Biorepository Email').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).contains('dsresearch@cuanschutz.edu').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-label"]').eq(19).contains('Virtual Biorepository URL').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).contains('https://redcap.link/HTPVBRrequest').should('exist');
   });
 
   it('Panneau Statistic', () => {
@@ -170,6 +176,11 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-content"]').eq(8).find('[data-icon="copy"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true});
     cy.get('div[class="ant-tooltip-inner"]').contains('Copy citation').should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-content"]').eq(8).contains('See more').should('not.exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-label"]').eq(9).contains('DOI').should('exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-content"]').eq(9).contains('https://doi.org/10.71738/n9tr-ba81').should('exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-content"]').eq(9).find('[data-icon="copy"]').should('exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-content"]').eq(9).find('[data-icon="copy"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true});
+    cy.get('div[class="ant-tooltip-inner"]').contains('Copy DOI URL').should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class*="EntityDataset_rowCountCard"]').eq(0).find('g[id="family"]').should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class*="EntityDataset_rowCountCard"]').eq(0).contains(/^400$/).should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class*="EntityDataset_rowCountCard"]').eq(0).contains('Participants').should('exist');
