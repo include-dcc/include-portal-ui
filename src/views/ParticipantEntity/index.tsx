@@ -35,7 +35,7 @@ const ParticipantEntity = () => {
 
   return (
     <EntityPage
-      links={getLinks(showFamilyTable)}
+      links={getLinks(showFamilyTable, showMeasurementTable)}
       pageId={'participant-entity-page'}
       data={participant}
       loading={loading}
