@@ -23,6 +23,12 @@ export const GET_QUICK_FILTER_EXPLO = gql`
             doc_count
           }
         }
+        condition_source_texts {
+          buckets {
+            key
+            doc_count
+          }
+        }
         maxo__code {
           buckets {
             key
@@ -171,12 +177,6 @@ export const GET_QUICK_FILTER_EXPLO = gql`
           }
         }
         # Diagnosis
-        diagnosis__source_text {
-          buckets {
-            key
-            doc_count
-          }
-        }
         diagnosis__age_at_event_days {
           stats {
             count

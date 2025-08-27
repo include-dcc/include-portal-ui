@@ -1863,6 +1863,7 @@ const en = {
       source_text: 'Condition (Source Text)',
       source_text_tumor_location: 'Tumor Location (Source Text)',
     },
+    condition_source_texts: 'Condition (Source Text)',
     outcomes: {
       age_at_event_days: {
         value: 'Age at Vital Status (days)',
@@ -2165,6 +2166,7 @@ const en = {
       age_tooltip_diagnosis: 'Age at Diagnosis',
       age_tooltip_phenotype: 'Age at Phenotype',
       biospecimens: 'Biospecimens',
+      condition_source_texts: 'Condition (Source Text)',
       count: '{count, plural, =0 {Participant} =1 {Participant} other {Participants}}',
       dbgap: 'dbGaP',
       diagnosis: 'Diagnosis',

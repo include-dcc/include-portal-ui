@@ -148,6 +148,7 @@ export interface IParticipantEntity {
   person?: { person_id: string };
   measurements?: ArrangerResultsTree<IMeasurement>;
   maxo?: ArrangerResultsTree<IMaxo>;
+  condition_source_texts?: string[];
 }
 
 export type ITableParticipantEntity = IParticipantEntity & {

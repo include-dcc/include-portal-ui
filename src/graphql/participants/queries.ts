@@ -41,6 +41,7 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
             person {
               person_id
             }
+            condition_source_texts
 
             files {
               hits {
