@@ -111,7 +111,7 @@ export const filterGroups: {
             type={RemoteComponentList.HPOTree}
             field={'observed_phenotype'}
           />,
-          'diagnosis__source_text',
+          'condition_source_texts',
           'maxo__code',
           'diagnosis__age_at_event_days',
           'outcomes__age_at_event_days__value',

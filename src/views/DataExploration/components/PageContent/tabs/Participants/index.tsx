@@ -238,26 +238,19 @@ const getDefaultColumns = (): ProColumnType[] => [
       family_type ? intl.get(`entities.participant.${family_type}`) : TABLE_EMPTY_PLACE_HOLDER,
   },
   {
-    key: 'diagnosis.source_text',
-    title: intl.get('entities.participant.source_text'),
+    key: 'condition_source_texts',
+    dataIndex: 'condition_source_texts',
+    title: intl.get('entities.participant.condition_source_texts'),
     defaultHidden: true,
-    render: (participant: IParticipantEntity) => {
-      const mondoSourceTexts = (participant.diagnosis?.hits?.edges ?? []).map(
-        (m) => m.node.source_text,
-      );
-      const hpoSourceTexts = (participant.phenotype?.hits?.edges ?? []).map(
-        (m) => m.node.source_text,
-      );
-      const sourceTexts = [...mondoSourceTexts, ...hpoSourceTexts];
-
-      if (!sourceTexts || sourceTexts.length === 0) {
+    render: (condition_source_texts: string[]) => {
+      if (!condition_source_texts || condition_source_texts.length === 0) {
         return TABLE_EMPTY_PLACE_HOLDER;
       }
 
       return (
         <ExpandableCell
           nOfElementsWhenCollapsed={1}
-          dataSource={sourceTexts}
+          dataSource={condition_source_texts}
           renderItem={(sourceText, index): React.ReactNode => <div key={index}>{sourceText}</div>}
         />
       );

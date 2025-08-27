@@ -336,6 +336,7 @@ export const getFacetsDictionary = () => ({
   age_at_first_patient_engagement: {
     value: intl.get('facets.age_at_first_patient_engagement.value'),
   },
+  condition_source_texts: intl.get('facets.condition_source_texts'),
   mondo: {
     name: intl.get('facets.mondo.name'),
   },
