@@ -23,6 +23,12 @@ export const GET_QUICK_FILTER_EXPLO = gql`
             doc_count
           }
         }
+        maxo__code {
+          buckets {
+            key
+            doc_count
+          }
+        }
         family_type {
           buckets {
             key

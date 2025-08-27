@@ -286,6 +286,9 @@ export const getFacetsDictionary = () => ({
   sex: intl.get('facets.sex'),
   race: intl.get('facets.race'),
   ethnicity: intl.get('facets.ethnicity'),
+  maxo: {
+    code: intl.get('facets.maxo.code'),
+  },
   status: intl.get('facets.status'),
   parent_sample_type: intl.get('facets.parent_sample_type'),
   family_type: intl.get('facets.family_type'),

@@ -1895,6 +1895,9 @@ const en = {
     person: {
       person_id: 'Person ID',
     },
+    maxo: {
+      code: 'Intervention (MAxO)',
+    },
 
     // Biospecimen
     biospecimen_type: 'Biospecimen Type',
@@ -2182,6 +2185,7 @@ const en = {
       files: 'Files',
       hpo_term: 'HPO Term',
       hpo_term_tooltip: '# of participants with this exact HPO term',
+      maxo_code: 'Intervention (MAxO)',
       measurement: {
         title: 'Measurement',
         type: 'Type',

@@ -97,6 +97,17 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
                 }
               }
             }
+
+            maxo {
+              hits {
+                edges {
+                  node {
+                    code
+                    display
+                  }
+                }
+              }
+            }
           }
         }
       }
