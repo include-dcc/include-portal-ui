@@ -7,6 +7,18 @@
 
 ### Technical / Other changes
 -->
+## 2025-09-03 include-portal-ui 1.21.0
+### Features:
+[SJIP-1402](https://d3b.atlassian.net/browse/SJIP-1402) Feature: [Data Exploration] Added New Condition & Measurement Fields
+[SJIP-1405](https://d3b.atlassian.net/browse/SJIP-1405) Feature: [Data Exploration] Added Participant descendant term count to the tooltip of Most Frequent Diagnoses
+[SJIP-1409](https://d3b.atlassian.net/browse/SJIP-1409) Feature: [Study Entity] Added Analyze in Cavatica button across different datasets
+[SJIP-1417](https://d3b.atlassian.net/browse/SJIP-1417) Feature: [Study Entity] Added DOI to the Summary section and Dataset Section
+[SJIP-1418](https://d3b.atlassian.net/browse/SJIP-1418) Feature: [Data Exploration] Added MaxO facet and column
+### Technical/ Other changes:
+[SJIP-937](https://d3b.atlassian.net/browse/SJIP-937) Refactor: [Data Exploration] Combined phenotype source text and diagnosis source text into one condition source text in the table
+[SJIP-1401](https://d3b.atlassian.net/browse/SJIP-1401) Refactor: [Security] Upgraded axios from 0.24.0 to 1.8.3
+[SJIP-1408](https://d3b.atlassian.net/browse/SJIP-1408) Refactor: [Public study] Updated header to back to studies page
+
 ## 2025-07-17 include-portal-ui 1.20.0
 ### Features:
 [SJIP-1275](https://d3b.atlassian.net/browse/SJIP-1275) Feature: [Upset Plot] Added clickable bar to filter the query by phenotype co-occurrence
