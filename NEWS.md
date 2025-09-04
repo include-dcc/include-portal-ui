@@ -9,40 +9,40 @@
 -->
 ## 2025-09-03 include-portal-ui 1.21.0
 ### Features:
-[SJIP-1402](https://d3b.atlassian.net/browse/SJIP-1402) Feature: [Data Exploration] Added New Condition & Measurement Fields
-[SJIP-1405](https://d3b.atlassian.net/browse/SJIP-1405) Feature: [Data Exploration] Added Participant descendant term count to the tooltip of Most Frequent Diagnoses
-[SJIP-1409](https://d3b.atlassian.net/browse/SJIP-1409) Feature: [Study Entity] Added Analyze in Cavatica button across different datasets
-[SJIP-1417](https://d3b.atlassian.net/browse/SJIP-1417) Feature: [Study Entity] Added DOI to the Summary section and Dataset Section
-[SJIP-1418](https://d3b.atlassian.net/browse/SJIP-1418) Feature: [Data Exploration] Added MaxO facet and column
+- [SJIP-1402](https://d3b.atlassian.net/browse/SJIP-1402) Feature: [Data Exploration] Added New Condition & Measurement Fields
+- [SJIP-1405](https://d3b.atlassian.net/browse/SJIP-1405) Feature: [Data Exploration] Added Participant descendant term count to the tooltip of Most Frequent Diagnoses
+- [SJIP-1409](https://d3b.atlassian.net/browse/SJIP-1409) Feature: [Study Entity] Added Analyze in Cavatica button across different datasets
+- [SJIP-1417](https://d3b.atlassian.net/browse/SJIP-1417) Feature: [Study Entity] Added DOI to the Summary section and Dataset Section
+- [SJIP-1418](https://d3b.atlassian.net/browse/SJIP-1418) Feature: [Data Exploration] Added MaxO facet and column
 ### Technical/ Other changes:
-[SJIP-937](https://d3b.atlassian.net/browse/SJIP-937) Refactor: [Data Exploration] Combined phenotype source text and diagnosis source text into one condition source text in the table
-[SJIP-1401](https://d3b.atlassian.net/browse/SJIP-1401) Refactor: [Security] Upgraded axios from 0.24.0 to 1.8.3
-[SJIP-1408](https://d3b.atlassian.net/browse/SJIP-1408) Refactor: [Public study] Updated header to back to studies page
+- [SJIP-937](https://d3b.atlassian.net/browse/SJIP-937) Refactor: [Data Exploration] Combined phenotype source text and diagnosis source text into one condition source text in the table
+- [SJIP-1401](https://d3b.atlassian.net/browse/SJIP-1401) Refactor: [Security] Upgraded axios from 0.24.0 to 1.8.3
+- [SJIP-1408](https://d3b.atlassian.net/browse/SJIP-1408) Refactor: [Public study] Updated header to back to studies page
 
 ## 2025-07-17 include-portal-ui 1.20.0
 ### Features:
-[SJIP-1275](https://d3b.atlassian.net/browse/SJIP-1275) Feature: [Upset Plot] Added clickable bar to filter the query by phenotype co-occurrence
-[SJIP-1343](https://d3b.atlassian.net/browse/SJIP-1343) Feature: [Transcriptomics] Added Box select to box plot for sample gene expression
-[SJIP-1365](https://d3b.atlassian.net/browse/SJIP-1365) Feature: [Data Exploration] Added the concept of linked participants between research studies such as DS-Connect & DS-DETERMINED
-[SJIP-1371](https://d3b.atlassian.net/browse/SJIP-1371) Feature: [Landing Page] Implemented Public Study Entity Pages
-[SJIP-1389](https://d3b.atlassian.net/browse/SJIP-1389) Feature: [Participant Entity] Added column sorting to the biospecimen table
+- [SJIP-1275](https://d3b.atlassian.net/browse/SJIP-1275) Feature: [Upset Plot] Added clickable bar to filter the query by phenotype co-occurrence
+- [SJIP-1343](https://d3b.atlassian.net/browse/SJIP-1343) Feature: [Transcriptomics] Added Box select to box plot for sample gene expression
+- [SJIP-1365](https://d3b.atlassian.net/browse/SJIP-1365) Feature: [Data Exploration] Added the concept of linked participants between research studies such as DS-Connect & DS-DETERMINED
+- [SJIP-1371](https://d3b.atlassian.net/browse/SJIP-1371) Feature: [Landing Page] Implemented Public Study Entity Pages
+- [SJIP-1389](https://d3b.atlassian.net/browse/SJIP-1389) Feature: [Participant Entity] Added column sorting to the biospecimen table
 ### Technical/ Other changes:
-[SJIP-1177](https://d3b.atlassian.net/browse/SJIP-1177) Refactor: [Transcriptomic] Fixed dataset name in the transcriptomics app
-[SJIP-1317](https://d3b.atlassian.net/browse/SJIP-1317) Issue: [Analytics] Fixed minor issues in the set operations app
-[SJIP-1327](https://d3b.atlassian.net/browse/SJIP-1327) Issue: [Data Exploration] Fixed the results in the Age at First Patient Engagement chart after an applied filter on biospecimen and data files
-[SJIP-1330](https://d3b.atlassian.net/browse/SJIP-1330) Refactor: [Data Exploration] Updated hierarchical biospecimen view to automatically select a sample by default
-[SJIP-1332](https://d3b.atlassian.net/browse/SJIP-1332) Refactor: [Analytics] Hid Reset button when no adjustment has was applied to the input
-[SJIP-1333](https://d3b.atlassian.net/browse/SJIP-1333) Refactor: [Venn Diagram] Updated icons when applying the compare of a specific entity type
-[SJIP-1335](https://d3b.atlassian.net/browse/SJIP-1335) Refactor: [Data Exploration] Add Participant descendant term count to the tooltip of Most Frequent Diagnoses/Phenotypes
-[SJIP-1339](https://d3b.atlassian.net/browse/SJIP-1339) Refactor: [Summary View] Fixed graphs that were no longer responsive to screen resizing
-[SJIP-1345](https://d3b.atlassian.net/browse/SJIP-1345) Issue: [Summary View] Fixed the sample type counts of the chart
-[SJIP-1344](https://d3b.atlassian.net/browse/SJIP-1344) Refactor: [Dataset] Added an anchor for a specific dataset in the study entity page
-[SJIP-1347](https://d3b.atlassian.net/browse/SJIP-1347) Refactor: [Biospecimen Hierarchy] Fixed the Container ID tree not matching the container ID in the metadata table
-[SJIP-1350](https://d3b.atlassian.net/browse/SJIP-1350) Issue: [Summary] Fixed graphs not displaying the correct result when applying No data filter in the numerical facets
-[SJIP-1368](https://d3b.atlassian.net/browse/SJIP-1368) Refactor: [Sitewide] Update Browser Tab Titles for INCLUDE Data Hub instead of "Portal"
-[SJIP-1370](https://d3b.atlassian.net/browse/SJIP-1370) Issue: [Study Entity] Fixed truncated legend in the Demographics chart
-[SJIP-1379](https://d3b.atlassian.net/browse/SJIP-1379) Refactor: [Summary View & Study entity Statistics] Modified to download data representation
-[SJIP-1386](https://d3b.atlassian.net/browse/SJIP-1386) Refactor: [Studies] Added a total files entry in the studies table
+- [SJIP-1177](https://d3b.atlassian.net/browse/SJIP-1177) Refactor: [Transcriptomic] Fixed dataset name in the transcriptomics app
+- [SJIP-1317](https://d3b.atlassian.net/browse/SJIP-1317) Issue: [Analytics] Fixed minor issues in the set operations app
+- [SJIP-1327](https://d3b.atlassian.net/browse/SJIP-1327) Issue: [Data Exploration] Fixed the results in the Age at First Patient Engagement chart after an applied filter on biospecimen and data files
+- [SJIP-1330](https://d3b.atlassian.net/browse/SJIP-1330) Refactor: [Data Exploration] Updated hierarchical biospecimen view to automatically select a sample by default
+- [SJIP-1332](https://d3b.atlassian.net/browse/SJIP-1332) Refactor: [Analytics] Hid Reset button when no adjustment has was applied to the input
+- [SJIP-1333](https://d3b.atlassian.net/browse/SJIP-1333) Refactor: [Venn Diagram] Updated icons when applying the compare of a specific entity type
+- [SJIP-1335](https://d3b.atlassian.net/browse/SJIP-1335) Refactor: [Data Exploration] Add Participant descendant term count to the tooltip of Most Frequent Diagnoses/Phenotypes
+- [SJIP-1339](https://d3b.atlassian.net/browse/SJIP-1339) Refactor: [Summary View] Fixed graphs that were no longer responsive to screen resizing
+- [SJIP-1345](https://d3b.atlassian.net/browse/SJIP-1345) Issue: [Summary View] Fixed the sample type counts of the chart
+- [SJIP-1344](https://d3b.atlassian.net/browse/SJIP-1344) Refactor: [Dataset] Added an anchor for a specific dataset in the study entity page
+- [SJIP-1347](https://d3b.atlassian.net/browse/SJIP-1347) Refactor: [Biospecimen Hierarchy] Fixed the Container ID tree not matching the container ID in the metadata table
+- [SJIP-1350](https://d3b.atlassian.net/browse/SJIP-1350) Issue: [Summary] Fixed graphs not displaying the correct result when applying No data filter in the numerical facets
+- [SJIP-1368](https://d3b.atlassian.net/browse/SJIP-1368) Refactor: [Sitewide] Update Browser Tab Titles for INCLUDE Data Hub instead of "Portal"
+- [SJIP-1370](https://d3b.atlassian.net/browse/SJIP-1370) Issue: [Study Entity] Fixed truncated legend in the Demographics chart
+- [SJIP-1379](https://d3b.atlassian.net/browse/SJIP-1379) Refactor: [Summary View & Study entity Statistics] Modified to download data representation
+- [SJIP-1386](https://d3b.atlassian.net/browse/SJIP-1386) Refactor: [Studies] Added a total files entry in the studies table
 
 ## 2025-04-15 include-portal-ui 1.18.0
 
