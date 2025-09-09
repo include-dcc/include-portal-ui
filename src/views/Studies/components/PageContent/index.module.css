@@ -10,6 +10,11 @@
 .pageContent .label {
   margin-bottom: 8px;
 }
+.pageContent .headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .pageContent .inputContainer {
   display: flex;
   gap: 8px;

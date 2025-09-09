@@ -1,8 +1,9 @@
-import React from 'react';
 import intl from 'react-intl-universal';
 import CloudArchitectureIcon from '@ferlab/ui/core/components/Icons/FuturoSpot/CloudArchitectureSpotIcon';
 import InformationIcon from '@ferlab/ui/core/components/Icons/FuturoSpot/InformationSpotIcon';
 import BannerItem from '@ferlab/ui/core/pages/LandingPage/BannerItem';
+
+import CitationGuidelines from 'components/CitationGuidelines';
 
 import styles from './index.module.css';
 
@@ -22,6 +23,7 @@ const InfoBanner = () => (
           href: 'https://help.includedcc.org/docs/quick-start-guide',
           target: '_blank',
         }}
+        additionalButtons={[<CitationGuidelines type="ghost" size="large" placement="top" />]}
       />
       <BannerItem
         IconComponent={CloudArchitectureIcon}

@@ -30,6 +30,7 @@ import { IStudyEntity } from 'graphql/studies/models';
 import { cloneDeep } from 'lodash';
 
 import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
+import CitationGuidelines from 'components/CitationGuidelines';
 import { trackCavaticaAction } from 'services/analytics';
 import { CavaticaApi } from 'services/api/cavatica';
 import { ICavaticaCreateProjectBody } from 'services/api/cavatica/models';
@@ -221,10 +222,12 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
 
   return (
     <Space direction="vertical" size={16} className={styles.pageContent}>
-      <Title className={styles.title} level={4}>
-        {intl.get('screen.studies.title')}
-      </Title>
-
+      <div className={styles.headerTop}>
+        <Title className={styles.title} level={4}>
+          {intl.get('screen.studies.title')}
+        </Title>
+        <CitationGuidelines type="ghost" placement="bottomLeft" />
+      </div>
       <div className={styles.patientContentHeader}>
         <ProLabel className={styles.label} title={intl.get('screen.studies.searchLabel.title')} />
         <div className={styles.inputContainer}>

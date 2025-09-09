@@ -1,0 +1,27 @@
+.citationContent {
+  max-width: 550px;
+  padding: 4px 0;
+}
+
+.citationPopover .ant-popover-inner {
+  border-radius: 8px;
+}
+
+.readMoreLink {
+  font-weight: 500;
+  text-decoration: underline !important;
+}
+
+.readMoreLink:hover {
+  text-decoration: underline !important;
+}
+
+.citationText {
+  font-style: italic;
+  background-color: var(--gray-3);
+  padding: 12px;
+  border-left: 4px solid var(--blue-6);
+  border-radius: 4px;
+  display: block;
+  white-space: pre-line;
+}
