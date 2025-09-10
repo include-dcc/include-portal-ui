@@ -76,7 +76,7 @@
     "@types/http-errors": "^1.8.2",
     "@types/jest": "^27.0.2",
     "@types/loadable__component": "^5.13.9",
-    "@types/lodash": "^4.17.16",
+    "@types/lodash": "^4.17.18",
     "@types/md5": "^2.3.5",
     "@types/node": "^16.18.126",
     "@types/react-highlight-words": "^0.20.0",
