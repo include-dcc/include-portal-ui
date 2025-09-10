@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import Footer from '@ferlab/ui/core/pages/LandingPage/Footer';
 import { getFTEnvVarByKey } from 'helpers/EnvVariables';
@@ -44,7 +45,7 @@ const Login = () => {
         <TopBanner />
         <StudiesSection />
         <CardsSection />
-        <Footer logos={footerLogos} />
+        <Footer logos={footerLogos} policies={intl.get('footer.policies.text')} />
       </div>
     </>
   );

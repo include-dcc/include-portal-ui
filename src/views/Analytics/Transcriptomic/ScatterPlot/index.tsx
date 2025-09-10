@@ -71,13 +71,17 @@ const ScatterPlotly = ({
       x: 0.99,
     },
     xaxis: {
-      title: intl.get('screen.analytics.transcriptomic.scatterPlot.xAxisTitle'),
-      titlefont: { size: 14 },
+      title: {
+        text: intl.get('screen.analytics.transcriptomic.scatterPlot.xAxisTitle'),
+        font: { size: 14 },
+      },
       tickfont: { size: 12 },
     },
     yaxis: {
-      title: intl.get('screen.analytics.transcriptomic.scatterPlot.yAxisTitle'),
-      titlefont: { size: 14 },
+      title: {
+        text: intl.get('screen.analytics.transcriptomic.scatterPlot.yAxisTitle'),
+        font: { size: 14 },
+      },
       tickfont: { size: 12 },
       automargin: true,
     },

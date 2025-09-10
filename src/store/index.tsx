@@ -15,7 +15,6 @@ import RemoteReducer from 'store/remote';
 import ReportReducer from 'store/report';
 import SavedFilterReducer from 'store/savedFilter';
 import SavedSetReducer from 'store/savedSet';
-import { RootState } from 'store/types';
 import UpsetReducer from 'store/upset';
 import UserReducer from 'store/user';
 import VennReducer from 'store/venn';
@@ -29,7 +28,7 @@ const persistConfig = {
   transforms: [createFilter('global', ['lang'])],
 };
 
-const rootReducer = combineReducers<RootState>({
+const rootReducer = combineReducers({
   global: GlobalReducer,
   user: UserReducer,
   report: ReportReducer,
@@ -44,7 +43,7 @@ const rootReducer = combineReducers<RootState>({
 });
 
 const store = configureStore({
-  reducer: persistReducer(persistConfig, rootReducer),
+  reducer: persistReducer(persistConfig, rootReducer as any),
   devTools: devMode,
   middleware: (getDefaultMiddleware) => {
     const defaultMid = getDefaultMiddleware({
