@@ -247,7 +247,9 @@ const SwarmPlotly = ({
           x: 0.99,
         },
         yaxis: {
-          title: intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm'),
+          title: {
+            text: intl.get('screen.analytics.transcriptomic.swarmPlot.fpkm'),
+          },
         },
         xaxis: {
           tickvals: [1, 2],

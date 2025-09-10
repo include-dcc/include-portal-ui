@@ -683,6 +683,8 @@ const fr = {
     //Other
     collection_sample_type: 'Collection Sample Type',
   },
+  'footer.policies.text':
+    'Le Centre de coordination des données INCLUDE (DCC) est soutenu par le projet INCLUDE des National Institutes of Health sous le numéro de projet U2CHL156291 administré par le National Heart, Lung and Blood Institute. Tout le contenu, les termes et conditions et les politiques associés au contenu et au site Web du DCC INCLUDE (les "Services") sont produits par le DCC INCLUDE. Les opinions et points de vue des auteurs exprimés sur les Services ne reflètent pas nécessairement',
 };
 
 export default fr;
