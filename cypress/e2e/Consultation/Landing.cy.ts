@@ -175,5 +175,6 @@ describe('Page Landing - Vérifier les informations affichées', () => {
     cy.get('[src*="/static/media/vanderbilt-logo."]').should('exist');
     cy.get('[src*="/static/media/chusj-logo."]').should('exist');
     cy.get('[src*="image/png"]').should('exist');
+    cy.get('[class*="Footer_policiesText"]').contains('The INCLUDE Data Coordinating Center (DCC) is supported by the National Institutes of Health INCLUDE Project under Project Number U2CHL156291 administered by the National Heart, Lung and Blood Institute. All content, terms and conditions and policies associated with the INCLUDE DCC content and website (the "Services") are produced by the INCLUDE DCC. The views and opinions of authors expressed on the Services do not necessarily state or reflect those of the National Institutes of Health ("NIH") or the U.S. government. Furthermore, the NIH does not endorse or promote any INCLUDE DCC entity or any of its products or services nor guarantees the products, services, or information provided by the INCLUDE DCC.').should('exist');
   });
 });

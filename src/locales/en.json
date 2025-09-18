@@ -136,7 +136,7 @@
   "filters.options.variant_class.substitution": "Substitution",
   "footer.navigation.fhir": "Fhir",
   "footer.navigation.zepplin": "Zeppelin",
-  "footer.policies.text": "The INCLUDE Data Coordinating Center (DCC) is supported by the National Institutes of Health INCLUDE Project under Project Number U2CHL156291 administered by the National Heart, Lung and Blood Institute. All content, terms and conditions and policies associated with the INCLUDE DCC content and website (the \"Services\") are produced by the INCLUDE DCC. The views and opinions of authors expressed on the Services do not necessarily",
+  "footer.policies.text": "The INCLUDE Data Coordinating Center (DCC) is supported by the National Institutes of Health INCLUDE Project under Project Number U2CHL156291 administered by the National Heart, Lung and Blood Institute. All content, terms and conditions and policies associated with the INCLUDE DCC content and website (the \"Services\") are produced by the INCLUDE DCC. The views and opinions of authors expressed on the Services do not necessarily state or reflect those of the National Institutes of Health (\"NIH\") or the U.S. government. Furthermore, the NIH does not endorse or promote any INCLUDE DCC entity or any of its products or services nor guarantees the products, services, or information provided by the INCLUDE DCC.",
   "global.errors.backHome": "Go to home page",
   "global.search.genes.emptyText": "No gene found",
   "global.search.genes.placeholder": "e.g. BRAF, ENSG00000157764",

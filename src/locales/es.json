@@ -136,7 +136,7 @@
   "filters.options.variant_class.substitution": "Sustitución",
   "footer.navigation.fhir": "Fhir",
   "footer.navigation.zepplin": "Zeppelin",
-  "footer.policies.text": "El Centro de Coordinación de Datos INCLUDE (DCC) está respaldado por el Proyecto INCLUDE de los Institutos Nacionales de Salud bajo el Número de Proyecto U2CHL156291 administrado por el Instituto Nacional del Corazón, Pulmón y Sangre. Todo el contenido, términos y condiciones y políticas asociadas con el contenido y sitio web del DCC INCLUDE (los \"Servicios\") son producidos por el DCC INCLUDE. Las opiniones y puntos de vista de los autores expresados en los Servicios no necesariamente",
+  "footer.policies.text": "El Centro de Coordinación de Datos INCLUDE (DCC) está respaldado por el Proyecto INCLUDE de los Institutos Nacionales de Salud bajo el Número de Proyecto U2CHL156291 administrado por el Instituto Nacional del Corazón, Pulmón y Sangre. Todo el contenido, términos y condiciones y políticas asociadas con el contenido y sitio web del DCC INCLUDE (los \"Servicios\") son producidos por el DCC INCLUDE. Las opiniones y puntos de vista de los autores expresados en los Servicios no necesariamente reflejan los de los Institutos Nacionales de Salud (\"NIH\") o el gobierno de los Estados Unidos. Además, el NIH no respalda ni promueve ninguna entidad del DCC INCLUDE ni ninguno de sus productos o servicios, ni garantiza los productos, servicios o información proporcionados por el DCC INCLUDE.",
   "global.errors.backHome": "Ir a la página de inicio",
   "global.search.genes.emptyText": "No se encontró el gen",
   "global.search.genes.placeholder": "Ej. BRAF, ENSG00000157764",
