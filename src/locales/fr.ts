@@ -691,7 +691,7 @@ const fr = {
   'components.citationGuidelines.intro':
     'Si vous utilisez des données du Hub de données INCLUDE, veuillez les citer comme suit :',
   'components.citationGuidelines.statement':
-    '"Les résultats [analysés/publiés/montrés] ici ont été réalisés avec des données accessibles via le Hub de données INCLUDE (INvestigation of Co-occurring conditions across the Lifespan to Understand Down syndrome) (Hub de données INCLUDE) soutenu par la subvention U2CHL156291 de l\'Institut national du cœur, des poumons et du sang. Les données ont été générées par les études suivantes : [lister les codes d\'étude (p. ex. HTP, DSC, etc.)]."',
+    '"Les résultats [analysés/publiés/montrés] ici ont été réalisés avec des données accessibles via le Hub de données INCLUDE (INvestigation of Co-occurring conditions across the Lifespan to Understand Down syndrome) (<a href="https://portal.includedcc.org/public-studies" target="_blank" rel="noopener noreferrer">https://portal.includedcc.org/public-studies</a>), soutenu par la subvention U2CHL156291 de l\'Institut national du cœur, des poumons et du sang. Les données ont été générées par les études suivantes : [lister les codes d\'étude (p. ex. HTP, DSC, etc.)]."',
   'components.citationGuidelines.readMore': 'En savoir plus sur les directives de citation',
 };
 
