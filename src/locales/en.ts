@@ -1898,6 +1898,7 @@ const en = {
     },
     maxo: {
       code: 'Intervention (MAxO)',
+      formatted: 'Intervention (MAxO)',
     },
 
     // Biospecimen

@@ -272,15 +272,15 @@ const getDefaultColumns = (): ProColumnType[] => [
           nOfElementsWhenCollapsed={1}
           dataSource={maxos}
           renderItem={(maxo, index): React.ReactNode =>
-            maxo.display ? (
+            maxo.formatted ? (
               <div key={index}>
-                {capitalize(maxo.display)} (MAxO:{' '}
+                {capitalize(`${maxo.display} (MAXO:`)}
                 <ExternalLink
-                  href={`http://purl.obolibrary.org/obo/MAXO_${maxo.code?.slice('MAXO:'.length)}`}
+                  href={`http://purl.obolibrary.org/obo/MAXO_${maxo.code?.split(':')[1]}`}
                 >
-                  {maxo.code?.slice('MAXO:'.length)}
+                  {maxo.code?.split(':')[1]}
                 </ExternalLink>
-                )
+                {`)`}
               </div>
             ) : (
               TABLE_EMPTY_PLACE_HOLDER

@@ -1763,6 +1763,7 @@ const es = {
     },
     maxo: {
       code: 'Intervention (MAxO)',
+      formatted: 'Intervención (MAxO)',
     },
 
     // Muestras biológicas

@@ -29,7 +29,7 @@ export const GET_QUICK_FILTER_EXPLO = gql`
             doc_count
           }
         }
-        maxo__code {
+        maxo__formatted {
           buckets {
             key
             doc_count
