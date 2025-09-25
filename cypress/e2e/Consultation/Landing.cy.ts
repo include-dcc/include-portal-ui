@@ -162,6 +162,7 @@ describe('Page Landing - Vérifier les informations affichées', () => {
     cy.get('[class*="BannerItem_container"]').eq(0).find('[class*="TextIcon_title"]').contains('INCLUDE Documentation Center').should('exist');
     cy.get('[class*="BannerItem_container"]').eq(0).contains('For information on accessing, submitting and uploading data, visit our Documentation Center.').should('exist');
     cy.get('[class*="BannerItem_container"]').eq(0).find('[href="https://help.includedcc.org/docs/quick-start-guide"]').contains('Documentation').should('exist');
+    cy.get('[class*="BannerItem_container"]').eq(0).find('[type="button"]').contains('Citation guidelines').should('exist');
 
     cy.get('[class*="BannerItem_container"]').eq(1).find('[id="cloud-architecture"]').should('exist');
     cy.get('[class*="BannerItem_container"]').eq(1).find('[class*="TextIcon_title"]').contains('Participate in the INCLUDE Project').should('exist');
