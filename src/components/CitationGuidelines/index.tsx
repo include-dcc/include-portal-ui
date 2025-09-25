@@ -7,7 +7,7 @@ import { ButtonProps } from 'antd/lib/button';
 
 import styles from './index.module.css';
 
-const { Text, Paragraph, Title } = Typography;
+const { Text, Paragraph } = Typography;
 
 interface CitationGuidelinesProps extends Omit<ButtonProps, 'onClick'> {
   buttonText?: string;
@@ -25,9 +25,7 @@ const CitationGuidelines: React.FC<CitationGuidelinesProps> = ({
   const citationContent = (
     <div className={styles.citationContent}>
       <Space direction="vertical" size={16}>
-        <Paragraph>
-          <Title>{intl.get('components.citationGuidelines.intro')}</Title>
-        </Paragraph>
+        <Text>{intl.get('components.citationGuidelines.intro')}</Text>
         <Paragraph>
           <Text>
             <span

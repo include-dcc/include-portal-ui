@@ -525,6 +525,14 @@ const es = {
         },
       },
     },
+    citationGuidelines: {
+      title: 'Directrices de citación',
+      buttonText: 'Directrices de citación',
+      intro: 'Si utiliza datos del Hub de Datos INCLUDE, por favor cite de la siguiente manera:',
+      statement:
+        'Los resultados [analizados/publicados/mostrados] aquí se realizaron con datos accedidos a través del Hub de Datos INCLUDE (INvestigation of Co-occurring conditions across the Lifespan to Understand Down syndromE) (<a href="https://portal.includedcc.org/public-studies" target="_blank" rel="noopener noreferrer">https://portal.includedcc.org/public-studies</a>) apoyado por la subvención U2CHL156291 del Instituto Nacional del Corazón, los Pulmones y la Sangre. Los datos fueron generados por los siguientes estudios: [listar códigos de estudio (ej. HTP, DSC, etc.)].',
+      readMore: 'Leer más sobre las directrices de citación',
+    },
   },
   // LAYOUT
   layout: {

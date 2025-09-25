@@ -612,10 +612,5 @@
   "upload.gene.ids.modal.upload.file.btn": "Subir un archivo",
   "upload.gene.ids.modal.clear.btn": "Borrar",
   "upload.gene.ids.modal.cancel.btn": "Cancelar",
-  "upload.gene.ids.modal.empty.table": "Sin datos",
-  "components.citationGuidelines.title": "Directrices de citación",
-  "components.citationGuidelines.buttonText": "Directrices de citación",
-  "components.citationGuidelines.intro": "Si utiliza datos del Hub de Datos INCLUDE, por favor cite de la siguiente manera:",
-  "components.citationGuidelines.statement": "\"Los resultados [analizados/publicados/mostrados] aquí se realizaron con datos accedidos a través del Hub de Datos INCLUDE (INvestigation of Co-occurring conditions across the Lifespan to Understand Down syndrome) (Hub de Datos INCLUDE) apoyado por la subvención U2CHL156291 del Instituto Nacional del Corazón, los Pulmones y la Sangre. Los datos fueron generados por los siguientes estudios: [listar códigos de estudio (ej. HTP, DSC, etc.)].\"",
-  "components.citationGuidelines.readMore": "Leer más sobre las directrices de citación"
+  "upload.gene.ids.modal.empty.table": "Sin datos"
 }
