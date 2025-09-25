@@ -274,7 +274,7 @@ const getDefaultColumns = (): ProColumnType[] => [
           renderItem={(maxo, index): React.ReactNode =>
             maxo.formatted ? (
               <div key={index}>
-                {capitalize(`${maxo.display} (MAXO:`)}
+                {`${capitalize(maxo.display)} (MAxO:`}
                 <ExternalLink
                   href={`http://purl.obolibrary.org/obo/MAXO_${maxo.code?.split(':')[1]}`}
                 >
