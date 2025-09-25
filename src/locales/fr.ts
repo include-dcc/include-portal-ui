@@ -338,6 +338,15 @@ const fr = {
         },
       },
     },
+    citationGuidelines: {
+      title: 'Directives de citation',
+      buttonText: 'Directives de citation',
+      intro:
+        'Si vous utilisez des données du Hub de données INCLUDE, veuillez les citer comme suit :',
+      statement:
+        'Les résultats [analysés/publiés/montrés] ici ont été réalisés avec des données accessibles via le Hub de données INCLUDE (INvestigation of Co-occurring conditions across the Lifespan to Understand Down syndromE) (<a href="https://portal.includedcc.org/public-studies" target="_blank" rel="noopener noreferrer">https://portal.includedcc.org/public-studies</a>), soutenu par la subvention U2CHL156291 de l\'Institut national du cœur, des poumons et du sang. Les données ont été générées par les études suivantes : [lister les codes d\'étude (p. ex. HTP, DSC, etc.)].',
+      readMore: 'En savoir plus sur les directives de citation',
+    },
   },
   // LAYOUT
   layout: {
@@ -683,8 +692,11 @@ const fr = {
     //Other
     collection_sample_type: 'Collection Sample Type',
   },
-  'footer.policies.text':
-    'Le Centre de coordination des données INCLUDE (DCC) est soutenu par le projet INCLUDE des National Institutes of Health sous le numéro de projet U2CHL156291 administré par le National Heart, Lung and Blood Institute. Tout le contenu, les termes et conditions et les politiques associés au contenu et au site Web du DCC INCLUDE (les "Services") sont produits par le DCC INCLUDE. Les opinions et points de vue des auteurs exprimés sur les Services ne reflètent pas nécessairement ceux des National Institutes of Health ("NIH") ou du gouvernement américain. De plus, le NIH n\'endosse ni ne promeut aucune entité du DCC INCLUDE ou l\'un de ses produits ou services, ni ne garantit les produits, services ou informations fournis par le DCC INCLUDE.',
+  footer: {
+    policies: {
+      text: 'Le Centre de coordination des données INCLUDE (DCC) est soutenu par le projet INCLUDE des National Institutes of Health sous le numéro de projet U2CHL156291 administré par le National Heart, Lung and Blood Institute. Tout le contenu, les termes et conditions et les politiques associés au contenu et au site Web du DCC INCLUDE (les "Services") sont produits par le DCC INCLUDE. Les opinions et points de vue des auteurs exprimés sur les Services ne reflètent pas nécessairement ceux des National Institutes of Health ("NIH") ou du gouvernement américain. De plus, le NIH n\'endosse ni ne promeut aucune entité du DCC INCLUDE ou l\'un de ses produits ou services, ni ne garantit les produits, services ou informations fournis par le DCC INCLUDE.',
+    },
+  },
 };
 
 export default fr;
