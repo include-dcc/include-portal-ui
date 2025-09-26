@@ -288,6 +288,7 @@ export const getFacetsDictionary = () => ({
   ethnicity: intl.get('facets.ethnicity'),
   maxo: {
     code: intl.get('facets.maxo.code'),
+    formatted: intl.get('facets.maxo.formatted')
   },
   status: intl.get('facets.status'),
   parent_sample_type: intl.get('facets.parent_sample_type'),

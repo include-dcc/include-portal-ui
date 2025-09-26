@@ -105,6 +105,7 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
                   node {
                     code
                     display
+                    formatted
                   }
                 }
               }

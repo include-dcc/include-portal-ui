@@ -114,6 +114,7 @@ export interface IMaxo {
   id: string;
   code: string;
   display: string;
+  formatted: string;
 }
 
 export interface IParticipantEntity {

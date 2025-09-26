@@ -112,7 +112,7 @@ export const filterGroups: {
             field={'observed_phenotype'}
           />,
           'condition_source_texts',
-          'maxo__code',
+          'maxo__formatted',
           'diagnosis__age_at_event_days',
           'outcomes__age_at_event_days__value',
           'observed_phenotype__age_at_event_days',
