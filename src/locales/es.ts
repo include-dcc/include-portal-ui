@@ -2044,6 +2044,7 @@ const es = {
       age_tooltip_phenotype: 'Edad en el fenotipo',
       biospecimens: 'Biospecímenes',
       condition_source_texts: 'Condición (Texto Fuente)',
+      'control only': 'Sólo control',
       count: '{count, plural, =0 {Participante} =1 {Participante} other {Participantes}}',
       dbgap: 'dbGaP',
       diagnosis: 'Diagnóstico',
