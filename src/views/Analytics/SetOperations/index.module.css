@@ -29,6 +29,12 @@
 }
 .noSetDescription {
   color: var(--gray-7);
+  a {
+    text-decoration: underline;
+  }
+}
+.noSetDescription > a {
+  text-decoration: none;
 }
 
 .selectSetForm {
