@@ -1678,6 +1678,88 @@ const es = {
             'HTP Whole Blood RNAseq (v1) es un conjunto de datos generado como parte del Proyecto Humano de Trisomía (HTP), que se centra en las características genéticas y moleculares de individuos con condiciones trisómicas, incluido el síndrome de Down. Este conjunto de datos consiste en datos de secuenciación de ARN (RNAseq) derivados de muestras de sangre entera, capturando perfiles transcriptómicos de alta capacidad (HTP). La primera versión (v1) incluye datos de expresión génica basal, con un enfoque en la comprensión de la expresión génica diferencial, el empalme alternativo y el análisis de vías entre muestras. Se utiliza para estudios comparativos entre poblaciones trisómicas y euploides para identificar posibles biomarcadores y objetivos terapéuticos.',
         },
       },
+      setOperations: {
+        title: 'Operaciones de Conjuntos',
+        description:
+          'Visualiza las intersecciones entre cohortes virtuales guardadas como conjuntos del mismo tipo utilizando un diagrama de Venn interactivo.',
+        tags: {
+          clinical: 'Clínico',
+          genomics: 'Genómica',
+        },
+        noSet: {
+          title: 'No hay conjuntos para comparar',
+          description:
+            'Necesitas al menos dos conjuntos guardados de ID de entidades (por ejemplo, dos conjuntos de participantes) para usar esta herramienta. Puedes crear conjuntos guardados en la parte superior de la tabla de resultados en las páginas de <a href="{dataExploration}">Exploración de Datos</a> y <a href="{variantExploration}">Exploración de Variantes</a>.',
+        },
+        selectSet: {
+          title: 'Selecciona dos o tres conjuntos para comenzar',
+          descriptionVenn:
+            'Visualiza las intersecciones entre conjuntos guardados utilizando un diagrama de Venn interactivo.',
+          descriptionSet:
+            'Ver tus conjuntos guardados en el <a href="{dashboard}">Panel de control</a>.',
+          entityType: {
+            label: 'Tipo de entidad',
+            placeholder: 'Seleccionar',
+            participants: 'Participantes',
+            biospecimens: 'Biospecímenes',
+            files: 'Archivos de Datos',
+            variants: 'Variantes',
+            disabledTooltip: 'No hay conjuntos para comparar',
+          },
+          sets: {
+            label: 'Conjuntos',
+            placeholder: 'Seleccionar',
+          },
+          compare: 'Comparar',
+          compareDisabledTooltip: 'Disponible con 2 o 3 conjuntos seleccionados',
+          resetTooltip: 'Restablecer',
+        },
+        venn: {
+          query: {
+            title: 'Conjuntos Seleccionados',
+            column: 'Definición del conjunto',
+          },
+          set: {
+            title: 'Definiciones de Conjuntos',
+            column: 'Definición del conjunto',
+            footer: 'Unión de conjuntos seleccionados:',
+            tooltipDataExplo: 'Ver en exploración de datos',
+            tooltipVariantExplo: 'Ver en exploración de variantes',
+            max: 'áx. 10,000 a la vez',
+          },
+          save: {
+            nameTemplate: 'Conjunto combinado',
+            cancel: 'Cancelar',
+            checkbox: {
+              label: 'Guardar este conjunto para referencia futura',
+              tooltips:
+                'Un conjunto guardado es una colección de uno o más ID de entidades que se puede guardar y volver a visitar para su uso posterior',
+            },
+            label: 'Nombre del conjunto',
+            alreadyExist: 'Ya existe un conjunto con este nombre',
+            ok: 'Ver conjunto',
+            entity: {
+              participants:
+                'Has seleccionado {count, plural, =0 {# participante} =1 {# participante} other {# participantes}}',
+              biospecimens:
+                'Has seleccionado {count, plural, =0 {# biospecimen} =1 {# biospecimen} other {# biospecimens}}',
+              files:
+                'Has seleccionado {count, plural, =0 {# archivo de datos} =1 {# archivo de datos} other {# archivos de datos}}',
+              variants:
+                'Has seleccionado {count, plural, =0 {# variante} =1 {# variante} other {# variantes}}',
+            },
+            titleData: 'Ver en exploración de datos',
+            titleVariant: 'Ver en exploración de variantes',
+          },
+          count: 'Contar :',
+          biospecimens: 'Biospecímenes',
+          files: 'Archivos de Datos',
+          participants: 'Participantes',
+          variants: 'Variantes',
+          title: 'Operaciones de Conjuntos',
+          ok: 'Cerrar',
+        },
+      },
     },
     participantEntity: {
       personPopover: {
