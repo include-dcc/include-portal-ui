@@ -296,16 +296,18 @@ const getDefaultColumns = (): ProColumnType[] => [
     dataIndex: 'diagnosis',
     className: styles.diagnosisCell,
     render: (mondo: ArrangerResultsTree<IParticipantDiagnosis>) => {
-      const mondoNames = mondo?.hits?.edges.map((m) => m.node.mondo_display_term);
+      const mondoNames = new Set(
+        mondo?.hits?.edges.map((m) => m.node.mondo_display_term).filter((name) => name !== null),
+      );
 
-      if (!mondoNames || mondoNames.length === 0) {
+      if (!mondoNames || mondoNames.size === 0) {
         return TABLE_EMPTY_PLACE_HOLDER;
       }
 
       return (
         <ExpandableCell
           nOfElementsWhenCollapsed={1}
-          dataSource={mondoNames}
+          dataSource={Array.from(mondoNames)}
           renderItem={(mondo_id, index): React.ReactNode => {
             const mondoInfo = extractMondoTitleAndCode(mondo_id);
 
