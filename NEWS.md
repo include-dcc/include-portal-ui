@@ -7,6 +7,18 @@
 
 ### Technical / Other changes
 -->
+## 2025-10-02 include-portal-ui 1.22.0
+
+### Features:
+- [SJIP-1420](https://d3b.atlassian.net/browse/SJIP-1420) Feature: [Landing & Studies] Added button for information about INCLUDE Citation Statements
+- [SJIP-1422](https://d3b.atlassian.net/browse/SJIP-1422) Feature: [Landing page] Added policies as a footer
+### Technical/ Other changes:
+- [SJIP-656](https://d3b.atlassian.net/browse/SJIP-656) Fix: [Data Exploration] Fixed missing display of the value control-only in the Family Unit field
+- [SJIP-1341](https://d3b.atlassian.net/browse/SJIP-1341) Refactor: [Saved Set] Transformed all sets to public
+- [SJIP-1419](https://d3b.atlassian.net/browse/SJIP-1419) Fix: [Quick Filter] Fixed the search for values on the MAxO Code
+- [SJIP-1433](https://d3b.atlassian.net/browse/SJIP-1433) Refactor: [Analytics] Removed underline from hyperlink upon mouse hover
+- [SJIP-1434](https://d3b.atlassian.net/browse/SJIP-1434) Refactor: [Data Exploration] Formatted the MAxO display in the facet to include the term and MAxO code
+
 ## 2025-09-03 include-portal-ui 1.21.0
 ### Features:
 - [SJIP-1402](https://d3b.atlassian.net/browse/SJIP-1402) Feature: [Data Exploration] Added New Condition & Measurement Fields
