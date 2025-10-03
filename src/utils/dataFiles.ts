@@ -1,5 +1,5 @@
 import { FileAccessType, IFileEntity } from 'graphql/files/models';
-import { intersection } from 'lodash';
+import { cloneDeep, intersection } from 'lodash';
 
 const STUDIES_CONTROLLED_AS_REGISTERED_RULES = ['X01-Hakonarson', 'X01-deSmith'];
 
@@ -14,7 +14,7 @@ export const userHasAccessToFile = (
   }
 
   // @see https://d3b.atlassian.net/browse/SJIP-932
-  const fileAccess = file;
+  const fileAccess = cloneDeep(file);
   if (STUDIES_CONTROLLED_AS_REGISTERED_RULES.includes(fileAccess.study.study_code)) {
     fileAccess.controlled_access = FileAccessType.REGISTERED;
   }
