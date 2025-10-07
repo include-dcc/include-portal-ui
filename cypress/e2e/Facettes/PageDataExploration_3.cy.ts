@@ -46,7 +46,7 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.validateFacetRank(1, 'Dataset');
   });
 
-  it('Data Category - Genomics', () => {
+  it('Data Category - Genomics [SJIP-1450]', () => {
     cy.validateFacetFilter('Data Category', 'Genomics', 'Genomics', /\d{1}/);
     cy.validateFacetRank(2, 'Data Category');
   });
