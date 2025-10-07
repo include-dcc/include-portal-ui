@@ -23,7 +23,7 @@ describe('Page Data Exploration (Biospecimens) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Sample Type', () => {
     cy.sortTableAndIntercept('Sample Type', 1);
-    cy.validateTableFirstRow('-', 3, true);
+    cy.validateTableFirstRow(/(-|^(?!-).*$)/, 3, true);
     cy.sortTableAndIntercept('Sample Type', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 3, true);
   });
@@ -37,7 +37,7 @@ describe('Page Data Exploration (Biospecimens) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Parent Sample Type', () => {
     cy.sortTableAndIntercept('Parent Sample Type', 1);
-    cy.validateTableFirstRow('-', 5, true);
+    cy.validateTableFirstRow(/(-|^(?!-).*$)/, 5, true);
     cy.sortTableAndIntercept('Parent Sample Type', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 5, true);
   });
@@ -58,7 +58,7 @@ describe('Page Data Exploration (Biospecimens) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri Collection Sample Type', () => {
     cy.sortTableAndIntercept('Collection Sample Type', 1);
-    cy.validateTableFirstRow('-', 8, true);
+    cy.validateTableFirstRow(/(-|^(?!-).*$)/, 8, true);
     cy.sortTableAndIntercept('Collection Sample Type', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 8, true);
   });

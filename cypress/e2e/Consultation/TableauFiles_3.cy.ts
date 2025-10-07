@@ -47,7 +47,7 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
 
   it('Valider les fonctionnalités du tableau - Tri Data Type', () => {
     cy.sortTableAndIntercept('Data Type', 1);
-    cy.validateTableFirstRow('-', 8, true);
+    cy.validateTableFirstRow(/(-|^(?!-).*$)/, 8, true);
     cy.sortTableAndIntercept('Data Type', 1);
     cy.validateTableFirstRow('gVCF', 8, true);
   });

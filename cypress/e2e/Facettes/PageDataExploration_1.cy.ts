@@ -78,8 +78,8 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.validateFacetRank(2, 'Condition (Source Text)');
   });
 
-  it('Intervention (MAxO) - Hearing examination (MAxO:0000873) [SJIP-1445]', () => {
-    cy.validateFacetFilter('Intervention (MAxO)', 'Hearing examination (MAxO:0000873)', 'Hearing examination (MAxO:0000873)', /\d{1}/);
+  it('Intervention (MAxO) - Hearing examination (MAxO:0000873)', () => {
+    cy.validateFacetFilter('Intervention (MAxO)', 'Hearing examination (MAxO:0000873)', 'hearing examination (MAxO:0000873)', /\d{1}/);
     cy.validateFacetRank(3, 'Intervention (MAxO)');
   });
 
