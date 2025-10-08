@@ -7,8 +7,13 @@
 
 ### Technical / Other changes
 -->
-## 2025-10-02 include-portal-ui 1.22.0
+## 2025-10-08 include-portal-ui 1.22.1
+### Technical/ Other changes:
+- [SJIP-1450](https://d3b.atlassian.net/browse/SJIP-1450) Issue: [Data Exploration] Fixed missing Genomics Data Category values
+- [SJIP-1452](https://d3b.atlassian.net/browse/SJIP-1452) Issue: [File Entity] Fixed error 500 when accessing certain files
+- [SJIP-1463](https://d3b.atlassian.net/browse/SJIP-1463) Issue: [Data Exploration] Fixed error 500 when sorting certain columns in the Data Files tab
 
+## 2025-10-02 include-portal-ui 1.22.0
 ### Features:
 - [SJIP-1420](https://d3b.atlassian.net/browse/SJIP-1420) Feature: [Landing & Studies] Added button for information about INCLUDE Citation Statements
 - [SJIP-1422](https://d3b.atlassian.net/browse/SJIP-1422) Feature: [Landing page] Added policies as a footer
