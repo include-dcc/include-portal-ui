@@ -72,7 +72,7 @@ const getDefaultColumns = (
     render: (record: IFileEntity) => {
       if (
         record.controlled_access.toLowerCase() === FileAccessType.CONTROLLED.toLowerCase() &&
-        record.access_urls.startsWith('drs://cavatica-ga4gh-api.sbgenomics.com/')
+        record.access_urls?.startsWith('drs://cavatica-ga4gh-api.sbgenomics.com/')
       ) {
         return (
           <Popover
