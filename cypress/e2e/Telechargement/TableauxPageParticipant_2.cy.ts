@@ -21,7 +21,7 @@ describe('Page d\'un participant - Exporter le tableau Diagnoses en TSV', () => 
     cy.validateFileHeaders('ExportTableauDiagnosesPageParticipant.json');
   });
 
-  it('Valider le contenu du fichier [SJIP-584]', () => {
+  it('Valider le contenu du fichier', () => {
     cy.validateFileContent('ExportTableauDiagnosesPageParticipant.json');
   });
 });

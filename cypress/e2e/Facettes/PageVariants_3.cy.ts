@@ -20,11 +20,11 @@ describe('Page des variants (Gene) - Filtrer avec les facettes', () => {
     cy.get('section[class*="Filters"] [aria-expanded="true"]').should('not.exist');
   });
   
-  it('Search by gene symbol - PRDX1 [SJIP-707]', () => {
+  it('Search by gene symbol - PRDX1', () => {
     cy.get('[class*="SearchLabel_title"]').contains('Search by gene').should('exist'); //data-cy="SearchLabel_Title"
 
     cy.get('[class*="SearchLabel_tooltipIcon"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true}); //data-cy="SearchLabel_InfoCircleOutlined"
-    cy.get('div[class="ant-tooltip-inner"]').contains('Enter a Gene Symbol, Gene Alias or Ensemble ID').should('exist');
+    cy.get('div[class="ant-tooltip-inner"]').contains('Enter a Gene Symbol, Gene Alias ​​or Ensemble ID').should('exist');
 
     cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'prdx1', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('PRDX1').should('exist'); //data-cy="Search_Dropdown"

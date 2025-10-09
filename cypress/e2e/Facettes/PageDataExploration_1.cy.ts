@@ -58,8 +58,8 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.validateFacetRank(0, 'Study Code');
   });
 
-  it('Down Syndrome Status - T21 [SJIP-553]', () => {
-    cy.validateFacetFilter('Down Syndrome Status', 'T21', 'T21', /\d{1}/);
+  it('Down Syndrome Status - T21', () => {
+    cy.validateFacetFilter('Down Syndrome Status', /(T21|Trisomy 21)/, 'T21', /\d{1}/);
     cy.validateFacetRank(1, 'Down Syndrome Status');
   });
 

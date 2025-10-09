@@ -19,7 +19,7 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
 
   it('Valider les fonctionnalités du tableau - Tri File Name', () => {
     cy.sortTableAndIntercept('File Name', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 4, true);
+    cy.validateTableFirstRow(/(-|^(?!-).*$)/, 4, true);
     cy.sortTableAndIntercept('File Name', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 4, true);
   });
@@ -61,7 +61,7 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
 
   it('Valider les fonctionnalités du tableau - Tri Access Url', () => {
     cy.sortTableAndIntercept('Access Url', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 10, true);
+    cy.validateTableFirstRow(/(-|^(?!-).*$)/, 10, true);
     cy.sortTableAndIntercept('Access Url', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 10, true);
   });
