@@ -46,7 +46,7 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.validateFacetRank(1, 'Dataset');
   });
 
-  it('Data Category - Genomics [SJIP-1450]', () => {
+  it('Data Category - Genomics', () => {
     cy.validateFacetFilter('Data Category', 'Genomics', 'Genomics', /\d{1}/);
     cy.validateFacetRank(2, 'Data Category');
   });
@@ -61,8 +61,8 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.validateFacetRank(4, 'Experimental Strategy');
   });
 
-  it('File Format - gVCF [SJIP-553]', () => {
-    cy.validateFacetFilter('File Format', 'GVCF', 'gvcf', /\d{1}/);
+  it('File Format - gVCF', () => {
+    cy.validateFacetFilter('File Format', /(gvcf|Gvcf)/, 'gvcf', /\d{1}/);
     cy.validateFacetRank(5, 'File Format');
   });
 

@@ -21,7 +21,7 @@ describe('Page d\'un participant - Exporter le tableau Phenotypes en TSV', () =>
     cy.validateFileHeaders('ExportTableauPhenotypesPageParticipant.json');
   });
 
-  it('Valider le contenu du fichier [SJIP-584]', () => {
+  it('Valider le contenu du fichier', () => {
     cy.validateFileContent('ExportTableauPhenotypesPageParticipant.json');
   });
 });

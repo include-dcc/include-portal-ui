@@ -94,10 +94,10 @@ describe('Navigation', () => {
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
   });
 
-  it('Modals de la page Dashboard [SJIP-347]', () => {
+  it('Modals de la page Dashboard', () => {
     cy.visitDashboard();
     cy.get('[class*="ListItem_savedSetListItem"] svg[data-icon="edit"]').eq(0).clickAndWait({force: true}); // data-cy="SavedSets"
-    cy.contains('Edit set').should('exist');
+    cy.contains('Save this Set').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
     cy.visitDashboard();
@@ -107,7 +107,7 @@ describe('Navigation', () => {
 
     cy.visitDashboard();
     cy.get('[class*="ListItemWithActions"] svg[data-icon="edit"]').eq(0).clickAndWait({force: true}); // data-cy="SavedFilters"
-    cy.contains('Edit filter').should('exist');
+    cy.contains('Save this Set').should('exist');
     cy.get('button[class="ant-modal-close"]').invoke('click');
 
     cy.visitDashboard();

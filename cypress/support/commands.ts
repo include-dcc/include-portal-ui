@@ -337,7 +337,7 @@ Cypress.Commands.add('validateClearAllButton', (shouldExist: boolean) => {
   cy.get('[id="query-builder-header-tools"]').contains('Clear all').should(strExist);
 });
 
-Cypress.Commands.add('validateFacetFilter', (facetTitle: string, valueFront: string, valueBack: string, expectedCount: string|RegExp, applyButton: boolean = true) => {
+Cypress.Commands.add('validateFacetFilter', (facetTitle: string, valueFront: string|RegExp, valueBack: string, expectedCount: string|RegExp, applyButton: boolean = true) => {
   if (applyButton) {
     cy.checkValueFacetAndApply(facetTitle, valueBack);
     cy.validatePillSelectedQuery(facetTitle, [valueFront]);

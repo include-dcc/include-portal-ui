@@ -32,7 +32,7 @@ describe('Page Studies - Exporter les études en TSV', () => {
     cy.validateFileHeaders('ExportTableauStudies.json');
   });
 
-  it('Valider le contenu du fichier [SJIP-1207]', () => {
+  it('Valider le contenu du fichier', () => {
     cy.validateFileContent('ExportTableauStudies.json');
   });
 });

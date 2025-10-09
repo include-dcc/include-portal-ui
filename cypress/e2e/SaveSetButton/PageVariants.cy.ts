@@ -32,11 +32,11 @@ describe('Page Variants - Bouton Save set', () => {
     cy.get('[class="ant-tooltip-inner"]').contains('Max. 10,000 items at a time. The first 10,000 will be processed.').should('exist');
   });
   
-  it('Valider les fonctionnalités du bouton - Save as new set [SJIP-863]', () => {
+  it('Valider les fonctionnalités du bouton - Save as new set', () => {
     cy.saveSetAs('Cypress_New_V', 0);
 
     cy.get('[class*="ant-notification"]').contains('Your set has been saved.').should('exist');
-    cy.get('[class*="ant-notification"]').contains('You can add your sets to a query from the dashboard.').should('exist');
+    cy.get('[class*="ant-notification"]').contains('You can add your sets to a query from the sidebar or the dashboard.').should('exist');
     
     cy.visitDashboard();
     cy.get('[class*="SavedSets_setTabs"] [data-node-key="variants"]').clickAndWait({force: true});

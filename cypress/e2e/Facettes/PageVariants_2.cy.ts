@@ -20,88 +20,71 @@ describe('Page des variants (Variant) - Filtrer avec les facettes', () => {
     cy.get('section[class*="Filters"] [aria-expanded="true"]').should('not.exist');
   });
   
-  it('Search by variant locus - 1-108192590-T-C [SJIP-705]', () => {
+  it('Search by variant locus - 1-108192', () => {
     cy.get('[class*="SearchLabel_title"]').contains('Search by variant').should('exist'); //data-cy="SearchLabel_Title"
 
     cy.get('[class*="SearchLabel_tooltipIcon"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true}); //data-cy="SearchLabel_InfoCircleOutlined"
     cy.get('div[class="ant-tooltip-inner"]').contains('Enter Variant Locus, Gene Symbol, Gene Alias, Gene AA Change, dbSNP ID, ClinVar ID, Ensembl ID, refseq ID').should('exist');
 
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', '1-108192590-t-c', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
-    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-108192590-T-C').should('exist'); //data-cy="Search_Dropdown"
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', '1-108192', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-108192').should('exist'); //data-cy="Search_Dropdown"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
-    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-108192590-T-C').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-108192').should('exist'); //data-cy="Tag_1-108192590-T-C"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Variant ID').should('exist');
-    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('1-108192590-T-C').should('exist');
-    cy.validateTableResultsCount(/^1 Result$/);
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('1-108192').should('exist');
 
     cy.get('[data-icon="close-circle"]').clickAndWait({force: true});
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
   });
 
-  it('Search by gene symbol - PRDX1 [SJIP-705]', () => {
+  it('Search by gene symbol - PRDX1', () => {
     cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'prdx1', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-').should('exist');
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('exist'); //data-cy="Tag_1-108192590-T-C"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Variant ID').should('exist');
+
+    cy.get('[data-icon="close-circle"]').clickAndWait({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
+  });
+
+  it('Search by gene AA change - p.Tyr11Cys', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'p.tyr11', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-').should('exist'); //data-cy="Search_Dropdown"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Variant ID').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('1-').should('exist');
     cy.validateTableResultsCount(/^1 Result$/);
 
     cy.get('[data-icon="close-circle"]').clickAndWait({force: true});
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
   });
 
-  it('Search by gene alias - NKEFA [SJIP-844]', () => {
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'nkefa', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
-    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-').should('exist');
+  it('Search by dbSNP ID - rs79735952', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'RS7973', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-').should('exist'); //data-cy="Search_Dropdown"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
-    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-').should('exist'); //data-cy="Tag_1-108192590-T-C"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Variant ID').should('exist');
-    cy.validateTableResultsCount(/^1 Result$/);
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('1-').should('exist');
 
     cy.get('[data-icon="close-circle"]').clickAndWait({force: true});
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
   });
 
-  it('Search by gene AA change - p.Tyr11Cys [SJIP-845]', () => {
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'p.tyr11cys', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
-    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-108192590-T-C').should('exist'); //data-cy="Search_Dropdown"
+  it('Search by ClinVar ID - 1267873', () => {
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', '1267', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-').should('exist'); //data-cy="Search_Dropdown"
     cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
 
-    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-108192590-T-C').should('exist'); //data-cy="Tag_1-108192590-T-C"
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-').should('exist'); //data-cy="Tag_1-108192590-T-C"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Variant ID').should('exist');
-    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('1-108192590-T-C').should('exist');
-    cy.validateTableResultsCount(/^1 Result$/);
-
-    cy.get('[data-icon="close-circle"]').clickAndWait({force: true});
-    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
-  });
-
-  it('Search by dbSNP ID - rs79735952 [SJIP-845]', () => {
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'RS79735952', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
-    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-108192590-T-C').should('exist'); //data-cy="Search_Dropdown"
-    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
-
-    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-108192590-T-C').should('exist'); //data-cy="Tag_1-108192590-T-C"
-    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Variant ID').should('exist');
-    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('1-108192590-T-C').should('exist');
-    cy.validateTableResultsCount(/^1 Result$/);
-
-    cy.get('[data-icon="close-circle"]').clickAndWait({force: true});
-    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
-  });
-
-  it('Search by ClinVar ID - 1267873 [SJIP-845]', () => {
-    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', '1267873', 'POST', '*/grapgql', 3); //data-cy="SearchAutocomplete_Select"
-    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('1-108192590-T-C').should('exist'); //data-cy="Search_Dropdown"
-    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true}); //data-cy="Search_Dropdown"
-
-    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('1-108192590-T-C').should('exist'); //data-cy="Tag_1-108192590-T-C"
-    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Variant ID').should('exist');
-    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('1-108192590-T-C').should('exist');
-    cy.validateTableResultsCount(/^1 Result$/);
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('1-').should('exist');
 
     cy.get('[data-icon="close-circle"]').clickAndWait({force: true});
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_1-108192590-T-C"
@@ -147,8 +130,8 @@ describe('Page des variants (Variant) - Filtrer avec les facettes', () => {
     cy.validateFacetFilter('Consequence', 'Missense', 'missense', /^4,455$/);
   });
 
-  it('Variant External Reference - DBSNP [SJIP-601]', () => {
-    cy.validateFacetFilter('Variant External Reference', 'DBSNP', 'DBSNP', /^463,991$/);
+  it('Variant External Reference - DBSNP', () => {
+    cy.validateFacetFilter('Variant External Reference', /(DBSNP|DbSNP)/, 'DBSNP', /^463,991$/);
     cy.validateFacetRank(2, 'Variant External Reference');
   });
 

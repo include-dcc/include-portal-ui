@@ -70,7 +70,7 @@ describe('Page d\'un fichier - Api', () => {
     });
   });
 
-  it('Valider la réponse reçue - Bouton Download [SJIP-967]', () => {
+  it('Valider la réponse reçue - Bouton Download', () => {
     cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
