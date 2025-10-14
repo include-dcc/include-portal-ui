@@ -765,7 +765,9 @@ const StudyEntity = () => {
               contentNotFound: intl.get(
                 'entities.study.dataset.cavatica.modal.createProjectToPushFileTo',
               ),
-              contentText: intl.get('entities.study.dataset.cavatica.modal.message'),
+              contentText: intl.get('entities.study.dataset.cavatica.modal.message', {
+                studyCode: study?.study_code,
+              }),
               newProjectButton: intl.get(
                 'entities.study.dataset.cavatica.modal.selectFooterButton',
               ),
@@ -773,7 +775,9 @@ const StudyEntity = () => {
               selectPlaceholder: intl.get(
                 'entities.study.dataset.cavatica.modal.selectPlaceholder',
               ),
-              title: intl.get('entities.study.dataset.cavatica.modal.title'),
+              title: intl.get('entities.study.dataset.cavatica.modal.title', {
+                studyCode: study?.study_code,
+              }),
             }}
             {...cavatica}
           />

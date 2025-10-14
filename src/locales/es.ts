@@ -2194,10 +2194,10 @@ const es = {
         cavatica: {
           button: 'Analizar en Cavatica',
           modal: {
-            title: 'Cavatica - Archivos no armonizados de DS-Connect',
+            title: 'Cavatica - Archivos no armonizados de {studyCode}',
             okText: 'Copiar archivos',
             message:
-              'Copie los archivos no armonizados de DS-Connect a su proyecto Cavatica. Una vez esté en su proyecto, podrá descargar el archivo o incluirlo en sus flujos de trabajo.',
+              'Copie los archivos no armonizados de {studyCode} a su proyecto Cavatica. Una vez esté en su proyecto, podrá descargar el archivo o incluirlo en sus flujos de trabajo.',
             selectFooterButton: 'Nuevo proyecto',
             selectPlaceholder: 'Seleccionar un proyecto',
             createProjectToPushFileTo: 'Crear un proyecto para subir sus archivos.',
