@@ -66,7 +66,7 @@ const FileEntityTitle: React.FC<OwnProps> = ({ file, loading }) => {
           content={intl.getHTML(
             'screen.dataExploration.tabs.datafiles.undeterminedAuthorization.popoverContent',
             {
-              href: 'https://kidsfirstdrc.org/help-center/accessing-controlled-data-via-dbgap/',
+              href: 'https://help.includedcc.org/docs/applying-for-access',
             },
           )}
         >
