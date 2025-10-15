@@ -92,45 +92,29 @@ export const getDRSItems = (
       if (cavaticaDatasetId === getEnvVarByKey('CAVATICA_BRAINPOWER_DATASET_ID_AGE_LATENCY')) {
         return getBrainPowerAgeLatencyDrsItems(value, type);
       }
-      if (
-        cavaticaDatasetId ===
-        getEnvVarByKey('REACT_APP_CAVATICA_BRAINPOWER_DATASET_ID_ANTHROPOMETRICS')
-      ) {
+      if (cavaticaDatasetId === getEnvVarByKey('CAVATICA_BRAINPOWER_DATASET_ID_ANTHROPOMETRICS')) {
         return getBrainPowerAnthropometricsDrsItems(value, type);
       }
-      if (
-        cavaticaDatasetId === getEnvVarByKey('REACT_APP_CAVATICA_BRAINPOWER_DATASET_ID_COGNITIVE')
-      ) {
+      if (cavaticaDatasetId === getEnvVarByKey('CAVATICA_BRAINPOWER_DATASET_ID_COGNITIVE')) {
         return getBrainPowerCognitiveDrsItems(value, type);
       }
-      if (
-        cavaticaDatasetId === getEnvVarByKey('REACT_APP_CAVATICA_BRAINPOWER_DATASET_ID_IMAGING')
-      ) {
+      if (cavaticaDatasetId === getEnvVarByKey('CAVATICA_BRAINPOWER_DATASET_ID_IMAGING')) {
         return getBrainPowerImagingDrsItems(value, type);
       }
-      if (cavaticaDatasetId === getEnvVarByKey('REACT_APP_CAVATICA_BRAINPOWER_DATASET_ID_PA_DAY')) {
+      if (cavaticaDatasetId === getEnvVarByKey('CAVATICA_BRAINPOWER_DATASET_ID_PA_DAY')) {
         return getBrainPowerPaDayDrsItems(value, type);
       }
-      if (
-        cavaticaDatasetId === getEnvVarByKey('REACT_APP_CAVATICA_BRAINPOWER_DATASET_ID_PA_PERSON')
-      ) {
+      if (cavaticaDatasetId === getEnvVarByKey('CAVATICA_BRAINPOWER_DATASET_ID_PA_PERSON')) {
         return getBrainPowerPaPersonDrsItems(value, type);
       }
-      if (
-        cavaticaDatasetId ===
-        getEnvVarByKey('REACT_APP_CAVATICA_BRAINPOWER_DATASET_ID_RANDOMIZATION')
-      ) {
+      if (cavaticaDatasetId === getEnvVarByKey('CAVATICA_BRAINPOWER_DATASET_ID_RANDOMIZATION')) {
         return getBrainPowerRandomizationDrsItems(value, type);
       }
-      if (
-        cavaticaDatasetId ===
-        getEnvVarByKey('REACT_APP_CAVATICA_BRAINPOWER_DATASET_ID_DEMOGRAPHICS')
-      ) {
+      if (cavaticaDatasetId === getEnvVarByKey('CAVATICA_BRAINPOWER_DATASET_ID_DEMOGRAPHICS')) {
         return getBrainPowerDemographicsDrsItems(value, type);
       }
       if (
-        cavaticaDatasetId ===
-        getEnvVarByKey('REACT_APP_CAVATICA_BRAINPOWER_DATASET_ID_HEALTH_CONDITIONS')
+        cavaticaDatasetId === getEnvVarByKey('CAVATICA_BRAINPOWER_DATASET_ID_HEALTH_CONDITIONS')
       ) {
         return getBrainPowerHealthConditionsDrsItems(value, type);
       }
