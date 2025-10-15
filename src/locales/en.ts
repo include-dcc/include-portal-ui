@@ -2243,10 +2243,10 @@ const en = {
         cavatica: {
           button: 'Analyze in Cavatica',
           modal: {
-            title: 'Cavatica - DS-Connect unharmonized files',
+            title: 'Cavatica - {studyCode} unharmonized files',
             okText: 'Copy files',
             message:
-              'Copy the DS-Connect’s unharmonized files into your Cavatica project. Once it is in your project, you can download the file or include it into your workflows.',
+              'Copy the {studyCode}’s unharmonized files into your Cavatica project. Once it is in your project, you can download the file or include it into your workflows.',
             selectFooterButton: 'New project',
             selectPlaceholder: 'Select a project',
             createProjectToPushFileTo: 'Create a project to push your files to.',
