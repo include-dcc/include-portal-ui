@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal';
-import { FileImageOutlined, LockOutlined, UnlockFilled } from '@ant-design/icons';
+import { FileImageOutlined, LockOutlined, UnlockFilled, WarningOutlined } from '@ant-design/icons';
 import { FENCE_AUTHENTIFICATION_STATUS } from '@ferlab/ui/core/components/Widgets/AuthorizedStudies';
 import { PASSPORT_AUTHENTIFICATION_STATUS } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
@@ -7,7 +7,7 @@ import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/ut
 import { EntityTitle } from '@ferlab/ui/core/pages/EntityPage';
 import { Popover, Space } from 'antd';
 import { INDEXES } from 'graphql/constants';
-import { IFileEntity } from 'graphql/files/models';
+import { FileAccessType, IFileEntity } from 'graphql/files/models';
 import { DATA_FILES_SAVED_SETS_FIELD } from 'views/DataExploration/utils/constant';
 
 import { FENCE_NAMES } from 'common/fenceTypes';
@@ -50,37 +50,67 @@ const FileEntityTitle: React.FC<OwnProps> = ({ file, loading }) => {
       ],
     });
 
+  const renderTag = () => {
+    if (
+      file?.controlled_access.toLowerCase() === FileAccessType.CONTROLLED.toLowerCase() &&
+      (file?.access_urls?.startsWith('drs://cavatica-ga4gh-api.sbgenomics.com/') ||
+        file?.access_urls?.startsWith('drs://nci-crdc.datacommons.io/'))
+    ) {
+      return (
+        <Popover
+          placement="bottom"
+          overlayStyle={{ maxWidth: '420px' }}
+          title={intl.get(
+            'screen.dataExploration.tabs.datafiles.undeterminedAuthorization.popoverTitle',
+          )}
+          content={intl.getHTML(
+            'screen.dataExploration.tabs.datafiles.undeterminedAuthorization.popoverContent',
+            {
+              href: 'https://kidsfirstdrc.org/help-center/accessing-controlled-data-via-dbgap/',
+            },
+          )}
+        >
+          <WarningOutlined className={styles.authorizedUndetermined} />
+        </Popover>
+      );
+    } else if (hasAccess) {
+      return (
+        <Popover
+          placement="bottom"
+          overlayClassName={styles.popOverContent}
+          title={intl.get('entities.file.fileAuthorization')}
+          content={intl.get('entities.file.unlocked')}
+        >
+          <UnlockFilled className={styles.unlocked} />
+        </Popover>
+      );
+    } else {
+      return (
+        <Popover
+          overlayClassName={styles.popOverContent}
+          title={intl.get('entities.file.fileAuthorization')}
+          content={
+            <span>
+              {intl.get('entities.file.locked')}
+              <PopoverContentLink
+                className={styles.contentLink}
+                externalHref="https://help.includedcc.org/docs/applying-for-access"
+                title={intl.get('entities.file.apply_data_access')}
+              />
+              .
+            </span>
+          }
+        >
+          <LockOutlined className={styles.locked} />
+        </Popover>
+      );
+    }
+  };
+
   const title = {
     text: file?.file_id,
     icon: <FileImageOutlined />,
-    tag: hasAccess ? (
-      <Popover
-        placement="bottom"
-        overlayClassName={styles.popOverContent}
-        title={intl.get('entities.file.fileAuthorization')}
-        content={intl.get('entities.file.unlocked')}
-      >
-        <UnlockFilled className={styles.unlocked} />
-      </Popover>
-    ) : (
-      <Popover
-        overlayClassName={styles.popOverContent}
-        title={intl.get('entities.file.fileAuthorization')}
-        content={
-          <span>
-            {intl.get('entities.file.locked')}
-            <PopoverContentLink
-              className={styles.contentLink}
-              externalHref="https://help.includedcc.org/docs/applying-for-access"
-              title={intl.get('entities.file.apply_data_access')}
-            />
-            .
-          </span>
-        }
-      >
-        <LockOutlined className={styles.locked} />
-      </Popover>
-    ),
+    tag: renderTag(),
     extra: (
       <Space>
         <DownloadFileManifestModal
