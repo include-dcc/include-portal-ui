@@ -152,9 +152,15 @@ describe('Page Landing - Vérifier les informations affichées', () => {
 
   it('Section Cavatica Tile', () => {
     cy.get('[class*="CavaticaCard_container"] [src*="cavatica-logo"]').should('exist');
-    cy.get('[class*="CavaticaCard_container"] [class*="CavaticaCard_description"]').contains('The portal integrates with Cavatica, a data analysis and sharing platform designed to accelerate discovery in a scalable, cloud-based compute environment where data, results, and workflows are shared among the world’s research community. Researchers and bioinformaticians can create or use existing workflows, to analyze INCLUDE datasets.').should('exist');
+    cy.get('[class*="CavaticaCard_container"] [class*="CavaticaCard_description"]').contains('The portal integrates with CAVATICA, a cloud-based platform designed for worldwide data analysis and collaboration. Researchers can analyze INCLUDE datasets using custom or pre-existing workflows.').should('exist');
     cy.get('[class*="CavaticaCard_container"] [href="https://www.cavatica.org/"]').contains('Learn more').should('exist');
     cy.get('[class*="CavaticaCard_container"] [href="https://cavatica.sbgenomics.com/"]').contains('Login').should('exist');
+  });
+
+  it('Section EMODs Tile', () => {
+    cy.get('[class*="CardsSection_emodsCardContainer"] [src*="EMODS_logo"]').should('exist');
+    cy.get('[class*="CardsSection_emodsCardContainer"] [class*="GenericCard_description"]').contains('The EMODs portal provides researchers with publications, phenotypes, datasets, and biospecimens derived from experimental models of Down syndrome, enabling mechanistic insights into the tissue-specific effects of trisomy 21.').should('exist');
+    cy.get('[class*="CardsSection_emodsCardContainer"] [href="https://experimentalmodels.includedcc.org"]').contains('Explore EMODs portal').should('exist');
   });
 
   it('Section Documentation Tiles', () => {
