@@ -21,3 +21,7 @@
   padding-left: 4px;
   display: inline;
 }
+
+.authorizedUndetermined {
+  color: var(--orange-7);
+}
