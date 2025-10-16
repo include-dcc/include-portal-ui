@@ -1334,8 +1334,8 @@ const en = {
               tooltips: 'Participants',
               T21: 'Trisomy 21',
               D21: 'Disomy 21',
-              legendAxisLeft: 'Age at First Patient Engagement (years)',
-              legendAxisBottom: '# of participants',
+              legendAxisBottom: 'Age at First Patient Engagement (years)',
+              legendAxisLeft: '# of participants',
             },
             sampleTypeGraph: {
               legendAxisLeft: 'Sample Types',
