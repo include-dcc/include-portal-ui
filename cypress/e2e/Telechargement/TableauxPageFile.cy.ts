@@ -12,7 +12,7 @@ beforeEach(() => {
   cy.waitUntilFile(oneMinute);
 });
 
-describe('Page d\'un fichier - Exporter le tableau Participants-Samples en TSV', () => {  
+describe('Page d\'un fichier - Exporter le tableau Participants-Samples en TSV', () => {
   it('Valider le nom du fichier', () => {
     cy.validateFileName('include-participants-samples-table-'+`${strDate.slice(0, 4)}-${strDate.slice(4, 6)}-${strDate.slice(6, 8)}`+'.tsv');
   });

@@ -10,7 +10,7 @@ beforeEach(() => {
   cy.showColumn('Homo.');
 });
 
-describe('Page des variants - Consultation du tableau', () => {  
+describe('Page des variants - Consultation du tableau', () => {
   it('Valider les fonctionnalités du tableau - Tri Variant', () => {
     cy.sortTableAndIntercept('Variant', 1);
     cy.validateTableFirstRow('-', 1, true);

@@ -118,7 +118,7 @@ describe('Page Profile Settings - Vérifier les informations affichées', () => 
     cy.get('input[id="newsletter_email"]').should('not.exist');
   });
 
-  it('Section Delete Account - Champs', () => {  
+  it('Section Delete Account - Champs', () => {
     cy.get('[class*="Gridcard_fuiCardWrapper"]').eq(4).contains('You will no longer be able to sign into the INCLUDE data portal. All of your saved sets and queries will be lost. You can create a new account at any time.').should('exist');
     cy.get('button[class*="ant-btn-dangerous"]').contains('Delete my account').should('exist');
   });
