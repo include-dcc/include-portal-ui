@@ -757,7 +757,7 @@ const en = {
         },
         cavatica: {
           description:
-            'The portal integrates with Cavatica, a data analysis and sharing platform designed to accelerate discovery in a scalable, cloud-based compute environment where data, results, and workflows are shared among the world’s research community. Researchers and bioinformaticians can create or use existing workflows, to analyze INCLUDE datasets.',
+            'The portal integrates with CAVATICA, a cloud-based platform designed for worldwide data analysis and collaboration. Researchers can analyze INCLUDE datasets using custom or pre-existing workflows.',
           learnMore: 'Learn more',
         },
         emods: {

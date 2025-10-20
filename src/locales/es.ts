@@ -763,7 +763,7 @@ const es = {
         },
         cavatica: {
           description:
-            'El portal se integra con Cavatica, una plataforma de análisis y compartición de datos diseñada para acelerar el descubrimiento en un entorno computacional basado en la nube, donde los datos, resultados y flujos de trabajo se comparten entre la comunidad investigadora mundial. Los investigadores y bioinformáticos pueden crear o utilizar flujos de trabajo existentes para analizar los conjuntos de datos de INCLUDE.',
+            'El portal se integra con CAVATICA, una plataforma basada en la nube diseñada para el análisis de datos y la colaboración a nivel mundial. Los investigadores pueden analizar conjuntos de datos de INCLUDE utilizando flujos de trabajo personalizados o preexistentes.',
           learnMore: 'Saber más',
         },
         emods: {
