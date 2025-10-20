@@ -544,6 +544,7 @@ const es = {
         contact: 'Contacto',
         dashboard: 'Panel de control',
         datafiles: 'Archivos de datos',
+        emods: 'EMODs Portal',
         explore: 'Exploración de datos',
         forum: 'Foro',
         help: 'Ayuda',

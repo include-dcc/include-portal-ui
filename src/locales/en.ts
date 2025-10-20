@@ -539,6 +539,7 @@ const en = {
         contact: 'Contact',
         dashboard: 'Dashboard',
         datafiles: 'Data Files',
+        emods: 'EMODs Portal',
         explore: 'Data Exploration',
         forum: 'Forum',
         help: 'Help',
