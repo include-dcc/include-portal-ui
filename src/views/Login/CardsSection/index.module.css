@@ -10,7 +10,7 @@
 .cardsGrid {
   max-width: 1200px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 40px;
   grid-row-gap: 48px;
 }
@@ -19,6 +19,12 @@
   max-width: 375px;
   width: 100%;
   max-height: 80px;
+}
+
+.emodsCardContainer {
+  border-radius: 2px;
+  background: linear-gradient(300deg, rgba(255, 201, 38, 0.3) 11.06%, rgba(2, 132, 199, 0.3) 59.62%),
+    #2e3f50;
 }
 
 @media (min-width: 800px) and (max-width: 1024px) {

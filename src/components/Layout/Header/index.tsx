@@ -142,6 +142,22 @@ const Header = () => {
                   ),
                 },
                 {
+                  key: 'emods',
+                  disabled: false,
+                  label: (
+                    <a
+                      href="#"
+                      onClick={() => {
+                        trackVisitResources('emods');
+                        window.open('https://experimentalmodels.includedcc.org/', '_blank');
+                      }}
+                    >
+                      <ExternalLinkIcon {...iconSize} />
+                      <Text className={style.linkText}>{intl.get('layout.main.menu.emods')}</Text>
+                    </a>
+                  ),
+                },
+                {
                   key: 'help',
                   label: (
                     <a
