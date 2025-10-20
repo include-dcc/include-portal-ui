@@ -760,6 +760,11 @@ const en = {
             'The portal integrates with Cavatica, a data analysis and sharing platform designed to accelerate discovery in a scalable, cloud-based compute environment where data, results, and workflows are shared among the world’s research community. Researchers and bioinformaticians can create or use existing workflows, to analyze INCLUDE datasets.',
           learnMore: 'Learn more',
         },
+        emods: {
+          description:
+            'The EMODs portal provides researchers with publications, phenotypes, datasets, and biospecimens derived from experimental models of Down syndrome, enabling mechanistic insights into the tissue-specific effects of trisomy 21.',
+          buttonLabel: 'Explore EMODs portal',
+        },
       },
       documentation: {
         title: 'INCLUDE Documentation Center',
