@@ -7,6 +7,14 @@
 
 ### Technical / Other changes
 -->
+## 2025-10-22 include-portal-ui v1.23.0
+### Features:
+- [SJIP-1462](https://d3b.atlassian.net/browse/SJIP-1462) Feature: [Landing page] Add New EMODs Tile to Landing Page – Ecosystem Tools Section
+### Technical / Other Changes:
+- [SJIP-1467](https://d3b.atlassian.net/browse/SJIP-1467) Refactor: [Data exploration] Adjust authorization icon and flow for files with NCI DRS url
+- [SJIP-1468](https://d3b.atlassian.net/browse/SJIP-1468) Issue: [Summary View] Fix inversed labels on graph
+- [SJIP-1469](https://d3b.atlassian.net/browse/SJIP-1469) Issue: [Study Entity] Certain analyze in Cavatica datasets aren't sending a call to Cavatica
+
 ## 2025-10-08 include-portal-ui 1.22.1
 ### Technical/ Other changes:
 - [SJIP-1450](https://d3b.atlassian.net/browse/SJIP-1450) Issue: [Data Exploration] Fixed missing Genomics Data Category values
