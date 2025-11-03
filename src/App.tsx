@@ -93,8 +93,8 @@ const App = () => {
               <>
                 <Routes>
                   <Route
-                    path={STATIC_ROUTES.GEN3_FENCE_REDIRECT}
-                    element={<FenceRedirect fence={FENCE_NAMES.gen3} />}
+                    path={STATIC_ROUTES.DCF_FENCE_REDIRECT}
+                    element={<FenceRedirect fence={FENCE_NAMES.dcf} />}
                   />
                   <Route
                     path={STATIC_ROUTES.CAVATICA_FENCE_REDIRECT}
