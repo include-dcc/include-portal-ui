@@ -24,6 +24,13 @@ export const FencesState: InitialState = {
     error: false,
     loading: false,
   },
+  [FENCE_NAMES.dcf]: {
+    id: FENCE_NAMES.dcf,
+    acl: [],
+    status: FENCE_AUTHENTIFICATION_STATUS.unknown,
+    loading: false,
+    error: false,
+  },
 };
 
 const fencesSlice = createSlice({
@@ -95,5 +102,4 @@ const fencesSlice = createSlice({
   },
 });
 
-export const fencesActions = fencesSlice.actions;
 export default fencesSlice.reducer;
