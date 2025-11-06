@@ -61,7 +61,7 @@ interface OwnProps {
 const getDefaultColumns = (
   fenceAcls: string[],
   isConnectedToCavatica: boolean,
-  isConnectedToGen3: boolean,
+  isConnectedToDcf: boolean,
 ): ProColumnType<any>[] => [
   {
     key: 'lock',
@@ -98,7 +98,7 @@ const getDefaultColumns = (
         record,
         fenceAcls,
         isConnectedToCavatica,
-        isConnectedToGen3,
+        isConnectedToDcf,
       );
 
       return hasAccess ? (
@@ -299,7 +299,7 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
-  const gen3 = useFenceAuthentification(FENCE_NAMES.gen3);
+  const dcf = useFenceAuthentification(FENCE_NAMES.dcf);
   const cavatica = useCavaticaPassport();
   const fencesAllAcls = useAllFencesAcl();
   const [selectedAllResults, setSelectedAllResults] = useState(false);
@@ -383,7 +383,7 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
         columns={getDefaultColumns(
           fencesAllAcls,
           cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected,
-          gen3.status === FENCE_AUTHENTIFICATION_STATUS.connected,
+          dcf.status === FENCE_AUTHENTIFICATION_STATUS.connected,
         )}
         showSorterTooltip={false}
         initialSelectedKey={selectedKeys}
@@ -419,7 +419,7 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
                 columns: getDefaultColumns(
                   fencesAllAcls,
                   cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected,
-                  gen3.status === FENCE_AUTHENTIFICATION_STATUS.connected,
+                  dcf.status === FENCE_AUTHENTIFICATION_STATUS.connected,
                 ),
                 index: INDEXES.FILE,
                 sqon:

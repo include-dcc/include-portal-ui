@@ -24,21 +24,22 @@ import { DashboardCardProps } from '..';
 
 const AuthorizedStudies = ({ id, className = '' }: DashboardCardProps) => {
   const dispatch = useDispatch();
-  const gen3 = useFenceAuthentification(FENCE_NAMES.gen3);
-  const fences = [gen3];
+  const DCF = FENCE_NAMES.dcf;
+  const dcf = useFenceAuthentification(DCF);
+  const fences = [dcf];
   const authorizedStudies = useFencesAuthorizedStudies();
   const services: IFenceService[] = [
     {
-      fence: FENCE_NAMES.gen3,
+      fence: DCF,
       name: 'Inludes Framework Services',
       icon: <IncludeIcon width={45} height={45} />,
       onConnectToFence: () => {
         trackKFConnection(true);
-        dispatch(fenceOpenAuhentificationTab(FENCE_NAMES.gen3));
+        dispatch(fenceOpenAuhentificationTab(DCF));
       },
       onDisconnectFromFence: () => {
         trackKFConnection(false);
-        dispatch(fenceDisconnection(FENCE_NAMES.gen3));
+        dispatch(fenceDisconnection(DCF));
       },
     },
   ];
@@ -50,7 +51,7 @@ const AuthorizedStudies = ({ id, className = '' }: DashboardCardProps) => {
 
     dispatch(fetchAuthorizedStudies(fences));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gen3.status]);
+  }, [dcf.status]);
 
   return (
     <AuthorizedStudiesWidget
