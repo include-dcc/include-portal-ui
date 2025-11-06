@@ -24,7 +24,7 @@
                             "access_urls": "drs://data.kidsfirstdrc.org/1cd34bd9-d780-47f4-907e-0f04be67ef68",
                             "acl": [],
                             "file_name": "HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz",
-                            "repository": "gen3",
+                            "repository": "dcf",
                             "nb_participants": 1,
                             "nb_biospecimens": 1,
                             "fhir_document_reference": "https://include-api-fhir-service-upgrade-qa.includedcc.org/DocumentReference?identifier=HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_1.fq.gz",
