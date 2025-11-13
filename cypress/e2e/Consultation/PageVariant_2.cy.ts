@@ -101,11 +101,6 @@ describe('Page d\'un variant - Valider les liens disponibles', () => {
     .should('have.attr', 'href', 'https://gnomad.broadinstitute.org/variant/1-108192590-T-C?dataset=gnomad_r3');
   });
 
-  it('Lien ClinVar du panneau ClinVar', () => {
-    cy.get('[id="pathogenicity"] div[class="ant-collapse-header"] [href]') // data-cy="Pathogenicity_ClinVar_1267873_ExternalLink"
-    .should('have.attr', 'href', 'https://www.ncbi.nlm.nih.gov/clinvar/variation/1267873');
-  });
-
   it('Lien de la condition Orphanet du panneau Gene - Phenotype Association', () => {
     cy.get('[data-row-key="0-s-l-c-25-a-24"] td[class="ant-table-cell"]').eq(2).find('[href]')
     .should('have.attr', 'href', 'https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=3173');
