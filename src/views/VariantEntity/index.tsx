@@ -2,7 +2,6 @@ import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
 import { IAnchorLink } from '@ferlab/ui/core/components/AnchorMenu';
 import { NO_GENE } from '@ferlab/ui/core/components/Consequences/Cell';
-import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { hydrateResults } from '@ferlab/ui/core/graphql/utils';
 import EntityPageWrapper, {
   EntityPublicCohortTable,
@@ -11,11 +10,8 @@ import EntityPageWrapper, {
 } from '@ferlab/ui/core/pages/EntityPage';
 import EntityNestedTable from '@ferlab/ui/core/pages/EntityPage/EntityNestedTable';
 import EntityVariantSummary from '@ferlab/ui/core/pages/EntityPage/EntityVariantSummary';
-import {
-  makeClinvarRows,
-  makeGenesOrderedRow,
-} from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
-import { Space, Tag } from 'antd';
+import { makeGenesOrderedRow } from '@ferlab/ui/core/pages/EntityPage/utils/pathogenicity';
+import { Tag } from 'antd';
 import { ArrangerEdge } from 'graphql/models';
 
 import LineStyleIcon from 'components/Icons/LineStyleIcon';
@@ -29,7 +25,7 @@ import {
   getFrequencyTableSummaryColumns,
   getPublicCohorts,
 } from './utils/frequency';
-import { getClinvarColumns, getGenePhenotypeColumns } from './utils/pathogenicity';
+import { getGenePhenotypeColumns } from './utils/pathogenicity';
 import { getSummaryItems } from './utils/summary';
 
 import styles from './index.module.css';
@@ -52,10 +48,11 @@ export default function VariantEntity() {
       title: intl.get('screen.variants.consequences.consequence'),
     },
     { href: `#${SectionId.FREQUENCY}`, title: intl.get('screen.variants.frequencies.frequency') },
-    {
-      href: `#${SectionId.PATHOGENICITY}`,
-      title: intl.get('screen.variants.pathogenicity.pathogenicity'),
-    },
+    // Pathogenicity section is temporarily removed SJIP-1482
+    // {
+    //   href: `#${SectionId.PATHOGENICITY}`,
+    //   title: intl.get('screen.variants.pathogenicity.pathogenicity'),
+    // },
     {
       href: `#${SectionId.CONDITION}`,
       title: intl.get('screen.variants.conditions.title'),
@@ -139,7 +136,8 @@ export default function VariantEntity() {
           emptyMessage={intl.get('no.data.available')}
         />
 
-        <EntityTable
+        {/* Pathogenicity section is temporarily removed SJIP-1482 */}
+        {/* <EntityTable
           id={SectionId.PATHOGENICITY}
           loading={loading}
           title={intl.get('screen.variants.pathogenicity.pathogenicity')}
@@ -158,7 +156,7 @@ export default function VariantEntity() {
           }
           data={makeClinvarRows(data?.clinvar)}
           columns={getClinvarColumns()}
-        />
+        /> */}
 
         <EntityTable
           id={SectionId.CONDITION}
