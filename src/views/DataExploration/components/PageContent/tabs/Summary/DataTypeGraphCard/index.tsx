@@ -9,7 +9,6 @@ import {
   formatAggregationChartData,
 } from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
 import { INDEXES } from 'graphql/constants';
-import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { DATATYPE_QUERY } from 'graphql/summary/queries';
 import { isEmpty } from 'lodash';
 import { ARRANGER_API_PROJECT_URL } from 'provider/ApolloProvider';
@@ -20,6 +19,7 @@ import { truncateString } from 'utils/string';
 import { getResizableGridDictionary } from 'utils/translation';
 
 import { DATA_TYPE_GRAPH_CARD_ID, UID } from '../utils/grid';
+import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 
 const addToQuery = (field: string, key: string) =>
   updateActiveQueryField({
@@ -30,7 +30,7 @@ const addToQuery = (field: string, key: string) =>
   });
 
 const DataTypeGraphCard = () => {
-  const { sqon } = useParticipantResolvedSqon(DATA_EXPLORATION_QB_ID);
+  const { sqon } = useFileResolvedSqon(DATA_EXPLORATION_QB_ID);
   const { loading, result } = useApi<any>({
     config: {
       url: ARRANGER_API_PROJECT_URL,
@@ -42,11 +42,11 @@ const DataTypeGraphCard = () => {
     },
   });
   const dataTypeResults = aggregationToChartData(
-    result?.data?.participant?.aggregations?.files__data_type.buckets,
-    result?.data?.participant?.hits?.total,
+    result?.data?.file?.aggregations?.data_type.buckets,
+    result?.data?.file?.hits?.total,
   )
-    .sort((a, b) => a.value - b.value)
-    .slice(0, 10);
+    .slice(0, 10)
+    .reverse()
 
   return (
     <ResizableGridCard
