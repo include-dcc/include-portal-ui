@@ -205,12 +205,12 @@ export const AGE_QUERY = `
 
 export const DATATYPE_QUERY = `
   query AggregationDataTypeInfo($sqon: JSON) {
-    participant {
+    file {
       hits(filters: $sqon) {
         total
       }
       aggregations(filters: $sqon, aggregations_filter_themselves: true, include_missing: false) {
-        files__data_type {
+        data_type {
           buckets {
             key
             doc_count
@@ -283,12 +283,12 @@ export const SAMPLES_QUERY = `
 
 export const DATA_CATEGORY_QUERY = `
   query AggregationDataCategoryInfo($sqon: JSON) {
-    participant {
+    file {
       hits(filters: $sqon) {
         total
       }
       aggregations(filters: $sqon, aggregations_filter_themselves: true, include_missing: false) {
-        files__data_category {
+        data_category {
           buckets {
             key
             doc_count
@@ -301,12 +301,12 @@ export const DATA_CATEGORY_QUERY = `
 
 export const SAMPLE_TYPE_QUERY = `
   query($sqon: JSON) {
-    participant {
+    biospecimen {
       hits(filters: $sqon) {
         total
       }
       aggregations(filters: $sqon, aggregations_filter_themselves: true, include_missing: false) {
-        files__biospecimens__sample_type {
+        sample_type {
           buckets {
             key
             doc_count

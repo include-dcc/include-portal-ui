@@ -9,7 +9,6 @@ import {
   formatAggregationChartData,
 } from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
 import { INDEXES } from 'graphql/constants';
-import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { SAMPLE_TYPE_QUERY } from 'graphql/summary/queries';
 import { isEmpty } from 'lodash';
 import { ARRANGER_API_PROJECT_URL } from 'provider/ApolloProvider';
@@ -20,6 +19,7 @@ import { truncateString } from 'utils/string';
 import { getResizableGridDictionary } from 'utils/translation';
 
 import { SAMPLE_TYPE, UID } from '../utils/grid';
+import useBiospecimenResolvedSqon from 'graphql/biospecimens/useBiospecimenResolvedSqon';
 
 const addToQuery = (field: string, key: string) =>
   updateActiveQueryField({
@@ -30,7 +30,7 @@ const addToQuery = (field: string, key: string) =>
   });
 
 const SampleTypeGraphCard = () => {
-  const { sqon } = useParticipantResolvedSqon(DATA_EXPLORATION_QB_ID);
+  const { sqon } = useBiospecimenResolvedSqon(DATA_EXPLORATION_QB_ID);
   const { loading, result } = useApi<any>({
     config: {
       url: ARRANGER_API_PROJECT_URL,
@@ -43,12 +43,11 @@ const SampleTypeGraphCard = () => {
   });
 
   const sampleTypeResults = aggregationToChartData(
-    result?.data?.participant?.aggregations?.files__biospecimens__sample_type.buckets,
-    result?.data?.participant?.hits?.total,
+    result?.data?.biospecimen?.aggregations?.sample_type.buckets,
+    result?.data?.biospecimen?.hits?.total,
   )
-    .sort((a, b) => b.value - a.value)
     .slice(0, 10)
-    .reverse();
+    .reverse()
 
   return (
     <ResizableGridCard
