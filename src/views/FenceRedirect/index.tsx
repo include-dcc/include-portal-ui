@@ -14,10 +14,6 @@ type OwnProps = {
  * The code query param is sent to the Fence Token endpoint to request a token pair.
  */
 const FenceRedirect = ({ fence }: OwnProps) => {
-  console.log(
-    FenceRedirect.name,
-    '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!',
-  ); //TODO
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('code');
     if (code) {
