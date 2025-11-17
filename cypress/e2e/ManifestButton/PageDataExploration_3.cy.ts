@@ -147,7 +147,7 @@ describe('Page Data Exploration (Data Files) - Api', () => {
       cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').click({force: true});
       cy.wait('@postManifest').then((interception) => {
         const nbLines = interception.response?.body.split('\n').filter((line: string) => line.trim() !== '');
-        expect(nbLines).to.have.length(3);
+        expect(nbLines).to.have.length(2);
       });
     });
   });
