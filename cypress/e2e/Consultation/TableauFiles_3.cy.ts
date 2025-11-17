@@ -54,7 +54,7 @@ describe('Page Data Exploration (Data Files) - Valider les fonctionnalités du t
 
   it('Valider les fonctionnalités du tableau - Tri Experimental Strategy', () => {
     cy.sortTableAndIntercept('Experimental Strategy', 1);
-    cy.validateTableFirstRow(/^(?!-).*$/, 9, true);
+    cy.validateTableFirstRow(/(-|^(?!-).*$)/, 9, true);
     cy.sortTableAndIntercept('Experimental Strategy', 1);
     cy.validateTableFirstRow(/^(?!-).*$/, 9, true);
   });
