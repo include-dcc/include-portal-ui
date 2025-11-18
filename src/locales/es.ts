@@ -1375,7 +1375,7 @@ const es = {
             participantsByAge: 'Participantes por edad en la primera interacción con el paciente',
             dataTypeTitle: 'Archivos por Tipo de Datos',
             studiesTitle: 'Participantes por Estudio',
-            sampleTypeTitle: 'Participantes por Tipo de Muestra',
+            sampleTypeTitle: 'Biospecímenes por Tipo de Muestra',
             mostFrequentPhenotypes: 'Fenotipos más Frecuentes (HPO)',
             mostFrequentDiagnoses: 'Diagnósticos más Frecuentes (MONDO)',
           },
