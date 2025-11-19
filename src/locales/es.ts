@@ -1327,11 +1327,11 @@ const es = {
           graphs: {
             dataCategory: {
               legendAxisLeft: 'Categorías de Datos',
-              legendAxisBottom: '# de participantes',
+              legendAxisBottom: '# de archivos',
             },
             dataTypeGraph: {
               legendAxisLeft: 'Tipos de Datos',
-              legendAxisBottom: '# de participantes',
+              legendAxisBottom: '# de archivos',
             },
             participantsByAgeGraph: {
               tooltips: 'Participantes',
@@ -1342,7 +1342,7 @@ const es = {
             },
             sampleTypeGraph: {
               legendAxisLeft: 'Tipos de Muestra',
-              legendAxisBottom: '# de participantes',
+              legendAxisBottom: '# de biospecímenes',
             },
             mostFrequentDiagnoses: {
               cardTitle: 'Diagnósticos más Frecuentes (MONDO)',
@@ -1371,11 +1371,11 @@ const es = {
             ethnicityTitle: 'Etnicidad',
           },
           availableData: {
-            dataCategoryTitle: 'Participantes por Categoría de Datos',
+            dataCategoryTitle: 'Archivos por Categoría de Datos',
             participantsByAge: 'Participantes por edad en la primera interacción con el paciente',
-            dataTypeTitle: 'Participantes por Tipo de Datos',
+            dataTypeTitle: 'Archivos por Tipo de Datos',
             studiesTitle: 'Participantes por Estudio',
-            sampleTypeTitle: 'Participantes por Tipo de Muestra',
+            sampleTypeTitle: 'Biospecímenes por Tipo de Muestra',
             mostFrequentPhenotypes: 'Fenotipos más Frecuentes (HPO)',
             mostFrequentDiagnoses: 'Diagnósticos más Frecuentes (MONDO)',
           },
