@@ -18,10 +18,13 @@ import LinkBox from './LinkBox';
 
 import styles from './index.module.css';
 
-const formatStorage = (storage: string) => {
-  if (!storage) return;
-  const parts = storage.split(/\.| /);
-  return `${parts[0]}${parts[2]}`;
+const formatStorage = (storage: string | undefined): string => {
+  if (!storage) {
+    return '';
+  }
+  const [strNumber = '', unit = ''] = storage.split(' ');
+  const wholeStrNumber = strNumber.split(".")[0] || ''
+  return `${wholeStrNumber}${unit}`;
 };
 
 const DataExplorationLinks = () => {
