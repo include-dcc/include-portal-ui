@@ -376,7 +376,7 @@ const PublicStudyEntity = () => {
                         participants: intl.get('entities.participant.participants'),
                         files: intl.get('entities.file.files'),
                       }}
-                      file_count={dataset?.expected_number_of_files || 0}
+                      file_count={dataset?.number_of_document_references || 0}
                       titleExtra={titleExtra}
                       header={
                         dataset?.dataset_name ? (

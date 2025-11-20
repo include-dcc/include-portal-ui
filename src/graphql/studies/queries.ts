@@ -186,7 +186,8 @@ export const GET_STUDY = gql`
                     description
                     doi_url
                     expected_data_categories
-                    expected_number_of_files
+                    expected_number_of_files #deprecated
+                    number_of_document_references
                     expected_number_participants
                     experimental_platform
                     experimental_strategy
