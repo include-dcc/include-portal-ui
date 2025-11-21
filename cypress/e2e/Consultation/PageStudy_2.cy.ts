@@ -184,7 +184,7 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class*="EntityDataset_rowCountCard"]').eq(0).contains(/^400$/).should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class*="EntityDataset_rowCountCard"]').eq(0).contains('Participants').should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class*="EntityDataset_rowCountCard"]').eq(1).find('g[id="file"]').should('exist');
-    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class*="EntityDataset_rowCountCard"]').eq(1).contains(/^11.2K$/).should('exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class*="EntityDataset_rowCountCard"]').eq(1).contains(/^3,200$/).should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class*="EntityDataset_rowCountCard"]').eq(1).contains('Files').should('exist');
   });
   
