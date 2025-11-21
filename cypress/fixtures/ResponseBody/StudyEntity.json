@@ -412,6 +412,7 @@
                                                     "Microbiome"
                                                 ],
                                                 "expected_number_of_files": "57",
+                                                "number_of_document_references": 57,
                                                 "expected_number_participants": 19,
                                                 "experimental_platform": "Illumina",
                                                 "experimental_strategy": "WGS",
@@ -451,6 +452,7 @@
                                                     "Microbiome"
                                                 ],
                                                 "expected_number_of_files": "419",
+                                                "number_of_document_references": 0,
                                                 "expected_number_participants": 419,
                                                 "experimental_platform": "SomaScan",
                                                 "experimental_strategy": "Plasma proteomics",
@@ -498,6 +500,7 @@
                                                     "Microbiome"
                                                 ],
                                                 "expected_number_of_files": "11199",
+                                                "number_of_document_references": 3200,
                                                 "expected_number_participants": 400,
                                                 "experimental_platform": "Illumina NovaSeq 6000",
                                                 "experimental_strategy": "Bulk RNA-Seq",

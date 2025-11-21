@@ -18,6 +18,8 @@ export interface IStudyDataset {
   description?: string;
   doi_url?: string;
   expected_data_categories?: string[];
+  number_of_document_references?: number;
+  //deprecated
   expected_number_of_files?: number;
   expected_number_participants?: number;
   experimental_platform?: string;
