@@ -2,8 +2,8 @@ import Icon from '@ant-design/icons';
 
 import { IconProps } from '.';
 
-const BiospecimenIcon = (props: IconProps) => (
-  <Icon {...props}>
+const BiospecimenIcon = ({ viewBox = '0 0 1024 1024', ...props }: IconProps) => (
+  <Icon viewBox={viewBox} {...props}>
     <svg viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
       <path
         // eslint-disable-next-line max-len
@@ -14,7 +14,4 @@ const BiospecimenIcon = (props: IconProps) => (
   </Icon>
 );
 
-BiospecimenIcon.defaultProps = {
-  viewBox: '0 0 1024 1024',
-};
 export default BiospecimenIcon;

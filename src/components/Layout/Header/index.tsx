@@ -275,6 +275,7 @@ const Header = () => {
           </Dropdown>,
           isShowTranslationBtnEnabled && (
             <Button
+              key={'translationButton'}
               size="small"
               type="text"
               onClick={() => dispatch(globalActions.changeLang(targetLang))}
