@@ -40,18 +40,21 @@ const SummaryHeader = ({
       icon: <FamilyIcon />,
       label: intl.get('entities.participant.participants'),
       count: participantCount,
+      id: 'participant_count',
     },
     {
       route: STATIC_ROUTES.DATA_EXPLORATION_BIOSPECIMENS,
       icon: <BiospecimenIcon />,
       label: intl.get('entities.biospecimen.biospecimens'),
       count: biospecimenCount,
+      id: 'biospecimen_count',
     },
     {
       route: STATIC_ROUTES.DATA_EXPLORATION_DATAFILES,
       icon: <FileIcon />,
       label: intl.get('entities.file.files'),
       count: fileCount,
+      id: 'file_count',
     },
   ];
 
@@ -59,6 +62,7 @@ const SummaryHeader = ({
     <div className={styles.container}>
       {items.map((item) => (
         <Tooltip
+          key={item.id}
           title={
             study?.is_harmonized ? undefined : intl.get('entities.study.unharmonizedWarningTooltip')
           }

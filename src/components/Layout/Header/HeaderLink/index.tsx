@@ -11,6 +11,7 @@ interface OwnProps {
   title: string;
   currentPathName: string;
   icon?: React.ReactElement;
+  key?: string | number;
 }
 
 const isActive = (current: string, to: string | string[]) =>

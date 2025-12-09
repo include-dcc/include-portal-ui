@@ -2,8 +2,8 @@ import Icon from '@ant-design/icons';
 
 import { IconProps } from '.';
 
-const LineStyleIcon = (props: IconProps) => (
-  <Icon {...props}>
+const LineStyleIcon = ({ viewBox = '0 0 1024 1024', ...props }: IconProps) => (
+  <Icon viewBox={viewBox} {...props}>
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
       <path
         fillRule="evenodd"
@@ -13,9 +13,5 @@ const LineStyleIcon = (props: IconProps) => (
     </svg>
   </Icon>
 );
-
-LineStyleIcon.defaultProps = {
-  viewBox: '0 0 1024 1024',
-};
 
 export default LineStyleIcon;

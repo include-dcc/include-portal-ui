@@ -2,8 +2,8 @@ import Icon from '@ant-design/icons/lib/components/Icon';
 
 import { IconProps } from '.';
 
-const DiseaseIcon = (props: IconProps) => (
-  <Icon {...props}>
+const DiseaseIcon = ({ viewBox = '0 0 1024 1024', ...props }: IconProps) => (
+  <Icon viewBox={viewBox} {...props}>
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
       <path
         fillRule="evenodd"
@@ -14,7 +14,4 @@ const DiseaseIcon = (props: IconProps) => (
   </Icon>
 );
 
-DiseaseIcon.defaultProps = {
-  viewBox: '0 0 1024 1024',
-};
 export default DiseaseIcon;
