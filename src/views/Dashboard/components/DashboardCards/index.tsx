@@ -15,11 +15,13 @@ export interface DashboardCardProps {
   className?: string;
 }
 
+export const AUTHORIZED_WIDGET_DASHBOARD_CARD_ID = '1';
+
 // Important do not change the ID
 // Its is used for user config
 export const dashboardCards: TSortableItems[] = [
   {
-    id: '1',
+    id: AUTHORIZED_WIDGET_DASHBOARD_CARD_ID,
     xs: 24,
     md: 12,
     xxl: 8,

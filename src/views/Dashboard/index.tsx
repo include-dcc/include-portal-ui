@@ -15,7 +15,7 @@ import useFeatureToggle from '../../hooks/useFeatureToggle';
 import { globalActions } from '../../store/global';
 import { SubscriptionStatus } from '../../store/user/types';
 
-import { dashboardCards } from './components/DashboardCards';
+import { AUTHORIZED_WIDGET_DASHBOARD_CARD_ID, dashboardCards } from './components/DashboardCards';
 import DataExplorationLinks from './components/DashboardCards/DataExplorationLinks';
 
 import styles from './index.module.css';
@@ -27,7 +27,6 @@ const BANNER_TYPE_KEY = `${FT_FLAG_KEY}_TYPE`;
 const BANNER_MSG_KEY = `${FT_FLAG_KEY}_MSG`;
 const FT_FLAG_NEWSLETTER_KEY = 'NEWSLETTER_NOTIFICATION';
 const FT_AUTHORIZED_WIDGET = 'AUTHORIZED_WIDGET';
-const AUTHORIZED_WIDGET_DASHBOARD_CARD_ID = '1';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
