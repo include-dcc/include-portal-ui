@@ -26,7 +26,12 @@ export const dashboardCards: TSortableItems[] = [
     md: 12,
     xxl: 8,
     className: cx(styles.cardColxxl6, styles.cardColxxl5),
-    component: <AuthorizedStudies id="1" className={styles.dashboardCard} />,
+    component: (
+      <AuthorizedStudies
+        id={AUTHORIZED_WIDGET_DASHBOARD_CARD_ID}
+        className={styles.dashboardCard}
+      />
+    ),
   },
   {
     id: '2',
