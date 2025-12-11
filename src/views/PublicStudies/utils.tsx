@@ -25,13 +25,11 @@ export const TABLE_ID = 'public-studies';
 type ColumnsProps = {
   manageLoginModal: (isOpen: boolean) => void;
   manageRedirectUri: (uri: string) => void;
-  isPublicStudyEnabled?: boolean;
 };
 
 export const getColumns = ({
   manageLoginModal,
   manageRedirectUri,
-  isPublicStudyEnabled = false,
 }: ColumnsProps): ProColumnType<any>[] => [
   {
     key: 'is_harmonized',
@@ -70,19 +68,9 @@ export const getColumns = ({
     key: 'study_code',
     title: intl.get('entities.study.code'),
     dataIndex: 'study_code',
-    render: (study_code: string) =>
-      isPublicStudyEnabled ? (
-        <Link to={`${STATIC_ROUTES.PUBLIC_STUDIES}/${study_code}`}>{study_code}</Link>
-      ) : (
-        <a
-          onClick={() => {
-            manageRedirectUri(`${STATIC_ROUTES.STUDIES}/${study_code}`);
-            manageLoginModal(true);
-          }}
-        >
-          {study_code}
-        </a>
-      ),
+    render: (study_code: string) => (
+      <Link to={`${STATIC_ROUTES.PUBLIC_STUDIES}/${study_code}`}>{study_code}</Link>
+    ),
   },
   {
     key: 'study_name',

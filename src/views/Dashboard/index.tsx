@@ -23,13 +23,16 @@ import styles from './index.module.css';
 const { Title } = Typography;
 
 const FT_FLAG_KEY = 'DASHBOARD_BANNER';
-const BANNER_TYPE_KEY = FT_FLAG_KEY + '_TYPE';
-const BANNER_MSG_KEY = FT_FLAG_KEY + '_MSG';
+const BANNER_TYPE_KEY = `${FT_FLAG_KEY}_TYPE`;
+const BANNER_MSG_KEY = `${FT_FLAG_KEY}_MSG`;
 const FT_FLAG_NEWSLETTER_KEY = 'NEWSLETTER_NOTIFICATION';
+const FT_AUTHORIZED_WIDGET = 'AUTHORIZED_WIDGET';
+const AUTHORIZED_WIDGET_DASHBOARD_CARD_ID = '1';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { isEnabled, hideFeature } = useFeatureToggle(FT_FLAG_NEWSLETTER_KEY);
+  const { isEnabled: showAuthWidget } = useFeatureToggle(FT_AUTHORIZED_WIDGET);
   const { userInfo } = useUser();
 
   useEffect(() => {
@@ -73,7 +76,12 @@ const Dashboard = () => {
             }),
           )
         }
-        items={orderCardIfNeeded(dashboardCards, userInfo?.config.dashboard?.cards?.order)}
+        items={orderCardIfNeeded(
+          dashboardCards.filter((x) =>
+            showAuthWidget ? x : x.id !== AUTHORIZED_WIDGET_DASHBOARD_CARD_ID,
+          ),
+          userInfo?.config.dashboard?.cards?.order,
+        )}
         gutter={[24, 24]}
       />
     </Space>
