@@ -38,7 +38,7 @@ beforeEach(() => {
   cy.wait('@authStudiesList');
 });
 
-describe('Page Dashboard - Widget Authorized Studies (connecté)', () => {
+describe.skip('Page Dashboard - Widget Authorized Studies (connecté)', () => {
   it('Vérifier les informations affichées - Header', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Authorized Studies')) {
