@@ -417,7 +417,10 @@ export const getSummaryItems = (variant?: IVariantEntity) => {
                 <>
                   <Text className={style.spliceAi}>{geneWithPickedConsequence.spliceai.ds}</Text>
                   {geneWithPickedConsequence.spliceai.type.map((t: string, index: number) => (
-                    <Tooltip title={intl.get(`screen.variants.summary.details.spliceAiType.${t}`)}>
+                    <Tooltip
+                      key={`deilts-spliceai-type-${t}`}
+                      title={intl.get(`screen.variants.summary.details.spliceAiType.${t}`)}
+                    >
                       <Tag key={index}>{t}</Tag>
                     </Tooltip>
                   ))}

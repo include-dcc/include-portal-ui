@@ -86,7 +86,7 @@ const menuItems = ({ handleChromosomes }: TMenuItems): TTranscriptomicSideBarIte
         }
       >
         {chromosomesIndex.map((_, index) => (
-          <Select.Option value={`chr${index + 1}`}>{`chr${index + 1}`}</Select.Option>
+          <Select.Option key={index} value={`chr${index + 1}`}>{`chr${index + 1}`}</Select.Option>
         ))}
         <Select.Option value={`chrX`}>{`chrX`}</Select.Option>
         <Select.Option value={`chrY`}>{`chrY`}</Select.Option>

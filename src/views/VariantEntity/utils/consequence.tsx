@@ -82,7 +82,10 @@ export const getColumn = (geneSymbolOfPicked?: string): ProColumnType[] => [
         <>
           <span className={style.spliceAi}>{spliceAi.ds}</span>
           {spliceAi.type.map((t: string, index: number) => (
-            <Tooltip title={intl.get(`screen.variants.summary.details.spliceAiType.${t}`)}>
+            <Tooltip
+              key={`details-spliceai-type-${t}`}
+              title={intl.get(`screen.variants.summary.details.spliceAiType.${t}`)}
+            >
               <Tag key={index}>{t}</Tag>
             </Tooltip>
           ))}

@@ -7,7 +7,7 @@ beforeEach(() => {
 });
 
 describe('Page Dashboard - Widget Authorized Studies (déconnecté)', () => {
-  it('Vérifier les informations affichées - Tooltip', () => {
+  it.skip('Vérifier les informations affichées - Tooltip', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Authorized Studies')) {
         cy.wrap($el).find('[class*="CardHeader_infoIcon"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true});
@@ -17,7 +17,7 @@ describe('Page Dashboard - Widget Authorized Studies (déconnecté)', () => {
     cy.get('[class="ant-popover-inner-content"]').contains('Users requesting access to controlled data are required to have an eRA Commons account. Read more on').should('exist');
   });
 
-  it('Valider les liens disponibles - Applying du Tooltip', () => {
+  it.skip('Valider les liens disponibles - Applying du Tooltip', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Authorized Studies')) {
         cy.wrap($el).find('[class*="CardHeader_infoIcon"]').trigger('mouseover', {eventConstructor: 'MouseEvent', force: true});
@@ -29,10 +29,11 @@ describe('Page Dashboard - Widget Authorized Studies (déconnecté)', () => {
   it('Vérifier les informations affichées - Carte', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Authorized Studies')) {
-        cy.wrap($el).find('[class*="Gridcard_contentWrapper"]').as('gridCard');
+        //cy.wrap($el).find('[class*="Gridcard_contentWrapper"]').as('gridCard');
+        throw new Error(`Error: "Authorized Studies should be hide (SJIP-1494)"`);
       }
     });
-    cy.get('@gridCard').contains('Access INCLUDE controlled-access data by connecting your account using your NIH Credentials.').should('exist');
-    cy.get('@gridCard').find('button').contains('Connect').should('exist');
+    //cy.get('@gridCard').contains('Access INCLUDE controlled-access data by connecting your account using your NIH Credentials.').should('exist');
+    //cy.get('@gridCard').find('button').contains('Connect').should('exist');
   });
 });

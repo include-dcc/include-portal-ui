@@ -2,8 +2,8 @@ import Icon from '@ant-design/icons';
 
 import { IconProps } from '.';
 
-const ListAddIcon = (props: IconProps) => (
-  <Icon {...props}>
+const ListAddIcon = ({ viewBox = '0 0 1024 1024', ...props }: IconProps) => (
+  <Icon viewBox={viewBox} {...props}>
     <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
@@ -13,9 +13,5 @@ const ListAddIcon = (props: IconProps) => (
     </svg>
   </Icon>
 );
-
-ListAddIcon.defaultProps = {
-  viewBox: '0 0 1024 1024',
-};
 
 export default ListAddIcon;
