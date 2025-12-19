@@ -7,6 +7,23 @@
 
 ### Technical / Other changes
 -->
+## 2025-12-19 include-portal-ui v1.24.0
+
+### Features:
+
+- [SJIP-1493](https://d3b.atlassian.net/browse/SJIP-1493) Feature: [Authentication] Added session timeout notification
+
+### Technical / Other Changes:
+- 
+- [SJIP-1143](https://d3b.atlassian.net/browse/SJIP-1143) Issue: [Data Exploration] Fixed empty graphs when adding a saved set from Transcriptomics analytics
+- [SJIP-1467](https://d3b.atlassian.net/browse/SJIP-1467) Refactor: [Data exploration] Adjusted authorization icon and flow for files with NCI DRS url
+- [SJIP-1482](https://d3b.atlassian.net/browse/SJIP-1482) Refactor: [Variant Entity] Removed Pathogenicity section of the variant entity page
+- [SJIP-1484](https://d3b.atlassian.net/browse/SJIP-1484) Issue: [Data Exploration] Fixed sample type, data type and category graphs
+- [SJIP-1485](https://d3b.atlassian.net/browse/SJIP-1485) Issue: [Dashboard] Fixed the number of data files shows undefined
+- [SJIP-1490](https://d3b.atlassian.net/browse/SJIP-1490) Refactor: [UI] Replaced the expected file count field with the new field created
+- [SJIP-1494](https://d3b.atlassian.net/browse/SJIP-1494) Refactor: [Dashboard] Temporarily removed the Authorized Studies Widget until NCI fence integration is complete
+- [SJIP-1495](https://d3b.atlassian.net/browse/SJIP-1495) Issue: [ETL] Updated logic for the extraction of the Down Syndrome Status for KF-INCLUDE studies
+- [SJIP-1496](https://d3b.atlassian.net/browse/SJIP-1496) Refactor: [Transcriptomics] Improved fetching time in transcriptomics page
 ## 2025-10-22 include-portal-ui v1.23.0
 ### Features:
 - [SJIP-1462](https://d3b.atlassian.net/browse/SJIP-1462) Feature: [Landing page] Add New EMODs Tile to Landing Page – Ecosystem Tools Section
