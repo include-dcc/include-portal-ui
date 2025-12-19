@@ -7,7 +7,7 @@ beforeEach(() => {
   cy.visitDataExplorationBiospecimenMock();
   cy.get('[data-cy="SidebarMenuItem_Biospecimen"]').clickAndWait({force: true});
   cy.get('button[class*="UploadIdsButton"]').clickAndWait({force: true});
-  cy.typeAndIntercept('[class*="UploadModal"] textarea', 'BS-03YNYNFS,htp0577a_paxgenewholebloodrna unknown', 'POST', '**/graphql', 1);
+  cy.typeAndIntercept('[class*="UploadModal"] textarea', 'BS-03YNYNFS,htp0561a_paxgenewholebloodrna unknown', 'POST', '**/graphql', 1);
   cy.waitWhileSpin(oneMinute);
 });
 
@@ -61,7 +61,7 @@ describe('Page Data Exploration (Biospecimens) - Téléverser une liste d\'ident
     cy.get('[id*="panel-matched"] [data-row-key="bs-03ynynfs:0"] td').eq(0).contains('BS-03YNYNFS').should('exist');
     cy.get('[id*="panel-matched"] [data-row-key="bs-03ynynfs:0"] td').eq(1).contains('bs-03ynynfs').should('exist');
     cy.get('[id*="panel-matched"] [data-row-key="bs-03ynynfs:0"] td').eq(2).contains('HTP').should('exist');
-    cy.get('[id*="panel-matched"] [data-row-key="bs-03ynynfs:1"] td').eq(0).contains('htp0577a_paxgenewholebloodrna').should('exist');
+    cy.get('[id*="panel-matched"] [data-row-key="bs-03ynynfs:1"] td').eq(0).contains('htp0561a_paxgenewholebloodrna').should('exist');
     cy.get('[id*="panel-matched"] [data-row-key="bs-03ynynfs:1"] td').eq(1).contains('bs-03ynynfs').should('exist');
     cy.get('[id*="panel-matched"] [data-row-key="bs-03ynynfs:1"] td').eq(2).contains('HTP').should('exist');
   });

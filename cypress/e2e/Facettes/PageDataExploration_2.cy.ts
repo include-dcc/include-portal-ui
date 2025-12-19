@@ -46,9 +46,9 @@ describe('Page Data Exploration (Biospecimens) - Filtrer avec les facettes', () 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_bs-03ynynfs"
   });
 
-  it('Search by external Sample ID - HTP0577A_PAXgeneWholeBloodRNA', () => {
+  it('Search by external Sample ID - HTP0561A_PAXgeneWholeBloodRNA', () => {
     cy.intercept('POST', '*/grapgql').as('getRouteMatcher');
-    cy.get('[class*="SearchAutocomplete_search"]').eq(0).find('input').type('htp0577a_paxgenewholebloodrna', {force: true}); //data-cy="SearchAutocomplete_Select"
+    cy.get('[class*="SearchAutocomplete_search"]').eq(0).find('input').type('htp0561a_paxgenewholebloodrna', {force: true}); //data-cy="SearchAutocomplete_Select"
     cy.waitWhileSpin(oneMinute);
     cy.wait('@getRouteMatcher');
     cy.wait('@getRouteMatcher');
