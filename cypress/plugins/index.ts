@@ -2,7 +2,7 @@
 /// <reference types="cypress"/>
 import fs, { rmdir } from 'fs';
 import path from 'path';
-import XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 
 require('dotenv').config();
 
@@ -22,13 +22,17 @@ module.exports = (on: Cypress.PluginEvents, config: Cypress.ConfigOptions) => {
       });
     },
     async extractTextFromXLSX(filePath) {
-      const workbook = XLSX.readFile(filePath);
+      const workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.readFile(filePath);
       let text = '';
 
-      workbook.SheetNames.forEach(sheetName => {
-        const sheet = workbook.Sheets[sheetName];
-        const sheetText = XLSX.utils.sheet_to_csv(sheet);
-        text += sheetText;
+      workbook.eachSheet((worksheet) => {
+        worksheet.eachRow((row) => {
+          const rowValues = Array.isArray(row.values)
+            ? row.values.map((value: any) => value || '').slice(1)
+            : [];
+          text += rowValues.join(',') + '\n';
+        });
       });
 
       return text;
@@ -37,7 +41,7 @@ module.exports = (on: Cypress.PluginEvents, config: Cypress.ConfigOptions) => {
       const files = fs.readdirSync(folder);
       const regex = new RegExp('.*');
 
-      const foundFile = files.find(file => regex.test(file));
+      const foundFile = files.find((file) => regex.test(file));
       return foundFile ? path.join(folder, foundFile) : null;
     },
     log(message: any) {
