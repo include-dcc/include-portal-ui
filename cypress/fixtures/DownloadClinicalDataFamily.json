@@ -17,6 +17,7 @@
                "Measurement (LOINC)",
                "Value",
                "Age at Measurement (Days)",
+               "Intervention (MAxO)",
                "pt-as0aepqm",
                "HTP0577",
                "proband-only",

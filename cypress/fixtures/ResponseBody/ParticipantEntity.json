@@ -355,7 +355,20 @@
                                 "study_code": "HTP"
                             },
                             "study_id": "HTP",
-                            "sex": "female"
+                            "sex": "female",
+                            "maxo": {
+                                "hits": {
+                                    "edges": [
+                                        {
+                                            "node": {
+                                                "code": "MAXO:0001155",
+                                                "display": "eye examination",
+                                                "formatted": "eye examination (MAxO:0001155)"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         }
                     }
                 ]
