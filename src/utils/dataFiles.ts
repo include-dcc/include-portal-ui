@@ -15,7 +15,11 @@ export const userHasAccessToFile = (
 
   // @see https://d3b.atlassian.net/browse/SJIP-932
   const fileAccess = cloneDeep(file);
-  if (STUDIES_CONTROLLED_AS_REGISTERED_RULES.includes(fileAccess.study.study_code)) {
+  if (
+    STUDIES_CONTROLLED_AS_REGISTERED_RULES.includes(fileAccess.study.study_code) ||
+    fileAccess.access_urls?.startsWith('drs://cavatica-ga4gh-api.sbgenomics.com/') ||
+    fileAccess.access_urls?.startsWith('drs://nci-crdc.datacommons.io/')
+  ) {
     fileAccess.controlled_access = FileAccessType.REGISTERED;
   }
 
