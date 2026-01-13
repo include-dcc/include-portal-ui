@@ -17,6 +17,7 @@
                "Measurement (LOINC)",
                "Value",
                "Age at Measurement (Days)",
+               "Intervention (MAxO)",
                "PT_0DQ69M1D",
                "NEX029_008A",
                "proband-only",
