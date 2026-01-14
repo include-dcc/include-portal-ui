@@ -7,6 +7,19 @@
 
 ### Technical / Other changes
 -->
+## 2026-01-14 include-portal-ui v1.25.0
+
+### Features:
+
+- [SJIP-1480](https://d3b.atlassian.net/browse/SJIP-1480) [Report] Add a new tab for Interventions
+
+### Technical / Other Changes:
+
+- [SJIP-1490](https://d3b.atlassian.net/browse/SJIP-1490) Refactor: [Study Entity] Updated the expected file count field for a dataset
+- [SJIP-1500](https://d3b.atlassian.net/browse/SJIP-1500) Refactor: [Study Entity] Added  additional Analyze in Cavatica button across different datasets
+- [SJIP-1504](https://d3b.atlassian.net/browse/SJIP-1504) Refactor: [Dependencies] Upgraded and fix vulnerabilities
+- [SJIP-1505](https://d3b.atlassian.net/browse/SJIP-1505) Issue: [Data Exploration] Unblocked the Analyze in Cavatica modal for files with an undetermined authorization status
+
 ## 2025-12-19 include-portal-ui v1.24.0
 
 ### Features:
@@ -14,7 +27,7 @@
 - [SJIP-1493](https://d3b.atlassian.net/browse/SJIP-1493) Feature: [Authentication] Added session timeout notification
 
 ### Technical / Other Changes:
-- 
+
 - [SJIP-1143](https://d3b.atlassian.net/browse/SJIP-1143) Issue: [Data Exploration] Fixed empty graphs when adding a saved set from Transcriptomics analytics
 - [SJIP-1467](https://d3b.atlassian.net/browse/SJIP-1467) Refactor: [Data exploration] Adjusted authorization icon and flow for files with NCI DRS url
 - [SJIP-1482](https://d3b.atlassian.net/browse/SJIP-1482) Refactor: [Variant Entity] Removed Pathogenicity section of the variant entity page
@@ -24,10 +37,15 @@
 - [SJIP-1494](https://d3b.atlassian.net/browse/SJIP-1494) Refactor: [Dashboard] Temporarily removed the Authorized Studies Widget until NCI fence integration is complete
 - [SJIP-1495](https://d3b.atlassian.net/browse/SJIP-1495) Issue: [ETL] Updated logic for the extraction of the Down Syndrome Status for KF-INCLUDE studies
 - [SJIP-1496](https://d3b.atlassian.net/browse/SJIP-1496) Refactor: [Transcriptomics] Improved fetching time in transcriptomics page
+
 ## 2025-10-22 include-portal-ui v1.23.0
-### Features:
+
+### Features: 
+
 - [SJIP-1462](https://d3b.atlassian.net/browse/SJIP-1462) Feature: [Landing page] Add New EMODs Tile to Landing Page – Ecosystem Tools Section
+
 ### Technical / Other Changes:
+
 - [SJIP-1467](https://d3b.atlassian.net/browse/SJIP-1467) Refactor: [Data exploration] Adjust authorization icon and flow for files with NCI DRS url
 - [SJIP-1468](https://d3b.atlassian.net/browse/SJIP-1468) Issue: [Summary View] Fix inversed labels on graph
 - [SJIP-1469](https://d3b.atlassian.net/browse/SJIP-1469) Issue: [Study Entity] Certain analyze in Cavatica datasets aren't sending a call to Cavatica
