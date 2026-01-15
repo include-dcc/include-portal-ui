@@ -28,6 +28,7 @@ export interface IStudyDataset {
   is_harmonized?: boolean;
   publications?: string[];
   publications_details?: ArrangerResultsTree<IPublicationDetails>;
+  has_participant_docs?: boolean;
 }
 
 export interface IAuthor {
