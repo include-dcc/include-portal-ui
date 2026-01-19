@@ -336,8 +336,8 @@ const PublicStudyEntity = () => {
                 </Title>
                 {studyData?.datasets?.map((dataset, index: number) => {
                   const titleExtra = [];
-
-                  if (dataset.dataset_name && dataset.is_harmonized) {
+                  const hasDocsInExploration = dataset.has_participant_docs;
+                  if (hasDocsInExploration) {
                     titleExtra.push(
                       <Button
                         className={style.datasetBtn}
