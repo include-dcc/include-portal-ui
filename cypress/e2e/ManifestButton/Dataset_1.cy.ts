@@ -13,7 +13,7 @@ beforeEach(() => {
       req.alias = 'postStats';
       req.reply(mockResponseBody);
     });
-    cy.get('[id="HTP-WGS-2021-X01"] [class="ant-collapse-header"] button[class*="ant-btn-default "]').eq(1).click({force: true});
+    cy.get('[id="HTP-WGS-2021-X01"] [class="ant-collapse-extra"] button[class*="ant-btn-default "]').eq(1).click({force: true});
     cy.wait('@postStats');
   });
 });

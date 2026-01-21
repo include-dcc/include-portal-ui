@@ -122,9 +122,9 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[class*="StudyEntity_datasetTitle"] [class*="StudyEntity_datasetInfo"]').should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-header"]').contains('HTP Whole Blood RNAseq (2020)').should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-header"] [class*="ant-tag-green"]').contains('Harmonized').should('exist');
-    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-header"]').contains('View in exploration').should('exist');
-    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-header"]').contains('Manifest').should('exist');
-    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-header"]').contains('Analysis').should('exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-extra"]').contains('View in exploration').should('exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-extra"]').contains('Manifest').should('exist');
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-extra"]').contains('Analysis').should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-label"]').eq(0).contains('Dataset ID').should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-content"]').eq(0).contains('HTP-RNAseq-WholeBlood-2020').should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-descriptions-item-label"]').eq(1).contains('Description').should('exist');
