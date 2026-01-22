@@ -192,6 +192,7 @@ export const GET_STUDY = gql`
                     experimental_platform
                     experimental_strategy
                     external_dataset_id
+                    has_participant_docs
                     is_harmonized
                     publications
                     publications_details {

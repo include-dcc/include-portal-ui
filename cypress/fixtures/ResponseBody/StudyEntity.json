@@ -417,6 +417,7 @@
                                                 "experimental_platform": "Illumina",
                                                 "experimental_strategy": "WGS",
                                                 "external_dataset_id": "HTP-WGS-2021-X01",
+                                                "has_participant_docs": true,
                                                 "is_harmonized": true,
                                                 "publications": [],
                                                 "publications_details": "publications_details"
@@ -505,6 +506,7 @@
                                                 "experimental_platform": "Illumina NovaSeq 6000",
                                                 "experimental_strategy": "Bulk RNA-Seq",
                                                 "external_dataset_id": "HTP-RNAseq-WholeBlood-2020",
+                                                "has_participant_docs": true,
                                                 "is_harmonized": true,
                                                 "publications": [
                                                     "https://pubmed.ncbi.nlm.nih.gov/37379383|https://pubmed.ncbi.nlm.nih.gov/39737640"

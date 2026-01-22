@@ -57,7 +57,7 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
   });
 
   it('Lien DataExploration du panneau HTP Whole Blood RNAseq (2020)', () => {
-    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-header"] button').eq(0).clickAndWait({force: true});
+    cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-extra"] button').eq(0).clickAndWait({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Dataset').should('exist');
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('HTP Whole Blood RNAseq (2020)').should('exist');
