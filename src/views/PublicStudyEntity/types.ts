@@ -60,6 +60,7 @@ export interface IPublicStudyEntity {
   study_designs?: string[];
   study_id?: string;
   study_meta_categories?: string[];
+  study_websites?: string[];
   study_name?: string;
   version?: string;
   website?: string;
