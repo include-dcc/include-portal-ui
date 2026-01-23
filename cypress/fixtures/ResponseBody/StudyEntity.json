@@ -366,6 +366,9 @@
                                 "longitudinal"
                             ],
                             "study_meta_categories": [],
+                            "study_websites": [
+                                "https://www.trisome.org/"
+                            ],
                             "website": "https://www.trisome.org/",
                             "data_category": [
                                 "Transcriptomics"
