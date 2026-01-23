@@ -203,10 +203,14 @@ const getSummaryDescriptions = ({
     });
   }
 
-  if (study?.website) {
+  if (study?.study_websites?.length) {
     result.push({
       label: intl.get('entities.study.study_website'),
-      value: <ExternalLink href={study.website}>{study.website}</ExternalLink>,
+      value: study.study_websites.map((website, index) => (
+        <div key={index}>
+          <ExternalLink href={website}>{website}</ExternalLink>
+        </div>
+      )),
     });
   }
 

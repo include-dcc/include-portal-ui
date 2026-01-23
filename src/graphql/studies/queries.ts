@@ -47,6 +47,7 @@ export const GET_STUDIES = gql`
             publications
             participant_count
             study_designs
+            study_websites
             selection_criteria
             website
           }
@@ -166,6 +167,7 @@ export const GET_STUDY = gql`
             study_designs
             study_meta_categories
             study_name
+            study_websites
             website
             data_category
             data_sources
@@ -258,6 +260,7 @@ export const SEARCH_STUDIES_QUERY = gql`
             attribution
             data_category
             website
+            study_websites
           }
         }
       }

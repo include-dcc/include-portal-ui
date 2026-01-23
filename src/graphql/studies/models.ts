@@ -119,5 +119,6 @@ export interface IStudyEntity {
   selection_criteria?: string[];
   study_designs?: string[];
   study_meta_categories?: string[];
+  study_websites?: string[];
   website: string;
 }
