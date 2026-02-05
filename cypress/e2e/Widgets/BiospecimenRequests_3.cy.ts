@@ -9,7 +9,7 @@ beforeEach(() => {
 });
 
 describe('Page Dashboard - Widget Biospecimen Requests', () => {
-  it('Valider les liens disponibles - Bouton Edit', () => {
+  it('Valider les liens disponibles - Bouton Edit [SJIP-1520]', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Biospecimen Requests')) {
         cy.wrap($el).as('dashboardCard');
