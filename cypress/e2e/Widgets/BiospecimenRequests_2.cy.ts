@@ -8,7 +8,7 @@ beforeEach(() => {
 });
 
 describe('Page Dashboard - Widget Biospecimen Requests', () => {
-  it('Vérifier les informations affichées - Nom', () => {
+  it('Vérifier les informations affichées - Nom [SJIP-1520]', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Biospecimen Requests')) {
         cy.wrap($el).as('dashboardCard');
@@ -17,7 +17,7 @@ describe('Page Dashboard - Widget Biospecimen Requests', () => {
     cy.get('@dashboardCard').contains('Cypress_BrB').should('exist');
   });
 
-  it('Vérifier les informations affichées - Stamp', () => {
+  it('Vérifier les informations affichées - Stamp [SJIP-1520]', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Biospecimen Requests')) {
         cy.wrap($el).as('dashboardCard');
@@ -27,7 +27,7 @@ describe('Page Dashboard - Widget Biospecimen Requests', () => {
     cy.get('@dashboardCard').contains(' ago').should('exist');
   });
 
-  it('Valider les liens disponibles - Nom', () => {
+  it('Valider les liens disponibles - Nom [SJIP-1520]', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Biospecimen Requests')) {
         cy.wrap($el).as('dashboardCard');
@@ -39,7 +39,7 @@ describe('Page Dashboard - Widget Biospecimen Requests', () => {
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('Cypress_BrB').should('exist');
   });
 
-  it('Valider les liens disponibles - Bouton Delete', () => {
+  it('Valider les liens disponibles - Bouton Delete [SJIP-1520]', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Biospecimen Requests')) {
         cy.wrap($el).as('dashboardCard');

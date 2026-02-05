@@ -1,4 +1,5 @@
 /// <reference types="cypress"/>
+import { equal } from 'assert';
 import '../../support/commands';
 
 beforeEach(() => {
@@ -10,12 +11,13 @@ beforeEach(() => {
 });
 
 describe('Page Data Exploration (Data Files) - Api', () => {
-  it('Valider la demande envoyée - Bouton Manifest', () => {
+  it('Valider la demande envoyée - Bouton Manifest [SJIP-1520]', () => {
     cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
       req.alias = 'postStats';
     });
     cy.get('[class*="Header_ProTableHeader"] button[class*="ant-btn-default"]').eq(1).click({force: true});
     cy.wait('@postStats').then((interception) => {
+      expect(interception.response?.statusCode).to.equal(200);
       cy.fixture('RequestBody/FileManifestStats.json').then((expectedRequestBody) => {
         const actualBody = { ...interception.request.body };
         const expectedBody = { ...expectedRequestBody };
@@ -28,7 +30,7 @@ describe('Page Data Exploration (Data Files) - Api', () => {
     });
   });
 
-  it('Valider la réponse reçue - Bouton Manifest', () => {
+  it('Valider la réponse reçue - Bouton Manifest [SJIP-1520]', () => {
     cy.fixture('RequestBody/FileManifestStats.json').then((mockRequestBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
@@ -37,13 +39,14 @@ describe('Page Data Exploration (Data Files) - Api', () => {
       cy.fixture('ResponseBody/FileManifestStats.json').then((expectedResponseBody) => {
         cy.get('[class*="Header_ProTableHeader"] button[class*="ant-btn-default"]').eq(1).click({force: true});
         cy.wait('@postStats').then((interception) => {
+          expect(interception.response?.statusCode).to.equal(200);
           expect(interception.response?.body).to.deep.equal(expectedResponseBody);
         });
       });
     });
   });
 
-  it('Valider la demande envoyée - Bouton Download', () => {
+  it('Valider la demande envoyée - Bouton Download [SJIP-1520]', () => {
     cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
@@ -58,6 +61,7 @@ describe('Page Data Exploration (Data Files) - Api', () => {
     });
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').click({force: true});
     cy.wait('@postManifest').then((interception) => {
+      expect(interception.response?.statusCode).to.equal(200);
       cy.fixture('RequestBody/FileManifestDownload.json').then((expectedRequestBody) => {
         const actualBody = { ...interception.request.body };
         const expectedBody = { ...expectedRequestBody };
@@ -71,7 +75,7 @@ describe('Page Data Exploration (Data Files) - Api', () => {
     });
   });
 
-  it('Valider la réponse reçue - Bouton Download', () => {
+  it('Valider la réponse reçue - Bouton Download [SJIP-1520]', () => {
     cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
@@ -89,13 +93,14 @@ describe('Page Data Exploration (Data Files) - Api', () => {
       cy.fixture('ResponseBody/FileManifestDownload.tsv').then((expectedResponseBody) => {
         cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').click({force: true});
         cy.wait('@postManifest').then((interception) => {
+          expect(interception.response?.statusCode).to.equal(200);
           expect(interception.response?.body).to.deep.equal(expectedResponseBody);
         });
       });
     });
   });
 
-  it('Valider la demande envoyée - Bouton Download (checkbox)', () => {
+  it('Valider la demande envoyée - Bouton Download (checkbox) [SJIP-1520]', () => {
     cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
@@ -111,6 +116,7 @@ describe('Page Data Exploration (Data Files) - Api', () => {
     cy.get('[class="ant-modal-body"] input[type="checkbox"]').check({force: true});
     cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').click({force: true});
     cy.wait('@postManifest').then((interception) => {
+      expect(interception.response?.statusCode).to.equal(200);
       cy.fixture('RequestBody/FileManifestDownload.json').then((expectedRequestBody) => {
         const actualBody = { ...interception.request.body };
         const expectedBody = { ...expectedRequestBody };
@@ -126,7 +132,7 @@ describe('Page Data Exploration (Data Files) - Api', () => {
     });
   });
 
-  it('Valider la réponse reçue - Bouton Download (checkbox)', () => {
+  it('Valider la réponse reçue - Bouton Download (checkbox) [SJIP-1520]', () => {
     cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
@@ -146,6 +152,7 @@ describe('Page Data Exploration (Data Files) - Api', () => {
       cy.get('[class="ant-modal-body"] input[type="checkbox"]').check({force: true});
       cy.get('[class="ant-modal-footer"] button[class*="ant-btn-primary"]').click({force: true});
       cy.wait('@postManifest').then((interception) => {
+        expect(interception.response?.statusCode).to.equal(200);
         const nbLines = interception.response?.body.split('\n').filter((line: string) => line.trim() !== '');
         expect(nbLines).to.have.length(3);
       });
