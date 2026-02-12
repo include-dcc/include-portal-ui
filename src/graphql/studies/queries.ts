@@ -184,6 +184,18 @@ export const GET_STUDY = gql`
                     dataset_name
                     data_collection_start_year
                     data_collection_end_year
+                    non_explorable_drs_items {
+                      hits {
+                        edges {
+                          node {
+                            study_name
+                            file_name
+                            drs_uri
+                            file_format
+                          }
+                        }
+                      }
+                    }
                     dbgap
                     description
                     doi_url

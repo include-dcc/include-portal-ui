@@ -53,7 +53,8 @@ export const getGuidDrsItem = (value: ICavaticaTreeNode): ICavaticaDRSImportItem
   };
 };
 
-export const getDRSItems = (
+//@deprecated
+export const getDRSItemsFromEnvVars = (
   value: ICavaticaTreeNode,
   studyId?: string,
   cavaticaDatasetId?: string,
@@ -123,7 +124,7 @@ export const getDRSItems = (
       return [];
   }
 };
-
+//@deprecated
 const getDSConnectDrsItems = (value: ICavaticaTreeNode, type: string): ICavaticaDRSImportItem[] => {
   const demographicAccessUrl = EnvironmentVariables.configFor(
     'CAVATICA_DSC_DEMOGRAPHIC_ACCESS_URL',
@@ -164,7 +165,7 @@ const getDSConnectDrsItems = (value: ICavaticaTreeNode, type: string): ICavatica
     },
   ];
 };
-
+//@deprecated
 const getAecomDsDrsItems = (value: ICavaticaTreeNode, type: string): ICavaticaDRSImportItem[] => {
   const uhClinicalMriAccessUrl = EnvironmentVariables.configFor(
     'CAVATICA_AECOM_DS_UH_CLINICAL_MRI_ACCESS_URL',
@@ -184,7 +185,7 @@ const getAecomDsDrsItems = (value: ICavaticaTreeNode, type: string): ICavaticaDR
     },
   ];
 };
-
+//@deprecated
 const getDsSleepClinicalDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -221,7 +222,7 @@ const getDsSleepClinicalDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getDsSleepDrsItems = (value: ICavaticaTreeNode, type: string): ICavaticaDRSImportItem[] => {
   const cshqDataAccessUrl = EnvironmentVariables.configFor(
     'CAVATICA_DS_SLEEP_UH_SLEEP_CSHQ_DATA_ACCESS_URL',
@@ -339,7 +340,7 @@ const getDsSleepDrsItems = (value: ICavaticaTreeNode, type: string): ICavaticaDR
     },
   ];
 };
-
+//@deprecated
 const getX01HakonarsonDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -362,7 +363,7 @@ const getX01HakonarsonDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getX01DeSmithDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -397,7 +398,7 @@ const getX01DeSmithDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getDsDeterminedSdiDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -434,7 +435,7 @@ const getDsDeterminedSdiDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getDsDeterminedCdmDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -625,7 +626,7 @@ const getDsDeterminedCdmDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getDsDeterminedDscDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -676,7 +677,7 @@ const getDsDeterminedDscDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getBrainPowerAgeLatencyDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -711,7 +712,7 @@ const getBrainPowerAgeLatencyDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getBrainPowerAnthropometricsDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -748,7 +749,7 @@ const getBrainPowerAnthropometricsDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getBrainPowerCognitiveDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -785,7 +786,7 @@ const getBrainPowerCognitiveDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getBrainPowerImagingDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -822,7 +823,7 @@ const getBrainPowerImagingDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getBrainPowerPaDayDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -859,7 +860,7 @@ const getBrainPowerPaDayDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getBrainPowerPaPersonDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -896,7 +897,7 @@ const getBrainPowerPaPersonDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getBrainPowerRandomizationDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -933,7 +934,7 @@ const getBrainPowerRandomizationDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getBrainPowerDemographicsDrsItems = (
   value: ICavaticaTreeNode,
   type: string,
@@ -970,7 +971,7 @@ const getBrainPowerDemographicsDrsItems = (
     },
   ];
 };
-
+//@deprecated
 const getBrainPowerHealthConditionsDrsItems = (
   value: ICavaticaTreeNode,
   type: string,

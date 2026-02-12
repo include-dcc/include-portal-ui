@@ -1,7 +1,7 @@
 import { IStudyDataset, IStudyEntity } from 'graphql/studies/models';
 import { getEnvVarByKey } from 'helpers/EnvVariables';
-
-export const hasCavaticaButton = ({
+//@deprecated
+export const hasCavaticaButtonFromEnvVarsConfig = ({
   study,
   dataset,
 }: {
