@@ -4,6 +4,14 @@ export interface IStudyResultTree {
   study: ArrangerResultsTree<IStudyEntity>;
 }
 
+export interface IDrsItems {
+  id: string;
+  study_name: string;
+  file_name: string;
+  drs_uri: string;
+  file_format: string;
+}
+
 export interface IStudyDataset {
   id: string;
   access_limitations?: string[];
@@ -29,6 +37,7 @@ export interface IStudyDataset {
   publications?: string[];
   publications_details?: ArrangerResultsTree<IPublicationDetails>;
   has_participant_docs?: boolean;
+  non_explorable_drs_items?: ArrangerResultsTree<IDrsItems>;
 }
 
 export interface IAuthor {

@@ -9,7 +9,10 @@ import {
   InfoCircleOutlined,
 } from '@ant-design/icons';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import { ICavaticaTreeNode } from '@ferlab/ui/core/components/Widgets/Cavatica/CavaticaAnalyzeModal';
+import {
+  CAVATICA_TYPE,
+  ICavaticaTreeNode,
+} from '@ferlab/ui/core/components/Widgets/Cavatica/CavaticaAnalyzeModal';
 import CavaticaCreateProjectModal from '@ferlab/ui/core/components/Widgets/Cavatica/CavaticaCreateProjectModal';
 import {
   CavaticaAnalyticsAction,
@@ -34,11 +37,8 @@ import { INDEXES } from 'graphql/constants';
 import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { useStudy } from 'graphql/studies/actions';
-import { IStudyDataset } from 'graphql/studies/models';
-import {
-  cavaticaCreateProjectDictionary,
-  getDRSItems,
-} from 'views/Studies/components/PageContent/Guid/utils';
+import { IDrsItems, IStudyDataset } from 'graphql/studies/models';
+import { cavaticaCreateProjectDictionary } from 'views/Studies/components/PageContent/Guid/utils';
 
 import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
 import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
@@ -57,6 +57,7 @@ import {
 } from 'store/passport/thunks';
 
 import ExternalLinkIcon from '../../components/Icons/ExternalLinkIcon';
+import { ArrangerEdge } from '../../graphql/models';
 import {
   DATA_CATEGORY_QUERY,
   DATATYPE_QUERY,
@@ -71,7 +72,6 @@ import { DATA_EXPLORATION_QB_ID } from '../DataExploration/utils/constant';
 import { getFlattenTree, TreeNode } from '../DataExploration/utils/OntologyTree';
 import { PhenotypeStore } from '../DataExploration/utils/PhenotypeStore';
 
-import { hasCavaticaButton } from './utils/cavatica';
 import { getStatisticsDictionary, queryId, SectionId } from './utils/constants';
 import getDataAccessDescriptions, { getFlatDataset } from './utils/dataAccess';
 import getDatasetDescription from './utils/datasets';
@@ -624,7 +624,9 @@ const StudyEntity = () => {
                 );
               }
 
-              if (hasCavaticaButton({ study, dataset })) {
+              const drsFromNonExplorableDocs: ArrangerEdge<IDrsItems>[] =
+                dataset?.non_explorable_drs_items?.hits?.edges ?? [];
+              if (drsFromNonExplorableDocs.length > 0) {
                 titleExtra.push(
                   <Button
                     className={style.datasetBtn}
@@ -747,9 +749,28 @@ const StudyEntity = () => {
               setCavaticaDatasetId(undefined);
             }}
             handleSubmit={(value: ICavaticaTreeNode) => {
+              const dataset = study?.datasets?.hits?.edges?.find(
+                (x) => x.node.dataset_id === cavaticaDatasetId,
+              )?.node;
+
+              const rawDrs: IDrsItems[] =
+                dataset?.non_explorable_drs_items?.hits?.edges?.map((x) => x.node) ?? [];
+
+              const projectOrParentKey =
+                value.type === CAVATICA_TYPE.PROJECT ? 'project' : 'parent';
+              const drsItemsReformatted = rawDrs.map((x) => ({
+                drs_uri: x.drs_uri,
+                [projectOrParentKey]: value.id,
+                name: x.study_name,
+                metadata: {
+                  name: x.file_name,
+                  study_name: x.study_name,
+                  file_format: x.file_format,
+                },
+              }));
               dispatch(
                 startImportJob({
-                  drsItems: getDRSItems(value, study?.study_id, cavaticaDatasetId),
+                  drsItems: drsItemsReformatted,
                   node: value,
                 }),
               );
