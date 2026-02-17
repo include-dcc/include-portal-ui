@@ -37,4 +37,7 @@ export interface IBiospecimenEntity {
   files: ArrangerResultsTree<IFileEntity>;
   nb_files: number;
   participant: IParticipantEntity;
+  external_parent_sample_id: string;
+  external_collection_sample_id: string;
+  external_container_id: string;
 }

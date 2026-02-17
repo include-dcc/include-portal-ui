@@ -1,10 +1,11 @@
-import { IFileEntity, IFileStudyEntity } from 'graphql/files/models';
+import { IBiospecimenEntity } from 'graphql/biospecimens/models';
+import { IFileEntity, IFileStudyEntity, ISequencingExperiment } from 'graphql/files/models';
 import { toNodes } from 'graphql/utils/helpers';
 import { makeUniqueWords as unique } from 'helpers';
 
 import { keepOnly } from 'utils/helper';
 
-const joinUniquely = (l: string[]) => unique(l).join(',');
+const joinUniquely = (l: string[] | number[]) => unique(l).join(',');
 
 const extractFileMetaData = (file: IFileEntity) => ({
   fhir_document_reference: file.fhir_document_reference,
@@ -28,17 +29,9 @@ const extractParticipantMetaData = (participants: any[]) => {
   );
 
   return {
-    // Removed temporarily due to bug
-    // case_id: joinUniquely(participants.map((x) => x.participant_id)),
+    participant_id: joinUniquely(participants.map((x) => x.participant_id)),
     external_participant_id: joinUniquely(participants.map((x) => x.external_id)),
     down_syndrome_status: joinUniquely(participants.map((x) => x.down_syndrome_status)),
-    // Removed temporarily due to bug
-    // ethnicity: joinUniquely(participants.map((x) => x.ethnicity)),
-    // gender: joinUniquely(participants.map((x) => x.sex)),
-    // race: joinUniquely(participants.map((x) => x.race)),
-    // diagnosis_mondo: joinUniquely(diagnosis.map((d) => d.mondo_display_term)),
-    // condition_source_text: joinUniquely(diagnosis.map((d) => d.source_text)),
-    // observed_phenotype_hpo: joinUniquely(phenotype.map((p) => p.hpo_phenotype_observed)),
     age_at_participant_diagnosis: joinUniquely(diagnosis.map((d) => d.age_at_event_days)),
     age_at_vital_status: joinUniquely(outcomes.map((o) => o.age_at_event_days.value)),
     age_at_phenotype_assignment: joinUniquely(phenotype.map((p) => p.age_at_event_days)),
@@ -49,9 +42,9 @@ const extractParticipantMetaData = (participants: any[]) => {
   };
 };
 
-const extractBioSpecimenMetaData = (biospecimens: any[]) => ({
-  sample_id: joinUniquely(biospecimens.map((x) => x.sample_id)),
-  sample_type: joinUniquely(biospecimens.map((x) => x.sample_type)),
+const extractBioSpecimenMetaData = (biospecimens: IBiospecimenEntity[]) => ({
+  samples_id: joinUniquely(biospecimens.map((x) => x.sample_id)),
+  sample_types: joinUniquely(biospecimens.map((x) => x.sample_type)),
   collection_id: joinUniquely(biospecimens.map((x) => x.collection_sample_id)),
   collection_sample_type: joinUniquely(biospecimens.map((x) => x.collection_sample_type)),
   external_sample_id: joinUniquely(biospecimens.map((x) => x.external_sample_id)),
@@ -71,8 +64,10 @@ const extractBioSpecimenMetaData = (biospecimens: any[]) => ({
   external_container_id: joinUniquely(biospecimens.map((x) => x.external_container_id)),
 });
 
-const extractSequentialExperimentMetaData = (sequentialExperiments: any[]) => ({
-  experimental_strategy: joinUniquely(sequentialExperiments.map((x) => x.experiment_strategy)),
+const extractSequentialExperimentMetaData = (sequentialExperiments: ISequencingExperiment[]) => ({
+  experimental_strategies: joinUniquely(sequentialExperiments.map((x) => x.experiment_strategy)),
+  platforms: joinUniquely(sequentialExperiments.map((x) => x.platform)),
+  library_strands: joinUniquely(sequentialExperiments.map((x) => x.library_strand)),
 });
 
 const extractStudyMetaData = (study: IFileStudyEntity) => ({
