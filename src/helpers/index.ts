@@ -4,4 +4,9 @@ export const isBoolTrue = (value: number | boolean | string | undefined | null) 
 export const isBoolFalse = (value: number | boolean | string | undefined | null) =>
   'false' === value?.toString().toLowerCase();
 
-export const makeUniqueWords = (words: string[]) => [...new Set(words)];
+export const makeUniqueWords = (words: (string | number)[]): string[] => {
+  const sWords = words
+    .filter((w) => w != null)
+    .map((w) => (typeof w === 'number' ? w.toString() : w));
+  return [...new Set(sWords)];
+};
