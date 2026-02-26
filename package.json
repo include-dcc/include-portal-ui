@@ -102,7 +102,7 @@
     "http-errors": "^1.7.2",
     "jwt-decode": "^3.1.2",
     "keycloak-js": "^25.0.6",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "md5": "^2.3.0",
     "plotly.js": "^3.0.1",
     "rc-menu": "^9.16.1",
