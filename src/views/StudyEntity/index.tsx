@@ -691,6 +691,7 @@ const StudyEntity = () => {
                   key={dataset?.id}
                   loading={loading}
                   participant_count={dataset?.expected_number_participants || 0}
+                  defaultCollapsed={datasetLength > 3}
                 />
               );
             })}
