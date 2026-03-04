@@ -539,7 +539,7 @@ const en = {
         contact: 'Contact',
         dashboard: 'Dashboard',
         datafiles: 'Data Files',
-        emods: 'EMODs Portal',
+        emods: 'Experimental Models',
         explore: 'Data Exploration',
         forum: 'Forum',
         help: 'Help',
@@ -763,8 +763,8 @@ const en = {
         },
         emods: {
           description:
-            'The EMODs portal provides researchers with publications, phenotypes, datasets, and biospecimens derived from experimental models of Down syndrome, enabling mechanistic insights into the tissue-specific effects of trisomy 21.',
-          buttonLabel: 'Explore EMODs portal',
+            'The Experimental Models portal provides researchers with publications, phenotypes, datasets, and biospecimens derived from experimental models of Down syndrome, enabling mechanistic insights into the tissue-specific effects of trisomy 21.',
+          buttonLabel: 'Explore Experimental Models',
         },
       },
       documentation: {

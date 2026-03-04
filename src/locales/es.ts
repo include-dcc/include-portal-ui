@@ -544,7 +544,7 @@ const es = {
         contact: 'Contacto',
         dashboard: 'Panel de control',
         datafiles: 'Archivos de datos',
-        emods: 'EMODs Portal',
+        emods: 'Modelos experimentales',
         explore: 'Exploración de datos',
         forum: 'Foro',
         help: 'Ayuda',
@@ -769,8 +769,8 @@ const es = {
         },
         emods: {
           description:
-            'El portal EMODs proporciona a los investigadores publicaciones, fenotipos, conjuntos de datos y biospecímenes derivados de modelos experimentales del síndrome de Down, permitiendo conocimientos mecanísticos sobre los efectos específicos de la trisomía 21 en los tejidos.',
-          buttonLabel: 'Explorar el portal EMODs',
+            'El portal modelos experimentales proporciona a los investigadores publicaciones, fenotipos, conjuntos de datos y biospecímenes derivados de modelos experimentales del síndrome de Down, permitiendo conocimientos mecanísticos sobre los efectos específicos de la trisomía 21 en los tejidos.',
+          buttonLabel: 'Explorar modelos experimentales',
         },
       },
       documentation: {
