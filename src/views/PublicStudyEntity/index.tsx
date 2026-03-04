@@ -400,6 +400,7 @@ const PublicStudyEntity = () => {
                       key={dataset?.id}
                       loading={loadingData}
                       participant_count={dataset?.expected_number_participants || 0}
+                      defaultCollapsed={datasetLength > 3}
                     />
                   );
                 })}
