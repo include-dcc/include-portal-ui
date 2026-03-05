@@ -5,6 +5,7 @@ import {
   IFilterGroup,
   TExtendedMapping,
   TFilterGroupDefaults,
+  VisualType,
 } from '@ferlab/ui/core/components/filters/types';
 import { updateActiveQueryFilters } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { underscoreToDot } from '@ferlab/ui/core/data/arranger/formatting';
@@ -68,7 +69,8 @@ const CustomFilterContainer = ({
   }, [filtersOpen]);
 
   const onChange = (fg: IFilterGroup, f: IFilter[]) => {
-    trackFacetSearch(index, fg.field);
+    const values = fg.type === VisualType.Checkbox ? f.map((filter) => filter.id) : [];
+    trackFacetSearch(index, fg.field, values);
     updateActiveQueryFilters({
       queryBuilderId,
       filterGroup: fg,
