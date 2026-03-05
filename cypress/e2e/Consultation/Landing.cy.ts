@@ -159,8 +159,8 @@ describe('Page Landing - Vérifier les informations affichées', () => {
 
   it('Section EMODs Tile', () => {
     cy.get('[class*="CardsSection_emodsCardContainer"] [src*="EMODS_logo"]').should('exist');
-    cy.get('[class*="CardsSection_emodsCardContainer"] [class*="GenericCard_description"]').contains('The EMODs portal provides researchers with publications, phenotypes, datasets, and biospecimens derived from experimental models of Down syndrome, enabling mechanistic insights into the tissue-specific effects of trisomy 21.').should('exist');
-    cy.get('[class*="CardsSection_emodsCardContainer"] [href="https://experimentalmodels.includedcc.org"]').contains('Explore EMODs portal').should('exist');
+    cy.get('[class*="CardsSection_emodsCardContainer"] [class*="GenericCard_description"]').contains('The Experimental Models portal provides researchers with publications, phenotypes, datasets, and biospecimens derived from experimental models of Down syndrome, enabling mechanistic insights into the tissue-specific effects of trisomy 21.').should('exist');
+    cy.get('[class*="CardsSection_emodsCardContainer"] [href="https://experimentalmodels.includedcc.org"]').contains('Explore Experimental Models').should('exist');
   });
 
   it('Section Documentation Tiles', () => {
