@@ -1467,6 +1467,11 @@ const es = {
               },
             },
           },
+          hierarchicalBiospecimen: {
+            modal: {
+              title: 'Jerarquía de muestras - {participantId}',
+            },
+          },
         },
         datafiles: {
           title: 'Archivos de Datos ({count})',
@@ -1766,6 +1771,47 @@ const es = {
           ok: 'Cerrar',
         },
       },
+    },
+    hierarchicalBiospecimen: {
+      treeViewTab: 'Vista de árbol',
+      tableViewTab: 'Vista de tabla',
+      searchPlaceholder: 'Buscar',
+      collapseAll: 'Colapsar todo',
+      expandAll: 'Expandir todo',
+      legend: {
+        title: 'Leyenda',
+        collection: 'Muestra de colección',
+        sample: 'Muestra',
+        container: 'Contenedor',
+        fileAvailable: 'Archivo disponible',
+        sampleAvailable: 'Muestra disponible',
+        oneSampleAvailable: 'Al menos una muestra disponible',
+      },
+      details: {
+        collection: {
+          collectionSampleId: 'ID de Muestra de Colección',
+          externalCollectionSampleId: 'ID de Colección Externa',
+          collectionSampleType: 'Tipo de Muestra de Colección',
+        },
+        sample: {
+          sampleId: 'ID de Muestra',
+          externalSampleId: 'ID de Muestra Externa',
+          sampleType: 'Tipo de Muestra',
+          parentSampleType: 'Tipo de Muestra Principal',
+          ageAtBiospecimenCollection: 'Edad en la Recolección de Muestras',
+          status: 'Disponibilidad de Muestra',
+          laboratoryProcedure: 'Procedimiento de Laboratorio',
+          nbFiles: 'Archivos',
+          participantFhirId: 'ID del Participante',
+        },
+        container: {
+          containerId: 'ID del Contenedor',
+          volume: 'Volumen',
+          volumeUnit: 'Unidad de Volumen',
+          biospecimenStorage: 'Almacenamiento de Muestras Biológicas',
+        },
+      },
+      exportAsTsv: 'Exportar como TSV',
     },
     participantEntity: {
       personPopover: {

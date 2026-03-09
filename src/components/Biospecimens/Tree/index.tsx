@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import {
   CheckCircleFilled,
@@ -193,6 +193,7 @@ const BiospecimenTree = ({
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [descriptions, setDescriptions] = useState<IDescriptionsItem[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
+  const treeContainerRef = useRef<HTMLDivElement>(null);
 
   const onExpand = (newExpandedKeys: React.Key[]) => {
     setExpandedKeys(newExpandedKeys);
@@ -223,6 +224,33 @@ const BiospecimenTree = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [biospecimen, loading]);
+
+  // Auto-scroll to selected element
+  useEffect(() => {
+    if (selectedKeys.length > 0) {
+      // delay for DOM to be updated
+      setTimeout(() => {
+        const selectedKey = selectedKeys[0];
+        const container = treeContainerRef.current;
+        const treeElement =
+          container?.querySelector('.ant-tree') || document.querySelector('.ant-tree');
+
+        if (treeElement) {
+          const selectedNode =
+            treeElement.querySelector(`[data-key="${selectedKey}"]`) ||
+            treeElement.querySelector('.ant-tree-node-selected');
+
+          if (selectedNode) {
+            selectedNode.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center',
+              inline: 'nearest',
+            });
+          }
+        }
+      }, 100);
+    }
+  }, [selectedKeys]);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -277,7 +305,7 @@ const BiospecimenTree = ({
               )}
             </div>
           </div>
-          <div className={styles.treeWrapper}>
+          <div className={styles.treeWrapper} ref={treeContainerRef}>
             {loading && (
               <Skeleton
                 paragraph={{
