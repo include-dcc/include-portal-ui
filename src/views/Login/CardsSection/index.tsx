@@ -46,7 +46,11 @@ const Cards = () => {
             learnMore: intl.get('screen.loginPage.cards.cavatica.learnMore'),
             login: intl.get('screen.loginPage.login'),
           }}
-          logo={<img src={CavaticaLogo} alt="Cavatica Logo" className={styles.logo} />}
+          logo={
+            <div className={styles.logoWrapper}>
+              <img src={CavaticaLogo} alt="Cavatica Logo" className={styles.logo} />
+            </div>
+          }
         />
 
         <GenericCard
@@ -54,7 +58,11 @@ const Cards = () => {
             description: intl.get('screen.loginPage.cards.emods.description'),
             button: intl.get('screen.loginPage.cards.emods.buttonLabel'),
           }}
-          logo={<img src={EMODS_logo} alt="EMODS Logo" className={styles.logo} />}
+          logo={
+            <div className={styles.logoWrapper}>
+              <img src={EMODS_logo} alt="EMODS Logo" className={styles.logo} />
+            </div>
+          }
           buttonProps={{
             type: 'primary',
             href: 'https://experimentalmodels.includedcc.org',
