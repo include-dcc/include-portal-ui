@@ -46,7 +46,8 @@
 .treeWrapper {
   min-height: 258px;
   max-height: 258px;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: scroll;
 }
 
 .checkIcon {

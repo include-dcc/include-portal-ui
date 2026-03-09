@@ -13,6 +13,7 @@ import Tree, { DataNode } from 'antd/lib/tree';
 import cx from 'classnames';
 import { useHierarchicalBiospecimen } from 'graphql/biospecimens/actions';
 import { IBiospecimenEntity, Status } from 'graphql/biospecimens/models';
+import SimpleBar from 'simplebar-react';
 
 import CollectionLogo from 'components/assets/biospecimen/collection.svg';
 import ContainerLogo from 'components/assets/biospecimen/container.svg';
@@ -25,6 +26,7 @@ import {
   IDescriptionsItem,
 } from './utils';
 
+import 'simplebar-react/dist/simplebar.min.css';
 import styles from './index.module.css';
 
 enum NODE_TYPE {
@@ -193,7 +195,7 @@ const BiospecimenTree = ({
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [descriptions, setDescriptions] = useState<IDescriptionsItem[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
-  const treeContainerRef = useRef<HTMLDivElement>(null);
+  const treeContainerRef = useRef<any>(null);
 
   const onExpand = (newExpandedKeys: React.Key[]) => {
     setExpandedKeys(newExpandedKeys);
@@ -231,9 +233,15 @@ const BiospecimenTree = ({
       // delay for DOM to be updated
       setTimeout(() => {
         const selectedKey = selectedKeys[0];
-        const container = treeContainerRef.current;
+
+        // Use SimpleBar ref to access scrollable content
+        const simpleBarInstance = treeContainerRef.current;
+        const scrollElement =
+          simpleBarInstance?.getScrollElement?.() ||
+          simpleBarInstance?.querySelector?.('.simplebar-content-wrapper') ||
+          document.querySelector('.simplebar-content-wrapper');
         const treeElement =
-          container?.querySelector('.ant-tree') || document.querySelector('.ant-tree');
+          scrollElement?.querySelector('.ant-tree') || document.querySelector('.ant-tree');
 
         if (treeElement) {
           const selectedNode =
@@ -305,7 +313,7 @@ const BiospecimenTree = ({
               )}
             </div>
           </div>
-          <div className={styles.treeWrapper} ref={treeContainerRef}>
+          <SimpleBar className={styles.treeWrapper} ref={treeContainerRef} autoHide={false}>
             {loading && (
               <Skeleton
                 paragraph={{
@@ -346,7 +354,7 @@ const BiospecimenTree = ({
                 }}
               />
             )}
-          </div>
+          </SimpleBar>
           <div className={styles.legendWrapper}>
             <Popover
               title={intl.get('screen.hierarchicalBiospecimen.legend.title')}
