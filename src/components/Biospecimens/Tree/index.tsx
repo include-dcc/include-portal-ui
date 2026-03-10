@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import intl from 'react-intl-universal';
 import {
   CheckCircleFilled,
@@ -13,6 +13,7 @@ import Tree, { DataNode } from 'antd/lib/tree';
 import cx from 'classnames';
 import { useHierarchicalBiospecimen } from 'graphql/biospecimens/actions';
 import { IBiospecimenEntity, Status } from 'graphql/biospecimens/models';
+import SimpleBar from 'simplebar-react';
 
 import CollectionLogo from 'components/assets/biospecimen/collection.svg';
 import ContainerLogo from 'components/assets/biospecimen/container.svg';
@@ -25,6 +26,7 @@ import {
   IDescriptionsItem,
 } from './utils';
 
+import 'simplebar-react/dist/simplebar.min.css';
 import styles from './index.module.css';
 
 enum NODE_TYPE {
@@ -193,6 +195,7 @@ const BiospecimenTree = ({
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [descriptions, setDescriptions] = useState<IDescriptionsItem[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
+  const treeContainerRef = useRef<any>(null);
 
   const onExpand = (newExpandedKeys: React.Key[]) => {
     setExpandedKeys(newExpandedKeys);
@@ -223,6 +226,39 @@ const BiospecimenTree = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [biospecimen, loading]);
+
+  // Auto-scroll to selected element
+  useEffect(() => {
+    if (selectedKeys.length > 0) {
+      // delay for DOM to be updated
+      setTimeout(() => {
+        const selectedKey = selectedKeys[0];
+
+        // Use SimpleBar ref to access scrollable content
+        const simpleBarInstance = treeContainerRef.current;
+        const scrollElement =
+          simpleBarInstance?.getScrollElement?.() ||
+          simpleBarInstance?.querySelector?.('.simplebar-content-wrapper') ||
+          document.querySelector('.simplebar-content-wrapper');
+        const treeElement =
+          scrollElement?.querySelector('.ant-tree') || document.querySelector('.ant-tree');
+
+        if (treeElement) {
+          const selectedNode =
+            treeElement.querySelector(`[data-key="${selectedKey}"]`) ||
+            treeElement.querySelector('.ant-tree-node-selected');
+
+          if (selectedNode) {
+            selectedNode.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center',
+              inline: 'nearest',
+            });
+          }
+        }
+      }, 100);
+    }
+  }, [selectedKeys]);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -277,7 +313,7 @@ const BiospecimenTree = ({
               )}
             </div>
           </div>
-          <div className={styles.treeWrapper}>
+          <SimpleBar className={styles.treeWrapper} ref={treeContainerRef} autoHide={false}>
             {loading && (
               <Skeleton
                 paragraph={{
@@ -318,7 +354,7 @@ const BiospecimenTree = ({
                 }}
               />
             )}
-          </div>
+          </SimpleBar>
           <div className={styles.legendWrapper}>
             <Popover
               title={intl.get('screen.hierarchicalBiospecimen.legend.title')}

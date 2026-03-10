@@ -16,9 +16,12 @@ const HierarchicalBiospecimenModal = ({ biospecimen, isOpen, onClose }: OwnProps
   <Modal
     onCancel={onClose}
     open={isOpen}
-    title={intl.get('screen.dataExploration.tabs.biospecimens.hierarchicalBiospecime.modal.title', {
-      participantId: biospecimen?.participant?.participant_id,
-    })}
+    title={intl.get(
+      'screen.dataExploration.tabs.biospecimens.hierarchicalBiospecimen.modal.title',
+      {
+        participantId: biospecimen?.participant?.participant_id,
+      },
+    )}
     onOk={onClose}
     cancelButtonProps={{ hidden: true }}
     className={styles.hierarchicalModal}

@@ -1476,7 +1476,7 @@ const en = {
               },
             },
           },
-          hierarchicalBiospecime: {
+          hierarchicalBiospecimen: {
             modal: {
               title: 'Sample hierarchy - {participantId}',
             },
