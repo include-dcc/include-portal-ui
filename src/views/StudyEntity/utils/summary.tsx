@@ -221,13 +221,13 @@ const getSummaryDescriptions = ({
   //   });
   // }
 
-  // TODO SJIP-1519 - move to design section
-  // if (study?.study_designs?.length) {
-  //   result.push({
-  //     label: intl.get('entities.study.study_design'),
-  //     value: study?.study_designs?.join(', '),
-  //   });
-  // }
+  // TODO SJIP-1519 - add also in design section
+  if (study?.study_designs?.length) {
+    result.push({
+      label: intl.get('entities.study.study_design'),
+      value: study?.study_designs?.join(', '),
+    });
+  }
 
   if (!isPublic && study?.publications?.length) {
     result.push({
