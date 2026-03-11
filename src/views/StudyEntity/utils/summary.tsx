@@ -74,28 +74,51 @@ const getSummaryDescriptions = ({
         ),
       ].filter((institution) => institution);
 
-  const result: IEntityDescriptionsItem[] = [];
+  const clinicalTrial = isPublic
+    ? (study?.clinical_trials as IPublicStudyEntity['clinical_trials'])?.[0]
+    : (study as IStudyEntity)?.clinical_trials?.hits?.edges?.[0]?.node;
 
-  if (study?.study_code) {
-    result.push({
-      label: intl.get('entities.study.study_code'),
-      value: study.study_code,
-    });
-  }
+  const result: IEntityDescriptionsItem[] = [];
 
   if (study?.study_name) {
     result.push({
       label: intl.get('entities.study.study_name'),
       value: (
-        <Space size={8}>
-          <Text>{study.study_name}</Text>
+        <>
+          <Text className={styles.studyNameSummary}>{study.study_name}</Text>
+          <Tooltip title={intl.get('entities.study.study_code_tooltip')}>
+            <Text>({study.study_code})</Text>
+          </Tooltip>
           {study.is_harmonized ? (
             <Tooltip title={intl.get('entities.study.harmonizedTooltip')}>
-              <Tag color="green">{intl.get('entities.study.harmonized')}</Tag>
+              <Tag className={styles.studyNameTag}>{intl.get('entities.study.harmonized')}</Tag>
             </Tooltip>
           ) : (
             <Tooltip title={intl.get('entities.study.unharmonizedTooltip')}>
-              <Tag>{intl.get('entities.study.unharmonized')}</Tag>
+              <Tag className={styles.studyNameTag}>{intl.get('entities.study.unharmonized')}</Tag>
+            </Tooltip>
+          )}
+        </>
+      ),
+    });
+  }
+
+  if (clinicalTrial) {
+    result.push({
+      label: intl.get('entities.study.clinical_trials.registry_id'),
+      value: (
+        <Space size={8}>
+          <ExternalLink href={`http://clinicaltrials.gov/study/${clinicalTrial.registry_id}`}>
+            {clinicalTrial.registry_id}
+          </ExternalLink>
+          {clinicalTrial.primary_purpose && (
+            <Tooltip title={intl.get('entities.study.clinical_trials.primary_purpose')}>
+              <Tag>{clinicalTrial.primary_purpose}</Tag>
+            </Tooltip>
+          )}
+          {clinicalTrial.trial_phase && (
+            <Tooltip title={intl.get('entities.study.clinical_trials.trial_phase')}>
+              <Tag>{clinicalTrial.trial_phase}</Tag>
             </Tooltip>
           )}
         </Space>
@@ -150,16 +173,17 @@ const getSummaryDescriptions = ({
     ),
   });
 
-  if (study?.part_lifespan_stages) {
-    result.push({
-      label: intl.get('entities.study.participant_life_span'),
-      value: study.part_lifespan_stages.map((lifespan, index) => (
-        <Tag color="cyan" key={index}>
-          {lifespan}
-        </Tag>
-      )),
-    });
-  }
+  // TODO SJIP-1519 - move to design section
+  // if (study?.part_lifespan_stages) {
+  //   result.push({
+  //     label: intl.get('entities.study.participant_life_span'),
+  //     value: study.part_lifespan_stages.map((lifespan, index) => (
+  //       <Tag color="cyan" key={index}>
+  //         {lifespan}
+  //       </Tag>
+  //     )),
+  //   });
+  // }
 
   if (study?.description) {
     result.push({
@@ -189,30 +213,21 @@ const getSummaryDescriptions = ({
     });
   }
 
-  if (study?.selection_criteria?.length) {
-    result.push({
-      label: intl.get('entities.study.selection_criteria'),
-      value: study?.selection_criteria?.join(', '),
-    });
-  }
+  // TODO SJIP-1519 - move to design section
+  // if (study?.selection_criteria?.length) {
+  //   result.push({
+  //     label: intl.get('entities.study.selection_criteria'),
+  //     value: study?.selection_criteria?.join(', '),
+  //   });
+  // }
 
-  if (study?.study_designs?.length) {
-    result.push({
-      label: intl.get('entities.study.study_design'),
-      value: study?.study_designs?.join(', '),
-    });
-  }
-
-  if (study?.study_websites?.length) {
-    result.push({
-      label: intl.get('entities.study.study_website'),
-      value: study.study_websites.map((website, index) => (
-        <div key={index}>
-          <ExternalLink href={website}>{website}</ExternalLink>
-        </div>
-      )),
-    });
-  }
+  // TODO SJIP-1519 - move to design section
+  // if (study?.study_designs?.length) {
+  //   result.push({
+  //     label: intl.get('entities.study.study_design'),
+  //     value: study?.study_designs?.join(', '),
+  //   });
+  // }
 
   if (!isPublic && study?.publications?.length) {
     result.push({
@@ -272,50 +287,6 @@ const getSummaryDescriptions = ({
     result.push({
       label: intl.get('entities.study.institution'),
       value: institutions.join(', '),
-    });
-  }
-
-  if (!isPublic && study && (study as IStudyEntity).contacts?.hits?.edges?.length) {
-    result.push({
-      label: intl.get('entities.study.study_contact'),
-      value: (study as IStudyEntity)?.contacts?.hits.edges.map((contact, index) => (
-        <div key={index}>
-          {contact.node.name && <Text>{contact.node.name}; </Text>}
-          {contact.node.email && <Text>{contact.node.email}</Text>}
-        </div>
-      )),
-    });
-  }
-
-  if (isPublic && study && (study as IPublicStudyEntity).contacts?.length) {
-    result.push({
-      label: intl.get('entities.study.study_contact'),
-      value: (study as IPublicStudyEntity)?.contacts?.map((contact, index) => (
-        <div key={index}>
-          {contact.name && <Text>{contact.name}; </Text>}
-          {contact.email && <Text>{contact.email}</Text>}
-        </div>
-      )),
-    });
-  }
-
-  if (study?.biobank_contact) {
-    result.push({
-      label: intl.get('entities.study.virtual_biorepository_email'),
-      value: (
-        <ExternalLink href={`mailto:${study.biobank_contact}`}>
-          {study.biobank_contact}
-        </ExternalLink>
-      ),
-    });
-  }
-
-  if (study?.biobank_request_link) {
-    result.push({
-      label: intl.get('entities.study.virtual_biorepository_url'),
-      value: (
-        <ExternalLink href={study.biobank_request_link}>{study.biobank_request_link}</ExternalLink>
-      ),
     });
   }
 

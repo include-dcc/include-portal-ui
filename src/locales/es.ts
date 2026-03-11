@@ -2192,6 +2192,12 @@ const es = {
       },
       acknowledgement: 'Reconocimiento',
       citation_statement: 'Declaración de citación',
+      clinical_trials: {
+        primary_purpose: 'Propósito principal',
+        registry_id: 'ID del registro de ensayo clínico',
+        tag: 'Ensayo clínico',
+        trial_phase: 'Fase del ensayo',
+      },
       code: 'Código',
       count: '{count, plural, =0 {Estudio} =1 {Estudio} other {Estudios}}',
       dataset: {
@@ -2297,6 +2303,7 @@ const es = {
       selection_criteria: 'Criterios de selección',
       study: 'Estudio',
       study_code: 'Código de estudio',
+      study_code_tooltip: 'Código de estudio',
       study_contact: 'Contacto de estudio',
       study_design: 'Diseño de estudio',
       study_designs_table: 'Diseño',

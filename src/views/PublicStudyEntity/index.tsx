@@ -193,6 +193,11 @@ const PublicStudyEntity = () => {
               loading={loadingData}
               logo={getLogoByStudyCode(studyData?.study_code)}
               title={studyData?.study_name}
+              titleTags={
+                studyData?.study_designs?.includes('Clinical Trial') ? (
+                  <Tag color="cyan">{intl.get('entities.study.clinical_trials.tag')}</Tag>
+                ) : undefined
+              }
             />
 
             <EntityDescriptions
@@ -317,7 +322,11 @@ const PublicStudyEntity = () => {
 
             {hasDataAccess && (
               <EntityDescriptions
-                descriptions={getDataAccessDescriptions(flatDataset)}
+                descriptions={getDataAccessDescriptions({
+                  flatDataset,
+                  study: studyData,
+                  isPublic: true,
+                })}
                 header={intl.get('entities.study.data_access')}
                 id={SectionId.DATA_ACCESS}
                 loading={loadingData}

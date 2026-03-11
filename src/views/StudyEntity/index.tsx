@@ -419,6 +419,11 @@ const StudyEntity = () => {
           loading={loading}
           logo={getLogoByStudyCode(study?.study_code)}
           title={study?.study_name}
+          titleTags={
+            study?.study_designs?.includes('Clinical Trial') ? (
+              <Tag color="cyan">{intl.get('entities.study.clinical_trials.tag')}</Tag>
+            ) : undefined
+          }
         />
 
         <EntityDescriptions
@@ -561,7 +566,7 @@ const StudyEntity = () => {
 
         {hasDataAccess && (
           <EntityDescriptions
-            descriptions={getDataAccessDescriptions(flatDataset)}
+            descriptions={getDataAccessDescriptions({ flatDataset, study })}
             header={intl.get('entities.study.data_access')}
             id={SectionId.DATA_ACCESS}
             loading={loading}
