@@ -33,6 +33,8 @@ const es = {
     pleaseDescribe: 'Por favor, describa',
     connect: 'Conectar',
     viewInExploration: 'Ver en exploración',
+    seeMore: 'Ver más',
+    seeLess: 'Ver menos',
     search: {
       genes: {
         emptyText: 'No se encontró ningún gen',

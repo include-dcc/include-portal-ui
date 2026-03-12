@@ -10,6 +10,7 @@ import copy from 'copy-to-clipboard';
 import { IStudyEntity } from 'graphql/studies/models';
 import { IPublicStudyEntity } from 'views/PublicStudyEntity/types';
 
+import ExpandableText from 'components/ExpandableText';
 import Publication from 'components/Publication';
 import PublicPublication from 'components/Publication/PublicPublication';
 import { globalActions } from 'store/global';
@@ -188,7 +189,7 @@ const getSummaryDescriptions = ({
   if (study?.description) {
     result.push({
       label: intl.get('entities.study.description'),
-      value: study.description,
+      value: <ExpandableText text={study.description} maxLines={2} />,
     });
   }
 
@@ -293,14 +294,14 @@ const getSummaryDescriptions = ({
   if (study?.citation_statement) {
     result.push({
       label: intl.get('entities.study.citation_statement'),
-      value: study.citation_statement,
+      value: <ExpandableText text={study.citation_statement} maxLines={2} />,
     });
   }
 
   if (study?.acknowledgement) {
     result.push({
       label: intl.get('entities.study.acknowledgement'),
-      value: study.acknowledgement,
+      value: <ExpandableText text={study.acknowledgement} maxLines={2} />,
     });
   }
 

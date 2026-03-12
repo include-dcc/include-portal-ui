@@ -81,17 +81,6 @@ const getDataAccessDescriptions = ({
       : TABLE_EMPTY_PLACE_HOLDER,
   });
 
-  if (study?.study_websites?.length) {
-    result.push({
-      label: intl.get('entities.study.study_website'),
-      value: study.study_websites.map((website, index) => (
-        <div key={index}>
-          <ExternalLink href={website}>{website}</ExternalLink>
-        </div>
-      )),
-    });
-  }
-
   if (!isPublic && study && (study as IStudyEntity).contacts?.hits?.edges?.length) {
     result.push({
       label: intl.get('entities.study.study_contact'),
@@ -111,6 +100,17 @@ const getDataAccessDescriptions = ({
         <div key={index}>
           {contact.name && <Text>{contact.name}; </Text>}
           {contact.email && <Text>{contact.email}</Text>}
+        </div>
+      )),
+    });
+  }
+
+  if (study?.study_websites?.length) {
+    result.push({
+      label: intl.get('entities.study.study_website'),
+      value: study.study_websites.map((website, index) => (
+        <div key={index}>
+          <ExternalLink href={website}>{website}</ExternalLink>
         </div>
       )),
     });

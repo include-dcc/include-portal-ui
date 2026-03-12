@@ -109,7 +109,14 @@ const PublicStudyEntity = () => {
 
   const flatDataset = getFlatDataset(studyData?.datasets);
   const hasDataAccess =
-    flatDataset?.accessLimitations.size || flatDataset?.accessRequirements.size ? true : false;
+    flatDataset?.accessLimitations.size ||
+    flatDataset?.accessRequirements.size ||
+    (studyData?.contacts?.length ?? 0) > 0 ||
+    studyData?.study_websites?.length ||
+    studyData?.biobank_contact ||
+    studyData?.biobank_request_link
+      ? true
+      : false;
 
   const hasFiles = (studyData?.file_count ?? 0) > 0;
 

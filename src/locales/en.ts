@@ -34,6 +34,8 @@ const en = {
     pleaseDescribe: 'Please describe',
     connect: 'Connect',
     viewInExploration: 'View in exploration',
+    seeMore: 'See more',
+    seeLess: 'See less',
     search: {
       genes: {
         emptyText: 'No gene found',
