@@ -84,6 +84,20 @@ export interface IContact {
   name?: string;
 }
 
+export interface IClinicalTrial {
+  id: string;
+  arm_allocation?: string;
+  arm_information?: string;
+  intervention?: string;
+  intervention_assignment_strategy?: string;
+  intervention_types?: string[];
+  primary_outcome_measures?: string[];
+  primary_purpose?: string;
+  registry_id?: string;
+  secondary_outcome_measures?: string[];
+  trial_phase?: string;
+}
+
 export interface IStudyEntity {
   id: string;
   study_id: string;
@@ -94,6 +108,7 @@ export interface IStudyEntity {
   biobank_request_link?: string;
   biospecimen_count: number;
   citation_statement?: string;
+  clinical_trials?: ArrangerResultsTree<IClinicalTrial>;
   contacts?: ArrangerResultsTree<IContact>;
   controlled_access?: string[];
   data_category: string[];

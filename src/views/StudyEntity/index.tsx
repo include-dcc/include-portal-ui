@@ -261,7 +261,14 @@ const StudyEntity = () => {
 
   const flatDataset = getFlatDataset(study?.datasets);
   const hasDataAccess =
-    flatDataset?.accessLimitations.size || flatDataset?.accessRequirements.size ? true : false;
+    flatDataset?.accessLimitations.size ||
+    flatDataset?.accessRequirements.size ||
+    (study?.contacts?.hits?.edges?.length ?? 0) > 0 ||
+    study?.study_websites?.length ||
+    study?.biobank_contact ||
+    study?.biobank_request_link
+      ? true
+      : false;
 
   const hasFiles = (study?.file_count ?? 0) > 0;
 
@@ -419,6 +426,11 @@ const StudyEntity = () => {
           loading={loading}
           logo={getLogoByStudyCode(study?.study_code)}
           title={study?.study_name}
+          titleTags={
+            study?.study_designs?.includes('Clinical Trial') ? (
+              <Tag color="cyan">{intl.get('entities.study.clinical_trials.tag')}</Tag>
+            ) : undefined
+          }
         />
 
         <EntityDescriptions
@@ -561,7 +573,7 @@ const StudyEntity = () => {
 
         {hasDataAccess && (
           <EntityDescriptions
-            descriptions={getDataAccessDescriptions(flatDataset)}
+            descriptions={getDataAccessDescriptions({ flatDataset, study })}
             header={intl.get('entities.study.data_access')}
             id={SectionId.DATA_ACCESS}
             loading={loading}

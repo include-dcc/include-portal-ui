@@ -34,6 +34,8 @@ const en = {
     pleaseDescribe: 'Please describe',
     connect: 'Connect',
     viewInExploration: 'View in exploration',
+    seeMore: 'See more',
+    seeLess: 'See less',
     search: {
       genes: {
         emptyText: 'No gene found',
@@ -2241,6 +2243,12 @@ const en = {
       },
       acknowledgement: 'Acknowledgement',
       citation_statement: 'Citation Statement',
+      clinical_trials: {
+        primary_purpose: 'Primary Purpose',
+        registry_id: 'Clinical Trial Registry ID',
+        tag: 'Clinical Trial',
+        trial_phase: 'Trial Phase',
+      },
       code: 'Code',
       count: '{count, plural, =0 {Study} =1 {Study} other {Studies}}',
       dataset: {
@@ -2346,6 +2354,7 @@ const en = {
       selection_criteria: 'Selection Criteria',
       study: 'Study',
       study_code: 'Study Code',
+      study_code_tooltip: 'Study code',
       study_contact: 'Study Contact',
       study_design: 'Study Design',
       study_designs_table: 'Design',

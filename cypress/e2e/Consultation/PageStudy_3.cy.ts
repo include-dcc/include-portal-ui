@@ -11,49 +11,66 @@ beforeEach(() => {
 });
 
 describe('Page d\'une étude - Valider les liens disponibles', () => {
-  it('Lien dbGaP du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(3).invoke('text').then((invokeText) => {
-      if (!invokeText.includes('-')) {
-        cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(3).find('[href]')
-        .should('have.attr', 'href').and('match', /https:\/\/www\.ncbi\.nlm\.nih\.gov\/projects\/gap\/cgi-bin\/study\.cgi\?study_id\=phs002981/);
-      };
-    });
+  it('Lien Clinical Trial du panneau Summary', () => {
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(1).find('[href]')
+      .should('have.attr', 'href').and('match', /http:\/\/clinicaltrials.gov\/study\/NCT04048759/);
   });
 
-  it('Lien Study Website du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(12).find('[href]')
-      .should('have.attr', 'href').and('match', /https:\/\/www.trisome.org/);
+  it('Lien \'See more\' de Description du panneau Summary', () => {
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(5).contains('See more').clickAndWait({force: true});
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"] [style*="webkit-line-clamp: unset"]').contains('The Human Trisome Project (HTP)').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(5).contains('See less').clickAndWait({force: true});
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"] [style*="webkit-line-clamp: 2"]').contains('The Human Trisome Project (HTP)').should('exist');
   });
 
   it('Lien Publication du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(10).find('[href]')
       .should('have.attr', 'href').and('match', /https:\/\/pubmed.ncbi.nlm.nih.gov\/38942750(|\/)/);
   });
 
   it('Lien \'See more\' de Publication du panneau Summary', () => {
     cy.get('[class*="PubModal_modalWrapper"]').should('not.exist');
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(13).contains('See more').clickAndWait({force: true});
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(10).contains('See more').clickAndWait({force: true});
     cy.get('[class*="PubModal_modalWrapper"]').should('exist');
   });
 
   it('Lien DOI Citation du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).find('[href]')
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(11).find('[href]')
       .should('have.attr', 'href').and('match', /https:\/\/doi.org\/10.71738\/p0a9-2v09/);
   });
 
-  it('Lien Virtual Biorepository Email du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(18).find('[href]')
-      .should('have.attr', 'href', 'mailto:dsresearch@cuanschutz.edu');
+  it('Lien \'See more\' de Citation Statement du panneau Summary', () => {
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).contains('See more').clickAndWait({force: true});
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"] [style*="webkit-line-clamp: unset"]').contains('This is the end of the Citation Statement text.').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(14).contains('See less').clickAndWait({force: true});
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"] [style*="webkit-line-clamp: 2"]').contains('This is the end of the Citation Statement text.').should('exist');
   });
 
-  it('Lien Virtual Biorepository URL du panneau Summary', () => {
-    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(19).find('[href]')
-      .should('have.attr', 'href', 'https://redcap.link/HTPVBRrequest');
+  it('Lien \'See more\' de Acknowledgement du panneau Summary', () => {
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('See more').clickAndWait({force: true});
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"] [style*="webkit-line-clamp: unset"]').contains('This is the end of the Acknowledgement text.').should('exist');
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"]').eq(15).contains('See less').clickAndWait({force: true});
+    cy.get('[id="summary"] [class="ant-descriptions-item-content"] [style*="webkit-line-clamp: 2"]').contains('This is the end of the Acknowledgement text.').should('exist');
   });
 
   it('Lien Duo de l\'Access Limitation du panneau Data Access', () => {
     cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(0).find('[href]')
       .should('have.attr', 'href', 'http://purl.obolibrary.org/obo/DUO_0000042');
+  });
+
+  it('Lien Study Website du panneau Data Access', () => {
+    cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(3).find('[href]')
+      .should('have.attr', 'href').and('match', /https:\/\/www.trisome.org/);
+  });
+
+  it('Lien Virtual Biorepository Email du panneau Data Access', () => {
+    cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(4).find('[href]')
+      .should('have.attr', 'href', 'mailto:dsresearch@cuanschutz.edu');
+  });
+
+  it('Lien Virtual Biorepository URL du panneau Data Access', () => {
+    cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(5).find('[href]')
+      .should('have.attr', 'href', 'https://redcap.link/HTPVBRrequest');
   });
 
   it('Lien DataExploration du panneau HTP Whole Blood RNAseq (2020)', () => {

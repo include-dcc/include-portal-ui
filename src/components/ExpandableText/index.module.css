@@ -1,0 +1,35 @@
+.container {
+  position: relative;
+}
+
+.text {
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.text.clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hiddenText {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  width: 100%;
+  visibility: hidden;
+  pointer-events: none;
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.toggleButton {
+  padding: 0;
+  margin-top: 8px;
+  height: auto;
+  font-size: 12px;
+}

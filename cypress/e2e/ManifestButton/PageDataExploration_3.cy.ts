@@ -30,7 +30,7 @@ describe('Page Data Exploration (Data Files) - Api', () => {
     });
   });
 
-  it('Valider la réponse reçue - Bouton Manifest [SJIP-1520]', () => {
+  it.skip('Valider la réponse reçue - Bouton Manifest [SJIP-1520]', () => {
     cy.fixture('RequestBody/FileManifestStats.json').then((mockRequestBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';

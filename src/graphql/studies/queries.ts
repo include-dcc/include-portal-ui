@@ -73,6 +73,24 @@ export const GET_STUDY = gql`
             biobank_request_link
             biospecimen_count
             citation_statement
+            clinical_trials {
+              hits {
+                edges {
+                  node {
+                    arm_allocation
+                    arm_information
+                    intervention
+                    intervention_assignment_strategy
+                    intervention_types
+                    primary_outcome_measures
+                    primary_purpose
+                    registry_id
+                    secondary_outcome_measures
+                    trial_phase
+                  }
+                }
+              }
+            }
             contacts {
               hits {
                 total

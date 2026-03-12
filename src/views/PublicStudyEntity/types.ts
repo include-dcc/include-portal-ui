@@ -1,5 +1,6 @@
 import {
   IAuthor,
+  IClinicalTrial,
   IContact,
   IDataType,
   IExperimentalStrategy,
@@ -22,6 +23,7 @@ export interface IPublicStudyEntity {
   biobank_request_link?: string;
   biospecimen_count?: number;
   citation_statement?: string;
+  clinical_trials?: IClinicalTrial[];
   contacts?: IContact[];
   controlled_access?: string[];
   data_category?: string[];
