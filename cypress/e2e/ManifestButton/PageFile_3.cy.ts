@@ -9,7 +9,7 @@ beforeEach(() => {
 });
 
 describe('Page d\'un fichier - Api', () => {
-  it('Valider la demande envoyée - Bouton Manifest [SJIP-1520]', () => {
+  it('Valider la demande envoyée - Bouton Manifest', () => {
     cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
       req.alias = 'postStats';
     });
@@ -28,7 +28,7 @@ describe('Page d\'un fichier - Api', () => {
     });
   });
 
-  it('Valider la réponse reçue - Bouton Manifest [SJIP-1520]', () => {
+  it('Valider la réponse reçue - Bouton Manifest', () => {
     cy.fixture('RequestBody/FileManifestStats.json').then((mockRequestBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
@@ -44,7 +44,7 @@ describe('Page d\'un fichier - Api', () => {
     });
   });
 
-  it('Valider la demande envoyée - Bouton Download [SJIP-1520]', () => {
+  it('Valider la demande envoyée - Bouton Download', () => {
     cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
@@ -73,7 +73,7 @@ describe('Page d\'un fichier - Api', () => {
     });
   });
 
-  it('Valider la réponse reçue - Bouton Download [SJIP-1520]', () => {
+  it('Valider la réponse reçue - Bouton Download', () => {
     cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
@@ -98,7 +98,7 @@ describe('Page d\'un fichier - Api', () => {
     });
   });
 
-  it('Valider la demande envoyée - Bouton Download (checkbox) [SJIP-1520]', () => {
+  it('Valider la demande envoyée - Bouton Download (checkbox)', () => {
     cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
@@ -130,7 +130,7 @@ describe('Page d\'un fichier - Api', () => {
     });
   });
 
-  it('Valider la réponse reçue - Bouton Download (checkbox) [SJIP-1520]', () => {
+  it('Valider la réponse reçue - Bouton Download (checkbox)', () => {
     cy.fixture('ResponseBody/FileManifestStats.json').then((mockResponseBody) => {
       cy.intercept('POST', '**/reports/file-manifest/stats', (req) => {
         req.alias = 'postStats';
