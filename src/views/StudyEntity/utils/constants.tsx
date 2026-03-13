@@ -8,6 +8,16 @@ export enum SectionId {
   DATA_ACCESS = 'data_access',
   DATA_FILE = 'data_file',
   DATASET = 'dataset',
+  DESIGN = 'design',
+}
+
+export enum StudyClinicalTrials {
+  BRAIN_POWER = 'BrainPower',
+  JAKI_DS = 'JAKi-DS',
+}
+
+export enum StudyDesign {
+  CLINICAL_TRIALS = 'Clinical Trial',
 }
 
 export const getStatisticsDictionary = (studyCode?: string) => ({

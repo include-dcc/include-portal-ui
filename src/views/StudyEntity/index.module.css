@@ -48,3 +48,8 @@
 .copy {
   margin-left: 4px;
 }
+
+.scheduleDiagram {
+  height: 100px;
+  cursor: pointer;
+}
