@@ -41,7 +41,7 @@ import { IDrsItems, IStudyDataset } from 'graphql/studies/models';
 import { cavaticaCreateProjectDictionary } from 'views/Studies/components/PageContent/Guid/utils';
 
 import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
-import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
+import DownloadClinicalData from 'components/reports/DownloadClinicalData';
 import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
 import { trackCavaticaAction } from 'services/analytics';
 import { CavaticaApi } from 'services/api/cavatica';
@@ -425,7 +425,7 @@ const StudyEntity = () => {
           extra={
             <Space>
               {study && (
-                <DownloadClinicalDataDropdown
+                <DownloadClinicalData
                   sqon={participantSqon}
                   key="actionDropdown"
                   disabled={!study?.is_harmonized}
