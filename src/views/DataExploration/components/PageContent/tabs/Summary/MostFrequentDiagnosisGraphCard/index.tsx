@@ -79,7 +79,7 @@ const MostFrequentDiagnosisGraphCard = () => {
           return 0;
         },
       );
-      setMondo(filterMondoData(treeNodeToChartData(flattenMondoTree)));
+      setMondo(filterMondoData(treeNodeToChartData(flattenMondoTree)).reverse());
     });
   }, [JSON.stringify(sqon)]);
 
