@@ -9,8 +9,7 @@ beforeEach(() => {
 
   cy.login();
   cy.visitStudyEntity('DS-NEXUS', 1);
-  cy.get('[class*="EntityTitle"] button[class*="ant-dropdown-trigger"]').click({force: true});
-  cy.clickAndIntercept('[data-menu-id*="-clinicalData"]', 'POST', '**/file-manifest', 1);
+  cy.clickAndIntercept('[class*="EntityTitle"] button:contains("Download clinical data")', 'POST', '**/file-manifest', 1);
   cy.waitUntilFile(oneMinute);
 });
 
