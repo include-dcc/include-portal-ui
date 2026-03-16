@@ -174,18 +174,6 @@ const getSummaryDescriptions = ({
     ),
   });
 
-  // TODO SJIP-1519 - move to design section
-  // if (study?.part_lifespan_stages) {
-  //   result.push({
-  //     label: intl.get('entities.study.participant_life_span'),
-  //     value: study.part_lifespan_stages.map((lifespan, index) => (
-  //       <Tag color="cyan" key={index}>
-  //         {lifespan}
-  //       </Tag>
-  //     )),
-  //   });
-  // }
-
   if (study?.description) {
     result.push({
       label: intl.get('entities.study.description'),
@@ -214,15 +202,6 @@ const getSummaryDescriptions = ({
     });
   }
 
-  // TODO SJIP-1519 - move to design section
-  // if (study?.selection_criteria?.length) {
-  //   result.push({
-  //     label: intl.get('entities.study.selection_criteria'),
-  //     value: study?.selection_criteria?.join(', '),
-  //   });
-  // }
-
-  // TODO SJIP-1519 - add also in design section
   if (study?.study_designs?.length) {
     result.push({
       label: intl.get('entities.study.study_design'),

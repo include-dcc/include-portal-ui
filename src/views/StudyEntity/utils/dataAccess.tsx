@@ -68,18 +68,19 @@ const getDataAccessDescriptions = ({
   isPublic = false,
 }: IGetDataAccessDescriptions): IEntityDescriptionsItem[] => {
   const result: IEntityDescriptionsItem[] = [];
-  result.push({
-    label: intl.get('entities.study.access_limitation'),
-    value: flatDataset?.accessLimitations.size
-      ? renderAccess(flatDataset?.accessLimitations)
-      : TABLE_EMPTY_PLACE_HOLDER,
-  });
-  result.push({
-    label: intl.get('entities.study.access_requirement'),
-    value: flatDataset?.accessRequirements.size
-      ? renderAccess(flatDataset.accessRequirements)
-      : TABLE_EMPTY_PLACE_HOLDER,
-  });
+  if (flatDataset?.accessLimitations.size) {
+    result.push({
+      label: intl.get('entities.study.access_limitation'),
+      value: renderAccess(flatDataset?.accessLimitations),
+    });
+  }
+
+  if (flatDataset?.accessRequirements.size) {
+    result.push({
+      label: intl.get('entities.study.access_requirement'),
+      value: renderAccess(flatDataset.accessRequirements),
+    });
+  }
 
   if (!isPublic && study && (study as IStudyEntity).contacts?.hits?.edges?.length) {
     result.push({

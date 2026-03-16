@@ -72,12 +72,20 @@ import { DATA_EXPLORATION_QB_ID } from '../DataExploration/utils/constant';
 import { getFlattenTree, TreeNode } from '../DataExploration/utils/OntologyTree';
 import { PhenotypeStore } from '../DataExploration/utils/PhenotypeStore';
 
-import { getStatisticsDictionary, queryId, SectionId } from './utils/constants';
+import {
+  getStatisticsDictionary,
+  queryId,
+  SectionId,
+  StudyClinicalTrials,
+  StudyDesign,
+} from './utils/constants';
 import getDataAccessDescriptions, { getFlatDataset } from './utils/dataAccess';
 import getDatasetDescription from './utils/datasets';
+import getDesignDescriptions from './utils/design';
 import getFileTables from './utils/file';
 import getSummaryDescriptions from './utils/summary';
 import { getLogoByStudyCode } from './utils/title';
+import ScheduleDiagramModal from './ScheduleDiagramModal';
 import SummaryHeader from './SummaryHeader';
 
 import style from './index.module.css';
@@ -107,6 +115,8 @@ const StudyEntity = () => {
   const [isCavaticaModalOpen, setIsCavaticaModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [cavaticaDatasetId, setCavaticaDatasetId] = useState<string | undefined>(undefined);
+
+  const [openDiagramModal, setOpenDiagramModal] = useState(false);
 
   const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
 
@@ -270,6 +280,12 @@ const StudyEntity = () => {
       ? true
       : false;
 
+  const isClinicalTrials = study?.study_designs?.includes(StudyDesign.CLINICAL_TRIALS);
+  const hasScheduleDiagram =
+    isClinicalTrials &&
+    (study?.study_code === StudyClinicalTrials.BRAIN_POWER ||
+      study?.study_code === StudyClinicalTrials.JAKI_DS);
+
   const hasFiles = (study?.file_count ?? 0) > 0;
 
   const defaultLinks = [
@@ -329,6 +345,11 @@ const StudyEntity = () => {
       title: intl.get('entities.study.data_access'),
     });
   }
+
+  defaultLinks.push({
+    href: `#${SectionId.DESIGN}`,
+    title: intl.get('entities.study.design'),
+  });
 
   let datasetLength = 0;
   if (hasDataset) {
@@ -427,7 +448,7 @@ const StudyEntity = () => {
           logo={getLogoByStudyCode(study?.study_code)}
           title={study?.study_name}
           titleTags={
-            study?.study_designs?.includes('Clinical Trial') ? (
+            isClinicalTrials ? (
               <Tag color="cyan">{intl.get('entities.study.clinical_trials.tag')}</Tag>
             ) : undefined
           }
@@ -579,6 +600,28 @@ const StudyEntity = () => {
             loading={loading}
             noDataLabel={intl.get('no.data.available')}
             title={intl.get('entities.study.data_access')}
+          />
+        )}
+
+        <EntityDescriptions
+          descriptions={getDesignDescriptions({
+            study,
+            isClinicalTrials,
+            hasScheduleDiagram,
+            setOpenDiagramModal,
+          })}
+          header={intl.get('entities.study.design')}
+          id={SectionId.DESIGN}
+          loading={loading}
+          noDataLabel={intl.get('no.data.available')}
+          title={intl.get('entities.study.design')}
+        />
+
+        {openDiagramModal && hasScheduleDiagram && (
+          <ScheduleDiagramModal
+            studyCode={study.study_code}
+            isOpen={openDiagramModal}
+            onClose={() => setOpenDiagramModal(false)}
           />
         )}
 

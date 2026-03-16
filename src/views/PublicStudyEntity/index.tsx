@@ -18,10 +18,18 @@ import EntityPage, {
 import { Button, Space, Tag, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IDataType, IExperimentalStrategy } from 'graphql/studies/models';
+import ScheduleDiagramModal from 'views/StudyEntity/ScheduleDiagramModal';
 import SummaryHeader from 'views/StudyEntity/SummaryHeader';
-import { getStatisticsDictionary, queryId, SectionId } from 'views/StudyEntity/utils/constants';
+import {
+  getStatisticsDictionary,
+  queryId,
+  SectionId,
+  StudyClinicalTrials,
+  StudyDesign,
+} from 'views/StudyEntity/utils/constants';
 import getDataAccessDescriptions from 'views/StudyEntity/utils/dataAccess';
 import getDatasetDescription from 'views/StudyEntity/utils/datasets';
+import getDesignDescriptions from 'views/StudyEntity/utils/design';
 import getFileTable from 'views/StudyEntity/utils/file';
 import getSummaryDescriptions from 'views/StudyEntity/utils/summary';
 import { getLogoByStudyCode } from 'views/StudyEntity/utils/title';
@@ -58,6 +66,8 @@ const PublicStudyEntity = () => {
   const [studyData, setStudyData] = useState<IPublicStudyEntity | undefined>(undefined);
   const [graphsData, setGraphsData] = useState<IPublicStudyGraphs | undefined>(undefined);
   const [loadingData, setLoadingData] = useState<boolean>(true);
+
+  const [openDiagramModal, setOpenDiagramModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,6 +128,12 @@ const PublicStudyEntity = () => {
       ? true
       : false;
 
+  const isClinicalTrials = studyData?.study_designs?.includes(StudyDesign.CLINICAL_TRIALS);
+  const hasScheduleDiagram =
+    isClinicalTrials &&
+    (studyData?.study_code === StudyClinicalTrials.BRAIN_POWER ||
+      studyData?.study_code === StudyClinicalTrials.JAKI_DS);
+
   const hasFiles = (studyData?.file_count ?? 0) > 0;
 
   const defaultLinks = [
@@ -150,6 +166,11 @@ const PublicStudyEntity = () => {
       title: intl.get('entities.study.data_access'),
     });
   }
+
+  defaultLinks.push({
+    href: `#${SectionId.DESIGN}`,
+    title: intl.get('entities.study.design'),
+  });
 
   let datasetLength = 0;
   if (hasDataset) {
@@ -201,7 +222,7 @@ const PublicStudyEntity = () => {
               logo={getLogoByStudyCode(studyData?.study_code)}
               title={studyData?.study_name}
               titleTags={
-                studyData?.study_designs?.includes('Clinical Trial') ? (
+                isClinicalTrials ? (
                   <Tag color="cyan">{intl.get('entities.study.clinical_trials.tag')}</Tag>
                 ) : undefined
               }
@@ -339,6 +360,29 @@ const PublicStudyEntity = () => {
                 loading={loadingData}
                 noDataLabel={intl.get('no.data.available')}
                 title={intl.get('entities.study.data_access')}
+              />
+            )}
+
+            <EntityDescriptions
+              descriptions={getDesignDescriptions({
+                study: studyData,
+                isClinicalTrials,
+                hasScheduleDiagram,
+                setOpenDiagramModal,
+                isPublic: true,
+              })}
+              header={intl.get('entities.study.design')}
+              id={SectionId.DESIGN}
+              loading={loadingData}
+              noDataLabel={intl.get('no.data.available')}
+              title={intl.get('entities.study.design')}
+            />
+
+            {openDiagramModal && hasScheduleDiagram && studyData?.study_code && (
+              <ScheduleDiagramModal
+                studyCode={studyData.study_code}
+                isOpen={openDiagramModal}
+                onClose={() => setOpenDiagramModal(false)}
               />
             )}
 
