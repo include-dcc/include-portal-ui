@@ -23,6 +23,14 @@ describe('Page d\'une étude - Valider les panneaux masquables', () => {
     cy.get('[id="data_access"] div[class*="ant-collapse-content-active"]').should('exist');
   });
 
+  it('Panneau Design', () => {
+    cy.get('[id="design"] div[class*="ant-collapse-content-active"]').should('exist');
+    cy.get('[id="design"] span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
+    cy.get('[id="design"] div[class*="ant-collapse-content-inactive ant-collapse-content-hidden"]').should('exist');
+    cy.get('[id="design"] span[class*="ant-collapse-arrow"]').clickAndWait({force: true});
+    cy.get('[id="design"] div[class*="ant-collapse-content-active"]').should('exist');
+  });
+
   it('Panneau HTP Whole Blood RNAseq (2020)', () => {
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] div[class*="ant-collapse-content-active"]').should('exist');
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] span[class*="ant-collapse-arrow"]').clickAndWait({force: true});

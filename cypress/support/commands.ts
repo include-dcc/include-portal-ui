@@ -710,6 +710,7 @@ Cypress.Commands.add('visitVariantsPage', (sharedFilterOption?: string) => {
 
 Cypress.Commands.add('waitUntilFile', (ms: number) => {
   const start = new Date().getTime();
+  cy.wait(500);
 
   function checkFile(): any {
     const now = new Date().getTime();

@@ -120,6 +120,32 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="data_access"] [class="ant-descriptions-item-content"]').eq(5).contains('https://redcap.link/HTPVBRrequest').should('exist');
   });
 
+  it('Panneau Design', () => {
+    cy.get('[id="design"] [class*="EntityDescriptions_title"]').contains('Design').should('exist');
+    cy.get('[id="design"] [class="ant-collapse-header"]').contains('Design').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').eq(0).contains('Study Design').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(0).contains('Clinical Trial, Case-Control, longitudinal').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').eq(1).contains('Trial Phase').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(1).contains('Not Applicable').should('exist');    
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').eq(2).contains('Primary Purpose').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(2).contains('Prevention').should('exist');    
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').eq(3).contains('Participant Lifespan').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(3).find('[class*="ant-tag-cyan"]').contains('Adult').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').eq(4).contains('Selection Criteria').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(4).contains('Ages 6 months to 89 years old, with or without Down syndrome').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').eq(5).contains('Intervention Type').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(5).find('[class="ant-tag"]').contains('Behavioral').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').eq(6).contains('Intervention').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(6).contains('Remote Low (Participants will attend 40 min remotely delivered group MVPA sessions once a week, receive a step counter, access to resources for increasing MVPA, and one 20-min remotely delivered individual support/education session/wk)').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').eq(7).contains('Arm Information').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(7).contains('Other: Remote Low').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').eq(8).contains('Arm Allocation').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(8).contains('Randomized').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').eq(9).contains('Intervention Assignment Strategy').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(9).contains('Parallel').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-label"]').contains('Schedule of Study Activities').should('not.exist');
+  });
+
   it('Panneau HTP Whole Blood RNAseq (2020)', () => {
     cy.get('[class*="StudyEntity_datasetTitle"]').contains('Dataset').should('exist');
     cy.get('[class*="StudyEntity_datasetTitle"] [class*="StudyEntity_datasetInfo"]').should('exist');
