@@ -11,7 +11,7 @@ beforeEach(() => {
   cy.visitDataExplorationParticipantMock();
   cy.get('div[role="tabpanel"] [class*="ant-table-row"]').eq(0).find('[type="checkbox"]').check({force: true});
   cy.get('[class*="Header_ProTableHeader"] button[class*="ant-dropdown-trigger"]').eq(1).click({force: true});
-  cy.clickAndIntercept('[data-menu-id*="-familyClinicalData"]', 'POST', '**/file-manifest', 1);
+  cy.clickAndIntercept('[data-menu-id*="-familyClinicalData"]', 'POST', '**/reports/family-clinical-data', 1);
   cy.waitUntilFile(oneMinute);
 });
 
