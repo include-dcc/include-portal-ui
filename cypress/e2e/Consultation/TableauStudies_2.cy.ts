@@ -28,6 +28,13 @@ describe('Page des études - Valider les liens disponibles', () => {
     });
   });
 
+  it('Lien \'See more\' de dbGap du tableau', () => {
+    cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(5).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See more').clickAndWait({force: true});
+    cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(5).contains('phs002330').should('exist');
+    cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(5).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See less').clickAndWait({force: true});
+    cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(5).contains('phs002330').should('not.exist');
+  });
+
   it('Lien Participants du tableau', () => {
     cy.get('tr[data-row-key="HTP"] [class="ant-table-cell"]').eq(6).find('[href]').clickAndWait({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
@@ -54,5 +61,13 @@ describe('Page des études - Valider les liens disponibles', () => {
     cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).contains('Participant or Caregiver Report').should('exist');
     cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See less').clickAndWait({force: true});
     cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).contains('Participant or Caregiver Report').should('not.exist');
+  });
+
+  it('Lien \'See more\' de Design du tableau', () => {
+    cy.hideColumn('Description');
+    cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See more').clickAndWait({force: true});
+    cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).contains('longitudinal').should('exist');
+    cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).find('[class*="ExpandableCell_fuiExpandableCellBtn"]').contains('See less').clickAndWait({force: true});
+    cy.get('tr[data-row-key="HTP"] [class*="ant-table-cell"]').eq(17).contains('longitudinal').should('not.exist');
   });
 });

@@ -174,6 +174,17 @@ Cypress.Commands.add('deleteSetIfExists', (dataNodeKey: string, setName: string)
   });
 });
 
+Cypress.Commands.add('hideColumn', (column: string|RegExp, eq: number = 0) => {
+  cy.intercept('PUT', '**/user').as('getPOSTuser');
+
+  cy.get('div[class="ant-popover-inner"]')
+    .find('div[class="ant-space-item"]').contains(column)
+    .find('[type="checkbox"]').uncheck({force: true});
+  cy.wait('@getPOSTuser', {timeout: oneMinute});
+  cy.get('[class*="Header_logo"]').clickAndWait({force: true});
+  cy.waitWhileSpin(oneMinute);
+});
+
 Cypress.Commands.add('login', () => {
   cy.session(['user'], () => {
     cy.visit('/dashboard');
