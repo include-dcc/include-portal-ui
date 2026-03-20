@@ -15,6 +15,7 @@ declare namespace Cypress {
     deleteFilterIfExists(filterName: string): cy & CyEventEmitter;
     deleteSet(dataNodeKey: string, setName: string): cy & CyEventEmitter;
     deleteSetIfExists(dataNodeKey: string, setName: string): cy & CyEventEmitter;
+    hideColumn(column: string|RegExp): cy & CyEventEmitter;
     login(): cy & CyEventEmitter;
     logout(): cy & CyEventEmitter;
     removeFilesFromFolder(folder: string): cy & CyEventEmitter;
