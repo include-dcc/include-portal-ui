@@ -79,7 +79,7 @@ export const GET_STUDY = gql`
                   node {
                     arm_allocation
                     arm_information
-                    intervention
+                    interventions
                     intervention_assignment_strategy
                     intervention_types
                     primary_outcome_measures
