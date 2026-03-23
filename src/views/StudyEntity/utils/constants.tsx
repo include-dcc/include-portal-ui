@@ -9,6 +9,7 @@ export enum SectionId {
   DATA_FILE = 'data_file',
   DATASET = 'dataset',
   DESIGN = 'design',
+  OUTCOME_MEASURES = 'outcome_measures',
 }
 
 export enum StudyClinicalTrials {

@@ -83,6 +83,7 @@ import getDataAccessDescriptions, { getFlatDataset } from './utils/dataAccess';
 import getDatasetDescription from './utils/datasets';
 import getDesignDescriptions from './utils/design';
 import getFileTables from './utils/file';
+import getOutcomeMeasuresDescriptions from './utils/outcomeMeasures';
 import getSummaryDescriptions from './utils/summary';
 import { getLogoByStudyCode } from './utils/title';
 import ScheduleDiagramModal from './ScheduleDiagramModal';
@@ -350,6 +351,13 @@ const StudyEntity = () => {
     href: `#${SectionId.DESIGN}`,
     title: intl.get('entities.study.design'),
   });
+
+  if (isClinicalTrials) {
+    defaultLinks.push({
+      href: `#${SectionId.OUTCOME_MEASURES}`,
+      title: intl.get('entities.study.outcome_measures'),
+    });
+  }
 
   let datasetLength = 0;
   if (hasDataset) {
@@ -622,6 +630,19 @@ const StudyEntity = () => {
             studyCode={study.study_code}
             isOpen={openDiagramModal}
             onClose={() => setOpenDiagramModal(false)}
+          />
+        )}
+
+        {isClinicalTrials && (
+          <EntityDescriptions
+            descriptions={getOutcomeMeasuresDescriptions({
+              study,
+            })}
+            header={intl.get('entities.study.outcome_measures')}
+            id={SectionId.OUTCOME_MEASURES}
+            loading={loading}
+            noDataLabel={intl.get('no.data.available')}
+            title={intl.get('entities.study.outcome_measures')}
           />
         )}
 
