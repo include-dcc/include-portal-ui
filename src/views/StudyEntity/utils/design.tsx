@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 import intl from 'react-intl-universal';
+import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { IEntityDescriptionsItem } from '@ferlab/ui/core/pages/EntityPage';
 import { Tag } from 'antd';
 import { IStudyEntity } from 'graphql/studies/models';
@@ -72,14 +73,7 @@ const getDesignDescriptions = ({
     });
   }
 
-  if (isClinicalTrials && isPublic && clinicalTrial?.intervention_types) {
-    result.push({
-      label: intl.get('entities.study.clinical_trials.intervention_types'),
-      value: <Tag>{clinicalTrial.intervention_types}</Tag>,
-    });
-  }
-
-  if (isClinicalTrials && !isPublic && clinicalTrial?.intervention_types?.length) {
+  if (isClinicalTrials && clinicalTrial?.intervention_types?.length) {
     result.push({
       label: intl.get('entities.study.clinical_trials.intervention_types'),
       value: clinicalTrial.intervention_types.map((intervention, index) => (
@@ -88,10 +82,16 @@ const getDesignDescriptions = ({
     });
   }
 
-  if (isClinicalTrials && clinicalTrial?.intervention) {
+  if (isClinicalTrials && clinicalTrial?.interventions?.length) {
     result.push({
       label: intl.get('entities.study.clinical_trials.intervention'),
-      value: clinicalTrial.intervention,
+      value: (
+        <ExpandableCell
+          nOfElementsWhenCollapsed={1}
+          dataSource={clinicalTrial.interventions}
+          renderItem={(sourceText, index): React.ReactNode => <div key={index}>{sourceText}</div>}
+        />
+      ),
     });
   }
 

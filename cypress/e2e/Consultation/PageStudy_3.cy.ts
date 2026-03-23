@@ -73,6 +73,13 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
       .should('have.attr', 'href', 'https://redcap.link/HTPVBRrequest');
   });
 
+  it('Lien \'See more\' de Intervention du panneau Design', () => {
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(6).contains('See more').clickAndWait({force: true});
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').contains('Remote High').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(6).contains('See less').clickAndWait({force: true});
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').contains('Remote High').should('not.exist');
+  });
+
   it('Lien DataExploration du panneau HTP Whole Blood RNAseq (2020)', () => {
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-extra"] button').eq(0).clickAndWait({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"

@@ -88,7 +88,7 @@ export interface IClinicalTrial {
   id: string;
   arm_allocation?: string;
   arm_information?: string;
-  intervention?: string;
+  interventions?: string[];
   intervention_assignment_strategy?: string;
   intervention_types?: string[];
   primary_outcome_measures?: string[];

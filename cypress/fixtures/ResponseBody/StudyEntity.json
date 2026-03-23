@@ -22,7 +22,9 @@
                                             "node": {
                                                 "arm_allocation": "Randomized",
                                                 "arm_information": "Other: Remote Low",
-                                                "intervention": "Remote Low (Participants will attend 40 min remotely delivered group MVPA sessions once a week, receive a step counter, access to resources for increasing MVPA, and one 20-min remotely delivered individual support/education session/wk)",
+                                                "interventions": ["Remote Low (Participants will attend 40 min remotely delivered group MVPA sessions once a week, receive a step counter, access to resources for increasing MVPA, and one 20-min remotely delivered individual support/education session/wk)",
+                                                    "Remote High (Participants will attend 40 min remotely delivered group MVPA sessions 3x a week, receive a step counter, access to resources for increasing MVPA, and one 20-min remotely delivered individual support/education session/wk)",
+                                                    "Personal Coach (Participants will receive a step counter, access to resources for increasing MVPA, and monthly remote individual support/education)"],
                                                 "intervention_assignment_strategy": "Parallel",
                                                 "intervention_types": [
                                                     "Behavioral"
