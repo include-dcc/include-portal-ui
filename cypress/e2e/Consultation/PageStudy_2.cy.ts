@@ -146,6 +146,16 @@ describe('Page d\'une étude - Vérifier les informations affichées', () => {
     cy.get('[id="design"] [class="ant-descriptions-item-label"]').contains('Schedule of Study Activities').should('not.exist');
   });
 
+  it('Panneau Outcome Measures', () => {
+    cy.get('[id="outcome_measures"] [class*="EntityDescriptions_title"]').contains('Outcome Measures').should('exist');
+    cy.get('[id="outcome_measures"] [class="ant-collapse-header"]').contains('Outcome Measures').should('exist');
+    cy.get('[id="outcome_measures"] [class="ant-descriptions-item-label"]').eq(0).contains('Primary Outcome Measure').should('exist');
+    cy.get('[id="outcome_measures"] [class="ant-descriptions-item-content"]').eq(0).contains('Minutes of Moderate to Vigorous Physical Activity (MVPA) per day').should('exist');
+    cy.get('[id="outcome_measures"] [class="ant-descriptions-item-label"]').eq(1).contains('Secondary Outcome Measure').should('exist');
+    cy.get('[id="outcome_measures"] [class="ant-descriptions-item-content"]').eq(1).contains('Cognitive function').should('exist');
+    cy.get('[id="outcome_measures"] [class="ant-descriptions-item-content"]').eq(1).contains('Cardiovascular fitness').should('exist');
+  });
+
   it('Panneau HTP Whole Blood RNAseq (2020)', () => {
     cy.get('[class*="StudyEntity_datasetTitle"]').contains('Dataset').should('exist');
     cy.get('[class*="StudyEntity_datasetTitle"] [class*="StudyEntity_datasetInfo"]').should('exist');

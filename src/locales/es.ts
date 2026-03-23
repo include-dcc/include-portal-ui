@@ -2336,8 +2336,10 @@ const es = {
       name: 'Nombre',
       numberByDataTypes: 'Conteo de archivos por tipo de datos',
       numberByExperimentalStrategy: 'Conteo de archivos por estrategia experimental',
+      outcome_measures: 'Medidas de resultado',
       participant_life_span: 'Esperanza de vida del participante',
       population: 'Población',
+      primary_outcome_measures: 'Medidas de resultado primarias',
       principal_investigator: 'Investigador principal',
       program: 'Programa',
       publication: 'Publicación',
@@ -2356,6 +2358,7 @@ const es = {
       },
       publicationTooltip:
         'Publicaciones generadas por el grupo de investigación asociado con este estudio.',
+      secondary_outcome_measures: 'Medidas de resultado secundarias',
       selection_criteria: 'Criterios de selección',
       study: 'Estudio',
       study_code: 'Código de estudio',

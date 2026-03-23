@@ -97,6 +97,13 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
       .should('have.attr', 'href').and('match', /https:\/\/doi.org\/10.71738\/n9tr-ba81/);
   });
 
+  it('Lien \'See more\' de Secondary Outcome Measure du panneau Outcome Measures', () => {
+    cy.get('[id="outcome_measures"] [class="ant-descriptions-item-content"]').eq(1).contains('See more').clickAndWait({force: true});
+    cy.get('[id="outcome_measures"] [class="ant-descriptions-item-content"]').contains('Brain volume').should('exist');
+    cy.get('[id="outcome_measures"] [class="ant-descriptions-item-content"]').eq(1).contains('See less').clickAndWait({force: true});
+    cy.get('[id="outcome_measures"] [class="ant-descriptions-item-content"]').contains('Brain volume').should('not.exist');
+  });
+
   it('Lien Files de Gene Expression Quantifications du panneau Files', () => {
     cy.get('[id="data_file"] [data-row-key="1"] td[class="ant-table-cell"]').eq(1).find('[href]').clickAndWait({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_DataFiles"
