@@ -86,7 +86,6 @@ import getFileTables from './utils/file';
 import getOutcomeMeasuresDescriptions from './utils/outcomeMeasures';
 import getSummaryDescriptions from './utils/summary';
 import { getLogoByStudyCode } from './utils/title';
-import ScheduleDiagramModal from './ScheduleDiagramModal';
 import SummaryHeader from './SummaryHeader';
 
 import style from './index.module.css';
@@ -116,8 +115,6 @@ const StudyEntity = () => {
   const [isCavaticaModalOpen, setIsCavaticaModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [cavaticaDatasetId, setCavaticaDatasetId] = useState<string | undefined>(undefined);
-
-  const [openDiagramModal, setOpenDiagramModal] = useState(false);
 
   const hasDataset = study?.datasets?.hits?.edges && study.datasets.hits.edges.length > 0;
 
@@ -616,7 +613,6 @@ const StudyEntity = () => {
             study,
             isClinicalTrials,
             hasScheduleDiagram,
-            setOpenDiagramModal,
           })}
           header={intl.get('entities.study.design')}
           id={SectionId.DESIGN}
@@ -624,14 +620,6 @@ const StudyEntity = () => {
           noDataLabel={intl.get('no.data.available')}
           title={intl.get('entities.study.design')}
         />
-
-        {openDiagramModal && hasScheduleDiagram && (
-          <ScheduleDiagramModal
-            studyCode={study.study_code}
-            isOpen={openDiagramModal}
-            onClose={() => setOpenDiagramModal(false)}
-          />
-        )}
 
         {isClinicalTrials && (
           <EntityDescriptions

@@ -18,7 +18,6 @@ import EntityPage, {
 import { Button, Space, Tag, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { IDataType, IExperimentalStrategy } from 'graphql/studies/models';
-import ScheduleDiagramModal from 'views/StudyEntity/ScheduleDiagramModal';
 import SummaryHeader from 'views/StudyEntity/SummaryHeader';
 import {
   getStatisticsDictionary,
@@ -67,8 +66,6 @@ const PublicStudyEntity = () => {
   const [studyData, setStudyData] = useState<IPublicStudyEntity | undefined>(undefined);
   const [graphsData, setGraphsData] = useState<IPublicStudyGraphs | undefined>(undefined);
   const [loadingData, setLoadingData] = useState<boolean>(true);
-
-  const [openDiagramModal, setOpenDiagramModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -376,7 +373,6 @@ const PublicStudyEntity = () => {
                 study: studyData,
                 isClinicalTrials,
                 hasScheduleDiagram,
-                setOpenDiagramModal,
                 isPublic: true,
               })}
               header={intl.get('entities.study.design')}
@@ -385,14 +381,6 @@ const PublicStudyEntity = () => {
               noDataLabel={intl.get('no.data.available')}
               title={intl.get('entities.study.design')}
             />
-
-            {openDiagramModal && hasScheduleDiagram && studyData?.study_code && (
-              <ScheduleDiagramModal
-                studyCode={studyData.study_code}
-                isOpen={openDiagramModal}
-                onClose={() => setOpenDiagramModal(false)}
-              />
-            )}
 
             {isClinicalTrials && (
               <EntityDescriptions
