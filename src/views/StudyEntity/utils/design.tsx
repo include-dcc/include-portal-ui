@@ -8,14 +8,12 @@ import { IPublicStudyEntity } from 'views/PublicStudyEntity/types';
 
 import brainpower_diagram from '../../../components/assets/study/brainpower_schedule_diagram.svg';
 import jakids_diagram from '../../../components/assets/study/jakids_schedule_diagram.svg';
+import ScheduleDiagramImage from '../ScheduleDiagram';
 
 import { StudyClinicalTrials } from './constants';
 
-import styles from '../index.module.css';
-
 interface IGetDesignDescriptions {
   hasScheduleDiagram?: boolean;
-  setOpenDiagramModal?: React.Dispatch<React.SetStateAction<boolean>>;
   study?: IStudyEntity | IPublicStudyEntity;
   isClinicalTrials?: boolean;
   isPublic?: boolean;
@@ -26,7 +24,6 @@ const getDesignDescriptions = ({
   isClinicalTrials = false,
   isPublic = false,
   hasScheduleDiagram = false,
-  setOpenDiagramModal,
 }: IGetDesignDescriptions): IEntityDescriptionsItem[] => {
   const result: IEntityDescriptionsItem[] = [];
 
@@ -116,10 +113,10 @@ const getDesignDescriptions = ({
     });
   }
 
-  if (hasScheduleDiagram && study?.study_code && setOpenDiagramModal) {
+  if (hasScheduleDiagram && study?.study_code) {
     result.push({
       label: intl.get('entities.study.clinical_trials.schedule_title'),
-      value: getScheduleDiagram(study?.study_code, setOpenDiagramModal),
+      value: getScheduleDiagram(study?.study_code),
     });
   }
 
@@ -139,20 +136,10 @@ export const getScheduleDiagramProps = (studyCode: string) => {
   return { diagramAlt, diagramSrc };
 };
 
-export const getScheduleDiagram = (
-  studyCode: string,
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
+export const getScheduleDiagram = (studyCode: string) => {
   const { diagramAlt, diagramSrc } = getScheduleDiagramProps(studyCode);
 
-  return (
-    <img
-      src={diagramSrc}
-      alt={diagramAlt}
-      className={styles.scheduleDiagram}
-      onClick={() => setOpenModal(true)}
-    />
-  );
+  return <ScheduleDiagramImage src={diagramSrc} alt={diagramAlt} />;
 };
 
 export default getDesignDescriptions;
