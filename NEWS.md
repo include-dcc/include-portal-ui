@@ -7,6 +7,23 @@
 
 ### Technical / Other changes
 -->
+## 2025-03-26 include-portal-ui v1.26.0
+### Features:
+- [SJIP-1518](https://d3b.atlassian.net/browse/SJIP-1518) Feature: [Study Entity] Update summary and data access section
+- [SJIP-1519](https://d3b.atlassian.net/browse/SJIP-1519) Feature: [Study Entity] Implement design section to include clinical trial fields and study schedule diagram
+- [SJIP-1521](https://d3b.atlassian.net/browse/SJIP-1521) Feature: [Study Entity] Implement clinical trial outcome measures section
+### Technical / Other Changes:
+- [SJIP-1470](https://d3b.atlassian.net/browse/SJIP-1470)Refactor: [Hierarchical Biospecimen View] Display scroll bar to tree section on hover and automatically scroll to selected sample
+- [SJIP-1479](https://d3b.atlassian.net/browse/SJIP-1479)Refactor: [Landing page] Updated the experimental models tile to replace the EMODs term
+- [SJIP-1481](https://d3b.atlassian.net/browse/SJIP-1481)Refactor: [Data Exploration] Set graphs to descending order
+- [SJIP-1492](https://d3b.atlassian.net/browse/SJIP-1492)Fix: [Landing page] Adjusted the spaces and alignment of the tiles
+- [SJIP-1502](https://d3b.atlassian.net/browse/SJIP-1502)Refactor: [Study Entity] Adjusted the rule to display the View in exploration button per dataset
+- [SJIP-1512](https://d3b.atlassian.net/browse/SJIP-1512)Refactor: [Study Entity] Automated the process to set drs_urls sent to Cavatica per dataset
+- [SJIP-1517](https://d3b.atlassian.net/browse/SJIP-1517)Refactor: [Study Entity] Updated the collapse by default for the dataset section >3
+- [SJIP-1523](https://d3b.atlassian.net/browse/SJIP-1523)Fix: [Cavatica API] Updated Cavatica suggest key fields to custom fields
+- [SJIP-1524](https://d3b.atlassian.net/browse/SJIP-1524)Fix: [Data Exploration] Repeated "study" term in the Study Code column header in TSV export from Data Exploration → Data Files tab
+- [SJIP-1535](https://d3b.atlassian.net/browse/SJIP-1535)Fix: [Study Entity] Remove the dropdown for downloading clinical data
+
 ## 2026-01-14 include-portal-ui v1.25.0
 
 ### Features:
