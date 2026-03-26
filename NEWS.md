@@ -7,7 +7,7 @@
 
 ### Technical / Other changes
 -->
-## 2025-03-26 include-portal-ui v1.26.0
+## 2026-03-26 include-portal-ui v1.26.0
 ### Features:
 - [SJIP-1518](https://d3b.atlassian.net/browse/SJIP-1518) Feature: [Study Entity] Update summary and data access section
 - [SJIP-1519](https://d3b.atlassian.net/browse/SJIP-1519) Feature: [Study Entity] Implement design section to include clinical trial fields and study schedule diagram
