@@ -2246,7 +2246,7 @@ const en = {
       citation_statement: 'Citation Statement',
       clinical_trials: {
         arm_allocation: 'Arm Allocation',
-        arm_information: 'Arm Information',
+        arms_information: 'Arm Information',
         intervention: 'Intervention',
         intervention_assignment_strategy: 'Intervention Assignment Strategy',
         intervention_types: 'Intervention Type',
