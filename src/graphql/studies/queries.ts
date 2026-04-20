@@ -78,7 +78,7 @@ export const GET_STUDY = gql`
                 edges {
                   node {
                     arm_allocation
-                    arm_information
+                    arms_information
                     interventions
                     intervention_assignment_strategy
                     intervention_types

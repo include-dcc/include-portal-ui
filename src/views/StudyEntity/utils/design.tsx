@@ -92,10 +92,16 @@ const getDesignDescriptions = ({
     });
   }
 
-  if (isClinicalTrials && clinicalTrial?.arm_information) {
+  if (isClinicalTrials && clinicalTrial?.arms_information?.length) {
     result.push({
-      label: intl.get('entities.study.clinical_trials.arm_information'),
-      value: clinicalTrial.arm_information,
+      label: intl.get('entities.study.clinical_trials.arms_information'),
+      value: (
+        <ExpandableCell
+          nOfElementsWhenCollapsed={1}
+          dataSource={clinicalTrial.arms_information}
+          renderItem={(sourceText, index): React.ReactNode => <div key={index}>{sourceText}</div>}
+        />
+      ),
     });
   }
 

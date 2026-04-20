@@ -2243,7 +2243,7 @@ const es = {
       citation_statement: 'Declaración de citación',
       clinical_trials: {
         arm_allocation: 'Asignación del brazo',
-        arm_information: 'Información del brazo',
+        arms_information: 'Información del brazo',
         intervention: 'Intervención',
         intervention_assignment_strategy: 'Estrategia de asignación de intervención',
         intervention_types: 'Tipo de intervención',
