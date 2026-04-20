@@ -80,6 +80,13 @@ describe('Page d\'une étude - Valider les liens disponibles', () => {
     cy.get('[id="design"] [class="ant-descriptions-item-content"]').contains('Remote High').should('not.exist');
   });
 
+  it('Lien \'See more\' de Arm Information du panneau Design', () => {
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(7).contains('See more').clickAndWait({force: true});
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').contains('Other: Personal Coach').should('exist');
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').eq(7).contains('See less').clickAndWait({force: true});
+    cy.get('[id="design"] [class="ant-descriptions-item-content"]').contains('Other: Personal Coach').should('not.exist');
+  });
+
   it('Lien DataExploration du panneau HTP Whole Blood RNAseq (2020)', () => {
     cy.get('[id="HTP-RNAseq-WholeBlood-2020"] [class="ant-collapse-extra"] button').eq(0).clickAndWait({force: true});
     cy.get('[class*="DataFiles_dataFilesTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
