@@ -37,7 +37,7 @@ import { ICavaticaCreateProjectBody } from 'services/api/cavatica/models';
 import { useCavaticaPassport } from 'store/passport';
 import { passportActions } from 'store/passport/slice';
 import {
-  createCavaticaProjet,
+  createCavaticaProject,
   fetchCavaticaBillingGroups,
   fetchCavaticaProjects,
   startImportJob,
@@ -368,7 +368,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
           }}
           handleSubmit={(values: ICavaticaCreateProjectBody) => {
             dispatch(
-              createCavaticaProjet({
+              createCavaticaProject({
                 body: values,
                 callback: () => {
                   trackCavaticaAction(INDEXES.FILE, CavaticaAnalyticsAction.PROJECT_CREATED);

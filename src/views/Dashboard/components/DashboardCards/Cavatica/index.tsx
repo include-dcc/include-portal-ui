@@ -9,7 +9,7 @@ import { useCavaticaPassport } from 'store/passport';
 import { passportActions } from 'store/passport/slice';
 import {
   connectCavaticaPassport,
-  createCavaticaProjet,
+  createCavaticaProject,
   disconnectCavaticaPassport,
   fetchCavaticaBillingGroups,
   fetchCavaticaProjects,
@@ -42,7 +42,7 @@ const Cavatica = ({ id, className = '' }: DashboardCardProps) => {
         },
         handleSubmit: (values: ICavaticaCreateProjectBody) => {
           dispatch(
-            createCavaticaProjet({
+            createCavaticaProject({
               body: values,
               callback: () => {
                 trackCavaticaAction('Dashboard', CavaticaAnalyticsAction.PROJECT_CREATED);

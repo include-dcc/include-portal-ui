@@ -23,7 +23,7 @@ import { passportActions } from 'store/passport/slice';
 import {
   beginCavaticaAnalyse,
   connectCavaticaPassport,
-  createCavaticaProjet,
+  createCavaticaProject,
   fetchCavaticaBillingGroups,
   fetchCavaticaProjects,
   startBulkImportJob,
@@ -139,7 +139,7 @@ const CavaticaAnalyzeButton: React.FC<OwnProps> = ({
         },
         handleSubmit: (values: ICavaticaCreateProjectBody) => {
           dispatch(
-            createCavaticaProjet({
+            createCavaticaProject({
               body: values,
               callback: () => {
                 trackCavaticaAction(index, CavaticaAnalyticsAction.PROJECT_CREATED);

@@ -182,7 +182,7 @@ export const fetchCavaticaBillingGroups = createAsyncThunk<
   },
 );
 
-export const createCavaticaProjet = createAsyncThunk<
+export const createCavaticaProject = createAsyncThunk<
   {
     newProject: ICavaticaProject;
   },
