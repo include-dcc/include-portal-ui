@@ -31,7 +31,7 @@ const renderDoiCitation = (doi: { citation?: string; url?: string }, dispatch: D
 
   const citation = doi.citation;
   const doiUrlIndex = citation.indexOf('https://doi');
-  const citationSliced = citation.slice(0, doiUrlIndex);
+  const citationSliced = doiUrlIndex === -1 ? citation : citation.slice(0, doiUrlIndex);
 
   return (
     <>

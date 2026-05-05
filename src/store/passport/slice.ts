@@ -7,7 +7,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
   beginCavaticaAnalyse,
-  createCavaticaProjet,
+  createCavaticaProject,
   disconnectCavaticaPassport,
   fetchCavaticaAuthentificationStatus,
   fetchCavaticaBillingGroups,
@@ -112,14 +112,14 @@ const passportSlice = createSlice({
       state.cavatica.billingGroups.error = action.payload;
     });
     // CREATE PROJECT
-    builder.addCase(createCavaticaProjet.pending, (state) => {
+    builder.addCase(createCavaticaProject.pending, (state) => {
       state.cavatica.projects.loading = true;
     });
-    builder.addCase(createCavaticaProjet.fulfilled, (state, action) => {
+    builder.addCase(createCavaticaProject.fulfilled, (state, action) => {
       state.cavatica.projects.loading = false;
       state.cavatica.projects.data.push(action.payload.newProject);
     });
-    builder.addCase(createCavaticaProjet.rejected, (state) => {
+    builder.addCase(createCavaticaProject.rejected, (state) => {
       state.cavatica.projects.loading = false;
       state.cavatica.projects.error = CAVATICA_API_ERROR_TYPE.create;
     });

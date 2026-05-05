@@ -37,7 +37,7 @@ import { INDEXES } from 'graphql/constants';
 import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import useParticipantResolvedSqon from 'graphql/participants/useParticipantResolvedSqon';
 import { useStudy } from 'graphql/studies/actions';
-import { IDrsItems, IStudyDataset } from 'graphql/studies/models';
+import { IDataType, IDrsItems, IExperimentalStrategy, IStudyDataset } from 'graphql/studies/models';
 import { cavaticaCreateProjectDictionary } from 'views/Studies/components/PageContent/Guid/utils';
 
 import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
@@ -50,7 +50,7 @@ import { useCavaticaPassport } from 'store/passport';
 import { passportActions } from 'store/passport/slice';
 import {
   connectCavaticaPassport,
-  createCavaticaProjet,
+  createCavaticaProject,
   fetchCavaticaBillingGroups,
   fetchCavaticaProjects,
   startImportJob,
@@ -366,11 +366,11 @@ const StudyEntity = () => {
   }
 
   const dataTypes = hydrateResults(study?.data_types?.hits?.edges || []).filter(
-    (dateType) => dateType.file_count > 0,
+    (dataType: IDataType) => dataType.file_count > 0,
   );
   const experimentStrategies = hydrateResults(
     study?.experimental_strategies?.hits?.edges || [],
-  ).filter((dateType) => dateType.file_count > 0);
+  ).filter((experimentStrategy: IExperimentalStrategy) => experimentStrategy.file_count > 0);
 
   if (hasFiles && (dataTypes.length > 0 || experimentStrategies.length > 0)) {
     defaultLinks.push({ href: `#${SectionId.DATA_FILE}`, title: intl.get('entities.study.file') });
@@ -894,7 +894,7 @@ const StudyEntity = () => {
             }}
             handleSubmit={(values: ICavaticaCreateProjectBody) => {
               dispatch(
-                createCavaticaProjet({
+                createCavaticaProject({
                   body: values,
                   callback: () => {
                     trackCavaticaAction(INDEXES.FILE, CavaticaAnalyticsAction.PROJECT_CREATED);
