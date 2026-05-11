@@ -826,7 +826,7 @@ const StudyEntity = () => {
               const drsItemsReformatted = rawDrs.map((x) => ({
                 drs_uri: x.drs_uri,
                 [projectOrParentKey]: value.id,
-                name: x.study_name,
+                name: x.file_name,
                 metadata: {
                   name: x.file_name,
                   study_name: x.study_name,
