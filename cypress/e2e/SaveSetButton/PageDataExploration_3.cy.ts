@@ -1,5 +1,6 @@
 /// <reference types="cypress"/>
 import '../../support/commands';
+import { oneMinute } from '../../support/utils';
 
 beforeEach(() => {
   cy.login();
@@ -52,7 +53,8 @@ describe('Page Data Exploration (Data Files) - Bouton Save set', () => {
     cy.get('[class*="ant-select-dropdown"]').contains('Cypress_F').parentsUntil('[class="ant-select-item-option-content"]').contains(/^1$/).should('exist');
     cy.get('[class*="ant-select-dropdown"]').contains('Cypress_F').clickAndWait({force: true});
     cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-primary"]', 'PUT', '**/sets/**', 1);
-    cy.get('form[id="add-remove-set"]').should('not.exist');
+    cy.get('body').contains('Success', {timeout: oneMinute});
+    cy.get('form[id="add-remove-set"]').should('not.exist', {timeout: oneMinute});
 
     cy.get('[class*="ant-notification"]').contains('Success').should('exist');
     cy.get('[class*="ant-notification"]').contains('Your set has been updated.').should('exist');
@@ -71,7 +73,8 @@ describe('Page Data Exploration (Data Files) - Bouton Save set', () => {
     cy.get('[class*="ant-select-dropdown"]').contains('Cypress_F').parentsUntil('[class="ant-select-item-option-content"]').contains(/^1$/).should('exist');
     cy.get('[class*="ant-select-dropdown"]').contains('Cypress_F').clickAndWait({force: true});
     cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-primary"]', 'PUT', '**/sets/**', 1);
-    cy.get('form[id="add-remove-set"]').should('not.exist');
+    cy.get('body').contains('Success', {timeout: oneMinute});
+    cy.get('form[id="add-remove-set"]').should('not.exist', {timeout: oneMinute});
 
     cy.get('[class*="ant-notification"]').contains('Success').should('exist');
     cy.get('[class*="ant-notification"]').contains('Your set has been updated.').should('exist');

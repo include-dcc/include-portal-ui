@@ -1,5 +1,4 @@
 /// <reference types="cypress"/>
-import { equal } from 'assert';
 import '../../support/commands';
 
 beforeEach(() => {
