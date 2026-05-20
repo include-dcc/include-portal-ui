@@ -54,6 +54,7 @@ import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
+import { sanitizeUserColumnState } from 'utils/tables';
 import { getProTableDictionary } from 'utils/translation';
 
 import HierarchicalBiospecimenModal from './HierarchicalBiospecimenModal';
@@ -372,14 +373,20 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
     );
   };
 
+  const biospecimensColumns = getDefaultColumns(setHierarchicalModal, setBiospecimenSelected);
+  const userColumnState = sanitizeUserColumnState(
+    userInfo?.config.data_exploration?.tables?.biospecimens?.columns,
+    biospecimensColumns,
+  );
+
   return (
     <>
       <ProTable
         tableId="biospecimen_table"
-        columns={getDefaultColumns(setHierarchicalModal, setBiospecimenSelected)}
+        columns={biospecimensColumns}
         wrapperClassName={styles.biospecimenTabWrapper}
         loading={results.loading}
-        initialColumnState={userInfo?.config.data_exploration?.tables?.biospecimens?.columns}
+        initialColumnState={userColumnState}
         enableRowSelection={true}
         initialSelectedKey={selectedKeys}
         showSorterTooltip={false}
@@ -416,8 +423,8 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
           onTableExportClick: () =>
             dispatch(
               fetchTsvReport({
-                columnStates: userInfo?.config.data_exploration?.tables?.biospecimens?.columns,
-                columns: getDefaultColumns(setHierarchicalModal, setBiospecimenSelected),
+                columnStates: userColumnState,
+                columns: biospecimensColumns,
                 index: INDEXES.BIOSPECIMEN,
                 sqon: getCurrentSqon(),
               }),

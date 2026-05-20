@@ -47,6 +47,7 @@ import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList } from 'utils/helper';
 import { resolveSyntheticSqonWithReferences } from 'utils/query';
+import { sanitizeUserColumnState } from 'utils/tables';
 import { getProTableDictionary } from 'utils/translation';
 
 import {
@@ -220,6 +221,11 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
     setQueryBuilderState(STUDIES_REPO_QB_ID, defaultQBState);
   };
 
+  const userColumnState = sanitizeUserColumnState(
+    userInfo?.config.study?.tables?.study?.columns,
+    defaultColumns,
+  );
+
   return (
     <Space direction="vertical" size={16} className={styles.pageContent}>
       <div className={styles.headerTop}>
@@ -251,7 +257,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
           <ProTable
             tableId={STUDIES_REPO_QB_ID}
             columns={defaultColumns}
-            initialColumnState={userInfo?.config.study?.tables?.study?.columns}
+            initialColumnState={userColumnState}
             wrapperClassName={styles.tableWrapper}
             loading={loading}
             showSorterTooltip={false}
@@ -286,7 +292,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
               onTableExportClick: () => {
                 dispatch(
                   fetchTsvReport({
-                    columnStates: userInfo?.config.study?.tables?.study?.columns,
+                    columnStates: userColumnState,
                     columns: defaultColumns,
                     index: INDEXES.STUDY,
                     sqon: resolvedSqon,
@@ -299,11 +305,7 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
             size="small"
             dataSource={data.map((i) => ({ ...i, key: i.study_code }))}
             dictionary={getProTableDictionary()}
-            summaryColumns={getSummaryColumns(
-              data,
-              defaultColumns,
-              userInfo?.config.study?.tables?.study?.columns,
-            )}
+            summaryColumns={getSummaryColumns(data, defaultColumns, userColumnState)}
           />
         }
       />

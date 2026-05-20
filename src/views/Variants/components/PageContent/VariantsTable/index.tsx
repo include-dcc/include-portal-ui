@@ -46,6 +46,7 @@ import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
+import { sanitizeUserColumnState } from 'utils/tables';
 import { getProTableDictionary } from 'utils/translation';
 
 import { GnomadCircle, renderClinvar, renderOmim } from './utils';
@@ -487,93 +488,102 @@ const VariantsTable = ({
       content={
         <FixedSizeTable
           elementId="query-builder-header-tools"
-          fixedProTable={(dimension) => (
-            <ProTable<ITableVariantEntity>
-              tableId="variants_table"
-              columns={getDefaultColumns(queryBuilderId, results.data.length === 0 ? true : false)}
-              enableRowSelection
-              initialColumnState={userInfo?.config.variants?.tables?.variants?.columns}
-              wrapperClassName={styles.variantTabWrapper}
-              loading={results.loading}
-              initialSelectedKey={selectedKeys}
-              showSorterTooltip={false}
-              // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-              onChange={({ current }, _, sorter) => {
-                setPageIndex(DEFAULT_PAGE_INDEX);
-                setQueryConfig({
-                  pageIndex: DEFAULT_PAGE_INDEX,
-                  size: queryConfig.size!,
-                  sort: formatQuerySortList(sorter),
-                });
-              }}
-              headerConfig={{
-                itemCount: {
-                  pageIndex: pageIndex,
-                  pageSize: queryConfig.size,
-                  total: results.total,
-                },
-                enableColumnSort: true,
-                onColumnSortChange: (newState) =>
-                  dispatch(
-                    updateUserConfig({
-                      variants: {
-                        tables: {
-                          variants: {
-                            columns: newState,
+          fixedProTable={(dimension) => {
+            const variantColumns = getDefaultColumns(
+              queryBuilderId,
+              results.data.length === 0 ? true : false,
+            );
+            return (
+              <ProTable<ITableVariantEntity>
+                tableId="variants_table"
+                columns={variantColumns}
+                enableRowSelection
+                initialColumnState={sanitizeUserColumnState(
+                  userInfo?.config.variants?.tables?.variants?.columns,
+                  variantColumns,
+                )}
+                wrapperClassName={styles.variantTabWrapper}
+                loading={results.loading}
+                initialSelectedKey={selectedKeys}
+                showSorterTooltip={false}
+                // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+                onChange={({ current }, _, sorter) => {
+                  setPageIndex(DEFAULT_PAGE_INDEX);
+                  setQueryConfig({
+                    pageIndex: DEFAULT_PAGE_INDEX,
+                    size: queryConfig.size!,
+                    sort: formatQuerySortList(sorter),
+                  });
+                }}
+                headerConfig={{
+                  itemCount: {
+                    pageIndex: pageIndex,
+                    pageSize: queryConfig.size,
+                    total: results.total,
+                  },
+                  enableColumnSort: true,
+                  onColumnSortChange: (newState) =>
+                    dispatch(
+                      updateUserConfig({
+                        variants: {
+                          tables: {
+                            variants: {
+                              columns: newState,
+                            },
                           },
                         },
-                      },
-                    }),
-                  ),
-                onSelectAllResultsChange: setSelectedAllResults,
-                onSelectedRowsChange: (keys, selectedRows) => {
-                  setSelectedKeys(keys);
-                  setSelectedRows(selectedRows);
-                },
-                extra: [
-                  <SetsManagementDropdown
-                    idField={VARIANT_SAVED_SETS_FIELD}
-                    results={results}
-                    selectedKeys={selectedKeys}
-                    selectedAllResults={selectedAllResults}
-                    sqon={getCurrentSqon()}
-                    type={SetType.VARIANT}
-                    key="variants-set-management"
-                  />,
-                ],
-              }}
-              bordered
-              size="small"
-              scroll={{ x: dimension.x, y: 'max-content' }}
-              pagination={{
-                current: pageIndex,
-                queryConfig,
-                setQueryConfig,
-                onChange: (page: number) => {
-                  scrollToTop(SCROLL_WRAPPER_ID);
-                  setPageIndex(page);
-                },
-                searchAfter: results.searchAfter,
-                onViewQueryChange: (viewPerQuery: PaginationViewPerQuery) => {
-                  dispatch(
-                    updateUserConfig({
-                      variants: {
-                        tables: {
-                          variants: {
-                            ...userInfo?.config.variants?.tables?.variants,
-                            viewPerQuery,
+                      }),
+                    ),
+                  onSelectAllResultsChange: setSelectedAllResults,
+                  onSelectedRowsChange: (keys, selectedRows) => {
+                    setSelectedKeys(keys);
+                    setSelectedRows(selectedRows);
+                  },
+                  extra: [
+                    <SetsManagementDropdown
+                      idField={VARIANT_SAVED_SETS_FIELD}
+                      results={results}
+                      selectedKeys={selectedKeys}
+                      selectedAllResults={selectedAllResults}
+                      sqon={getCurrentSqon()}
+                      type={SetType.VARIANT}
+                      key="variants-set-management"
+                    />,
+                  ],
+                }}
+                bordered
+                size="small"
+                scroll={{ x: dimension.x, y: 'max-content' }}
+                pagination={{
+                  current: pageIndex,
+                  queryConfig,
+                  setQueryConfig,
+                  onChange: (page: number) => {
+                    scrollToTop(SCROLL_WRAPPER_ID);
+                    setPageIndex(page);
+                  },
+                  searchAfter: results.searchAfter,
+                  onViewQueryChange: (viewPerQuery: PaginationViewPerQuery) => {
+                    dispatch(
+                      updateUserConfig({
+                        variants: {
+                          tables: {
+                            variants: {
+                              ...userInfo?.config.variants?.tables?.variants,
+                              viewPerQuery,
+                            },
                           },
                         },
-                      },
-                    }),
-                  );
-                },
-                defaultViewPerQuery: queryConfig.size,
-              }}
-              dataSource={results.data.map((i) => ({ ...i, key: i.id }))}
-              dictionary={getProTableDictionary()}
-            />
-          )}
+                      }),
+                    );
+                  },
+                  defaultViewPerQuery: queryConfig.size,
+                }}
+                dataSource={results.data.map((i) => ({ ...i, key: i.id }))}
+                dictionary={getProTableDictionary()}
+              />
+            );
+          }}
         />
       }
     />
