@@ -58,6 +58,7 @@ import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
+import { sanitizeUserColumnState } from 'utils/tables';
 import { getProTableDictionary } from 'utils/translation';
 
 import styles from './index.module.css';
@@ -499,13 +500,19 @@ const ParticipantsTab = ({ sqon }: OwnProps) => {
     });
   }, [queryConfig]);
 
+  const participantsColumns = getDefaultColumns();
+  const userColumnState = sanitizeUserColumnState(
+    userInfo?.config.data_exploration?.tables?.participants?.columns,
+    participantsColumns,
+  );
+
   return (
     <ProTable<ITableParticipantEntity>
       tableId="participants_table"
-      columns={getDefaultColumns()}
+      columns={participantsColumns}
       wrapperClassName={styles.participantTabWrapper}
       loading={results.loading}
-      initialColumnState={userInfo?.config.data_exploration?.tables?.participants?.columns}
+      initialColumnState={userColumnState}
       enableRowSelection={true}
       showSorterTooltip={false}
       initialSelectedKey={selectedKeys}
@@ -540,8 +547,8 @@ const ParticipantsTab = ({ sqon }: OwnProps) => {
         onTableExportClick: () =>
           dispatch(
             fetchTsvReport({
-              columnStates: userInfo?.config.data_exploration?.tables?.participants?.columns,
-              columns: getDefaultColumns(),
+              columnStates: userColumnState,
+              columns: participantsColumns,
               index: INDEXES.PARTICIPANT,
               sqon: getCurrentSqon(),
             }),

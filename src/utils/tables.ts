@@ -20,4 +20,20 @@ const userColsHaveSameKeyAsDefaultCols = (
   return userCols.every((c) => defaultColsKeys.includes(c.key));
 };
 
-export { userColsHaveSameKeyAsDefaultCols };
+// Drops entries from a persisted user column state whose key no longer exists
+// in defaultCols. Without this, ProTable's initialColumnState can carry stale
+// columns (e.g. a column removed from the code but still present in the user's
+// server-side config), which causes a visual glitch in the rendered table.
+const sanitizeUserColumnState = (
+  userCols: TColumnStates | undefined,
+  defaultCols: ProColumnType[],
+): TColumnStates | undefined => {
+  if (!userCols?.length) {
+    return undefined;
+  }
+  const defaultColsKeys = new Set(defaultCols.map((c) => c.key));
+  const filtered = userCols.filter((c) => defaultColsKeys.has(c.key));
+  return filtered.length ? filtered : undefined;
+};
+
+export { sanitizeUserColumnState, userColsHaveSameKeyAsDefaultCols };

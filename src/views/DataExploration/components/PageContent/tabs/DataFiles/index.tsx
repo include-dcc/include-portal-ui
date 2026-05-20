@@ -50,6 +50,7 @@ import { userHasAccessToFile } from 'utils/dataFiles';
 import { formatFileSize } from 'utils/formatFileSize';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
+import { sanitizeUserColumnState } from 'utils/tables';
 import { getProTableDictionary } from 'utils/translation';
 
 import styles from './index.module.css';
@@ -376,20 +377,26 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
     selectedKeys.length > MAX_ITEMS_QUERY ||
     (selectedAllResults && results.total > MAX_ITEMS_QUERY);
 
+  const datafilesColumns = getDefaultColumns(
+    fencesAllAcls,
+    cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected,
+    dcf.status === FENCE_AUTHENTIFICATION_STATUS.connected,
+  );
+  const userColumnState = sanitizeUserColumnState(
+    userInfo?.config.data_exploration?.tables?.datafiles?.columns,
+    datafilesColumns,
+  );
+
   return (
     <>
       <ProTable<ITableFileEntity>
         tableId="datafiles_table"
-        columns={getDefaultColumns(
-          fencesAllAcls,
-          cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected,
-          dcf.status === FENCE_AUTHENTIFICATION_STATUS.connected,
-        )}
+        columns={datafilesColumns}
         showSorterTooltip={false}
         initialSelectedKey={selectedKeys}
         wrapperClassName={styles.dataFilesTabWrapper}
         loading={results.loading}
-        initialColumnState={userInfo?.config.data_exploration?.tables?.datafiles?.columns}
+        initialColumnState={userColumnState}
         enableRowSelection={true}
         onChange={(_pagination, _filter, sorter) => {
           setPageIndex(DEFAULT_PAGE_INDEX);
@@ -415,12 +422,8 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
           onTableExportClick: () =>
             dispatch(
               fetchTsvReport({
-                columnStates: userInfo?.config.data_exploration?.tables?.datafiles?.columns,
-                columns: getDefaultColumns(
-                  fencesAllAcls,
-                  cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected,
-                  dcf.status === FENCE_AUTHENTIFICATION_STATUS.connected,
-                ),
+                columnStates: userColumnState,
+                columns: datafilesColumns,
                 index: INDEXES.FILE,
                 sqon:
                   selectedAllResults || !selectedKeys.length

@@ -46,6 +46,7 @@ import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
+import { sanitizeUserColumnState } from 'utils/tables';
 import { getProTableDictionary } from 'utils/translation';
 
 import { GnomadCircle, renderClinvar, renderOmim } from './utils';
@@ -482,6 +483,12 @@ const VariantsTable = ({
     // eslint-disable-next-line
   }, [JSON.stringify(filters)]);
 
+  const variantsColumns = getDefaultColumns(queryBuilderId, results.data.length === 0);
+  const userColumnState = sanitizeUserColumnState(
+    userInfo?.config.variants?.tables?.variants?.columns,
+    variantsColumns,
+  );
+
   return (
     <GridCard
       content={
@@ -490,9 +497,9 @@ const VariantsTable = ({
           fixedProTable={(dimension) => (
             <ProTable<ITableVariantEntity>
               tableId="variants_table"
-              columns={getDefaultColumns(queryBuilderId, results.data.length === 0 ? true : false)}
+              columns={variantsColumns}
               enableRowSelection
-              initialColumnState={userInfo?.config.variants?.tables?.variants?.columns}
+              initialColumnState={userColumnState}
               wrapperClassName={styles.variantTabWrapper}
               loading={results.loading}
               initialSelectedKey={selectedKeys}
