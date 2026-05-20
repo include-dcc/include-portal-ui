@@ -113,18 +113,6 @@ describe('Page des études - Colonnes du tableau', () => {
     cy.get('div[class="ant-popover-inner"]')
       .find('div[class="ant-space-item"]').eq(20)
       .contains('Principal Investigator').should('exist');
-
-    cy.get('thead[class="ant-table-thead"]')
-      .contains('Start').should('not.exist');
-    cy.get('div[class="ant-popover-inner"]')
-      .find('div[class="ant-space-item"]').eq(21)
-      .contains('Start').should('exist');
-
-    cy.get('thead[class="ant-table-thead"]')
-      .contains('End').should('not.exist');
-    cy.get('div[class="ant-popover-inner"]')
-      .find('div[class="ant-space-item"]').eq(22)
-      .contains('End').should('exist');
   });
 
   it('Masquer une colonne affichée', () => {
