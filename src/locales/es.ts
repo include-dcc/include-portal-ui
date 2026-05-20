@@ -1517,7 +1517,6 @@ const es = {
       },
     },
     studies: {
-      end: 'Fin',
       harmonizedPopover: {
         title: 'Datos Armonizados',
         content:
@@ -1564,7 +1563,6 @@ const es = {
         title: 'Buscar por código de estudio, nombre del estudio, dbGaP',
         placeholder: 'HTP, El Proyecto Humano de Trisomía, phs001138',
       },
-      start: 'Inicio',
       title: 'Estudios',
     },
     publicStudies: {
@@ -2305,9 +2303,7 @@ const es = {
       data_sources: 'Tipo de fuente de datos clínicos',
       data_source_table: 'Fuente de datos',
       date_collection_end: 'Fin de la recolección de datos (Año)',
-      date_collection_end_year: 'Año de fin de recolección',
       date_collection_start: 'Inicio de la recolección de datos (Año)',
-      date_collection_start_year: 'Año de inicio de recolección',
       dbGaP: 'Número de acceso dbGaP',
       dbgap: 'dbGaP',
       description: 'Descripción',

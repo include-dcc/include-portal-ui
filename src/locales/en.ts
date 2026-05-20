@@ -1526,7 +1526,6 @@ const en = {
       },
     },
     studies: {
-      end: 'End',
       harmonizedPopover: {
         title: 'Harmonized Data',
         content:
@@ -1573,7 +1572,6 @@ const en = {
         title: 'Search by study code, study name, dbGaP',
         placeholder: 'HTP, The Human Trisome Project, phs001138',
       },
-      start: 'Start',
       title: 'Studies',
     },
     publicStudies: {
@@ -2308,9 +2306,7 @@ const en = {
       data_sources: 'Clinical Data Source Type',
       data_source_table: 'Data Source',
       date_collection_end: 'Date Collection End (Year)',
-      date_collection_end_year: 'Year of collection end',
       date_collection_start: 'Date Collection Start (Year)',
-      date_collection_start_year: 'Year of collection start',
       dbGaP: 'dbGaP Accession Number',
       dbgap: 'dbGaP',
       description: 'Description',
