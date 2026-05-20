@@ -9,8 +9,6 @@ beforeEach(() => {
   cy.showColumn('Data Source');
   cy.showColumn('Design');
   cy.showColumn('Principal Investigator');
-  cy.showColumn('Start');
-  cy.showColumn('End');
   cy.clickAndIntercept('input[type="radio"][value="true"]', 'POST', '**/graphql', 15, false/*beVisible*/, 1);
 });
 

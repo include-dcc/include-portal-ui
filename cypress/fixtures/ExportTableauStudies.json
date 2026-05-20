@@ -13,9 +13,7 @@
               "Participant Lifespan",
               "Data Source",
               "Design",
-              "Principal Investigator",
-              "Start",
-              "End"],
+              "Principal Investigator"],
   "content": ["true",
               "HTP",
               "The Human Trisome Project",
@@ -28,6 +26,6 @@
               "Investigator Assessment",
               "Medical Record",
               "Participant or Caregiver Report",
-              "longitudinal",
+              "ongitudinal",
               "--"]
 }

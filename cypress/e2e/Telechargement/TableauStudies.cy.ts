@@ -15,8 +15,6 @@ beforeEach(() => {
   cy.showColumn('Data Source');
   cy.showColumn('Design');
   cy.showColumn('Principal Investigator');
-  cy.showColumn('Start');
-  cy.showColumn('End');
   cy.wait(1000);
 
   cy.clickAndIntercept('div[id="content"] svg[data-icon="download"]', 'POST', '**/download', 1);

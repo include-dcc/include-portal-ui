@@ -413,24 +413,6 @@ const getColumns = (): ProColumnType<any>[] => [
       );
     },
   },
-  {
-    key: 'date_collection_start_year',
-    title: intl.get('screen.studies.start'),
-    tooltip: intl.get('entities.study.date_collection_start_year'),
-    dataIndex: 'date_collection_start_year',
-    defaultHidden: true,
-    render: (date_collection_start_year: string) =>
-      date_collection_start_year || TABLE_EMPTY_PLACE_HOLDER,
-  },
-  {
-    key: 'date_collection_end_year',
-    title: intl.get('screen.studies.end'),
-    tooltip: intl.get('entities.study.date_collection_end_year'),
-    dataIndex: 'date_collection_end_year',
-    defaultHidden: true,
-    render: (date_collection_end_year: string) =>
-      date_collection_end_year || TABLE_EMPTY_PLACE_HOLDER,
-  },
 ];
 
 const Studies = () => {
