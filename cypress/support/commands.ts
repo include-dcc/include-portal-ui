@@ -299,6 +299,7 @@ Cypress.Commands.add('saveSetAs', (setName: string, itemPosition: number) => {
   cy.get('form[id="save-set"] input').type(setName);
   cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-primary"]', 'POST', '**/sets', 1);
 
+  cy.get('body').contains('Your set has been saved.', {timeout: oneMinute});
   cy.get('form[id="save-set"]').should('not.exist', {timeout: oneMinute});
 });
 
