@@ -629,10 +629,17 @@ Cypress.Commands.add('visitParticipantEntityMock', () => {
             req.reply(mockResponseDSStatusBody);
           };
         });
+        cy.intercept('POST', '**/graphql', (req) => {
+          if (req.body.query.includes('getParticipantCount')) {
+            req.alias = 'postPartCountGraphql';
+            req.reply(mockResponseDSStatusBody);
+          };
+        });
         cy.visit('/participants/mock');
         cy.wait('@postPartGraphql');
         cy.wait('@postTreeGraphql');
         cy.wait('@postDSStatusGraphql');
+        cy.wait('@postPartCountGraphql');
       });
     });
   });

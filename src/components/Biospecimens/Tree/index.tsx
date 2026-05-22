@@ -218,11 +218,16 @@ const BiospecimenTree = ({
   }, []);
 
   useEffect(() => {
-    if (!loading && biospecimen) {
+    if (loading) return;
+    if (biospecimen) {
       setSelectedKeys([biospecimen.sample_id]);
       const nodeDetails = getNodeDetails(biospecimen.fhir_id, dataParsed);
       nodeDetails &&
         setDescriptions(getSampleDetails(nodeDetails, hasParticipantLink, participantId));
+    } else if (dataParsed.length > 0) {
+      const firstCollectionSample = dataParsed[0];
+      setSelectedKeys([firstCollectionSample.key]);
+      setDescriptions(getCollectionDetails(firstCollectionSample));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [biospecimen, loading]);
