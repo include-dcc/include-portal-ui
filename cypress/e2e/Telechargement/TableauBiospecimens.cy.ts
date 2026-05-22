@@ -17,6 +17,7 @@ beforeEach(() => {
 
   cy.get('div[role="tabpanel"] [class*="ant-table-row"]').eq(0).find('[type="checkbox"]').check({force: true});
   cy.clickAndIntercept('div[id="content"] svg[data-icon="download"]', 'POST', '**/download', 1, false/*beVisible*/, 1);
+  cy.contains('Your download is being prepared').should('not.exist', {timeout: oneMinute});
   cy.waitUntilFile(oneMinute);
 });
 

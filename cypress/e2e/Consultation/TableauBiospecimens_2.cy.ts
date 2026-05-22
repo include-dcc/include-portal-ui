@@ -1,5 +1,6 @@
 /// <reference types="cypress"/>
 import '../../support/commands';
+import { oneMinute } from '../../support/utils';
 
 beforeEach(() => {
   cy.login();
@@ -15,7 +16,7 @@ describe('Page Data Exploration (Biospecimens) - Valider les liens disponibles',
   it('Lien Participant ID du tableau', () => {
     cy.get('tr[class*="ant-table-row"] [class*="ant-table-cell"]').eq(6).find('[href]').clickAndWait({force: true});
     cy.get('[id="participant-entity-page"]').should('exist');
-    cy.get('[class*="EntityTitle"]').contains('pt-as0aepqm');
+    cy.get('[class*="EntityTitle"]', {timeout: oneMinute}).contains('pt-as0aepqm');
   });
 
   it('Lien Collection ID du tableau', () => {
