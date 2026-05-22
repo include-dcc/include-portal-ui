@@ -232,37 +232,34 @@ const BiospecimenTree = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [biospecimen, loading]);
 
-  // Auto-scroll to selected element
+  // Auto-scroll to selected element (within the tree container only, not the page)
   useEffect(() => {
-    if (selectedKeys.length > 0) {
-      // delay for DOM to be updated
-      setTimeout(() => {
-        const selectedKey = selectedKeys[0];
+    if (selectedKeys.length === 0) return;
+    // delay for DOM to be updated
+    const timeoutId = setTimeout(() => {
+      const selectedKey = selectedKeys[0];
 
-        // Use SimpleBar ref to access scrollable content
-        const simpleBarInstance = treeContainerRef.current;
-        const scrollElement =
-          simpleBarInstance?.getScrollElement?.() ||
-          simpleBarInstance?.querySelector?.('.simplebar-content-wrapper') ||
-          document.querySelector('.simplebar-content-wrapper');
-        const treeElement =
-          scrollElement?.querySelector('.ant-tree') || document.querySelector('.ant-tree');
+      const simpleBarInstance = treeContainerRef.current;
+      const scrollElement =
+        simpleBarInstance?.getScrollElement?.() ||
+        simpleBarInstance?.querySelector?.('.simplebar-content-wrapper');
+      const treeElement = scrollElement?.querySelector('.ant-tree');
 
-        if (treeElement) {
-          const selectedNode =
-            treeElement.querySelector(`[data-key="${selectedKey}"]`) ||
-            treeElement.querySelector('.ant-tree-node-selected');
+      if (!scrollElement || !treeElement) return;
 
-          if (selectedNode) {
-            selectedNode.scrollIntoView({
-              behavior: 'smooth',
-              block: 'center',
-              inline: 'nearest',
-            });
-          }
-        }
-      }, 100);
-    }
+      const selectedNode =
+        treeElement.querySelector(`[data-key="${selectedKey}"]`) ||
+        treeElement.querySelector('.ant-tree-node-selected');
+
+      if (!selectedNode) return;
+
+      const nodeRect = selectedNode.getBoundingClientRect();
+      const containerRect = scrollElement.getBoundingClientRect();
+      const offset =
+        nodeRect.top - containerRect.top - (containerRect.height - nodeRect.height) / 2;
+      scrollElement.scrollTop += offset;
+    }, 100);
+    return () => clearTimeout(timeoutId);
   }, [selectedKeys]);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
