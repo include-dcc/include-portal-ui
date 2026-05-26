@@ -7,6 +7,18 @@
 
 ### Technical / Other changes
 -->
+## 2026-05-26 include-portal-ui v1.27.0
+### Technical / Other Changes:
+- [SJIP-1539](https://d3b.atlassian.net/browse/SJIP-1539) Refactor: [Study Entity] Make clinical trial intervention a list instead of a single value
+- [SJIP-1546](https://d3b.atlassian.net/browse/SJIP-1546) Fix: [Study Entity] Arm information only showed the first value instead of all values
+- [SJIP-1555](https://d3b.atlassian.net/browse/SJIP-1555) Fix: [Study Entity] Duplicate datasets displayed on DS-HPBM study entity page
+- [SJIP-1556](https://d3b.atlassian.net/browse/SJIP-1556) Fix: [Study Entity] Studies only showing one study website URL despite having multiple
+- [SJIP-1557](https://d3b.atlassian.net/browse/SJIP-1557) Fix: [Study Entity] DOI citation "Available from" URL truncated in display — missing final character
+- [SJIP-1558](https://d3b.atlassian.net/browse/SJIP-1558) Fix: [ETL] Fixed Furunculosis (MONDO_0100595) missing from participant diagnoses
+- [SJIP-1559](https://d3b.atlassian.net/browse/SJIP-1559) Fix: [Cavatica API] Analyze in Cavatica only pushes first file when dataset has multiple files
+- [SJIP-1561](https://d3b.atlassian.net/browse/SJIP-1561) Fix: [Studies] Remove Start Year and End Year columns from the Studies page table
+- [SJIP-1563](https://d3b.atlassian.net/browse/SJIP-1563) Refactor: [Participant Entity] First collection sample in the hierarchical biospecimen tree now selected by default
+
 ## 2026-03-26 include-portal-ui v1.26.0
 ### Features:
 - [SJIP-1518](https://d3b.atlassian.net/browse/SJIP-1518) Feature: [Study Entity] Update summary and data access section
