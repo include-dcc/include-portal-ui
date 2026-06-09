@@ -145,8 +145,7 @@ const generateLocalTsvReport = createAsyncThunk<
     rows: any[];
   },
   { rejectValue: string }
-  // TODO: change the prefix to get distinct action tags
->('report/generate/tsv', async (args, thunkAPI) => {
+>('report/generate/localtsv', async (args, thunkAPI) => {
   // !! This function assumes that it is called only when the table is not empty. Said otherwise, data is never empty !!
   const messageKey = 'report_pending';
 
