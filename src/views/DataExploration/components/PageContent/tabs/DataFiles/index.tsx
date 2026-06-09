@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { LockOutlined, SafetyOutlined, UnlockFilled, WarningOutlined } from '@ant-design/icons';
+import {
+  CloseCircleOutlined,
+  LockOutlined,
+  SafetyOutlined,
+  UnlockFilled,
+  WarningOutlined,
+} from '@ant-design/icons';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
@@ -16,11 +22,12 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
-import { Popover, Tag, Tooltip } from 'antd';
+import { Modal, Popover, Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useDataFiles } from 'graphql/files/actions';
 import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
 import { IStudyEntity } from 'graphql/studies/models';
+import { isEmpty } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
@@ -419,18 +426,28 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
             setSelectedKeys(keys);
             setSelectedRows(rows);
           },
-          onTableExportClick: () =>
-            dispatch(
-              fetchTsvReport({
-                columnStates: userColumnState,
-                columns: datafilesColumns,
-                index: INDEXES.FILE,
-                sqon:
-                  selectedAllResults || !selectedKeys.length
-                    ? sqon
-                    : generateSelectionSqon(TAB_IDS.DATA_FILES, selectedKeys),
-              }),
-            ),
+          onTableExportClick: () => {
+            if (selectedKeys.length > 10000 || (isEmpty(selectedKeys) && results.total > 10000)) {
+              Modal.error({
+                title: intl.get('global.exportModal.title'),
+                icon: <CloseCircleOutlined />,
+                content: intl.get('global.exportModal.content'),
+                okText: intl.get('global.exportModal.button'),
+              });
+            } else {
+              dispatch(
+                fetchTsvReport({
+                  columnStates: userColumnState,
+                  columns: datafilesColumns,
+                  index: INDEXES.FILE,
+                  sqon:
+                    selectedAllResults || !selectedKeys.length
+                      ? sqon
+                      : generateSelectionSqon(TAB_IDS.DATA_FILES, selectedKeys),
+                }),
+              );
+            }
+          },
           onColumnSortChange: (newState) =>
             dispatch(
               updateUserConfig({

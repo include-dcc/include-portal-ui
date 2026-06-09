@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
+import { CloseCircleOutlined } from '@ant-design/icons';
 import ProLabel from '@ferlab/ui/core/components/ProLabel';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import SummarySumCell from '@ferlab/ui/core/components/ProTable/SummarySumCell';
@@ -23,7 +24,7 @@ import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, isEmptySqon } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Button, Input, Space, Tooltip, Typography } from 'antd';
+import { Button, Input, Modal, Space, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useStudies } from 'graphql/studies/actions';
 import { IStudyEntity } from 'graphql/studies/models';
@@ -290,14 +291,23 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
                 ),
               enableTableExport: true,
               onTableExportClick: () => {
-                dispatch(
-                  fetchTsvReport({
-                    columnStates: userColumnState,
-                    columns: defaultColumns,
-                    index: INDEXES.STUDY,
-                    sqon: resolvedSqon,
-                  }),
-                );
+                if (data.length > 10000) {
+                  Modal.error({
+                    title: intl.get('global.exportModal.title'),
+                    icon: <CloseCircleOutlined />,
+                    content: intl.get('global.exportModal.content'),
+                    okText: intl.get('global.exportModal.button'),
+                  });
+                } else {
+                  dispatch(
+                    fetchTsvReport({
+                      columnStates: userColumnState,
+                      columns: defaultColumns,
+                      index: INDEXES.STUDY,
+                      sqon: resolvedSqon,
+                    }),
+                  );
+                }
               },
               hasFilter: !isEmptySqon(resolvedSqon),
               clearFilter,

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ApartmentOutlined } from '@ant-design/icons';
+import { ApartmentOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import RequestBiospecimenButton from '@ferlab/ui/core/components/BiospecimenRequest/RequestBiospecimenButton';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
@@ -16,7 +16,7 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
-import { Tooltip } from 'antd';
+import { Modal, Tooltip } from 'antd';
 import { AxiosRequestConfig } from 'axios';
 import { useBiospecimen } from 'graphql/biospecimens/actions';
 import { IBiospecimenEntity, Status } from 'graphql/biospecimens/models';
@@ -24,6 +24,7 @@ import { INDEXES } from 'graphql/constants';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { IStudyEntity } from 'graphql/studies/models';
 import EnvironmentVariables from 'helpers/EnvVariables';
+import { isEmpty } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
@@ -420,15 +421,25 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
                 },
               }),
             ),
-          onTableExportClick: () =>
-            dispatch(
-              fetchTsvReport({
-                columnStates: userColumnState,
-                columns: biospecimensColumns,
-                index: INDEXES.BIOSPECIMEN,
-                sqon: getCurrentSqon(),
-              }),
-            ),
+          onTableExportClick: () => {
+            if (selectedKeys.length > 10000 || (isEmpty(selectedKeys) && results.total > 10000)) {
+              Modal.error({
+                title: intl.get('global.exportModal.title'),
+                icon: <CloseCircleOutlined />,
+                content: intl.get('global.exportModal.content'),
+                okText: intl.get('global.exportModal.button'),
+              });
+            } else {
+              dispatch(
+                fetchTsvReport({
+                  columnStates: userColumnState,
+                  columns: biospecimensColumns,
+                  index: INDEXES.BIOSPECIMEN,
+                  sqon: getCurrentSqon(),
+                }),
+              );
+            }
+          },
           extra: [
             <RequestBiospecimenButton
               additionalHandleClick={() => trackRequestBiospecimen('open modal')}

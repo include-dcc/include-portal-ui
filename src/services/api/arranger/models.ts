@@ -99,3 +99,16 @@ export interface IArrangerUpset {
   name: string;
   elems: string[];
 }
+
+export type TTsvReportColumn = {
+  field: string;
+  header: string;
+};
+
+export type TTsvReportConfig = {
+  index: string;
+  fileName: string;
+  sqon: ISyntheticSqon;
+  sort: { field: string; order: string }[];
+  columns: TTsvReportColumn[];
+};

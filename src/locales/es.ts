@@ -151,6 +151,12 @@ const es = {
         },
       },
     },
+    exportModal: {
+      title: 'Número máximo superado',
+      content:
+        'Se puede exportar un máximo de 10 000 elementos a la vez. Refine su selección e inténtelo de nuevo.',
+      button: 'Cerrar',
+    },
     notification: {
       genericError: 'Ocurrió un error',
     },
