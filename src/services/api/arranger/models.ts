@@ -112,3 +112,5 @@ export type TTsvReportConfig = {
   sort: { field: string; order: string }[];
   columns: TTsvReportColumn[];
 };
+
+export const MAX_ROW_EXPORTED = 10000;

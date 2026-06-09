@@ -45,6 +45,7 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
 import useApi from 'hooks/useApi';
 import { trackRequestBiospecimen } from 'services/analytics';
+import { MAX_ROW_EXPORTED } from 'services/api/arranger/models';
 import { headers } from 'services/api/reports';
 import { ReportType } from 'services/api/reports/models';
 import { SetType } from 'services/api/savedSet/models';
@@ -422,23 +423,26 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
               }),
             ),
           onTableExportClick: () => {
-            if (selectedKeys.length > 10000 || (isEmpty(selectedKeys) && results.total > 10000)) {
+            if (
+              selectedKeys.length > MAX_ROW_EXPORTED ||
+              (isEmpty(selectedKeys) && results.total > MAX_ROW_EXPORTED)
+            ) {
               Modal.error({
                 title: intl.get('global.exportModal.title'),
                 icon: <CloseCircleOutlined />,
                 content: intl.get('global.exportModal.content'),
                 okText: intl.get('global.exportModal.button'),
               });
-            } else {
-              dispatch(
-                fetchTsvReport({
-                  columnStates: userColumnState,
-                  columns: biospecimensColumns,
-                  index: INDEXES.BIOSPECIMEN,
-                  sqon: getCurrentSqon(),
-                }),
-              );
+              return;
             }
+            dispatch(
+              fetchTsvReport({
+                columnStates: userColumnState,
+                columns: biospecimensColumns,
+                index: INDEXES.BIOSPECIMEN,
+                sqon: getCurrentSqon(),
+              }),
+            );
           },
           extra: [
             <RequestBiospecimenButton

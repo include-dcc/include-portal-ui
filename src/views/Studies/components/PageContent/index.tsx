@@ -33,6 +33,7 @@ import { cloneDeep } from 'lodash';
 import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
 import CitationGuidelines from 'components/CitationGuidelines';
 import { trackCavaticaAction } from 'services/analytics';
+import { MAX_ROW_EXPORTED } from 'services/api/arranger/models';
 import { CavaticaApi } from 'services/api/cavatica';
 import { ICavaticaCreateProjectBody } from 'services/api/cavatica/models';
 import { useCavaticaPassport } from 'store/passport';
@@ -291,23 +292,23 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
                 ),
               enableTableExport: true,
               onTableExportClick: () => {
-                if (data.length > 10000) {
+                if (data.length > MAX_ROW_EXPORTED) {
                   Modal.error({
                     title: intl.get('global.exportModal.title'),
                     icon: <CloseCircleOutlined />,
                     content: intl.get('global.exportModal.content'),
                     okText: intl.get('global.exportModal.button'),
                   });
-                } else {
-                  dispatch(
-                    fetchTsvReport({
-                      columnStates: userColumnState,
-                      columns: defaultColumns,
-                      index: INDEXES.STUDY,
-                      sqon: resolvedSqon,
-                    }),
-                  );
+                  return;
                 }
+                dispatch(
+                  fetchTsvReport({
+                    columnStates: userColumnState,
+                    columns: defaultColumns,
+                    index: INDEXES.STUDY,
+                    sqon: resolvedSqon,
+                  }),
+                );
               },
               hasFilter: !isEmptySqon(resolvedSqon),
               clearFilter,

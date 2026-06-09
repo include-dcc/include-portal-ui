@@ -52,6 +52,7 @@ import AgeCell from 'views/ParticipantEntity/AgeCell';
 import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
+import { MAX_ROW_EXPORTED } from 'services/api/arranger/models';
 import { SetType } from 'services/api/savedSet/models';
 import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
@@ -545,23 +546,26 @@ const ParticipantsTab = ({ sqon }: OwnProps) => {
             }),
           ),
         onTableExportClick: () => {
-          if (selectedKeys.length > 10000 || (isEmpty(selectedKeys) && results.total > 10000)) {
+          if (
+            selectedKeys.length > MAX_ROW_EXPORTED ||
+            (isEmpty(selectedKeys) && results.total > MAX_ROW_EXPORTED)
+          ) {
             Modal.error({
               title: intl.get('global.exportModal.title'),
               icon: <CloseCircleOutlined />,
               content: intl.get('global.exportModal.content'),
               okText: intl.get('global.exportModal.button'),
             });
-          } else {
-            dispatch(
-              fetchTsvReport({
-                columnStates: userColumnState,
-                columns: participantsColumns,
-                index: INDEXES.PARTICIPANT,
-                sqon: getCurrentSqon(),
-              }),
-            );
+            return;
           }
+          dispatch(
+            fetchTsvReport({
+              columnStates: userColumnState,
+              columns: participantsColumns,
+              index: INDEXES.PARTICIPANT,
+              sqon: getCurrentSqon(),
+            }),
+          );
         },
         onSelectAllResultsChange: setSelectedAllResults,
         onSelectedRowsChange: (keys) => setSelectedKeys(keys),

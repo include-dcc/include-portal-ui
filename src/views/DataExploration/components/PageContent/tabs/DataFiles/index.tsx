@@ -47,6 +47,7 @@ import { MAX_ITEMS_QUERY, TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { FENCE_NAMES } from 'common/fenceTypes';
 import CavaticaAnalyzeButton from 'components/Cavatica/AnalyzeButton';
 import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
+import { MAX_ROW_EXPORTED } from 'services/api/arranger/models';
 import { SetType } from 'services/api/savedSet/models';
 import { useAllFencesAcl, useFenceAuthentification } from 'store/fences';
 import { useCavaticaPassport } from 'store/passport';
@@ -427,26 +428,29 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
             setSelectedRows(rows);
           },
           onTableExportClick: () => {
-            if (selectedKeys.length > 10000 || (isEmpty(selectedKeys) && results.total > 10000)) {
+            if (
+              selectedKeys.length > MAX_ROW_EXPORTED ||
+              (isEmpty(selectedKeys) && results.total > MAX_ROW_EXPORTED)
+            ) {
               Modal.error({
                 title: intl.get('global.exportModal.title'),
                 icon: <CloseCircleOutlined />,
                 content: intl.get('global.exportModal.content'),
                 okText: intl.get('global.exportModal.button'),
               });
-            } else {
-              dispatch(
-                fetchTsvReport({
-                  columnStates: userColumnState,
-                  columns: datafilesColumns,
-                  index: INDEXES.FILE,
-                  sqon:
-                    selectedAllResults || !selectedKeys.length
-                      ? sqon
-                      : generateSelectionSqon(TAB_IDS.DATA_FILES, selectedKeys),
-                }),
-              );
+              return;
             }
+            dispatch(
+              fetchTsvReport({
+                columnStates: userColumnState,
+                columns: datafilesColumns,
+                index: INDEXES.FILE,
+                sqon:
+                  selectedAllResults || !selectedKeys.length
+                    ? sqon
+                    : generateSelectionSqon(TAB_IDS.DATA_FILES, selectedKeys),
+              }),
+            );
           },
           onColumnSortChange: (newState) =>
             dispatch(
