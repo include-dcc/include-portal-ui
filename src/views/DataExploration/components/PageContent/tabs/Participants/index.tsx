@@ -546,10 +546,9 @@ const ParticipantsTab = ({ sqon }: OwnProps) => {
             }),
           ),
         onTableExportClick: () => {
-          if (
-            selectedKeys.length > MAX_ROW_EXPORTED ||
-            (isEmpty(selectedKeys) && results.total > MAX_ROW_EXPORTED)
-          ) {
+          const nbRowsToExport =
+            selectedAllResults || isEmpty(selectedKeys) ? results.total : selectedKeys.length;
+          if (nbRowsToExport > MAX_ROW_EXPORTED) {
             Modal.error({
               title: intl.get('global.exportModal.title'),
               icon: <CloseCircleOutlined />,
