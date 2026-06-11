@@ -31,13 +31,15 @@ const getAuthLink = () =>
   }));
 
 const Provider = ({ children }: IProvider): ReactElement => {
+  const header = getAuthLink();
+
   const client = useMemo<ApolloClient<NormalizedCacheObject>>(
     () =>
       new ApolloClient({
         cache: new InMemoryCache({ addTypename: false }),
-        link: getAuthLink().concat(arrangerLink),
+        link: header.concat(arrangerLink),
       }),
-    [],
+    [header],
   );
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
