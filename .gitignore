@@ -121,3 +121,4 @@ build/
 /cypress/results
 .testquality
 .copilot
+.claude/settings.local.json
