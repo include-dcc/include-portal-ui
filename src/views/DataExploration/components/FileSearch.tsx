@@ -17,6 +17,7 @@ const FileSearch = ({ queryBuilderId }: ICustomSearchProps) => {
     <GlobalSearch<IFileEntity>
       queryBuilderId={queryBuilderId}
       field="file_id"
+      searchFields={['file_id', 'file_name']}
       index={INDEXES.FILE}
       placeholder={intl.get('global.search.file.placeholder')}
       emptyDescription={intl.get('global.search.file.emptyText')}
@@ -28,12 +29,14 @@ const FileSearch = ({ queryBuilderId }: ICustomSearchProps) => {
             <SelectItem
               icon={<FileTextOutlined />}
               title={highlightSearchMatch(option.file_id, matchRegex, search)}
+              caption={highlightSearchMatch(option.file_name, matchRegex, search)}
             />
           ),
           value: option.file_id,
         }))
       }
       title={intl.get('global.search.file.title')}
+      tooltipText={intl.get('global.search.file.tooltip')}
     />
   );
 };

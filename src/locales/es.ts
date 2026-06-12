@@ -92,6 +92,7 @@ const es = {
         emptyText: 'No se encontraron archivos',
         placeholder: 'p. ej., GF_001CSF26',
         title: 'Buscar por ID de archivo',
+        tooltip: 'Buscar por ID de archivo o nombre de archivo',
       },
       fileSet: {
         title: 'Conjuntos de Archivos Guardados',

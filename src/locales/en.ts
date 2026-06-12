@@ -93,6 +93,7 @@ const en = {
         emptyText: 'No files found',
         placeholder: 'e.g. GF_001CSF26',
         title: 'Search by File ID',
+        tooltip: 'Search by File ID or File Name',
       },
       fileSet: {
         title: 'Saved File Sets',
