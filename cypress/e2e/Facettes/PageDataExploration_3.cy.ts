@@ -36,6 +36,22 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz"
   });
 
+  it('Search by File Name - HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz', () => {
+    cy.get('[class*="SearchLabel_title"]').contains('Search by File ID').should('exist');
+
+    cy.typeAndIntercept('[class*="SearchAutocomplete_search"] input', 'htp0577a_frrb192320222-1a_HWHKMDSXX_L1_2.fq.gz', 'POST', '*/grapgql', 3);
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz').should('exist');
+    cy.get('[class*="ant-select-dropdown"] [class*="ant-select-item"]').eq(0).click({force: true});
+
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').contains('HTP.HTP0577A_FRRB192320222-1a_HWHKMDSXX_L1_2.fq.gz').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('File ID').should('exist');
+    cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('HTP.HTP0577A FRRB192320222-1a HWHKMDSXX L1 2.fq.gz').should('exist');
+    cy.validateTableResultsCount(/^1 Result$/);
+
+    cy.get('[data-icon="close-circle"]').clickAndWait({force: true});
+    cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist');
+  });
+
   it('Access - Controlled', () => {
     cy.validateFacetFilter('Access', 'Controlled', 'Controlled', /\d{1}/);
     cy.validateFacetRank(0, 'Access');
