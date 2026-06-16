@@ -248,6 +248,7 @@ export const FILE_SEARCH_BY_ID_QUERY = gql`
         edges {
           node {
             file_id
+            file_name
           }
         }
       }
