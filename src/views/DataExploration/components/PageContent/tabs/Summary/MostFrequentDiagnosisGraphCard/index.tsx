@@ -66,7 +66,7 @@ const MostFrequentDiagnosisGraphCard = () => {
 
   useEffect(() => {
     setMondoLoading(true);
-    phenotypeStore.current?.fetch({ field: 'mondo', sqon }).then(() => {
+    phenotypeStore.current?.fetch({ field: 'mondo', sqon, filterThemselves: true }).then(() => {
       setMondoLoading(false);
       const flattenMondoTree = getFlattenTree(phenotypeStore.current?.tree as TreeNode).sort(
         (a, b) => {
