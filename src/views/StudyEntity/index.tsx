@@ -307,13 +307,11 @@ const StudyEntity = () => {
       ) ||
       hasData(
         aggregationToChartData(
-          dataCategory?.result?.data?.participant?.aggregations?.files__data_category?.buckets,
+          dataCategory?.result?.data?.file?.aggregations?.data_category?.buckets,
         ),
       ) ||
       hasData(
-        aggregationToChartData(
-          dataType?.result?.data?.participant?.aggregations?.files__data_type?.buckets,
-        ),
+        aggregationToChartData(dataType?.result?.data?.file?.aggregations?.data_type?.buckets),
       ) ||
       hasData(
         aggregationToChartData(
@@ -555,8 +553,7 @@ const StudyEntity = () => {
               dataCategory: {
                 loading: dataCategory.loading,
                 data: aggregationToChartData(
-                  dataCategory.result?.data?.participant?.aggregations?.files__data_category
-                    .buckets,
+                  dataCategory.result?.data?.file?.aggregations?.data_category.buckets,
                 ),
                 filter: {
                   total: 10,
@@ -565,7 +562,7 @@ const StudyEntity = () => {
               dataType: {
                 loading: dataType.loading,
                 data: aggregationToChartData(
-                  dataType.result?.data?.participant?.aggregations?.files__data_type.buckets,
+                  dataType.result?.data?.file?.aggregations?.data_type.buckets,
                 ),
                 filter: {
                   total: 10,
