@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
+import { CloseCircleOutlined } from '@ant-design/icons';
 import ProLabel from '@ferlab/ui/core/components/ProLabel';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import SummarySumCell from '@ferlab/ui/core/components/ProTable/SummarySumCell';
@@ -23,7 +24,7 @@ import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, isEmptySqon } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
-import { Button, Input, Space, Tooltip, Typography } from 'antd';
+import { Button, Input, Modal, Space, Tooltip, Typography } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useStudies } from 'graphql/studies/actions';
 import { IStudyEntity } from 'graphql/studies/models';
@@ -32,6 +33,7 @@ import { cloneDeep } from 'lodash';
 import AnalyzeModal from 'components/Cavatica/AnalyzeModal';
 import CitationGuidelines from 'components/CitationGuidelines';
 import { trackCavaticaAction } from 'services/analytics';
+import { MAX_ROW_EXPORTED } from 'services/api/arranger/models';
 import { CavaticaApi } from 'services/api/cavatica';
 import { ICavaticaCreateProjectBody } from 'services/api/cavatica/models';
 import { useCavaticaPassport } from 'store/passport';
@@ -290,6 +292,15 @@ const PageContent = ({ defaultColumns = [] }: OwnProps) => {
                 ),
               enableTableExport: true,
               onTableExportClick: () => {
+                if (data.length > MAX_ROW_EXPORTED) {
+                  Modal.error({
+                    title: intl.get('global.exportModal.title'),
+                    icon: <CloseCircleOutlined />,
+                    content: intl.get('global.exportModal.content'),
+                    okText: intl.get('global.exportModal.button'),
+                  });
+                  return;
+                }
                 dispatch(
                   fetchTsvReport({
                     columnStates: userColumnState,

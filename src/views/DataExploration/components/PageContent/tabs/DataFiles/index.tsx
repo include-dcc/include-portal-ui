@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { LockOutlined, SafetyOutlined, UnlockFilled, WarningOutlined } from '@ant-design/icons';
+import {
+  CloseCircleOutlined,
+  LockOutlined,
+  SafetyOutlined,
+  UnlockFilled,
+  WarningOutlined,
+} from '@ant-design/icons';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
@@ -16,11 +22,12 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
-import { Popover, Tag, Tooltip } from 'antd';
+import { Modal, Popover, Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useDataFiles } from 'graphql/files/actions';
 import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
 import { IStudyEntity } from 'graphql/studies/models';
+import { isEmpty } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
@@ -40,6 +47,7 @@ import { MAX_ITEMS_QUERY, TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { FENCE_NAMES } from 'common/fenceTypes';
 import CavaticaAnalyzeButton from 'components/Cavatica/AnalyzeButton';
 import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
+import { MAX_ROW_EXPORTED } from 'services/api/arranger/models';
 import { SetType } from 'services/api/savedSet/models';
 import { useAllFencesAcl, useFenceAuthentification } from 'store/fences';
 import { useCavaticaPassport } from 'store/passport';
@@ -419,7 +427,18 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
             setSelectedKeys(keys);
             setSelectedRows(rows);
           },
-          onTableExportClick: () =>
+          onTableExportClick: () => {
+            const nbRowsToExport =
+              selectedAllResults || isEmpty(selectedKeys) ? results.total : selectedKeys.length;
+            if (nbRowsToExport > MAX_ROW_EXPORTED) {
+              Modal.error({
+                title: intl.get('global.exportModal.title'),
+                icon: <CloseCircleOutlined />,
+                content: intl.get('global.exportModal.content'),
+                okText: intl.get('global.exportModal.button'),
+              });
+              return;
+            }
             dispatch(
               fetchTsvReport({
                 columnStates: userColumnState,
@@ -430,7 +449,8 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
                     ? sqon
                     : generateSelectionSqon(TAB_IDS.DATA_FILES, selectedKeys),
               }),
-            ),
+            );
+          },
           onColumnSortChange: (newState) =>
             dispatch(
               updateUserConfig({

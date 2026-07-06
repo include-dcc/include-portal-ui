@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { TeamOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import { TABLE_EMPTY_PLACE_HOLDER } from '@ferlab/ui/core/common/constants';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import ProTable from '@ferlab/ui/core/components/ProTable';
@@ -17,7 +17,7 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
-import { Popover, Tag, Tooltip } from 'antd';
+import { Modal, Popover, Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { ArrangerResultsTree } from 'graphql/models';
 import { useParticipants } from 'graphql/participants/actions';
@@ -31,7 +31,7 @@ import {
   Sex,
 } from 'graphql/participants/models';
 import { IStudyEntity } from 'graphql/studies/models';
-import { capitalize } from 'lodash';
+import { capitalize, isEmpty } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
@@ -52,6 +52,7 @@ import AgeCell from 'views/ParticipantEntity/AgeCell';
 import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import DownloadClinicalDataDropdown from 'components/reports/DownloadClinicalDataDropdown';
+import { MAX_ROW_EXPORTED } from 'services/api/arranger/models';
 import { SetType } from 'services/api/savedSet/models';
 import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
@@ -544,7 +545,18 @@ const ParticipantsTab = ({ sqon }: OwnProps) => {
               },
             }),
           ),
-        onTableExportClick: () =>
+        onTableExportClick: () => {
+          const nbRowsToExport =
+            selectedAllResults || isEmpty(selectedKeys) ? results.total : selectedKeys.length;
+          if (nbRowsToExport > MAX_ROW_EXPORTED) {
+            Modal.error({
+              title: intl.get('global.exportModal.title'),
+              icon: <CloseCircleOutlined />,
+              content: intl.get('global.exportModal.content'),
+              okText: intl.get('global.exportModal.button'),
+            });
+            return;
+          }
           dispatch(
             fetchTsvReport({
               columnStates: userColumnState,
@@ -552,7 +564,8 @@ const ParticipantsTab = ({ sqon }: OwnProps) => {
               index: INDEXES.PARTICIPANT,
               sqon: getCurrentSqon(),
             }),
-          ),
+          );
+        },
         onSelectAllResultsChange: setSelectedAllResults,
         onSelectedRowsChange: (keys) => setSelectedKeys(keys),
         extra: [

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ApartmentOutlined } from '@ant-design/icons';
+import { ApartmentOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import RequestBiospecimenButton from '@ferlab/ui/core/components/BiospecimenRequest/RequestBiospecimenButton';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
@@ -16,7 +16,7 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
-import { Tooltip } from 'antd';
+import { Modal, Tooltip } from 'antd';
 import { AxiosRequestConfig } from 'axios';
 import { useBiospecimen } from 'graphql/biospecimens/actions';
 import { IBiospecimenEntity, Status } from 'graphql/biospecimens/models';
@@ -24,6 +24,7 @@ import { INDEXES } from 'graphql/constants';
 import { IParticipantEntity } from 'graphql/participants/models';
 import { IStudyEntity } from 'graphql/studies/models';
 import EnvironmentVariables from 'helpers/EnvVariables';
+import { isEmpty } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import StudyPopoverRedirect from 'views/DataExploration/components/StudyPopoverRedirect';
 import {
@@ -44,6 +45,7 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import DownloadDataButton from 'components/Biospecimens/DownloadDataButton';
 import useApi from 'hooks/useApi';
 import { trackRequestBiospecimen } from 'services/analytics';
+import { MAX_ROW_EXPORTED } from 'services/api/arranger/models';
 import { headers } from 'services/api/reports';
 import { ReportType } from 'services/api/reports/models';
 import { SetType } from 'services/api/savedSet/models';
@@ -420,7 +422,18 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
                 },
               }),
             ),
-          onTableExportClick: () =>
+          onTableExportClick: () => {
+            const nbRowsToExport =
+              selectedAllResults || isEmpty(selectedKeys) ? results.total : selectedKeys.length;
+            if (nbRowsToExport > MAX_ROW_EXPORTED) {
+              Modal.error({
+                title: intl.get('global.exportModal.title'),
+                icon: <CloseCircleOutlined />,
+                content: intl.get('global.exportModal.content'),
+                okText: intl.get('global.exportModal.button'),
+              });
+              return;
+            }
             dispatch(
               fetchTsvReport({
                 columnStates: userColumnState,
@@ -428,7 +441,8 @@ const BioSpecimenTab = ({ sqon }: OwnProps) => {
                 index: INDEXES.BIOSPECIMEN,
                 sqon: getCurrentSqon(),
               }),
-            ),
+            );
+          },
           extra: [
             <RequestBiospecimenButton
               additionalHandleClick={() => trackRequestBiospecimen('open modal')}
