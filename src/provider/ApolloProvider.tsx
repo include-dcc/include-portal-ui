@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useMemo } from 'react';
 import {
   ApolloClient,
   ApolloProvider,
@@ -33,10 +33,14 @@ const getAuthLink = () =>
 const Provider = ({ children }: IProvider): ReactElement => {
   const header = getAuthLink();
 
-  const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-    cache: new InMemoryCache({ addTypename: false }),
-    link: header.concat(arrangerLink),
-  });
+  const client = useMemo<ApolloClient<NormalizedCacheObject>>(
+    () =>
+      new ApolloClient({
+        cache: new InMemoryCache({ addTypename: false }),
+        link: header.concat(arrangerLink),
+      }),
+    [header],
+  );
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
