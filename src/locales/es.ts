@@ -2207,6 +2207,7 @@ const es = {
       files: 'Archivos',
       hpo_term: 'Término HPO',
       hpo_term_tooltip: '# de participantes con este término HPO exacto',
+      interpretation: 'Interpretación',
       maxo_code: 'Intervención (MAxO)',
       measurement: {
         title: 'Medición',
@@ -2220,6 +2221,8 @@ const es = {
       mondo_diagnosis: 'Diagnóstico (MONDO)',
       mondo_term: 'Término MONDO',
       mondo_term_tooltip: '# de participantes con este término MONDO exacto',
+      not_observed: 'No observado',
+      observed: 'Observado',
       other: 'Otro',
       participants: 'Participantes',
       participant_id: 'ID de participante',

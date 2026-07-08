@@ -2,6 +2,7 @@ import intl from 'react-intl-universal';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
+import { Tag } from 'antd';
 import { IParticipantPhenotype } from 'graphql/participants/models';
 import { capitalize } from 'lodash';
 import { extractPhenotypeTitleAndCode } from 'views/DataExploration/utils/helper';
@@ -10,12 +11,14 @@ import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 
 import AgeCell from '../AgeCell';
 import HpoParticipantCount from '../PhenotypeTable/HpoParticipantCount';
+
 const getPhenotypeDefaultColumns = (): ProColumnType[] => [
   {
-    key: 'hpo_phenotype_observed',
+    key: 'hpo_phenotype',
     title: intl.get('entities.participant.phenotype_hpo'),
     render: (phenotype: IParticipantPhenotype) => {
-      const phenotypeNames = phenotype?.hpo_phenotype_observed;
+      const phenotypeNames =
+        phenotype?.hpo_phenotype_observed || phenotype?.hpo_phenotype_not_observed;
       if (!phenotypeNames || phenotypeNames.length === 0) {
         return TABLE_EMPTY_PLACE_HOLDER;
       }
@@ -47,6 +50,19 @@ const getPhenotypeDefaultColumns = (): ProColumnType[] => [
     title: intl.get('entities.participant.source_text'),
     render: (phenotype: IParticipantPhenotype) =>
       phenotype?.source_text ? phenotype.source_text : TABLE_EMPTY_PLACE_HOLDER,
+    width: '30%',
+  },
+  {
+    key: 'interpretation',
+    title: intl.get('entities.participant.interpretation'),
+    render: (phenotype: IParticipantPhenotype) => (
+      <Tag color={phenotype?.is_observed ? 'green' : ''}>
+        {phenotype?.is_observed
+          ? intl.get('entities.participant.observed')
+          : intl.get('entities.participant.not_observed')}
+      </Tag>
+    ),
+    width: '15%',
   },
   {
     key: 'age_at_event_days',
@@ -58,6 +74,7 @@ const getPhenotypeDefaultColumns = (): ProColumnType[] => [
       ) : (
         TABLE_EMPTY_PLACE_HOLDER
       ),
+    width: '10%',
   },
   {
     key: 'hpo_term',
@@ -69,6 +86,7 @@ const getPhenotypeDefaultColumns = (): ProColumnType[] => [
       ) : (
         TABLE_EMPTY_PLACE_HOLDER
       ),
+    width: '10%',
   },
 ];
 

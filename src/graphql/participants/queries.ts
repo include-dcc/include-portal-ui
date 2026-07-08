@@ -246,7 +246,8 @@ export const GET_PARTICIPANT_ENTITY = gql`
                     age_at_event_days
                     fhir_id
                     hpo_phenotype_observed
-                    observed
+                    hpo_phenotype_not_observed
+                    is_observed
                     source_text
                   }
                 }

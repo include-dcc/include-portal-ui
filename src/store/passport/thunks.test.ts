@@ -129,7 +129,7 @@ describe(`${extractMetadata.name}()`, () => {
                           hpo_phenotype_observed_text: 'hpo_phenotype_observed_text',
                           hpo_phenotype_not_observed: 'hpo_phenotype_not_observed',
                           hpo_phenotype_not_observed_text: 'hpo_phenotype_not_observed_text',
-                          observed: false,
+                          is_observed: false,
                         },
                       },
                     ],
