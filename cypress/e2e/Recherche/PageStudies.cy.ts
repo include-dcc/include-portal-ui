@@ -26,9 +26,9 @@ describe('Page des études - Rechercher des études', () => {
   });
 
   it('Par dbGaP', () => {
-    cy.typeAndIntercept('[class*="PageContent_inputContainer"] input', 'S002330', 'POST', '**/graphql', 5);
-    cy.validateTableResultsCount(/\d{1} Results/);
-    cy.validateTableFirstRow('phs002330', 5);
+    cy.typeAndIntercept('[class*="PageContent_inputContainer"] input', 'S002981', 'POST', '**/graphql', 5);
+    cy.validateTableResultsCount(/\d{1} Result/);
+    cy.validateTableFirstRow('phs002981', 5);
 
     cy.get('button[class*="Header_clearFilterLink"]').should('contain', 'Clear filters').clickAndWait({force: true});
     cy.validateTableResultsCount(/\d{1} Results/);

@@ -283,7 +283,11 @@ Cypress.Commands.add('saveBioReqAs', (bioreqName: string, itemPosition: number) 
 
 Cypress.Commands.add('saveFilterAs', (filterName: string) => {
   cy.get('button[class*="Header_iconBtnAction"]').clickAndWait({force: true});
-  cy.get('[class="ant-modal-content"] input').clear().type(filterName);
+  cy.contains(/(Save this|Edit) filter/).filter(':visible').should('exist');
+  cy.wait(500);
+  cy.get('[class="ant-modal-content"] input').clear({force: true});
+  cy.wait(500);
+  cy.get('[class="ant-modal-content"] input').type(filterName);
   cy.get(`[class="ant-modal-content"] input[value="`+filterName+`"]`).should('exist');
   cy.clickAndIntercept('[class="ant-modal-content"] button[class*="ant-btn-primary"]', 'POST', '**/saved-filters', 1);
 

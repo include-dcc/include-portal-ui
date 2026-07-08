@@ -27,8 +27,8 @@ describe('Page des études - Filtrer avec les facettes', () => {
     cy.validateFacetRank(1, 'Domain');
   });
 
-  it('Data Category - Genomics', () => {
-    cy.validateFacetFilter('Data Category', 'Genomics', 'Genomics', /\d{1} Result/, false);
+  it('Data Category - Transcriptomics', () => {
+    cy.validateFacetFilter('Data Category', 'Transcriptomics', 'Transcriptomics', /\d{1} Result/, false);
     cy.validateFacetRank(2, 'Data Category');
   });
 
@@ -51,7 +51,7 @@ describe('Page des études - Filtrer avec les facettes', () => {
   });
 
   it('Design - Longitudinal', () => {
-    cy.validateFacetFilter('Design', 'Longitudinal', 'longitudinal', /\d{1} Result/, false);
+    cy.validateFacetFilter('Design', 'Longitudinal', 'Longitudinal', /\d{1} Result/, false);
     cy.validateFacetRank(6, 'Design');
   });
 

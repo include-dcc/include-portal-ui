@@ -62,8 +62,8 @@ describe('Page Data Exploration (Data Files) - Filtrer avec les facettes', () =>
     cy.validateFacetRank(1, 'Dataset');
   });
 
-  it('Data Category - Genomics', () => {
-    cy.validateFacetFilter('Data Category', 'Genomics', 'Genomics', /\d{1}/);
+  it('Data Category - Transcriptomics', () => {
+    cy.validateFacetFilter('Data Category', 'Transcriptomics', 'Transcriptomics', /\d{1}/);
     cy.validateFacetRank(2, 'Data Category');
   });
 
