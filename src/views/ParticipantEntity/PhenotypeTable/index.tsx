@@ -26,7 +26,14 @@ const PhenotypeTable = ({ participant, loading }: OwnProps) => {
   const dispatch = useDispatch();
 
   const phenotype: IParticipantPhenotype[] =
-    participant?.phenotype?.hits?.edges?.map((e) => ({ key: e.node.fhir_id, ...e.node })) || [];
+    participant?.phenotype?.hits?.edges?.map((e) => ({
+      key: e.node.fhir_id,
+      ...e.node,
+      hpo_phenotype: e.node.hpo_phenotype_observed || e.node.hpo_phenotype_not_observed,
+      interpretation: e.node.is_observed
+        ? intl.get('entities.participant.observed')
+        : intl.get('entities.participant.not_observed'),
+    })) || [];
 
   const phenotypesDefaultColumns = getPhenotypeDefaultColumns();
 

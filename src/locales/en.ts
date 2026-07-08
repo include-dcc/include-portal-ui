@@ -2210,6 +2210,7 @@ const en = {
       files: 'Files',
       hpo_term: 'HPO Term',
       hpo_term_tooltip: '# of participants with this exact HPO term',
+      interpretation: 'Interpretation',
       maxo_code: 'Intervention (MAxO)',
       measurement: {
         title: 'Measurement',
@@ -2223,6 +2224,8 @@ const en = {
       mondo_diagnosis: 'Diagnosis (MONDO)',
       mondo_term: 'MONDO Term',
       mondo_term_tooltip: '# of participants with this exact MONDO term',
+      not_observed: 'Not observed',
+      observed: 'Observed',
       other: 'Other',
       participants: 'Participants',
       participant_id: 'Participant ID',
