@@ -83,7 +83,7 @@ describe('Page d\'un variant - Valider les liens disponibles', () => {
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('DS360-CHD').should('exist');
   });
 
-  it('Lien Participants du panneau INCLUDE Studies', () => {
+  it('Lien Participants du panneau INCLUDE Studies [SJIP-1587]', () => {
     cy.get('[id="frequency"] tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(1).find('a').clickAndWait({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Participant ID').should('exist');

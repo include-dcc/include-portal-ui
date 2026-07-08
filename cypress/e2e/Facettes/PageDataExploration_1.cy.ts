@@ -53,8 +53,8 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.get('[class*="SearchAutocomplete_search"] [class*="ant-tag"]').should('not.exist'); //data-cy="Tag_pt-as0aepqm"
   });
 
-  it('Study Code - DS360-CHD', () => {
-    cy.validateFacetFilter('Study Code', 'DS360-CHD', 'DS360-CHD', /\d{1}/);
+  it('Study Code - HTP', () => {
+    cy.validateFacetFilter('Study Code', 'HTP', 'HTP', /\d{1}/);
     cy.validateFacetRank(0, 'Study Code');
   });
 
@@ -123,7 +123,7 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.validateFacetRank(11, 'Ethnicity');
   });
 
-  it('Vital Status - Alive', () => {
+  it('Vital Status - Alive [SJIP-1588]', () => {
     cy.validateFacetFilter('Vital Status', 'Alive', 'Alive', /\d{1}/);
     cy.validateFacetRank(12, 'Vital Status');
   });

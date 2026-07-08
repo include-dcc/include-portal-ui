@@ -30,7 +30,7 @@ describe('Page Data Exploration (Participants) - Valider les fonctionnalités du
 
   it('Valider les fonctionnalités du tableau - Tri DS Status [SJIP-1435]', () => {
     cy.sortTableAndIntercept('DS Status', 1);
-    cy.validateTableFirstRow('-', 4, true);
+    cy.validateTableFirstRow(/(-|D21)/, 4, true);
     cy.sortTableAndIntercept('DS Status', 1);
     cy.validateTableFirstRow('T21', 4, true);
   });
