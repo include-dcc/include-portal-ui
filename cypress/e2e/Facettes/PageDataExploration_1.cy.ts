@@ -122,9 +122,9 @@ describe('Page Data Exploration (Participants) - Filtrer avec les facettes', () 
     cy.validateFacetFilter('Ethnicity', 'Not Hispanic or Latino', 'Not Hispanic or Latino', /\d{1}/);
     cy.validateFacetRank(11, 'Ethnicity');
   });
-
-  it('Vital Status - Alive [SJIP-1588]', () => {
+  /* No Data
+  it('Vital Status - Alive', () => {
     cy.validateFacetFilter('Vital Status', 'Alive', 'Alive', /\d{1}/);
     cy.validateFacetRank(12, 'Vital Status');
-  });
+  });*/
 });
