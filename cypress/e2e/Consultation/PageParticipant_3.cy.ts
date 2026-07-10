@@ -56,7 +56,7 @@ describe('Page d\'un participant - Valider les liens disponibles', () => {
 
   it('Lien HPO Term du panneau Phenotypes', () => {
     cy.resetColumns('phenotype');
-    cy.get('[id="phenotype"] tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(3).find('[href]').clickAndWait({force: true});
+    cy.get('[id="phenotype"] tr[class*="ant-table-row"]').eq(0).find('td[class="ant-table-cell"]').eq(4).find('[href]').clickAndWait({force: true});
     cy.get('[class*="Participants_participantTabWrapper"]').should('exist'); // data-cy="ProTable_Participants"
     cy.get('[class*="QueryBar_selected"] [class*="QueryPill_field"]').contains('Phenotype (HPO)').should('exist');
     cy.get('[class*="QueryBar_selected"] [class*="QueryValues_value"]').contains('Atrial septal defect (HP:0001631)').should('exist');

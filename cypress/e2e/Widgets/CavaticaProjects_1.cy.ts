@@ -26,7 +26,7 @@ describe('Page Dashboard - Widget Cavatica Projects (déconnecté)', () => {
     cy.get('a[href="https://www.cavatica.org/"]').contains('Read more').should('exist');
   });
 
-  it('Vérifier les informations affichées - Carte [SJIP-1585]', () => {
+  it('Vérifier les informations affichées - Carte', () => {
     cy.get('[class*="DashboardCards_dashboardCard"]').each(($el: JQuery<HTMLElement>) => {
       if ($el.text().includes('Cavatica Projects')) {
         cy.wrap($el).find('[class*="Gridcard_contentWrapper"]').as('gridCard');

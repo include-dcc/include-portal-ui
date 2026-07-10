@@ -20,16 +20,22 @@ describe('Page d\'un participant - Colonnes du tableau Phenotypes', () => {
       .find('th[class*="ant-table-cell"]').eq(1)
       .should('not.have.class', 'ant-table-column-has-sorters')
       .contains('Condition (Source Text)').should('exist');
-
+    
     cy.get('[id="phenotype"]')
       .find('thead[class="ant-table-thead"]')
       .find('th[class*="ant-table-cell"]').eq(2)
+      .should('not.have.class', 'ant-table-column-has-sorters')
+      .contains('Interpretation').should('exist');
+
+    cy.get('[id="phenotype"]')
+      .find('thead[class="ant-table-thead"]')
+      .find('th[class*="ant-table-cell"]').eq(3)
       .should('not.have.class', 'ant-table-column-has-sorters')
       .contains('Age').should('exist');
 
     cy.get('[id="phenotype"]')
       .find('thead[class="ant-table-thead"]')
-      .find('th[class*="ant-table-cell"]').eq(3)
+      .find('th[class*="ant-table-cell"]').eq(4)
       .should('not.have.class', 'ant-table-column-has-sorters')
       .contains('HPO Term').should('exist');
   });
