@@ -7,6 +7,14 @@
 
 ### Technical / Other changes
 -->
+## 2026-07-22 include-portal-ui v1.28.0
+### Features:
+- [SJIP-1530](https://d3b.atlassian.net/browse/SJIP-1530) Feature: [Data Exploration] Add file name to file search box
+### Technical / Other Changes:
+- [SJIP-1448](https://d3b.atlassian.net/browse/SJIP-1448) Fix: [Participant Entity] Missing phenotype HPO values due to non-observed phenotypes
+- [SJIP-1575](https://d3b.atlassian.net/browse/SJIP-1575) Fix: [Summary] Graphs not refreshing on filter change
+- [SJIP-1577](https://d3b.atlassian.net/browse/SJIP-1577) Fix: [UI] Tags misaligned inside filter boxes
+- [SJIP-1581](https://d3b.atlassian.net/browse/SJIP-1581) Fix: [Study Entity] HTP files by data category and files by data type charts incorrectly showing "No data"
 ## 2026-05-26 include-portal-ui v1.27.0
 ### Technical / Other Changes:
 - [SJIP-1539](https://d3b.atlassian.net/browse/SJIP-1539) Refactor: [Study Entity] Make clinical trial intervention a list instead of a single value
