@@ -31,11 +31,6 @@ export type TUser = {
   newsletter_subscription_status?: string;
 };
 
-export type TProfileImagePresignedOutput = {
-  s3Key: string;
-  presignUrl: string;
-};
-
 export type TUserTableConfig = {
   columns?: TColumnStates;
   viewPerQuery?: PaginationViewPerQuery;
