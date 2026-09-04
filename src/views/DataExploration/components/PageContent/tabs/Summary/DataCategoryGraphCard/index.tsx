@@ -9,6 +9,7 @@ import {
   formatAggregationChartData,
 } from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
 import { INDEXES } from 'graphql/constants';
+import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 import { DATA_CATEGORY_QUERY } from 'graphql/summary/queries';
 import { isEmpty } from 'lodash';
 import { ARRANGER_API_PROJECT_URL } from 'provider/ApolloProvider';
@@ -19,7 +20,6 @@ import { truncateString } from 'utils/string';
 import { getResizableGridDictionary } from 'utils/translation';
 
 import { DATA_CATEGORY_GRAPH_CARD_ID, UID } from '../utils/grid';
-import useFileResolvedSqon from 'graphql/files/useFileResolvedSqon';
 
 const addToQuery = (field: string, key: string) =>
   updateActiveQueryField({
@@ -46,7 +46,7 @@ const DataCategoryGraphCard = () => {
     result?.data?.file?.hits?.total,
   )
     .slice(0, 10)
-    .reverse()
+    .reverse();
 
   return (
     <ResizableGridCard

@@ -8,6 +8,7 @@ import {
   aggregationToChartData,
   formatAggregationChartData,
 } from '@ferlab/ui/core/layout/ResizableGridLayout/utils';
+import useBiospecimenResolvedSqon from 'graphql/biospecimens/useBiospecimenResolvedSqon';
 import { INDEXES } from 'graphql/constants';
 import { SAMPLE_TYPE_QUERY } from 'graphql/summary/queries';
 import { isEmpty } from 'lodash';
@@ -19,7 +20,6 @@ import { truncateString } from 'utils/string';
 import { getResizableGridDictionary } from 'utils/translation';
 
 import { SAMPLE_TYPE, UID } from '../utils/grid';
-import useBiospecimenResolvedSqon from 'graphql/biospecimens/useBiospecimenResolvedSqon';
 
 const addToQuery = (field: string, key: string) =>
   updateActiveQueryField({
@@ -47,7 +47,7 @@ const SampleTypeGraphCard = () => {
     result?.data?.biospecimen?.hits?.total,
   )
     .slice(0, 10)
-    .reverse()
+    .reverse();
 
   return (
     <ResizableGridCard
