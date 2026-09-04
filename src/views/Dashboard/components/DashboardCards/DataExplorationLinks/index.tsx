@@ -23,7 +23,7 @@ const formatStorage = (storage: string | undefined): string => {
     return '';
   }
   const [strNumber = '', unit = ''] = storage.split(' ');
-  const wholeStrNumber = strNumber.split(".")[0] || ''
+  const wholeStrNumber = strNumber.split('.')[0] || '';
   return `${wholeStrNumber}${unit}`;
 };
 
