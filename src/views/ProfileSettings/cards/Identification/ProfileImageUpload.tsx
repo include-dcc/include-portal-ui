@@ -1,7 +1,6 @@
 import { Fragment, useState } from 'react';
 import intl from 'react-intl-universal';
-import { Button, Modal, Space, Typography, Upload } from 'antd';
-import ImgCrop from 'antd-img-crop';
+import { Button, Modal, Space, Typography } from 'antd';
 
 import UserAvatar from 'components/UserAvatar';
 import { useAppDispatch } from 'store';
@@ -30,13 +29,6 @@ const ProfileImageUpload = () => {
     <Fragment>
       <Space direction="vertical" align="center">
         <UserAvatar imageKey={userInfo?.profile_image_key} size={120} />
-        <ImgCrop
-          rotationSlider
-          modalOk={intl.get('global.save')}
-          modalTitle={intl.get('screen.profileSettings.cards.identification.editPhotoModalTitle')}
-        >
-          <Upload showUploadList={false} maxCount={1}></Upload>
-        </ImgCrop>
         {userInfo?.profile_image_key && (
           <Button
             size="small"

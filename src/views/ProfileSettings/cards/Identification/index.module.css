@@ -12,11 +12,6 @@
   width: 100%;
 }
 
-.profileImageUpload :global(.ant-space-item):first-child {
-  display: flex;
-  justify-content: center;
-}
-
 .deleteMessage {
   text-align: center;
 }

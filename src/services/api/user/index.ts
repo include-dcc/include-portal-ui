@@ -8,8 +8,8 @@ import { TNewsletterSubscribe, TUser, TUserUpdate } from './models';
 export const USER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/user`;
 export const NEWSLETTER_API_URL = `${EnvironmentVariables.configFor('USERS_API')}/newsletter`;
 
-export const headers = (contentType: string = 'application/json') => ({
-  'Content-Type': contentType,
+export const headers = () => ({
+  'Content-Type': 'application/json',
 });
 
 const fetch = () =>

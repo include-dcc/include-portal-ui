@@ -425,13 +425,10 @@ const fr = {
           publicEmail: 'Public Email',
           publicEmailNotice:
             'This email will be displayed on your profile page and accessible to all logged-in users of the portal.',
-          editPhotoModalTitle: 'Edit photo',
-          uploadImageError: 'Unable to upload your image at the moment',
           removePhotoModalTitle: 'Remove profile photo?',
           removePhotoModalButton: 'Yes remove photo',
           removePhotoModalMessage:
             'Are you sure you want to remove your photo? We will replace it with a default avatar.',
-          uploadPhotoButton: 'Upload photo',
           removePhotoButton: 'Remove photo',
         },
         roleAffiliation: {
