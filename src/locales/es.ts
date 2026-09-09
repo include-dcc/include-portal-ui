@@ -644,13 +644,10 @@ const es = {
           publicEmail: 'Correo electrónico público',
           publicEmailNotice:
             'Este correo electrónico se mostrará en tu página de perfil y será accesible para todos los usuarios registrados del portal.',
-          editPhotoModalTitle: 'Editar foto',
-          uploadImageError: 'No se pudo cargar tu imagen en este momento',
           removePhotoModalTitle: '¿Eliminar foto de perfil?',
           removePhotoModalButton: 'Sí, eliminar foto',
           removePhotoModalMessage:
             '¿Estás seguro de que quieres eliminar tu foto? La reemplazaremos por un avatar predeterminado.',
-          uploadPhotoButton: 'Subir foto',
           removePhotoButton: 'Eliminar foto',
         },
         roleAffiliation: {
