@@ -2,6 +2,10 @@
   "name": "include-portal-ui",
   "version": "1.28.0",
   "private": true,
+  "engines": {
+    "node": ">=22 <24",
+    "npm": ">=10 <12"
+  },
   "overrides": {
     "glob": "^11.0.0"
   },
