@@ -3,6 +3,7 @@ name: 'Quality'
 on:
     pull_request:
         branches:
+            - dev
             - main
 
 permissions:
@@ -22,9 +23,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
       - uses: ArtiomTr/jest-coverage-report-action@v2
         id: coverage
         with:

@@ -2,7 +2,7 @@
 
 ## Pre-requisites
 
-- Node 22 (matches CI/Netlify — see `NODE_VERSION` in the Netlify environment)
+- Node 22 — the exact version is pinned in `.nvmrc`, which CI and Netlify both read
 - Docker
 
 ## Get Started
