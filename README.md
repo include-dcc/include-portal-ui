@@ -2,7 +2,7 @@
 
 ## Pre-requisites
 
-- Node 22 — the exact version is pinned in `.nvmrc`, which CI and Netlify both read
+- Node 26 — the exact version is pinned in `.nvmrc`, which CI and Netlify both read
 - Docker
 
 ## Get Started

@@ -3,7 +3,7 @@
   "version": "1.28.0",
   "private": true,
   "engines": {
-    "node": ">=22 <24",
+    "node": ">=26 <28",
     "npm": ">=10 <12"
   },
   "overrides": {
