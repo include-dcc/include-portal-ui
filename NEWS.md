@@ -7,6 +7,13 @@
 
 ### Technical / Other changes
 -->
+## 2026-10-27 include-portal-ui v1.29.0
+### Technical / Other Changes:
+- [SJIP-1585](https://d3b.atlassian.net/browse/SJIP-1585) Fix: [Cavatica] Cavatica widget error appearing
+- [SJIP-1597](https://d3b.atlassian.net/browse/SJIP-1597) Issue: [ETL] Missing data category for files using the expected_data_category code system
+- [SJIP-1607](https://d3b.atlassian.net/browse/SJIP-1607) Fix: [Cypress] Download tests failing
+- [SJIP-1608](https://d3b.atlassian.net/browse/SJIP-1608) Refactor: [Dependencies] Upgrade dependencies
+- [SJIP-1615](https://d3b.atlassian.net/browse/SJIP-1615) Refactor: [Dependencies] Upgrade Node.js version
 ## 2026-07-22 include-portal-ui v1.28.0
 ### Features:
 - [SJIP-1530](https://d3b.atlassian.net/browse/SJIP-1530) Feature: [Data Exploration] Add file name to file search box
