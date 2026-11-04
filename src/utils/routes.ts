@@ -20,7 +20,6 @@ export enum STATIC_ROUTES {
   FILES = '/files',
   PARTICIPANTS = '/participants',
 
-  DCF_FENCE_REDIRECT = '/dcf_redirect',
   CAVATICA_FENCE_REDIRECT = '/cavatica_redirect',
 
   ANALYTICS = '/analytics',

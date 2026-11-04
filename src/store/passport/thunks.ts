@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal';
-import { FENCE_AUTHENTIFICATION_STATUS } from '@ferlab/ui/core/components/Widgets/AuthorizedStudies';
+import { IAuthorizedStudy } from '@ferlab/ui/core/components/Widgets/AuthorizedStudies';
 import { PASSPORT } from '@ferlab/ui/core/components/Widgets/Cavatica';
 import {
   CAVATICA_TYPE,
@@ -15,13 +15,14 @@ import { termToSqon } from '@ferlab/ui/core/data/sqon/utils';
 import { ISort } from '@ferlab/ui/core/graphql/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IFileEntity, IFileResultTree } from 'graphql/files/models';
-import { SEARCH_FILES_QUERY } from 'graphql/files/queries';
+import { buildFileTotalQuery, SEARCH_FILES_QUERY } from 'graphql/files/queries';
 import { hydrateResults } from 'graphql/models';
+import { IStudyResultTree } from 'graphql/studies/models';
+import { GET_STUDIES_BY_EXTERNAL_IDS } from 'graphql/studies/queries';
 import EnvironmentVariables from 'helpers/EnvVariables';
 import { isEmpty } from 'lodash';
 import { CAVATICA_FILE_BATCH_SIZE } from 'views/DataExploration/utils/constant';
 
-import { FENCE_NAMES } from 'common/fenceTypes';
 import { ArrangerApi } from 'services/api/arranger';
 import { CavaticaApi } from 'services/api/cavatica';
 import {
@@ -34,7 +35,8 @@ import { FenceApi } from 'services/api/fence';
 import { globalActions } from 'store/global';
 import { RootState } from 'store/types';
 import { handleThunkApiResponse } from 'store/utils';
-import { userHasAccessToFile } from 'utils/dataFiles';
+import { buildAuthorizedAcl, extractConsentCodes, extractStudyAccessions } from 'utils/cavatica';
+import { isFileUnlocked } from 'utils/dataFiles';
 import { chunkIt } from 'utils/helper';
 
 import { extractMetadata } from './metadata';
@@ -55,6 +57,8 @@ export const fetchCavaticaAuthentificationStatus = createAsyncThunk<
 
   let acl: string[] = [];
   if (data?.authenticated) {
+    // Not dead: key-manager refreshes the Cavatica token on this call, before the parallel
+    // Cavatica calls that follow (its refresh isn't single-flight).
     const { data } = await FenceApi.fetchAcls(PASSPORT.cavatica);
     acl = data?.acl || [];
   }
@@ -122,6 +126,101 @@ export const connectCavaticaPassport = createAsyncThunk<
       reject('nothing');
     }, TEN_MINUTES_IN_MS);
   });
+});
+
+const MAX_AUTHORIZED_STUDIES = 100;
+
+type TFileTotal = { hits: { total: number } };
+
+const studyFilter = (studyCode: string, acl?: string[]): ISqonGroupFilter => ({
+  op: BooleanOperators.and,
+  content: [
+    termToSqon({ field: 'study.study_code', value: [studyCode] }),
+    ...(acl ? [termToSqon({ field: 'acl', value: acl })] : []),
+  ],
+});
+
+// One aliased file query per sqon: { f0: sqon0, f1: sqon1, ... }
+const toAliasedVariables = (sqons: ISqonGroupFilter[]) =>
+  Object.fromEntries(sqons.map((sqon, index) => [`f${index}`, sqon]));
+
+export const fetchCavaticaAuthorizedStudies = createAsyncThunk<
+  { studies: IAuthorizedStudy[] },
+  void,
+  { rejectValue: string }
+>('passport/cavatica/fetch/authorizedStudies', async (_, thunkAPI) => {
+  const { data: accessData, error: accessError } = await CavaticaApi.fetchAccessIds();
+  if (accessError) {
+    return thunkAPI.rejectWithValue(accessError.message);
+  }
+
+  const accessions = extractStudyAccessions(accessData);
+  if (!accessions.length) {
+    return { studies: [] };
+  }
+
+  const { data: studiesData, error: studiesError } = await ArrangerApi.graphqlRequest<{
+    data?: IStudyResultTree;
+    errors?: unknown[];
+  }>({
+    query: GET_STUDIES_BY_EXTERNAL_IDS.loc?.source.body,
+    variables: {
+      sqon: {
+        op: BooleanOperators.and,
+        content: [termToSqon({ field: 'external_ids', value: accessions })],
+      },
+      first: MAX_AUTHORIZED_STUDIES,
+    },
+  });
+  if (studiesError || studiesData?.errors) {
+    return thunkAPI.rejectWithValue(studiesError?.message ?? 'Failed to fetch authorized studies');
+  }
+
+  const studies = hydrateResults(studiesData?.data?.study.hits.edges || []);
+  if (!studies.length) {
+    return { studies: [] };
+  }
+
+  // Two counts per study: all its files (s2i), and the authorized ones (s2i+1).
+  // A file can carry several acl values: count files, never sum acl buckets.
+  const consentCodes = extractConsentCodes(accessData);
+  const matchedStudies = studies.map((study) => {
+    const studyAccessions = (study.external_ids ?? []).filter((id) => accessions.includes(id));
+    return {
+      study,
+      authorizedAcl: buildAuthorizedAcl(consentCodes, studyAccessions, study.study_id),
+    };
+  });
+  const { data: countsData, error: countsError } = await ArrangerApi.graphqlRequest<{
+    data?: Record<string, TFileTotal>;
+    errors?: unknown[];
+  }>({
+    query: buildFileTotalQuery(matchedStudies.length * 2),
+    variables: toAliasedVariables(
+      matchedStudies.flatMap(({ study, authorizedAcl }) => [
+        studyFilter(study.study_code),
+        studyFilter(study.study_code, authorizedAcl),
+      ]),
+    ),
+  });
+  if (countsError || countsData?.errors) {
+    return thunkAPI.rejectWithValue('Failed to fetch authorized studies file counts');
+  }
+
+  const total = (alias: number) => countsData?.data?.[`s${alias}`]?.hits.total ?? 0;
+  return {
+    studies: matchedStudies.map(({ study, authorizedAcl }, index) => ({
+      study_id: study.study_id,
+      study_code: study.study_code,
+      title: study.study_name,
+      // The widget shows it and uses it as the authorized link's acl filter
+      user_acl_in_study: authorizedAcl,
+      total_files_count: total(index * 2),
+      total_authorized_files_count: total(index * 2 + 1),
+      // Not shown by the widget
+      authorized_controlled_files_count: total(index * 2 + 1),
+    })),
+  };
 });
 
 export const fetchCavaticaProjects = createAsyncThunk<
@@ -230,15 +329,7 @@ export const beginCavaticaAnalyse = createAsyncThunk<
     return thunkAPI.rejectWithValue(CAVATICA_ANALYSE_STATUS.upload_limit_reached);
   }
 
-  const { fences, passport } = thunkAPI.getState();
-  let acls: string[] = [];
-
-  for (const fenceKey in fences) {
-    const key = fenceKey as FENCE_NAMES;
-    if (fences[key].acl !== undefined) {
-      acls = [...acls, ...fences[key].acl];
-    }
-  }
+  const { passport } = thunkAPI.getState();
 
   const sqon: ISqonGroupFilter = {
     op: BooleanOperators.and,
@@ -267,11 +358,9 @@ export const beginCavaticaAnalyse = createAsyncThunk<
   const files = hydrateResults(data?.data?.file?.hits?.edges || []);
 
   const authorizedFiles = files.filter((file) =>
-    userHasAccessToFile(
+    isFileUnlocked(
       file,
-      acls,
       passport.cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected,
-      fences.dcf.status === FENCE_AUTHENTIFICATION_STATUS.connected,
     ),
   );
 

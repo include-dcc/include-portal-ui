@@ -1,3 +1,4 @@
+import { IAuthorizedStudy } from '@ferlab/ui/core/components/Widgets/AuthorizedStudies';
 import {
   CAVATICA_ANALYSE_STATUS,
   PASSPORT_AUTHENTIFICATION_STATUS,
@@ -22,6 +23,11 @@ export type InitialState = {
       data: ICavaticaBillingGroup[];
       loading: boolean;
       error?: any;
+    };
+    authorizedStudies: {
+      studies: IAuthorizedStudy[];
+      loading: boolean;
+      error: boolean;
     };
     bulkImportData: {
       loading: boolean;

@@ -1,7 +1,19 @@
-import { IFileEntity } from 'graphql/files/models';
+import {
+  CAVATICA_ANALYSE_STATUS,
+  PASSPORT_AUTHENTIFICATION_STATUS,
+} from '@ferlab/ui/core/components/Widgets/Cavatica/type';
+import { BooleanOperators } from '@ferlab/ui/core/data/sqon/operators';
+import { FileAccessType, IFileEntity } from 'graphql/files/models';
 import { FamilyType, Sex } from 'graphql/participants/models';
 
+import { ArrangerApi } from 'services/api/arranger';
+import { CavaticaApi } from 'services/api/cavatica';
+
 import { extractMetadata } from './metadata';
+import { beginCavaticaAnalyse, fetchCavaticaAuthorizedStudies } from './thunks';
+
+jest.mock('services/api/cavatica');
+jest.mock('services/api/arranger');
 
 describe(`${extractMetadata.name}()`, () => {
   test('should handle edge case', () => {
@@ -305,5 +317,246 @@ describe(`${extractMetadata.name}()`, () => {
     };
 
     expect(extractMetadata(file)).toEqual(expectedMetaData);
+  });
+});
+
+describe(`${fetchCavaticaAuthorizedStudies.typePrefix}`, () => {
+  const fetchAccessIds = CavaticaApi.fetchAccessIds as jest.Mock;
+  const graphqlRequest = ArrangerApi.graphqlRequest as jest.Mock;
+
+  const run = () => fetchCavaticaAuthorizedStudies()(jest.fn(), jest.fn(), undefined);
+
+  const studiesResponse = (nodes: object[]) => ({
+    data: { data: { study: { hits: { edges: nodes.map((node) => ({ node })) } } } },
+  });
+  // Totals in alias order: [study0 total, study0 authorized, study1 total, ...]
+  const countsResponse = (...totals: number[]) => ({
+    data: {
+      data: Object.fromEntries(totals.map((total, index) => [`s${index}`, { hits: { total } }])),
+    },
+  });
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  test('should return no study without querying arranger when Cavatica returns no access', async () => {
+    fetchAccessIds.mockResolvedValue({ data: { access_ids: [] } });
+
+    const action = await run();
+
+    expect(action.payload).toEqual({ studies: [] });
+    expect(graphqlRequest).not.toHaveBeenCalled();
+  });
+
+  test('should count all and authorized files of a study matched by two accessions', async () => {
+    fetchAccessIds.mockResolvedValue({
+      data: { access_ids: [' phs002330.c1', 'phs002981.v1.p1', 'phs999999.c1'] },
+    });
+    graphqlRequest
+      .mockResolvedValueOnce(
+        studiesResponse([
+          {
+            study_id: 'HTP',
+            study_code: 'HTP',
+            study_name: 'The Human Trisome Project',
+            external_ids: ['phs002981', 'phs002330'],
+          },
+        ]),
+      )
+      .mockResolvedValueOnce(countsResponse(22409, 15105));
+
+    const action = await run();
+
+    expect(action.payload).toEqual({
+      studies: [
+        {
+          study_id: 'HTP',
+          study_code: 'HTP',
+          title: 'The Human Trisome Project',
+          user_acl_in_study: ['phs002330.c1', 'HTP', 'open_access'],
+          total_files_count: 22409,
+          total_authorized_files_count: 15105,
+          authorized_controlled_files_count: 15105,
+        },
+      ],
+    });
+    expect(graphqlRequest.mock.calls[0][0].variables.sqon.content[0].content).toEqual({
+      field: 'external_ids',
+      value: ['phs002330', 'phs002981', 'phs999999'],
+    });
+    const { variables } = graphqlRequest.mock.calls[1][0];
+    expect(variables.f0.content).toHaveLength(1);
+    expect(variables.f0.content[0].content).toEqual({ field: 'study.study_code', value: ['HTP'] });
+    expect(variables.f1.content[1].content).toEqual({
+      field: 'acl',
+      value: ['phs002330.c1', 'HTP', 'open_access'],
+    });
+  });
+
+  test('should fetch every count in one call, two aliases per study in study order', async () => {
+    fetchAccessIds.mockResolvedValue({
+      data: { access_ids: ['phs002982.c1', 'phs004098.c999'] },
+    });
+    graphqlRequest
+      .mockResolvedValueOnce(
+        studiesResponse([
+          {
+            study_id: 'X01-deSmith',
+            study_code: 'X01-deSmith',
+            study_name: 'deSmith',
+            external_ids: ['phs002982'],
+          },
+          {
+            study_id: 'DS-HPBM',
+            study_code: 'DS-HPBM',
+            study_name: 'HPBM',
+            external_ids: ['phs004098'],
+          },
+        ]),
+      )
+      .mockResolvedValueOnce(countsResponse(1308, 0, 5480, 5480));
+
+    const action = await run();
+
+    expect(graphqlRequest).toHaveBeenCalledTimes(2);
+    const { query, variables } = graphqlRequest.mock.calls[1][0];
+    expect(query).toContain('s3: file');
+    expect(variables.f2.content[0].content.value).toEqual(['DS-HPBM']);
+    expect(variables.f3.content[1].content.value).toEqual([
+      'phs004098.c999',
+      'DS-HPBM',
+      'open_access',
+    ]);
+    expect(
+      (
+        action.payload as {
+          studies: {
+            study_code: string;
+            total_authorized_files_count: number;
+            total_files_count: number;
+          }[];
+        }
+      ).studies.map((study) => [
+        study.study_code,
+        study.total_authorized_files_count,
+        study.total_files_count,
+      ]),
+    ).toEqual([
+      ['X01-deSmith', 0, 1308],
+      ['DS-HPBM', 5480, 5480],
+    ]);
+  });
+
+  test('should skip the file counts call when no study matches', async () => {
+    fetchAccessIds.mockResolvedValue({ data: { access_ids: ['phs999999.c1'] } });
+    graphqlRequest.mockResolvedValueOnce(studiesResponse([]));
+
+    const action = await run();
+
+    expect(action.payload).toEqual({ studies: [] });
+    expect(graphqlRequest).toHaveBeenCalledTimes(1);
+  });
+
+  test('should reject when Cavatica fails', async () => {
+    fetchAccessIds.mockResolvedValue({ error: { message: 'Request failed with status code 401' } });
+
+    const action = await run();
+
+    expect(action.type).toBe(fetchCavaticaAuthorizedStudies.rejected.type);
+    expect(graphqlRequest).not.toHaveBeenCalled();
+  });
+
+  test('should reject when arranger answers with GraphQL errors', async () => {
+    fetchAccessIds.mockResolvedValue({ data: { access_ids: ['phs002982.c1'] } });
+    graphqlRequest.mockResolvedValueOnce({ data: { errors: [{ message: 'boom' }] } });
+
+    const action = await run();
+
+    expect(action.type).toBe(fetchCavaticaAuthorizedStudies.rejected.type);
+  });
+
+  test('should reject when a file count query fails', async () => {
+    fetchAccessIds.mockResolvedValue({ data: { access_ids: ['phs002982.c1'] } });
+    graphqlRequest
+      .mockResolvedValueOnce(
+        studiesResponse([
+          {
+            study_id: 'X01-deSmith',
+            study_code: 'X01-deSmith',
+            study_name: 'deSmith',
+            external_ids: ['phs002982'],
+          },
+        ]),
+      )
+      .mockResolvedValueOnce({ error: { message: 'Network Error' } });
+
+    const action = await run();
+
+    expect(action.type).toBe(fetchCavaticaAuthorizedStudies.rejected.type);
+  });
+});
+
+describe(`${beginCavaticaAnalyse.typePrefix}`, () => {
+  const graphqlRequest = ArrangerApi.graphqlRequest as jest.Mock;
+
+  const file = (file_id: string, access_urls: string) => ({
+    file_id,
+    access_urls,
+    acl: ['phs002330.c1'],
+    controlled_access: FileAccessType.CONTROLLED,
+    study: { study_code: 'HTP' },
+  });
+  const getState = () => ({
+    passport: {
+      cavatica: { authentification: { status: PASSPORT_AUTHENTIFICATION_STATUS.connected } },
+    },
+  });
+  const run = () =>
+    beginCavaticaAnalyse({
+      sqon: { op: BooleanOperators.and, content: [] },
+      sort: [],
+      fileIds: [],
+    })(jest.fn(), getState as any, undefined);
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  test('should authorize Controlled files on the Cavatica DRS host without DCF', async () => {
+    graphqlRequest.mockResolvedValue({
+      data: {
+        data: {
+          file: {
+            hits: {
+              edges: [
+                { node: file('cavatica', 'drs://cavatica-ga4gh-api.sbgenomics.com/abc') },
+                { node: file('other', 'drs://other-host.org/abc') },
+              ],
+            },
+          },
+        },
+      },
+    });
+
+    const action = await run();
+
+    expect(
+      (action.payload as { authorizedFiles: IFileEntity[] }).authorizedFiles.map(
+        ({ file_id }) => file_id,
+      ),
+    ).toEqual(['cavatica']);
+  });
+
+  test('should reject a Controlled file on another host even with DCF connected', async () => {
+    graphqlRequest.mockResolvedValue({
+      data: {
+        data: { file: { hits: { edges: [{ node: file('other', 'drs://other-host.org/abc') }] } } },
+      },
+    });
+
+    const action = await run();
+
+    expect(action.payload).toBe(CAVATICA_ANALYSE_STATUS.unauthorize);
   });
 });

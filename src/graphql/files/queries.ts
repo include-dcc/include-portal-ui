@@ -223,6 +223,17 @@ export const GET_FILE_COUNT = gql`
   }
 `;
 
+// One aliased file total per sqon: s<i> filtered by $f<i>
+export const buildFileTotalQuery = (sqonCount: number) => {
+  const indexes = Array.from({ length: sqonCount }, (_, index) => index);
+  const params = indexes.map((index) => `$f${index}: JSON`).join(', ');
+  const fields = indexes
+    .map((index) => `\n    s${index}: file { hits(filters: $f${index}) { total } }`)
+    .join('');
+
+  return `query getFileTotal(${params}) {${fields}\n  }`;
+};
+
 export const CHECK_FILE_MATCH = gql`
   query fetchMatchFile($sqon: JSON, $first: Int, $offset: Int) {
     file {

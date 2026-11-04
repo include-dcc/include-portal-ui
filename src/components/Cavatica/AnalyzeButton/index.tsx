@@ -17,7 +17,6 @@ import { CAVATICA_FILE_BATCH_SIZE } from 'views/DataExploration/utils/constant';
 import { trackCavaticaAction } from 'services/analytics';
 import { CavaticaApi } from 'services/api/cavatica';
 import { ICavaticaCreateProjectBody } from 'services/api/cavatica/models';
-import { fetchAllFencesAuthentificationStatus } from 'store/fences/thunks';
 import { useCavaticaPassport } from 'store/passport';
 import { passportActions } from 'store/passport/slice';
 import {
@@ -66,10 +65,6 @@ const CavaticaAnalyzeButton: React.FC<OwnProps> = ({
       ),
     [dispatch, fileIds, sqon, sort],
   );
-
-  useEffect(() => {
-    dispatch(fetchAllFencesAuthentificationStatus());
-  }, [dispatch]);
 
   useEffect(() => {
     if (

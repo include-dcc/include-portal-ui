@@ -1,40 +1,21 @@
 import { FileAccessType, IFileEntity } from 'graphql/files/models';
-import { cloneDeep, intersection } from 'lodash';
 
 const STUDIES_CONTROLLED_AS_REGISTERED_RULES = ['X01-Hakonarson', 'X01-deSmith'];
 
-export const userHasAccessToFile = (
-  file: IFileEntity,
-  userAcls: string[],
-  isConnectedToCavatica: boolean = false,
-  isConnectedToDcf: boolean = false,
-) => {
-  if (!isConnectedToDcf && !isConnectedToCavatica) {
+// UI hint only: Cavatica enforces the real access
+export const isFileUnlocked = (file: IFileEntity, isConnectedToCavatica: boolean = false) => {
+  if (!isConnectedToCavatica) {
     return false;
   }
 
-  // @see https://d3b.atlassian.net/browse/SJIP-932
-  const fileAccess = cloneDeep(file);
+  // Remapped to Registered, @see https://d3b.atlassian.net/browse/SJIP-932
   if (
-    STUDIES_CONTROLLED_AS_REGISTERED_RULES.includes(fileAccess.study.study_code) ||
-    fileAccess.access_urls?.startsWith('drs://cavatica-ga4gh-api.sbgenomics.com/') ||
-    fileAccess.access_urls?.startsWith('drs://nci-crdc.datacommons.io/')
+    STUDIES_CONTROLLED_AS_REGISTERED_RULES.includes(file.study.study_code) ||
+    file.access_urls?.startsWith('drs://cavatica-ga4gh-api.sbgenomics.com/') ||
+    file.access_urls?.startsWith('drs://nci-crdc.datacommons.io/')
   ) {
-    fileAccess.controlled_access = FileAccessType.REGISTERED;
+    return true;
   }
 
-  if (fileAccess.controlled_access === FileAccessType.CONTROLLED && !isConnectedToDcf) {
-    return false;
-  }
-
-  if (fileAccess.controlled_access === FileAccessType.REGISTERED && !isConnectedToCavatica) {
-    return false;
-  }
-
-  return (
-    !fileAccess.acl ||
-    fileAccess.acl.length === 0 ||
-    intersection(userAcls, fileAccess.acl).length > 0 ||
-    fileAccess.controlled_access === FileAccessType.REGISTERED
-  );
+  return file.controlled_access === FileAccessType.REGISTERED;
 };
