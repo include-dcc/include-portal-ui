@@ -8,7 +8,6 @@ import storage from 'redux-persist/lib/storage';
 import createFilter from 'redux-persist-transform-filter';
 
 import AnalyticsReducer from 'store/analytics';
-import FencesReducer from 'store/fences';
 import GlobalReducer from 'store/global';
 import PassportReducer from 'store/passport';
 import RemoteReducer from 'store/remote';
@@ -32,7 +31,6 @@ const rootReducer = combineReducers({
   global: GlobalReducer,
   user: UserReducer,
   report: ReportReducer,
-  fences: FencesReducer,
   passport: PassportReducer,
   savedFilter: SavedFilterReducer,
   savedSet: SavedSetReducer,

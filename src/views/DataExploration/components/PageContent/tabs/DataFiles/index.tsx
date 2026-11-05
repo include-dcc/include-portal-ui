@@ -16,7 +16,6 @@ import { resetSearchAfterQueryConfig, tieBreaker } from '@ferlab/ui/core/compone
 import useQueryBuilderState, {
   addQuery,
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import { FENCE_AUTHENTIFICATION_STATUS } from '@ferlab/ui/core/components/Widgets/AuthorizedStudies';
 import { PASSPORT_AUTHENTIFICATION_STATUS } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
@@ -44,17 +43,15 @@ import { generateSelectionSqon } from 'views/DataExploration/utils/selectionSqon
 import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import { MAX_ITEMS_QUERY, TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
-import { FENCE_NAMES } from 'common/fenceTypes';
 import CavaticaAnalyzeButton from 'components/Cavatica/AnalyzeButton';
 import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
 import { MAX_ROW_EXPORTED } from 'services/api/arranger/models';
 import { SetType } from 'services/api/savedSet/models';
-import { useAllFencesAcl, useFenceAuthentification } from 'store/fences';
 import { useCavaticaPassport } from 'store/passport';
 import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
-import { userHasAccessToFile } from 'utils/dataFiles';
+import { isFileUnlocked } from 'utils/dataFiles';
 import { formatFileSize } from 'utils/formatFileSize';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -67,11 +64,7 @@ interface OwnProps {
   sqon?: ISqonGroupFilter;
 }
 
-const getDefaultColumns = (
-  fenceAcls: string[],
-  isConnectedToCavatica: boolean,
-  isConnectedToDcf: boolean,
-): ProColumnType<any>[] => [
+const getDefaultColumns = (isConnectedToCavatica: boolean): ProColumnType<any>[] => [
   {
     key: 'lock',
     tooltip: intl.get('entities.file.fileAuthorization'),
@@ -103,12 +96,7 @@ const getDefaultColumns = (
         );
       }
 
-      const hasAccess = userHasAccessToFile(
-        record,
-        fenceAcls,
-        isConnectedToCavatica,
-        isConnectedToDcf,
-      );
+      const hasAccess = isFileUnlocked(record, isConnectedToCavatica);
 
       return hasAccess ? (
         <Tooltip title="Authorized">
@@ -308,9 +296,7 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
-  const dcf = useFenceAuthentification(FENCE_NAMES.dcf);
   const cavatica = useCavaticaPassport();
-  const fencesAllAcls = useAllFencesAcl();
   const [selectedAllResults, setSelectedAllResults] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [selectedRows, setSelectedRows] = useState<ITableFileEntity[]>([]);
@@ -386,9 +372,7 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
     (selectedAllResults && results.total > MAX_ITEMS_QUERY);
 
   const datafilesColumns = getDefaultColumns(
-    fencesAllAcls,
     cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected,
-    dcf.status === FENCE_AUTHENTIFICATION_STATUS.connected,
   );
   const userColumnState = sanitizeUserColumnState(
     userInfo?.config.data_exploration?.tables?.datafiles?.columns,

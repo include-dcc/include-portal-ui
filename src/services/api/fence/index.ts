@@ -1,29 +1,13 @@
 import { PASSPORT } from '@ferlab/ui/core/components/Widgets/Cavatica';
 import EnvironmentVariables from 'helpers/EnvVariables';
-import { ARRANGER_API } from 'provider/ApolloProvider';
-
-import { FENCE_NAMES } from 'common/fenceTypes';
-import { IAuthorizedStudiesFetchParams } from 'store/fences/types';
 
 import { sendRequest } from '..';
 
-import {
-  IAuthorizedStudiesPayload,
-  IFenceAclsPayload,
-  IFenceAuthPayload,
-  IFenceInfo,
-} from './models';
+import { IFenceAclsPayload, IFenceAuthPayload, IFenceInfo } from './models';
 
 const FENCE_API_URL = EnvironmentVariables.configFor('FENCE_API_URL');
 
-type TApiFence = FENCE_NAMES | PASSPORT;
-
-const fetchAuthorizedStudies = (params: IAuthorizedStudiesFetchParams) =>
-  sendRequest<IAuthorizedStudiesPayload>({
-    method: 'POST',
-    url: `${ARRANGER_API}/authorized-studies`,
-    data: params,
-  });
+type TApiFence = PASSPORT;
 
 const isAuthenticated = (fence: TApiFence) =>
   sendRequest<IFenceAuthPayload>({
@@ -59,7 +43,6 @@ const disconnect = (fence: TApiFence) =>
   });
 
 export const FenceApi = {
-  fetchAuthorizedStudies,
   isAuthenticated,
   fetchInfo,
   exchangeCode,

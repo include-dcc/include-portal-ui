@@ -21,7 +21,6 @@ import FenceRedirect from 'views/FenceRedirect';
 import Login from 'views/Login';
 
 import { LANG } from 'common/constants';
-import { FENCE_NAMES } from 'common/fenceTypes';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Spinner from 'components/uiKit/Spinner';
 import NotificationContextHolder from 'components/utils/NotificationContextHolder';
@@ -89,10 +88,6 @@ const App = () => {
             <AuthMiddleware>
               <>
                 <Routes>
-                  <Route
-                    path={STATIC_ROUTES.DCF_FENCE_REDIRECT}
-                    element={<FenceRedirect fence={FENCE_NAMES.dcf} />}
-                  />
                   <Route
                     path={STATIC_ROUTES.CAVATICA_FENCE_REDIRECT}
                     element={<FenceRedirect fence={PASSPORT.cavatica} />}

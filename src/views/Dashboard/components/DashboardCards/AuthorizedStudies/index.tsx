@@ -1,22 +1,24 @@
 import { useEffect } from 'react';
 import intl from 'react-intl-universal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AuthorizedStudiesWidget, {
   FENCE_AUTHENTIFICATION_STATUS,
+  IFence,
   IFenceService,
 } from '@ferlab/ui/core/components/Widgets/AuthorizedStudies';
+import { PASSPORT } from '@ferlab/ui/core/components/Widgets/Cavatica';
+import { PASSPORT_AUTHENTIFICATION_STATUS } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import { INDEXES } from 'graphql/constants';
 import { DATA_EXPLORATION_QB_ID } from 'views/DataExploration/utils/constant';
 
-import { FENCE_NAMES } from 'common/fenceTypes';
-import IncludeIcon from 'components/Icons/IncludeIcon';
-import { trackKFConnection } from 'services/analytics';
-import { useFenceAuthentification, useFencesAuthorizedStudies } from 'store/fences';
+import CavaticaIcon from 'components/Icons/CavaticaIcon';
+import { trackCavaticaConnection } from 'services/analytics';
+import { passportCavaticaSelector } from 'store/passport/selector';
 import {
-  fenceDisconnection,
-  fenceOpenAuhentificationTab,
-  fetchAuthorizedStudies,
-} from 'store/fences/thunks';
+  connectCavaticaPassport,
+  disconnectCavaticaPassport,
+  fetchCavaticaAuthorizedStudies,
+} from 'store/passport/thunks';
 import { SUPPORT_EMAIL } from 'store/report/thunks';
 import { STATIC_ROUTES } from 'utils/routes';
 
@@ -24,34 +26,41 @@ import { DashboardCardProps } from '..';
 
 const AuthorizedStudies = ({ id, className = '' }: DashboardCardProps) => {
   const dispatch = useDispatch();
-  const DCF = FENCE_NAMES.dcf;
-  const dcf = useFenceAuthentification(DCF);
-  const fences = [dcf];
-  const authorizedStudies = useFencesAuthorizedStudies();
+  // Read only: the Cavatica card (useCavaticaPassport) fetches the connection status.
+  const { authentification, authorizedStudies } = useSelector(passportCavaticaSelector);
+  const isConnected = authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected;
+
+  // The widget takes "fences": the Cavatica connection is the only one
+  const fences: IFence[] = [
+    {
+      id: PASSPORT.cavatica,
+      status: authentification.status as unknown as FENCE_AUTHENTIFICATION_STATUS,
+      loading: authentification.loading,
+      acl: [],
+      error: authentification.error,
+    },
+  ];
   const services: IFenceService[] = [
     {
-      fence: DCF,
-      name: 'Inludes Framework Services',
-      icon: <IncludeIcon width={45} height={45} />,
+      fence: PASSPORT.cavatica,
+      name: 'Cavatica',
+      icon: <CavaticaIcon />,
       onConnectToFence: () => {
-        trackKFConnection(true);
-        dispatch(fenceOpenAuhentificationTab(DCF));
+        trackCavaticaConnection(true);
+        dispatch(connectCavaticaPassport());
       },
       onDisconnectFromFence: () => {
-        trackKFConnection(false);
-        dispatch(fenceDisconnection(DCF));
+        trackCavaticaConnection(false);
+        dispatch(disconnectCavaticaPassport());
       },
     },
   ];
 
   useEffect(() => {
-    if (!fences.some(({ status }) => status === FENCE_AUTHENTIFICATION_STATUS.connected)) {
-      return;
+    if (isConnected) {
+      dispatch(fetchCavaticaAuthorizedStudies());
     }
-
-    dispatch(fetchAuthorizedStudies(fences));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dcf.status]);
+  }, [dispatch, isConnected]);
 
   return (
     <AuthorizedStudiesWidget
@@ -60,7 +69,8 @@ const AuthorizedStudies = ({ id, className = '' }: DashboardCardProps) => {
       queryProps={{
         to: STATIC_ROUTES.DATA_EXPLORATION_DATAFILES,
         queryBuilderId: DATA_EXPLORATION_QB_ID,
-        participantIndex: INDEXES.PARTICIPANT,
+        // The study filter must be on the file index, like the counts
+        participantIndex: INDEXES.FILE,
         fileIndex: INDEXES.FILE,
       }}
       authorizedStudies={authorizedStudies}
@@ -68,11 +78,11 @@ const AuthorizedStudies = ({ id, className = '' }: DashboardCardProps) => {
       services={services}
       dictionary={{
         title: intl.get('screen.dashboard.cards.authorizedStudies.title', {
-          count: authorizedStudies.studies.length,
+          count: isConnected ? authorizedStudies.studies.length : 0,
         }),
-        disconnect: intl.get('screen.dashboard.cards.cavatica.disconnect'),
+        disconnect: intl.get('screen.dashboard.cards.authorizedStudies.disconnect'),
         connectedNotice: intl.get('screen.dashboard.cards.authorizedStudies.connectedNotice'),
-        manageConnections: intl.get('screen.dashboard.cards.cavatica.disconnect'),
+        manageConnections: intl.get('screen.dashboard.cards.authorizedStudies.disconnect'),
         noAvailableStudies: intl.get('screen.dashboard.cards.authorizedStudies.noAvailableStudies'),
         authentification: {
           description: intl.get('screen.dashboard.cards.authorizedStudies.disconnectedNotice'),

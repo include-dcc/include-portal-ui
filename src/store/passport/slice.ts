@@ -10,11 +10,16 @@ import {
   createCavaticaProject,
   disconnectCavaticaPassport,
   fetchCavaticaAuthentificationStatus,
+  fetchCavaticaAuthorizedStudies,
   fetchCavaticaBillingGroups,
   fetchCavaticaProjects,
   startBulkImportJob,
 } from './thunks';
 import { InitialState } from './type';
+
+// A studies fetch that finishes after a disconnect must not overwrite the reset state
+const isCavaticaDisconnected = (state: InitialState) =>
+  state.cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.disconnected;
 
 export const passportState: InitialState = {
   cavatica: {
@@ -30,6 +35,11 @@ export const passportState: InitialState = {
     },
     billingGroups: {
       data: [],
+      loading: false,
+      error: false,
+    },
+    authorizedStudies: {
+      studies: [],
       loading: false,
       error: false,
     },
@@ -64,6 +74,7 @@ const passportSlice = createSlice({
       state.cavatica.billingGroups.error = false;
       state.cavatica.bulkImportData.status = CAVATICA_ANALYSE_STATUS.unknow;
       state.cavatica.authentification.loading = true;
+      state.cavatica.authentification.error = false;
       state.cavatica.authentification.status = PASSPORT_AUTHENTIFICATION_STATUS.unknown;
     });
     builder.addCase(fetchCavaticaAuthentificationStatus.fulfilled, (state, action) => {
@@ -82,10 +93,31 @@ const passportSlice = createSlice({
     builder.addCase(disconnectCavaticaPassport.fulfilled, (state) => {
       state.cavatica.authentification.loading = false;
       state.cavatica.authentification.status = PASSPORT_AUTHENTIFICATION_STATUS.disconnected;
+      state.cavatica.authorizedStudies = passportState.cavatica.authorizedStudies;
     });
     builder.addCase(disconnectCavaticaPassport.rejected, (state) => {
       state.cavatica.authentification.loading = false;
       state.cavatica.authentification.error = true;
+    });
+    // AUTHORIZED STUDIES
+    builder.addCase(fetchCavaticaAuthorizedStudies.pending, (state) => {
+      state.cavatica.authorizedStudies.loading = true;
+      state.cavatica.authorizedStudies.error = false;
+    });
+    builder.addCase(fetchCavaticaAuthorizedStudies.fulfilled, (state, action) => {
+      if (isCavaticaDisconnected(state)) {
+        return;
+      }
+      state.cavatica.authorizedStudies.loading = false;
+      state.cavatica.authorizedStudies.studies = action.payload.studies;
+    });
+    builder.addCase(fetchCavaticaAuthorizedStudies.rejected, (state) => {
+      if (isCavaticaDisconnected(state)) {
+        return;
+      }
+      state.cavatica.authorizedStudies.loading = false;
+      state.cavatica.authorizedStudies.error = true;
+      state.cavatica.authorizedStudies.studies = [];
     });
     // FETCH PROJECT
     builder.addCase(fetchCavaticaProjects.pending, (state) => {

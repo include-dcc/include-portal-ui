@@ -1,6 +1,5 @@
 import intl from 'react-intl-universal';
 import { FileImageOutlined, LockOutlined, UnlockFilled, WarningOutlined } from '@ant-design/icons';
-import { FENCE_AUTHENTIFICATION_STATUS } from '@ferlab/ui/core/components/Widgets/AuthorizedStudies';
 import { PASSPORT_AUTHENTIFICATION_STATUS } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
@@ -10,13 +9,11 @@ import { INDEXES } from 'graphql/constants';
 import { FileAccessType, IFileEntity } from 'graphql/files/models';
 import { DATA_FILES_SAVED_SETS_FIELD } from 'views/DataExploration/utils/constant';
 
-import { FENCE_NAMES } from 'common/fenceTypes';
 import CavaticaAnalyzeButton from 'components/Cavatica/AnalyzeButton';
 import PopoverContentLink from 'components/uiKit/PopoverContentLink';
 import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
-import { useAllFencesAcl, useFenceAuthentification } from 'store/fences';
 import { useCavaticaPassport } from 'store/passport';
-import { userHasAccessToFile } from 'utils/dataFiles';
+import { isFileUnlocked } from 'utils/dataFiles';
 
 import styles from './index.module.css';
 
@@ -26,16 +23,12 @@ interface OwnProps {
 }
 
 const FileEntityTitle: React.FC<OwnProps> = ({ file, loading }) => {
-  const fencesAllAcls = useAllFencesAcl();
   const cavatica = useCavaticaPassport();
-  const dcf = useFenceAuthentification(FENCE_NAMES.dcf);
 
   const hasAccess = file
-    ? userHasAccessToFile(
+    ? isFileUnlocked(
         file,
-        fencesAllAcls,
         cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected,
-        dcf.status === FENCE_AUTHENTIFICATION_STATUS.connected,
       )
     : false;
 

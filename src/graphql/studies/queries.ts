@@ -315,6 +315,23 @@ export const SEARCH_STUDIES_BY_ID_AND_NAME_QUERY = gql`
   }
 `;
 
+export const GET_STUDIES_BY_EXTERNAL_IDS = gql`
+  query getStudiesByExternalIds($sqon: JSON, $first: Int) {
+    study {
+      hits(filters: $sqon, first: $first) {
+        edges {
+          node {
+            study_id
+            study_code
+            study_name
+            external_ids
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_STUDY_COUNT = gql`
   query getStudiesCount($sqon: JSON) {
     study {

@@ -11,6 +11,10 @@ export interface ICavaticaDRSImportJobPayload {
   state: string;
 }
 
+export interface ICavaticaAccessPayload {
+  access_ids?: string[];
+}
+
 export interface ICavaticaListPayload<T> {
   href: string;
   items: T[];

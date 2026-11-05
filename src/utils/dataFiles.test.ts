@@ -1,6 +1,6 @@
 import { FileAccessType } from 'graphql/files/models';
 
-import { userHasAccessToFile } from './dataFiles';
+import { isFileUnlocked } from './dataFiles';
 
 const file = {
   id: 'id',
@@ -64,99 +64,50 @@ const file = {
 };
 
 describe('dataFiles', () => {
-  test('userHasAccessToFile should managed file with empty acl', () => {
-    expect(userHasAccessToFile(file, [], true, true)).toBeTruthy();
+  const controlled = {
+    ...file,
+    controlled_access: FileAccessType.CONTROLLED,
+    study: { ...file.study, study_code: 'ABC-DS' },
+  };
+  const registered = { ...controlled, controlled_access: FileAccessType.REGISTERED };
+
+  test('isFileUnlocked should deny everything when not connected to Cavatica', () => {
+    expect(isFileUnlocked(registered, false)).toBeFalsy();
+    expect(isFileUnlocked(file, false)).toBeFalsy();
   });
 
-  test('userHasAccessToFile should managed controlled file and gen3 connections', () => {
-    // controlled and gen3
+  test('isFileUnlocked should never authorize a Controlled file', () => {
+    expect(isFileUnlocked(controlled, true)).toBeFalsy();
+  });
+
+  test('isFileUnlocked should lock a file without an access type', () => {
     expect(
-      userHasAccessToFile(
-        {
-          ...file,
-          controlled_access: FileAccessType.CONTROLLED,
-          study: { ...file.study, study_code: 'ABC-DS' },
-        },
-        [],
-        false,
-        true,
-      ),
-    ).toBeTruthy();
-    expect(
-      userHasAccessToFile(
-        {
-          ...file,
-          controlled_access: FileAccessType.CONTROLLED,
-          study: { ...file.study, study_code: 'ABC-DS' },
-        },
-        [],
-        false,
-        false,
-      ),
+      isFileUnlocked({ ...registered, controlled_access: undefined as any }, true),
     ).toBeFalsy();
   });
 
-  test('userHasAccessToFile should managed registered file and cavatica connections', () => {
-    // registred and cavatica
-    expect(
-      userHasAccessToFile(
-        {
-          ...file,
-          controlled_access: FileAccessType.REGISTERED,
-          study: { ...file.study, study_code: 'ABC-DS' },
-        },
-        [],
-        true,
-        false,
-      ),
-    ).toBeTruthy();
-    expect(
-      userHasAccessToFile(
-        {
-          ...file,
-          controlled_access: FileAccessType.REGISTERED,
-          study: { ...file.study, study_code: 'ABC-DS' },
-        },
-        [],
-        false,
-        false,
-      ),
-    ).toBeFalsy();
+  test('isFileUnlocked should authorize a Registered file when connected to Cavatica', () => {
+    expect(isFileUnlocked(registered, true)).toBeTruthy();
   });
 
-  test('userHasAccessToFile should managed file from X01 studies', () => {
+  test('isFileUnlocked should treat Controlled files on the Cavatica/CRDC DRS hosts as Registered', () => {
     expect(
-      userHasAccessToFile(
-        { ...file, study: { ...file.study, study_code: 'X01-Hakonarson' } },
-        [],
-        true,
+      isFileUnlocked({ ...controlled, access_urls: 'drs://nci-crdc.datacommons.io/abc' }, true),
+    ).toBeTruthy();
+    expect(
+      isFileUnlocked(
+        { ...controlled, access_urls: 'drs://cavatica-ga4gh-api.sbgenomics.com/abc' },
         true,
       ),
     ).toBeTruthy();
-    expect(
-      userHasAccessToFile(
-        { ...file, study: { ...file.study, study_code: 'X01-Hakonarson' } },
-        [],
-        false,
-        true,
-      ),
-    ).toBeFalsy();
+  });
 
+  test('isFileUnlocked should treat Controlled files from X01 studies as Registered', () => {
     expect(
-      userHasAccessToFile(
-        { ...file, study: { ...file.study, study_code: 'X01-deSmith' } },
-        [],
-        true,
-        true,
-      ),
+      isFileUnlocked({ ...file, study: { ...file.study, study_code: 'X01-Hakonarson' } }, true),
     ).toBeTruthy();
     expect(
-      userHasAccessToFile(
-        { ...file, study: { ...file.study, study_code: 'X01-deSmith' } },
-        [],
-        false,
-        true,
-      ),
-    ).toBeFalsy();
+      isFileUnlocked({ ...file, study: { ...file.study, study_code: 'X01-deSmith' } }, true),
+    ).toBeTruthy();
   });
 });

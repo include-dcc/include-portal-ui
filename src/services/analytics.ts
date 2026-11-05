@@ -195,11 +195,11 @@ export const trackRegistrationStarted = () => {
   }
 };
 
-export const trackKFConnection = (connected: boolean) => {
+export const trackCavaticaConnection = (connected: boolean) => {
   if (isGaActive) {
     ReactGA.event({
       category: 'FencesConnections',
-      action: `${connected ? 'Connected to' : 'Disconnected from'} Kids First Framework Services`,
+      action: `${connected ? 'Connected to' : 'Disconnected from'} Cavatica`,
     });
   }
 };

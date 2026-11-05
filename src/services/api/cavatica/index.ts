@@ -3,6 +3,7 @@ import EnvironmentVariables from 'helpers/EnvVariables';
 import { sendRequest } from 'services/api';
 
 import {
+  ICavaticaAccessPayload,
   ICavaticaBillingGroup,
   ICavaticaCreateProjectBody,
   ICavaticaDRSImportBody,
@@ -32,6 +33,13 @@ const fetchProjetMembers = (projectId: string) =>
   sendRequest<ICavaticaListPayload<ICavaticaProjectMember>>({
     method: 'GET',
     url: `${CAVATICA_PROXY_URL}/projects/${projectId}/members`,
+    headers: headers(),
+  });
+
+const fetchAccessIds = () =>
+  sendRequest<ICavaticaAccessPayload>({
+    method: 'GET',
+    url: `${CAVATICA_PROXY_URL}/third-party-provider/kf-dc/access`,
     headers: headers(),
   });
 
@@ -71,6 +79,7 @@ const startBulkDrsImportJob = (data: ICavaticaDRSImportBody) =>
 export const CavaticaApi = {
   fetchProjects,
   fetchProjetMembers,
+  fetchAccessIds,
   fetchBillingGroups,
   createProject,
   listFilesAndFolders,
