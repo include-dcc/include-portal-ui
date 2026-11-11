@@ -7,6 +7,9 @@
 
 ### Technical / Other changes
 -->
+## 2026-11-11 include-portal-ui v1.30.0
+### Features:
+- [SJIP-1560](https://d3b.atlassian.net/browse/SJIP-1560) Feature: [Dashboard] Replace Authorized Studies widget to use Cavatica API for dbGaP access IDs
 ## 2026-10-27 include-portal-ui v1.29.0
 ### Technical / Other Changes:
 - [SJIP-1585](https://d3b.atlassian.net/browse/SJIP-1585) Fix: [Cavatica] Cavatica widget error appearing
