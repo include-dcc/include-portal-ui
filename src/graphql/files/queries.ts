@@ -179,6 +179,7 @@ export const GET_FILE_ENTITY = gql`
             }
 
             controlled_access
+            acl
             data_category
             data_type
             dataset_names

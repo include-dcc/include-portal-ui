@@ -1,0 +1,16 @@
+.popoverContent {
+  max-width: 420px;
+}
+
+.contentLink {
+  padding-left: 4px;
+  display: inline;
+}
+
+.locked {
+  color: var(--gray-6);
+}
+
+.unlocked {
+  color: var(--green-7);
+}

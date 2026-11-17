@@ -8,9 +8,14 @@ import { FamilyType, Sex } from 'graphql/participants/models';
 
 import { ArrangerApi } from 'services/api/arranger';
 import { CavaticaApi } from 'services/api/cavatica';
+import { extractConsentCodes } from 'utils/cavatica';
 
 import { extractMetadata } from './metadata';
-import { beginCavaticaAnalyse, fetchCavaticaAuthorizedStudies } from './thunks';
+import {
+  beginCavaticaAnalyse,
+  fetchCavaticaAuthorizedStudies,
+  fetchCavaticaUserAcls,
+} from './thunks';
 
 jest.mock('services/api/cavatica');
 jest.mock('services/api/arranger');
@@ -320,11 +325,66 @@ describe(`${extractMetadata.name}()`, () => {
   });
 });
 
+const userAclsState = (userAcls: object) => () => ({ passport: { cavatica: { userAcls } } } as any);
+
+describe(`${fetchCavaticaUserAcls.typePrefix}`, () => {
+  const fetchAccessIds = CavaticaApi.fetchAccessIds as jest.Mock;
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  test('should extract the consent codes of the Cavatica ids', async () => {
+    fetchAccessIds.mockResolvedValue({
+      data: { access_ids: [' phs002330.c1', 'phs002981.v1.p1', 'phs004098.v2.c999'] },
+    });
+
+    const action = await fetchCavaticaUserAcls()(
+      jest.fn(),
+      userAclsState({ loading: false, loaded: false }),
+      undefined,
+    );
+
+    expect(action.payload).toEqual({ consentCodes: ['phs002330.c1', 'phs004098.c999'] });
+  });
+
+  test('should reject when Cavatica fails', async () => {
+    fetchAccessIds.mockResolvedValue({ error: { message: 'Request failed with status code 401' } });
+
+    const action = await fetchCavaticaUserAcls()(
+      jest.fn(),
+      userAclsState({ loading: false, loaded: false }),
+      undefined,
+    );
+
+    expect(action.type).toBe(fetchCavaticaUserAcls.rejected.type);
+  });
+
+  test.each([
+    ['already loaded', { loading: false, loaded: true }],
+    ['already loading', { loading: true, loaded: false }],
+  ])('should not call Cavatica when the acls are %s', async (_, userAcls) => {
+    await fetchCavaticaUserAcls()(jest.fn(), userAclsState(userAcls), undefined);
+
+    expect(fetchAccessIds).not.toHaveBeenCalled();
+  });
+});
+
 describe(`${fetchCavaticaAuthorizedStudies.typePrefix}`, () => {
   const fetchAccessIds = CavaticaApi.fetchAccessIds as jest.Mock;
   const graphqlRequest = ArrangerApi.graphqlRequest as jest.Mock;
 
-  const run = () => fetchCavaticaAuthorizedStudies()(jest.fn(), jest.fn(), undefined);
+  // The acls come from the store, parsed like fetchCavaticaUserAcls does
+  const run = (access_ids: string[]) =>
+    fetchCavaticaAuthorizedStudies()(
+      jest.fn(),
+      userAclsState({
+        consentCodes: extractConsentCodes({ access_ids }),
+        loading: false,
+        loaded: true,
+      }),
+      undefined,
+    );
 
   const studiesResponse = (nodes: object[]) => ({
     data: { data: { study: { hits: { edges: nodes.map((node) => ({ node })) } } } },
@@ -341,18 +401,33 @@ describe(`${fetchCavaticaAuthorizedStudies.typePrefix}`, () => {
   });
 
   test('should return no study without querying arranger when Cavatica returns no access', async () => {
-    fetchAccessIds.mockResolvedValue({ data: { access_ids: [] } });
-
-    const action = await run();
+    const action = await run([]);
 
     expect(action.payload).toEqual({ studies: [] });
     expect(graphqlRequest).not.toHaveBeenCalled();
   });
 
-  test('should count all and authorized files of a study matched by two accessions', async () => {
-    fetchAccessIds.mockResolvedValue({
-      data: { access_ids: [' phs002330.c1', 'phs002981.v1.p1', 'phs999999.c1'] },
-    });
+  test('should reject without any call while the acls are not loaded', async () => {
+    const action = await fetchCavaticaAuthorizedStudies()(
+      jest.fn(),
+      userAclsState({ consentCodes: [], loading: true, loaded: false }),
+      undefined,
+    );
+
+    expect(action.type).toBe(fetchCavaticaAuthorizedStudies.rejected.type);
+    expect(fetchAccessIds).not.toHaveBeenCalled();
+    expect(graphqlRequest).not.toHaveBeenCalled();
+  });
+
+  test('should never call Cavatica itself', async () => {
+    graphqlRequest.mockResolvedValueOnce(studiesResponse([]));
+
+    await run(['phs999999.c1']);
+
+    expect(fetchAccessIds).not.toHaveBeenCalled();
+  });
+
+  test('should count all and authorized files of a study matched by one of its accessions', async () => {
     graphqlRequest
       .mockResolvedValueOnce(
         studiesResponse([
@@ -366,7 +441,7 @@ describe(`${fetchCavaticaAuthorizedStudies.typePrefix}`, () => {
       )
       .mockResolvedValueOnce(countsResponse(22409, 15105));
 
-    const action = await run();
+    const action = await run([' phs002330.c1', 'phs002981.v1.p1', 'phs999999.c1']);
 
     expect(action.payload).toEqual({
       studies: [
@@ -374,7 +449,7 @@ describe(`${fetchCavaticaAuthorizedStudies.typePrefix}`, () => {
           study_id: 'HTP',
           study_code: 'HTP',
           title: 'The Human Trisome Project',
-          user_acl_in_study: ['phs002330.c1', 'HTP', 'open_access'],
+          user_acl_in_study: ['phs002330.c1', 'open_access'],
           total_files_count: 22409,
           total_authorized_files_count: 15105,
           authorized_controlled_files_count: 15105,
@@ -383,21 +458,18 @@ describe(`${fetchCavaticaAuthorizedStudies.typePrefix}`, () => {
     });
     expect(graphqlRequest.mock.calls[0][0].variables.sqon.content[0].content).toEqual({
       field: 'external_ids',
-      value: ['phs002330', 'phs002981', 'phs999999'],
+      value: ['phs002330', 'phs999999'],
     });
     const { variables } = graphqlRequest.mock.calls[1][0];
     expect(variables.f0.content).toHaveLength(1);
     expect(variables.f0.content[0].content).toEqual({ field: 'study.study_code', value: ['HTP'] });
     expect(variables.f1.content[1].content).toEqual({
       field: 'acl',
-      value: ['phs002330.c1', 'HTP', 'open_access'],
+      value: ['phs002330.c1', 'open_access'],
     });
   });
 
   test('should fetch every count in one call, two aliases per study in study order', async () => {
-    fetchAccessIds.mockResolvedValue({
-      data: { access_ids: ['phs002982.c1', 'phs004098.c999'] },
-    });
     graphqlRequest
       .mockResolvedValueOnce(
         studiesResponse([
@@ -417,17 +489,13 @@ describe(`${fetchCavaticaAuthorizedStudies.typePrefix}`, () => {
       )
       .mockResolvedValueOnce(countsResponse(1308, 0, 5480, 5480));
 
-    const action = await run();
+    const action = await run(['phs002982.c1', 'phs004098.c999']);
 
     expect(graphqlRequest).toHaveBeenCalledTimes(2);
     const { query, variables } = graphqlRequest.mock.calls[1][0];
     expect(query).toContain('s3: file');
     expect(variables.f2.content[0].content.value).toEqual(['DS-HPBM']);
-    expect(variables.f3.content[1].content.value).toEqual([
-      'phs004098.c999',
-      'DS-HPBM',
-      'open_access',
-    ]);
+    expect(variables.f3.content[1].content.value).toEqual(['phs004098.c999', 'open_access']);
     expect(
       (
         action.payload as {
@@ -449,35 +517,23 @@ describe(`${fetchCavaticaAuthorizedStudies.typePrefix}`, () => {
   });
 
   test('should skip the file counts call when no study matches', async () => {
-    fetchAccessIds.mockResolvedValue({ data: { access_ids: ['phs999999.c1'] } });
     graphqlRequest.mockResolvedValueOnce(studiesResponse([]));
 
-    const action = await run();
+    const action = await run(['phs999999.c1']);
 
     expect(action.payload).toEqual({ studies: [] });
     expect(graphqlRequest).toHaveBeenCalledTimes(1);
   });
 
-  test('should reject when Cavatica fails', async () => {
-    fetchAccessIds.mockResolvedValue({ error: { message: 'Request failed with status code 401' } });
-
-    const action = await run();
-
-    expect(action.type).toBe(fetchCavaticaAuthorizedStudies.rejected.type);
-    expect(graphqlRequest).not.toHaveBeenCalled();
-  });
-
   test('should reject when arranger answers with GraphQL errors', async () => {
-    fetchAccessIds.mockResolvedValue({ data: { access_ids: ['phs002982.c1'] } });
     graphqlRequest.mockResolvedValueOnce({ data: { errors: [{ message: 'boom' }] } });
 
-    const action = await run();
+    const action = await run(['phs002982.c1']);
 
     expect(action.type).toBe(fetchCavaticaAuthorizedStudies.rejected.type);
   });
 
   test('should reject when a file count query fails', async () => {
-    fetchAccessIds.mockResolvedValue({ data: { access_ids: ['phs002982.c1'] } });
     graphqlRequest
       .mockResolvedValueOnce(
         studiesResponse([
@@ -491,7 +547,7 @@ describe(`${fetchCavaticaAuthorizedStudies.typePrefix}`, () => {
       )
       .mockResolvedValueOnce({ error: { message: 'Network Error' } });
 
-    const action = await run();
+    const action = await run(['phs002982.c1']);
 
     expect(action.type).toBe(fetchCavaticaAuthorizedStudies.rejected.type);
   });
@@ -500,44 +556,45 @@ describe(`${fetchCavaticaAuthorizedStudies.typePrefix}`, () => {
 describe(`${beginCavaticaAnalyse.typePrefix}`, () => {
   const graphqlRequest = ArrangerApi.graphqlRequest as jest.Mock;
 
-  const file = (file_id: string, access_urls: string) => ({
+  const file = (file_id: string, acl: string[]) => ({
     file_id,
-    access_urls,
-    acl: ['phs002330.c1'],
+    acl,
+    access_urls: 'drs://cavatica-ga4gh-api.sbgenomics.com/abc',
     controlled_access: FileAccessType.CONTROLLED,
     study: { study_code: 'HTP' },
   });
   const getState = () => ({
     passport: {
-      cavatica: { authentification: { status: PASSPORT_AUTHENTIFICATION_STATUS.connected } },
+      cavatica: {
+        authentification: { status: PASSPORT_AUTHENTIFICATION_STATUS.connected },
+        userAcls: { consentCodes: ['phs002330.c1'], loading: false, loaded: true, error: false },
+      },
     },
   });
+  const filesResponse = (...nodes: object[]) => ({
+    data: { data: { file: { hits: { edges: nodes.map((node) => ({ node })) } } } },
+  });
+  const dispatch = jest.fn();
   const run = () =>
     beginCavaticaAnalyse({
       sqon: { op: BooleanOperators.and, content: [] },
       sort: [],
       fileIds: [],
-    })(jest.fn(), getState as any, undefined);
+    })(dispatch, getState as any, undefined);
 
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  test('should authorize Controlled files on the Cavatica DRS host without DCF', async () => {
-    graphqlRequest.mockResolvedValue({
-      data: {
-        data: {
-          file: {
-            hits: {
-              edges: [
-                { node: file('cavatica', 'drs://cavatica-ga4gh-api.sbgenomics.com/abc') },
-                { node: file('other', 'drs://other-host.org/abc') },
-              ],
-            },
-          },
-        },
-      },
-    });
+  test("should keep only the files matching the user's acls", async () => {
+    graphqlRequest.mockResolvedValue(
+      filesResponse(
+        file('authorized', ['phs002330.c1']),
+        file('open', ['open_access']),
+        file('other-consent', ['phs002330.c2']),
+        file('no-acl', []),
+      ),
+    );
 
     const action = await run();
 
@@ -545,15 +602,20 @@ describe(`${beginCavaticaAnalyse.typePrefix}`, () => {
       (action.payload as { authorizedFiles: IFileEntity[] }).authorizedFiles.map(
         ({ file_id }) => file_id,
       ),
-    ).toEqual(['cavatica']);
+    ).toEqual(['authorized', 'open']);
   });
 
-  test('should reject a Controlled file on another host even with DCF connected', async () => {
-    graphqlRequest.mockResolvedValue({
-      data: {
-        data: { file: { hits: { edges: [{ node: file('other', 'drs://other-host.org/abc') }] } } },
-      },
-    });
+  test('should request the user acls before filtering', async () => {
+    graphqlRequest.mockResolvedValue(filesResponse(file('authorized', ['phs002330.c1'])));
+
+    await run();
+
+    // A thunk: fetchCavaticaUserAcls, a no-op when already loaded
+    expect(dispatch).toHaveBeenCalledWith(expect.any(Function));
+  });
+
+  test('should reject when no file matches the user acls', async () => {
+    graphqlRequest.mockResolvedValue(filesResponse(file('other-consent', ['phs002330.c2'])));
 
     const action = await run();
 

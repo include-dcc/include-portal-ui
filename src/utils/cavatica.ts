@@ -5,16 +5,7 @@ const toAccessIds = (payload?: ICavaticaAccessPayload): string[] =>
     .filter((id): id is string => typeof id === 'string')
     .map((id) => id.trim());
 
-// phs002330.c1 -> phs002330, the form the ETL stores in study.external_ids
-export const extractStudyAccessions = (payload?: ICavaticaAccessPayload): string[] => {
-  const accessions = toAccessIds(payload)
-    .map((id) => id.split('.')[0])
-    .filter((accession) => accession.startsWith('phs'));
-
-  return Array.from(new Set(accessions));
-};
-
-const OPEN_ACCESS_ACL = 'open_access';
+export const OPEN_ACCESS_ACL = 'open_access';
 
 // phsN[.middle parts].cX -> phsN.cX, the form the ETL stores in file acl. Other ids are ignored.
 export const extractConsentCodes = (payload?: ICavaticaAccessPayload): string[] => {
@@ -28,17 +19,18 @@ export const extractConsentCodes = (payload?: ICavaticaAccessPayload): string[] 
     return [];
   });
 
-  return Array.from(new Set(codes)).sort();
+  return [...new Set(codes)].sort();
 };
 
-// A file is authorized when its acl holds one of the user's consent codes for the study,
-// the study's own id, or open_access
-export const buildAuthorizedAcl = (
-  consentCodes: string[],
-  studyAccessions: string[],
-  studyId: string,
-): string[] => [
-  ...consentCodes.filter((code) => studyAccessions.includes(code.split('.')[0])),
-  studyId,
+// phs002330.c1 -> phs002330, the form the ETL stores in study.external_ids
+const toAccession = (consentCode: string) => consentCode.split('.')[0];
+
+export const toStudyAccessions = (consentCodes: string[]): string[] => [
+  ...new Set(consentCodes.map(toAccession)),
+];
+
+// The study's own consent codes plus open_access: the widget lists them per study
+export const buildAuthorizedAcl = (consentCodes: string[], studyAccessions: string[]): string[] => [
+  ...consentCodes.filter((code) => studyAccessions.includes(toAccession(code))),
   OPEN_ACCESS_ACL,
 ];

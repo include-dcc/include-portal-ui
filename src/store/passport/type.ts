@@ -29,6 +29,13 @@ export type InitialState = {
       loading: boolean;
       error: boolean;
     };
+    // phsN.cX consent codes from the Cavatica access ids
+    userAcls: {
+      consentCodes: string[];
+      loading: boolean;
+      loaded: boolean;
+      error: boolean;
+    };
     bulkImportData: {
       loading: boolean;
       files: IFileEntity[];
