@@ -1,48 +1,4 @@
-import { buildAuthorizedAcl, extractConsentCodes, extractStudyAccessions } from './cavatica';
-
-describe('extractStudyAccessions', () => {
-  test('should keep the phs prefix of the Cavatica ids', () => {
-    expect(
-      extractStudyAccessions({
-        access_ids: ['phs000892.c1', 'phs001287.c1', 'phs002517.c1', 'phs002790.c1'],
-      }),
-    ).toEqual(['phs000892', 'phs001287', 'phs002517', 'phs002790']);
-  });
-
-  test('should strip any middle parts', () => {
-    expect(extractStudyAccessions({ access_ids: ['phs002330.v2.p1'] })).toEqual(['phs002330']);
-  });
-
-  test('should trim whitespace', () => {
-    expect(extractStudyAccessions({ access_ids: [' phs002981.v1.p1 '] })).toEqual(['phs002981']);
-  });
-
-  test('should deduplicate versions of the same study', () => {
-    expect(extractStudyAccessions({ access_ids: ['phs002330.v1.p1', 'phs002330.v2.p1'] })).toEqual([
-      'phs002330',
-    ]);
-  });
-
-  test('should accept an accession without a version', () => {
-    expect(extractStudyAccessions({ access_ids: ['phs004098'] })).toEqual(['phs004098']);
-  });
-
-  test('should drop ids without the phs prefix', () => {
-    expect(extractStudyAccessions({ access_ids: ['foo.c1', 'PHS000892.c1'] })).toEqual([]);
-  });
-
-  test('should drop empty and non-string values', () => {
-    expect(
-      extractStudyAccessions({ access_ids: ['', '  ', null as any, 'phs002983.v1.p1'] }),
-    ).toEqual(['phs002983']);
-  });
-
-  test('should return an empty list for an empty or missing payload', () => {
-    expect(extractStudyAccessions({ access_ids: [] })).toEqual([]);
-    expect(extractStudyAccessions({})).toEqual([]);
-    expect(extractStudyAccessions(undefined)).toEqual([]);
-  });
-});
+import { buildAuthorizedAcl, extractConsentCodes, toStudyAccessions } from './cavatica';
 
 describe('extractConsentCodes', () => {
   test('should keep the Cavatica ids as is', () => {
@@ -75,18 +31,22 @@ describe('extractConsentCodes', () => {
   });
 });
 
+describe('toStudyAccessions', () => {
+  test('should keep the unique phs prefixes of the consent codes', () => {
+    expect(toStudyAccessions(['phs002330.c1', 'phs002330.c2', 'phs004098.c999'])).toEqual([
+      'phs002330',
+      'phs004098',
+    ]);
+  });
+});
+
 describe('buildAuthorizedAcl', () => {
-  test("should keep the study's consent codes plus its id and open_access", () => {
+  test("should keep only the study's consent codes plus open_access", () => {
     expect(
       buildAuthorizedAcl(
         ['phs002330.c1', 'phs002981.c2', 'phs004098.c1'],
         ['phs002981', 'phs002330'],
-        'HTP',
       ),
-    ).toEqual(['phs002330.c1', 'phs002981.c2', 'HTP', 'open_access']);
-  });
-
-  test('should still authorize the study id and open_access without consent codes', () => {
-    expect(buildAuthorizedAcl([], ['phs002330'], 'HTP')).toEqual(['HTP', 'open_access']);
+    ).toEqual(['phs002330.c1', 'phs002981.c2', 'open_access']);
   });
 });

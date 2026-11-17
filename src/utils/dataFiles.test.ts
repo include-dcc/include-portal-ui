@@ -63,51 +63,53 @@ const file = {
   key: 'key',
 };
 
-describe('dataFiles', () => {
-  const controlled = {
+describe('isFileUnlocked', () => {
+  const consentCodes = ['phs002330.c1', 'phs004098.c999'];
+  const withAcl = (acl: string[], controlled_access: string = FileAccessType.CONTROLLED) => ({
     ...file,
-    controlled_access: FileAccessType.CONTROLLED,
-    study: { ...file.study, study_code: 'ABC-DS' },
-  };
-  const registered = { ...controlled, controlled_access: FileAccessType.REGISTERED };
-
-  test('isFileUnlocked should deny everything when not connected to Cavatica', () => {
-    expect(isFileUnlocked(registered, false)).toBeFalsy();
-    expect(isFileUnlocked(file, false)).toBeFalsy();
+    acl,
+    controlled_access,
   });
 
-  test('isFileUnlocked should never authorize a Controlled file', () => {
-    expect(isFileUnlocked(controlled, true)).toBeFalsy();
+  test('should lock every file when not connected to Cavatica', () => {
+    expect(
+      isFileUnlocked(withAcl(['open_access'], FileAccessType.REGISTERED), false, consentCodes),
+    ).toBe(false);
+    expect(isFileUnlocked(withAcl(['phs002330.c1']), false, consentCodes)).toBe(false);
   });
 
-  test('isFileUnlocked should lock a file without an access type', () => {
-    expect(
-      isFileUnlocked({ ...registered, controlled_access: undefined as any }, true),
-    ).toBeFalsy();
+  test('should unlock an open_access file when connected, without any consent code', () => {
+    expect(isFileUnlocked(withAcl(['open_access']), true, [])).toBe(true);
   });
 
-  test('isFileUnlocked should authorize a Registered file when connected to Cavatica', () => {
-    expect(isFileUnlocked(registered, true)).toBeTruthy();
+  test('should unlock a Registered file when connected, whatever its acl', () => {
+    expect(isFileUnlocked(withAcl([], FileAccessType.REGISTERED), true, [])).toBe(true);
+    expect(isFileUnlocked(withAcl(['phs002330.c2'], FileAccessType.REGISTERED), true, [])).toBe(
+      true,
+    );
   });
 
-  test('isFileUnlocked should treat Controlled files on the Cavatica/CRDC DRS hosts as Registered', () => {
-    expect(
-      isFileUnlocked({ ...controlled, access_urls: 'drs://nci-crdc.datacommons.io/abc' }, true),
-    ).toBeTruthy();
-    expect(
-      isFileUnlocked(
-        { ...controlled, access_urls: 'drs://cavatica-ga4gh-api.sbgenomics.com/abc' },
-        true,
-      ),
-    ).toBeTruthy();
+  test("should unlock a Controlled file holding one of the user's consent codes", () => {
+    expect(isFileUnlocked(withAcl(['phs002330.c1']), true, consentCodes)).toBe(true);
   });
 
-  test('isFileUnlocked should treat Controlled files from X01 studies as Registered', () => {
-    expect(
-      isFileUnlocked({ ...file, study: { ...file.study, study_code: 'X01-Hakonarson' } }, true),
-    ).toBeTruthy();
-    expect(
-      isFileUnlocked({ ...file, study: { ...file.study, study_code: 'X01-deSmith' } }, true),
-    ).toBeTruthy();
+  test('should unlock a file when any one of its acl values matches', () => {
+    expect(isFileUnlocked(withAcl(['SD_65064P2Z', 'phs004098.c999']), true, consentCodes)).toBe(
+      true,
+    );
+  });
+
+  test('should lock a Controlled file of another consent group or study', () => {
+    expect(isFileUnlocked(withAcl(['phs002330.c2']), true, consentCodes)).toBe(false);
+    expect(isFileUnlocked(withAcl(['phs001138.c1']), true, consentCodes)).toBe(false);
+  });
+
+  test('should lock a file whose only acl value is the study id', () => {
+    expect(isFileUnlocked(withAcl(['X01-Hakonarson']), true, consentCodes)).toBe(false);
+  });
+
+  test('should lock a file without acl values', () => {
+    expect(isFileUnlocked(withAcl([]), true, consentCodes)).toBe(false);
+    expect(isFileUnlocked(withAcl(undefined as any), true, consentCodes)).toBe(false);
   });
 });

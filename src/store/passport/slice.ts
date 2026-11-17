@@ -13,11 +13,12 @@ import {
   fetchCavaticaAuthorizedStudies,
   fetchCavaticaBillingGroups,
   fetchCavaticaProjects,
+  fetchCavaticaUserAcls,
   startBulkImportJob,
 } from './thunks';
 import { InitialState } from './type';
 
-// A studies fetch that finishes after a disconnect must not overwrite the reset state
+// A fetch that finishes after a disconnect must not overwrite the reset state
 const isCavaticaDisconnected = (state: InitialState) =>
   state.cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.disconnected;
 
@@ -41,6 +42,12 @@ export const passportState: InitialState = {
     authorizedStudies: {
       studies: [],
       loading: false,
+      error: false,
+    },
+    userAcls: {
+      consentCodes: [],
+      loading: false,
+      loaded: false,
       error: false,
     },
     bulkImportData: {
@@ -80,6 +87,10 @@ const passportSlice = createSlice({
     builder.addCase(fetchCavaticaAuthentificationStatus.fulfilled, (state, action) => {
       state.cavatica.authentification.loading = false;
       state.cavatica.authentification.status = action.payload.status;
+      // An expired connection must refetch the acls on the next connection
+      if (action.payload.status !== PASSPORT_AUTHENTIFICATION_STATUS.connected) {
+        state.cavatica.userAcls = passportState.cavatica.userAcls;
+      }
     });
     builder.addCase(fetchCavaticaAuthentificationStatus.rejected, (state) => {
       state.cavatica.authentification.loading = false;
@@ -94,6 +105,7 @@ const passportSlice = createSlice({
       state.cavatica.authentification.loading = false;
       state.cavatica.authentification.status = PASSPORT_AUTHENTIFICATION_STATUS.disconnected;
       state.cavatica.authorizedStudies = passportState.cavatica.authorizedStudies;
+      state.cavatica.userAcls = passportState.cavatica.userAcls;
     });
     builder.addCase(disconnectCavaticaPassport.rejected, (state) => {
       state.cavatica.authentification.loading = false;
@@ -118,6 +130,28 @@ const passportSlice = createSlice({
       state.cavatica.authorizedStudies.loading = false;
       state.cavatica.authorizedStudies.error = true;
       state.cavatica.authorizedStudies.studies = [];
+    });
+    // USER ACLS
+    builder.addCase(fetchCavaticaUserAcls.pending, (state) => {
+      state.cavatica.userAcls.loading = true;
+      state.cavatica.userAcls.error = false;
+    });
+    builder.addCase(fetchCavaticaUserAcls.fulfilled, (state, action) => {
+      if (isCavaticaDisconnected(state)) {
+        return;
+      }
+      state.cavatica.userAcls = {
+        ...action.payload,
+        loading: false,
+        loaded: true,
+        error: false,
+      };
+    });
+    builder.addCase(fetchCavaticaUserAcls.rejected, (state) => {
+      if (isCavaticaDisconnected(state)) {
+        return;
+      }
+      state.cavatica.userAcls = { ...passportState.cavatica.userAcls, error: true };
     });
     // FETCH PROJECT
     builder.addCase(fetchCavaticaProjects.pending, (state) => {

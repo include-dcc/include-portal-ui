@@ -2,13 +2,7 @@ import { useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  CloseCircleOutlined,
-  LockOutlined,
-  SafetyOutlined,
-  UnlockFilled,
-  WarningOutlined,
-} from '@ant-design/icons';
+import { CloseCircleOutlined, LockOutlined, SafetyOutlined } from '@ant-design/icons';
 import ProTable from '@ferlab/ui/core/components/ProTable';
 import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
@@ -16,12 +10,11 @@ import { resetSearchAfterQueryConfig, tieBreaker } from '@ferlab/ui/core/compone
 import useQueryBuilderState, {
   addQuery,
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
-import { PASSPORT_AUTHENTIFICATION_STATUS } from '@ferlab/ui/core/components/Widgets/Cavatica/type';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import { SortDirection } from '@ferlab/ui/core/graphql/constants';
 import { numberWithCommas } from '@ferlab/ui/core/utils/numberUtils';
-import { Modal, Popover, Tag, Tooltip } from 'antd';
+import { Modal, Tag, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
 import { useDataFiles } from 'graphql/files/actions';
 import { FileAccessType, IFileEntity, ITableFileEntity } from 'graphql/files/models';
@@ -44,14 +37,13 @@ import { DEFAULT_OFFSET } from 'views/Variants/utils/constants';
 
 import { MAX_ITEMS_QUERY, TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import CavaticaAnalyzeButton from 'components/Cavatica/AnalyzeButton';
+import FileAuthorization from 'components/FileAuthorization';
 import DownloadFileManifestModal from 'components/uiKit/reports/DownloadFileManifestModal';
 import { MAX_ROW_EXPORTED } from 'services/api/arranger/models';
 import { SetType } from 'services/api/savedSet/models';
-import { useCavaticaPassport } from 'store/passport';
 import { fetchTsvReport } from 'store/report/thunks';
 import { useUser } from 'store/user';
 import { updateUserConfig } from 'store/user/thunks';
-import { isFileUnlocked } from 'utils/dataFiles';
 import { formatFileSize } from 'utils/formatFileSize';
 import { formatQuerySortList, scrollToTop } from 'utils/helper';
 import { STATIC_ROUTES } from 'utils/routes';
@@ -64,50 +56,14 @@ interface OwnProps {
   sqon?: ISqonGroupFilter;
 }
 
-const getDefaultColumns = (isConnectedToCavatica: boolean): ProColumnType<any>[] => [
+const getDefaultColumns = (): ProColumnType<any>[] => [
   {
     key: 'lock',
     tooltip: intl.get('entities.file.fileAuthorization'),
     title: intl.get('entities.file.fileAuthorization'),
     iconTitle: <LockOutlined />,
     align: 'center',
-    render: (record: IFileEntity) => {
-      if (
-        record.controlled_access.toLowerCase() === FileAccessType.CONTROLLED.toLowerCase() &&
-        (record.access_urls?.startsWith('drs://cavatica-ga4gh-api.sbgenomics.com/') ||
-          record.access_urls?.startsWith('drs://nci-crdc.datacommons.io/'))
-      ) {
-        return (
-          <Popover
-            placement="top"
-            overlayStyle={{ maxWidth: '420px' }}
-            title={intl.get(
-              'screen.dataExploration.tabs.datafiles.undeterminedAuthorization.popoverTitle',
-            )}
-            content={intl.getHTML(
-              'screen.dataExploration.tabs.datafiles.undeterminedAuthorization.popoverContent',
-              {
-                href: 'https://help.includedcc.org/docs/applying-for-access',
-              },
-            )}
-          >
-            <WarningOutlined className={styles.authorizedUndetermined} />
-          </Popover>
-        );
-      }
-
-      const hasAccess = isFileUnlocked(record, isConnectedToCavatica);
-
-      return hasAccess ? (
-        <Tooltip title="Authorized">
-          <UnlockFilled className={styles.authorizedLock} />
-        </Tooltip>
-      ) : (
-        <Tooltip title="Unauthorized">
-          <LockOutlined className={styles.unauthorizedLock} />
-        </Tooltip>
-      );
-    },
+    render: (record: IFileEntity) => <FileAuthorization file={record} />,
   },
   {
     key: 'controlled_access',
@@ -296,7 +252,6 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
-  const cavatica = useCavaticaPassport();
   const [selectedAllResults, setSelectedAllResults] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [selectedRows, setSelectedRows] = useState<ITableFileEntity[]>([]);
@@ -371,9 +326,7 @@ const DataFilesTab = ({ sqon }: OwnProps) => {
     selectedKeys.length > MAX_ITEMS_QUERY ||
     (selectedAllResults && results.total > MAX_ITEMS_QUERY);
 
-  const datafilesColumns = getDefaultColumns(
-    cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected,
-  );
+  const datafilesColumns = getDefaultColumns();
   const userColumnState = sanitizeUserColumnState(
     userInfo?.config.data_exploration?.tables?.datafiles?.columns,
     datafilesColumns,

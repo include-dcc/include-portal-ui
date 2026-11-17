@@ -35,7 +35,7 @@ import { FenceApi } from 'services/api/fence';
 import { globalActions } from 'store/global';
 import { RootState } from 'store/types';
 import { handleThunkApiResponse } from 'store/utils';
-import { buildAuthorizedAcl, extractConsentCodes, extractStudyAccessions } from 'utils/cavatica';
+import { buildAuthorizedAcl, extractConsentCodes, toStudyAccessions } from 'utils/cavatica';
 import { isFileUnlocked } from 'utils/dataFiles';
 import { chunkIt } from 'utils/helper';
 
@@ -48,19 +48,16 @@ const TEN_MINUTES_IN_MS = 1000 * 60 * 10;
 export const fetchCavaticaAuthentificationStatus = createAsyncThunk<
   {
     status: PASSPORT_AUTHENTIFICATION_STATUS;
-    acl: string[];
   },
   void,
   { state: RootState }
 >('passport/cavatica/auth/status', async (_, thunkAPI) => {
   const { data, error } = await FenceApi.isAuthenticated(PASSPORT.cavatica);
 
-  let acl: string[] = [];
   if (data?.authenticated) {
-    // Not dead: key-manager refreshes the Cavatica token on this call, before the parallel
-    // Cavatica calls that follow (its refresh isn't single-flight).
-    const { data } = await FenceApi.fetchAcls(PASSPORT.cavatica);
-    acl = data?.acl || [];
+    // Not dead, result unused: key-manager refreshes the Cavatica token on this call, before
+    // the parallel Cavatica calls that follow (its refresh isn't single-flight).
+    await FenceApi.fetchAcls(PASSPORT.cavatica);
   }
 
   return handleThunkApiResponse({
@@ -69,7 +66,6 @@ export const fetchCavaticaAuthentificationStatus = createAsyncThunk<
       status: data?.authenticated
         ? PASSPORT_AUTHENTIFICATION_STATUS.connected
         : PASSPORT_AUTHENTIFICATION_STATUS.disconnected,
-      acl,
     },
     reject: thunkAPI.rejectWithValue,
   });
@@ -144,17 +140,41 @@ const studyFilter = (studyCode: string, acl?: string[]): ISqonGroupFilter => ({
 const toAliasedVariables = (sqons: ISqonGroupFilter[]) =>
   Object.fromEntries(sqons.map((sqon, index) => [`f${index}`, sqon]));
 
+// One Cavatica call per connection: the condition skips it once loaded or while loading
+export const fetchCavaticaUserAcls = createAsyncThunk<
+  { consentCodes: string[] },
+  void,
+  { rejectValue: string; state: RootState }
+>(
+  'passport/cavatica/fetch/userAcls',
+  async (_, thunkAPI) => {
+    const { data, error } = await CavaticaApi.fetchAccessIds();
+    if (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+
+    return { consentCodes: extractConsentCodes(data) };
+  },
+  {
+    condition: (_, { getState }) => {
+      const { loading, loaded } = getState().passport.cavatica.userAcls;
+      return !loading && !loaded;
+    },
+  },
+);
+
+// Dispatch once userAcls is loaded: it reads the consent codes from the store
 export const fetchCavaticaAuthorizedStudies = createAsyncThunk<
   { studies: IAuthorizedStudy[] },
   void,
-  { rejectValue: string }
+  { rejectValue: string; state: RootState }
 >('passport/cavatica/fetch/authorizedStudies', async (_, thunkAPI) => {
-  const { data: accessData, error: accessError } = await CavaticaApi.fetchAccessIds();
-  if (accessError) {
-    return thunkAPI.rejectWithValue(accessError.message);
+  const { consentCodes, loaded } = thunkAPI.getState().passport.cavatica.userAcls;
+  if (!loaded) {
+    return thunkAPI.rejectWithValue('Cavatica access ids are not loaded');
   }
 
-  const accessions = extractStudyAccessions(accessData);
+  const accessions = toStudyAccessions(consentCodes);
   if (!accessions.length) {
     return { studies: [] };
   }
@@ -183,14 +203,10 @@ export const fetchCavaticaAuthorizedStudies = createAsyncThunk<
 
   // Two counts per study: all its files (s2i), and the authorized ones (s2i+1).
   // A file can carry several acl values: count files, never sum acl buckets.
-  const consentCodes = extractConsentCodes(accessData);
-  const matchedStudies = studies.map((study) => {
-    const studyAccessions = (study.external_ids ?? []).filter((id) => accessions.includes(id));
-    return {
-      study,
-      authorizedAcl: buildAuthorizedAcl(consentCodes, studyAccessions, study.study_id),
-    };
-  });
+  const matchedStudies = studies.map((study) => ({
+    study,
+    authorizedAcl: buildAuthorizedAcl(consentCodes, study.external_ids ?? []),
+  }));
   const { data: countsData, error: countsError } = await ArrangerApi.graphqlRequest<{
     data?: Record<string, TFileTotal>;
     errors?: unknown[];
@@ -329,6 +345,8 @@ export const beginCavaticaAnalyse = createAsyncThunk<
     return thunkAPI.rejectWithValue(CAVATICA_ANALYSE_STATUS.upload_limit_reached);
   }
 
+  // No-op once loaded; the Analyze button waits while another fetch is in flight
+  await thunkAPI.dispatch(fetchCavaticaUserAcls());
   const { passport } = thunkAPI.getState();
 
   const sqon: ISqonGroupFilter = {
@@ -357,18 +375,19 @@ export const beginCavaticaAnalyse = createAsyncThunk<
 
   const files = hydrateResults(data?.data?.file?.hits?.edges || []);
 
+  const isConnected =
+    passport.cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected;
   const authorizedFiles = files.filter((file) =>
-    isFileUnlocked(
-      file,
-      passport.cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected,
-    ),
+    isFileUnlocked(file, isConnected, passport.cavatica.userAcls.consentCodes),
   );
 
+  // Known gap: a failed acls or files fetch also lands here and reads as "unauthorized".
+  // ferlab has no modal for generic_error, so a real fix also needs a notification.
   if (!authorizedFiles.length) {
     return thunkAPI.rejectWithValue(CAVATICA_ANALYSE_STATUS.unauthorize);
   }
 
-  if (passport.cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected) {
+  if (isConnected) {
     thunkAPI.dispatch(fetchCavaticaProjects());
   }
 
@@ -446,6 +465,7 @@ export const startBulkImportJob = createAsyncThunk<
   });
 });
 
+// Shares startBulkImportJob's action type: the bulkImportData reducers also run on single imports
 export const startImportJob = createAsyncThunk<
   any,
   { drsItems: ICavaticaDRSImportItem[]; node: ICavaticaTreeNode },
