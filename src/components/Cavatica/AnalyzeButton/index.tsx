@@ -70,12 +70,15 @@ const CavaticaAnalyzeButton: React.FC<OwnProps> = ({
     if (
       !maxFileReached &&
       cavatica.authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected &&
+      // Right after connecting, the acls are still loading: filter files once they're in
+      !cavatica.userAcls.loading &&
       cavatica.bulkImportData.status === CAVATICA_ANALYSE_STATUS.pending_analyse
     ) {
       onBeginAnalyse();
     }
   }, [
     cavatica.authentification.status,
+    cavatica.userAcls.loading,
     cavatica.bulkImportData.status,
     onBeginAnalyse,
     maxFileReached,
@@ -105,7 +108,7 @@ const CavaticaAnalyzeButton: React.FC<OwnProps> = ({
       }}
       handleFilesAndFolders={CavaticaApi.listFilesAndFolders}
       cavatica={cavatica}
-      loading={cavatica.bulkImportData.loading}
+      loading={cavatica.bulkImportData.loading || cavatica.userAcls.loading}
       setCavaticaBulkImportDataStatus={(status: CAVATICA_ANALYSE_STATUS) => {
         dispatch(passportActions.setCavaticaBulkImportDataStatus(status));
       }}

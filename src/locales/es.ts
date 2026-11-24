@@ -1512,11 +1512,6 @@ const es = {
               disabledButtonTooltip: 'Debes seleccionar al menos 1 elemento',
             },
           },
-          undeterminedAuthorization: {
-            popoverTitle: 'Autorización Indeterminada',
-            popoverContent:
-              'No podemos determinar el estado de autorización de estos archivos. Dependiendo de tu estado de autorización en dbGaP, los archivos en este conjunto pueden o no estar accesibles en tu proyecto Cavatica. Lee más sobre <a href="{href}" style="color:#0369a1;text-decoration-line:underline;" target="_blank">solicitar acceso a datos</a>.',
-          },
         },
       },
     },

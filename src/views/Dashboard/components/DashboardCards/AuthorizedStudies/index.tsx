@@ -26,8 +26,8 @@ import { DashboardCardProps } from '..';
 
 const AuthorizedStudies = ({ id, className = '' }: DashboardCardProps) => {
   const dispatch = useDispatch();
-  // Read only: the Cavatica card (useCavaticaPassport) fetches the connection status.
-  const { authentification, authorizedStudies } = useSelector(passportCavaticaSelector);
+  // Read only: the Cavatica card (useCavaticaPassport) fetches the connection status and the acls.
+  const { authentification, authorizedStudies, userAcls } = useSelector(passportCavaticaSelector);
   const isConnected = authentification.status === PASSPORT_AUTHENTIFICATION_STATUS.connected;
 
   // The widget takes "fences": the Cavatica connection is the only one
@@ -57,10 +57,10 @@ const AuthorizedStudies = ({ id, className = '' }: DashboardCardProps) => {
   ];
 
   useEffect(() => {
-    if (isConnected) {
+    if (isConnected && userAcls.loaded) {
       dispatch(fetchCavaticaAuthorizedStudies());
     }
-  }, [dispatch, isConnected]);
+  }, [dispatch, isConnected, userAcls.loaded]);
 
   return (
     <AuthorizedStudiesWidget
@@ -73,7 +73,11 @@ const AuthorizedStudies = ({ id, className = '' }: DashboardCardProps) => {
         participantIndex: INDEXES.FILE,
         fileIndex: INDEXES.FILE,
       }}
-      authorizedStudies={authorizedStudies}
+      // The studies wait for the acls: keep the spinner meanwhile
+      authorizedStudies={{
+        ...authorizedStudies,
+        loading: authorizedStudies.loading || userAcls.loading,
+      }}
       className={className}
       services={services}
       dictionary={{
